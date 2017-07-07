@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import RealmSwift
+import SwiftyBeaver
+let log = SwiftyBeaver.self
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        API.sharedInstance.createDefaultData()
+        migrateRealmDatabaseIfNeeded()
+        setupSwiftyBeaver()
+        setupIQKeyboard()
+        setupFirstScreen()
+        
         return true
     }
 
@@ -42,5 +53,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+}
+
+extension AppDelegate {
+    // MARK: Setup
+    func setupSwiftyBeaver() {
+        // Setup swifty beaver
+        let console = ConsoleDestination()
+        log.addDestination(console) // add to SwiftyBeaver
+    }
+    
+    func setupIQKeyboard() {
+        IQKeyboardManager.sharedManager().enable = true
+    }
+    
+    func setupFirstScreen() {
+        window = UIWindow(frame: UIScreen.main.bounds)
+        let rootVC = CustomTabViewController()
+//        let rootVC = LoginViewController()
+        rootVC.view.backgroundColor = .white
+        let navVC = UINavigationController(rootViewController: rootVC)
+        navVC.view.backgroundColor = .white
+        navVC.navigationBar.isTranslucent = false
+        window!.rootViewController = navVC
+        window!.makeKeyAndVisible()
+    }
+    
+    func migrateRealmDatabaseIfNeeded() {
+        var config = Realm.Configuration()
+        config.deleteRealmIfMigrationNeeded = true
+        
+        Realm.Configuration.defaultConfiguration = config
+        _ = try! Realm()
+    }
 }
 

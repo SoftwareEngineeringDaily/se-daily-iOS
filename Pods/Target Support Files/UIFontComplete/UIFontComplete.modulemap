@@ -1,0 +1,6 @@
+framework module UIFontComplete {
+  umbrella header "UIFontComplete-umbrella.h"
+
+  export *
+  module * { export * }
+}

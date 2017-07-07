@@ -7,12 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		162B61FE1F05772700927CBC /* AudioViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162B61FD1F05772700927CBC /* AudioViewManager.swift */; };
+		164C71051F021AC8003803BC /* CustomTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C71041F021AC8003803BC /* CustomTabViewController.swift */; };
+		164C71071F021C8D003803BC /* PodcastCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C71061F021C8D003803BC /* PodcastCollectionViewController.swift */; };
+		164C71091F021C97003803BC /* FeedCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C71081F021C97003803BC /* FeedCollectionViewController.swift */; };
+		164FE9D51F02CC53009419CA /* EmbeddedCollectonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9D41F02CC53009419CA /* EmbeddedCollectonViewCell.swift */; };
+		164FE9D71F02CD99009419CA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9D61F02CD99009419CA /* Extensions.swift */; };
+		164FE9D91F02D611009419CA /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9D81F02D611009419CA /* CollectionReusableView.swift */; };
+		164FE9DC1F02DAB5009419CA /* PodcastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9DB1F02DAB5009419CA /* PodcastCollectionViewCell.swift */; };
+		164FE9E11F02EE67009419CA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9E01F02EE67009419CA /* LoginViewController.swift */; };
+		164FE9E51F02EE83009419CA /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9E41F02EE83009419CA /* API.swift */; };
+		164FE9E71F02F02F009419CA /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9E61F02F02F009419CA /* UserModel.swift */; };
+		164FE9E91F02F049009419CA /* Stylesheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9E81F02F049009419CA /* Stylesheet.swift */; };
+		164FE9EB1F02F340009419CA /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9EA1F02F340009419CA /* Helpers.swift */; };
+		164FE9ED1F02F7E2009419CA /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9EC1F02F7E2009419CA /* UIButtonExtension.swift */; };
+		164FE9EF1F03065C009419CA /* NavigationControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9EE1F03065C009419CA /* NavigationControllerExtension.swift */; };
+		164FE9F11F030A2E009419CA /* PodcastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9F01F030A2E009419CA /* PodcastModel.swift */; };
+		1672FAC41F06C141008445B1 /* NotificationCenterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */; };
+		167AFAB21F043CF600A1332F /* PostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */; };
+		167AFAB51F043ED500A1332F /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB41F043ED500A1332F /* DetailTableViewCell.swift */; };
+		167AFAB71F043F1100A1332F /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB61F043F1100A1332F /* HeaderView.swift */; };
+		167AFAB91F04624E00A1332F /* SingleLabelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB81F04624E00A1332F /* SingleLabelTableViewCell.swift */; };
 		1686FC011F009EC00088A6C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1686FC001F009EC00088A6C1 /* AppDelegate.swift */; };
-		1686FC031F009EC00088A6C1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1686FC021F009EC00088A6C1 /* ViewController.swift */; };
 		1686FC061F009EC00088A6C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC041F009EC00088A6C1 /* Main.storyboard */; };
 		1686FC081F009EC00088A6C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC071F009EC00088A6C1 /* Assets.xcassets */; };
 		1686FC0B1F009EC00088A6C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC091F009EC00088A6C1 /* LaunchScreen.storyboard */; };
 		1686FC161F009EC00088A6C1 /* SEDaily_IOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */; };
+		1687DB451F0AC214002FFC78 /* TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687DB441F0AC214002FFC78 /* TestModel.swift */; };
+		169893A01F04C787008A2B4C /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1698939F1F04C787008A2B4C /* AudioManager.swift */; };
+		16D766BA1F06B4850066C143 /* AudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D766B91F06B4850066C143 /* AudioView.swift */; };
+		238E99F4E37C7365658113B8 /* Pods_SEDaily_IOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C9F051C6C2F8638D2ABF8 /* Pods_SEDaily_IOSTests.framework */; };
+		24412438C753126FDDD37CBF /* Pods_SEDaily_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,9 +51,29 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		162B61FD1F05772700927CBC /* AudioViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioViewManager.swift; sourceTree = "<group>"; };
+		164C71041F021AC8003803BC /* CustomTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabViewController.swift; sourceTree = "<group>"; };
+		164C71061F021C8D003803BC /* PodcastCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCollectionViewController.swift; sourceTree = "<group>"; };
+		164C71081F021C97003803BC /* FeedCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewController.swift; sourceTree = "<group>"; };
+		164FE9D41F02CC53009419CA /* EmbeddedCollectonViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmbeddedCollectonViewCell.swift; sourceTree = "<group>"; };
+		164FE9D61F02CD99009419CA /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		164FE9D81F02D611009419CA /* CollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionReusableView.swift; sourceTree = "<group>"; };
+		164FE9DB1F02DAB5009419CA /* PodcastCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCollectionViewCell.swift; sourceTree = "<group>"; };
+		164FE9E01F02EE67009419CA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		164FE9E41F02EE83009419CA /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		164FE9E61F02F02F009419CA /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		164FE9E81F02F049009419CA /* Stylesheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stylesheet.swift; sourceTree = "<group>"; };
+		164FE9EA1F02F340009419CA /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		164FE9EC1F02F7E2009419CA /* UIButtonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
+		164FE9EE1F03065C009419CA /* NavigationControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationControllerExtension.swift; sourceTree = "<group>"; };
+		164FE9F01F030A2E009419CA /* PodcastModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastModel.swift; sourceTree = "<group>"; };
+		1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterExtension.swift; sourceTree = "<group>"; };
+		167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewController.swift; sourceTree = "<group>"; };
+		167AFAB41F043ED500A1332F /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
+		167AFAB61F043F1100A1332F /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		167AFAB81F04624E00A1332F /* SingleLabelTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLabelTableViewCell.swift; sourceTree = "<group>"; };
 		1686FBFD1F009EC00088A6C1 /* SEDaily-IOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SEDaily-IOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1686FC001F009EC00088A6C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1686FC021F009EC00088A6C1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1686FC051F009EC00088A6C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1686FC071F009EC00088A6C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1686FC0A1F009EC00088A6C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -36,6 +81,15 @@
 		1686FC111F009EC00088A6C1 /* SEDaily-IOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SEDaily-IOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SEDaily_IOSTests.swift; sourceTree = "<group>"; };
 		1686FC171F009EC00088A6C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1687DB441F0AC214002FFC78 /* TestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestModel.swift; sourceTree = "<group>"; };
+		1698939F1F04C787008A2B4C /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		16D766B91F06B4850066C143 /* AudioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioView.swift; sourceTree = "<group>"; };
+		675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.release.xcconfig"; sourceTree = "<group>"; };
+		995F64385352A79BA0DF7DEB /* Pods-SEDaily-IOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9FDA28C254F62BB468401B75 /* Pods-SEDaily-IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.debug.xcconfig"; sourceTree = "<group>"; };
+		A2EFA433B346D70E958FFC73 /* Pods-SEDaily-IOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SEDaily_IOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF0C9F051C6C2F8638D2ABF8 /* Pods_SEDaily_IOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SEDaily_IOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24412438C753126FDDD37CBF /* Pods_SEDaily_IOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,18 +105,92 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				238E99F4E37C7365658113B8 /* Pods_SEDaily_IOSTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		164FE9DA1F02DAA5009419CA /* CollectionViews */ = {
+			isa = PBXGroup;
+			children = (
+				164C71061F021C8D003803BC /* PodcastCollectionViewController.swift */,
+				164C71081F021C97003803BC /* FeedCollectionViewController.swift */,
+			);
+			name = CollectionViews;
+			sourceTree = "<group>";
+		};
+		164FE9DD1F02DAB8009419CA /* CollectionViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				164FE9D41F02CC53009419CA /* EmbeddedCollectonViewCell.swift */,
+				164FE9DB1F02DAB5009419CA /* PodcastCollectionViewCell.swift */,
+			);
+			name = CollectionViewCells;
+			sourceTree = "<group>";
+		};
+		164FE9DE1F02DACA009419CA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				164FE9D81F02D611009419CA /* CollectionReusableView.swift */,
+				167AFAB61F043F1100A1332F /* HeaderView.swift */,
+				16D766B91F06B4850066C143 /* AudioView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		164FE9DF1F02EE4E009419CA /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				164FE9E01F02EE67009419CA /* LoginViewController.swift */,
+				167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		164FE9E21F02EE71009419CA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				164FE9E61F02F02F009419CA /* UserModel.swift */,
+				164FE9F01F030A2E009419CA /* PodcastModel.swift */,
+				1698939F1F04C787008A2B4C /* AudioManager.swift */,
+				162B61FD1F05772700927CBC /* AudioViewManager.swift */,
+				1687DB441F0AC214002FFC78 /* TestModel.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		164FE9E31F02EE77009419CA /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				164FE9D61F02CD99009419CA /* Extensions.swift */,
+				164FE9E81F02F049009419CA /* Stylesheet.swift */,
+				164FE9EA1F02F340009419CA /* Helpers.swift */,
+				164FE9EC1F02F7E2009419CA /* UIButtonExtension.swift */,
+				164FE9EE1F03065C009419CA /* NavigationControllerExtension.swift */,
+				1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		167AFAB31F043E8F00A1332F /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				167AFAB41F043ED500A1332F /* DetailTableViewCell.swift */,
+				167AFAB81F04624E00A1332F /* SingleLabelTableViewCell.swift */,
+			);
+			name = TableViewCell;
+			sourceTree = "<group>";
+		};
 		1686FBF41F009EC00088A6C1 = {
 			isa = PBXGroup;
 			children = (
 				1686FBFF1F009EC00088A6C1 /* SEDaily-IOS */,
 				1686FC141F009EC00088A6C1 /* SEDaily-IOSTests */,
 				1686FBFE1F009EC00088A6C1 /* Products */,
+				4E74333675FE5899EC260076 /* Pods */,
+				E6ABCD02C9CBA1E6E09EB4DE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,12 +206,20 @@
 		1686FBFF1F009EC00088A6C1 /* SEDaily-IOS */ = {
 			isa = PBXGroup;
 			children = (
-				1686FC001F009EC00088A6C1 /* AppDelegate.swift */,
-				1686FC021F009EC00088A6C1 /* ViewController.swift */,
-				1686FC041F009EC00088A6C1 /* Main.storyboard */,
-				1686FC071F009EC00088A6C1 /* Assets.xcassets */,
-				1686FC091F009EC00088A6C1 /* LaunchScreen.storyboard */,
 				1686FC0C1F009EC00088A6C1 /* Info.plist */,
+				164FE9E41F02EE83009419CA /* API.swift */,
+				1686FC001F009EC00088A6C1 /* AppDelegate.swift */,
+				164C71041F021AC8003803BC /* CustomTabViewController.swift */,
+				1686FC071F009EC00088A6C1 /* Assets.xcassets */,
+				164FE9DD1F02DAB8009419CA /* CollectionViewCells */,
+				164FE9DA1F02DAA5009419CA /* CollectionViews */,
+				164FE9E31F02EE77009419CA /* Helpers */,
+				1686FC091F009EC00088A6C1 /* LaunchScreen.storyboard */,
+				1686FC041F009EC00088A6C1 /* Main.storyboard */,
+				164FE9E21F02EE71009419CA /* Models */,
+				167AFAB31F043E8F00A1332F /* TableViewCell */,
+				164FE9DF1F02EE4E009419CA /* ViewControllers */,
+				164FE9DE1F02DACA009419CA /* Views */,
 			);
 			path = "SEDaily-IOS";
 			sourceTree = "<group>";
@@ -96,6 +233,26 @@
 			path = "SEDaily-IOSTests";
 			sourceTree = "<group>";
 		};
+		4E74333675FE5899EC260076 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9FDA28C254F62BB468401B75 /* Pods-SEDaily-IOS.debug.xcconfig */,
+				675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */,
+				995F64385352A79BA0DF7DEB /* Pods-SEDaily-IOSTests.debug.xcconfig */,
+				A2EFA433B346D70E958FFC73 /* Pods-SEDaily-IOSTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E6ABCD02C9CBA1E6E09EB4DE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */,
+				DF0C9F051C6C2F8638D2ABF8 /* Pods_SEDaily_IOSTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -103,9 +260,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1686FC1A1F009EC00088A6C1 /* Build configuration list for PBXNativeTarget "SEDaily-IOS" */;
 			buildPhases = (
+				6A12E8C003C75BEEE01B2AA0 /* [CP] Check Pods Manifest.lock */,
 				1686FBF91F009EC00088A6C1 /* Sources */,
 				1686FBFA1F009EC00088A6C1 /* Frameworks */,
 				1686FBFB1F009EC00088A6C1 /* Resources */,
+				AE5F616C12D0339AD2CE40F0 /* [CP] Embed Pods Frameworks */,
+				4B6DBB81C87D23ABC98202EB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -120,9 +280,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1686FC1D1F009EC00088A6C1 /* Build configuration list for PBXNativeTarget "SEDaily-IOSTests" */;
 			buildPhases = (
+				0AC6AC0CAA2207AE56408B2B /* [CP] Check Pods Manifest.lock */,
 				1686FC0D1F009EC00088A6C1 /* Sources */,
 				1686FC0E1F009EC00088A6C1 /* Frameworks */,
 				1686FC0F1F009EC00088A6C1 /* Resources */,
+				43BA1A9ED42DE22C48E64092 /* [CP] Embed Pods Frameworks */,
+				8836A870BF4FA6C98035B298 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -146,8 +309,13 @@
 				TargetAttributes = {
 					1686FBFC1F009EC00088A6C1 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = 6MS9QWALYV;
+						DevelopmentTeam = 6TY8WC8WPP;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					1686FC101F009EC00088A6C1 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -196,13 +364,129 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0AC6AC0CAA2207AE56408B2B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		43BA1A9ED42DE22C48E64092 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4B6DBB81C87D23ABC98202EB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6A12E8C003C75BEEE01B2AA0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8836A870BF4FA6C98035B298 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AE5F616C12D0339AD2CE40F0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1686FBF91F009EC00088A6C1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1686FC031F009EC00088A6C1 /* ViewController.swift in Sources */,
+				167AFAB51F043ED500A1332F /* DetailTableViewCell.swift in Sources */,
+				164FE9E11F02EE67009419CA /* LoginViewController.swift in Sources */,
+				1687DB451F0AC214002FFC78 /* TestModel.swift in Sources */,
+				164FE9EF1F03065C009419CA /* NavigationControllerExtension.swift in Sources */,
+				167AFAB21F043CF600A1332F /* PostDetailTableViewController.swift in Sources */,
+				164FE9D51F02CC53009419CA /* EmbeddedCollectonViewCell.swift in Sources */,
+				164FE9D91F02D611009419CA /* CollectionReusableView.swift in Sources */,
+				167AFAB91F04624E00A1332F /* SingleLabelTableViewCell.swift in Sources */,
+				162B61FE1F05772700927CBC /* AudioViewManager.swift in Sources */,
+				167AFAB71F043F1100A1332F /* HeaderView.swift in Sources */,
+				164FE9D71F02CD99009419CA /* Extensions.swift in Sources */,
+				164FE9E51F02EE83009419CA /* API.swift in Sources */,
+				164FE9E91F02F049009419CA /* Stylesheet.swift in Sources */,
+				164C71091F021C97003803BC /* FeedCollectionViewController.swift in Sources */,
+				164C71071F021C8D003803BC /* PodcastCollectionViewController.swift in Sources */,
+				164C71051F021AC8003803BC /* CustomTabViewController.swift in Sources */,
+				164FE9DC1F02DAB5009419CA /* PodcastCollectionViewCell.swift in Sources */,
+				169893A01F04C787008A2B4C /* AudioManager.swift in Sources */,
+				16D766BA1F06B4850066C143 /* AudioView.swift in Sources */,
+				164FE9EB1F02F340009419CA /* Helpers.swift in Sources */,
+				1672FAC41F06C141008445B1 /* NotificationCenterExtension.swift in Sources */,
+				164FE9F11F030A2E009419CA /* PodcastModel.swift in Sources */,
+				164FE9ED1F02F7E2009419CA /* UIButtonExtension.swift in Sources */,
 				1686FC011F009EC00088A6C1 /* AppDelegate.swift in Sources */,
+				164FE9E71F02F02F009419CA /* UserModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,12 +625,14 @@
 		};
 		1686FC1B1F009EC00088A6C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9FDA28C254F62BB468401B75 /* Pods-SEDaily-IOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 6MS9QWALYV;
+				CURRENT_PROJECT_VERSION = 7;
+				DEVELOPMENT_TEAM = 6TY8WC8WPP;
 				INFOPLIST_FILE = "SEDaily-IOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "koala-tea.SEDaily-IOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "koala-tea.SEDaily";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -354,12 +640,14 @@
 		};
 		1686FC1C1F009EC00088A6C1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 6MS9QWALYV;
+				CURRENT_PROJECT_VERSION = 7;
+				DEVELOPMENT_TEAM = 6TY8WC8WPP;
 				INFOPLIST_FILE = "SEDaily-IOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "koala-tea.SEDaily-IOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "koala-tea.SEDaily";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -367,6 +655,7 @@
 		};
 		1686FC1E1F009EC00088A6C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 995F64385352A79BA0DF7DEB /* Pods-SEDaily-IOSTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -382,6 +671,7 @@
 		};
 		1686FC1F1F009EC00088A6C1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A2EFA433B346D70E958FFC73 /* Pods-SEDaily-IOSTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -414,6 +704,7 @@
 				1686FC1C1F009EC00088A6C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1686FC1D1F009EC00088A6C1 /* Build configuration list for PBXNativeTarget "SEDaily-IOSTests" */ = {
 			isa = XCConfigurationList;
@@ -422,6 +713,7 @@
 				1686FC1F1F009EC00088A6C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

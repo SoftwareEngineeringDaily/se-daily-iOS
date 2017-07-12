@@ -21,6 +21,8 @@ extension API {
     enum Endpoints {
         static let posts = "/posts"
         static let recommendations = "/posts/recommendations"
+        static let login = "/auth/login"
+        static let register = "/auth/register"
     }
     
     enum Types {
@@ -30,8 +32,6 @@ extension API {
     }
     
     enum Params {
-        static let email = "email"
-        static let password = "password"
         static let bearer = "Bearer"
         static let lastUpdatedBefore = "lastUpdatedBefore"
         static let createdAtBefore = "createdAtBefore"
@@ -40,6 +40,9 @@ extension API {
         static let deviceToken = "deviceToken"
         static let accessToken = "accessToken"
         static let type = "type"
+        static let username = "username"
+        static let password = "password"
+        static let token = "token"
     }
 }
 
@@ -48,6 +51,89 @@ class API {
     
     static let sharedInstance: API = API()
     private init() {}
+}
+
+extension API {
+    // MARK: Auth
+    func login(username: String, password: String, completion: @escaping (_ success: Bool?) -> Void) {
+        let urlString = rootURL + Endpoints.login
+        
+        let _headers : HTTPHeaders = [Headers.contentType:Headers.x_www_form_urlencoded]
+        var params = [String: String]()
+        params[Params.username] = username
+        params[Params.password] = password
+        
+        typealias model = PodcastModel
+        
+        Alamofire.request(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody , headers: _headers).responseJSON { response in
+            switch response.result {
+            case .success:
+                let jsonResponse = response.result.value as! NSDictionary
+                
+                if let message = jsonResponse["message"] {
+                    log.error(message)
+
+                    Helpers.alertWithMessage(title: Helpers.Alerts.error, message: String(describing: message), completionHandler: nil)
+                    completion(false)
+                    return
+                }
+                
+                if let token = jsonResponse["token"] {
+                    let user = User()
+                    user.email = username
+                    user.token = token as? String
+                    log.info(token)
+                    user.save()
+                    completion(true)
+                }
+            case .failure(let error):
+                log.error(error)
+
+                Helpers.alertWithMessage(title: Helpers.Alerts.error, message: error.localizedDescription, completionHandler: nil)
+                completion(false)
+            }
+        }
+    }
+    
+    func register(username: String, password: String, completion: @escaping (_ success: Bool?) -> Void) {
+        let urlString = rootURL + Endpoints.register
+        
+        let _headers : HTTPHeaders = [Headers.contentType:Headers.x_www_form_urlencoded]
+        var params = [String: String]()
+        params[Params.username] = username
+        params[Params.password] = password
+        
+        typealias model = PodcastModel
+        
+        Alamofire.request(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody , headers: _headers).responseJSON { response in
+            switch response.result {
+            case .success:
+                let jsonResponse = response.result.value as! NSDictionary
+                
+                if let message = jsonResponse["message"] {
+                    log.error(message)
+                    
+                    Helpers.alertWithMessage(title: Helpers.Alerts.error, message: String(describing: message), completionHandler: nil)
+                    completion(false)
+                    return
+                }
+                
+                if let token = jsonResponse["token"] {
+                    let user = User()
+                    user.email = username
+                    user.token = token as? String
+                    user.save()
+                    completion(true)
+                }
+            case .failure(let error):
+                log.error(error)
+                
+                Helpers.alertWithMessage(title: Helpers.Alerts.error, message: error.localizedDescription, completionHandler: nil)
+                completion(false)
+            }
+        }
+    }
+
 }
 
 extension API {
@@ -93,7 +179,10 @@ extension API {
         
         let urlString = rootURL + Endpoints.recommendations
         
+        let user = User.getActiveUser()
+        guard let userToken = user.token else { return }
         var params = [String: String]()
+        params[Params.token] = userToken
         
         typealias model = PodcastModel
         

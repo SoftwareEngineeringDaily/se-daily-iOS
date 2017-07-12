@@ -27,6 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupIQKeyboard()
         setupFirstScreen()
         
+        API.sharedInstance.login(username: "test@test.com", password: "testing", completion: {
+            (success) in
+            API.sharedInstance.getRecommended()
+        })
+        
         return true
     }
 

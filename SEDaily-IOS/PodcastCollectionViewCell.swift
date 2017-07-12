@@ -9,10 +9,11 @@
 import UIKit
 import SnapKit
 import KoalaTeaFlowLayout
+import RealmSwift
 
 class PodcastCollectionViewCell: UICollectionViewCell {
     
-    var podcastModel: PodcastModel!
+    var model: PodcastModel!
     
     let titleLabel = UILabel()
     let upVoteCountLabel = UILabel()
@@ -73,7 +74,7 @@ class PodcastCollectionViewCell: UICollectionViewCell {
     }
     
     func setupCell(model: PodcastModel) {
-        self.podcastModel = model
+        self.model = model
         guard let name = model.podcastName else { return }
         titleLabel.text = name
         guard let score = model.score else { return }
@@ -82,6 +83,6 @@ class PodcastCollectionViewCell: UICollectionViewCell {
     
     func playButtonPressed() {
         AudioViewManager.shared.presentAudioView()
-        AudioManager.shared.loadAudio(model: podcastModel)
+        AudioManager.shared.audio.state = .willDownload(from: model)
     }
 }

@@ -39,18 +39,43 @@ class AudioViewManager: NSObject {
         audioView.frame.origin.y = UIScreen.main.bounds.height
 
         audioView.animateIn()
-        audioView.setupNotificationObserver()
-    }
-    
-    func startActivityIndicator() {
-        audioView.startActivityIndicator()
-    }
-    
-    func stopActivityIndicator() {
-        audioView.stopActivityIndicator()
     }
     
     public func setText(text: String?) {
         audioView.setText(text: text)
+    }
+    
+    func handleAudioManagerStateChange() {
+        if let model = AudioManager.shared.podcastModel {
+            self.setText(text: model.podcastName)
+        }
+        
+        switch AudioManager.shared.audio.state {
+        case .stopped:
+            audioView.activityView.stopAnimating()
+            
+            audioView.playButton.isHidden = false
+            audioView.pauseButton.isHidden = true
+        case .willDownload:
+            audioView.activityView.startAnimating()
+            
+            audioView.playButton.isHidden = false
+            audioView.pauseButton.isHidden = true
+        case .downloading:
+            audioView.activityView.startAnimating()
+            
+            audioView.playButton.isHidden = false
+            audioView.pauseButton.isHidden = true
+        case .playing:
+            audioView.activityView.stopAnimating()
+            
+            audioView.playButton.isHidden = true
+            audioView.pauseButton.isHidden = false
+        case .paused:
+            audioView.activityView.stopAnimating()
+            
+            audioView.playButton.isHidden = false
+            audioView.pauseButton.isHidden = true
+        }
     }
 }

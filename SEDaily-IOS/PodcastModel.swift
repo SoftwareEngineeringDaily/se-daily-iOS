@@ -26,6 +26,7 @@ public class PodcastModel: Object, Mappable {
     dynamic var link: String? = nil
     dynamic var type: String? = nil
     dynamic var score: String? = nil
+    dynamic var currentTime: String = "0"
     
     dynamic var mp3Saved: Bool = false
     
@@ -55,12 +56,26 @@ public class PodcastModel: Object, Mappable {
         return desc
     }
     
-    func getMP3URL() -> URL {
+    func getMP3asURL() -> URL? {
+        guard let urlString = self.mp3URL else {
+            return nil
+        }
+        guard let url = URL(string: urlString) else {
+            return nil
+        }
+        return url
+    }
+    
+    func getSavedMP3URL() -> URL {
         var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         
         // the name of the file here I kept is yourFileName with appended extension
         documentsURL.appendPathComponent(self.podcastName! + "." + "mp3")
         return documentsURL
+    }
+    
+    func getCurrentTime() -> Double? {
+        return Double(self.currentTime)
     }
 }
 
@@ -81,6 +96,13 @@ extension PodcastModel {
         let realm = try! Realm()
         try! realm.write {
             self.podcastName = podcastName
+        }
+    }
+    
+    func update(currentTime: Double) {
+        let realm = try! Realm()
+        try! realm.write {
+            self.currentTime = String(currentTime)
         }
     }
     

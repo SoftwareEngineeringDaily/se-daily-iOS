@@ -142,7 +142,7 @@ extension HeaderView {
         //@TODO: Switch button and/or stop if playing
         AudioViewManager.shared.presentAudioView()
         let string = "http://traffic.libsyn.com/rtpodcast/podcast_update.mp3"
-        AudioManager.shared.loadAudio(model: model)
+        AudioManager.shared.audio.state = .willDownload(from: model)
 //        AudioManager.shared.loadAudio(model: model)
     }
 }

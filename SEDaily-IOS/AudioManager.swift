@@ -8,6 +8,7 @@
 
 import Foundation
 import AVFoundation
+import MediaPlayer
 import Alamofire
 
 public class Task {
@@ -24,7 +25,11 @@ public class Task {
     var audioManager: AudioManager
     
     var request: Alamofire.Request? = nil
-    var progress: Double? = nil
+    var progress: Int = 0 {
+        didSet {
+            audioManager.loadingProgress = progress
+        }
+    }
     
     init(state: State, audioManager: AudioManager) {
         self.state = state
@@ -51,7 +56,9 @@ public class Task {
         self.request = Alamofire.download(audioUrl, to: destination)
             .downloadProgress { progress in
                 log.info("Download Progress: \((progress.fractionCompleted * 100))")
-                self.progress = progress.fractionCompleted * 100
+
+                let convertedProgressFraction = Int(progress.fractionCompleted * 100)
+                self.progress = convertedProgressFraction
             }
             .response { response in
                 guard let destinationUrl = response.destinationURL else { return }
@@ -84,6 +91,19 @@ public enum PlaybackState {
     case failed
 }
 
+extension PlaybackState: CustomStringConvertible {
+    public var description: String {
+        switch self {
+            case .stopped: return "stopped"
+            case .willDownload: return "willDownload"
+            case .downloading: return "downloading"
+            case .playing: return "playing"
+            case .paused: return "paused"
+            case .failed: return "failed"
+        }
+    }
+}
+
 public struct AudioFile {
     var fileURL: URL
     var currentTime: Double
@@ -98,6 +118,7 @@ public protocol AudioManagerDelegate: NSObjectProtocol {
     func playerCurrentTimeDidChange(_ player: AudioManager)
     func playerPlaybackDidEnd(_ player: AudioManager)
     func playerDidFinishDownloading(_ player: AudioManager)
+    func playerDownloadProgressDidChange(_ player: AudioManager)
 //    func playerBufferingStateDidChange(_ player: AudioManager)
     
     // This is the time in seconds that the video has been buffered.
@@ -110,28 +131,24 @@ public class AudioManager: NSObject {
     open weak var playerDelegate: AudioManagerDelegate?
     
     var task: Task?
+    var loadingProgress: Int = 0 {
+        didSet {
+            playerDelegate?.playerDownloadProgressDidChange(self)
+        }
+    }
     var audioPlayer: AVAudioPlayer? = nil
     var currentAudioFile: AudioFile? = nil
+    var timer: Timer? = nil
     
     open var playbackState: PlaybackState = .stopped {
         didSet {
-//            if playbackState != oldValue {
-////                self.playerDelegate?.playerPlaybackStateDidChange(self)
-//                handleStateChange()
+            // @TODO: .description doesn't work with downloading because we have to switch
+            // back to that state and then use "task.state"
+//            if playbackState.description != oldValue.description {
+                self.playerDelegate?.playerPlaybackStateDidChange(self)
+                handleStateChange()
 //            }
-            self.playerDelegate?.playerPlaybackStateDidChange(self)
-            handleStateChange()
         }
-    }
-    
-    public override init() {
-        log.info("INIT")
-    }
-    
-    deinit {
-        log.info("DEINIT")
-        audioPlayer = nil
-        task = nil
     }
 
     fileprivate func handleStateChange() {
@@ -139,6 +156,7 @@ public class AudioManager: NSObject {
         case .stopped:
             log.info("stopped")
             
+            self.timer?.invalidate()
             // Stop Audio
             self.audioPlayer?.pause()
             // Cancel any downloads
@@ -147,6 +165,7 @@ public class AudioManager: NSObject {
         case .willDownload(let audioURL, let fileName):
             log.info("will download")
             
+            self.timer?.invalidate()
             self.audioPlayer?.pause()
             self.task?.cancel()
             
@@ -167,6 +186,10 @@ public class AudioManager: NSObject {
             }
         case .playing(let audioFile):
             log.info("playing")
+
+            self.setupSession()
+            self.setupMediaPlayerControls()
+            self.task?.cancel()
             
             do {
                 audioPlayer = try AVAudioPlayer(contentsOf: audioFile.fileURL, fileTypeHint: "mp3")
@@ -184,6 +207,7 @@ public class AudioManager: NSObject {
         case .paused:
             log.info("paused")
             
+            self.timer?.invalidate()
             self.audioPlayer?.pause()
         case .failed:
             log.info("failed")
@@ -195,13 +219,59 @@ public class AudioManager: NSObject {
         let audioSession = AVAudioSession.sharedInstance()
         do {
             try audioSession.setCategory(AVAudioSessionCategoryPlayback)
+            try audioSession.setActive(true)
         } catch let error {
             log.error(error.localizedDescription)
         }
     }
     
+    func setupMediaPlayerControls() {
+        let commandCenter = MPRemoteCommandCenter.shared()
+
+        commandCenter.skipBackwardCommand.isEnabled = true
+        commandCenter.skipBackwardCommand.preferredIntervals = [30]
+        commandCenter.skipBackwardCommand.removeTarget(nil)
+        commandCenter.skipBackwardCommand.addTarget(self, action: #selector(self.skipBackward))
+        
+        commandCenter.skipForwardCommand.isEnabled = true
+        commandCenter.skipForwardCommand.preferredIntervals = [30]
+        commandCenter.skipForwardCommand.removeTarget(nil)
+        commandCenter.skipForwardCommand.addTarget(self, action: #selector(self.skipForward))
+        
+        commandCenter.playCommand.isEnabled = true
+        commandCenter.playCommand.removeTarget(nil)
+        
+        commandCenter.playCommand.addTarget(self, action: #selector(self.targetPlay))
+        
+        commandCenter.pauseCommand.isEnabled = true
+        commandCenter.pauseCommand.removeTarget(nil)
+        commandCenter.pauseCommand.addTarget(self, action: #selector(self.pause))
+    }
+    
+    func skipForward() {
+        guard let currentTime = audioPlayer?.currentTime else { return }
+        guard let duration = audioPlayer?.duration else { return }
+        audioPlayer?.stop()
+        audioPlayer?.currentTime = currentTime + 30.0
+        if duration <= currentTime + 30 {
+            self.stop()
+            self.playerDelegate?.playerPlaybackDidEnd(self)
+        }
+        audioPlayer?.play()
+    }
+    
+    func skipBackward() {
+        guard let currentTime = audioPlayer?.currentTime else { return }
+        audioPlayer?.stop()
+        audioPlayer?.currentTime = currentTime - 30.0
+        if 0.0 >= currentTime - 30 {
+            audioPlayer?.currentTime = 0.0
+        }
+        audioPlayer?.play()
+    }
+    
     func setupTimer() {
-        Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateCurrentTime), userInfo: nil, repeats: true)
+        self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateCurrentTime), userInfo: nil, repeats: true)
     }
     
     func updateCurrentTime() {
@@ -227,6 +297,11 @@ public class AudioManager: NSObject {
             return
         }
         self.playbackState = .playing(file)
+    }
+    
+    // Stil can't figure out why @obj is needed for some target functions
+    public func targetPlay() {
+        self.play()
     }
     
     public func pause() {

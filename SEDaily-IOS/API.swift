@@ -154,7 +154,7 @@ extension API {
             case .success:
                 let modelsArray = response.result.value
                 guard let array = modelsArray else { return }
-                
+
                 for item in array {
                     
                     let realm = try! Realm()

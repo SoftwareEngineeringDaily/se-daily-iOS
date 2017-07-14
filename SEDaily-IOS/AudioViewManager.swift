@@ -33,7 +33,10 @@ class AudioViewManager: NSObject{
             audioManager.play(audioFile: audioFile)
             return
         }
-        audioManager.willDownload(from: podcastModel.getMP3asURL()!, fileName: podcastModel.podcastName!)
+
+        guard let url = podcastModel.getMP3asURL() else { return }
+        guard let fileName = podcastModel.podcastName else { return }
+        audioManager.willDownload(from: url, fileName: fileName)
     }
     
     fileprivate func presentAudioView() {
@@ -102,6 +105,7 @@ class AudioViewManager: NSObject{
             
             audioView.playButton.isHidden = true
             audioView.pauseButton.isHidden = false
+            audioView.progressLabel.text = ""
         case .paused:
             audioView.activityView.stopAnimating()
             
@@ -114,6 +118,10 @@ class AudioViewManager: NSObject{
 }
 
 extension AudioViewManager: AudioManagerDelegate {
+    func playerDownloadProgressDidChange(_ player: AudioManager) {
+        audioView.updateDownloadProgress(progress: player.loadingProgress)
+    }
+
     func playerDidFinishDownloading(_ player: AudioManager) {
         podcastModel.update(mp3Saved: true)
     }
@@ -125,6 +133,10 @@ extension AudioViewManager: AudioManagerDelegate {
     func playerCurrentTimeDidChange(_ player: AudioManager) {
         guard let currentTime = player.audioPlayer?.currentTime else { return }
         podcastModel.update(currentTime: currentTime)
+        
+        guard let duration = player.audioPlayer?.duration else { return }
+        let progress = Float(currentTime / duration)
+        audioView.updateCurrentTimeProgress(progress: progress)
     }
     
     func playerPlaybackStateDidChange(_ player: AudioManager) {
@@ -147,5 +159,13 @@ extension AudioViewManager: AudioViewDelegate {
     
     func stopButtonPressed() {
         audioManager.stop()
+    }
+    
+    func skipForwardButtonPressed() {
+        audioManager.skipForward()
+    }
+    
+    func skipBackwardButtonPressed() {
+        audioManager.skipBackward()
     }
 }

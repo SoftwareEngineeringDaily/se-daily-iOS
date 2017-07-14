@@ -15,6 +15,8 @@ public protocol AudioViewDelegate: NSObjectProtocol {
     func playButtonPressed()
     func pauseButtonPressed()
     func stopButtonPressed()
+    func skipForwardButtonPressed()
+    func skipBackwardButtonPressed()
 }
 
 class AudioView: UIView {
@@ -25,9 +27,14 @@ class AudioView: UIView {
     var podcastLabel = UILabel()
     fileprivate var containerView = UIView()
     fileprivate var stackView = UIStackView()
+    var skipForwardButton = UIButton()
+    var skipBackwardbutton = UIButton()
     var playButton = UIButton()
     var pauseButton = UIButton()
     var stopButton = UIButton()
+    
+    var progressView: UIProgressView?
+    var progressLabel = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -65,28 +72,75 @@ class AudioView: UIView {
         
         stackView.snp.makeConstraints { (make) -> Void in
             make.height.equalTo(70.calculateHeight())
-            make.width.equalTo(150.calculateHeight())
+            make.width.equalTo((50 * 5).calculateHeight())
             make.top.equalTo(podcastLabel.snp.bottom)
             make.centerX.equalToSuperview()
         }
         
+        stackView.addArrangedSubview(skipBackwardbutton)
         stackView.addArrangedSubview(stopButton)
         stackView.addArrangedSubview(playButton)
         stackView.addArrangedSubview(pauseButton)
+        stackView.addArrangedSubview(skipForwardButton)
         
-        playButton.setIcon(icon: .fontAwesome(.play), iconSize: (70 / 2).calculateHeight(), color: Stylesheet.Colors.secondaryColor, forState: .normal)
-        pauseButton.setIcon(icon: .fontAwesome(.pause), iconSize: (70 / 2).calculateHeight(), color: Stylesheet.Colors.secondaryColor, forState: .normal)
-        stopButton.setIcon(icon: .fontAwesome(.stop), iconSize: (70 / 2).calculateHeight(), color: Stylesheet.Colors.secondaryColor, forState: .normal)
+        let iconHeight = (70 / 2).calculateHeight()
         
+        skipBackwardbutton.setImage(#imageLiteral(resourceName: "Backward"), for: .normal)
+        skipBackwardbutton.height = iconHeight
+        skipBackwardbutton.tintColor = Stylesheet.Colors.secondaryColor
         
+        playButton.setIcon(icon: .fontAwesome(.play), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)
+        pauseButton.setIcon(icon: .fontAwesome(.pause), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)
+        stopButton.setIcon(icon: .fontAwesome(.stop), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)
+        
+        skipForwardButton.setImage(#imageLiteral(resourceName: "Forward"), for: .normal)
+        skipForwardButton.height = iconHeight
+        skipForwardButton.tintColor = Stylesheet.Colors.secondaryColor
+        
+        skipBackwardbutton.addTarget(self, action: #selector(self.skipBackwardButtonPressed), for: .touchUpInside)
         playButton.addTarget(self, action: #selector(self.playButtonPressed), for: .touchUpInside)
         pauseButton.addTarget(self, action: #selector(self.pauseButtonPressed), for: .touchUpInside)
         stopButton.addTarget(self, action: #selector(self.stopButtonPressed), for: .touchUpInside)
+        skipForwardButton.addTarget(self, action: #selector(self.skipForwardButtonPressed), for: .touchUpInside)
         
         playButton.isHidden = true
         
         setupActivityIndicator()
+        addControls()
     }
+    
+    func addControls() {
+        // Create Progress View Control
+        progressView = UIProgressView(progressViewStyle: UIProgressViewStyle.default)
+        progressView?.tintColor = Stylesheet.Colors.secondaryColor
+        self.addSubview(progressView!)
+        
+        progressView?.snp.makeConstraints { (make) -> Void in
+            make.bottom.equalToSuperview()
+            make.height.equalTo(5.calculateHeight())
+            make.left.right.equalToSuperview()
+        }
+
+        // Add Label
+        self.addSubview(progressLabel)
+        
+        progressLabel.snp.makeConstraints { (make) -> Void in
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().inset(20)
+            make.height.width.equalTo(50.calculateHeight())
+        }
+        
+        progressLabel.text = "0.0"
+    }
+    
+    func updateDownloadProgress(progress: Int) {
+        progressLabel.text = String(progress) + "%"
+    }
+    
+    func updateCurrentTimeProgress(progress: Float) {
+        progressView?.progress = progress
+    }
+
     
     public func animateIn() {
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
@@ -127,19 +181,23 @@ class AudioView: UIView {
 extension AudioView {
     // MARK: Function
     func playButtonPressed() {
-        //@TODO: These state changes shouldn't be handled here
-//        AudioManager.shared.playbackState = .playing(AudioManager.shared.playbackState)
         delegate?.playButtonPressed()
     }
     
     func pauseButtonPressed() {
-//        AudioManager.shared.playbackState = .paused
         delegate?.pauseButtonPressed()
     }
     
     func stopButtonPressed() {
-//        AudioManager.shared.playbackState = .stopped
         delegate?.stopButtonPressed()
+    }
+    
+    func skipForwardButtonPressed() {
+        delegate?.skipForwardButtonPressed()
+    }
+    
+    func skipBackwardButtonPressed() {
+        delegate?.skipBackwardButtonPressed()
     }
 }
 

@@ -78,7 +78,7 @@ class EmbeddedCollectonViewCell: UICollectionViewCell {
                 activityView.stopAnimating()
             })
             
-            self.data = PodcastModel.all().sorted(byKeyPath: "uploadDate")
+            self.data = PodcastModel.all().sorted(byKeyPath: "uploadDate", ascending: false)
             self.registerNotifications()
         }
     }

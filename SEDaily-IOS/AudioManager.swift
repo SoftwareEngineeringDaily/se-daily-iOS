@@ -10,40 +10,34 @@ import Foundation
 import AVFoundation
 import Alamofire
 
-class Task {
+public class Task {
     enum State {
-        case finished(File)
+        case finished(AudioFile)
         case inProgress
     }
     
     var state: State {
         didSet {
-            AudioManager.shared.audio.state = .downloading(task: self)
+            audioManager.playbackState = .downloading(task: self)
         }
     }
+    var audioManager: AudioManager
     
     var request: Alamofire.Request? = nil
     var progress: Double? = nil
     
-    init(state: State) {
+    init(state: State, audioManager: AudioManager) {
         self.state = state
+        self.audioManager = audioManager
     }
     
-    func download(audioUrl: URL, model: PodcastModel) {
-        
-        guard model.mp3Saved != true else {
-            log.info(model.getSavedMP3URL())
-            let file = File(fileURL: model.getSavedMP3URL())
-            self.state = .finished(file)
-            return
-        }
-        
+    func download(audioUrl: URL, fileName: String) {
         //audioUrl should be of type URL
         let audioFileName = String(audioUrl.lastPathComponent)!
         
         //path extension will consist of the type of file it is, m4a or mp4
         let pathExtension = audioFileName.pathExtension
-        let name = model.podcastName!
+        let name = fileName
         
         let destination: DownloadRequest.DownloadFileDestination = { _, _ in
             var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -61,145 +55,139 @@ class Task {
             }
             .response { response in
                 guard let destinationUrl = response.destinationURL else { return }
-                model.update(mp3Saved: true)
                 
                 self.request = nil
                 
-                let file = File(fileURL: destinationUrl)
-                self.state = .finished(file)
-                log.info(destinationUrl)
+                let audioFile = AudioFile(fileURL: destinationUrl, currentTime: 0.0)
+                self.state = .finished(audioFile)
             }
     }
+    
+    func pause() {
+        guard request != nil else { return }
+        request?.suspend()
+    }
+    
+    func cancel() {
+        guard request != nil else { return }
+        request?.cancel()
+    }
 }
 
-struct File {
+/// Asset playback states.
+public enum PlaybackState {
+    case stopped
+    case willDownload(from: URL, fileName: String)
+    case downloading(task: Task)
+    case playing(AudioFile)
+    case paused
+    case failed
+}
+
+public struct AudioFile {
     var fileURL: URL
+    var currentTime: Double
 }
 
-struct Audio {
-    enum State {
-        case stopped
-        case willDownload(from: PodcastModel)
-        case downloading(task: Task)
-        case playing(PlaybackState)
-//        case paused(PlaybackState)
-        case paused
-    }
+// MARK: - PlayerDelegate
+
+/// Player delegate protocol
+public protocol AudioManagerDelegate: NSObjectProtocol {
+    func playerReady(_ player: AudioManager)
+    func playerPlaybackStateDidChange(_ player: AudioManager)
+    func playerCurrentTimeDidChange(_ player: AudioManager)
+    func playerPlaybackDidEnd(_ player: AudioManager)
+    func playerDidFinishDownloading(_ player: AudioManager)
+//    func playerBufferingStateDidChange(_ player: AudioManager)
     
-    var state: State
+    // This is the time in seconds that the video has been buffered.
+    // If implementing a UIProgressView, user this value / player.maximumDuration to set progress.
+//    func playerBufferTimeDidChange(_ bufferTime: Double)
+}
+
+public class AudioManager: NSObject {
+    /// Player delegate.
+    open weak var playerDelegate: AudioManagerDelegate?
     
-    var audioPlayer: AVAudioPlayer!
-}
-
-extension Audio {
-    struct PlaybackState {
-        let file: File
-        var progress: Double
-    }
-}
-
-extension Audio {
-    var downloadTask: Task? {
-        guard case let .downloading(task) = state else {
-            return nil
-        }
-        
-        return task
-    }
-}
-
-public class AudioManager {
-    static let shared: AudioManager = AudioManager()
-    private init() {}
+    var task: Task?
+    var audioPlayer: AVAudioPlayer? = nil
+    var currentAudioFile: AudioFile? = nil
     
-    var podcastModel: PodcastModel!
-
-    var audio = Audio(state: .stopped, audioPlayer: nil) {
-        // Every time the video changes, we re-render
+    open var playbackState: PlaybackState = .stopped {
         didSet {
-            layoutAudioViewManager()
+//            if playbackState != oldValue {
+////                self.playerDelegate?.playerPlaybackStateDidChange(self)
+//                handleStateChange()
+//            }
+            self.playerDelegate?.playerPlaybackStateDidChange(self)
             handleStateChange()
         }
     }
     
-    var task: Task!
-    var playbackState: Audio.PlaybackState!
-    
-    func layoutAudioViewManager() {
-        AudioViewManager.shared.handleAudioManagerStateChange()
+    public override init() {
+        log.info("INIT")
     }
     
-    func handleStateChange() {
-        //@TODO: need a state for audio did finish
-        //@TODO: Stop any ongoing tasks
-        switch audio.state {
+    deinit {
+        log.info("DEINIT")
+        audioPlayer = nil
+        task = nil
+    }
+
+    fileprivate func handleStateChange() {
+        switch playbackState {
         case .stopped:
-            guard audio.audioPlayer != nil else { return }
             log.info("stopped")
-//            audio.audioPlayer.stop()
-            // @TODO: maybe don't set to nil but setting it right now for testing purposes
-            //@TODO: Also changing the state again cause infinit loop
-            //@TODO: Save progress
-            audio.audioPlayer = nil
-        case .willDownload(let model):
-            //@TODO: Should we stop audio when downloading?
-            // Start a download task and enter the 'downloading' state
-            self.podcastModel = model
             
-            if task != nil {
-                task.request?.cancel()
-            }
+            // Stop Audio
+            self.audioPlayer?.pause()
+            // Cancel any downloads
+            self.task?.cancel()
+            // @TODO: Set everything to nil
+        case .willDownload(let audioURL, let fileName):
+            log.info("will download")
             
-            task = Task(state: .inProgress)
+            self.audioPlayer?.pause()
+            self.task?.cancel()
             
-            guard let audioURL = model.getMP3asURL() else {
-                //@TODO: Some error here
-                log.error("no original audio url?")
-                break
-            }
+            task = Task(state: .inProgress, audioManager: self)
             
-            task.download(audioUrl: audioURL, model: model)
-            audio.state = .downloading(task: task)
+            task?.download(audioUrl: audioURL, fileName: fileName)
+            
+            playbackState = .downloading(task: task!)
         case .downloading(let task):
+            log.info("downloading")
             // If the download task finished, start playback
             switch task.state {
             case .inProgress:
                 break
-            case .finished(let file):
-                let playbackState = Audio.PlaybackState(file: file, progress: 0)
-                audio.state = .playing(playbackState)
+            case .finished(let audioFile):
+                self.playbackState = .playing(audioFile)
+                self.playerDelegate?.playerDidFinishDownloading(self)
             }
-        case .playing(let playbackState):
-            // Audio already playing
-            // Hmm not sure if I should still have a guard here or fix state (see below)
-            //@TODO: This isn't the right guard
-            guard audio.audioPlayer == nil else { break }
-//            if self.playbackState != nil {
-//                guard playbackState.file.fileURL != self.playbackState.file.fileURL else { return }
-//            }
+        case .playing(let audioFile):
+            log.info("playing")
             
-            self.playbackState = playbackState
-
             do {
-                log.info("here")
-                let audioPlayer = try AVAudioPlayer(contentsOf: playbackState.file.fileURL, fileTypeHint: "mp3")
+                audioPlayer = try AVAudioPlayer(contentsOf: audioFile.fileURL, fileTypeHint: "mp3")
+                self.currentAudioFile = audioFile
                 
-                // Here we're changing the audio state again so we get an infinit loop
-                self.audio.audioPlayer = audioPlayer
+                audioPlayer?.currentTime = audioFile.currentTime
+                audioPlayer?.play()
+                setupTimer()
                 
-//                podcastModel.update(currentTime: 20.0)
-//                if let currentTime = podcastModel.getCurrentTime() {
-//                    self.audio.audioPlayer.currentTime = currentTime
-//                }
-                self.audio.audioPlayer.play()
+                // set audio once because this changes state
             } catch let error {
                 log.error(error.localizedDescription)
                 break
             }
         case .paused:
-            guard audio.audioPlayer != nil else { return }
-            //@TODO: Save progress
-            audio.audioPlayer.pause()
+            log.info("paused")
+            
+            self.audioPlayer?.pause()
+        case .failed:
+            log.info("failed")
+            //@TODO: Setup some failure errors
         }
     }
     
@@ -212,89 +200,42 @@ public class AudioManager {
         }
     }
     
+    func setupTimer() {
+        Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateCurrentTime), userInfo: nil, repeats: true)
+    }
     
-//    func playAudio() {
-//        if self.isPlaying() {
-//            audioPlayer.stop()
-//        }
-//        
-//        if request != nil {
-//            request?.resume()
-//            return
-//        }
-//        AudioViewManager.shared.stopActivityIndicator()
-//        
-//        guard audioPlayer != nil else { return }
-//        audioPlayer.play()
-//        NotificationCenter.default.post(name: .playingAudio, object: nil)
-//    }
-//    
-//    func pauseAudio() {
-//        if request != nil {
-//            request?.suspend()
-//            return
-//        }
-//        
-//        guard audioPlayer != nil else { return }
-//        log.info(audioPlayer.currentTime)
-//        audioPlayer.pause()
-//        NotificationCenter.default.post(name: .playingAudio, object: nil)
-//    }
-//    
-//    func stopAudio() {
-//        if request != nil {
-//            request?.cancel()
-//            //@TODO: cancel audio if playing?
-//            return
-//        }
-//        
-//        AudioViewManager.shared.stopActivityIndicator()
-//        
-//        guard audioPlayer != nil else { return }
-//        audioPlayer.stop()
-//        audioPlayer = nil
-//    }
-//    
-//    func loadAudio(model: PodcastModel) {
-//        let audioSession = AVAudioSession.sharedInstance()
-//        do {
-//            try audioSession.setCategory(AVAudioSessionCategoryPlayback)
-//        } catch let error {
-//            log.error(error.localizedDescription)
-//        }
-//
-//        if model.mp3Saved == true {
-//            self.setSound(url: model.getMP3URL())
-//            AudioViewManager.shared.setText(text: model.podcastName!)
-//            return
-//        }
-//
-//        // Block request already going
-//        if request != nil {
-//            request?.cancel()
-//            return
-//        }
-//        
-//        let audioUrl = model.mp3URL!
-//        
-//    }
-//    
-//    func setSound(url: URL) {
-//        do {
-//            let player = try AVAudioPlayer(contentsOf: url)
-//            self.audioPlayer = player
-//            self.playAudio()
-//        } catch let error {
-//            log.error(error.localizedDescription)
-//        }
-//    }
-//    
-    func isPlaying() -> Bool {
-        guard audio.audioPlayer != nil else { return false }
-        if audio.audioPlayer.isPlaying {
-            return true
+    func updateCurrentTime() {
+        guard let player = audioPlayer else { return }
+        let currentTime = player.currentTime
+        guard currentTime <= player.duration else {
+            self.playerDelegate?.playerPlaybackDidEnd(self)
+            return
         }
-        return false
+        self.currentAudioFile?.currentTime = currentTime
+        self.playerDelegate?.playerCurrentTimeDidChange(self)
+    }
+    
+    public func willDownload(from url: URL, fileName: String) {
+        self.playbackState = .willDownload(from: url, fileName: fileName)
+    }
+    
+    public func play(audioFile: AudioFile? = nil) {
+        //@TODO: Check if there is a current audio file
+        // if not, wtf?
+        guard let file = audioFile else {
+            self.playbackState = .playing(self.currentAudioFile!)
+            return
+        }
+        self.playbackState = .playing(file)
+    }
+    
+    public func pause() {
+        self.playbackState = .paused
+    }
+    
+    public func stop() {
+        self.playbackState = .stopped
     }
 }
+
 

@@ -8,7 +8,17 @@
 
 import UIKit
 
+// MARK: - PlayerDelegate
+
+/// Player delegate protocol
+public protocol AudioViewDelegate: NSObjectProtocol {
+    func playButtonPressed()
+    func pauseButtonPressed()
+    func stopButtonPressed()
+}
+
 class AudioView: UIView {
+    open weak var delegate: AudioViewDelegate?
     
     var activityView: UIActivityIndicatorView!
     
@@ -107,21 +117,29 @@ class AudioView: UIView {
             make.right.equalToSuperview().inset(10.calculateWidth())
         }
     }
+    
+    func setProgress() {
+    
+    }
 }
 
 
 extension AudioView {
     // MARK: Function
     func playButtonPressed() {
-        AudioManager.shared.audio.state = .playing(AudioManager.shared.playbackState)
+        //@TODO: These state changes shouldn't be handled here
+//        AudioManager.shared.playbackState = .playing(AudioManager.shared.playbackState)
+        delegate?.playButtonPressed()
     }
     
     func pauseButtonPressed() {
-        AudioManager.shared.audio.state = .paused
+//        AudioManager.shared.playbackState = .paused
+        delegate?.pauseButtonPressed()
     }
     
     func stopButtonPressed() {
-        AudioManager.shared.audio.state = .stopped
+//        AudioManager.shared.playbackState = .stopped
+        delegate?.stopButtonPressed()
     }
 }
 

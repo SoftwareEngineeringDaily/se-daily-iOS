@@ -9,13 +9,34 @@
 import UIKit
 import SwiftIcons
 
-class AudioViewManager: NSObject {
+class AudioViewManager: NSObject{
+
     static let shared: AudioViewManager = AudioViewManager()
-    private override init() {}
+    private override init() {
+        super.init()
+        self.audioManager = AudioManager()
+        self.audioManager.playerDelegate = self
+    }
     
-    var audioView = AudioView()
+    var audioView: AudioView!
+    var podcastModel: PodcastModel!
+    var audioManager: AudioManager!
     
-    func presentAudioView() {
+    func setupManager(podcastModel: PodcastModel) {
+        self.podcastModel = podcastModel
+        self.presentAudioView()
+    }
+    
+    fileprivate func setupAudioManager() {
+        if podcastModel.mp3Saved {
+            let audioFile = AudioFile(fileURL: podcastModel.getSavedMP3URL(), currentTime: podcastModel.getCurrentTime()!)
+            audioManager.play(audioFile: audioFile)
+            return
+        }
+        audioManager.willDownload(from: podcastModel.getMP3asURL()!, fileName: podcastModel.podcastName!)
+    }
+    
+    fileprivate func presentAudioView() {
         if var topController = UIApplication.shared.keyWindow?.rootViewController {
             while let presentedViewController = topController.presentedViewController {
                 topController = presentedViewController
@@ -27,10 +48,19 @@ class AudioViewManager: NSObject {
             }
 
             self.setupView(over: topController)
+            self.setupAudioManager()
         }
     }
     
-    func setupView(over vc: UIViewController) {
+    fileprivate func setupView(over vc: UIViewController) {
+        if audioView != nil {
+            // Setup progress, text, other stuff
+            setText(text: podcastModel.podcastName)
+            return
+        }
+        
+        audioView = AudioView()
+        audioView.delegate = self
         vc.view.addSubview(audioView)
         
         audioView.width = UIScreen.main.bounds.width
@@ -38,24 +68,25 @@ class AudioViewManager: NSObject {
         audioView.center.x = vc.view.center.x
         audioView.frame.origin.y = UIScreen.main.bounds.height
 
+        setText(text: podcastModel.podcastName)
+        
         audioView.animateIn()
     }
     
-    public func setText(text: String?) {
+    fileprivate func setText(text: String?) {
         audioView.setText(text: text)
     }
     
-    func handleAudioManagerStateChange() {
-        if let model = AudioManager.shared.podcastModel {
+    fileprivate func handleAudioManagerStateChange() {
+        if let model = podcastModel {
             self.setText(text: model.podcastName)
         }
         
-        switch AudioManager.shared.audio.state {
+        switch audioManager.playbackState {
         case .stopped:
-            audioView.activityView.stopAnimating()
-            
-            audioView.playButton.isHidden = false
-            audioView.pauseButton.isHidden = true
+            audioView.animateOut()
+
+            audioView = nil
         case .willDownload:
             audioView.activityView.startAnimating()
             
@@ -76,6 +107,45 @@ class AudioViewManager: NSObject {
             
             audioView.playButton.isHidden = false
             audioView.pauseButton.isHidden = true
+        case .failed:
+            audioView.animateOut()
         }
+    }
+}
+
+extension AudioViewManager: AudioManagerDelegate {
+    func playerDidFinishDownloading(_ player: AudioManager) {
+        podcastModel.update(mp3Saved: true)
+    }
+
+    func playerPlaybackDidEnd(_ player: AudioManager) {
+        
+    }
+    
+    func playerCurrentTimeDidChange(_ player: AudioManager) {
+        guard let currentTime = player.audioPlayer?.currentTime else { return }
+        podcastModel.update(currentTime: currentTime)
+    }
+    
+    func playerPlaybackStateDidChange(_ player: AudioManager) {
+        handleAudioManagerStateChange()
+    }
+    
+    func playerReady(_ player: AudioManager) {
+        
+    }
+}
+
+extension AudioViewManager: AudioViewDelegate {
+    func playButtonPressed() {
+        audioManager.play()
+    }
+    
+    func pauseButtonPressed() {
+        audioManager.pause()
+    }
+    
+    func stopButtonPressed() {
+        audioManager.stop()
     }
 }

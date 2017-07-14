@@ -52,7 +52,7 @@ class PodcastCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! EmbeddedCollectonViewCell
-    
+
         // Configure the cell
         switch indexPath.section {
         case 1:

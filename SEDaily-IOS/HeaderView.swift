@@ -140,9 +140,10 @@ class HeaderView: UIView {
 extension HeaderView {
     func playButtonPressed() {
         //@TODO: Switch button and/or stop if playing
-        AudioViewManager.shared.presentAudioView()
+//        AudioViewManager.shared.presentAudioView()
         let string = "http://traffic.libsyn.com/rtpodcast/podcast_update.mp3"
-        AudioManager.shared.audio.state = .willDownload(from: model)
-//        AudioManager.shared.loadAudio(model: model)
+        
+        // Podcast model checks here
+        AudioViewManager.shared.setupManager(podcastModel: model)
     }
 }

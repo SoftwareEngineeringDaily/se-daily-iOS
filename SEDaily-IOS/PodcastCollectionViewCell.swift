@@ -82,7 +82,12 @@ class PodcastCollectionViewCell: UICollectionViewCell {
     }
     
     func playButtonPressed() {
-        AudioViewManager.shared.presentAudioView()
-        AudioManager.shared.audio.state = .willDownload(from: model)
+        //@TODO: Switch button and/or stop if playing
+        //        AudioViewManager.shared.presentAudioView()
+        let string = "http://traffic.libsyn.com/rtpodcast/podcast_update.mp3"
+        
+        // Podcast model checks here
+        
+        AudioViewManager.shared.setupManager(podcastModel: model)
     }
 }

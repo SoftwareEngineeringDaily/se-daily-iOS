@@ -11,9 +11,9 @@ import AVFoundation
 import MediaPlayer
 import Alamofire
 
-public class Task {
+public class Task: NSObject {
     enum State {
-        case finished(AudioFile)
+        case finished(url: URL, currentTime: Double)
         case inProgress
     }
     
@@ -27,7 +27,7 @@ public class Task {
     var request: Alamofire.Request? = nil
     var progress: Int = 0 {
         didSet {
-            audioManager.loadingProgress = progress
+//            audioManager.loadingProgress = progress
         }
     }
     
@@ -36,15 +36,21 @@ public class Task {
         self.audioManager = audioManager
     }
     
+    var observer: Any!
+    var avPlayer: AVPlayer!
+    
     func download(audioUrl: URL, fileName: String) {
-        //audioUrl should be of type URL
+
+        // Downloading File from URL
+        
+        // audioUrl should be of type URL
         let audioFileName = String(audioUrl.lastPathComponent)!
         
         //path extension will consist of the type of file it is, m4a or mp4
         let pathExtension = audioFileName.pathExtension
         let name = fileName
         
-        let destination: DownloadRequest.DownloadFileDestination = { _, _ in
+        let destination: DownloadRequest.DownloadFileDestination = {_,_  in
             var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             
             // the name of the file here I kept is yourFileName with appended extension
@@ -65,8 +71,7 @@ public class Task {
                 
                 self.request = nil
                 
-                let audioFile = AudioFile(fileURL: destinationUrl, currentTime: 0.0)
-                self.state = .finished(audioFile)
+                self.state = .finished(url: destinationUrl, currentTime: 0.0)
             }
     }
     
@@ -83,31 +88,37 @@ public class Task {
 
 /// Asset playback states.
 public enum PlaybackState {
+    case setup(url: URL?, currentTime: Double?)
     case stopped
     case willDownload(from: URL, fileName: String)
     case downloading(task: Task)
-    case playing(AudioFile)
+    case playing
     case paused
     case failed
+    case buffering
 }
 
 extension PlaybackState: CustomStringConvertible {
     public var description: String {
-        switch self {
-            case .stopped: return "stopped"
-            case .willDownload: return "willDownload"
-            case .downloading: return "downloading"
-            case .playing: return "playing"
-            case .paused: return "paused"
-            case .failed: return "failed"
+        get {
+            switch self {
+                case .setup: return "setup"
+                case .stopped: return "stopped"
+                case .willDownload: return "willDownload"
+                case .downloading: return "downloading"
+                case .playing: return "playing"
+                case .paused: return "paused"
+                case .failed: return "failed"
+                case .buffering: return "buffering"
+            }
         }
     }
 }
 
-public struct AudioFile {
-    var fileURL: URL
-    var currentTime: Double
-}
+//public struct AudioFile {
+//    var fileURL: URL
+//    var currentTime: Double
+//}
 
 // MARK: - PlayerDelegate
 
@@ -119,54 +130,68 @@ public protocol AudioManagerDelegate: NSObjectProtocol {
     func playerPlaybackDidEnd(_ player: AudioManager)
     func playerDidFinishDownloading(_ player: AudioManager)
     func playerDownloadProgressDidChange(_ player: AudioManager)
-//    func playerBufferingStateDidChange(_ player: AudioManager)
+    func playerIsBuffering(_ player: AudioManager)
+    
+//    func playerBufferingStateDidChange( player: AudioManager)
     
     // This is the time in seconds that the video has been buffered.
     // If implementing a UIProgressView, user this value / player.maximumDuration to set progress.
-//    func playerBufferTimeDidChange(_ bufferTime: Double)
+//    func playerBufferTimeDidChange( bufferTime: Double)
 }
 
 public class AudioManager: NSObject {
     /// Player delegate.
     open weak var playerDelegate: AudioManagerDelegate?
     
-    var task: Task?
-    var loadingProgress: Int = 0 {
-        didSet {
-            playerDelegate?.playerDownloadProgressDidChange(self)
-        }
-    }
-    var audioPlayer: AVAudioPlayer? = nil
-    var currentAudioFile: AudioFile? = nil
-    var timer: Timer? = nil
+    fileprivate let seekDuration: Float64 = 30
+    
+    internal var task: Task!
+    internal var avPlayer: AVPlayer?
+    internal var playerItem: AVPlayerItem?
+    internal var timeObserver: Any?
+    internal var startTime: Double = 0
     
     open var playbackState: PlaybackState = .stopped {
         didSet {
-            // @TODO: .description doesn't work with downloading because we have to switch
-            // back to that state and then use "task.state"
-//            if playbackState.description != oldValue.description {
                 self.playerDelegate?.playerPlaybackStateDidChange(self)
                 handleStateChange()
-//            }
         }
     }
 
     fileprivate func handleStateChange() {
         switch playbackState {
+        case .setup(let url, let currentTime):
+            self.task?.cancel()
+            
+            guard let url = url else { return }
+            let avAsset = AVURLAsset(url: url)
+            let avPlayerItem = AVPlayerItem(asset: avAsset)
+            
+            avPlayer = AVPlayer(playerItem: avPlayerItem)
+            
+            if let time = currentTime {
+                self.startTime = time
+            }
+            
+            self.setupPlayerItem(avPlayerItem)
+            self.playbackState = .buffering
+            
+            // Setup observer
+            self.addPlayerObservers()
         case .stopped:
             log.info("stopped")
             
-            self.timer?.invalidate()
             // Stop Audio
-            self.audioPlayer?.pause()
+            self.avPlayer?.pause()
             // Cancel any downloads
-            self.task?.cancel()
-            // @TODO: Set everything to nil
+
+            // Remove observers
+            removeSetupPlayerObservers()
+            self.removePlayerObservers()
         case .willDownload(let audioURL, let fileName):
             log.info("will download")
             
-            self.timer?.invalidate()
-            self.audioPlayer?.pause()
+            self.avPlayer?.pause()
             self.task?.cancel()
             
             task = Task(state: .inProgress, audioManager: self)
@@ -180,38 +205,30 @@ public class AudioManager: NSObject {
             switch task.state {
             case .inProgress:
                 break
-            case .finished(let audioFile):
-                self.playbackState = .playing(audioFile)
+            case .finished(let url, let currentTime):
+//                self.playbackState = .playing(url: url, currentTime: currentTime)
                 self.playerDelegate?.playerDidFinishDownloading(self)
             }
-        case .playing(let audioFile):
+        case .playing:
             log.info("playing")
-
             self.setupSession()
             self.setupMediaPlayerControls()
-            self.task?.cancel()
             
-            do {
-                audioPlayer = try AVAudioPlayer(contentsOf: audioFile.fileURL, fileTypeHint: "mp3")
-                self.currentAudioFile = audioFile
-                
-                audioPlayer?.currentTime = audioFile.currentTime
-                audioPlayer?.play()
-                setupTimer()
-                
-                // set audio once because this changes state
-            } catch let error {
-                log.error(error.localizedDescription)
-                break
-            }
+            avPlayer?.play()
         case .paused:
+            // Pause Timer
             log.info("paused")
             
-            self.timer?.invalidate()
-            self.audioPlayer?.pause()
+            self.avPlayer?.pause()
         case .failed:
+            // Remove observers
+            self.removePlayerObservers()
             log.info("failed")
             //@TODO: Setup some failure errors
+        case .buffering:
+            log.info("buffering")
+            
+            self.playerDelegate?.playerIsBuffering(self)
         }
     }
     
@@ -249,39 +266,32 @@ public class AudioManager: NSObject {
     }
     
     func skipForward() {
-        guard let currentTime = audioPlayer?.currentTime else { return }
-        guard let duration = audioPlayer?.duration else { return }
-        audioPlayer?.stop()
-        audioPlayer?.currentTime = currentTime + 30.0
-        if duration <= currentTime + 30 {
-            self.stop()
-            self.playerDelegate?.playerPlaybackDidEnd(self)
+        guard let duration  = avPlayer?.currentItem?.duration else{
+            return
         }
-        audioPlayer?.play()
+        guard let playerCurrentTime = avPlayer?.currentTime().seconds else { return }
+        let newTime = playerCurrentTime + seekDuration
+        
+        if newTime < (CMTimeGetSeconds(duration) - seekDuration) {
+            
+            let time2: CMTime = CMTimeMake(Int64(newTime * 1000 as Float64), 1000)
+            avPlayer?.seek(to: time2, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
+            
+        }
     }
     
     func skipBackward() {
-        guard let currentTime = audioPlayer?.currentTime else { return }
-        audioPlayer?.stop()
-        audioPlayer?.currentTime = currentTime - 30.0
-        if 0.0 >= currentTime - 30 {
-            audioPlayer?.currentTime = 0.0
+        guard let playerCurrentTime = avPlayer?.currentTime().seconds else { return }
+        var newTime = playerCurrentTime - seekDuration
+        
+        if newTime < 0 {
+            newTime = 0
         }
-        audioPlayer?.play()
-    }
-    
-    func setupTimer() {
-        self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateCurrentTime), userInfo: nil, repeats: true)
+        let time2: CMTime = CMTimeMake(Int64(newTime * 1000 as Float64), 1000)
+        avPlayer?.seek(to: time2, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
     }
     
     func updateCurrentTime() {
-        guard let player = audioPlayer else { return }
-        let currentTime = player.currentTime
-        guard currentTime <= player.duration else {
-            self.playerDelegate?.playerPlaybackDidEnd(self)
-            return
-        }
-        self.currentAudioFile?.currentTime = currentTime
         self.playerDelegate?.playerCurrentTimeDidChange(self)
     }
     
@@ -289,14 +299,12 @@ public class AudioManager: NSObject {
         self.playbackState = .willDownload(from: url, fileName: fileName)
     }
     
-    public func play(audioFile: AudioFile? = nil) {
-        //@TODO: Check if there is a current audio file
-        // if not, wtf?
-        guard let file = audioFile else {
-            self.playbackState = .playing(self.currentAudioFile!)
-            return
-        }
-        self.playbackState = .playing(file)
+    public func setupAudio(url: URL? = nil, currentTime: Double? = 0) {
+        self.playbackState = .setup(url: url, currentTime: currentTime)
+    }
+    
+    public func play() {
+        self.playbackState = .playing
     }
     
     // Stil can't figure out why @obj is needed for some target functions
@@ -311,6 +319,229 @@ public class AudioManager: NSObject {
     public func stop() {
         self.playbackState = .stopped
     }
+    
+    public func getCurrentTime() -> Double? {
+        guard let currentTime = avPlayer?.currentItem?.currentTime().seconds else { return nil }
+        guard !currentTime.isNaN else { return nil }
+        return currentTime
+    }
+    
+    public func getDuration() -> Double? {
+        guard let duration = avPlayer?.currentItem?.duration.seconds else { return nil }
+        guard !duration.isNaN else { return nil }
+        return duration
+    }
+    
+    open func seek(to time: CMTime) {
+        if let playerItem = self.playerItem {
+            return playerItem.seek(to: time)
+        } else {
+            startTime = time.seconds
+        }
+    }
 }
 
+extension Double {
+    func getCMTime() -> CMTime {
+        let currentTime = CMTimeMake(Int64((self) * 1000 as Float64), 1000)
+        return currentTime
+    }
+}
 
+// MARK: - KVO
+
+// KVO contexts
+
+private var PlayerObserverContext = 0
+private var PlayerItemObserverContext = 0
+private var PlayerLayerObserverContext = 0
+
+// KVO player keys
+
+private let PlayerTracksKey = "tracks"
+private let PlayerPlayableKey = "playable"
+private let PlayerDurationKey = "duration"
+private let PlayerRateKey = "rate"
+
+// KVO player item keys
+
+private let PlayerStatusKey = "status"
+private let PlayerEmptyBufferKey = "playbackBufferEmpty"
+private let PlayerKeepUpKey = "playbackLikelyToKeepUp"
+private let PlayerLoadedTimeRangesKey = "loadedTimeRanges"
+
+// KVO player layer keys
+
+private let PlayerReadyForDisplayKey = "readyForDisplay"
+
+extension AudioManager {
+
+    // MARK: - AVPlayerObservers
+    
+    internal func addPlayerObservers() {
+        self.timeObserver = self.avPlayer?.addPeriodicTimeObserver(forInterval: CMTimeMake(1,1), queue: DispatchQueue.main, using: { [weak self] timeInterval in
+
+            self?.updateCurrentTime()
+        })
+        self.avPlayer?.addObserver(self, forKeyPath: PlayerRateKey, options: ([.new, .old]) , context: &PlayerObserverContext)
+    }
+    
+    internal func removePlayerObservers() {
+        if let observer = self.timeObserver {
+            self.avPlayer?.removeTimeObserver(observer)
+        }
+        self.avPlayer?.removeObserver(self, forKeyPath: PlayerRateKey, context: &PlayerObserverContext)
+    }
+    
+    // MARK: - Observe Value
+    
+    override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        
+        // PlayerRateKey, PlayerObserverContext
+        
+        if (context == &PlayerItemObserverContext) {
+            
+            // PlayerStatusKey
+            
+            if keyPath == PlayerKeepUpKey {
+                
+                // PlayerKeepUpKey
+                
+//                if let item = self.playerItem {
+                    if (self.avPlayer?.currentItem?.isPlaybackLikelyToKeepUp)! {
+                        if playbackState.description != PlaybackState.playing.description {
+                            self.playbackState = .playing
+                        }
+                    }
+//                }
+                
+//                if let status = change?[NSKeyValueChangeKey.newKey] as? NSNumber {
+//                    switch (status.intValue as AVPlayerStatus.RawValue) {
+//                    case AVPlayerStatus.readyToPlay.rawValue:
+//                        self._playerView.playerLayer.player = self._avplayer
+//                        self._playerView.playerLayer.isHidden = false
+//                        break
+//                    case AVPlayerStatus.failed.rawValue:
+//                        self.playbackState = PlaybackState.failed
+//                        break
+//                    default:
+//                        break
+//                    }
+//                }
+                
+            } else if keyPath == PlayerEmptyBufferKey {
+                
+                // PlayerEmptyBufferKey
+                
+//                if let item = self.playerItem {
+//                    if item.isPlaybackBufferEmpty {
+//                        self.bufferingState = .delayed
+//                    }
+//                }
+                log.info(PlayerEmptyBufferKey)
+                log.info(playerItem?.isPlaybackBufferEmpty)
+                
+                if let status = change?[NSKeyValueChangeKey.newKey] as? NSNumber {
+                    switch (status.intValue as AVPlayerStatus.RawValue) {
+                    case AVPlayerStatus.readyToPlay.rawValue:
+//                        self._playerView.playerLayer.player = self._avplayer
+//                        self._playerView.playerLayer.isHidden = false
+                        break
+                    case AVPlayerStatus.failed.rawValue:
+                        self.playbackState = PlaybackState.failed
+                        break
+                    default:
+                        break
+                    }
+                }
+                
+            } else if keyPath == PlayerLoadedTimeRangesKey {
+                
+                // PlayerLoadedTimeRangesKey
+                log.info(PlayerLoadedTimeRangesKey)
+                log.info(playerItem?.loadedTimeRanges.first)
+//                if let item = self.playerItem {
+//                    self.bufferingState = .ready
+//                    
+//                    let timeRanges = item.loadedTimeRanges
+//                    if let timeRange = timeRanges.first?.timeRangeValue {
+//                        let bufferedTime = CMTimeGetSeconds(CMTimeAdd(timeRange.start, timeRange.duration))
+//                        self.executeClosureOnMainQueueIfNecessary {
+//                            self.playerDelegate?.playerBufferTimeDidChange(bufferedTime)
+//                        }
+//                        let currentTime = CMTimeGetSeconds(item.currentTime())
+//                        if (bufferedTime - currentTime) >= self.bufferSize && self.playbackState == .playing {
+//                            self.playFromCurrentTime()
+//                        }
+//                    } else {
+//                        self.playFromCurrentTime()
+//                    }
+//                }
+                
+            }
+            
+        } else if (context == &PlayerLayerObserverContext) {
+//            if self._playerView.playerLayer.isReadyForDisplay {
+//                self.executeClosureOnMainQueueIfNecessary {
+//                    self.playerDelegate?.playerReady(self)
+//                }
+//            }
+        }
+        
+    }
+    
+//    func availableDuration(playerItem: AVPlayerItem) -> TimeInterval {
+//        let loadedTimeRanges: [Any]? = playerItem.loadedTimeRanges
+//        
+//        let timeRange = loadedTimeRanges?[0] as? CMTimeRange ?? CMTimeRange().timeRangeValue
+//        let startSeconds: Float64 = CMTimeGetSeconds(timeRange.start())
+//        let durationSeconds: Float64 = CMTimeGetSeconds(timeRange.duration)
+//        let result: TimeInterval = startSeconds + durationSeconds
+//        return result
+//    }
+}
+
+extension AudioManager {
+    fileprivate func removeSetupPlayerObservers() {
+        //@TODO: Add variables that keep track of these observers
+        self.playerItem?.removeObserver(self, forKeyPath: PlayerEmptyBufferKey, context: &PlayerItemObserverContext)
+        self.playerItem?.removeObserver(self, forKeyPath: PlayerKeepUpKey, context: &PlayerItemObserverContext)
+        self.playerItem?.removeObserver(self, forKeyPath: PlayerStatusKey, context: &PlayerItemObserverContext)
+        self.playerItem?.removeObserver(self, forKeyPath: PlayerLoadedTimeRangesKey, context: &PlayerItemObserverContext)
+    }
+    
+    fileprivate func setupPlayerItem(_ playerItem: AVPlayerItem?) {
+        
+        if let currentPlayerItem = self.playerItem {
+            NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: currentPlayerItem)
+            NotificationCenter.default.removeObserver(self, name: .AVPlayerItemFailedToPlayToEndTime, object: currentPlayerItem)
+        }
+        
+        self.playerItem = playerItem
+
+        if startTime != 0 {
+            self.seek(to: startTime.getCMTime())
+        }
+        
+        self.playerItem?.addObserver(self, forKeyPath: PlayerEmptyBufferKey, options: ([.new, .old]), context: &PlayerItemObserverContext)
+        self.playerItem?.addObserver(self, forKeyPath: PlayerKeepUpKey, options: ([.new, .old]), context: &PlayerItemObserverContext)
+        self.playerItem?.addObserver(self, forKeyPath: PlayerStatusKey, options: ([.new, .old]), context: &PlayerItemObserverContext)
+        self.playerItem?.addObserver(self, forKeyPath: PlayerLoadedTimeRangesKey, options: ([.new, .old]), context: &PlayerItemObserverContext)
+        
+        if let updatedPlayerItem = self.playerItem {
+            NotificationCenter.default.addObserver(self, selector: #selector(self.playerItemDidPlayToEndTime(_:)), name: .AVPlayerItemDidPlayToEndTime, object: updatedPlayerItem)
+            NotificationCenter.default.addObserver(self, selector: #selector(playerItemFailedToPlayToEndTime(_:)), name: .AVPlayerItemFailedToPlayToEndTime, object: updatedPlayerItem)
+        }
+        
+        self.avPlayer?.replaceCurrentItem(with: self.playerItem)
+    }
+    
+    internal func playerItemDidPlayToEndTime(_ aNotification: Notification) {
+        self.playbackState = .stopped
+        self.playerDelegate?.playerPlaybackDidEnd(self)
+    }
+    
+    internal func playerItemFailedToPlayToEndTime(_ aNotification: Notification) {
+        self.playbackState = .failed
+    }
+}

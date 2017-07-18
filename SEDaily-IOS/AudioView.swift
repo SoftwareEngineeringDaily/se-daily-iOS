@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVFoundation
+import SwifterSwift
 
 // MARK: - PlayerDelegate
 
@@ -17,6 +19,7 @@ public protocol AudioViewDelegate: NSObjectProtocol {
     func stopButtonPressed()
     func skipForwardButtonPressed()
     func skipBackwardButtonPressed()
+    func playbackSliderValueChanged(value: Float)
 }
 
 class AudioView: UIView {
@@ -35,6 +38,14 @@ class AudioView: UIView {
     
     var progressView: UIProgressView?
     var progressLabel = UILabel()
+    
+    var playbackSlider = UISlider(frame: .zero)
+    
+    var currentTimeLabel = UILabel()
+    var timeLeftLabel = UILabel()
+    
+    var sliderIsMoving = false
+    var checkCount = 0
 
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -106,7 +117,62 @@ class AudioView: UIView {
         playButton.isHidden = true
         
         setupActivityIndicator()
-        addControls()
+//        addControls()
+        addSlider()
+    }
+    
+    func addSlider() {
+        playbackSlider.minimumValue = 0
+        playbackSlider.isContinuous = true
+        playbackSlider.tintColor = Stylesheet.Colors.secondaryColor
+        playbackSlider.layer.cornerRadius = 0
+        playbackSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
+        playbackSlider.isUserInteractionEnabled = false
+        
+        self.addSubview(playbackSlider)
+        self.bringSubview(toFront: playbackSlider)
+        
+        playbackSlider.snp.makeConstraints { (make) -> Void in
+            make.top.equalToSuperview().inset(-10)
+            make.height.equalTo(20.calculateHeight())
+            make.left.right.equalToSuperview()
+        }
+        
+        let smallCircle = #imageLiteral(resourceName: "SmallCircle").filled(withColor: Stylesheet.Colors.secondaryColor)
+        playbackSlider.setThumbImage(smallCircle, for: .normal)
+        
+        let bigCircle = #imageLiteral(resourceName: "BigCircle").filled(withColor: Stylesheet.Colors.secondaryColor)
+        playbackSlider.setThumbImage(bigCircle, for: .highlighted)
+    }
+    
+    func playbackSliderValueChanged(_ sender: UISlider) {
+        let timeInSeconds = sender.value
+        self.delegate?.playbackSliderValueChanged(value: timeInSeconds)
+        sliderIsMoving = true
+    }
+    
+    func updateSlider(maxValue: Float) {
+        if playbackSlider.isUserInteractionEnabled == false {
+            playbackSlider.isUserInteractionEnabled = true
+        }
+        playbackSlider.maximumValue = maxValue
+    }
+    
+    func updateSlider(currentValue: Float) {
+        updateChecker()
+        if !sliderIsMoving {
+            playbackSlider.value = currentValue
+        }
+    }
+    
+    func updateChecker() {
+        guard sliderIsMoving != false else { return }
+        if checkCount >= 3 {
+            sliderIsMoving = false
+            checkCount = 0
+            return
+        }
+        checkCount += 1
     }
     
     func addControls() {
@@ -122,13 +188,13 @@ class AudioView: UIView {
         }
 
         // Add Label
-        self.addSubview(progressLabel)
-        
-        progressLabel.snp.makeConstraints { (make) -> Void in
-            make.centerY.equalToSuperview()
-            make.right.equalToSuperview().inset(20)
-            make.height.width.equalTo(50.calculateHeight())
-        }
+//        self.addSubview(progressLabel)
+//        
+//        progressLabel.snp.makeConstraints { (make) -> Void in
+//            make.centerY.equalToSuperview()
+//            make.right.equalToSuperview().inset(20)
+//            make.height.width.equalTo(50.calculateHeight())
+//        }
         
         progressLabel.text = "0.0"
     }
@@ -201,4 +267,12 @@ extension AudioView {
     }
 }
 
+class MySlider: UISlider {
+//    override func trackRect(forBounds bounds: CGRect) -> CGRect {
+//        return CGRect(origin: bounds.origin, size: CGSize(width: bounds.width, height: 5))
+//    }
+//    override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+//        return true
+//    }
+}
 

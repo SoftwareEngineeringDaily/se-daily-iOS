@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftIcons
+import AVFoundation
 
 class AudioViewManager: NSObject{
 
@@ -15,12 +16,12 @@ class AudioViewManager: NSObject{
     private override init() {
         super.init()
         self.audioManager = AudioManager()
-        self.audioManager.playerDelegate = self
+        self.audioManager?.playerDelegate = self
     }
     
-    var audioView: AudioView!
-    var podcastModel: PodcastModel!
-    var audioManager: AudioManager!
+    var audioView: AudioView?
+    var podcastModel: PodcastModel?
+    var audioManager: AudioManager?
     
     func setupManager(podcastModel: PodcastModel) {
         self.podcastModel = podcastModel
@@ -28,15 +29,16 @@ class AudioViewManager: NSObject{
     }
     
     fileprivate func setupAudioManager() {
-        if podcastModel.mp3Saved {
-            let audioFile = AudioFile(fileURL: podcastModel.getSavedMP3URL(), currentTime: podcastModel.getCurrentTime()!)
-            audioManager.play(audioFile: audioFile)
-            return
-        }
-
-        guard let url = podcastModel.getMP3asURL() else { return }
-        guard let fileName = podcastModel.podcastName else { return }
-        audioManager.willDownload(from: url, fileName: fileName)
+//        if podcastModel.mp3Saved {
+//            let audioFile = AudioFile(fileURL: podcastModel.getSavedMP3URL(), currentTime: podcastModel.getCurrentTime()!)
+//            audioManager.play(audioFile: audioFile)
+//            return
+//        }
+//
+        guard let url = podcastModel?.getMP3asURL() else { return }
+        audioManager?.setupAudio(url: url, currentTime: podcastModel?.getCurrentTime())
+//        guard let fileName = podcastModel.podcastName else { return }
+//        audioManager.willDownload(from: url, fileName: fileName)
     }
     
     fileprivate func presentAudioView() {
@@ -58,26 +60,27 @@ class AudioViewManager: NSObject{
     fileprivate func setupView(over vc: UIViewController) {
         if audioView != nil {
             // Setup progress, text, other stuff
-            setText(text: podcastModel.podcastName)
+            setText(text: podcastModel?.podcastName)
             return
         }
         
         audioView = AudioView()
-        audioView.delegate = self
-        vc.view.addSubview(audioView)
+        audioView?.delegate = self
+        vc.view.addSubview(audioView!)
         
-        audioView.width = UIScreen.main.bounds.width
-        audioView.height = 110.calculateHeight()
-        audioView.center.x = vc.view.center.x
-        audioView.frame.origin.y = UIScreen.main.bounds.height
+        audioView?.width = UIScreen.main.bounds.width
+        audioView?.height = 110.calculateHeight()
+        audioView?.center.x = vc.view.center.x
+        audioView?.frame.origin.y = UIScreen.main.bounds.height
 
-        setText(text: podcastModel.podcastName)
+        setText(text: podcastModel?.podcastName)
         
-        audioView.animateIn()
+        audioView?.animateIn()
     }
     
     fileprivate func setText(text: String?) {
-        audioView.setText(text: text)
+        guard audioView != nil else { return }
+        audioView?.setText(text: text)
     }
     
     fileprivate func handleAudioManagerStateChange() {
@@ -85,58 +88,78 @@ class AudioViewManager: NSObject{
             self.setText(text: model.podcastName)
         }
         
+        guard let audioManager = audioManager else { return }
         switch audioManager.playbackState {
+        case .setup:
+            audioView?.activityView.startAnimating()
+            
+            audioView?.playButton.isHidden = false
+            audioView?.pauseButton.isHidden = true
         case .stopped:
-            audioView.animateOut()
+            audioView?.animateOut()
 
             audioView = nil
         case .willDownload:
-            audioView.activityView.startAnimating()
+            audioView?.activityView.startAnimating()
             
-            audioView.playButton.isHidden = false
-            audioView.pauseButton.isHidden = true
+            audioView?.playButton.isHidden = false
+            audioView?.pauseButton.isHidden = true
         case .downloading:
-            audioView.activityView.startAnimating()
+            audioView?.activityView.startAnimating()
             
-            audioView.playButton.isHidden = false
-            audioView.pauseButton.isHidden = true
+            audioView?.playButton.isHidden = false
+            audioView?.pauseButton.isHidden = true
         case .playing:
-            audioView.activityView.stopAnimating()
+            audioView?.activityView.stopAnimating()
             
-            audioView.playButton.isHidden = true
-            audioView.pauseButton.isHidden = false
-            audioView.progressLabel.text = ""
+            audioView?.playButton.isHidden = true
+            audioView?.pauseButton.isHidden = false
+            audioView?.progressLabel.text = ""
         case .paused:
-            audioView.activityView.stopAnimating()
+            audioView?.activityView.stopAnimating()
             
-            audioView.playButton.isHidden = false
-            audioView.pauseButton.isHidden = true
+            audioView?.playButton.isHidden = false
+            audioView?.pauseButton.isHidden = true
         case .failed:
-            audioView.animateOut()
+            audioView?.animateOut()
+        case .buffering:
+            audioView?.activityView.startAnimating()
+            
+            audioView?.playButton.isHidden = false
+            audioView?.pauseButton.isHidden = true
         }
     }
 }
 
 extension AudioViewManager: AudioManagerDelegate {
+    func playerIsBuffering(_ player: AudioManager) {
+        handleAudioManagerStateChange()
+    }
+
     func playerDownloadProgressDidChange(_ player: AudioManager) {
-        audioView.updateDownloadProgress(progress: player.loadingProgress)
+//        audioView.updateDownloadProgress(progress: player.loadingProgress)
     }
 
     func playerDidFinishDownloading(_ player: AudioManager) {
-        podcastModel.update(mp3Saved: true)
+//        podcastModel.update(mp3Saved: true)
     }
 
     func playerPlaybackDidEnd(_ player: AudioManager) {
-        
+        log.info("playback did end")
+        podcastModel?.update(currentTime: 0.0)
     }
     
     func playerCurrentTimeDidChange(_ player: AudioManager) {
-        guard let currentTime = player.audioPlayer?.currentTime else { return }
-        podcastModel.update(currentTime: currentTime)
+        guard let currentTime = player.getCurrentTime() else { return }
+        podcastModel?.update(currentTime: currentTime)
         
-        guard let duration = player.audioPlayer?.duration else { return }
+        guard let duration = player.getDuration() else { return }
         let progress = Float(currentTime / duration)
-        audioView.updateCurrentTimeProgress(progress: progress)
+        audioView?.updateCurrentTimeProgress(progress: progress)
+        
+        //@TODO: make this one function
+        audioView?.updateSlider(maxValue: Float(duration))
+        audioView?.updateSlider(currentValue: Float(currentTime))
     }
     
     func playerPlaybackStateDidChange(_ player: AudioManager) {
@@ -149,23 +172,28 @@ extension AudioViewManager: AudioManagerDelegate {
 }
 
 extension AudioViewManager: AudioViewDelegate {
+    func playbackSliderValueChanged(value: Float) {
+        let cmTime = CMTimeMake(Int64(value), 1)
+        audioManager?.seek(to: cmTime)
+    }
+
     func playButtonPressed() {
-        audioManager.play()
+        audioManager?.play()
     }
     
     func pauseButtonPressed() {
-        audioManager.pause()
+        audioManager?.pause()
     }
     
     func stopButtonPressed() {
-        audioManager.stop()
+        audioManager?.stop()
     }
     
     func skipForwardButtonPressed() {
-        audioManager.skipForward()
+        audioManager?.skipForward()
     }
     
     func skipBackwardButtonPressed() {
-        audioManager.skipBackward()
+        audioManager?.skipBackward()
     }
 }

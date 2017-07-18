@@ -82,12 +82,12 @@ extension API {
                     let user = User()
                     user.email = username
                     user.token = token as? String
-                    log.info(token)
+//                    log.info(token)
                     user.save()
                     completion(true)
                 }
             case .failure(let error):
-                log.error(error)
+//                log.error(error)
 
                 Helpers.alertWithMessage(title: Helpers.Alerts.error, message: error.localizedDescription, completionHandler: nil)
                 completion(false)
@@ -210,7 +210,8 @@ extension API {
                     }
                 }
             case .failure(let error):
-                log.error(error)
+//                log.error(error)
+                break
             }
         }
     }

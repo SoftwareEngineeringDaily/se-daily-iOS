@@ -99,5 +99,4 @@ extension PodcastCollectionViewController {
         
         return CGSize(width: self.collectionView!.width, height: 60.calculateHeight())
     }
-
 }

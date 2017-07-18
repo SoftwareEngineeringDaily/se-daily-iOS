@@ -45,7 +45,6 @@ class AudioView: UIView {
     var timeLeftLabel = UILabel()
     
     var sliderIsMoving = false
-    var checkCount = 0
 
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -145,12 +144,17 @@ class AudioView: UIView {
         playbackSlider.setThumbImage(bigCircle, for: .highlighted)
     }
     
-    func playbackSliderValueChanged(_ sender: UISlider) {
-        let timeInSeconds = sender.value
+    func playbackSliderValueChanged(_ slider: UISlider) {
+        let timeInSeconds = slider.value
         self.delegate?.playbackSliderValueChanged(value: timeInSeconds)
-        sliderIsMoving = true
+        
+        if(slider.isTracking) {
+            sliderIsMoving = true
+        } else {
+            sliderIsMoving = false
+        }
     }
-    
+
     func updateSlider(maxValue: Float) {
         if playbackSlider.isUserInteractionEnabled == false {
             playbackSlider.isUserInteractionEnabled = true
@@ -159,20 +163,9 @@ class AudioView: UIView {
     }
     
     func updateSlider(currentValue: Float) {
-        updateChecker()
         if !sliderIsMoving {
             playbackSlider.value = currentValue
         }
-    }
-    
-    func updateChecker() {
-        guard sliderIsMoving != false else { return }
-        if checkCount >= 3 {
-            sliderIsMoving = false
-            checkCount = 0
-            return
-        }
-        checkCount += 1
     }
     
     func addControls() {

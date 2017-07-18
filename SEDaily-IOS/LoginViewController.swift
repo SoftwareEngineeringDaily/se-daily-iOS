@@ -8,7 +8,6 @@
 
 import UIKit
 import SwifterSwift
-import PKHUD
 import SideMenu
 
 class LoginViewController: UIViewController {
@@ -57,7 +56,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         if User.getActiveUser().isLoggedIn() != false {
-            HUD.show(.systemActivity)
+            
             // If so move on to the next screen
             let vc = CustomTabViewController()
             self.navigationController?.pushViewController(vc, animated: true)

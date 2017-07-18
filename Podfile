@@ -20,8 +20,8 @@ target 'SEDaily-IOS' do
   pod 'IQKeyboardManagerSwift'
   pod 'Eureka'
   pod 'SideMenu'
-  pod 'PKHUD'
   pod 'ActiveLabel'
+  pod 'Kingfisher'
 
   target 'SEDaily-IOSTests' do
     inherit! :search_paths

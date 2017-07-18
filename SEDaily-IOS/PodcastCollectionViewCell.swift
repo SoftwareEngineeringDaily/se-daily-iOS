@@ -10,21 +10,20 @@ import UIKit
 import SnapKit
 import KoalaTeaFlowLayout
 import RealmSwift
+import Kingfisher
 
 class PodcastCollectionViewCell: UICollectionViewCell {
     
     var model: PodcastModel!
     
+    let imageView = UIImageView()
     let titleLabel = UILabel()
-    let upVoteCountLabel = UILabel()
-    let playButton = UIButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        self.contentView.addSubview(imageView)
         self.contentView.addSubview(titleLabel)
-        self.contentView.addSubview(upVoteCountLabel)
-        self.contentView.addSubview(playButton)
         
         self.contentView.backgroundColor = .white
         contentView.layer.cornerRadius = 2.calculateWidth()
@@ -33,12 +32,28 @@ class PodcastCollectionViewCell: UICollectionViewCell {
         contentView.layer.shadowOffset = CGSize(width: 0, height: 1.calculateHeight())
         contentView.layer.shadowRadius = 2.calculateWidth()
         
-        titleLabel.snp.makeConstraints{ (make) in
-            make.top.equalToSuperview().inset(5.calculateHeight())
+        let topBottomInset = 5.0.calculateHeight()
+        let amountToSubtract = topBottomInset * 2
+        
+        let twoThirds: CGFloat = (2.0/3.0)
+        
+        imageView.snp.makeConstraints{ (make) in
+            make.top.equalToSuperview().inset(topBottomInset)
             make.left.right.equalToSuperview().inset(10.calculateWidth())
-            make.height.equalToSuperview().dividedBy(2.5)
+            make.height.equalTo(((self.height * twoThirds) - amountToSubtract))
         }
         
+        imageView.contentMode = .scaleAspectFit
+        
+        let oneThird: CGFloat = (1.0/3.0)
+        
+        titleLabel.snp.makeConstraints{ (make) in
+            make.bottom.equalToSuperview().inset(topBottomInset)
+            make.left.right.equalToSuperview().inset(10.calculateWidth())
+            make.height.equalToSuperview().multipliedBy(oneThird)
+            make.height.equalTo(((self.height * oneThird) - amountToSubtract))
+        }
+
         titleLabel.font = UIFont.systemFont(ofSize: 16.calculateWidth())
         titleLabel.adjustsFontSizeToFitWidth = false
         titleLabel.lineBreakMode = .byTruncatingTail
@@ -46,27 +61,6 @@ class PodcastCollectionViewCell: UICollectionViewCell {
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .center
         titleLabel.textColor = Stylesheet.Colors.offBlack
-        
-        upVoteCountLabel.snp.makeConstraints{ (make) in
-            make.top.equalTo(titleLabel.snp.bottom)
-            make.left.right.equalToSuperview().inset(2.calculateWidth())
-            make.height.equalToSuperview().dividedBy(3)
-        }
-
-        upVoteCountLabel.font = UIFont.systemFont(ofSize: 22.calculateWidth())
-        upVoteCountLabel.textAlignment = .center
-        upVoteCountLabel.textColor = Stylesheet.Colors.offBlack
-        upVoteCountLabel.text = "2"
-        
-        playButton.snp.makeConstraints{ (make) in
-            make.top.equalTo(upVoteCountLabel.snp.bottom)
-            make.bottom.equalToSuperview().inset(5.calculateHeight())
-            make.left.right.equalToSuperview().inset(5.calculateWidth())
-        }
-        
-        playButton.setTitle("Play", for: .normal)
-        playButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .normal)
-        playButton.addTarget(self, action: #selector(self.playButtonPressed), for: .touchUpInside)
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -77,17 +71,14 @@ class PodcastCollectionViewCell: UICollectionViewCell {
         self.model = model
         guard let name = model.podcastName else { return }
         titleLabel.text = name
-        guard let score = model.score else { return }
-        upVoteCountLabel.text = score
-    }
-    
-    func playButtonPressed() {
-        //@TODO: Switch button and/or stop if playing
-        //        AudioViewManager.shared.presentAudioView()
-        let string = "http://traffic.libsyn.com/rtpodcast/podcast_update.mp3"
         
-        // Podcast model checks here
-        
-        AudioViewManager.shared.setupManager(podcastModel: model)
+        guard let imageURLString = model.imageURLString else {
+            self.imageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
+            return
+        }
+        if let url = URL(string: imageURLString) {
+            self.imageView.kf.indicatorType = .activity
+            self.imageView.kf.setImage(with: url)
+        }
     }
 }

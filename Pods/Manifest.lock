@@ -6,9 +6,9 @@ PODS:
     - ObjectMapper (~> 2.0)
   - Eureka (3.0.0)
   - IQKeyboardManagerSwift (4.0.10)
+  - Kingfisher (3.10.3)
   - KoalaTeaFlowLayout (0.2.1)
   - ObjectMapper (2.2.7)
-  - PKHUD (4.2.3)
   - Realm (2.8.3):
     - Realm/Headers (= 2.8.3)
   - Realm/Headers (2.8.3)
@@ -33,8 +33,8 @@ DEPENDENCIES:
   - AlamofireObjectMapper
   - Eureka
   - IQKeyboardManagerSwift
+  - Kingfisher
   - KoalaTeaFlowLayout
-  - PKHUD
   - RealmSwift
   - Reusable
   - SideMenu
@@ -51,9 +51,9 @@ SPEC CHECKSUMS:
   AlamofireObjectMapper: 435adc82f5b367679bd9e71c4974a54efd0b2521
   Eureka: f36fd440c3ebb7bfea0a4fbe6f16a05f1cb35906
   IQKeyboardManagerSwift: 75ba21a23794a1e6b6fe6d9a267ea17f80e06771
+  Kingfisher: a0ac82dc5bcf0388dd74b294cf2cc13730c63436
   KoalaTeaFlowLayout: e15286230f54eaf8dae0fceab780016931144311
   ObjectMapper: 65abcfd9a61cf7396cbd14a4fb22fddfcc46577e
-  PKHUD: c7692163a09875cbf15827dc581df3c5cf7f1015
   Realm: 3601ef091c8c499a31101d8563b991e75546cdce
   RealmSwift: 8183818515471b01a99abdd2970f8e4fd52b6f4a
   Reusable: 98e5fff1e0e2e00872199699b276dde08ee56c07
@@ -65,6 +65,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   UIFontComplete: 4924a60fdf0438ae65266281d5b814a576c5c1fe
 
-PODFILE CHECKSUM: d4eb8f8aa6ce436664ba986b432b256dc296f839
+PODFILE CHECKSUM: 23e9a5800bbeb12b4164324f6283979f1d91ea5f
 
 COCOAPODS: 1.2.1

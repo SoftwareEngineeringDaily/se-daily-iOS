@@ -150,6 +150,7 @@ public class AudioManager: NSObject {
     internal var playerItem: AVPlayerItem?
     internal var timeObserver: Any?
     internal var startTime: Double = 0
+    internal var keyObserversSet = false
     
     open var playbackState: PlaybackState = .stopped {
         didSet {
@@ -186,7 +187,6 @@ public class AudioManager: NSObject {
             // Cancel any downloads
 
             // Remove observers
-            removeSetupPlayerObservers()
             self.removePlayerObservers()
         case .willDownload(let audioURL, let fileName):
             log.info("will download")
@@ -502,15 +502,14 @@ extension AudioManager {
 }
 
 extension AudioManager {
-    fileprivate func removeSetupPlayerObservers() {
-        //@TODO: Add variables that keep track of these observers
-        self.playerItem?.removeObserver(self, forKeyPath: PlayerEmptyBufferKey, context: &PlayerItemObserverContext)
-        self.playerItem?.removeObserver(self, forKeyPath: PlayerKeepUpKey, context: &PlayerItemObserverContext)
-        self.playerItem?.removeObserver(self, forKeyPath: PlayerStatusKey, context: &PlayerItemObserverContext)
-        self.playerItem?.removeObserver(self, forKeyPath: PlayerLoadedTimeRangesKey, context: &PlayerItemObserverContext)
-    }
-    
     fileprivate func setupPlayerItem(_ playerItem: AVPlayerItem?) {
+        if keyObserversSet {
+            self.playerItem?.removeObserver(self, forKeyPath: PlayerEmptyBufferKey, context: &PlayerItemObserverContext)
+            self.playerItem?.removeObserver(self, forKeyPath: PlayerKeepUpKey, context: &PlayerItemObserverContext)
+            self.playerItem?.removeObserver(self, forKeyPath: PlayerStatusKey, context: &PlayerItemObserverContext)
+            self.playerItem?.removeObserver(self, forKeyPath: PlayerLoadedTimeRangesKey, context: &PlayerItemObserverContext)
+            self.keyObserversSet = false
+        }
         
         if let currentPlayerItem = self.playerItem {
             NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: currentPlayerItem)
@@ -527,6 +526,7 @@ extension AudioManager {
         self.playerItem?.addObserver(self, forKeyPath: PlayerKeepUpKey, options: ([.new, .old]), context: &PlayerItemObserverContext)
         self.playerItem?.addObserver(self, forKeyPath: PlayerStatusKey, options: ([.new, .old]), context: &PlayerItemObserverContext)
         self.playerItem?.addObserver(self, forKeyPath: PlayerLoadedTimeRangesKey, options: ([.new, .old]), context: &PlayerItemObserverContext)
+        self.keyObserversSet = true
         
         if let updatedPlayerItem = self.playerItem {
             NotificationCenter.default.addObserver(self, selector: #selector(self.playerItemDidPlayToEndTime(_:)), name: .AVPlayerItemDidPlayToEndTime, object: updatedPlayerItem)

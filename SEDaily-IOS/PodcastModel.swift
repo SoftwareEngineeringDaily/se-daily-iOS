@@ -27,6 +27,7 @@ public class PodcastModel: Object, Mappable {
     dynamic var type: String? = nil
     dynamic var score: String? = nil
     dynamic var currentTime: String = "0"
+    dynamic var imageURLString: String? = nil
     
     dynamic var mp3Saved: Bool = false
     
@@ -49,6 +50,7 @@ public class PodcastModel: Object, Mappable {
         mp3URL <- map["mp3"]
         link <- map["link"]
         score <- (map["score"], TransformOf<String, Int>(fromJSON: { $0.map { String($0) } }, toJSON: { Int($0!) }))
+        imageURLString <- map["featuredImage"]
     }
     
     func getDescription() -> String {

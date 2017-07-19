@@ -1,6 +1,0 @@
-framework module KoalaTeaFlowLayout {
-  umbrella header "KoalaTeaFlowLayout-umbrella.h"
-
-  export *
-  module * { export * }
-}

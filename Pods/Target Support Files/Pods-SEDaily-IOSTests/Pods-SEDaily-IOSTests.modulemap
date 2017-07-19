@@ -1,6 +1,0 @@
-framework module Pods_SEDaily_IOSTests {
-  umbrella header "Pods-SEDaily-IOSTests-umbrella.h"
-
-  export *
-  module * { export * }
-}

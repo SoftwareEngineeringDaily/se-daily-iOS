@@ -93,6 +93,7 @@ class AudioViewManager: NSObject{
         guard let audioManager = audioManager else { return }
         switch audioManager.playbackState {
         case .setup:
+            audioView?.isFirstLoad = true
             audioView?.activityView.startAnimating()
             
             audioView?.playButton.isHidden = false
@@ -163,26 +164,35 @@ extension AudioViewManager: AudioManagerDelegate {
     func playerCurrentTimeDidChange(_ player: AudioManager) {
         guard let currentTime = player.getCurrentTime() else { return }
         podcastModel?.update(currentTime: currentTime)
-        
+        log.info(currentTime)
+        log.info(player.getDuration())
         guard let duration = player.getDuration() else { return }
         let timeLeft = Double(duration - currentTime)
         
         var currentTimeString = ""
         Helpers.hmsFrom(seconds: Int(currentTime), completion: { hours, minutes, seconds in
-            let hours = Helpers.getStringFrom(seconds: hours)
-            let minutes = Helpers.getStringFrom(seconds: minutes)
-            let seconds = Helpers.getStringFrom(seconds: seconds)
+            let hoursString = Helpers.getStringFrom(seconds: hours)
+            let minutesString = Helpers.getStringFrom(seconds: minutes)
+            let secondsString = Helpers.getStringFrom(seconds: seconds)
             
-            currentTimeString = "\(hours):\(minutes):\(seconds)"
+            if hoursString == "00" {
+                currentTimeString = "\(minutesString):\(secondsString)"
+                return
+            }
+            currentTimeString = "\(hoursString):\(minutesString):\(secondsString)"
         })
         
         var timeLeftString = ""
         Helpers.hmsFrom(seconds: Int(timeLeft), completion: { hours, minutes, seconds in
-            let hours = Helpers.getStringFrom(seconds: hours)
-            let minutes = Helpers.getStringFrom(seconds: minutes)
-            let seconds = Helpers.getStringFrom(seconds: seconds)
-            
-            timeLeftString = "\(hours):\(minutes):\(seconds)"
+            let hoursString = Helpers.getStringFrom(seconds: hours)
+            let minutesString = Helpers.getStringFrom(seconds: minutes)
+            let secondsString = Helpers.getStringFrom(seconds: seconds)
+
+            if hoursString == "00" {
+                timeLeftString = "-" + "\(minutesString):\(secondsString)"
+                return
+            }
+            timeLeftString = "-" + "\(hoursString):\(minutesString):\(secondsString)"
         })
         
         audioView?.updateTimeLabels(currentTimeString: currentTimeString, timeLeftString: timeLeftString)

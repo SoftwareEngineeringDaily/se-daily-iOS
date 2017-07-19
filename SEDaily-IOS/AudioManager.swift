@@ -217,8 +217,6 @@ public class AudioManager: NSObject {
             self.setupMediaPlayerControls()
             
             avPlayer?.play()
-            //@TODO: remove this
-            avPlayer?.volume = 0.0
         case .paused:
             // Pause Timer
             log.info("paused")

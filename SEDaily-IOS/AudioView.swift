@@ -190,11 +190,12 @@ class AudioView: UIView {
     func addLabels() {
         currentTimeLabel.text = "00.00.00"
         currentTimeLabel.textAlignment = .left
-        currentTimeLabel.adjustsFontSizeToFitWidth = true
+        currentTimeLabel.font = UIFont.systemFont(ofSize: 12)
         
         timeLeftLabel.text = "00.00.00"
         timeLeftLabel.textAlignment = .right
         timeLeftLabel.adjustsFontSizeToFitWidth = true
+        timeLeftLabel.font = UIFont.systemFont(ofSize: 12)
 
         self.containerView.addSubview(currentTimeLabel)
         self.containerView.addSubview(timeLeftLabel)
@@ -203,14 +204,14 @@ class AudioView: UIView {
             make.left.equalTo(playbackSlider).inset(5.calculateWidth())
             make.top.equalTo(playbackSlider.snp.bottom).inset(5.calculateHeight())
             make.height.equalTo(20.calculateHeight())
-            make.width.equalTo(50.calculateWidth())
+            make.width.equalTo(55.calculateWidth())
         }
         
         timeLeftLabel.snp.makeConstraints { (make) -> Void in
             make.right.equalTo(playbackSlider).inset(5.calculateWidth())
             make.top.equalTo(playbackSlider.snp.bottom).inset(5.calculateHeight())
             make.height.equalTo(20.calculateHeight())
-            make.width.equalTo(50.calculateWidth())
+            make.width.equalTo(55.calculateWidth())
         }
     }
     

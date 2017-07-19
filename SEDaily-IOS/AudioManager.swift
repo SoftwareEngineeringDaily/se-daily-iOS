@@ -131,6 +131,7 @@ public protocol AudioManagerDelegate: NSObjectProtocol {
     func playerDidFinishDownloading(_ player: AudioManager)
     func playerDownloadProgressDidChange(_ player: AudioManager)
     func playerIsBuffering(_ player: AudioManager)
+    func playerIsLikelyToKeepUp(_ player: AudioManager)
     
 //    func playerBufferingStateDidChange( player: AudioManager)
     
@@ -398,7 +399,8 @@ extension AudioManager {
     override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         // PlayerRateKey, PlayerObserverContext
-        
+        //@TODO: check if buffering for too long
+        // If so, restart stream
         if (context == &PlayerItemObserverContext) {
             
             // PlayerStatusKey
@@ -410,6 +412,7 @@ extension AudioManager {
 //                if let item = self.playerItem {
                     if (self.avPlayer?.currentItem?.isPlaybackLikelyToKeepUp)! {
                         if playbackState.description != PlaybackState.playing.description {
+                            self.playerDelegate?.playerIsLikelyToKeepUp(self)
                             self.playbackState = .playing
                         }
                     }

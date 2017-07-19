@@ -83,6 +83,7 @@ class AudioViewManager: NSObject{
         audioView?.setText(text: text)
     }
     
+    //@TODO: Switch all handling of enabled parts of audio view to here
     fileprivate func handleAudioManagerStateChange() {
         if let model = podcastModel {
             self.setText(text: model.podcastName)
@@ -132,6 +133,12 @@ class AudioViewManager: NSObject{
 }
 
 extension AudioViewManager: AudioManagerDelegate {
+    func playerIsLikelyToKeepUp(_ player: AudioManager) {
+        guard let duration = player.getDuration() else { return }
+
+        audioView?.updateSlider(maxValue: Float(duration))
+    }
+
     func playerIsBuffering(_ player: AudioManager) {
         handleAudioManagerStateChange()
     }
@@ -158,7 +165,6 @@ extension AudioViewManager: AudioManagerDelegate {
         audioView?.updateCurrentTimeProgress(progress: progress)
         
         //@TODO: make this one function
-        audioView?.updateSlider(maxValue: Float(duration))
         audioView?.updateSlider(currentValue: Float(currentTime))
     }
     
@@ -174,6 +180,7 @@ extension AudioViewManager: AudioManagerDelegate {
 extension AudioViewManager: AudioViewDelegate {
     func playbackSliderValueChanged(value: Float) {
         let cmTime = CMTimeMake(Int64(value), 1)
+        //@TODO: This is slowing down ui
         audioManager?.seek(to: cmTime)
     }
 

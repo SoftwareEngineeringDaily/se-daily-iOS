@@ -44,7 +44,7 @@ class AudioView: UIView {
     var currentTimeLabel = UILabel()
     var timeLeftLabel = UILabel()
     
-    var sliderIsMoving = false
+    var previousSliderValue: Float = 0.0
 
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -146,16 +146,25 @@ class AudioView: UIView {
     
     func playbackSliderValueChanged(_ slider: UISlider) {
         let timeInSeconds = slider.value
-        self.delegate?.playbackSliderValueChanged(value: timeInSeconds)
         
-        if(slider.isTracking) {
-            sliderIsMoving = true
+        log.info(playbackSlider.isTracking)
+        log.info(timeInSeconds != previousSliderValue)
+        if (playbackSlider.isTracking) && (timeInSeconds != previousSliderValue) {
+            // Update Labels
+            log.debug("value is tracking and changing")
+//            sliderIsMoving = true
         } else {
-            sliderIsMoving = false
+//            sliderIsMoving = false
+            log.debug("drag did end")
+            self.delegate?.playbackSliderValueChanged(value: timeInSeconds)
         }
+        previousSliderValue = timeInSeconds
     }
 
     func updateSlider(maxValue: Float) {
+        // Update max only once
+        guard playbackSlider.maximumValue <= 1.0 else { return }
+
         if playbackSlider.isUserInteractionEnabled == false {
             playbackSlider.isUserInteractionEnabled = true
         }
@@ -163,7 +172,12 @@ class AudioView: UIView {
     }
     
     func updateSlider(currentValue: Float) {
-        if !sliderIsMoving {
+        let min = playbackSlider.value - 60.0
+        let max = playbackSlider.value + 60.0
+        
+        // Check if current value is within a close enough range to slider value
+        // This fixes sliders skipping around
+        if min...max ~= currentValue && !playbackSlider.isTracking {
             playbackSlider.value = currentValue
         }
     }

@@ -36,15 +36,15 @@ class AudioView: UIView {
     var pauseButton = UIButton()
     var stopButton = UIButton()
     
-    var progressView: UIProgressView?
-    var progressLabel = UILabel()
-    
+    var bufferSlider = UISlider(frame: .zero)
+    var bufferBackgroundSlider = UISlider(frame: .zero)
     var playbackSlider = UISlider(frame: .zero)
     
     var currentTimeLabel = UILabel()
     var timeLeftLabel = UILabel()
     
     var previousSliderValue: Float = 0.0
+    var isFirstLoad = true
 
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -65,9 +65,10 @@ class AudioView: UIView {
         containerView.addSubview(podcastLabel)
         
         podcastLabel.snp.makeConstraints { (make) -> Void in
-            make.left.right.equalToSuperview().inset(15.calculateWidth())
-            make.centerY.equalToSuperview().inset(-30.calculateHeight())
+            make.left.equalToSuperview().inset(60.calculateWidth())
+            make.right.equalToSuperview().inset(60.calculateWidth())
             make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().inset(-30.calculateHeight())
         }
         
         podcastLabel.font = UIFont.systemFont(ofSize: 16.calculateWidth())
@@ -116,14 +117,17 @@ class AudioView: UIView {
         playButton.isHidden = true
         
         setupActivityIndicator()
-//        addControls()
-        addSlider()
+        addPlaybackSlider()
+        addLabels()
     }
     
-    func addSlider() {
+    func addPlaybackSlider() {
+        addBufferSlider()
+        
         playbackSlider.minimumValue = 0
         playbackSlider.isContinuous = true
-        playbackSlider.tintColor = Stylesheet.Colors.secondaryColor
+        playbackSlider.minimumTrackTintColor = Stylesheet.Colors.secondaryColor
+        playbackSlider.maximumTrackTintColor = .clear
         playbackSlider.layer.cornerRadius = 0
         playbackSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
         playbackSlider.isUserInteractionEnabled = false
@@ -144,17 +148,79 @@ class AudioView: UIView {
         playbackSlider.setThumbImage(bigCircle, for: .highlighted)
     }
     
+    func addBufferSlider() {
+        // Background Buffer Slider
+        bufferBackgroundSlider.minimumValue = 0
+        bufferBackgroundSlider.isContinuous = true
+        bufferBackgroundSlider.tintColor = Stylesheet.Colors.bufferColor
+        bufferBackgroundSlider.layer.cornerRadius = 0
+        bufferBackgroundSlider.alpha = 0.5
+        bufferBackgroundSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
+        bufferBackgroundSlider.isUserInteractionEnabled = false
+        
+        self.addSubview(bufferBackgroundSlider)
+        
+        bufferBackgroundSlider.snp.makeConstraints { (make) -> Void in
+            make.top.equalToSuperview().inset(-10)
+            make.height.equalTo(20.calculateHeight())
+            make.left.right.equalToSuperview()
+        }
+        
+        bufferBackgroundSlider.setThumbImage(UIImage(), for: .normal)
+        
+        bufferSlider.minimumValue = 0
+        bufferSlider.isContinuous = true
+        bufferSlider.minimumTrackTintColor = Stylesheet.Colors.bufferColor
+        bufferSlider.maximumTrackTintColor = .clear
+        bufferSlider.layer.cornerRadius = 0
+        bufferSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
+        bufferSlider.isUserInteractionEnabled = false
+        
+        self.addSubview(bufferSlider)
+        
+        bufferSlider.snp.makeConstraints { (make) -> Void in
+            make.top.equalToSuperview().inset(-10)
+            make.height.equalTo(20.calculateHeight())
+            make.left.right.equalToSuperview()
+        }
+        
+        bufferSlider.setThumbImage(UIImage(), for: .normal)
+    }
+    
+    func addLabels() {
+        currentTimeLabel.text = "00.00.00"
+        currentTimeLabel.textAlignment = .left
+        currentTimeLabel.adjustsFontSizeToFitWidth = true
+        
+        timeLeftLabel.text = "00.00.00"
+        timeLeftLabel.textAlignment = .right
+        timeLeftLabel.adjustsFontSizeToFitWidth = true
+
+        self.containerView.addSubview(currentTimeLabel)
+        self.containerView.addSubview(timeLeftLabel)
+        
+        currentTimeLabel.snp.makeConstraints { (make) -> Void in
+            make.left.equalTo(playbackSlider).inset(5.calculateWidth())
+            make.top.equalTo(playbackSlider.snp.bottom).inset(5.calculateHeight())
+            make.height.equalTo(20.calculateHeight())
+            make.width.equalTo(50.calculateWidth())
+        }
+        
+        timeLeftLabel.snp.makeConstraints { (make) -> Void in
+            make.right.equalTo(playbackSlider).inset(5.calculateWidth())
+            make.top.equalTo(playbackSlider.snp.bottom).inset(5.calculateHeight())
+            make.height.equalTo(20.calculateHeight())
+            make.width.equalTo(50.calculateWidth())
+        }
+    }
+    
     func playbackSliderValueChanged(_ slider: UISlider) {
         let timeInSeconds = slider.value
         
-        log.info(playbackSlider.isTracking)
-        log.info(timeInSeconds != previousSliderValue)
         if (playbackSlider.isTracking) && (timeInSeconds != previousSliderValue) {
             // Update Labels
             log.debug("value is tracking and changing")
-//            sliderIsMoving = true
         } else {
-//            sliderIsMoving = false
             log.debug("drag did end")
             self.delegate?.playbackSliderValueChanged(value: timeInSeconds)
         }
@@ -168,10 +234,19 @@ class AudioView: UIView {
         if playbackSlider.isUserInteractionEnabled == false {
             playbackSlider.isUserInteractionEnabled = true
         }
+
         playbackSlider.maximumValue = maxValue
+        bufferSlider.maximumValue = maxValue
     }
     
     func updateSlider(currentValue: Float) {
+        // Have to check is first load because current value may be far from 0.0
+        if isFirstLoad {
+            playbackSlider.value = currentValue
+            isFirstLoad = false
+            return
+        }
+        
         let min = playbackSlider.value - 60.0
         let max = playbackSlider.value + 60.0
         
@@ -182,38 +257,14 @@ class AudioView: UIView {
         }
     }
     
-    func addControls() {
-        // Create Progress View Control
-        progressView = UIProgressView(progressViewStyle: UIProgressViewStyle.default)
-        progressView?.tintColor = Stylesheet.Colors.secondaryColor
-        self.addSubview(progressView!)
-        
-        progressView?.snp.makeConstraints { (make) -> Void in
-            make.bottom.equalToSuperview()
-            make.height.equalTo(5.calculateHeight())
-            make.left.right.equalToSuperview()
-        }
-
-        // Add Label
-//        self.addSubview(progressLabel)
-//        
-//        progressLabel.snp.makeConstraints { (make) -> Void in
-//            make.centerY.equalToSuperview()
-//            make.right.equalToSuperview().inset(20)
-//            make.height.width.equalTo(50.calculateHeight())
-//        }
-        
-        progressLabel.text = "0.0"
+    func updateBufferSlider(bufferValue: Float) {
+        bufferSlider.value = bufferValue
     }
     
-    func updateDownloadProgress(progress: Int) {
-        progressLabel.text = String(progress) + "%"
+    func updateTimeLabels(currentTimeString: String, timeLeftString: String) {
+        self.currentTimeLabel.text = currentTimeString
+        self.timeLeftLabel.text = timeLeftString
     }
-    
-    func updateCurrentTimeProgress(progress: Float) {
-        progressView?.progress = progress
-    }
-
     
     public func animateIn() {
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {

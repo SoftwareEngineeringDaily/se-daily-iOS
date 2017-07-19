@@ -30,6 +30,7 @@ enum Stylesheet {
         static let dark2 = UIColor(hex: 0xB25800)
         
         static let secondaryColor = UIColor(hex: 0xfc4482)
+        static let bufferColor = UIColor(hex: 0xb6b8b9)
     }
     
     enum Fonts {

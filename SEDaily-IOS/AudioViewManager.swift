@@ -53,6 +53,7 @@ class AudioViewManager: NSObject{
             }
 
             self.setupView(over: topController)
+            // Move top controller's view's bottom constraint
             self.setupAudioManager()
         }
     }
@@ -115,7 +116,6 @@ class AudioViewManager: NSObject{
             
             audioView?.playButton.isHidden = true
             audioView?.pauseButton.isHidden = false
-            audioView?.progressLabel.text = ""
         case .paused:
             audioView?.activityView.stopAnimating()
             
@@ -133,6 +133,10 @@ class AudioViewManager: NSObject{
 }
 
 extension AudioViewManager: AudioManagerDelegate {
+    func playerBufferTimeDidChange(_ bufferValue: Float) {
+        audioView?.updateBufferSlider(bufferValue: bufferValue)
+    }
+
     func playerIsLikelyToKeepUp(_ player: AudioManager) {
         guard let duration = player.getDuration() else { return }
 
@@ -161,10 +165,28 @@ extension AudioViewManager: AudioManagerDelegate {
         podcastModel?.update(currentTime: currentTime)
         
         guard let duration = player.getDuration() else { return }
-        let progress = Float(currentTime / duration)
-        audioView?.updateCurrentTimeProgress(progress: progress)
+        let timeLeft = Double(duration - currentTime)
         
-        //@TODO: make this one function
+        var currentTimeString = ""
+        Helpers.hmsFrom(seconds: Int(currentTime), completion: { hours, minutes, seconds in
+            let hours = Helpers.getStringFrom(seconds: hours)
+            let minutes = Helpers.getStringFrom(seconds: minutes)
+            let seconds = Helpers.getStringFrom(seconds: seconds)
+            
+            currentTimeString = "\(hours):\(minutes):\(seconds)"
+        })
+        
+        var timeLeftString = ""
+        Helpers.hmsFrom(seconds: Int(timeLeft), completion: { hours, minutes, seconds in
+            let hours = Helpers.getStringFrom(seconds: hours)
+            let minutes = Helpers.getStringFrom(seconds: minutes)
+            let seconds = Helpers.getStringFrom(seconds: seconds)
+            
+            timeLeftString = "\(hours):\(minutes):\(seconds)"
+        })
+        
+        audioView?.updateTimeLabels(currentTimeString: currentTimeString, timeLeftString: timeLeftString)
+
         audioView?.updateSlider(currentValue: Float(currentTime))
     }
     

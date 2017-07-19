@@ -132,6 +132,7 @@ public protocol AudioManagerDelegate: NSObjectProtocol {
     func playerDownloadProgressDidChange(_ player: AudioManager)
     func playerIsBuffering(_ player: AudioManager)
     func playerIsLikelyToKeepUp(_ player: AudioManager)
+    func playerBufferTimeDidChange(_ bufferValue: Float)
     
 //    func playerBufferingStateDidChange( player: AudioManager)
     
@@ -216,6 +217,8 @@ public class AudioManager: NSObject {
             self.setupMediaPlayerControls()
             
             avPlayer?.play()
+            //@TODO: remove this
+            avPlayer?.volume = 0.0
         case .paused:
             // Pause Timer
             log.info("paused")
@@ -461,25 +464,24 @@ extension AudioManager {
             } else if keyPath == PlayerLoadedTimeRangesKey {
                 
                 // PlayerLoadedTimeRangesKey
-                log.info(PlayerLoadedTimeRangesKey)
-                log.info(playerItem?.loadedTimeRanges.first)
-//                if let item = self.playerItem {
+                if let item = self.playerItem {
 //                    self.bufferingState = .ready
-//                    
-//                    let timeRanges = item.loadedTimeRanges
-//                    if let timeRange = timeRanges.first?.timeRangeValue {
-//                        let bufferedTime = CMTimeGetSeconds(CMTimeAdd(timeRange.start, timeRange.duration))
+                    
+                    let timeRanges = item.loadedTimeRanges
+                    if let timeRange = timeRanges.first?.timeRangeValue {
+                        let bufferedTime = CMTimeGetSeconds(CMTimeAdd(timeRange.start, timeRange.duration))
 //                        self.executeClosureOnMainQueueIfNecessary {
-//                            self.playerDelegate?.playerBufferTimeDidChange(bufferedTime)
+                            self.playerDelegate?.playerBufferTimeDidChange(Float(bufferedTime))
+                        
 //                        }
 //                        let currentTime = CMTimeGetSeconds(item.currentTime())
 //                        if (bufferedTime - currentTime) >= self.bufferSize && self.playbackState == .playing {
 //                            self.playFromCurrentTime()
 //                        }
-//                    } else {
+                    } else {
 //                        self.playFromCurrentTime()
-//                    }
-//                }
+                    }
+                }
                 
             }
             

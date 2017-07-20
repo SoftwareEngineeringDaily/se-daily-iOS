@@ -71,8 +71,6 @@ extension API {
                 let jsonResponse = response.result.value as! NSDictionary
                 
                 if let message = jsonResponse["message"] {
-                    log.error(message)
-
                     Helpers.alertWithMessage(title: Helpers.Alerts.error, message: String(describing: message), completionHandler: nil)
                     completion(false)
                     return
@@ -82,12 +80,11 @@ extension API {
                     let user = User()
                     user.email = username
                     user.token = token as? String
-//                    log.info(token)
                     user.save()
                     completion(true)
                 }
             case .failure(let error):
-//                log.error(error)
+                log.error(error)
 
                 Helpers.alertWithMessage(title: Helpers.Alerts.error, message: error.localizedDescription, completionHandler: nil)
                 completion(false)
@@ -154,19 +151,19 @@ extension API {
             case .success:
                 let modelsArray = response.result.value
                 guard let array = modelsArray else { return }
-
+                
                 for item in array {
                     
-                    let realm = try! Realm()
-                    let existingItem = realm.object(ofType: model.self, forPrimaryKey: item.key)
+//                    let realm = try! Realm()
+//                    let existingItem = realm.object(ofType: model.self, forPrimaryKey: item.key)
                     
-                    if item.key != existingItem?.key {
+//                    if item.key != existingItem?.key {
                         item.type = type
                         item.save()
-                    }
-                    else {
+//                    }
+//                    else {
                         // Nothing needs be done.
-                    }
+//                    }
                 }
             case .failure(let error):
                 log.error(error)
@@ -182,35 +179,34 @@ extension API {
         let user = User.getActiveUser()
         guard let userToken = user.token else { return }
         var params = [String: String]()
-        params[Params.token] = userToken
+        params[Params.bearer] = userToken
         
         typealias model = PodcastModel
-        
+
         Alamofire.request(urlString, method: .get, parameters: params).responseArray { (response: DataResponse<[model]>) in
             
             switch response.result {
                 
             case .success:
                 let modelsArray = response.result.value
-                
                 guard let array = modelsArray else { return }
-                
+                log.info(array)
                 for item in array {
                     
                     // Check if Achievement Model already exists
-                    let realm = try! Realm()
-                    let existingItem = realm.object(ofType: model.self, forPrimaryKey: item.key)
-                    
-                    if item.key != existingItem?.key {
+//                    let realm = try! Realm()
+//                    let existingItem = realm.object(ofType: model.self, forPrimaryKey: item.key)
+//                    
+//                    if item.key != existingItem?.key {
                         item.type = API.Types.recommended
                         item.save()
-                    }
-                    else {
+//                    }
+//                    else {
                         // Nothing needs be done.
-                    }
+//                    }
                 }
             case .failure(let error):
-//                log.error(error)
+                log.error(error)
                 break
             }
         }

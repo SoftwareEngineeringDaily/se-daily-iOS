@@ -9,6 +9,8 @@
 import UIKit
 import SwiftIcons
 import AVFoundation
+import SnapKit
+import SwifterSwift
 
 class AudioViewManager: NSObject{
 
@@ -53,8 +55,32 @@ class AudioViewManager: NSObject{
             }
 
             self.setupView(over: topController)
+            
             // Move top controller's view's bottom constraint
+            if let controller = topController as? ContainerViewController {
+                controller.setContainerViewInset()
+            }
+            
             self.setupAudioManager()
+        }
+    }
+    
+    fileprivate func triggerRemoveContainerViewInset() {
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            
+            guard !(topController is UIAlertController) else {
+                // There's already a alert preseneted
+                return
+            }
+            
+            // Move top controller's view's bottom constraint
+            if let controller = topController as? ContainerViewController {
+                controller.removeContainerViewInset()
+            }
+            
         }
     }
     
@@ -67,6 +93,8 @@ class AudioViewManager: NSObject{
         
         audioView = AudioView()
         audioView?.delegate = self
+        
+        // Can't add to view
         vc.view.addSubview(audioView!)
         
         audioView?.width = UIScreen.main.bounds.width
@@ -94,11 +122,14 @@ class AudioViewManager: NSObject{
         switch audioManager.playbackState {
         case .setup:
             audioView?.isFirstLoad = true
+            audioView?.updateTimeLabels(currentTimeString: "00.00.00", timeLeftString: "00.00.00")
+            audioView?.disableButtons()
             audioView?.activityView.startAnimating()
             
             audioView?.playButton.isHidden = false
             audioView?.pauseButton.isHidden = true
         case .stopped:
+            self.triggerRemoveContainerViewInset()
             audioView?.animateOut()
 
             audioView = nil
@@ -113,6 +144,7 @@ class AudioViewManager: NSObject{
             audioView?.playButton.isHidden = false
             audioView?.pauseButton.isHidden = true
         case .playing:
+            audioView?.enableButtons()
             audioView?.activityView.stopAnimating()
             
             audioView?.playButton.isHidden = true
@@ -164,8 +196,7 @@ extension AudioViewManager: AudioManagerDelegate {
     func playerCurrentTimeDidChange(_ player: AudioManager) {
         guard let currentTime = player.getCurrentTime() else { return }
         podcastModel?.update(currentTime: currentTime)
-        log.info(currentTime)
-        log.info(player.getDuration())
+
         guard let duration = player.getDuration() else { return }
         let timeLeft = Double(duration - currentTime)
         

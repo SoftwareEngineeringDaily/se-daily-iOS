@@ -27,11 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupIQKeyboard()
         setupFirstScreen()
         
-        API.sharedInstance.login(username: "test@test.com", password: "testing", completion: {
-            (success) in
-            API.sharedInstance.getRecommended()
-        })
-        
         return true
     }
 
@@ -74,13 +69,14 @@ extension AppDelegate {
     
     func setupFirstScreen() {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let rootVC = CustomTabViewController()
-//        let rootVC = LoginViewController()
+//        let rootVC = CustomTabViewController()
+        let rootVC = ContainerViewController()
         rootVC.view.backgroundColor = .white
-        let navVC = UINavigationController(rootViewController: rootVC)
-        navVC.view.backgroundColor = .white
-        navVC.navigationBar.isTranslucent = false
-        window!.rootViewController = navVC
+//        let navVC = UINavigationController(rootViewController: rootVC)
+//        navVC.view.backgroundColor = .white
+//        navVC.navigationBar.isTranslucent = false
+//        window!.rootViewController = navVC
+        window!.rootViewController = rootVC
         window!.makeKeyAndVisible()
     }
     

@@ -17,7 +17,7 @@ class PostDetailTableViewController: UITableViewController {
         super.viewDidLoad()
         
         self.tableView.register(cellType: SingleLabelTableViewCell.self)
-        
+
         tableView.allowsSelection = false
         tableView.alwaysBounceVertical = false
         tableView.estimatedRowHeight = 20

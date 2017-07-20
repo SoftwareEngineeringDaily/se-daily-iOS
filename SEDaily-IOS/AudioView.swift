@@ -268,7 +268,7 @@ class AudioView: UIView {
     }
     
     public func animateIn() {
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
             self.frame.origin.y -= self.height
             self.frame = self.frame
         })
@@ -297,8 +297,20 @@ class AudioView: UIView {
         }
     }
     
-    func setProgress() {
+    func enableButtons() {
+        self.playButton.isEnabled = true
+        self.skipForwardButton.isEnabled = true
+        self.skipBackwardbutton.isEnabled = true
+        self.playButton.isEnabled = true
+        self.pauseButton.isEnabled = true
+    }
     
+    func disableButtons() {
+        self.playButton.isEnabled = false
+        self.skipForwardButton.isEnabled = false
+        self.skipBackwardbutton.isEnabled = false
+        self.playButton.isEnabled = false
+        self.pauseButton.isEnabled = false
     }
 }
 

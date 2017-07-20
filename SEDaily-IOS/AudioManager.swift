@@ -186,10 +186,11 @@ public class AudioManager: NSObject {
             
             // Stop Audio
             self.avPlayer?.pause()
+            
             // Cancel any downloads
 
             // Remove observers
-            self.removePlayerObservers()
+//            self.removePlayerObservers()
         case .willDownload(let audioURL, let fileName):
             log.info("will download")
             
@@ -396,12 +397,10 @@ extension AudioManager {
     }
     
     // MARK: - Observe Value
-    
+    //@TODO: Check failed and buffering too long
     override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         // PlayerRateKey, PlayerObserverContext
-        //@TODO: check if buffering for too long
-        // If so, restart stream
         if (context == &PlayerItemObserverContext) {
             
             // PlayerStatusKey
@@ -409,29 +408,29 @@ extension AudioManager {
             if keyPath == PlayerKeepUpKey {
                 
                 // PlayerKeepUpKey
-                
-//                if let item = self.playerItem {
-                    if (self.avPlayer?.currentItem?.isPlaybackLikelyToKeepUp)! {
-                        if playbackState.description != PlaybackState.playing.description {
+                if let item = self.playerItem {
+                    if item.isPlaybackLikelyToKeepUp {
+                        //@TODO: This might not play if buffering takes too long when already in the playing state
+                        if self.playbackState.description == PlaybackState.buffering.description {
                             self.playerDelegate?.playerIsLikelyToKeepUp(self)
                             self.playbackState = .playing
                         }
                     }
-//                }
+                }
                 
-//                if let status = change?[NSKeyValueChangeKey.newKey] as? NSNumber {
-//                    switch (status.intValue as AVPlayerStatus.RawValue) {
-//                    case AVPlayerStatus.readyToPlay.rawValue:
+                if let status = change?[NSKeyValueChangeKey.newKey] as? NSNumber {
+                    switch (status.intValue as AVPlayerStatus.RawValue) {
+                    case AVPlayerStatus.readyToPlay.rawValue:
 //                        self._playerView.playerLayer.player = self._avplayer
 //                        self._playerView.playerLayer.isHidden = false
-//                        break
-//                    case AVPlayerStatus.failed.rawValue:
-//                        self.playbackState = PlaybackState.failed
-//                        break
-//                    default:
-//                        break
-//                    }
-//                }
+                        break
+                    case AVPlayerStatus.failed.rawValue:
+                        self.playbackState = PlaybackState.failed
+                        break
+                    default:
+                        break
+                    }
+                }
                 
             } else if keyPath == PlayerEmptyBufferKey {
                 
@@ -506,6 +505,8 @@ extension AudioManager {
 
 extension AudioManager {
     fileprivate func setupPlayerItem(_ playerItem: AVPlayerItem?) {
+        //@TODO: Observers still breaking
+        //@TODO: MAybe move this to a remove all observers function in stopped
         if keyObserversSet {
             self.playerItem?.removeObserver(self, forKeyPath: PlayerEmptyBufferKey, context: &PlayerItemObserverContext)
             self.playerItem?.removeObserver(self, forKeyPath: PlayerKeepUpKey, context: &PlayerItemObserverContext)

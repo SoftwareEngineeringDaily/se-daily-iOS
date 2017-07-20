@@ -28,23 +28,44 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
         
         // Do any additional setup after loading the view.
         
-        let leftBarButton = UIBarButtonItem(image: nil, style: .plain, target: self, action: #selector(self.presentLeftSideMenu))
-        
-        self.navigationItem.leftBarButtonItem = leftBarButton
-        
         delegate = self
         
         self.view.backgroundColor = .white
         
-        setupNavBar()
         setupTabs()
         setupSideMenu()
         setupTitleView()
         self.selectedIndex = 0
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        setupNavBar()
+    }
+    
     func setupNavBar() {
+//        let leftBarButton = UIBarButtonItem(image: nil, style: .plain, target: self, action: #selector(self.presentLeftSideMenu))
         
+//        self.navigationItem.leftBarButtonItem = leftBarButton
+        switch User.getActiveUser().isLoggedIn() {
+        case false:
+            let rightBarButton = UIBarButtonItem(title: "Login", style: .done, target: self, action: #selector(self.loginButtonPressed))
+            self.navigationItem.rightBarButtonItem = rightBarButton
+            break
+        case true:
+            let rightBarButton = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(self.logoutButtonPressed))
+            self.navigationItem.rightBarButtonItem = rightBarButton
+            break
+        }
+    }
+    
+    func loginButtonPressed() {
+        let vc = LoginViewController()
+        self.navigationController?.pushViewController(vc)
+    }
+    
+    func logoutButtonPressed() {
+        User.logout()
+        self.setupNavBar()
     }
     
 //    func setupNavButton() {

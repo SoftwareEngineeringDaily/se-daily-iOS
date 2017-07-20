@@ -28,6 +28,7 @@ class LoginViewController: UIViewController {
     let lastNameTextField = TextField()
     
     let loginButton = UIButton()
+    let cancelButton = UIButton()
     let signUpButton = UIButton()
     
     override func viewDidLoad() {
@@ -38,11 +39,11 @@ class LoginViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationBar?.setColors(background: Stylesheet.Colors.base, text: Stylesheet.Colors.white)
+//        self.navigationBar?.setColors(background: Stylesheet.Colors.base, text: Stylesheet.Colors.white)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        self.navigationBar?.setColors(background: Stylesheet.Colors.white, text: Stylesheet.Colors.base)
+//        self.navigationBar?.setColors(background: Stylesheet.Colors.white, text: Stylesheet.Colors.base)
     }
     
     override func didReceiveMemoryWarning() {
@@ -55,12 +56,14 @@ class LoginViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        if User.getActiveUser().isLoggedIn() != false {
-            
-            // If so move on to the next screen
-            let vc = CustomTabViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+//        if User.getActiveUser().isLoggedIn() != false {
+//            
+//            // If so move on to the next screen
+////            let vc = CustomTabViewController()
+////            self.navigationController?.pushViewController(vc, animated: true)
+//            User.logout()
+//            self.navigationController?.popViewController()
+//        }
     }
     
     func addBottomBorderToView(view: UIView, height: CGFloat, width: CGFloat) {
@@ -127,11 +130,12 @@ class LoginViewController: UIViewController {
         self.stackView.addArrangedSubview(lastNameTextField)
         self.stackView.addArrangedSubview(loginButton)
         self.stackView.addArrangedSubview(signUpButton)
+        self.stackView.addArrangedSubview(cancelButton)
         
         stackView.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(self.view.center)
             make.left.right.equalToSuperview()
-            make.bottom.equalTo(signUpButton)
+            make.bottom.equalTo(cancelButton)
         }
     }
     
@@ -219,6 +223,11 @@ class LoginViewController: UIViewController {
             make.height.equalTo(42.calculateHeight())
         }
         
+        cancelButton.snp.makeConstraints { (make) -> Void in
+            make.width.equalTo(94.calculateWidth())
+            make.height.equalTo(42.calculateHeight())
+        }
+        
         signUpButton.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(94.calculateWidth())
             make.height.equalTo(42.calculateHeight())
@@ -230,6 +239,13 @@ class LoginViewController: UIViewController {
         loginButton.addTarget(self, action: #selector(self.loginButtonPressed), for: .touchUpInside)
         loginButton.cornerRadius = 4.calculateWidth()
         
+        cancelButton.setTitle("Cancel", for: .normal)
+        cancelButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
+        cancelButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
+        cancelButton.addTarget(self, action: #selector(self.cancelButtonPressed), for: .touchUpInside)
+        cancelButton.cornerRadius = 4.calculateWidth()
+        cancelButton.isHidden = true
+        
         signUpButton.setTitle("Sign Up", for: .normal)
         signUpButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
         signUpButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
@@ -238,10 +254,6 @@ class LoginViewController: UIViewController {
     }
     
     func loginButtonPressed() {
-        passwordConfirmTextField.isHidden = true
-        firstNameTextField.isHidden = true
-        lastNameTextField.isHidden = true
-        
         guard !emailTextField.isEmpty else {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.emailEmpty)
             return
@@ -265,22 +277,30 @@ class LoginViewController: UIViewController {
         }
         
         // API Login Call
-//        HUD.show(.systemActivity)
-//        API.sharedInstance.login(email: email, password: password, completion: { (success) -> Void in
-//            
-//            if success == false {
+        API.sharedInstance.login(username: email, password: password, completion: { (success) -> Void in
+            
+            if success == false {
 //                HUD.hide()
-//                return
-//            }
-//            HUD.hide()
-//            // Completed so present Tab controller
-//            let vc = CustomTabViewController()
-//            self.navigationController?.pushViewController(vc, animated: true)
-//        })
+                return
+            }
+//            HUD.hide({ _ in
+            self.navigationController?.popViewController()
+//            })
+        })
+    }
+    
+    func cancelButtonPressed() {
+        loginButton.isHidden = false
+        cancelButton.isHidden = true
+        passwordConfirmTextField.isHidden = true
+        firstNameTextField.isHidden = true
+        lastNameTextField.isHidden = true
     }
     
     func signUpButtonPressed() {
         if passwordConfirmTextField.isHidden == true {
+            loginButton.isHidden = true
+            cancelButton.isHidden = false
             passwordConfirmTextField.isHidden = false
             firstNameTextField.isHidden = false
             lastNameTextField.isHidden = false
@@ -320,40 +340,16 @@ class LoginViewController: UIViewController {
             return
         }
         
-        guard !firstNameTextField.isEmpty else {
-            Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.firstNameEmpty)
-            return
-        }
-        
-        guard let firstName = firstNameTextField.text else { return }
-        guard firstName.length >= 2 else {
-            Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.lastNameNotLongEnough)
-            return
-        }
-        
-        guard !lastNameTextField.isEmpty else {
-            Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.lastNameEmpty)
-            return
-        }
-        
-        guard let lastName = lastNameTextField.text else { return }
-        guard lastName.length >= 2 else {
-            Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.lastNameNotLongEnough)
-            return
-        }
-        
         // API Login Call
-//        HUD.show(.systemActivity)
-//        API.sharedInstance.register(firstName: firstName, lastName: lastName, email: email, password: password, completion: { (success) -> Void in
-//            
-//            if success == false {
+        API.sharedInstance.register(username: email, password: password, completion: { (success) -> Void in
+            
+            if success == false {
 //                HUD.hide()
-//                return
-//            }
-//            
-//            // Completed so present Tab controller
-//            let vc = CustomTabViewController()
-//            self.navigationController?.pushViewController(vc, animated: true)
-//        })
+                return
+            }
+//            HUD.hide({ _ in
+                self.navigationController?.popViewController()
+//            })
+        })
     }
 }

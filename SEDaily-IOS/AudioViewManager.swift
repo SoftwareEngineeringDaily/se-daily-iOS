@@ -12,37 +12,57 @@ import AVFoundation
 import SnapKit
 import SwifterSwift
 
-class AudioViewManager: NSObject{
+class AudioViewManager: NSObject {
 
     static let shared: AudioViewManager = AudioViewManager()
+    
+    /// The instance of `AssetPlaybackManager` that the app uses for managing playback.
+    let assetPlaybackManager = Manager()
+    
+    /// The instance of `RemoteCommandManager` that the app uses for managing remote command events.
+    var remoteCommandManager: RemoteCommandManager!
+    
     private override init() {
         super.init()
-        self.audioManager = AudioManager()
-        self.audioManager?.playerDelegate = self
+        self.assetPlaybackManager.playerDelegate = self
     }
     
     var audioView: AudioView?
     var podcastModel: PodcastModel?
-    var audioManager: AudioManager?
+//    var audioManager: Manager?
     
     func setupManager(podcastModel: PodcastModel) {
         self.podcastModel = podcastModel
         self.presentAudioView()
     }
     
-    fileprivate func setupAudioManager() {
+    fileprivate func setupAudioManager(url: URL, name: String) {
 //        if podcastModel.mp3Saved {
 //            let audioFile = AudioFile(fileURL: podcastModel.getSavedMP3URL(), currentTime: podcastModel.getCurrentTime()!)
 //            audioManager.play(audioFile: audioFile)
 //            return
 //        }
 //
-        guard let url = podcastModel?.getMP3asURL() else { return }
-        audioManager?.setupAudio(url: url, currentTime: podcastModel?.getCurrentTime())
-//        guard let fileName = podcastModel.podcastName else { return }
+//        guard let url = podcastModel?.getMP3asURL() else { return }
+//        audioManager?.setupAudio(url: url, currentTime: podcastModel?.getCurrentTime())
+//        guard let name = podcastModel?.podcastName else { return }
 //        audioManager.willDownload(from: url, fileName: fileName)
+        
+        let avAsset = AVURLAsset(url: url)
+        let asset = Asset(assetName: name, urlAsset: avAsset)
+        assetPlaybackManager.asset = asset
+        
+        // @TODO: This takes a while
+        
+        // Initializer the `RemoteCommandManager`.
+        remoteCommandManager = RemoteCommandManager(assetPlaybackManager: assetPlaybackManager)
+        
+        // Always enable playback commands in MPRemoteCommandCenter.
+        remoteCommandManager.activatePlaybackCommands(true)
+        remoteCommandManager.toggleSkipBackwardCommand(true, interval: 30)
+        remoteCommandManager.toggleSkipForwardCommand(true, interval: 30)
     }
-    
+
     fileprivate func presentAudioView() {
         if var topController = UIApplication.shared.keyWindow?.rootViewController {
             while let presentedViewController = topController.presentedViewController {
@@ -61,7 +81,10 @@ class AudioViewManager: NSObject{
                 controller.setContainerViewInset()
             }
             
-            self.setupAudioManager()
+            guard let url = self.podcastModel?.getMP3asURL() else { return }
+            guard let name = self.podcastModel?.podcastName else { return }
+            
+            self.setupAudioManager(url: url, name: name)
         }
     }
     
@@ -118,11 +141,10 @@ class AudioViewManager: NSObject{
             self.setText(text: model.podcastName)
         }
         
-        guard let audioManager = audioManager else { return }
-        switch audioManager.playbackState {
-        case .setup:
+        switch assetPlaybackManager.state {
+        case .initial:
+            log.info("initial")
             audioView?.isFirstLoad = true
-            audioView?.updateTimeLabels(currentTimeString: "00.00.00", timeLeftString: "00.00.00")
             audioView?.disableButtons()
             audioView?.activityView.startAnimating()
             
@@ -133,16 +155,16 @@ class AudioViewManager: NSObject{
             audioView?.animateOut()
 
             audioView = nil
-        case .willDownload:
-            audioView?.activityView.startAnimating()
-            
-            audioView?.playButton.isHidden = false
-            audioView?.pauseButton.isHidden = true
-        case .downloading:
-            audioView?.activityView.startAnimating()
-            
-            audioView?.playButton.isHidden = false
-            audioView?.pauseButton.isHidden = true
+//        case .willDownload:
+//            audioView?.activityView.startAnimating()
+//            
+//            audioView?.playButton.isHidden = false
+//            audioView?.pauseButton.isHidden = true
+//        case .downloading:
+//            audioView?.activityView.startAnimating()
+//            
+//            audioView?.playButton.isHidden = false
+//            audioView?.pauseButton.isHidden = true
         case .playing:
             audioView?.enableButtons()
             audioView?.activityView.stopAnimating()
@@ -159,83 +181,67 @@ class AudioViewManager: NSObject{
         case .buffering:
             audioView?.activityView.startAnimating()
             
+            audioView?.stopButton.isEnabled = true
             audioView?.playButton.isHidden = false
             audioView?.pauseButton.isHidden = true
+        case .interrupted:
+            log.info("Interuppted state")
         }
     }
 }
 
-extension AudioViewManager: AudioManagerDelegate {
+extension AudioViewManager: ManagerDelegate {
+    func currentAssetDidChange(_ player: Manager) {
+        log.info("Current Asset Changed")
+    }
+
     func playerBufferTimeDidChange(_ bufferValue: Float) {
         audioView?.updateBufferSlider(bufferValue: bufferValue)
     }
 
-    func playerIsLikelyToKeepUp(_ player: AudioManager) {
-        guard let duration = player.getDuration() else { return }
-
+    func playerIsLikelyToKeepUp(_ player: Manager) {
+        let duration = player.duration
         audioView?.updateSlider(maxValue: Float(duration))
     }
 
-    func playerIsBuffering(_ player: AudioManager) {
+    func playerIsBuffering(_ player: Manager) {
         handleAudioManagerStateChange()
     }
 
-    func playerDownloadProgressDidChange(_ player: AudioManager) {
+    func playerDownloadProgressDidChange(_ player: Manager) {
 //        audioView.updateDownloadProgress(progress: player.loadingProgress)
     }
 
-    func playerDidFinishDownloading(_ player: AudioManager) {
+    func playerDidFinishDownloading(_ player: Manager) {
 //        podcastModel.update(mp3Saved: true)
     }
 
-    func playerPlaybackDidEnd(_ player: AudioManager) {
+    func playerPlaybackDidEnd(_ player: Manager) {
         log.info("playback did end")
         podcastModel?.update(currentTime: 0.0)
     }
     
-    func playerCurrentTimeDidChange(_ player: AudioManager) {
-        guard let currentTime = player.getCurrentTime() else { return }
-        podcastModel?.update(currentTime: currentTime)
-
-        guard let duration = player.getDuration() else { return }
-        let timeLeft = Double(duration - currentTime)
+    func playerCurrentTimeDidChange(_ player: Manager) {
         
-        var currentTimeString = ""
-        Helpers.hmsFrom(seconds: Int(currentTime), completion: { hours, minutes, seconds in
-            let hoursString = Helpers.getStringFrom(seconds: hours)
-            let minutesString = Helpers.getStringFrom(seconds: minutes)
-            let secondsString = Helpers.getStringFrom(seconds: seconds)
-            
-            if hoursString == "00" {
-                currentTimeString = "\(minutesString):\(secondsString)"
-                return
-            }
-            currentTimeString = "\(hoursString):\(minutesString):\(secondsString)"
-        })
+        let duration = player.duration
+        let currentTime = player.playbackPosition
+//        guard let currentTime = player.getCurrentTime() else { return }
+//        podcastModel?.update(currentTime: currentTime)
+//
+//        guard let duration = player.getDuration() else { return }
+        let timeLeft = Float(duration - currentTime)
         
-        var timeLeftString = ""
-        Helpers.hmsFrom(seconds: Int(timeLeft), completion: { hours, minutes, seconds in
-            let hoursString = Helpers.getStringFrom(seconds: hours)
-            let minutesString = Helpers.getStringFrom(seconds: minutes)
-            let secondsString = Helpers.getStringFrom(seconds: seconds)
-
-            if hoursString == "00" {
-                timeLeftString = "-" + "\(minutesString):\(secondsString)"
-                return
-            }
-            timeLeftString = "-" + "\(hoursString):\(minutesString):\(secondsString)"
-        })
-        
-        audioView?.updateTimeLabels(currentTimeString: currentTimeString, timeLeftString: timeLeftString)
+        audioView?.updateTimeLabels(currentTime: currentTime, timeLeft: timeLeft)
 
         audioView?.updateSlider(currentValue: Float(currentTime))
     }
     
-    func playerPlaybackStateDidChange(_ player: AudioManager) {
+    func playerPlaybackStateDidChange(_ player: Manager) {
+        log.error(player.state)
         handleAudioManagerStateChange()
     }
     
-    func playerReady(_ player: AudioManager) {
+    func playerReady(_ player: Manager) {
         
     }
 }
@@ -244,26 +250,26 @@ extension AudioViewManager: AudioViewDelegate {
     func playbackSliderValueChanged(value: Float) {
         let cmTime = CMTimeMake(Int64(value), 1)
         //@TODO: This is slowing down ui
-        audioManager?.seek(to: cmTime)
+        assetPlaybackManager.seekTo(TimeInterval(value))
     }
 
     func playButtonPressed() {
-        audioManager?.play()
+        assetPlaybackManager.play()
     }
     
     func pauseButtonPressed() {
-        audioManager?.pause()
+        assetPlaybackManager.pause()
     }
     
     func stopButtonPressed() {
-        audioManager?.stop()
+        assetPlaybackManager.stop()
     }
     
     func skipForwardButtonPressed() {
-        audioManager?.skipForward()
+        assetPlaybackManager.skipForward(30)
     }
     
     func skipBackwardButtonPressed() {
-        audioManager?.skipBackward()
+        assetPlaybackManager.skipBackward(30)
     }
 }

@@ -55,8 +55,7 @@ public class User: Object, Mappable {
 extension User {
     func save() {
         let realm = try? Realm()
-        try? realm?.write {
-            log.info("saving")
+        try! realm?.write {
             realm?.add(self, update: true)
         }
     }
@@ -76,7 +75,6 @@ extension User {
     class func getActiveUser() -> User {
         let realm = try? Realm()
         guard let user = realm?.objects(User.self).first else {
-            log.info("returning default")
             User.createDefault()
             return (realm?.objects(User.self).first!)!
         }
@@ -89,6 +87,7 @@ extension User {
     }
     
     class func logout() {
+        NotificationCenter.default.post(name: .loginChanged, object: nil)
         log.error("loggin out")
         let user = User()
         user.firstName = ""
@@ -100,7 +99,6 @@ extension User {
     
     class func createDefault() {
         log.error("creating default")
-//        guard self.getActiveUser() == nil else { return }
         let user = User()
         user.email = ""
         user.token = ""

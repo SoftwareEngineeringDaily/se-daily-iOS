@@ -50,6 +50,7 @@ class AudioView: UIView {
         super.init(frame: frame);
         
         self.performLayout()
+        self.disableButtons()
     }
     
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented"); }
@@ -262,8 +263,42 @@ class AudioView: UIView {
         bufferSlider.value = bufferValue
     }
     
-    func updateTimeLabels(currentTimeString: String, timeLeftString: String) {
+    func updateTimeLabels(currentTime: Float, timeLeft: Float) {
+        updateCurrentTimeLabel(currentTime: currentTime)
+        updateTimeLeftLabel(timeLeft: timeLeft)
+    }
+
+    func updateCurrentTimeLabel(currentTime: Float) {
+        var currentTimeString = ""
+        Helpers.hmsFrom(seconds: Int(currentTime), completion: { hours, minutes, seconds in
+            let hoursString = Helpers.getStringFrom(seconds: hours)
+            let minutesString = Helpers.getStringFrom(seconds: minutes)
+            let secondsString = Helpers.getStringFrom(seconds: seconds)
+            
+            if hoursString == "00" {
+                currentTimeString = "\(minutesString):\(secondsString)"
+                return
+            }
+            currentTimeString = "\(hoursString):\(minutesString):\(secondsString)"
+        })
+
         self.currentTimeLabel.text = currentTimeString
+    }
+    
+    func updateTimeLeftLabel(timeLeft: Float) {
+        var timeLeftString = ""
+        Helpers.hmsFrom(seconds: Int(timeLeft), completion: { hours, minutes, seconds in
+            let hoursString = Helpers.getStringFrom(seconds: hours)
+            let minutesString = Helpers.getStringFrom(seconds: minutes)
+            let secondsString = Helpers.getStringFrom(seconds: seconds)
+            
+            if hoursString == "00" {
+                timeLeftString = "-" + "\(minutesString):\(secondsString)"
+                return
+            }
+            timeLeftString = "-" + "\(hoursString):\(minutesString):\(secondsString)"
+        })
+
         self.timeLeftLabel.text = timeLeftString
     }
     
@@ -299,18 +334,18 @@ class AudioView: UIView {
     
     func enableButtons() {
         self.playButton.isEnabled = true
+        self.pauseButton.isEnabled = true
+        self.stopButton.isEnabled = true
         self.skipForwardButton.isEnabled = true
         self.skipBackwardbutton.isEnabled = true
-        self.playButton.isEnabled = true
-        self.pauseButton.isEnabled = true
     }
     
     func disableButtons() {
         self.playButton.isEnabled = false
+        self.pauseButton.isEnabled = false
+        self.stopButton.isEnabled = false
         self.skipForwardButton.isEnabled = false
         self.skipBackwardbutton.isEnabled = false
-        self.playButton.isEnabled = false
-        self.pauseButton.isEnabled = false
     }
 }
 

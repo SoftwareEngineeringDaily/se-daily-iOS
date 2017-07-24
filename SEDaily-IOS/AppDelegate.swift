@@ -21,11 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        API.sharedInstance.createDefaultData()
         migrateRealmDatabaseIfNeeded()
         setupSwiftyBeaver()
         setupIQKeyboard()
         setupFirstScreen()
+        API.sharedInstance.createDefaultData()
         
         return true
     }
@@ -69,7 +69,6 @@ extension AppDelegate {
     
     func setupFirstScreen() {
         window = UIWindow(frame: UIScreen.main.bounds)
-//        let rootVC = CustomTabViewController()
         let rootVC = ContainerViewController()
         rootVC.view.backgroundColor = .white
 //        let navVC = UINavigationController(rootViewController: rootVC)
@@ -78,12 +77,15 @@ extension AppDelegate {
 //        window!.rootViewController = navVC
         window!.rootViewController = rootVC
         window!.makeKeyAndVisible()
+        
+        let realm = try! Realm()
+        log.info(realm.configuration.fileURL)
     }
     
     func migrateRealmDatabaseIfNeeded() {
         var config = Realm.Configuration()
         config.deleteRealmIfMigrationNeeded = true
-        
+
         Realm.Configuration.defaultConfiguration = config
         _ = try! Realm()
     }

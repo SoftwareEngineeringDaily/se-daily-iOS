@@ -30,6 +30,13 @@ class PodcastCollectionViewController: UICollectionViewController {
         
         let layout = KoalaTeaFlowLayout(ratio: 0.5, cellsAcross: 1, cellSpacing: 0)
         self.collectionView?.collectionViewLayout = layout
+        
+        // User Login observer
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)
+    }
+    
+    func loginObserver() {
+        self.collectionView?.reloadData()
     }
 
     override func didReceiveMemoryWarning() {

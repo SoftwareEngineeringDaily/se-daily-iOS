@@ -15,7 +15,9 @@ import SwiftyJSON
 extension API {
     enum Headers {
         static let contentType = "Content-Type"
+        static let authorization = "Authorization"
         static let x_www_form_urlencoded = "application/x-www-form-urlencoded"
+        static let bearer = "Bearer "
     }
     
     enum Endpoints {
@@ -23,6 +25,8 @@ extension API {
         static let recommendations = "/posts/recommendations"
         static let login = "/auth/login"
         static let register = "/auth/register"
+        static let upvote = "/upvote"
+        static let downvote = "/downvote"
     }
     
     enum Types {
@@ -81,6 +85,8 @@ extension API {
                     user.email = username
                     user.token = token as? String
                     user.save()
+                    
+                    NotificationCenter.default.post(name: .loginChanged, object: nil)
                     completion(true)
                 }
             case .failure(let error):
@@ -120,6 +126,8 @@ extension API {
                     user.email = username
                     user.token = token as? String
                     user.save()
+                    
+                    NotificationCenter.default.post(name: .loginChanged, object: nil)
                     completion(true)
                 }
             case .failure(let error):
@@ -136,10 +144,10 @@ extension API {
 extension API {
     //MARK: Getters
     func getPosts(type: String, createdAtBefore beforeDate: String = "", completion: @escaping () -> Void) {
-        
         let urlString = rootURL + Endpoints.posts
         
         var params = [String: String]()
+        params[Params.type] = type
         params[Params.createdAtBefore] = beforeDate
         
         typealias model = PodcastModel
@@ -153,17 +161,32 @@ extension API {
                 guard let array = modelsArray else { return }
                 
                 for item in array {
+
+                    let realm = try! Realm()
+                    let existingItem = realm.object(ofType: model.self, forPrimaryKey: item.key)
                     
-//                    let realm = try! Realm()
-//                    let existingItem = realm.object(ofType: model.self, forPrimaryKey: item.key)
-                    
-//                    if item.key != existingItem?.key {
-                        item.type = type
+                    if item.key != existingItem?.key {
+                        switch type {
+                        case API.Types.top:
+                            item.isTop = true
+                        case API.Types.new:
+                            item.isNew = true
+                        default:
+                            break
+                        }
                         item.save()
-//                    }
-//                    else {
-                        // Nothing needs be done.
-//                    }
+                    }
+                    else {
+                        // Just update the existing item
+                        switch type {
+                        case API.Types.top:
+                            existingItem?.update(isTop: true)
+                        case API.Types.new:
+                            existingItem?.update(isNew: true)
+                        default:
+                            break
+                        }
+                    }
                 }
             case .failure(let error):
                 log.error(error)
@@ -172,42 +195,107 @@ extension API {
         }
     }
     
-    func getRecommended() {
-        
+    func getRecommendedPosts(createdAtBefore beforeDate: String = "", completion: @escaping () -> Void) {
         let urlString = rootURL + Endpoints.recommendations
         
         let user = User.getActiveUser()
         guard let userToken = user.token else { return }
-        var params = [String: String]()
-        params[Params.bearer] = userToken
-        
-        typealias model = PodcastModel
+        let _headers : HTTPHeaders = [
+            Headers.authorization:Headers.bearer + userToken,
+        ]
 
-        Alamofire.request(urlString, method: .get, parameters: params).responseArray { (response: DataResponse<[model]>) in
+        typealias model = PodcastModel
+        
+        Alamofire.request(urlString, method: .get, parameters: nil, headers: _headers).responseArray { (response: DataResponse<[model]>) in
             
             switch response.result {
                 
             case .success:
                 let modelsArray = response.result.value
                 guard let array = modelsArray else { return }
-                log.info(array)
+
                 for item in array {
-                    
                     // Check if Achievement Model already exists
-//                    let realm = try! Realm()
-//                    let existingItem = realm.object(ofType: model.self, forPrimaryKey: item.key)
-//                    
-//                    if item.key != existingItem?.key {
-                        item.type = API.Types.recommended
+                    let realm = try! Realm()
+                    let existingItem = realm.object(ofType: model.self, forPrimaryKey: item.key)
+                    
+                    if item.key != existingItem?.key {
+                        item.isRecommended = true
                         item.save()
-//                    }
-//                    else {
-                        // Nothing needs be done.
-//                    }
+                    }
+                    else {
+                        // Just update the existing item
+                        existingItem?.update(isRecommended: true)
+                    }
                 }
             case .failure(let error):
                 log.error(error)
                 break
+            }
+            completion()
+        }
+    }
+}
+
+extension API {
+    func upvotePodcast(podcastId: String, completion: @escaping (_ success: Bool?) -> Void) {
+        let urlString = rootURL + Endpoints.posts + "/" + podcastId + Endpoints.upvote
+        
+        let user = User.getActiveUser()
+        guard let userToken = user.token else { return }
+        let _headers : HTTPHeaders = [
+            Headers.authorization:Headers.bearer + userToken,
+        ]
+
+        typealias model = PodcastModel
+        
+        Alamofire.request(urlString, method: .post, parameters: nil, encoding: URLEncoding.httpBody , headers: _headers).responseJSON { response in
+            switch response.result {
+            case .success:
+                let jsonResponse = response.result.value as! NSDictionary
+                log.info(jsonResponse)
+                if let message = jsonResponse["message"] {
+                    Helpers.alertWithMessage(title: Helpers.Alerts.error, message: String(describing: message), completionHandler: nil)
+                    completion(false)
+                    return
+                }
+                
+            case .failure(let error):
+                log.error(error)
+                
+                Helpers.alertWithMessage(title: Helpers.Alerts.error, message: error.localizedDescription, completionHandler: nil)
+                completion(false)
+            }
+        }
+    }
+    
+    func downvotePodcast(podcastId: String, completion: @escaping (_ success: Bool?) -> Void) {
+        let urlString = rootURL + Endpoints.posts + "/" + podcastId + Endpoints.downvote
+        
+        let user = User.getActiveUser()
+        guard let userToken = user.token else { return }
+        let _headers : HTTPHeaders = [
+            Headers.authorization:Headers.bearer + userToken,
+        ]
+        
+        typealias model = PodcastModel
+        
+        Alamofire.request(urlString, method: .post, parameters: nil, encoding: URLEncoding.httpBody , headers: _headers).responseJSON { response in
+            switch response.result {
+            case .success:
+                let jsonResponse = response.result.value as! NSDictionary
+                log.info(jsonResponse)
+                if let message = jsonResponse["message"] {
+                    Helpers.alertWithMessage(title: Helpers.Alerts.error, message: String(describing: message), completionHandler: nil)
+                    completion(false)
+                    return
+                }
+                
+            case .failure(let error):
+                log.error(error)
+                
+                Helpers.alertWithMessage(title: Helpers.Alerts.error, message: error.localizedDescription, completionHandler: nil)
+                completion(false)
             }
         }
     }
@@ -215,7 +303,7 @@ extension API {
 
 extension API {
     func createDefaultData() {
-        User.createDefault()
+//        User.createDefault()
     }
     
 //    func loadAllObjects() {

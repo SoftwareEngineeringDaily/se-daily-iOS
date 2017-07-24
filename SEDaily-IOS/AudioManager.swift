@@ -171,13 +171,23 @@ public class AudioManager: NSObject {
             let avPlayerItem = AVPlayerItem(asset: avAsset)
             
             avPlayer = AVPlayer(playerItem: avPlayerItem)
+            // Initializer the `RemoteCommandManager`.
+//            remoteCommandManager = RemoteCommandManager(assetPlaybackManager: assetPlaybackManager)
+            
+            // Always enable playback commands in MPRemoteCommandCenter.
+            remoteCommandManager.activatePlaybackCommands(true)
+            remoteCommandManager.toggleSkipBackwardCommand(true, interval: 30)
+            remoteCommandManager.toggleSkipForwardCommand(true, interval: 30)
+            let asset = Asset(assetName: "TEST", urlAsset: avAsset)
+            assetPlaybackManager.asset = asset
+            self.playbackState = .playing
             
             if let time = currentTime {
                 self.startTime = time
             }
             
-            self.setupPlayerItem(avPlayerItem)
-            self.playbackState = .buffering
+//            self.setupPlayerItem(avPlayerItem)
+//            self.playbackState = .buffering
             
             // Setup observer
             self.addPlayerObservers()
@@ -236,36 +246,52 @@ public class AudioManager: NSObject {
     }
     
     func setupSession() {
+        // Setup AVAudioSession to indicate to the system you how intend to play audio.
         let audioSession = AVAudioSession.sharedInstance()
+        
         do {
-            try audioSession.setCategory(AVAudioSessionCategoryPlayback)
-            try audioSession.setActive(true)
-        } catch let error {
-            log.error(error.localizedDescription)
+            try audioSession.setCategory(AVAudioSessionCategoryPlayback, mode: AVAudioSessionModeDefault)
+        }
+        catch {
+            print("An error occured setting the audio session category: \(error)")
+        }
+        
+        // Set the AVAudioSession as active.  This is required so that your application becomes the "Now Playing" app.
+        do {
+            try audioSession.setActive(true, with: [])
+        }
+        catch {
+            print("An Error occured activating the audio session: \(error)")
         }
     }
     
+    /// The instance of `AssetPlaybackManager` that the app uses for managing playback.
+    let assetPlaybackManager = AssetPlaybackManager()
+    
+    /// The instance of `RemoteCommandManager` that the app uses for managing remote command events.
+    var remoteCommandManager: RemoteCommandManager!
+    
     func setupMediaPlayerControls() {
-        let commandCenter = MPRemoteCommandCenter.shared()
-
-        commandCenter.skipBackwardCommand.isEnabled = true
-        commandCenter.skipBackwardCommand.preferredIntervals = [30]
-        commandCenter.skipBackwardCommand.removeTarget(nil)
-        commandCenter.skipBackwardCommand.addTarget(self, action: #selector(self.skipBackward))
-        
-        commandCenter.skipForwardCommand.isEnabled = true
-        commandCenter.skipForwardCommand.preferredIntervals = [30]
-        commandCenter.skipForwardCommand.removeTarget(nil)
-        commandCenter.skipForwardCommand.addTarget(self, action: #selector(self.skipForward))
-        
-        commandCenter.playCommand.isEnabled = true
-        commandCenter.playCommand.removeTarget(nil)
-        
-        commandCenter.playCommand.addTarget(self, action: #selector(self.targetPlay))
-        
-        commandCenter.pauseCommand.isEnabled = true
-        commandCenter.pauseCommand.removeTarget(nil)
-        commandCenter.pauseCommand.addTarget(self, action: #selector(self.pause))
+//        let commandCenter = MPRemoteCommandCenter.shared()
+//
+//        commandCenter.skipBackwardCommand.isEnabled = true
+//        commandCenter.skipBackwardCommand.preferredIntervals = [30]
+//        commandCenter.skipBackwardCommand.removeTarget(nil)
+//        commandCenter.skipBackwardCommand.addTarget(self, action: #selector(self.skipBackward))
+//        
+//        commandCenter.skipForwardCommand.isEnabled = true
+//        commandCenter.skipForwardCommand.preferredIntervals = [30]
+//        commandCenter.skipForwardCommand.removeTarget(nil)
+//        commandCenter.skipForwardCommand.addTarget(self, action: #selector(self.skipForward))
+//        
+//        commandCenter.playCommand.isEnabled = true
+//        commandCenter.playCommand.removeTarget(nil)
+//        
+//        commandCenter.playCommand.addTarget(self, action: #selector(self.targetPlay))
+//        
+//        commandCenter.pauseCommand.isEnabled = true
+//        commandCenter.pauseCommand.removeTarget(nil)
+//        commandCenter.pauseCommand.addTarget(self, action: #selector(self.pause))
     }
     
     func skipForward() {

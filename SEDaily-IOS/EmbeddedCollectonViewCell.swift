@@ -27,6 +27,9 @@ class EmbeddedCollectonViewCell: UICollectionViewCell {
         collectionView.backgroundColor = .clear
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        collectionView.remembersLastFocusedIndexPath = false
+
 //        collectionView.showsHorizontalScrollIndicator = false
 //        collectionView.showsVerticalScrollIndicator = false
         
@@ -53,27 +56,29 @@ class EmbeddedCollectonViewCell: UICollectionViewCell {
         activityView.center = self.contentView.center
         
         activityView.startAnimating()
-        
+        log.info("setting up")
         switch type {
         case API.Types.top:
             API.sharedInstance.getPosts(type: type, completion: {
                 activityView.stopAnimating()
             })
-            
-            self.data = PodcastModel.all().sorted(byKeyPath: "score", ascending: false)
+            self.data = PodcastModel.getTop()
             self.registerNotifications()
         case API.Types.recommended:
             guard User.getActiveUser().isLoggedIn() else {
                 API.sharedInstance.getPosts(type: API.Types.top, completion: {
                     activityView.stopAnimating()
                 })
-                self.data = PodcastModel.all().sorted(byKeyPath: "score", ascending: false)
+                self.data = PodcastModel.getTop()
                 self.registerNotifications()
-                return
+                break
             }
-            
-            API.sharedInstance.getRecommended()
-        default:
+            API.sharedInstance.getRecommendedPosts(completion: {
+                activityView.stopAnimating()
+            })
+            self.data = PodcastModel.getRecommended()
+            self.registerNotifications()
+        default: // new
             API.sharedInstance.getPosts(type: type, completion: {
                 activityView.stopAnimating()
             })

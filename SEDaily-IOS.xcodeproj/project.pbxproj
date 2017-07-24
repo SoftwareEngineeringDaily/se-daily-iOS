@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1610E2C11F227BCF006C8E83 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610E2C01F227BCF006C8E83 /* Asset.swift */; };
+		1610E2C61F227C0D006C8E83 /* AssetPlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610E2C31F227C0D006C8E83 /* AssetPlaybackManager.swift */; };
+		1610E2C71F227C0D006C8E83 /* RemoteCommandDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610E2C41F227C0D006C8E83 /* RemoteCommandDataSource.swift */; };
+		1610E2C81F227C0D006C8E83 /* RemoteCommandManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610E2C51F227C0D006C8E83 /* RemoteCommandManager.swift */; };
 		1649A78A1F204EC6005C4A6E /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1649A7891F204EC6005C4A6E /* ContainerViewController.swift */; };
 		164C71051F021AC8003803BC /* CustomTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C71041F021AC8003803BC /* CustomTabViewController.swift */; };
 		164C71071F021C8D003803BC /* PodcastCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C71061F021C8D003803BC /* PodcastCollectionViewController.swift */; };
@@ -23,6 +27,7 @@
 		164FE9ED1F02F7E2009419CA /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9EC1F02F7E2009419CA /* UIButtonExtension.swift */; };
 		164FE9EF1F03065C009419CA /* NavigationControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9EE1F03065C009419CA /* NavigationControllerExtension.swift */; };
 		164FE9F11F030A2E009419CA /* PodcastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9F01F030A2E009419CA /* PodcastModel.swift */; };
+		166036211F266FF300A22B7B /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166036201F266FF300A22B7B /* Notifications.swift */; };
 		1672FAC41F06C141008445B1 /* NotificationCenterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */; };
 		167AFAB21F043CF600A1332F /* PostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */; };
 		167AFAB51F043ED500A1332F /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB41F043ED500A1332F /* DetailTableViewCell.swift */; };
@@ -33,10 +38,11 @@
 		1686FC081F009EC00088A6C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC071F009EC00088A6C1 /* Assets.xcassets */; };
 		1686FC0B1F009EC00088A6C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC091F009EC00088A6C1 /* LaunchScreen.storyboard */; };
 		1686FC161F009EC00088A6C1 /* SEDaily_IOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */; };
-		1687DB451F0AC214002FFC78 /* TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687DB441F0AC214002FFC78 /* TestModel.swift */; };
 		169893A01F04C787008A2B4C /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1698939F1F04C787008A2B4C /* AudioManager.swift */; };
 		16B147B11F16BF9C00433A42 /* AudioViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B147B01F16BF9C00433A42 /* AudioViewManager.swift */; };
 		16D766BA1F06B4850066C143 /* AudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D766B91F06B4850066C143 /* AudioView.swift */; };
+		16DDC6361F24062F006BF9BD /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DDC6351F24062F006BF9BD /* Manager.swift */; };
+		16DDC63A1F24183D006BF9BD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DDC6391F24183D006BF9BD /* ViewController.swift */; };
 		238E99F4E37C7365658113B8 /* Pods_SEDaily_IOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C9F051C6C2F8638D2ABF8 /* Pods_SEDaily_IOSTests.framework */; };
 		24412438C753126FDDD37CBF /* Pods_SEDaily_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */; };
 /* End PBXBuildFile section */
@@ -52,6 +58,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1610E2C01F227BCF006C8E83 /* Asset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
+		1610E2C31F227C0D006C8E83 /* AssetPlaybackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetPlaybackManager.swift; sourceTree = "<group>"; };
+		1610E2C41F227C0D006C8E83 /* RemoteCommandDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteCommandDataSource.swift; sourceTree = "<group>"; };
+		1610E2C51F227C0D006C8E83 /* RemoteCommandManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteCommandManager.swift; sourceTree = "<group>"; };
 		1649A7891F204EC6005C4A6E /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		164C71041F021AC8003803BC /* CustomTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabViewController.swift; sourceTree = "<group>"; };
 		164C71061F021C8D003803BC /* PodcastCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCollectionViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +78,7 @@
 		164FE9EC1F02F7E2009419CA /* UIButtonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 		164FE9EE1F03065C009419CA /* NavigationControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationControllerExtension.swift; sourceTree = "<group>"; };
 		164FE9F01F030A2E009419CA /* PodcastModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastModel.swift; sourceTree = "<group>"; };
+		166036201F266FF300A22B7B /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterExtension.swift; sourceTree = "<group>"; };
 		167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewController.swift; sourceTree = "<group>"; };
 		167AFAB41F043ED500A1332F /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -82,10 +93,11 @@
 		1686FC111F009EC00088A6C1 /* SEDaily-IOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SEDaily-IOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SEDaily_IOSTests.swift; sourceTree = "<group>"; };
 		1686FC171F009EC00088A6C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1687DB441F0AC214002FFC78 /* TestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestModel.swift; sourceTree = "<group>"; };
 		1698939F1F04C787008A2B4C /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		16B147B01F16BF9C00433A42 /* AudioViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioViewManager.swift; sourceTree = "<group>"; };
 		16D766B91F06B4850066C143 /* AudioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioView.swift; sourceTree = "<group>"; };
+		16DDC6351F24062F006BF9BD /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
+		16DDC6391F24183D006BF9BD /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.release.xcconfig"; sourceTree = "<group>"; };
 		995F64385352A79BA0DF7DEB /* Pods-SEDaily-IOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9FDA28C254F62BB468401B75 /* Pods-SEDaily-IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -114,6 +126,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1610E2C21F227BE0006C8E83 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				1610E2C31F227C0D006C8E83 /* AssetPlaybackManager.swift */,
+				1610E2C41F227C0D006C8E83 /* RemoteCommandDataSource.swift */,
+				1610E2C51F227C0D006C8E83 /* RemoteCommandManager.swift */,
+				1698939F1F04C787008A2B4C /* AudioManager.swift */,
+				16B147B01F16BF9C00433A42 /* AudioViewManager.swift */,
+				16DDC6351F24062F006BF9BD /* Manager.swift */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
 		164FE9DA1F02DAA5009419CA /* CollectionViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +173,7 @@
 				164FE9E01F02EE67009419CA /* LoginViewController.swift */,
 				167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */,
 				1649A7891F204EC6005C4A6E /* ContainerViewController.swift */,
+				16DDC6391F24183D006BF9BD /* ViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -155,11 +181,9 @@
 		164FE9E21F02EE71009419CA /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				1698939F1F04C787008A2B4C /* AudioManager.swift */,
-				16B147B01F16BF9C00433A42 /* AudioViewManager.swift */,
 				164FE9F01F030A2E009419CA /* PodcastModel.swift */,
-				1687DB441F0AC214002FFC78 /* TestModel.swift */,
 				164FE9E61F02F02F009419CA /* UserModel.swift */,
+				1610E2C01F227BCF006C8E83 /* Asset.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -173,6 +197,7 @@
 				164FE9EC1F02F7E2009419CA /* UIButtonExtension.swift */,
 				164FE9EE1F03065C009419CA /* NavigationControllerExtension.swift */,
 				1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */,
+				166036201F266FF300A22B7B /* Notifications.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -209,6 +234,7 @@
 		1686FBFF1F009EC00088A6C1 /* SEDaily-IOS */ = {
 			isa = PBXGroup;
 			children = (
+				1610E2C21F227BE0006C8E83 /* Managers */,
 				1686FC0C1F009EC00088A6C1 /* Info.plist */,
 				164FE9E41F02EE83009419CA /* API.swift */,
 				1686FC001F009EC00088A6C1 /* AppDelegate.swift */,
@@ -466,10 +492,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				167AFAB51F043ED500A1332F /* DetailTableViewCell.swift in Sources */,
+				1610E2C81F227C0D006C8E83 /* RemoteCommandManager.swift in Sources */,
 				164FE9E11F02EE67009419CA /* LoginViewController.swift in Sources */,
 				1649A78A1F204EC6005C4A6E /* ContainerViewController.swift in Sources */,
-				1687DB451F0AC214002FFC78 /* TestModel.swift in Sources */,
 				164FE9EF1F03065C009419CA /* NavigationControllerExtension.swift in Sources */,
+				1610E2C71F227C0D006C8E83 /* RemoteCommandDataSource.swift in Sources */,
 				167AFAB21F043CF600A1332F /* PostDetailTableViewController.swift in Sources */,
 				164FE9D51F02CC53009419CA /* EmbeddedCollectonViewCell.swift in Sources */,
 				164FE9D91F02D611009419CA /* CollectionReusableView.swift in Sources */,
@@ -477,6 +504,7 @@
 				167AFAB71F043F1100A1332F /* HeaderView.swift in Sources */,
 				164FE9D71F02CD99009419CA /* Extensions.swift in Sources */,
 				164FE9E51F02EE83009419CA /* API.swift in Sources */,
+				16DDC63A1F24183D006BF9BD /* ViewController.swift in Sources */,
 				164FE9E91F02F049009419CA /* Stylesheet.swift in Sources */,
 				164C71091F021C97003803BC /* FeedCollectionViewController.swift in Sources */,
 				16B147B11F16BF9C00433A42 /* AudioViewManager.swift in Sources */,
@@ -486,11 +514,15 @@
 				169893A01F04C787008A2B4C /* AudioManager.swift in Sources */,
 				16D766BA1F06B4850066C143 /* AudioView.swift in Sources */,
 				164FE9EB1F02F340009419CA /* Helpers.swift in Sources */,
+				166036211F266FF300A22B7B /* Notifications.swift in Sources */,
 				1672FAC41F06C141008445B1 /* NotificationCenterExtension.swift in Sources */,
 				164FE9F11F030A2E009419CA /* PodcastModel.swift in Sources */,
+				16DDC6361F24062F006BF9BD /* Manager.swift in Sources */,
+				1610E2C11F227BCF006C8E83 /* Asset.swift in Sources */,
 				164FE9ED1F02F7E2009419CA /* UIButtonExtension.swift in Sources */,
 				1686FC011F009EC00088A6C1 /* AppDelegate.swift in Sources */,
 				164FE9E71F02F02F009419CA /* UserModel.swift in Sources */,
+				1610E2C61F227C0D006C8E83 /* AssetPlaybackManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

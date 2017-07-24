@@ -57,8 +57,6 @@ class HeaderView: UIView {
         }
         
         setupLabels()
-        
-        
     }
     
     func setupLabels() {
@@ -123,10 +121,14 @@ class HeaderView: UIView {
         scoreLabel.font = UIFont(font: .helveticaNeue, size: 24.calculateWidth())
 
         downVoteButton.setIcon(icon: .fontAwesome(.arrowCircleODown), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.offBlack, forState: .normal)
+        downVoteButton.setIcon(icon: .fontAwesome(.arrowCircleOUp), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.base, forState: .selected)
         downVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
+        downVoteButton.addTarget(self, action: #selector(self.downVoteButtonPressed), for: .touchUpInside)
         
         upVoteButton.setIcon(icon: .fontAwesome(.arrowCircleOUp), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.offBlack, forState: .normal)
+        upVoteButton.setIcon(icon: .fontAwesome(.arrowCircleOUp), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.base, forState: .selected)
         upVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
+        upVoteButton.addTarget(self, action: #selector(self.upvoteButtonPressed), for: .touchUpInside)
     }
     
     func setupHeader(model: PodcastModel) {
@@ -145,5 +147,43 @@ extension HeaderView {
 
         // Podcast model checks here
         AudioViewManager.shared.setupManager(podcastModel: model)
+    }
+    
+    func upvoteButtonPressed() {
+        guard User.checkAndAlert() else { return }
+        guard let podcastId = model.podcastId else { return }
+        API.sharedInstance.upvotePodcast(podcastId: podcastId, completion: { (success) in
+            guard success != nil else { return }
+            switch success! {
+            case true:
+                guard let score = self.model.score else { return }
+                guard var int = Int(score) else { return }
+                int += 1
+                self.scoreLabel.text = String(int)
+                
+                self.upVoteButton.isSelected = true
+            case false:
+                self.upVoteButton.isSelected = false
+            }
+        })
+    }
+    
+    func downVoteButtonPressed() {
+        guard User.checkAndAlert() else { return }
+        guard let podcastId = model.podcastId else { return }
+        API.sharedInstance.downvotePodcast(podcastId: podcastId, completion: { (success) in
+            guard success != nil else { return }
+            switch success! {
+            case true:
+                guard let score = self.model.score else { return }
+                guard var int = Int(score) else { return }
+                int -= 1
+                self.scoreLabel.text = String(int)
+                
+                self.downVoteButton.isSelected = true
+            case false:
+                self.downVoteButton.isSelected = false
+            }
+        })
     }
 }

@@ -14,7 +14,7 @@ import Kingfisher
 
 class PodcastCollectionViewCell: UICollectionViewCell {
     
-    var model: PodcastModel!
+    var podcastModel: PodcastModel!
     
     let imageView = UIImageView()
     let titleLabel = UILabel()
@@ -27,6 +27,7 @@ class PodcastCollectionViewCell: UICollectionViewCell {
         
         self.contentView.backgroundColor = .white
         contentView.layer.cornerRadius = 2.calculateWidth()
+        
         contentView.layer.shadowColor = UIColor.lightGray.cgColor
         contentView.layer.shadowOpacity = 0.75
         contentView.layer.shadowOffset = CGSize(width: 0, height: 1.calculateHeight())
@@ -68,7 +69,7 @@ class PodcastCollectionViewCell: UICollectionViewCell {
     }
     
     func setupCell(model: PodcastModel) {
-        self.model = model
+        self.podcastModel = model
         guard let name = model.podcastName else { return }
         titleLabel.text = name
         

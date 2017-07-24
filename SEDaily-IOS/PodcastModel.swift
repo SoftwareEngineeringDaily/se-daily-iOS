@@ -31,6 +31,10 @@ public class PodcastModel: Object, Mappable {
     
     dynamic var mp3Saved: Bool = false
     
+    dynamic var isNew: Bool = false
+    dynamic var isTop: Bool = false
+    dynamic var isRecommended: Bool = false
+    
     override public static func primaryKey() -> String? {
         return "key"
     }
@@ -94,6 +98,14 @@ extension PodcastModel {
         return realm.objects(PodcastModel.self)
     }
     
+    class func getRecommended() -> Results<PodcastModel> {
+        return self.all().filter("isRecommended == true")
+    }
+    
+    class func getTop() -> Results<PodcastModel> {
+        return self.all().filter("isTop == true").sorted(byKeyPath: "score", ascending: false)
+    }
+    
     func update(name: String) {
         let realm = try! Realm()
         try! realm.write {
@@ -112,6 +124,27 @@ extension PodcastModel {
         let realm = try! Realm()
         try! realm.write {
             self.mp3Saved = mp3Saved
+        }
+    }
+    
+    func update(isNew: Bool) {
+        let realm = try! Realm()
+        try! realm.write {
+            self.isNew = isNew
+        }
+    }
+    
+    func update(isTop: Bool) {
+        let realm = try! Realm()
+        try! realm.write {
+            self.isTop = isTop
+        }
+    }
+    
+    func update(isRecommended: Bool) {
+        let realm = try! Realm()
+        try! realm.write {
+            self.isRecommended = isRecommended
         }
     }
     

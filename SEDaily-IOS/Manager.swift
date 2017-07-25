@@ -139,6 +139,8 @@ public class Manager: NSObject {
     
     override init() {
         super.init()
+        //@TODO: Do we need to stop session?
+        self.setupAVAudioSession()
         
         #if os(iOS)
             // Add the notification observer needed to respond to audio interruptions.
@@ -189,7 +191,7 @@ public class Manager: NSObject {
             
             return
         }
-        
+        self.state = .playing
         player.play()
     }
     //@TODO: Set states
@@ -201,7 +203,7 @@ public class Manager: NSObject {
             
             return
         }
-        
+        self.state = .paused
         player.pause()
     }
     
@@ -511,6 +513,7 @@ public class Manager: NSObject {
 //                        self.executeClosureOnMainQueueIfNecessary {
                     // AVPlayer waits till bufferedTime is 1000 before playing
                     // So we need to be in the buffered state for this time
+                    // @TODO: This isn't always setting correctly
                     switch bufferedTime <= 1000 {
                     case true:
                         if self.state != .buffering {
@@ -540,6 +543,26 @@ public class Manager: NSObject {
         }
         
         log.debug(keyPath)
+    }
+    
+    func setupAVAudioSession() {
+        // Setup AVAudioSession to indicate to the system you how intend to play audio.
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        do {
+            try audioSession.setCategory(AVAudioSessionCategoryPlayback, mode: AVAudioSessionModeDefault)
+        }
+        catch {
+            print("An error occured setting the audio session category: \(error)")
+        }
+        
+        // Set the AVAudioSession as active.  This is required so that your application becomes the "Now Playing" app.
+        do {
+            try audioSession.setActive(true, with: [])
+        }
+        catch {
+            print("An Error occured activating the audio session: \(error)")
+        }
     }
 }
 

@@ -29,6 +29,9 @@
 		164FE9F11F030A2E009419CA /* PodcastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9F01F030A2E009419CA /* PodcastModel.swift */; };
 		166036211F266FF300A22B7B /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166036201F266FF300A22B7B /* Notifications.swift */; };
 		1672FAC41F06C141008445B1 /* NotificationCenterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */; };
+		1673B8FD1F27AA3200923BB8 /* LatestCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1673B8FC1F27AA3200923BB8 /* LatestCollectionViewController.swift */; };
+		1673B8FF1F27E56100923BB8 /* TopCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1673B8FE1F27E56100923BB8 /* TopCollectionViewController.swift */; };
+		1673B9011F27E70200923BB8 /* JustForYouCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1673B9001F27E70200923BB8 /* JustForYouCollectionViewController.swift */; };
 		167AFAB21F043CF600A1332F /* PostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */; };
 		167AFAB51F043ED500A1332F /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB41F043ED500A1332F /* DetailTableViewCell.swift */; };
 		167AFAB71F043F1100A1332F /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB61F043F1100A1332F /* HeaderView.swift */; };
@@ -80,6 +83,9 @@
 		164FE9F01F030A2E009419CA /* PodcastModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastModel.swift; sourceTree = "<group>"; };
 		166036201F266FF300A22B7B /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterExtension.swift; sourceTree = "<group>"; };
+		1673B8FC1F27AA3200923BB8 /* LatestCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatestCollectionViewController.swift; sourceTree = "<group>"; };
+		1673B8FE1F27E56100923BB8 /* TopCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopCollectionViewController.swift; sourceTree = "<group>"; };
+		1673B9001F27E70200923BB8 /* JustForYouCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JustForYouCollectionViewController.swift; sourceTree = "<group>"; };
 		167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewController.swift; sourceTree = "<group>"; };
 		167AFAB41F043ED500A1332F /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		167AFAB61F043F1100A1332F /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
@@ -144,6 +150,9 @@
 			children = (
 				164C71061F021C8D003803BC /* PodcastCollectionViewController.swift */,
 				164C71081F021C97003803BC /* FeedCollectionViewController.swift */,
+				1673B8FC1F27AA3200923BB8 /* LatestCollectionViewController.swift */,
+				1673B8FE1F27E56100923BB8 /* TopCollectionViewController.swift */,
+				1673B9001F27E70200923BB8 /* JustForYouCollectionViewController.swift */,
 			);
 			name = CollectionViews;
 			sourceTree = "<group>";
@@ -508,7 +517,10 @@
 				164FE9E91F02F049009419CA /* Stylesheet.swift in Sources */,
 				164C71091F021C97003803BC /* FeedCollectionViewController.swift in Sources */,
 				16B147B11F16BF9C00433A42 /* AudioViewManager.swift in Sources */,
+				1673B9011F27E70200923BB8 /* JustForYouCollectionViewController.swift in Sources */,
 				164C71071F021C8D003803BC /* PodcastCollectionViewController.swift in Sources */,
+				1673B8FF1F27E56100923BB8 /* TopCollectionViewController.swift in Sources */,
+				1673B8FD1F27AA3200923BB8 /* LatestCollectionViewController.swift in Sources */,
 				164C71051F021AC8003803BC /* CustomTabViewController.swift in Sources */,
 				164FE9DC1F02DAB5009419CA /* PodcastCollectionViewCell.swift in Sources */,
 				169893A01F04C787008A2B4C /* AudioManager.swift in Sources */,
@@ -665,7 +677,7 @@
 			baseConfigurationReference = 9FDA28C254F62BB468401B75 /* Pods-SEDaily-IOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_TEAM = 6TY8WC8WPP;
 				INFOPLIST_FILE = "SEDaily-IOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -680,7 +692,7 @@
 			baseConfigurationReference = 675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_TEAM = 6TY8WC8WPP;
 				INFOPLIST_FILE = "SEDaily-IOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -18,6 +18,7 @@ import UIKit
 import SideMenu
 import SwifterSwift
 import SnapKit
+import SwiftIcons
 
 class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     
@@ -87,16 +88,19 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     
     func setupTabs() {
         let layout = UICollectionViewLayout()
-        let vc1 = PodcastCollectionViewController(collectionViewLayout: layout)
-        let vc2 = FeedCollectionViewController(collectionViewLayout: layout)
+        let vc1 = LatestCollectionViewController(collectionViewLayout: layout)
+        let vc2 = JustForYouCollectionViewController(collectionViewLayout: layout)
+        let vc3 = TopCollectionViewController(collectionViewLayout: layout)
                 
-        let icon1 = UITabBarItem(title: "Podcast", image: #imageLiteral(resourceName: "mic_stand"), selectedImage: nil)
-        let icon2 = UITabBarItem(title: "Feed", image: #imageLiteral(resourceName: "activity_feed"), selectedImage: nil)
+        let icon1 = UITabBarItem(title: "Latest", image: #imageLiteral(resourceName: "mic_stand"), selectedImage: #imageLiteral(resourceName: "mic_stand_selected"))
+        let icon2 = UITabBarItem(title: "Just For You", image: #imageLiteral(resourceName: "activity_feed"), selectedImage: #imageLiteral(resourceName: "activity_feed_selected"))
+        let icon3 = UITabBarItem(tabBarSystemItem: .mostViewed, tag: 0)
         
         vc1.tabBarItem = icon1
         vc2.tabBarItem = icon2
+        vc3.tabBarItem = icon3
         
-        let controllers = [vc1,vc2]
+        let controllers = [vc1,vc2,vc3]
         self.viewControllers = controllers
         
         self.tabBar.backgroundColor = .white

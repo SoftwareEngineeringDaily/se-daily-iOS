@@ -35,6 +35,9 @@ public class PodcastModel: Object, Mappable {
     dynamic var isTop: Bool = false
     dynamic var isRecommended: Bool = false
     
+    dynamic var isUpvoted: Bool = false
+    dynamic var isDownvoted: Bool = false
+    
     override public static func primaryKey() -> String? {
         return "key"
     }
@@ -47,7 +50,7 @@ public class PodcastModel: Object, Mappable {
     // Mappable
     public func mapping(map: Map) {
         key <- map["_id"]
-        podcastId <- map["id"]
+        podcastId <- map["_id"]
         podcastName <- map["title.rendered"]
         podcastDesc <- (map["content.rendered"], TransformOf<String, String>(fromJSON: { $0.map { String($0).htmlDecoded } }, toJSON: { $0!.htmlDecoded }))
         uploadDate <- map["date"]
@@ -55,6 +58,8 @@ public class PodcastModel: Object, Mappable {
         link <- map["link"]
         score <- (map["score"], TransformOf<String, Int>(fromJSON: { $0.map { String($0) } }, toJSON: { Int($0!) }))
         imageURLString <- map["featuredImage"]
+        isUpvoted <- map["upvoted"]
+        isDownvoted <- map["downvoted"]
     }
     
     func getDescription() -> String {
@@ -106,6 +111,14 @@ extension PodcastModel {
         return self.all().filter("isTop == true").sorted(byKeyPath: "score", ascending: false)
     }
     
+    func updateFrom(item: PodcastModel) {
+        guard self.podcastName == item.podcastName else { return }
+        let realm = try! Realm()
+        try! realm.write {
+            realm.add(item, update: true)
+        }
+    }
+    
     func update(name: String) {
         let realm = try! Realm()
         try! realm.write {
@@ -145,6 +158,22 @@ extension PodcastModel {
         let realm = try! Realm()
         try! realm.write {
             self.isRecommended = isRecommended
+        }
+    }
+    
+    func update(isUpvoted: Bool) {
+        let realm = try! Realm()
+        try! realm.write {
+            self.isUpvoted = isUpvoted
+            self.isDownvoted = false
+        }
+    }
+    
+    func update(isDownvoted: Bool) {
+        let realm = try! Realm()
+        try! realm.write {
+            self.isDownvoted = isDownvoted
+            self.isUpvoted = false
         }
     }
     

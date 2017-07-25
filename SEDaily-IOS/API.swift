@@ -150,9 +150,15 @@ extension API {
         params[Params.type] = type
         params[Params.createdAtBefore] = beforeDate
         
+        let user = User.getActiveUser()
+        guard let userToken = user.token else { return }
+        let _headers : HTTPHeaders = [
+            Headers.authorization:Headers.bearer + userToken,
+        ]
+        
         typealias model = PodcastModel
         
-        Alamofire.request(urlString, method: .get, parameters: params).responseArray { (response: DataResponse<[model]>) in
+        Alamofire.request(urlString, method: .get, parameters: params, headers: _headers).responseArray { (response: DataResponse<[model]>) in
             
             switch response.result {
             
@@ -178,6 +184,12 @@ extension API {
                     }
                     else {
                         // Just update the existing item
+                        let recommended = existingItem!.isRecommended
+                        
+                        existingItem?.updateFrom(item: item)
+                        
+                        existingItem?.update(isRecommended: recommended)
+                        
                         switch type {
                         case API.Types.top:
                             existingItem?.update(isTop: true)
@@ -225,6 +237,7 @@ extension API {
                     }
                     else {
                         // Just update the existing item
+                        existingItem?.updateFrom(item: item)
                         existingItem?.update(isRecommended: true)
                     }
                 }
@@ -238,13 +251,14 @@ extension API {
 }
 
 extension API {
-    func upvotePodcast(podcastId: String, completion: @escaping (_ success: Bool?) -> Void) {
+    func upvotePodcast(podcastId: String, completion: @escaping (_ success: Bool?, _ active: Bool?) -> Void) {
         let urlString = rootURL + Endpoints.posts + "/" + podcastId + Endpoints.upvote
         
         let user = User.getActiveUser()
         guard let userToken = user.token else { return }
         let _headers : HTTPHeaders = [
             Headers.authorization:Headers.bearer + userToken,
+            Headers.contentType:Headers.x_www_form_urlencoded
         ]
 
         typealias model = PodcastModel
@@ -253,29 +267,33 @@ extension API {
             switch response.result {
             case .success:
                 let jsonResponse = response.result.value as! NSDictionary
-                log.info(jsonResponse)
+
                 if let message = jsonResponse["message"] {
                     Helpers.alertWithMessage(title: Helpers.Alerts.error, message: String(describing: message), completionHandler: nil)
-                    completion(false)
+                    completion(false, nil)
                     return
                 }
                 
+                if let active = jsonResponse["active"] as? Bool {
+                    completion(true, active)
+                }
             case .failure(let error):
                 log.error(error)
                 
                 Helpers.alertWithMessage(title: Helpers.Alerts.error, message: error.localizedDescription, completionHandler: nil)
-                completion(false)
+                completion(false, nil)
             }
         }
     }
     
-    func downvotePodcast(podcastId: String, completion: @escaping (_ success: Bool?) -> Void) {
+    func downvotePodcast(podcastId: String, completion: @escaping (_ success: Bool?, _ active: Bool?) -> Void) {
         let urlString = rootURL + Endpoints.posts + "/" + podcastId + Endpoints.downvote
         
         let user = User.getActiveUser()
         guard let userToken = user.token else { return }
         let _headers : HTTPHeaders = [
             Headers.authorization:Headers.bearer + userToken,
+            Headers.contentType:Headers.x_www_form_urlencoded
         ]
         
         typealias model = PodcastModel
@@ -284,18 +302,20 @@ extension API {
             switch response.result {
             case .success:
                 let jsonResponse = response.result.value as! NSDictionary
-                log.info(jsonResponse)
+
                 if let message = jsonResponse["message"] {
                     Helpers.alertWithMessage(title: Helpers.Alerts.error, message: String(describing: message), completionHandler: nil)
-                    completion(false)
+                    completion(false, nil)
                     return
                 }
-                
+                if let active = jsonResponse["active"] as? Bool {
+                    completion(true, active)
+                }
             case .failure(let error):
                 log.error(error)
                 
                 Helpers.alertWithMessage(title: Helpers.Alerts.error, message: error.localizedDescription, completionHandler: nil)
-                completion(false)
+                completion(false, nil)
             }
         }
     }

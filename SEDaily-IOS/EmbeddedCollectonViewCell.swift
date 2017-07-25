@@ -28,8 +28,6 @@ class EmbeddedCollectonViewCell: UICollectionViewCell {
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        collectionView.remembersLastFocusedIndexPath = false
-
 //        collectionView.showsHorizontalScrollIndicator = false
 //        collectionView.showsVerticalScrollIndicator = false
         

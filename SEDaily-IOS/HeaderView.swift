@@ -121,7 +121,7 @@ class HeaderView: UIView {
         scoreLabel.font = UIFont(font: .helveticaNeue, size: 24.calculateWidth())
 
         downVoteButton.setIcon(icon: .fontAwesome(.arrowCircleODown), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.offBlack, forState: .normal)
-        downVoteButton.setIcon(icon: .fontAwesome(.arrowCircleOUp), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.base, forState: .selected)
+        downVoteButton.setIcon(icon: .fontAwesome(.arrowCircleODown), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.base, forState: .selected)
         downVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
         downVoteButton.addTarget(self, action: #selector(self.downVoteButtonPressed), for: .touchUpInside)
         
@@ -136,6 +136,19 @@ class HeaderView: UIView {
         self.titleLabel.text = model.podcastName!
         self.dateLabel.text = Helpers.formatDate(dateString: model.uploadDate!)
         self.scoreLabel.text = model.score!
+        
+        if self.model.isUpvoted {
+            upVoteButton.isSelected = self.model.isUpvoted
+            guard var int = Int(model.score!) else { return }
+            int += 1
+            self.scoreLabel.text = String(int)
+        }
+        if self.model.isDownvoted {
+            downVoteButton.isSelected = self.model.isDownvoted
+            guard var int = Int(model.score!) else { return }
+            int -= 1
+            self.scoreLabel.text = String(int)
+        }
     }
 }
 
@@ -152,18 +165,16 @@ extension HeaderView {
     func upvoteButtonPressed() {
         guard User.checkAndAlert() else { return }
         guard let podcastId = model.podcastId else { return }
-        API.sharedInstance.upvotePodcast(podcastId: podcastId, completion: { (success) in
+        API.sharedInstance.upvotePodcast(podcastId: podcastId, completion: { (success, active) in
             guard success != nil else { return }
-            switch success! {
-            case true:
-                guard let score = self.model.score else { return }
-                guard var int = Int(score) else { return }
-                int += 1
-                self.scoreLabel.text = String(int)
-                
-                self.upVoteButton.isSelected = true
-            case false:
-                self.upVoteButton.isSelected = false
+            if success == true {
+                guard let active = active else { return }
+                switch active {
+                case true:
+                    self.addScore(active: active)
+                case false:
+                    self.addScore(active: active)
+                }
             }
         })
     }
@@ -171,19 +182,59 @@ extension HeaderView {
     func downVoteButtonPressed() {
         guard User.checkAndAlert() else { return }
         guard let podcastId = model.podcastId else { return }
-        API.sharedInstance.downvotePodcast(podcastId: podcastId, completion: { (success) in
+        API.sharedInstance.downvotePodcast(podcastId: podcastId, completion: { (success, active) in
             guard success != nil else { return }
-            switch success! {
-            case true:
-                guard let score = self.model.score else { return }
-                guard var int = Int(score) else { return }
-                int -= 1
-                self.scoreLabel.text = String(int)
-                
-                self.downVoteButton.isSelected = true
-            case false:
-                self.downVoteButton.isSelected = false
+            if success == true {
+                // Switch if active
+                guard let active = active else { return }
+                switch active {
+                case true:
+                    self.subtractScore(active: active)
+                case false:
+                    self.subtractScore(active: active)
+                }
             }
         })
+    }
+    
+    func addScore(active: Bool) {
+        if active == false {
+            self.scoreLabel.text = String(model.score!)
+            self.model.update(isUpvoted: false)
+            upVoteButton.isSelected = self.model.isUpvoted
+            downVoteButton.isSelected = self.model.isDownvoted
+            return
+        }
+
+        guard let score = self.model.score else { return }
+        guard var int = Int(score) else { return }
+        int += 1
+        // Update score label
+        self.scoreLabel.text = String(int)
+        
+        self.model.update(isUpvoted: true)
+        
+        upVoteButton.isSelected = self.model.isUpvoted
+        downVoteButton.isSelected = self.model.isDownvoted
+    }
+    
+    func subtractScore(active: Bool) {
+        if active == false {
+            self.scoreLabel.text = String(model.score!)
+            self.model.update(isDownvoted: false)
+            upVoteButton.isSelected = self.model.isUpvoted
+            downVoteButton.isSelected = self.model.isDownvoted
+            return
+        }
+        guard let score = self.model.score else { return }
+        guard var int = Int(score) else { return }
+        int -= 1
+        // Update score label
+        self.scoreLabel.text = String(int)
+
+        self.model.update(isDownvoted: true)
+        
+        upVoteButton.isSelected = self.model.isUpvoted
+        downVoteButton.isSelected = self.model.isDownvoted
     }
 }

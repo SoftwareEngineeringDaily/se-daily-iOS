@@ -87,7 +87,6 @@ extension User {
     }
     
     class func logout() {
-        NotificationCenter.default.post(name: .loginChanged, object: nil)
         log.error("loggin out")
         let user = User()
         user.firstName = ""
@@ -95,6 +94,7 @@ extension User {
         user.email = ""
         user.token = ""
         user.save()
+        NotificationCenter.default.post(name: .loginChanged, object: nil)
     }
     
     class func createDefault() {

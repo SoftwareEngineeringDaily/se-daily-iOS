@@ -178,8 +178,8 @@ public class AudioManager: NSObject {
             remoteCommandManager.activatePlaybackCommands(true)
             remoteCommandManager.toggleSkipBackwardCommand(true, interval: 30)
             remoteCommandManager.toggleSkipForwardCommand(true, interval: 30)
-            let asset = Asset(assetName: "TEST", urlAsset: avAsset)
-            assetPlaybackManager.asset = asset
+//            let asset = Asset(assetName: "TEST", urlAsset: avAsset)
+//            assetPlaybackManager.asset = asset
             self.playbackState = .playing
             
             if let time = currentTime {
@@ -373,6 +373,13 @@ public class AudioManager: NSObject {
 extension Double {
     func getCMTime() -> CMTime {
         let currentTime = CMTimeMake(Int64((self) * 1000 as Float64), 1000)
+        return currentTime
+    }
+}
+
+extension Float {
+    func getCMTime() -> CMTime {
+        let currentTime = CMTimeMake(Int64((Double(self)) * 1000 as Float64), 1000)
         return currentTime
     }
 }

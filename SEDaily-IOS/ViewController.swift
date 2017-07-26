@@ -31,9 +31,9 @@ class ViewController: UIViewController {
             log.error("Error")
             return
         }
-        let asset = Asset(assetName: "HERE", urlAsset: AVURLAsset(url: url))
-        self.assetPlaybackManager =  Manager()
-        assetPlaybackManager.asset = asset
+//        let asset = Asset(assetName: "HERE", urlAsset: AVURLAsset(url: url))
+//        self.assetPlaybackManager =  Manager()
+//        assetPlaybackManager.asset = asset
         
         // Initializer the `RemoteCommandManager`.
         remoteCommandManager = RemoteCommandManager(assetPlaybackManager: assetPlaybackManager)

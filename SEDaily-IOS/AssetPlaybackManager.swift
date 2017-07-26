@@ -20,10 +20,10 @@ class AssetPlaybackManager: NSObject {
     // MARK: Types
     
     /// Notification that is posted when the `nextTrack()` is called.
-    static let nextTrackNotification = Notification.Name("nextTrackNotification")
+//    static let nextTrackNotification = Notification.Name("nextTrackNotification")
     
     /// Notification that is posted when the `previousTrack()` is called.
-    static let previousTrackNotification = Notification.Name("previousTrackNotification")
+//    static let previousTrackNotification = Notification.Name("previousTrackNotification")
     
     /// An enumeration of possible playback states that `AssetPlaybackManager` can be in.
     ///
@@ -196,13 +196,13 @@ class AssetPlaybackManager: NSObject {
     func nextTrack() {
         guard asset != nil else { return }
         
-        NotificationCenter.default.post(name: AssetPlaybackManager.nextTrackNotification, object: nil, userInfo: [Asset.nameKey: asset.assetName])
+//        NotificationCenter.default.post(name: AssetPlaybackManager.nextTrackNotification, object: nil, userInfo: [Asset.nameKey: asset.assetName])
     }
     
     func previousTrack() {
         guard asset != nil else { return }
         
-        NotificationCenter.default.post(name: AssetPlaybackManager.previousTrackNotification, object: nil, userInfo: [Asset.nameKey: asset.assetName])
+//        NotificationCenter.default.post(name: AssetPlaybackManager.previousTrackNotification, object: nil, userInfo: [Asset.nameKey: asset.assetName])
     }
     
     func skipForward(_ interval: TimeInterval) {
@@ -333,6 +333,7 @@ class AssetPlaybackManager: NSObject {
     // MARK: Notification Observing Methods
     
     func handleAVPlayerItemDidPlayToEndTimeNotification(notification: Notification) {
+        
         player.replaceCurrentItem(with: nil)
     }
     

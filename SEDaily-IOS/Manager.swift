@@ -74,11 +74,30 @@ public class Manager: NSObject {
     dynamic var percentProgress: Float = 0
     
     /// The total duration in seconds for the `asset`.  This is marked as `dynamic` so that this property can be observed using KVO.
-    dynamic var duration: Float = 0
+    dynamic var duration: Float {
+        get {
+            if let playerItem = self.playerItem {
+                return Float(CMTimeGetSeconds(playerItem.duration))
+            } else {
+                return 0
+            }
+        }
+    }
     
     /// The current playback position in seconds for the `asset`.  This is marked as `dynamic` so that this property can be observed using KVO.
-    dynamic var playbackPosition: Float = 0
-    //@TODO: see about setting this state on init
+    dynamic var playbackPosition: Float {
+        get {
+            if let playerItem = self.playerItem {
+                return Float(CMTimeGetSeconds(playerItem.currentTime()))
+            } else {
+                return 0
+            }
+        }
+        set {
+            self.playerDelegate?.playerCurrentTimeDidChange(self)
+        }
+    }
+
     /// The state that the internal `AVPlayer` is in.
     var state: Manager.playbackState = .initial {
         didSet {
@@ -105,7 +124,7 @@ public class Manager: NSObject {
         didSet {
             if playerItem != nil {
                 playerItem.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.status), options: [.initial, .new], context: nil)
-                NotificationCenter.default.addObserver(self, selector: #selector(AssetPlaybackManager.handleAVPlayerItemDidPlayToEndTimeNotification(notification:)), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
+                NotificationCenter.default.addObserver(self, selector: #selector(self.handleAVPlayerItemDidPlayToEndTimeNotification(notification:)), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
                 
                 playerItem.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.isPlaybackBufferEmpty), options: ([.new, .old]), context: nil)
                 playerItem.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.isPlaybackLikelyToKeepUp), options: ([.new, .old]), context: nil)
@@ -126,6 +145,9 @@ public class Manager: NSObject {
         didSet {
             if asset != nil {
                 asset.urlAsset.addObserver(self, forKeyPath: #keyPath(AVURLAsset.isPlayable), options: [.initial, .new], context: nil)
+                if let savedTime = asset.savedTime {
+                    self.seekTo(TimeInterval(savedTime))
+                }
             }
             else {
                 // Unload currentItem so that the state is updated globally.
@@ -144,7 +166,7 @@ public class Manager: NSObject {
         
         #if os(iOS)
             // Add the notification observer needed to respond to audio interruptions.
-            NotificationCenter.default.addObserver(self, selector: #selector(AssetPlaybackManager.handleAudioSessionInterruption(notification:)), name: .AVAudioSessionInterruption, object: AVAudioSession.sharedInstance())
+            NotificationCenter.default.addObserver(self, selector: #selector(self.handleAudioSessionInterruption(notification:)), name: .AVAudioSessionInterruption, object: AVAudioSession.sharedInstance())
         #endif
         
         // Add the Key-Value Observers needed to keep internal state of `AssetPlaybackManager` and `MPNowPlayingInfoCenter` in sync.
@@ -157,10 +179,9 @@ public class Manager: NSObject {
             guard let duration = self?.player.currentItem?.duration else { return }
             
             let durationInSecods = Float(CMTimeGetSeconds(duration))
-            
+
             self?.playbackPosition = timeElapsed
             self?.percentProgress = timeElapsed / durationInSecods
-            self?.playerDelegate?.playerCurrentTimeDidChange(self!)
         })
     }
     
@@ -192,9 +213,10 @@ public class Manager: NSObject {
             return
         }
         self.state = .playing
+        
         player.play()
     }
-    //@TODO: Set states
+
     func pause() {
         guard asset != nil else { return }
         
@@ -231,13 +253,13 @@ public class Manager: NSObject {
     func nextTrack() {
         guard asset != nil else { return }
         
-        NotificationCenter.default.post(name: AssetPlaybackManager.nextTrackNotification, object: nil, userInfo: [Asset.nameKey: asset.assetName])
+        NotificationCenter.default.post(name: Manager.nextTrackNotification, object: nil, userInfo: [Asset.nameKey: asset.assetName])
     }
     
     func previousTrack() {
         guard asset != nil else { return }
         
-        NotificationCenter.default.post(name: AssetPlaybackManager.previousTrackNotification, object: nil, userInfo: [Asset.nameKey: asset.assetName])
+        NotificationCenter.default.post(name: Manager.previousTrackNotification, object: nil, userInfo: [Asset.nameKey: asset.assetName])
     }
     
     func skipForward(_ interval: TimeInterval) {
@@ -347,7 +369,7 @@ public class Manager: NSObject {
     
     func updatePlaybackRateMetadata() {
         guard player.currentItem != nil else {
-            duration = 0
+//            duration = 0
             nowPlayingInfoCenter.nowPlayingInfo = nil
             
             return
@@ -355,7 +377,7 @@ public class Manager: NSObject {
         
         var nowPlayingInfo = nowPlayingInfoCenter.nowPlayingInfo ?? [String: Any]()
         
-        duration = Float(CMTimeGetSeconds(player.currentItem!.duration))
+//        duration = Float(CMTimeGetSeconds(player.currentItem!.duration))
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = duration
         nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = CMTimeGetSeconds(player.currentItem!.currentTime())
         nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player.rate
@@ -383,6 +405,7 @@ public class Manager: NSObject {
     // MARK: Notification Observing Methods
     
     func handleAVPlayerItemDidPlayToEndTimeNotification(notification: Notification) {
+        self.playerDelegate?.playerPlaybackDidEnd(self)
         player.replaceCurrentItem(with: nil)
     }
     
@@ -514,13 +537,14 @@ public class Manager: NSObject {
                     // AVPlayer waits till bufferedTime is 1000 before playing
                     // So we need to be in the buffered state for this time
                     // @TODO: This isn't always setting correctly
-                    switch bufferedTime <= 1000 {
+                    log.info(bufferedTime)
+                    switch bufferedTime <= 400 {
                     case true:
-                        if self.state != .buffering {
+                        if self.state != .buffering && self.state != .paused {
                             self.state = .buffering
                         }
                     case false:
-                        if self.state != .playing {
+                        if self.state != .playing && self.state != .paused {
                             self.state = .playing
                         }
                     }

@@ -21,4 +21,6 @@ struct Asset {
     
     /// The `AVURLAsset` corresponding to an asset in either the application bundle or on the Internet.
     let urlAsset: AVURLAsset
+    
+    let savedTime: Float?
 }

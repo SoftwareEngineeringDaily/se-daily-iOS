@@ -222,6 +222,10 @@ class AudioView: UIView {
         if (playbackSlider.isTracking) && (timeInSeconds != previousSliderValue) {
             // Update Labels
             log.debug("value is tracking and changing")
+            self.updateSlider(currentValue: timeInSeconds)
+            let duration = playbackSlider.maximumValue
+            let timeLeft = Float(duration - timeInSeconds)
+            self.updateTimeLabels(currentTime: timeInSeconds, timeLeft: timeLeft)
         } else {
             log.debug("drag did end")
             self.delegate?.playbackSliderValueChanged(value: timeInSeconds)
@@ -243,20 +247,22 @@ class AudioView: UIView {
     
     func updateSlider(currentValue: Float) {
         // Have to check is first load because current value may be far from 0.0
-        if isFirstLoad {
-            playbackSlider.value = currentValue
-            isFirstLoad = false
-            return
-        }
-        
-        let min = playbackSlider.value - 60.0
-        let max = playbackSlider.value + 60.0
+        //@TODO: Fix this logic to fix jumping of playbackslider
+        if playbackSlider.isTracking { return }
+//        if isFirstLoad {
+//            playbackSlider.value = currentValue
+//            isFirstLoad = false
+//            return
+//        }
+//        
+//        let min = playbackSlider.value - 60.0
+//        let max = playbackSlider.value + 60.0
         
         // Check if current value is within a close enough range to slider value
         // This fixes sliders skipping around
-        if min...max ~= currentValue && !playbackSlider.isTracking {
+//        if min...max ~= currentValue && !playbackSlider.isTracking {
             playbackSlider.value = currentValue
-        }
+//        }
     }
     
     func updateBufferSlider(bufferValue: Float) {
@@ -270,6 +276,7 @@ class AudioView: UIView {
 
     func updateCurrentTimeLabel(currentTime: Float) {
         var currentTimeString = ""
+        guard currentTime != 0 && !currentTime.isNaN else { return }
         Helpers.hmsFrom(seconds: Int(currentTime), completion: { hours, minutes, seconds in
             let hoursString = Helpers.getStringFrom(seconds: hours)
             let minutesString = Helpers.getStringFrom(seconds: minutes)
@@ -287,6 +294,8 @@ class AudioView: UIView {
     
     func updateTimeLeftLabel(timeLeft: Float) {
         var timeLeftString = ""
+
+        guard timeLeft != 0 && !timeLeft.isNaN else { return }
         Helpers.hmsFrom(seconds: Int(timeLeft), completion: { hours, minutes, seconds in
             let hoursString = Helpers.getStringFrom(seconds: hours)
             let minutesString = Helpers.getStringFrom(seconds: minutes)

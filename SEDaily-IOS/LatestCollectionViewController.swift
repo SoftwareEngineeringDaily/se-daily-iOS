@@ -123,9 +123,7 @@ extension LatestCollectionViewController {
     func registerNotifications() {
         token = data.addNotificationBlock {[weak self] (changes: RealmCollectionChange) in
             guard let collectionView = self?.collectionView else { return }
-            log.debug("LATEST")
-            log.info(self?.itemCount)
-            log.error(self?.data.count)
+
             switch changes {
             case .initial:
                 guard let int = self?.data.count else { return }

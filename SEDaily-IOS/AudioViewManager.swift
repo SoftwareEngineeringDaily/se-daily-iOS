@@ -48,8 +48,15 @@ class AudioViewManager: NSObject {
 //        guard let name = podcastModel?.podcastName else { return }
 //        audioManager.willDownload(from: url, fileName: fileName)
         
+        var savedTime: Float = 0
+        if let time = podcastModel?.currentTime {
+            if let float = Float(time) {
+                savedTime = float
+            }
+        }
+        
         let avAsset = AVURLAsset(url: url)
-        let asset = Asset(assetName: name, urlAsset: avAsset)
+        let asset = Asset(assetName: name, urlAsset: avAsset, savedTime: savedTime)
         assetPlaybackManager.asset = asset
         
         // @TODO: This takes a while
@@ -136,6 +143,7 @@ class AudioViewManager: NSObject {
     }
     
     //@TODO: Switch all handling of enabled parts of audio view to here
+    //@TODO: Add manager param and update everything here (maybe)
     fileprivate func handleAudioManagerStateChange() {
         if let model = podcastModel {
             self.setText(text: model.podcastName)
@@ -201,6 +209,7 @@ extension AudioViewManager: ManagerDelegate {
 
     func playerIsLikelyToKeepUp(_ player: Manager) {
         let duration = player.duration
+        log.error(duration, "duration")
         audioView?.updateSlider(maxValue: Float(duration))
     }
 
@@ -222,11 +231,10 @@ extension AudioViewManager: ManagerDelegate {
     }
     
     func playerCurrentTimeDidChange(_ player: Manager) {
-        
         let duration = player.duration
         let currentTime = player.playbackPosition
 //        guard let currentTime = player.getCurrentTime() else { return }
-//        podcastModel?.update(currentTime: currentTime)
+        podcastModel?.update(currentTime: currentTime)
 //
 //        guard let duration = player.getDuration() else { return }
         let timeLeft = Float(duration - currentTime)
@@ -238,6 +246,10 @@ extension AudioViewManager: ManagerDelegate {
     
     func playerPlaybackStateDidChange(_ player: Manager) {
         log.error(player.state)
+        if player.state == .playing {
+            let duration = player.duration
+            audioView?.updateSlider(maxValue: Float(duration))
+        }
         handleAudioManagerStateChange()
     }
     
@@ -249,7 +261,6 @@ extension AudioViewManager: ManagerDelegate {
 extension AudioViewManager: AudioViewDelegate {
     func playbackSliderValueChanged(value: Float) {
         let cmTime = CMTimeMake(Int64(value), 1)
-        //@TODO: This is slowing down ui
         assetPlaybackManager.seekTo(TimeInterval(value))
     }
 

@@ -126,7 +126,7 @@ extension PodcastModel {
         }
     }
     
-    func update(currentTime: Double) {
+    func update(currentTime: Float) {
         let realm = try! Realm()
         try! realm.write {
             self.currentTime = String(currentTime)

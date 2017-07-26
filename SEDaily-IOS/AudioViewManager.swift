@@ -54,7 +54,7 @@ class AudioViewManager: NSObject {
                 savedTime = float
             }
         }
-        
+        log.info(savedTime, "savedtime")
         let avAsset = AVURLAsset(url: url)
         let asset = Asset(assetName: name, urlAsset: avAsset, savedTime: savedTime)
         assetPlaybackManager.asset = asset

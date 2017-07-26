@@ -94,6 +94,7 @@ public class Manager: NSObject {
             }
         }
         set {
+            guard self.playbackPosition != self.duration else { return }
             self.playerDelegate?.playerCurrentTimeDidChange(self)
         }
     }
@@ -406,6 +407,7 @@ public class Manager: NSObject {
     
     func handleAVPlayerItemDidPlayToEndTimeNotification(notification: Notification) {
         self.playerDelegate?.playerPlaybackDidEnd(self)
+        self.state = .stopped
         player.replaceCurrentItem(with: nil)
     }
     
@@ -471,7 +473,7 @@ public class Manager: NSObject {
         else if keyPath == #keyPath(AVPlayer.rate) {
             updatePlaybackRateMetadata()
 
-            self.playerDelegate?.playerCurrentTimeDidChange(self)
+//            self.playerDelegate?.playerCurrentTimeDidChange(self)
         }
             
         // All Buffer observer values

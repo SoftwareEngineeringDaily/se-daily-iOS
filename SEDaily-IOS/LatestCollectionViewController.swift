@@ -20,10 +20,13 @@ class LatestCollectionViewController: UICollectionViewController, IndicatorInfoP
     var tabTitle = ""
     var tagId = -1
     var token: NotificationToken?
-    var data: Results<PodcastModel> = {
-        let data = PodcastModel.all()
+    lazy var data: Results<PodcastModel> = {
+        var returnData = PodcastModel.all()
+        if self.tagId != -1 {
+            returnData = returnData.filter ("tags CONTAINS '\(self.tagId)'")
+        }
         
-        return data
+        return returnData.sorted(byKeyPath: "uploadDate", ascending: false)
     }()
     
     var itemCount = 0
@@ -103,7 +106,6 @@ extension LatestCollectionViewController {
 //        }
 //        //        self.getData()
 //        return 0
-        print(itemCount)
         return itemCount
     }
     
@@ -135,7 +137,8 @@ extension LatestCollectionViewController {
     func registerNotifications() {
         token = data.addNotificationBlock {[weak self] (changes: RealmCollectionChange) in
             guard let collectionView = self?.collectionView else { return }
-
+            
+            
             switch changes {
             case .initial:
                 guard let int = self?.data.count else { return }
@@ -143,16 +146,19 @@ extension LatestCollectionViewController {
                 collectionView.reloadData()
                 break
             case .update(_, let deletions, let insertions, let modifications):
-                guard let int = self?.data.count else { return }
-                print(self?.itemCount)
-                
                 let deleteIndexPaths = deletions.map { IndexPath(item: $0, section: 0) }
                 let insertIndexPaths = insertions.map { IndexPath(item: $0, section: 0) }
                 let updateIndexPaths = modifications.map { IndexPath(item: $0, section: 0) }
                 
                 self?.collectionView?.performBatchUpdates({
                     self?.collectionView?.deleteItems(at: deleteIndexPaths)
+                    if !deleteIndexPaths.isEmpty {
+                        self?.itemCount -= 1
+                    }
                     self?.collectionView?.insertItems(at: insertIndexPaths)
+                    if !insertIndexPaths.isEmpty {
+                        self?.itemCount += 1
+                    }
                     self?.collectionView?.reloadItems(at: updateIndexPaths)
                 }, completion: nil)
                 break

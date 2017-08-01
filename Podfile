@@ -22,6 +22,7 @@ target 'SEDaily-IOS' do
   pod 'SideMenu'
   pod 'ActiveLabel'
   pod 'Kingfisher'
+  pod 'XLPagerTabStrip', :git => 'https://github.com/KelvinJin/XLPagerTabStrip', :branch => 'swift3'
 
   target 'SEDaily-IOSTests' do
     inherit! :search_paths

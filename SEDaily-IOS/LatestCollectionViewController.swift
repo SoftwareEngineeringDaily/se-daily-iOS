@@ -9,18 +9,24 @@
 import UIKit
 import RealmSwift
 import KoalaTeaFlowLayout
+import XLPagerTabStrip
 
 private let reuseIdentifier = "Cell"
 
-class LatestCollectionViewController: UICollectionViewController {
+class LatestCollectionViewController: UICollectionViewController, IndicatorInfoProvider {
     
     let activityView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     
+    var tabTitle = ""
+    var tagId = -1
     var token: NotificationToken?
-    var data: Results<PodcastModel> = {
-        let data = PodcastModel.all()
+    lazy var data: Results<PodcastModel> = {
+        var returnData = PodcastModel.all()
+        if self.tagId != -1 {
+            returnData = returnData.filter ("tags CONTAINS '\(self.tagId)'")
+        }
         
-        return data
+        return returnData.sorted(byKeyPath: "uploadDate", ascending: false)
     }()
     
     var itemCount = 0
@@ -52,6 +58,10 @@ class LatestCollectionViewController: UICollectionViewController {
         }
         
         loadData()
+        
+        if (self.tagId != -1) {
+            self.data = data.filter ("tags contains '\(self.tagId)'")
+        }
     }
     
     func loginObserver() {
@@ -69,7 +79,7 @@ class LatestCollectionViewController: UICollectionViewController {
 
     func loadData() {
         activityView.startAnimating()
-        API.sharedInstance.getPosts(type: API.Types.new, completion: {
+        API.sharedInstance.getPosts(type: API.Types.new, tags: String(self.tagId), completion: {
             self.activityView.stopAnimating()
         })
         
@@ -116,6 +126,10 @@ extension LatestCollectionViewController {
         vc.model = item
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: self.tabTitle)
+    }
 }
 
 extension LatestCollectionViewController {
@@ -123,7 +137,8 @@ extension LatestCollectionViewController {
     func registerNotifications() {
         token = data.addNotificationBlock {[weak self] (changes: RealmCollectionChange) in
             guard let collectionView = self?.collectionView else { return }
-
+            
+            
             switch changes {
             case .initial:
                 guard let int = self?.data.count else { return }
@@ -131,16 +146,19 @@ extension LatestCollectionViewController {
                 collectionView.reloadData()
                 break
             case .update(_, let deletions, let insertions, let modifications):
-                guard let int = self?.data.count else { return }
-                self?.itemCount = int
-                
                 let deleteIndexPaths = deletions.map { IndexPath(item: $0, section: 0) }
                 let insertIndexPaths = insertions.map { IndexPath(item: $0, section: 0) }
                 let updateIndexPaths = modifications.map { IndexPath(item: $0, section: 0) }
                 
                 self?.collectionView?.performBatchUpdates({
                     self?.collectionView?.deleteItems(at: deleteIndexPaths)
+                    if !deleteIndexPaths.isEmpty {
+                        self?.itemCount -= 1
+                    }
                     self?.collectionView?.insertItems(at: insertIndexPaths)
+                    if !insertIndexPaths.isEmpty {
+                        self?.itemCount += 1
+                    }
                     self?.collectionView?.reloadItems(at: updateIndexPaths)
                 }, completion: nil)
                 break

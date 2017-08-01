@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01BB1D6D1F29999E004A912E /* PodcastPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */; };
 		1610E2C11F227BCF006C8E83 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610E2C01F227BCF006C8E83 /* Asset.swift */; };
 		1610E2C61F227C0D006C8E83 /* AssetPlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610E2C31F227C0D006C8E83 /* AssetPlaybackManager.swift */; };
 		1610E2C71F227C0D006C8E83 /* RemoteCommandDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610E2C41F227C0D006C8E83 /* RemoteCommandDataSource.swift */; };
@@ -61,6 +62,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastPageViewController.swift; sourceTree = "<group>"; };
 		1610E2C01F227BCF006C8E83 /* Asset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
 		1610E2C31F227C0D006C8E83 /* AssetPlaybackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetPlaybackManager.swift; sourceTree = "<group>"; };
 		1610E2C41F227C0D006C8E83 /* RemoteCommandDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteCommandDataSource.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */,
 				1649A7891F204EC6005C4A6E /* ContainerViewController.swift */,
 				16DDC6391F24183D006BF9BD /* ViewController.swift */,
+				01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -509,6 +512,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/UIFontComplete/UIFontComplete.framework",
+				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -530,6 +534,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIFontComplete.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -571,6 +576,7 @@
 				164FE9EB1F02F340009419CA /* Helpers.swift in Sources */,
 				166036211F266FF300A22B7B /* Notifications.swift in Sources */,
 				1672FAC41F06C141008445B1 /* NotificationCenterExtension.swift in Sources */,
+				01BB1D6D1F29999E004A912E /* PodcastPageViewController.swift in Sources */,
 				164FE9F11F030A2E009419CA /* PodcastModel.swift in Sources */,
 				16DDC6361F24062F006BF9BD /* Manager.swift in Sources */,
 				1610E2C11F227BCF006C8E83 /* Asset.swift in Sources */,

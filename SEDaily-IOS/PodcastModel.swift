@@ -28,6 +28,7 @@ public class PodcastModel: Object, Mappable {
     dynamic var score: String? = nil
     dynamic var currentTime: String = "0"
     dynamic var imageURLString: String? = nil
+    dynamic var tags: String = ""
     
     dynamic var mp3Saved: Bool = false
     
@@ -60,6 +61,12 @@ public class PodcastModel: Object, Mappable {
         imageURLString <- map["featuredImage"]
         isUpvoted <- map["upvoted"]
         isDownvoted <- map["downvoted"]
+        
+        if let unwrappedTags = map.JSON["tags"] as? [Int] {
+            for intTag in unwrappedTags {
+                tags += "\(intTag),"
+            }
+        }
     }
     
     func getDescription() -> String {
@@ -101,6 +108,11 @@ extension PodcastModel {
     class func all() -> Results<PodcastModel> {
         let realm = try! Realm()
         return realm.objects(PodcastModel.self)
+    }
+    
+    class func filterByTag(tag: String) -> Results<PodcastModel> {
+        let realm = try! Realm()
+        return realm.objects(PodcastModel.self).filter ("tags contains '\(tag)'")
     }
     
     class func getRecommended() -> Results<PodcastModel> {

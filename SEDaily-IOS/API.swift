@@ -35,6 +35,10 @@ extension API {
         static let recommended = "recommended"
     }
     
+    enum TagIds {
+        static let business = "1200"
+    }
+    
     enum Params {
         static let bearer = "Bearer"
         static let lastUpdatedBefore = "lastUpdatedBefore"
@@ -47,6 +51,7 @@ extension API {
         static let username = "username"
         static let password = "password"
         static let token = "token"
+        static let tags = "tags"
     }
 }
 
@@ -143,13 +148,17 @@ extension API {
 
 extension API {
     //MARK: Getters
-    func getPosts(type: String, createdAtBefore beforeDate: String = "", completion: @escaping () -> Void) {
+    func getPosts(type: String, createdAtBefore beforeDate: String = "", tags: String = "", completion: @escaping () -> Void) {
         let urlString = rootURL + Endpoints.posts
         
         var params = [String: String]()
         params[Params.type] = type
         params[Params.createdAtBefore] = beforeDate
-        
+        // @TODO: Allow for an array and join the array
+        if (tags != "-1") {
+            params[Params.tags] = tags
+        }
+        print(params)
         let user = User.getActiveUser()
         guard let userToken = user.token else { return }
         let _headers : HTTPHeaders = [
@@ -167,7 +176,6 @@ extension API {
                 guard let array = modelsArray else { return }
                 
                 for item in array {
-
                     let realm = try! Realm()
                     let existingItem = realm.object(ofType: model.self, forPrimaryKey: item.key)
                     

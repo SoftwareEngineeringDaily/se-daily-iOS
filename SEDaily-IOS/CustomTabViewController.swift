@@ -88,7 +88,8 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     
     func setupTabs() {
         let layout = UICollectionViewLayout()
-        let vc1 = LatestCollectionViewController(collectionViewLayout: layout)
+        let vc1 = PodcastPageViewController()
+//        let vc1 = LatestCollectionViewController(collectionViewLayout: layout)
         let vc2 = JustForYouCollectionViewController(collectionViewLayout: layout)
         let vc3 = TopCollectionViewController(collectionViewLayout: layout)
                 

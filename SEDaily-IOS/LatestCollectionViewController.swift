@@ -9,13 +9,16 @@
 import UIKit
 import RealmSwift
 import KoalaTeaFlowLayout
+import XLPagerTabStrip
 
 private let reuseIdentifier = "Cell"
 
-class LatestCollectionViewController: UICollectionViewController {
+class LatestCollectionViewController: UICollectionViewController, IndicatorInfoProvider {
     
     let activityView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     
+    var tabTitle = ""
+    var tagId = -1
     var token: NotificationToken?
     var data: Results<PodcastModel> = {
         let data = PodcastModel.all()
@@ -52,6 +55,10 @@ class LatestCollectionViewController: UICollectionViewController {
         }
         
         loadData()
+        
+        if (self.tagId != -1) {
+            self.data = data.filter ("tags contains '\(self.tagId)'")
+        }
     }
     
     func loginObserver() {
@@ -69,7 +76,7 @@ class LatestCollectionViewController: UICollectionViewController {
 
     func loadData() {
         activityView.startAnimating()
-        API.sharedInstance.getPosts(type: API.Types.new, completion: {
+        API.sharedInstance.getPosts(type: API.Types.new, tags: String(self.tagId), completion: {
             self.activityView.stopAnimating()
         })
         
@@ -96,6 +103,7 @@ extension LatestCollectionViewController {
 //        }
 //        //        self.getData()
 //        return 0
+        print(itemCount)
         return itemCount
     }
     
@@ -116,6 +124,10 @@ extension LatestCollectionViewController {
         vc.model = item
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: self.tabTitle)
+    }
 }
 
 extension LatestCollectionViewController {
@@ -132,7 +144,7 @@ extension LatestCollectionViewController {
                 break
             case .update(_, let deletions, let insertions, let modifications):
                 guard let int = self?.data.count else { return }
-                self?.itemCount = int
+                print(self?.itemCount)
                 
                 let deleteIndexPaths = deletions.map { IndexPath(item: $0, section: 0) }
                 let insertIndexPaths = insertions.map { IndexPath(item: $0, section: 0) }

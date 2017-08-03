@@ -11,6 +11,8 @@ import Alamofire
 import AlamofireObjectMapper
 import RealmSwift
 import SwiftyJSON
+import Fabric
+import Crashlytics
 
 extension API {
     enum Headers {
@@ -83,6 +85,7 @@ extension API {
                 if let message = jsonResponse["message"] {
                     Helpers.alertWithMessage(title: Helpers.Alerts.error, message: String(describing: message), completionHandler: nil)
                     completion(false)
+                    Tracker.logLoginError(string: String(describing: message))
                     return
                 }
                 
@@ -99,6 +102,7 @@ extension API {
                 log.error(error)
 
                 Helpers.alertWithMessage(title: Helpers.Alerts.error, message: error.localizedDescription, completionHandler: nil)
+                Tracker.logLoginError(error: error)
                 completion(false)
             }
         }
@@ -123,6 +127,7 @@ extension API {
                     log.error(message)
                     
                     Helpers.alertWithMessage(title: Helpers.Alerts.error, message: String(describing: message), completionHandler: nil)
+                    Tracker.logRegisterError(string: String(describing: message))
                     completion(false)
                     return
                 }
@@ -140,6 +145,7 @@ extension API {
                 log.error(error)
                 
                 Helpers.alertWithMessage(title: Helpers.Alerts.error, message: error.localizedDescription, completionHandler: nil)
+                Tracker.logRegisterError(error: error)
                 completion(false)
             }
         }
@@ -215,6 +221,7 @@ extension API {
                 }
             case .failure(let error):
                 log.error(error)
+                Tracker.logGeneralError(error: error)
             }
             completion()
         }
@@ -256,6 +263,7 @@ extension API {
                 }
             case .failure(let error):
                 log.error(error)
+                Tracker.logGeneralError(error: error)
                 break
             }
             completion()
@@ -292,7 +300,7 @@ extension API {
                 }
             case .failure(let error):
                 log.error(error)
-                
+                Tracker.logGeneralError(error: error)
                 Helpers.alertWithMessage(title: Helpers.Alerts.error, message: error.localizedDescription, completionHandler: nil)
                 completion(false, nil)
             }
@@ -326,7 +334,7 @@ extension API {
                 }
             case .failure(let error):
                 log.error(error)
-                
+                Tracker.logGeneralError(error: error)
                 Helpers.alertWithMessage(title: Helpers.Alerts.error, message: error.localizedDescription, completionHandler: nil)
                 completion(false, nil)
             }

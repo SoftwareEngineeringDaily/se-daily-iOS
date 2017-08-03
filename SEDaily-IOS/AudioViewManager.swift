@@ -33,6 +33,7 @@ class AudioViewManager: NSObject {
     
     func setupManager(podcastModel: PodcastModel) {
         self.podcastModel = podcastModel
+        Tracker.logPlayPodcast(podcast: podcastModel)
         self.presentAudioView()
     }
     

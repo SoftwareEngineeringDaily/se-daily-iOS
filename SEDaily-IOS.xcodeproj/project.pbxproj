@@ -44,6 +44,8 @@
 		1686FC161F009EC00088A6C1 /* SEDaily_IOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */; };
 		169893A01F04C787008A2B4C /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1698939F1F04C787008A2B4C /* AudioManager.swift */; };
 		16B147B11F16BF9C00433A42 /* AudioViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B147B01F16BF9C00433A42 /* AudioViewManager.swift */; };
+		16D67C4A1F33AC620065E838 /* AnswersTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D67C491F33AC620065E838 /* AnswersTracker.swift */; };
+		16D67C4D1F33AE370065E838 /* ObjectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D67C4C1F33AE370065E838 /* ObjectExtensions.swift */; };
 		16D766BA1F06B4850066C143 /* AudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D766B91F06B4850066C143 /* AudioView.swift */; };
 		16DDC6361F24062F006BF9BD /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DDC6351F24062F006BF9BD /* Manager.swift */; };
 		16DDC63A1F24183D006BF9BD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DDC6391F24183D006BF9BD /* ViewController.swift */; };
@@ -103,6 +105,8 @@
 		1686FC171F009EC00088A6C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1698939F1F04C787008A2B4C /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		16B147B01F16BF9C00433A42 /* AudioViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioViewManager.swift; sourceTree = "<group>"; };
+		16D67C491F33AC620065E838 /* AnswersTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswersTracker.swift; sourceTree = "<group>"; };
+		16D67C4C1F33AE370065E838 /* ObjectExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectExtensions.swift; sourceTree = "<group>"; };
 		16D766B91F06B4850066C143 /* AudioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioView.swift; sourceTree = "<group>"; };
 		16DDC6351F24062F006BF9BD /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
 		16DDC6391F24183D006BF9BD /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -210,6 +214,7 @@
 				164FE9EE1F03065C009419CA /* NavigationControllerExtension.swift */,
 				1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */,
 				166036201F266FF300A22B7B /* Notifications.swift */,
+				16D67C491F33AC620065E838 /* AnswersTracker.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -261,6 +266,7 @@
 				167AFAB31F043E8F00A1332F /* TableViewCell */,
 				164FE9DF1F02EE4E009419CA /* ViewControllers */,
 				164FE9DE1F02DACA009419CA /* Views */,
+				16D67C4C1F33AE370065E838 /* ObjectExtensions.swift */,
 			);
 			path = "SEDaily-IOS";
 			sourceTree = "<group>";
@@ -307,6 +313,7 @@
 				1686FBFB1F009EC00088A6C1 /* Resources */,
 				AE5F616C12D0339AD2CE40F0 /* [CP] Embed Pods Frameworks */,
 				4B6DBB81C87D23ABC98202EB /* [CP] Copy Pods Resources */,
+				16D67C4B1F33AD1D0065E838 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -423,6 +430,19 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		16D67C4B1F33AD1D0065E838 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run f0ec5c4da42e81dc990c190bf79ca81fd9fdcf7d 8f1f2cea85347d8df665cfe1460a1391be0d1c99e81197b80ef43259ec294b0d";
 		};
 		43BA1A9ED42DE22C48E64092 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -556,9 +576,11 @@
 				1610E2C71F227C0D006C8E83 /* RemoteCommandDataSource.swift in Sources */,
 				167AFAB21F043CF600A1332F /* PostDetailTableViewController.swift in Sources */,
 				164FE9D51F02CC53009419CA /* EmbeddedCollectonViewCell.swift in Sources */,
+				16D67C4D1F33AE370065E838 /* ObjectExtensions.swift in Sources */,
 				164FE9D91F02D611009419CA /* CollectionReusableView.swift in Sources */,
 				167AFAB91F04624E00A1332F /* SingleLabelTableViewCell.swift in Sources */,
 				167AFAB71F043F1100A1332F /* HeaderView.swift in Sources */,
+				16D67C4A1F33AC620065E838 /* AnswersTracker.swift in Sources */,
 				164FE9D71F02CD99009419CA /* Extensions.swift in Sources */,
 				164FE9E51F02EE83009419CA /* API.swift in Sources */,
 				16DDC63A1F24183D006BF9BD /* ViewController.swift in Sources */,

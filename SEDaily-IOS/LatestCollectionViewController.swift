@@ -23,7 +23,7 @@ class LatestCollectionViewController: UICollectionViewController, IndicatorInfoP
     lazy var data: Results<PodcastModel> = {
         var returnData = PodcastModel.all()
         if self.tagId != -1 {
-            returnData = returnData.filter ("tags CONTAINS '\(self.tagId)'")
+            returnData = returnData.filter ("categories CONTAINS '\(self.tagId)'")
         }
         
         return returnData.sorted(byKeyPath: "uploadDate", ascending: false)
@@ -60,7 +60,7 @@ class LatestCollectionViewController: UICollectionViewController, IndicatorInfoP
         loadData()
         
         if (self.tagId != -1) {
-            self.data = data.filter ("tags contains '\(self.tagId)'")
+            self.data = data.filter ("categories contains '\(self.tagId)'")
         }
     }
     
@@ -79,7 +79,7 @@ class LatestCollectionViewController: UICollectionViewController, IndicatorInfoP
 
     func loadData() {
         activityView.startAnimating()
-        API.sharedInstance.getPosts(type: API.Types.new, tags: String(self.tagId), completion: {
+        API.sharedInstance.getPosts(type: API.Types.new, categoires: String(self.tagId), completion: {
             self.activityView.stopAnimating()
         })
         

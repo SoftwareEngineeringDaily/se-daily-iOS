@@ -40,8 +40,10 @@ class SingleLabelTableViewCell: UITableViewCell, Reusable {
         label.handleURLTap { url in
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                Tracker.logMovedToWebView(url: url.absoluteString)
             } else {
                 UIApplication.shared.openURL(url)
+                Tracker.logMovedToWebView(url: url.absoluteString)
             }
         }
     }

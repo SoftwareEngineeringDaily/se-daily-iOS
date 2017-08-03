@@ -23,6 +23,8 @@ target 'SEDaily-IOS' do
   pod 'ActiveLabel'
   pod 'Kingfisher'
   pod 'XLPagerTabStrip', :git => 'https://github.com/KelvinJin/XLPagerTabStrip', :branch => 'swift3'
+  pod 'Fabric'
+  pod 'Crashlytics'
 
   target 'SEDaily-IOSTests' do
     inherit! :search_paths

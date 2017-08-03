@@ -44,39 +44,39 @@ class PodcastPageViewController: ButtonBarPagerTabStripViewController {
         
         let child_2 = LatestCollectionViewController(collectionViewLayout: layout)
         child_2.tabTitle = "Business and Philosophy"
-        child_2.tagId = 346
+        child_2.tagId = 1068
         
         let child_3 = LatestCollectionViewController(collectionViewLayout: layout)
         child_3.tabTitle = "Blockchain"
-        child_3.tagId = 281
+        child_3.tagId = 1082
         
         let child_4 = LatestCollectionViewController(collectionViewLayout: layout)
         child_4.tabTitle = "Cloud Engineering"
-        child_4.tagId = 457
+        child_4.tagId = 1079
         
         let child_5 = LatestCollectionViewController(collectionViewLayout: layout)
         child_5.tabTitle = "Data"
-        child_5.tagId = 888
+        child_5.tagId = 1081
         
         let child_6 = LatestCollectionViewController(collectionViewLayout: layout)
         child_6.tabTitle = "JavaScript"
-        child_6.tagId = 10
+        child_6.tagId = 1084
         
         let child_7 = LatestCollectionViewController(collectionViewLayout: layout)
         child_7.tabTitle = "Machine Learning"
-        child_7.tagId = 311
+        child_7.tagId = 1080
         
         let child_8 = LatestCollectionViewController(collectionViewLayout: layout)
         child_8.tabTitle = "Open Source"
-        child_8.tagId = 282
+        child_8.tagId = 1078
         
         let child_9 = LatestCollectionViewController(collectionViewLayout: layout)
         child_9.tabTitle = "Security"
-        child_9.tagId = 112
+        child_9.tagId = 1083
         
         let child_10 = LatestCollectionViewController(collectionViewLayout: layout)
         child_10.tabTitle = "Hackers"
-        child_10.tagId = 1235
+        child_10.tagId = 1085
         
         return [child_1, child_2, child_3, child_4, child_5]
         

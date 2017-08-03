@@ -52,6 +52,7 @@ extension API {
         static let password = "password"
         static let token = "token"
         static let tags = "tags"
+        static let categories = "categories"
     }
 }
 
@@ -148,7 +149,7 @@ extension API {
 
 extension API {
     //MARK: Getters
-    func getPosts(type: String, createdAtBefore beforeDate: String = "", tags: String = "", completion: @escaping () -> Void) {
+    func getPosts(type: String, createdAtBefore beforeDate: String = "", tags: String = "", categoires: String = "", completion: @escaping () -> Void) {
         let urlString = rootURL + Endpoints.posts
         
         var params = [String: String]()
@@ -158,7 +159,11 @@ extension API {
         if (tags != "-1") {
             params[Params.tags] = tags
         }
-        print(params)
+        
+        if (categoires != "-1") {
+            params[Params.categories] = categoires
+        }
+
         let user = User.getActiveUser()
         guard let userToken = user.token else { return }
         let _headers : HTTPHeaders = [

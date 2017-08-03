@@ -29,6 +29,7 @@ public class PodcastModel: Object, Mappable {
     dynamic var currentTime: String = "0"
     dynamic var imageURLString: String? = nil
     dynamic var tags: String = ""
+    dynamic var categories: String = ""
     
     dynamic var mp3Saved: Bool = false
     
@@ -65,6 +66,12 @@ public class PodcastModel: Object, Mappable {
         if let unwrappedTags = map.JSON["tags"] as? [Int] {
             for intTag in unwrappedTags {
                 tags += "\(intTag),"
+            }
+        }
+        
+        if let unwrappedCategories = map.JSON["categories"] as? [Int] {
+            for intTag in unwrappedCategories {
+                categories += "\(intTag),"
             }
         }
     }

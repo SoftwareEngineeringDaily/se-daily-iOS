@@ -39,46 +39,58 @@ class PodcastPageViewController: ButtonBarPagerTabStripViewController {
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let layout = UICollectionViewLayout()
         
+        var viewControllers = [UIViewController]()
+        
         let child_1 = LatestCollectionViewController(collectionViewLayout: layout)
         child_1.tabTitle = "All"
+        viewControllers.append(child_1)
         
         let child_2 = LatestCollectionViewController(collectionViewLayout: layout)
         child_2.tabTitle = "Business and Philosophy"
         child_2.tagId = 1068
+        viewControllers.append(child_2)
         
         let child_3 = LatestCollectionViewController(collectionViewLayout: layout)
         child_3.tabTitle = "Blockchain"
         child_3.tagId = 1082
+        viewControllers.append(child_3)
         
         let child_4 = LatestCollectionViewController(collectionViewLayout: layout)
         child_4.tabTitle = "Cloud Engineering"
         child_4.tagId = 1079
+        viewControllers.append(child_4)
         
         let child_5 = LatestCollectionViewController(collectionViewLayout: layout)
         child_5.tabTitle = "Data"
         child_5.tagId = 1081
+        viewControllers.append(child_5)
         
         let child_6 = LatestCollectionViewController(collectionViewLayout: layout)
         child_6.tabTitle = "JavaScript"
         child_6.tagId = 1084
+        viewControllers.append(child_6)
         
         let child_7 = LatestCollectionViewController(collectionViewLayout: layout)
         child_7.tabTitle = "Machine Learning"
         child_7.tagId = 1080
+        viewControllers.append(child_7)
         
         let child_8 = LatestCollectionViewController(collectionViewLayout: layout)
         child_8.tabTitle = "Open Source"
         child_8.tagId = 1078
+        viewControllers.append(child_8)
         
         let child_9 = LatestCollectionViewController(collectionViewLayout: layout)
         child_9.tabTitle = "Security"
         child_9.tagId = 1083
+        viewControllers.append(child_9)
         
         let child_10 = LatestCollectionViewController(collectionViewLayout: layout)
         child_10.tabTitle = "Hackers"
         child_10.tagId = 1085
+        viewControllers.append(child_10)
         
-        return [child_1, child_2, child_3, child_4, child_5]
+        return viewControllers
         
     }
 }

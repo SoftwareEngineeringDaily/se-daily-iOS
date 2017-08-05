@@ -123,7 +123,7 @@ extension PodcastModel {
     }
     
     class func getRecommended() -> Results<PodcastModel> {
-        return self.all().filter("isRecommended == true")
+        return self.all().filter("isRecommended == true").sorted(byKeyPath: "uploadDate", ascending: false)
     }
     
     class func getTop() -> Results<PodcastModel> {

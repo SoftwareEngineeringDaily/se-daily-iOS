@@ -155,7 +155,7 @@ extension API {
 
 extension API {
     //MARK: Getters
-    func getPosts(type: String, createdAtBefore beforeDate: String = "", tags: String = "", categoires: String = "", completion: @escaping () -> Void) {
+    func getPosts(type: String, createdAtBefore beforeDate: String = "", tags: String = "-1", categoires: String = "", completion: @escaping (_ hasChanges: Bool) -> Void) {
         let urlString = rootURL + Endpoints.posts
         
         var params = [String: String]()
@@ -177,16 +177,23 @@ extension API {
         ]
         
         typealias model = PodcastModel
-        
+
         Alamofire.request(urlString, method: .get, parameters: params, headers: _headers).responseArray { (response: DataResponse<[model]>) in
             
-            switch response.result {
+            // Variable to check if this function returns changes
+            var hasChanges = false
             
+            switch response.result {
             case .success:
                 let modelsArray = response.result.value
                 guard let array = modelsArray else { return }
-                
+
+                if array.isEmpty {
+                    completion(hasChanges)
+                }
                 for item in array {
+                    hasChanges = true
+                    
                     let realm = try! Realm()
                     let existingItem = realm.object(ofType: model.self, forPrimaryKey: item.key)
                     
@@ -219,15 +226,16 @@ extension API {
                         }
                     }
                 }
+                completion(hasChanges)
             case .failure(let error):
                 log.error(error)
                 Tracker.logGeneralError(error: error)
+                completion(false)
             }
-            completion()
         }
     }
     
-    func getRecommendedPosts(createdAtBefore beforeDate: String = "", completion: @escaping () -> Void) {
+    func getRecommendedPosts(createdAtBefore beforeDate: String = "", completion: @escaping (_ hasChanges: Bool) -> Void) {
         let urlString = rootURL + Endpoints.recommendations
         
         let user = User.getActiveUser()
@@ -238,6 +246,9 @@ extension API {
 
         typealias model = PodcastModel
         
+        // Variable to check if this function returns changes
+        var hasChanges = false
+        
         Alamofire.request(urlString, method: .get, parameters: nil, headers: _headers).responseArray { (response: DataResponse<[model]>) in
             
             switch response.result {
@@ -246,7 +257,12 @@ extension API {
                 let modelsArray = response.result.value
                 guard let array = modelsArray else { return }
 
+                if array.isEmpty {
+                    completion(hasChanges)
+                }
+                
                 for item in array {
+                    hasChanges = true
                     // Check if Achievement Model already exists
                     let realm = try! Realm()
                     let existingItem = realm.object(ofType: model.self, forPrimaryKey: item.key)
@@ -261,12 +277,14 @@ extension API {
                         existingItem?.update(isRecommended: true)
                     }
                 }
+                completion(hasChanges)
+                break
             case .failure(let error):
                 log.error(error)
                 Tracker.logGeneralError(error: error)
+                completion(false)
                 break
             }
-            completion()
         }
     }
 }

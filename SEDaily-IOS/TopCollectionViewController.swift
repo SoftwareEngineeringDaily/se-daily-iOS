@@ -6,7 +6,6 @@
 //  Copyright © 2017 Koala Tea. All rights reserved.
 //
 
-
 import UIKit
 import RealmSwift
 import KoalaTeaFlowLayout
@@ -71,7 +70,7 @@ class TopCollectionViewController: UICollectionViewController {
     
     func loadData() {
         activityView.startAnimating()
-        API.sharedInstance.getPosts(type: API.Types.top, completion: {
+        API.sharedInstance.getPosts(type: API.Types.top, completion: {_ in 
             self.activityView.stopAnimating()
         })
         self.registerNotifications()

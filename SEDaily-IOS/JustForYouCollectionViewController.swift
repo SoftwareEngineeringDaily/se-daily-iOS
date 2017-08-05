@@ -56,6 +56,7 @@ class JustForYouCollectionViewController: UICollectionViewController {
     }
     
     func loginObserver() {
+        itemCount = 0
         loadData()
     }
     
@@ -72,14 +73,14 @@ class JustForYouCollectionViewController: UICollectionViewController {
         activityView.startAnimating()
         
         guard User.getActiveUser().isLoggedIn() else {
-            API.sharedInstance.getPosts(type: API.Types.top, completion: {
+            API.sharedInstance.getPosts(type: API.Types.top, completion: {_ in 
                 self.activityView.stopAnimating()
             })
             self.data = PodcastModel.getTop()
             self.registerNotifications()
             return
         }
-        API.sharedInstance.getRecommendedPosts(completion: {
+        API.sharedInstance.getRecommendedPosts(completion: {_ in 
             self.activityView.stopAnimating()
         })
         self.data = PodcastModel.getRecommended()

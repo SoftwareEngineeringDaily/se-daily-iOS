@@ -79,7 +79,7 @@ class LatestCollectionViewController: UICollectionViewController, IndicatorInfoP
 
     func loadData() {
         activityView.startAnimating()
-        API.sharedInstance.getPosts(type: API.Types.new, categoires: String(self.tagId), completion: {
+        API.sharedInstance.getPosts(type: API.Types.new, categoires: String(self.tagId), completion: {_ in 
             self.activityView.stopAnimating()
         })
         

@@ -89,10 +89,11 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     func setupTabs() {
         let layout = UICollectionViewLayout()
         let vc1 = PodcastPageViewController()
-//        let vc1 = LatestCollectionViewController(collectionViewLayout: layout)
         let vc2 = JustForYouCollectionViewController(collectionViewLayout: layout)
         let vc3 = TopCollectionViewController(collectionViewLayout: layout)
-                
+//        let vc2 = GeneralCollectionViewController(collectionViewLayout: layout, type: API.Types.recommended)
+//        let vc3 = GeneralCollectionViewController(collectionViewLayout: layout, type: API.Types.top)
+        
         let icon1 = UITabBarItem(title: "Latest", image: #imageLiteral(resourceName: "mic_stand"), selectedImage: #imageLiteral(resourceName: "mic_stand_selected"))
         let icon2 = UITabBarItem(title: "Just For You", image: #imageLiteral(resourceName: "activity_feed"), selectedImage: #imageLiteral(resourceName: "activity_feed_selected"))
         let icon3 = UITabBarItem(tabBarSystemItem: .mostViewed, tag: 0)

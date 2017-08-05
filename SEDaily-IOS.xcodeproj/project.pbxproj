@@ -29,6 +29,7 @@
 		164FE9EF1F03065C009419CA /* NavigationControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9EE1F03065C009419CA /* NavigationControllerExtension.swift */; };
 		164FE9F11F030A2E009419CA /* PodcastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9F01F030A2E009419CA /* PodcastModel.swift */; };
 		166036211F266FF300A22B7B /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166036201F266FF300A22B7B /* Notifications.swift */; };
+		1668124A1F350737007F288B /* GeneralCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166812491F350737007F288B /* GeneralCollectionViewController.swift */; };
 		1672FAC41F06C141008445B1 /* NotificationCenterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */; };
 		1673B8FD1F27AA3200923BB8 /* LatestCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1673B8FC1F27AA3200923BB8 /* LatestCollectionViewController.swift */; };
 		1673B8FF1F27E56100923BB8 /* TopCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1673B8FE1F27E56100923BB8 /* TopCollectionViewController.swift */; };
@@ -86,6 +87,7 @@
 		164FE9EE1F03065C009419CA /* NavigationControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationControllerExtension.swift; sourceTree = "<group>"; };
 		164FE9F01F030A2E009419CA /* PodcastModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastModel.swift; sourceTree = "<group>"; };
 		166036201F266FF300A22B7B /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		166812491F350737007F288B /* GeneralCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralCollectionViewController.swift; sourceTree = "<group>"; };
 		1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterExtension.swift; sourceTree = "<group>"; };
 		1673B8FC1F27AA3200923BB8 /* LatestCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatestCollectionViewController.swift; sourceTree = "<group>"; };
 		1673B8FE1F27E56100923BB8 /* TopCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopCollectionViewController.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				1673B8FC1F27AA3200923BB8 /* LatestCollectionViewController.swift */,
 				1673B8FE1F27E56100923BB8 /* TopCollectionViewController.swift */,
 				1673B9001F27E70200923BB8 /* JustForYouCollectionViewController.swift */,
+				166812491F350737007F288B /* GeneralCollectionViewController.swift */,
 			);
 			name = CollectionViews;
 			sourceTree = "<group>";
@@ -585,6 +588,7 @@
 				164FE9E51F02EE83009419CA /* API.swift in Sources */,
 				16DDC63A1F24183D006BF9BD /* ViewController.swift in Sources */,
 				164FE9E91F02F049009419CA /* Stylesheet.swift in Sources */,
+				1668124A1F350737007F288B /* GeneralCollectionViewController.swift in Sources */,
 				164C71091F021C97003803BC /* FeedCollectionViewController.swift in Sources */,
 				16B147B11F16BF9C00433A42 /* AudioViewManager.swift in Sources */,
 				1673B9011F27E70200923BB8 /* JustForYouCollectionViewController.swift in Sources */,
@@ -748,7 +752,7 @@
 			baseConfigurationReference = 9FDA28C254F62BB468401B75 /* Pods-SEDaily-IOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = 6TY8WC8WPP;
 				INFOPLIST_FILE = "SEDaily-IOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -763,7 +767,7 @@
 			baseConfigurationReference = 675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = 6TY8WC8WPP;
 				INFOPLIST_FILE = "SEDaily-IOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

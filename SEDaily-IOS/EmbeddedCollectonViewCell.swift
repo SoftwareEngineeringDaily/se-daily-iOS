@@ -57,27 +57,27 @@ class EmbeddedCollectonViewCell: UICollectionViewCell {
         log.info("setting up")
         switch type {
         case API.Types.top:
-            API.sharedInstance.getPosts(type: type, completion: {
+            API.sharedInstance.getPosts(type: type, completion: {_ in 
                 activityView.stopAnimating()
             })
             self.data = PodcastModel.getTop()
             self.registerNotifications()
         case API.Types.recommended:
             guard User.getActiveUser().isLoggedIn() else {
-                API.sharedInstance.getPosts(type: API.Types.top, completion: {
+                API.sharedInstance.getPosts(type: API.Types.top, completion: {_ in 
                     activityView.stopAnimating()
                 })
                 self.data = PodcastModel.getTop()
                 self.registerNotifications()
                 break
             }
-            API.sharedInstance.getRecommendedPosts(completion: {
+            API.sharedInstance.getRecommendedPosts(completion: {_ in 
                 activityView.stopAnimating()
             })
             self.data = PodcastModel.getRecommended()
             self.registerNotifications()
         default: // new
-            API.sharedInstance.getPosts(type: type, completion: {
+            API.sharedInstance.getPosts(type: type, completion: {_ in 
                 activityView.stopAnimating()
             })
             

@@ -70,13 +70,13 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
         }
     }
     
-    func loginObserver() {
-        loadData(lastItemDate: "")
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func loginObserver() {
+        loadData(lastItemDate: "")
     }
     
     // MARK: - Data stuff

@@ -32,6 +32,10 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
     let preloadMargin = 5
     var lastLoadedPage = 0
     
+    enum APICheckDates {
+        static let newFeedLastCheck = "newFeedLastCheck"
+    }
+    
     init(collectionViewLayout layout: UICollectionViewLayout, tagId: Int = -1, type: String) {
         super.init(collectionViewLayout: layout)
         
@@ -105,27 +109,161 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
         }
     }
     
+    // @TODO: Move to repository
+    func loadNewLocalPodcasts (hasChanges: Bool) {
+        self.activityView.stopAnimating()
+        
+        //@TODO: Fix this, right now it stops all loading completely
+        if hasChanges {
+            self.loading = false
+        }
+        
+        // @TODO: Should probably only load count
+        var returnData = PodcastModel.all()
+
+        if self.tagId != -1 {
+            returnData = returnData.filter("categories CONTAINS '\(self.tagId)'")
+        }
+        
+        self.data = returnData.sorted(byKeyPath: "uploadDate", ascending: false)
+        self.registerNotifications()
+    }
+    
+    func alreadyLoadedNewToday (tagId: Int?) -> Bool {
+        let defaults = UserDefaults.standard
+        var key = APICheckDates.newFeedLastCheck
+        
+        if tagId != nil && tagId! > -1 {
+            key = "\(key)-\(String(describing: tagId!))"
+        }
+        
+        if let newFeedLastCheck = defaults.string(forKey: key) {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // @TOOD: is this ISO?
+            
+            let newFeedLastCheckDate = formatter.date(from: newFeedLastCheck)
+            let newFeedDate = newFeedLastCheckDate!.dateString() // @TODO Guard?
+            
+            let today = Date()
+            let todayDate = today.dateString()
+            
+            if (newFeedDate == todayDate) {
+                return true
+            }
+            
+            return false
+        }
+        
+        return false
+    }
+    
+    func setLoadedNewToday (tagId: Int?) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // @TOOD: is this ISO?
+        
+        let todayString = formatter.string(from: Date())
+        
+        var key = APICheckDates.newFeedLastCheck
+        if tagId != nil && tagId! > -1 {
+            key = "\(key)-\(String(describing: tagId!))"
+        }
+        
+        let defaults = UserDefaults.standard
+        defaults.set(todayString, forKey: key)
+    }
+    
+    func alreadyLoadMoreThanLastItemDateToday (tagId: Int, lastItemDate: String?) -> Bool {
+        let defaults = UserDefaults.standard
+        var key = APICheckDates.newFeedLastCheck
+        
+        if tagId > -1 {
+            key = "\(key)-\(String(describing: tagId))"
+        }
+        
+        if lastItemDate == nil || (lastItemDate?.isEmpty)! {
+            return false
+        }
+        
+        // Format last item date
+        let formatterTmp = DateFormatter()
+        formatterTmp.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+        let lastItemDateObject = formatterTmp.date(from: lastItemDate!)
+        if lastItemDateObject == nil {
+            return false
+        }
+        formatterTmp.dateFormat = "yyyy-MM-dd"
+        let lastItemDateString = formatterTmp.string(from: lastItemDateObject!)
+        key = "\(key)-\(String(describing: lastItemDateString))"
+        
+        if let newFeedLastCheck = defaults.string(forKey: key) {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // @TOOD: is this ISO?
+            
+            let newFeedLastCheckDate = formatter.date(from: newFeedLastCheck)
+            let newFeedDate = newFeedLastCheckDate!.dateString() // @TODO Guard?
+            
+            let today = Date()
+            let todayDate = today.dateString()
+            
+            if (newFeedDate == todayDate) {
+                return true
+            }
+            
+            return false
+        }
+        
+        return false
+    }
+    
+    func setLoadMoreThanLastItemDateToday (tagId: Int, lastItemDate: String?) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // @TOOD: is this ISO?
+        
+        let todayString = formatter.string(from: Date())
+        
+        var key = APICheckDates.newFeedLastCheck
+        if tagId > -1 {
+            key = "\(key)-\(String(describing: tagId))"
+        }
+        
+        if lastItemDate == nil || (lastItemDate?.isEmpty)! {
+            return
+        }
+        
+        // Format last item date
+        let formatterTmp = DateFormatter()
+        formatterTmp.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+        let lastItemDateObject = formatterTmp.date(from: lastItemDate!)
+        if lastItemDateObject == nil {
+            return
+        }
+        formatterTmp.dateFormat = "yyyy-MM-dd"
+        let lastItemDateString = formatterTmp.string(from: lastItemDateObject!)
+        key = "\(key)-\(String(describing: lastItemDateString))"
+        
+        let defaults = UserDefaults.standard
+        defaults.set(todayString, forKey: key)
+    }
+    
     func loadData(lastItemDate: String) {
         //@TODO: Fix this for recommended and top
         self.activityView.startAnimating()
         
         switch type {
         case API.Types.new:
+            let alreadLoadedStartToday = self.alreadyLoadedNewToday(tagId: self.tagId)
+            let alreadyLoadedCurrentTime = lastItemDate.isEmpty || self.alreadyLoadMoreThanLastItemDateToday(tagId: self.tagId, lastItemDate: lastItemDate)
+            
+            if (alreadLoadedStartToday && alreadyLoadedCurrentTime) {
+                // !TODO: This may be being called during scroll when it doesn't need to be since we load all. However, we probably shouldn't load all from realm?
+                self.loadNewLocalPodcasts(hasChanges: false)
+                return;
+            }
+            
             API.sharedInstance.getPosts(type: type, createdAtBefore: lastItemDate, categoires: String(self.tagId), completion: { (hasChanges) in
-                self.activityView.stopAnimating()
-                
-                //@TODO: Fix this, right now it stops all loading completely
-                if hasChanges {
-                    self.loading = false
-                }
-                
-                var returnData = PodcastModel.all()
-                if self.tagId != -1 {
-                    returnData = returnData.filter ("categories CONTAINS '\(self.tagId)'")
-                }
-                
-                self.data = returnData.sorted(byKeyPath: "uploadDate", ascending: false)
-                self.registerNotifications()
+                self.setLoadedNewToday(tagId: self.tagId)
+                self.setLoadMoreThanLastItemDateToday(tagId: self.tagId, lastItemDate: lastItemDate)
+                self.loadNewLocalPodcasts(hasChanges: hasChanges)
             })
             break
         case API.Types.recommended:

@@ -10,6 +10,7 @@ import UIKit
 import RealmSwift
 import KoalaTeaFlowLayout
 import XLPagerTabStrip
+import SwifterSwift
 
 private let reuseIdentifier = "Cell"
 
@@ -69,7 +70,6 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
         // Add activity view
         self.view.addSubview(activityView)
         activityView.snp.makeConstraints {(make) -> Void in
-//            make.top.equalToSuperview().inset(20.calculateHeight())
             make.center.equalToSuperview()
         }
     }
@@ -100,7 +100,6 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
         
         if (indexPath.item >= preloadIndex && lastLoadedPage < nextPage) || indexPath == collectionView?.indexPathForLastItem! {
             if let lastDate = item.uploadDate {
-                
                 //@TODO: This is left open for paging for recommended and top posts
                 // (I think top posts could be paged)
                 guard type != API.Types.recommended || type != API.Types.top else { return }
@@ -114,13 +113,13 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
         self.activityView.stopAnimating()
         
         //@TODO: Fix this, right now it stops all loading completely
-        if hasChanges {
-            self.loading = false
-        }
+        //        if hasChanges {
+        self.loading = false
+        //        }
         
         // @TODO: Should probably only load count
         var returnData = PodcastModel.all()
-
+        
         if self.tagId != -1 {
             returnData = returnData.filter("categories CONTAINS '\(self.tagId)'")
         }
@@ -138,30 +137,19 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
         }
         
         if let newFeedLastCheck = defaults.string(forKey: key) {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // @TOOD: is this ISO?
-            
-            let newFeedLastCheckDate = formatter.date(from: newFeedLastCheck)
-            let newFeedDate = newFeedLastCheckDate!.dateString() // @TODO Guard?
-            
-            let today = Date()
-            let todayDate = today.dateString()
-            
+            let todayDate = Date().dateString()
+            let newFeedDate = Date(iso8601String: newFeedLastCheck)!.dateString()
             if (newFeedDate == todayDate) {
                 return true
             }
             
             return false
         }
-        
         return false
     }
     
     func setLoadedNewToday (tagId: Int?) {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // @TOOD: is this ISO?
-        
-        let todayString = formatter.string(from: Date())
+        let todayString = Date().iso8601String
         
         var key = APICheckDates.newFeedLastCheck
         if tagId != nil && tagId! > -1 {
@@ -184,26 +172,12 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
             return false
         }
         
-        // Format last item date
-        let formatterTmp = DateFormatter()
-        formatterTmp.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
-        let lastItemDateObject = formatterTmp.date(from: lastItemDate!)
-        if lastItemDateObject == nil {
-            return false
-        }
-        formatterTmp.dateFormat = "yyyy-MM-dd"
-        let lastItemDateString = formatterTmp.string(from: lastItemDateObject!)
+        let lastItemDateString = Date(iso8601String: lastItemDate!)
         key = "\(key)-\(String(describing: lastItemDateString))"
         
         if let newFeedLastCheck = defaults.string(forKey: key) {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // @TOOD: is this ISO?
-            
-            let newFeedLastCheckDate = formatter.date(from: newFeedLastCheck)
-            let newFeedDate = newFeedLastCheckDate!.dateString() // @TODO Guard?
-            
-            let today = Date()
-            let todayDate = today.dateString()
+            let todayDate = Date().dateString()
+            let newFeedDate = Date(iso8601String: newFeedLastCheck)!.dateString()
             
             if (newFeedDate == todayDate) {
                 return true
@@ -216,10 +190,7 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
     }
     
     func setLoadMoreThanLastItemDateToday (tagId: Int, lastItemDate: String?) {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // @TOOD: is this ISO?
-        
-        let todayString = formatter.string(from: Date())
+        let todayString = Date().iso8601String
         
         var key = APICheckDates.newFeedLastCheck
         if tagId > -1 {
@@ -230,15 +201,7 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
             return
         }
         
-        // Format last item date
-        let formatterTmp = DateFormatter()
-        formatterTmp.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
-        let lastItemDateObject = formatterTmp.date(from: lastItemDate!)
-        if lastItemDateObject == nil {
-            return
-        }
-        formatterTmp.dateFormat = "yyyy-MM-dd"
-        let lastItemDateString = formatterTmp.string(from: lastItemDateObject!)
+        let lastItemDateString = Date(iso8601String: lastItemDate!)
         key = "\(key)-\(String(describing: lastItemDateString))"
         
         let defaults = UserDefaults.standard
@@ -247,8 +210,6 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
     
     func loadData(lastItemDate: String) {
         //@TODO: Fix this for recommended and top
-        self.activityView.startAnimating()
-        
         switch type {
         case API.Types.new:
             let alreadLoadedStartToday = self.alreadyLoadedNewToday(tagId: self.tagId)
@@ -259,6 +220,8 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
                 self.loadNewLocalPodcasts(hasChanges: false)
                 return;
             }
+            
+            self.activityView.startAnimating()
             
             API.sharedInstance.getPosts(type: type, createdAtBefore: lastItemDate, categoires: String(self.tagId), completion: { (hasChanges) in
                 self.setLoadedNewToday(tagId: self.tagId)
@@ -286,7 +249,7 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
                 if hasChanges {
                     self.loading = false
                 }
-
+                
                 self.data = PodcastModel.getRecommended()
                 self.registerNotifications()
             })
@@ -318,12 +281,12 @@ extension GeneralCollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        if !data.isEmpty {
-            if itemCount < 10 {
-                self.getData()
-            }
-            return itemCount
-//        }
+        //        if !data.isEmpty {
+        if itemCount < 10 {
+            self.getData()
+        }
+        return itemCount
+        //        }
         self.getData()
         return 0
     }

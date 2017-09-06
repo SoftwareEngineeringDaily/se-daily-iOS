@@ -34,7 +34,7 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
     var lastLoadedPage = 0
     
     enum APICheckDates {
-        static let newFeedLastCheck = "newFeedLastCheck"
+        static let newFeedLastCheck = "newFeed"
     }
     
     init(collectionViewLayout layout: UICollectionViewLayout, tagId: Int = -1, type: String) {
@@ -128,14 +128,17 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
         self.registerNotifications()
     }
     
-    func alreadyLoadedNewToday (tagId: Int?) -> Bool {
+    func alreadyLoadedNewToday (tagId: Int, lastItemDate: String?) -> Bool {
         let defaults = UserDefaults.standard
+        // @TODO: we may be able to add this to the filters dictionary
         var key = APICheckDates.newFeedLastCheck
         
-        if tagId != nil && tagId! > -1 {
-            key = "\(key)-\(String(describing: tagId!))"
-        }
+        var filters = [String: String]()
+        filters["lastItemDate"] = lastItemDate
+        filters["tagId"] = String(tagId)
         
+        key = "\(key)-\(filters.description)"
+
         if let newFeedLastCheck = defaults.string(forKey: key) {
             let todayDate = Date().dateString()
             let newFeedDate = Date(iso8601String: newFeedLastCheck)!.dateString()
@@ -148,74 +151,28 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
         return false
     }
     
-    func setLoadedNewToday (tagId: Int?) {
+    func setLoadedNewToday (tagId: Int, lastItemDate: String?) {
         let todayString = Date().iso8601String
-        
         var key = APICheckDates.newFeedLastCheck
-        if tagId != nil && tagId! > -1 {
-            key = "\(key)-\(String(describing: tagId!))"
-        }
+        
+        var filters = [String: String]()
+        filters["lastItemDate"] = lastItemDate
+        filters["tagId"] = String(tagId)
+        
+        key = "\(key)-\(filters.description)"
         
         let defaults = UserDefaults.standard
         defaults.set(todayString, forKey: key)
     }
     
-    func alreadyLoadMoreThanLastItemDateToday (tagId: Int, lastItemDate: String?) -> Bool {
-        let defaults = UserDefaults.standard
-        var key = APICheckDates.newFeedLastCheck
-        
-        if tagId > -1 {
-            key = "\(key)-\(String(describing: tagId))"
-        }
-        
-        if lastItemDate == nil || (lastItemDate?.isEmpty)! {
-            return false
-        }
-        
-        let lastItemDateString = Date(iso8601String: lastItemDate!)
-        key = "\(key)-\(String(describing: lastItemDateString))"
-        
-        if let newFeedLastCheck = defaults.string(forKey: key) {
-            let todayDate = Date().dateString()
-            let newFeedDate = Date(iso8601String: newFeedLastCheck)!.dateString()
-            
-            if (newFeedDate == todayDate) {
-                return true
-            }
-            
-            return false
-        }
-        
-        return false
-    }
-    
-    func setLoadMoreThanLastItemDateToday (tagId: Int, lastItemDate: String?) {
-        let todayString = Date().iso8601String
-        
-        var key = APICheckDates.newFeedLastCheck
-        if tagId > -1 {
-            key = "\(key)-\(String(describing: tagId))"
-        }
-        
-        if lastItemDate == nil || (lastItemDate?.isEmpty)! {
-            return
-        }
-        
-        let lastItemDateString = Date(iso8601String: lastItemDate!)
-        key = "\(key)-\(String(describing: lastItemDateString))"
-        
-        let defaults = UserDefaults.standard
-        defaults.set(todayString, forKey: key)
-    }
     
     func loadData(lastItemDate: String) {
         //@TODO: Fix this for recommended and top
         switch type {
         case API.Types.new:
-            let alreadLoadedStartToday = self.alreadyLoadedNewToday(tagId: self.tagId)
-            let alreadyLoadedCurrentTime = lastItemDate.isEmpty || self.alreadyLoadMoreThanLastItemDateToday(tagId: self.tagId, lastItemDate: lastItemDate)
-            
-            if (alreadLoadedStartToday && alreadyLoadedCurrentTime) {
+            let alreadLoadedStartToday = self.alreadyLoadedNewToday(tagId: self.tagId, lastItemDate: lastItemDate)
+      
+            if (alreadLoadedStartToday) {
                 // !TODO: This may be being called during scroll when it doesn't need to be since we load all. However, we probably shouldn't load all from realm?
                 self.loadNewLocalPodcasts(hasChanges: false)
                 return;
@@ -224,8 +181,7 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
             self.activityView.startAnimating()
             
             API.sharedInstance.getPosts(type: type, createdAtBefore: lastItemDate, categoires: String(self.tagId), completion: { (hasChanges) in
-                self.setLoadedNewToday(tagId: self.tagId)
-                self.setLoadMoreThanLastItemDateToday(tagId: self.tagId, lastItemDate: lastItemDate)
+                self.setLoadedNewToday(tagId: self.tagId, lastItemDate: lastItemDate)
                 self.loadNewLocalPodcasts(hasChanges: hasChanges)
             })
             break

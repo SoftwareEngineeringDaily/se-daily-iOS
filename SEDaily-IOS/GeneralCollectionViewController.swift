@@ -10,6 +10,7 @@ import UIKit
 import RealmSwift
 import KoalaTeaFlowLayout
 import XLPagerTabStrip
+import SwifterSwift
 
 private let reuseIdentifier = "Cell"
 
@@ -31,6 +32,10 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
     let pageSize = 10
     let preloadMargin = 5
     var lastLoadedPage = 0
+    
+    enum APICheckDates {
+        static let newFeedLastCheck = "newFeed"
+    }
     
     init(collectionViewLayout layout: UICollectionViewLayout, tagId: Int = -1, type: String) {
         super.init(collectionViewLayout: layout)
@@ -65,18 +70,17 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
         // Add activity view
         self.view.addSubview(activityView)
         activityView.snp.makeConstraints {(make) -> Void in
-//            make.top.equalToSuperview().inset(20.calculateHeight())
             make.center.equalToSuperview()
         }
-    }
-    
-    func loginObserver() {
-        loadData(lastItemDate: "")
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func loginObserver() {
+        loadData(lastItemDate: "")
     }
     
     // MARK: - Data stuff
@@ -96,7 +100,6 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
         
         if (indexPath.item >= preloadIndex && lastLoadedPage < nextPage) || indexPath == collectionView?.indexPathForLastItem! {
             if let lastDate = item.uploadDate {
-                
                 //@TODO: This is left open for paging for recommended and top posts
                 // (I think top posts could be paged)
                 guard type != API.Types.recommended || type != API.Types.top else { return }
@@ -105,27 +108,81 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
         }
     }
     
+    // @TODO: Move to repository
+    func loadNewLocalPodcasts (hasChanges: Bool) {
+        self.activityView.stopAnimating()
+        
+        //@TODO: Fix this, right now it stops all loading completely
+        //        if hasChanges {
+        self.loading = false
+        //        }
+        
+        // @TODO: Should probably only load count
+        var returnData = PodcastModel.all()
+        
+        if self.tagId != -1 {
+            returnData = returnData.filter("categories CONTAINS '\(self.tagId)'")
+        }
+        
+        self.data = returnData.sorted(byKeyPath: "uploadDate", ascending: false)
+        self.registerNotifications()
+    }
+    
+    func alreadyLoadedNewToday (tagId: Int, lastItemDate: String?) -> Bool {
+        let defaults = UserDefaults.standard
+        // @TODO: we may be able to add this to the filters dictionary
+        var key = APICheckDates.newFeedLastCheck
+        
+        var filters = [String: String]()
+        filters["lastItemDate"] = lastItemDate
+        filters["tagId"] = String(tagId)
+        
+        key = "\(key)-\(filters.description)"
+
+        if let newFeedLastCheck = defaults.string(forKey: key) {
+            let todayDate = Date().dateString()
+            let newFeedDate = Date(iso8601String: newFeedLastCheck)!.dateString()
+            if (newFeedDate == todayDate) {
+                return true
+            }
+            
+            return false
+        }
+        return false
+    }
+    
+    func setLoadedNewToday (tagId: Int, lastItemDate: String?) {
+        let todayString = Date().iso8601String
+        var key = APICheckDates.newFeedLastCheck
+        
+        var filters = [String: String]()
+        filters["lastItemDate"] = lastItemDate
+        filters["tagId"] = String(tagId)
+        
+        key = "\(key)-\(filters.description)"
+        
+        let defaults = UserDefaults.standard
+        defaults.set(todayString, forKey: key)
+    }
+    
+    
     func loadData(lastItemDate: String) {
         //@TODO: Fix this for recommended and top
-        self.activityView.startAnimating()
-        
         switch type {
         case API.Types.new:
+            let alreadLoadedStartToday = self.alreadyLoadedNewToday(tagId: self.tagId, lastItemDate: lastItemDate)
+      
+            if (alreadLoadedStartToday) {
+                // !TODO: This may be being called during scroll when it doesn't need to be since we load all. However, we probably shouldn't load all from realm?
+                self.loadNewLocalPodcasts(hasChanges: false)
+                return;
+            }
+            
+            self.activityView.startAnimating()
+            
             API.sharedInstance.getPosts(type: type, createdAtBefore: lastItemDate, categoires: String(self.tagId), completion: { (hasChanges) in
-                self.activityView.stopAnimating()
-                
-                //@TODO: Fix this, right now it stops all loading completely
-                if hasChanges {
-                    self.loading = false
-                }
-                
-                var returnData = PodcastModel.all()
-                if self.tagId != -1 {
-                    returnData = returnData.filter ("categories CONTAINS '\(self.tagId)'")
-                }
-                
-                self.data = returnData.sorted(byKeyPath: "uploadDate", ascending: false)
-                self.registerNotifications()
+                self.setLoadedNewToday(tagId: self.tagId, lastItemDate: lastItemDate)
+                self.loadNewLocalPodcasts(hasChanges: hasChanges)
             })
             break
         case API.Types.recommended:
@@ -148,7 +205,7 @@ class GeneralCollectionViewController: UICollectionViewController, IndicatorInfo
                 if hasChanges {
                     self.loading = false
                 }
-
+                
                 self.data = PodcastModel.getRecommended()
                 self.registerNotifications()
             })
@@ -180,12 +237,12 @@ extension GeneralCollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        if !data.isEmpty {
-            if itemCount < 10 {
-                self.getData()
-            }
-            return itemCount
-//        }
+        //        if !data.isEmpty {
+        if itemCount < 10 {
+            self.getData()
+        }
+        return itemCount
+        //        }
         self.getData()
         return 0
     }

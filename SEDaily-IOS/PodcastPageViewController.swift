@@ -81,6 +81,10 @@ class PodcastPageViewController: ButtonBarPagerTabStripViewController {
         child_10.tabTitle = "Hackers"
         viewControllers.append(child_10)
         
+        let child_11 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1069, type: API.Types.new)
+        child_11.tabTitle = "Greatest Hits"
+        viewControllers.append(child_11)
+        
         return viewControllers
         
     }

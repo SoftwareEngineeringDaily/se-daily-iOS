@@ -25,6 +25,8 @@ target 'SEDaily-IOS' do
   pod 'XLPagerTabStrip', :git => 'https://github.com/KelvinJin/XLPagerTabStrip', :branch => 'swift3'
   pod 'Fabric'
   pod 'Crashlytics'
+  # @TODO: Fix the pod not being found
+  pod 'KTResponsiveUI', :git => 'https://github.com/KoalaTeaCode/KTResponsiveUI'
 
   target 'SEDaily-IOSTests' do
     inherit! :search_paths

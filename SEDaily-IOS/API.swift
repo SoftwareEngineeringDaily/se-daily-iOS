@@ -55,6 +55,7 @@ extension API {
         static let token = "token"
         static let tags = "tags"
         static let categories = "categories"
+        static let search = "search"
     }
 }
 
@@ -284,6 +285,38 @@ extension API {
                 Tracker.logGeneralError(error: error)
                 completion(false)
                 break
+            }
+        }
+    }
+    
+    func getPostsWith(searchTerm: String, createdAtBefore beforeDate: String = "", completion: @escaping (_ posts: [PodcastModel]?) -> Void) {
+        let urlString = rootURL + Endpoints.posts
+        
+        var params = [String: String]()
+        params[Params.search] = searchTerm
+        params[Params.createdAtBefore] = beforeDate
+        
+        let user = User.getActiveUser()
+        guard let userToken = user.token else { return }
+        let _headers : HTTPHeaders = [
+            Headers.authorization:Headers.bearer + userToken,
+            ]
+        
+        typealias model = PodcastModel
+        
+        Alamofire.request(urlString, method: .get, parameters: params, headers: _headers).responseArray { (response: DataResponse<[model]>) in
+            switch response.result {
+            case .success:
+                let modelsArray = response.result.value
+                guard let array = modelsArray else {
+                    completion(nil)
+                    return
+                }
+                completion(array)
+            case .failure(let error):
+                log.error(error)
+                Tracker.logGeneralError(error: error)
+                completion(nil)
             }
         }
     }

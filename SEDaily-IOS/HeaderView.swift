@@ -33,7 +33,7 @@ class HeaderView: UIView {
     
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented"); }
     
-    func performLayout() {
+    override func performLayout() {
         let views = [
             titleLabel
             ,dateLabel

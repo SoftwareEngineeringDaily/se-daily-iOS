@@ -12,6 +12,8 @@
 		1610E2C61F227C0D006C8E83 /* AssetPlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610E2C31F227C0D006C8E83 /* AssetPlaybackManager.swift */; };
 		1610E2C71F227C0D006C8E83 /* RemoteCommandDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610E2C41F227C0D006C8E83 /* RemoteCommandDataSource.swift */; };
 		1610E2C81F227C0D006C8E83 /* RemoteCommandManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610E2C51F227C0D006C8E83 /* RemoteCommandManager.swift */; };
+		161F3DE61F61F73D00A8F825 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161F3DE51F61F73D00A8F825 /* SearchTableViewController.swift */; };
+		161F3DEA1F62703100A8F825 /* PodcastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */; };
 		1649A78A1F204EC6005C4A6E /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1649A7891F204EC6005C4A6E /* ContainerViewController.swift */; };
 		164C71051F021AC8003803BC /* CustomTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C71041F021AC8003803BC /* CustomTabViewController.swift */; };
 		164C71071F021C8D003803BC /* PodcastCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C71061F021C8D003803BC /* PodcastCollectionViewController.swift */; };
@@ -70,6 +72,8 @@
 		1610E2C31F227C0D006C8E83 /* AssetPlaybackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetPlaybackManager.swift; sourceTree = "<group>"; };
 		1610E2C41F227C0D006C8E83 /* RemoteCommandDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteCommandDataSource.swift; sourceTree = "<group>"; };
 		1610E2C51F227C0D006C8E83 /* RemoteCommandManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteCommandManager.swift; sourceTree = "<group>"; };
+		161F3DE51F61F73D00A8F825 /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
+		161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastTableViewCell.swift; sourceTree = "<group>"; };
 		1649A7891F204EC6005C4A6E /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		164C71041F021AC8003803BC /* CustomTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabViewController.swift; sourceTree = "<group>"; };
 		164C71061F021C8D003803BC /* PodcastCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCollectionViewController.swift; sourceTree = "<group>"; };
@@ -227,6 +231,7 @@
 			children = (
 				167AFAB41F043ED500A1332F /* DetailTableViewCell.swift */,
 				167AFAB81F04624E00A1332F /* SingleLabelTableViewCell.swift */,
+				161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */,
 			);
 			name = TableViewCell;
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 				164FE9DF1F02EE4E009419CA /* ViewControllers */,
 				164FE9DE1F02DACA009419CA /* Views */,
 				16D67C4C1F33AE370065E838 /* ObjectExtensions.swift */,
+				161F3DE51F61F73D00A8F825 /* SearchTableViewController.swift */,
 			);
 			path = "SEDaily-IOS";
 			sourceTree = "<group>";
@@ -522,6 +528,7 @@
 				"${BUILT_PRODUCTS_DIR}/AlamofireObjectMapper/AlamofireObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/KTResponsiveUI/KTResponsiveUI.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/KoalaTeaFlowLayout/KoalaTeaFlowLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
@@ -544,6 +551,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KTResponsiveUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KoalaTeaFlowLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
@@ -578,6 +586,7 @@
 				164FE9EF1F03065C009419CA /* NavigationControllerExtension.swift in Sources */,
 				1610E2C71F227C0D006C8E83 /* RemoteCommandDataSource.swift in Sources */,
 				167AFAB21F043CF600A1332F /* PostDetailTableViewController.swift in Sources */,
+				161F3DE61F61F73D00A8F825 /* SearchTableViewController.swift in Sources */,
 				164FE9D51F02CC53009419CA /* EmbeddedCollectonViewCell.swift in Sources */,
 				16D67C4D1F33AE370065E838 /* ObjectExtensions.swift in Sources */,
 				164FE9D91F02D611009419CA /* CollectionReusableView.swift in Sources */,
@@ -608,6 +617,7 @@
 				1610E2C11F227BCF006C8E83 /* Asset.swift in Sources */,
 				164FE9ED1F02F7E2009419CA /* UIButtonExtension.swift in Sources */,
 				1686FC011F009EC00088A6C1 /* AppDelegate.swift in Sources */,
+				161F3DEA1F62703100A8F825 /* PodcastTableViewCell.swift in Sources */,
 				164FE9E71F02F02F009419CA /* UserModel.swift in Sources */,
 				1610E2C61F227C0D006C8E83 /* AssetPlaybackManager.swift in Sources */,
 			);

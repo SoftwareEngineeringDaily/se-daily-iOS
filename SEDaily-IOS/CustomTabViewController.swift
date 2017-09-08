@@ -44,19 +44,24 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     }
     
     func setupNavBar() {
-//        let leftBarButton = UIBarButtonItem(image: nil, style: .plain, target: self, action: #selector(self.presentLeftSideMenu))
+        let rightBarButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(self.leftBarButtonPressed))
+        self.navigationItem.rightBarButtonItem = rightBarButton
         
-//        self.navigationItem.leftBarButtonItem = leftBarButton
         switch User.getActiveUser().isLoggedIn() {
         case false:
-            let rightBarButton = UIBarButtonItem(title: "Login", style: .done, target: self, action: #selector(self.loginButtonPressed))
-            self.navigationItem.rightBarButtonItem = rightBarButton
+            let leftBarButton = UIBarButtonItem(title: "Login", style: .done, target: self, action: #selector(self.loginButtonPressed))
+            self.navigationItem.leftBarButtonItem = leftBarButton
             break
         case true:
-            let rightBarButton = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(self.logoutButtonPressed))
-            self.navigationItem.rightBarButtonItem = rightBarButton
+            let leftBarButton = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(self.logoutButtonPressed))
+            self.navigationItem.leftBarButtonItem = leftBarButton
             break
         }
+    }
+    
+    func leftBarButtonPressed() {
+        let vc = SearchTableViewController()
+        self.navigationController?.pushViewController(vc)
     }
     
     func loginButtonPressed() {

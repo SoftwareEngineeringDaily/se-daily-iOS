@@ -37,7 +37,7 @@ class PostDetailTableViewController: UITableViewController {
     }
     
     func setupTitleView() {
-        guard let navigationBarHeight = self.navigationBar?.height else { return }
+        guard let navigationBarHeight = self.navigationController?.navigationBar.height else { return }
         let height = navigationBarHeight - (4.calculateHeight())
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: height, height: height))
         imageView.contentMode = .scaleAspectFit

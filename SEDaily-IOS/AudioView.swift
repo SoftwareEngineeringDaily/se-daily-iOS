@@ -221,11 +221,19 @@ class AudioView: UIView {
         
         if (playbackSlider.isTracking) && (timeInSeconds != previousSliderValue) {
             // Update Labels
+            // Do this without using functions because this views controller use the functions and they have a !isTracking guard
+            //@TODO: Figure out how to fix not being able to use functions
             log.debug("value is tracking and changing")
-            self.updateSlider(currentValue: timeInSeconds)
+//            self.updateSlider(currentValue: timeInSeconds)
+            playbackSlider.value = timeInSeconds
             let duration = playbackSlider.maximumValue
             let timeLeft = Float(duration - timeInSeconds)
-            self.updateTimeLabels(currentTime: timeInSeconds, timeLeft: timeLeft)
+            
+            let currentTimeString = Helpers.createTimeString(time: timeInSeconds)
+            let timeLeftString = Helpers.createTimeString(time: timeLeft)
+//            self.updateTimeLabels(currentTimeText: currentTimeString, timeLeftText: timeLeftString)
+            self.currentTimeLabel.text = currentTimeString
+            self.timeLeftLabel.text = timeLeftString
         } else {
             log.debug("drag did end")
             self.delegate?.playbackSliderValueChanged(value: timeInSeconds)
@@ -248,7 +256,7 @@ class AudioView: UIView {
     func updateSlider(currentValue: Float) {
         // Have to check is first load because current value may be far from 0.0
         //@TODO: Fix this logic to fix jumping of playbackslider
-        if playbackSlider.isTracking { return }
+        guard !playbackSlider.isTracking else { return }
 //        if isFirstLoad {
 //            playbackSlider.value = currentValue
 //            isFirstLoad = false
@@ -269,46 +277,10 @@ class AudioView: UIView {
         bufferSlider.value = bufferValue
     }
     
-    func updateTimeLabels(currentTime: Float, timeLeft: Float) {
-        updateCurrentTimeLabel(currentTime: currentTime)
-        updateTimeLeftLabel(timeLeft: timeLeft)
-    }
-
-    func updateCurrentTimeLabel(currentTime: Float) {
-        var currentTimeString = ""
-        guard currentTime != 0 && !currentTime.isNaN else { return }
-        Helpers.hmsFrom(seconds: Int(currentTime), completion: { hours, minutes, seconds in
-            let hoursString = Helpers.getStringFrom(seconds: hours)
-            let minutesString = Helpers.getStringFrom(seconds: minutes)
-            let secondsString = Helpers.getStringFrom(seconds: seconds)
-            
-            if hoursString == "00" {
-                currentTimeString = "\(minutesString):\(secondsString)"
-                return
-            }
-            currentTimeString = "\(hoursString):\(minutesString):\(secondsString)"
-        })
-
-        self.currentTimeLabel.text = currentTimeString
-    }
-    
-    func updateTimeLeftLabel(timeLeft: Float) {
-        var timeLeftString = ""
-
-        guard timeLeft != 0 && !timeLeft.isNaN else { return }
-        Helpers.hmsFrom(seconds: Int(timeLeft), completion: { hours, minutes, seconds in
-            let hoursString = Helpers.getStringFrom(seconds: hours)
-            let minutesString = Helpers.getStringFrom(seconds: minutes)
-            let secondsString = Helpers.getStringFrom(seconds: seconds)
-            
-            if hoursString == "00" {
-                timeLeftString = "-" + "\(minutesString):\(secondsString)"
-                return
-            }
-            timeLeftString = "-" + "\(hoursString):\(minutesString):\(secondsString)"
-        })
-
-        self.timeLeftLabel.text = timeLeftString
+    func updateTimeLabels(currentTimeText: String, timeLeftText: String) {
+        guard !playbackSlider.isTracking else { return }
+        self.currentTimeLabel.text = currentTimeText
+        self.timeLeftLabel.text = timeLeftText
     }
     
     public func animateIn() {
@@ -342,6 +314,7 @@ class AudioView: UIView {
     }
     
     func enableButtons() {
+        log.warning("enabling buttons")
         self.playButton.isEnabled = true
         self.pauseButton.isEnabled = true
         self.stopButton.isEnabled = true
@@ -350,6 +323,7 @@ class AudioView: UIView {
     }
     
     func disableButtons() {
+        log.warning("disabling buttons")
         self.playButton.isEnabled = false
         self.pauseButton.isEnabled = false
         self.stopButton.isEnabled = false
@@ -377,7 +351,7 @@ extension AudioView {
         delegate?.skipForwardButtonPressed()
     }
     
-    func skipBackwardButtonPressed() {
+    @objc func skipBackwardButtonPressed() {
         delegate?.skipBackwardButtonPressed()
     }
 }

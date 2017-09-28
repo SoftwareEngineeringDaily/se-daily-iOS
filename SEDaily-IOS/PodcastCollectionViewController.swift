@@ -92,14 +92,14 @@ extension PodcastCollectionViewController {
         
         switch indexPath.section {
         case 1:
-            reusableview.setupTitleLabel(title: "Just For You")
+            reusableview?.setupTitleLabel(title: "Just For You")
         case 2:
-            reusableview.setupTitleLabel(title: "Greatest Hits")
+            reusableview?.setupTitleLabel(title: "Greatest Hits")
         default:
-            reusableview.setupTitleLabel(title: "Latest")
+            reusableview?.setupTitleLabel(title: "Latest")
         }
         
-        return reusableview
+        return reusableview!
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

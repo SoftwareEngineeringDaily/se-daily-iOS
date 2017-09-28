@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KTResponsiveUI
 
 private let reuseIdentifier = "reuseIdentifier"
 
@@ -62,7 +63,7 @@ class SearchTableViewController: UITableViewController {
         self.tableView.tableHeaderView = searchController.searchBar
         
         tableView.separatorStyle = .singleLine
-        tableView.rowHeight = 75.scaleForScreenHeight()
+        tableView.rowHeight = UIView.getValueScaledByScreenHeightFor(baseValue: 75)
         
         self.title = "Search"
     }

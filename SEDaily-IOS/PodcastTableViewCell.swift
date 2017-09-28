@@ -19,7 +19,7 @@ class PodcastTableViewCell: UITableViewCell, Reusable {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        cellImageView = UIImageView(leftInset: 10, height: 75, keepEqual: true)
+        cellImageView = UIImageView(leftInset: 10, height: 75)
         cellImageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
         cellImageView.contentMode = .scaleAspectFit
         cellImageView.clipsToBounds = true

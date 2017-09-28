@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import AlamofireObjectMapper
+//import AlamofireObjectMapper
 import RealmSwift
 import SwiftyJSON
 import Fabric

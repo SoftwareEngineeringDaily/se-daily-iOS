@@ -51,10 +51,12 @@ class AudioView: UIView {
     var settingsButton = UIButton()
     
     lazy var alertController: UIAlertController = {
-        let alert = UIAlertController(title: "Player Speed", message: "", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Playback Speed", message: "", preferredStyle: .actionSheet)
         let times: [Float] = [1.0,1.2,1.4,1.6,1.8,2.0,2.5,3.0]
         times.forEach({ (time) in
-            alert.addAction(UIAlertAction(title: String(time), style: .default) { action in
+            let title = String(time) + "x"
+            alert.addAction(UIAlertAction(title: title, style: .default) { action in
+                self.settingsButton.setTitle(title, for: .normal)
                 // perhaps use action.title here
                 self.delegate?.audioRateChanged(speed: time)
             })
@@ -136,14 +138,20 @@ class AudioView: UIView {
         
         playButton.isHidden = true
         
-        settingsButton.setIcon(icon: .fontAwesome(.ellipsisH), iconSize: 25, color: Stylesheet.Colors.secondaryColor, backgroundColor: .clear, forState: .normal)
+        settingsButton.setTitle("1.0x", for: .normal)
+        settingsButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .normal)
         settingsButton.addTarget(self, action: #selector(self.settingsButtonPressed), for: .touchUpInside)
         self.addSubview(settingsButton)
+        
+        let width = UIView.getValueScaledByScreenWidthFor(baseValue: 40)
+        let height = UIView.getValueScaledByScreenHeightFor(baseValue: 40)
         settingsButton.snp.makeConstraints { (make) -> Void in
+            make.width.equalTo(width)
+            make.height.equalTo(height)
             make.bottom.equalToSuperview()
             make.right.equalToSuperview()
         }
-        
+
         setupActivityIndicator()
         addPlaybackSlider()
         addLabels()

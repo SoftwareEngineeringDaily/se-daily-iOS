@@ -7,7 +7,8 @@ target 'SEDaily-IOS' do
 
   # Pods for SEDaily-IOS
   pod 'Alamofire', '~> 4.0’
-  pod 'AlamofireObjectMapper'
+  #pod 'AlamofireObjectMapper'
+  pod 'ObjectMapper'
   pod 'RealmSwift'
   pod 'SwiftyJSON'
   pod 'SwifterSwift'
@@ -22,11 +23,13 @@ target 'SEDaily-IOS' do
   pod 'SideMenu'
   pod 'ActiveLabel'
   pod 'Kingfisher'
-  pod 'XLPagerTabStrip', :git => 'https://github.com/KelvinJin/XLPagerTabStrip', :branch => 'swift3'
+  pod 'XLPagerTabStrip'
   pod 'Fabric'
   pod 'Crashlytics'
-  # @TODO: Fix the pod not being found
-  pod 'KTResponsiveUI', :git => 'https://github.com/KoalaTeaCode/KTResponsiveUI'
+#  pod 'KTResponsiveUI', :git => 'https://github.com/KoalaTeaCode/KTResponsiveUI'
+  pod 'KTResponsiveUI'
+  pod 'KoalaTeaPlayer'
+  pod 'Tabman', '~> 1.0'
 
   target 'SEDaily-IOSTests' do
     inherit! :search_paths

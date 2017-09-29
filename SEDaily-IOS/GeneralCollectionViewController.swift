@@ -15,7 +15,6 @@ import SwifterSwift
 private let reuseIdentifier = "Cell"
 
 class GeneralCollectionViewController: UICollectionViewController, IndicatorInfoProvider {
-    
     let activityView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     
     var type: String = ""

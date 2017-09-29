@@ -187,11 +187,13 @@ class LoginViewController: UIViewController {
         addBottomBorderToView(view: lastNameTextField, height: 36.calculateHeight(), width: 316.calculateWidth())
         
         emailTextField.placeholder = "Email"
+        emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
         emailTextField.textColor = Stylesheet.Colors.white
         emailTextField.autocorrectionType = .no
         emailTextField.autocapitalizationType = .none
         
         passwordTextField.placeholder = "Password"
+        passwordTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
         passwordTextField.textColor = Stylesheet.Colors.white
         passwordTextField.autocorrectionType = .no
         passwordTextField.autocapitalizationType = .none

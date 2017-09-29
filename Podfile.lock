@@ -1,54 +1,65 @@
 PODS:
   - ActiveLabel (0.7.1)
-  - Alamofire (4.5.0)
-  - AlamofireObjectMapper (4.1.0):
-    - Alamofire (~> 4.1)
-    - ObjectMapper (~> 2.0)
-  - Crashlytics (3.8.5):
+  - Alamofire (4.5.1)
+  - Crashlytics (3.8.6):
     - Fabric (~> 1.6.3)
-  - Eureka (3.1.0)
-  - Fabric (1.6.12)
-  - IQKeyboardManagerSwift (4.0.10)
-  - Kingfisher (3.10.4)
+  - Eureka (4.0.0)
+  - Fabric (1.6.13)
+  - IQKeyboardManagerSwift (5.0.2)
+  - Kingfisher (4.0.1)
   - KoalaTeaFlowLayout (0.3.0)
-  - KTResponsiveUI (0.2.0)
-  - ObjectMapper (2.2.8)
-  - Realm (2.9.0):
-    - Realm/Headers (= 2.9.0)
-  - Realm/Headers (2.9.0)
-  - RealmSwift (2.9.0):
-    - Realm (= 2.9.0)
+  - KoalaTeaPlayer (0.1.3)
+  - KTResponsiveUI (0.2.2):
+    - SwiftIcons
+  - ObjectMapper (3.0.0)
+  - Pageboy (2.0.0)
+  - PureLayout (3.0.2)
+  - Realm (2.10.1):
+    - Realm/Headers (= 2.10.1)
+  - Realm/Headers (2.10.1)
+  - RealmSwift (2.10.1):
+    - Realm (= 2.10.1)
   - Reusable (4.0.0):
     - Reusable/Storyboard (= 4.0.0)
     - Reusable/View (= 4.0.0)
   - Reusable/Storyboard (4.0.0)
   - Reusable/View (4.0.0)
-  - SideMenu (2.3.3)
-  - SnapKit (3.2.0)
-  - SwifterSwift (3.1.0):
-    - SwifterSwift/Cocoa (= 3.1.0)
-    - SwifterSwift/Foundation (= 3.1.0)
-    - SwifterSwift/UIKit (= 3.1.0)
-  - SwifterSwift/Cocoa (3.1.0)
-  - SwifterSwift/Foundation (3.1.0)
-  - SwifterSwift/UIKit (3.1.0)
+  - SideMenu (3.0.2)
+  - SnapKit (4.0.0)
+  - SwifterSwift (4.0.0):
+    - SwifterSwift/AppKit (= 4.0.0)
+    - SwifterSwift/CoreGraphics (= 4.0.0)
+    - SwifterSwift/CoreLocation (= 4.0.0)
+    - SwifterSwift/Foundation (= 4.0.0)
+    - SwifterSwift/SwiftStdlib (= 4.0.0)
+    - SwifterSwift/UIKit (= 4.0.0)
+  - SwifterSwift/AppKit (4.0.0)
+  - SwifterSwift/CoreGraphics (4.0.0)
+  - SwifterSwift/CoreLocation (4.0.0)
+  - SwifterSwift/Foundation (4.0.0)
+  - SwifterSwift/SwiftStdlib (4.0.0)
+  - SwifterSwift/UIKit (4.0.0)
   - SwiftIcons (1.5.1)
-  - SwiftyBeaver (1.3.0)
+  - SwiftyBeaver (1.4.2)
   - SwiftyJSON (3.1.4)
-  - UIFontComplete (1.0.0)
-  - XLPagerTabStrip (5.0.0)
+  - Tabman (1.0.1):
+    - Pageboy (~> 2.0.0)
+    - PureLayout (~> 3.0.0)
+  - UIFontComplete (2.0.1)
+  - XLPagerTabStrip (7.0.0)
 
 DEPENDENCIES:
   - ActiveLabel
   - Alamofire (~> 4.0)
-  - AlamofireObjectMapper
   - Crashlytics
   - Eureka
   - Fabric
   - IQKeyboardManagerSwift
   - Kingfisher
   - KoalaTeaFlowLayout
-  - KTResponsiveUI (from `https://github.com/KoalaTeaCode/KTResponsiveUI`)
+  - KoalaTeaPlayer
+  - KTResponsiveUI
+  - ObjectMapper
   - RealmSwift
   - Reusable
   - SideMenu
@@ -57,48 +68,37 @@ DEPENDENCIES:
   - SwiftIcons
   - SwiftyBeaver
   - SwiftyJSON
+  - Tabman (~> 1.0)
   - UIFontComplete
-  - XLPagerTabStrip (from `https://github.com/KelvinJin/XLPagerTabStrip`, branch `swift3`)
-
-EXTERNAL SOURCES:
-  KTResponsiveUI:
-    :git: https://github.com/KoalaTeaCode/KTResponsiveUI
-  XLPagerTabStrip:
-    :branch: swift3
-    :git: https://github.com/KelvinJin/XLPagerTabStrip
-
-CHECKOUT OPTIONS:
-  KTResponsiveUI:
-    :commit: d1e3260b7df75ab0857054921f04fa16b7b736d3
-    :git: https://github.com/KoalaTeaCode/KTResponsiveUI
-  XLPagerTabStrip:
-    :commit: 99e3cbd5e6b99bb6b1fdf25f4af58fe2e38ad308
-    :git: https://github.com/KelvinJin/XLPagerTabStrip
+  - XLPagerTabStrip
 
 SPEC CHECKSUMS:
   ActiveLabel: 68625f22775f51c31bb691ca8de20f1e5a3bc825
-  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
-  AlamofireObjectMapper: 435adc82f5b367679bd9e71c4974a54efd0b2521
-  Crashlytics: dfbae35ef22ca189240d230ad501feea4ee85d2d
-  Eureka: d6725c38d0dcdceaa331d1468f75e76315715ae0
-  Fabric: f050464eac45a2ce5a8e6e6a07e977c0df32fe28
-  IQKeyboardManagerSwift: 75ba21a23794a1e6b6fe6d9a267ea17f80e06771
-  Kingfisher: dc3a4983e86d2dfa89513664983a82340c11a289
+  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
+  Crashlytics: 95d05f4e4c19a771250c4bd9ce344d996de32bbf
+  Eureka: c0b55d2aec82050c1400c7d65960b700be8d10ef
+  Fabric: 2fb5676bc811af011a04513451f463dac6803206
+  IQKeyboardManagerSwift: e580da046d804d2836ee84668cc17e43a850a35d
+  Kingfisher: b771785e9461ed4b8686d40e7145f9e58100cb24
   KoalaTeaFlowLayout: 816ab599e3ddcf3234b8a02e2eeff4aed5ad71c0
-  KTResponsiveUI: 1291fc76fe61bf4f0ea95125d187ed661950ceae
-  ObjectMapper: 3d571bb5af471c779e1160828cd9ad5c4ef90958
-  Realm: f14ab1673502559cb16592ddb8f383c474c13e05
-  RealmSwift: 16ad2c187042c4934f49750375582fe508627dcb
+  KoalaTeaPlayer: a4c57d597cdced682c4167ce308493e5d6f0e7f2
+  KTResponsiveUI: fa61c6f9da890187f6df85e30da0e69bf4849463
+  ObjectMapper: 92230db59bf8f341a5c3a3cf0b9fbdde3cf0d87f
+  Pageboy: a43a4e34fad98ebfa415a5d33cd0389e5005a101
+  PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
+  Realm: fc7a317a5c2c9ba91f5f235ede4e2ea76e9eba0c
+  RealmSwift: 505ed6c15942a2e76f5cfa78a8667cfa997ee75b
   Reusable: 98e5fff1e0e2e00872199699b276dde08ee56c07
-  SideMenu: a447554ae5c982e8077666389e1c8b0c8656e065
-  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
-  SwifterSwift: f84eb7308f7742724b3cbf84283ce00f7c06d7fc
+  SideMenu: 8fe957e0f5dcf1a1175c8ba5d47978d4eb2a89da
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  SwifterSwift: 0b63ade1ec0c5bc4d6228df993de41fe44bc123e
   SwiftIcons: 287593643898af5a9ef16be4b1f9cf91a436cbc7
-  SwiftyBeaver: d4b551ba34b4206c52cc4684ae90444b8aaa5afd
+  SwiftyBeaver: 91057725648ee4980308f1650af077d04b3654a0
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
-  UIFontComplete: 4924a60fdf0438ae65266281d5b814a576c5c1fe
-  XLPagerTabStrip: 87b8b705f9a7178e76a063ffaa2d70045944a965
+  Tabman: 627b2bddc6c054bcd86c60919000c30c4adf2ec4
+  UIFontComplete: 7e3ce7f0a12d2529fb07f537e262aabfa87df280
+  XLPagerTabStrip: 9be80a66c6b7d60306b2c0a6004965016d68f813
 
-PODFILE CHECKSUM: eeb4f7f8feb882c500d9800b3b5edd4d6f4a1b63
+PODFILE CHECKSUM: cd208a587a098caa8649b5e4f8d48a84e49f35ca
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.4.0.beta.1

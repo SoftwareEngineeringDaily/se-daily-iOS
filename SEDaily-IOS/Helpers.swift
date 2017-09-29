@@ -92,6 +92,25 @@ class Helpers {
         
         return seconds < 10 ? "0\(seconds)" : "\(seconds)"
     }
+    
+    /*
+     A formatter for individual date components used to provide an appropriate
+     value for the `startTimeLabel` and `durationLabel`.
+     */
+    static let timeRemainingFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.zeroFormattingBehavior = .pad
+        formatter.allowedUnits = [.minute, .second]
+        
+        return formatter
+    }()
+    
+    static func createTimeString(time: Float) -> String {
+        let components = NSDateComponents()
+        components.second = Int(max(0.0, time))
+        
+        return timeRemainingFormatter.string(from: components as DateComponents)!
+    }
 }
 
 extension Helpers {
@@ -110,9 +129,9 @@ public extension String {
     var htmlDecoded: String {
         guard let encodedData = self.data(using: .utf8) else { return self }
         
-        let attributedOptions: [String : Any] = [
-            NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-            NSCharacterEncodingDocumentAttribute: String.Encoding.utf8.rawValue]
+        let attributedOptions: [NSAttributedString.DocumentReadingOptionKey : Any] = [
+            NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html,
+            NSAttributedString.DocumentReadingOptionKey.characterEncoding: String.Encoding.utf8.rawValue]
         
         do {
             let attributedString = try NSAttributedString(data: encodedData,
@@ -140,13 +159,5 @@ class TextField: UITextField {
     
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return UIEdgeInsetsInsetRect(bounds, padding)
-    }
-}
-
-extension String {
-    func convertHtmlSymbols() throws -> String? {
-        guard let data = data(using: .utf8) else { return nil }
-        
-        return try NSAttributedString(data: data, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute: String.Encoding.utf8.rawValue], documentAttributes: nil).string
     }
 }

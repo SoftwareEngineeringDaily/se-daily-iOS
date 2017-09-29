@@ -8,10 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		01BB1D6D1F29999E004A912E /* PodcastPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */; };
-		1610E2C11F227BCF006C8E83 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610E2C01F227BCF006C8E83 /* Asset.swift */; };
-		1610E2C61F227C0D006C8E83 /* AssetPlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610E2C31F227C0D006C8E83 /* AssetPlaybackManager.swift */; };
-		1610E2C71F227C0D006C8E83 /* RemoteCommandDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610E2C41F227C0D006C8E83 /* RemoteCommandDataSource.swift */; };
-		1610E2C81F227C0D006C8E83 /* RemoteCommandManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610E2C51F227C0D006C8E83 /* RemoteCommandManager.swift */; };
 		161F3DE61F61F73D00A8F825 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161F3DE51F61F73D00A8F825 /* SearchTableViewController.swift */; };
 		161F3DEA1F62703100A8F825 /* PodcastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */; };
 		1649A78A1F204EC6005C4A6E /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1649A7891F204EC6005C4A6E /* ContainerViewController.swift */; };
@@ -30,6 +26,7 @@
 		164FE9ED1F02F7E2009419CA /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9EC1F02F7E2009419CA /* UIButtonExtension.swift */; };
 		164FE9EF1F03065C009419CA /* NavigationControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9EE1F03065C009419CA /* NavigationControllerExtension.swift */; };
 		164FE9F11F030A2E009419CA /* PodcastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9F01F030A2E009419CA /* PodcastModel.swift */; };
+		165A5B681F7C32FD00FDE80B /* TempObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165A5B671F7C32FD00FDE80B /* TempObjectMapper.swift */; };
 		166036211F266FF300A22B7B /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166036201F266FF300A22B7B /* Notifications.swift */; };
 		1668124A1F350737007F288B /* GeneralCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166812491F350737007F288B /* GeneralCollectionViewController.swift */; };
 		1672FAC41F06C141008445B1 /* NotificationCenterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */; };
@@ -45,13 +42,10 @@
 		1686FC081F009EC00088A6C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC071F009EC00088A6C1 /* Assets.xcassets */; };
 		1686FC0B1F009EC00088A6C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC091F009EC00088A6C1 /* LaunchScreen.storyboard */; };
 		1686FC161F009EC00088A6C1 /* SEDaily_IOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */; };
-		169893A01F04C787008A2B4C /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1698939F1F04C787008A2B4C /* AudioManager.swift */; };
 		16B147B11F16BF9C00433A42 /* AudioViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B147B01F16BF9C00433A42 /* AudioViewManager.swift */; };
 		16D67C4A1F33AC620065E838 /* AnswersTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D67C491F33AC620065E838 /* AnswersTracker.swift */; };
 		16D67C4D1F33AE370065E838 /* ObjectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D67C4C1F33AE370065E838 /* ObjectExtensions.swift */; };
 		16D766BA1F06B4850066C143 /* AudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D766B91F06B4850066C143 /* AudioView.swift */; };
-		16DDC6361F24062F006BF9BD /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DDC6351F24062F006BF9BD /* Manager.swift */; };
-		16DDC63A1F24183D006BF9BD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DDC6391F24183D006BF9BD /* ViewController.swift */; };
 		238E99F4E37C7365658113B8 /* Pods_SEDaily_IOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C9F051C6C2F8638D2ABF8 /* Pods_SEDaily_IOSTests.framework */; };
 		24412438C753126FDDD37CBF /* Pods_SEDaily_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */; };
 /* End PBXBuildFile section */
@@ -68,10 +62,6 @@
 
 /* Begin PBXFileReference section */
 		01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastPageViewController.swift; sourceTree = "<group>"; };
-		1610E2C01F227BCF006C8E83 /* Asset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
-		1610E2C31F227C0D006C8E83 /* AssetPlaybackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetPlaybackManager.swift; sourceTree = "<group>"; };
-		1610E2C41F227C0D006C8E83 /* RemoteCommandDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteCommandDataSource.swift; sourceTree = "<group>"; };
-		1610E2C51F227C0D006C8E83 /* RemoteCommandManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteCommandManager.swift; sourceTree = "<group>"; };
 		161F3DE51F61F73D00A8F825 /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastTableViewCell.swift; sourceTree = "<group>"; };
 		1649A7891F204EC6005C4A6E /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
@@ -90,6 +80,7 @@
 		164FE9EC1F02F7E2009419CA /* UIButtonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 		164FE9EE1F03065C009419CA /* NavigationControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationControllerExtension.swift; sourceTree = "<group>"; };
 		164FE9F01F030A2E009419CA /* PodcastModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastModel.swift; sourceTree = "<group>"; };
+		165A5B671F7C32FD00FDE80B /* TempObjectMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempObjectMapper.swift; sourceTree = "<group>"; };
 		166036201F266FF300A22B7B /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		166812491F350737007F288B /* GeneralCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralCollectionViewController.swift; sourceTree = "<group>"; };
 		1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterExtension.swift; sourceTree = "<group>"; };
@@ -109,13 +100,10 @@
 		1686FC111F009EC00088A6C1 /* SEDaily-IOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SEDaily-IOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SEDaily_IOSTests.swift; sourceTree = "<group>"; };
 		1686FC171F009EC00088A6C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1698939F1F04C787008A2B4C /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		16B147B01F16BF9C00433A42 /* AudioViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioViewManager.swift; sourceTree = "<group>"; };
 		16D67C491F33AC620065E838 /* AnswersTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswersTracker.swift; sourceTree = "<group>"; };
 		16D67C4C1F33AE370065E838 /* ObjectExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectExtensions.swift; sourceTree = "<group>"; };
 		16D766B91F06B4850066C143 /* AudioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioView.swift; sourceTree = "<group>"; };
-		16DDC6351F24062F006BF9BD /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
-		16DDC6391F24183D006BF9BD /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.release.xcconfig"; sourceTree = "<group>"; };
 		995F64385352A79BA0DF7DEB /* Pods-SEDaily-IOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9FDA28C254F62BB468401B75 /* Pods-SEDaily-IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -147,12 +135,7 @@
 		1610E2C21F227BE0006C8E83 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				1610E2C31F227C0D006C8E83 /* AssetPlaybackManager.swift */,
-				1610E2C41F227C0D006C8E83 /* RemoteCommandDataSource.swift */,
-				1610E2C51F227C0D006C8E83 /* RemoteCommandManager.swift */,
-				1698939F1F04C787008A2B4C /* AudioManager.swift */,
 				16B147B01F16BF9C00433A42 /* AudioViewManager.swift */,
-				16DDC6351F24062F006BF9BD /* Manager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -195,7 +178,6 @@
 				164FE9E01F02EE67009419CA /* LoginViewController.swift */,
 				167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */,
 				1649A7891F204EC6005C4A6E /* ContainerViewController.swift */,
-				16DDC6391F24183D006BF9BD /* ViewController.swift */,
 				01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */,
 			);
 			name = ViewControllers;
@@ -206,7 +188,6 @@
 			children = (
 				164FE9F01F030A2E009419CA /* PodcastModel.swift */,
 				164FE9E61F02F02F009419CA /* UserModel.swift */,
-				1610E2C01F227BCF006C8E83 /* Asset.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -276,6 +257,7 @@
 				164FE9DE1F02DACA009419CA /* Views */,
 				16D67C4C1F33AE370065E838 /* ObjectExtensions.swift */,
 				161F3DE51F61F73D00A8F825 /* SearchTableViewController.swift */,
+				165A5B671F7C32FD00FDE80B /* TempObjectMapper.swift */,
 			);
 			path = "SEDaily-IOS";
 			sourceTree = "<group>";
@@ -361,12 +343,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Koala Tea";
 				TargetAttributes = {
 					1686FBFC1F009EC00088A6C1 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 6TY8WC8WPP;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -377,6 +360,7 @@
 					1686FC101F009EC00088A6C1 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 6MS9QWALYV;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 1686FBFC1F009EC00088A6C1;
 					};
@@ -525,13 +509,15 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ActiveLabel/ActiveLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/AlamofireObjectMapper/AlamofireObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/KTResponsiveUI/KTResponsiveUI.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/KoalaTeaFlowLayout/KoalaTeaFlowLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/KoalaTeaPlayer/KoalaTeaPlayer.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
+				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Reusable/Reusable.framework",
@@ -541,6 +527,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwifterSwift/SwifterSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
 				"${BUILT_PRODUCTS_DIR}/UIFontComplete/UIFontComplete.framework",
 				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 			);
@@ -548,13 +535,15 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActiveLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KTResponsiveUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KoalaTeaFlowLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KoalaTeaPlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reusable.framework",
@@ -564,6 +553,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwifterSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIFontComplete.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 			);
@@ -580,11 +570,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				167AFAB51F043ED500A1332F /* DetailTableViewCell.swift in Sources */,
-				1610E2C81F227C0D006C8E83 /* RemoteCommandManager.swift in Sources */,
 				164FE9E11F02EE67009419CA /* LoginViewController.swift in Sources */,
 				1649A78A1F204EC6005C4A6E /* ContainerViewController.swift in Sources */,
 				164FE9EF1F03065C009419CA /* NavigationControllerExtension.swift in Sources */,
-				1610E2C71F227C0D006C8E83 /* RemoteCommandDataSource.swift in Sources */,
 				167AFAB21F043CF600A1332F /* PostDetailTableViewController.swift in Sources */,
 				161F3DE61F61F73D00A8F825 /* SearchTableViewController.swift in Sources */,
 				164FE9D51F02CC53009419CA /* EmbeddedCollectonViewCell.swift in Sources */,
@@ -595,7 +583,6 @@
 				16D67C4A1F33AC620065E838 /* AnswersTracker.swift in Sources */,
 				164FE9D71F02CD99009419CA /* Extensions.swift in Sources */,
 				164FE9E51F02EE83009419CA /* API.swift in Sources */,
-				16DDC63A1F24183D006BF9BD /* ViewController.swift in Sources */,
 				164FE9E91F02F049009419CA /* Stylesheet.swift in Sources */,
 				1668124A1F350737007F288B /* GeneralCollectionViewController.swift in Sources */,
 				164C71091F021C97003803BC /* FeedCollectionViewController.swift in Sources */,
@@ -606,20 +593,17 @@
 				1673B8FD1F27AA3200923BB8 /* LatestCollectionViewController.swift in Sources */,
 				164C71051F021AC8003803BC /* CustomTabViewController.swift in Sources */,
 				164FE9DC1F02DAB5009419CA /* PodcastCollectionViewCell.swift in Sources */,
-				169893A01F04C787008A2B4C /* AudioManager.swift in Sources */,
+				165A5B681F7C32FD00FDE80B /* TempObjectMapper.swift in Sources */,
 				16D766BA1F06B4850066C143 /* AudioView.swift in Sources */,
 				164FE9EB1F02F340009419CA /* Helpers.swift in Sources */,
 				166036211F266FF300A22B7B /* Notifications.swift in Sources */,
 				1672FAC41F06C141008445B1 /* NotificationCenterExtension.swift in Sources */,
 				01BB1D6D1F29999E004A912E /* PodcastPageViewController.swift in Sources */,
 				164FE9F11F030A2E009419CA /* PodcastModel.swift in Sources */,
-				16DDC6361F24062F006BF9BD /* Manager.swift in Sources */,
-				1610E2C11F227BCF006C8E83 /* Asset.swift in Sources */,
 				164FE9ED1F02F7E2009419CA /* UIButtonExtension.swift in Sources */,
 				1686FC011F009EC00088A6C1 /* AppDelegate.swift in Sources */,
 				161F3DEA1F62703100A8F825 /* PodcastTableViewCell.swift in Sources */,
 				164FE9E71F02F02F009419CA /* UserModel.swift in Sources */,
-				1610E2C61F227C0D006C8E83 /* AssetPlaybackManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -671,14 +655,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -723,14 +713,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -762,13 +758,14 @@
 			baseConfigurationReference = 9FDA28C254F62BB468401B75 /* Pods-SEDaily-IOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_TEAM = 6TY8WC8WPP;
 				INFOPLIST_FILE = "SEDaily-IOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "koala-tea.SEDaily";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -777,13 +774,14 @@
 			baseConfigurationReference = 675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_TEAM = 6TY8WC8WPP;
 				INFOPLIST_FILE = "SEDaily-IOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "koala-tea.SEDaily";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -798,7 +796,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "koala-tea.SEDaily-IOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SEDaily-IOS.app/SEDaily-IOS";
 			};
 			name = Debug;
@@ -814,7 +813,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "koala-tea.SEDaily-IOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SEDaily-IOS.app/SEDaily-IOS";
 			};
 			name = Release;

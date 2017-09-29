@@ -19,6 +19,7 @@ public protocol AudioViewDelegate: NSObjectProtocol {
     func stopButtonPressed()
     func skipForwardButtonPressed()
     func skipBackwardButtonPressed()
+    func audioRateChanged(speed: Float)
     func playbackSliderValueChanged(value: Float)
 }
 
@@ -45,6 +46,26 @@ class AudioView: UIView {
     
     var previousSliderValue: Float = 0.0
     var isFirstLoad = true
+    
+    
+    var settingsButton = UIButton()
+    
+    lazy var alertController: UIAlertController = {
+        let alert = UIAlertController(title: "Playback Speed", message: "", preferredStyle: .actionSheet)
+        let times: [Float] = [1.0,1.2,1.4,1.6,1.8,2.0,2.5,3.0]
+        times.forEach({ (time) in
+            let title = String(time) + "x"
+            alert.addAction(UIAlertAction(title: title, style: .default) { action in
+                self.settingsButton.setTitle(title, for: .normal)
+                // perhaps use action.title here
+                self.delegate?.audioRateChanged(speed: time)
+            })
+        })
+        alert.addAction(title: "Cancel", style: .cancel, isEnabled: true) { (action) in
+            self.alertController.dismiss(animated: true, completion: nil)
+        }
+        return alert
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -117,6 +138,20 @@ class AudioView: UIView {
         
         playButton.isHidden = true
         
+        settingsButton.setTitle("1.0x", for: .normal)
+        settingsButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .normal)
+        settingsButton.addTarget(self, action: #selector(self.settingsButtonPressed), for: .touchUpInside)
+        self.addSubview(settingsButton)
+        
+        let width = UIView.getValueScaledByScreenWidthFor(baseValue: 40)
+        let height = UIView.getValueScaledByScreenHeightFor(baseValue: 40)
+        settingsButton.snp.makeConstraints { (make) -> Void in
+            make.width.equalTo(width)
+            make.height.equalTo(height)
+            make.bottom.equalToSuperview()
+            make.right.equalToSuperview()
+        }
+
         setupActivityIndicator()
         addPlaybackSlider()
         addLabels()
@@ -216,19 +251,31 @@ class AudioView: UIView {
         }
     }
     
-    func playbackSliderValueChanged(_ slider: UISlider) {
+    @objc func playbackSliderValueChanged(_ slider: UISlider) {
         let timeInSeconds = slider.value
         
         if (playbackSlider.isTracking) && (timeInSeconds != previousSliderValue) {
             // Update Labels
-            log.debug("value is tracking and changing")
-            self.updateSlider(currentValue: timeInSeconds)
+            // Do this without using functions because this views controller use the functions and they have a !isTracking guard
+            //@TODO: Figure out how to fix not being able to use functions
+//            self.updateSlider(currentValue: timeInSeconds)
+            playbackSlider.value = timeInSeconds
             let duration = playbackSlider.maximumValue
             let timeLeft = Float(duration - timeInSeconds)
-            self.updateTimeLabels(currentTime: timeInSeconds, timeLeft: timeLeft)
+            
+            let currentTimeString = Helpers.createTimeString(time: timeInSeconds)
+            let timeLeftString = Helpers.createTimeString(time: timeLeft)
+//            self.updateTimeLabels(currentTimeText: currentTimeString, timeLeftText: timeLeftString)
+            self.currentTimeLabel.text = currentTimeString
+            self.timeLeftLabel.text = timeLeftString
         } else {
-            log.debug("drag did end")
             self.delegate?.playbackSliderValueChanged(value: timeInSeconds)
+            let duration = playbackSlider.maximumValue
+            let timeLeft = Float(duration - timeInSeconds)
+            let currentTimeString = Helpers.createTimeString(time: timeInSeconds)
+            let timeLeftString = Helpers.createTimeString(time: timeLeft)
+            self.currentTimeLabel.text = currentTimeString
+            self.timeLeftLabel.text = timeLeftString
         }
         previousSliderValue = timeInSeconds
     }
@@ -248,7 +295,7 @@ class AudioView: UIView {
     func updateSlider(currentValue: Float) {
         // Have to check is first load because current value may be far from 0.0
         //@TODO: Fix this logic to fix jumping of playbackslider
-        if playbackSlider.isTracking { return }
+        guard !playbackSlider.isTracking else { return }
 //        if isFirstLoad {
 //            playbackSlider.value = currentValue
 //            isFirstLoad = false
@@ -269,46 +316,10 @@ class AudioView: UIView {
         bufferSlider.value = bufferValue
     }
     
-    func updateTimeLabels(currentTime: Float, timeLeft: Float) {
-        updateCurrentTimeLabel(currentTime: currentTime)
-        updateTimeLeftLabel(timeLeft: timeLeft)
-    }
-
-    func updateCurrentTimeLabel(currentTime: Float) {
-        var currentTimeString = ""
-        guard currentTime != 0 && !currentTime.isNaN else { return }
-        Helpers.hmsFrom(seconds: Int(currentTime), completion: { hours, minutes, seconds in
-            let hoursString = Helpers.getStringFrom(seconds: hours)
-            let minutesString = Helpers.getStringFrom(seconds: minutes)
-            let secondsString = Helpers.getStringFrom(seconds: seconds)
-            
-            if hoursString == "00" {
-                currentTimeString = "\(minutesString):\(secondsString)"
-                return
-            }
-            currentTimeString = "\(hoursString):\(minutesString):\(secondsString)"
-        })
-
-        self.currentTimeLabel.text = currentTimeString
-    }
-    
-    func updateTimeLeftLabel(timeLeft: Float) {
-        var timeLeftString = ""
-
-        guard timeLeft != 0 && !timeLeft.isNaN else { return }
-        Helpers.hmsFrom(seconds: Int(timeLeft), completion: { hours, minutes, seconds in
-            let hoursString = Helpers.getStringFrom(seconds: hours)
-            let minutesString = Helpers.getStringFrom(seconds: minutes)
-            let secondsString = Helpers.getStringFrom(seconds: seconds)
-            
-            if hoursString == "00" {
-                timeLeftString = "-" + "\(minutesString):\(secondsString)"
-                return
-            }
-            timeLeftString = "-" + "\(hoursString):\(minutesString):\(secondsString)"
-        })
-
-        self.timeLeftLabel.text = timeLeftString
+    func updateTimeLabels(currentTimeText: String, timeLeftText: String) {
+        guard !playbackSlider.isTracking else { return }
+        self.currentTimeLabel.text = currentTimeText
+        self.timeLeftLabel.text = timeLeftText
     }
     
     public func animateIn() {
@@ -342,6 +353,7 @@ class AudioView: UIView {
     }
     
     func enableButtons() {
+        log.warning("enabling buttons")
         self.playButton.isEnabled = true
         self.pauseButton.isEnabled = true
         self.stopButton.isEnabled = true
@@ -350,6 +362,7 @@ class AudioView: UIView {
     }
     
     func disableButtons() {
+        log.warning("disabling buttons")
         self.playButton.isEnabled = false
         self.pauseButton.isEnabled = false
         self.stopButton.isEnabled = false
@@ -361,24 +374,29 @@ class AudioView: UIView {
 
 extension AudioView {
     // MARK: Function
-    func playButtonPressed() {
+    @objc func playButtonPressed() {
         delegate?.playButtonPressed()
     }
     
-    func pauseButtonPressed() {
+    @objc func pauseButtonPressed() {
         delegate?.pauseButtonPressed()
     }
     
-    func stopButtonPressed() {
+    @objc func stopButtonPressed() {
         delegate?.stopButtonPressed()
     }
     
-    func skipForwardButtonPressed() {
+    @objc func skipForwardButtonPressed() {
         delegate?.skipForwardButtonPressed()
     }
     
-    func skipBackwardButtonPressed() {
+    @objc func skipBackwardButtonPressed() {
         delegate?.skipBackwardButtonPressed()
+    }
+    
+    @objc func settingsButtonPressed() {
+        // Present alert view
+        self.parentViewController?.present(alertController, animated: true, completion: nil)
     }
 }
 

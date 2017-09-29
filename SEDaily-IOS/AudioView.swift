@@ -19,6 +19,7 @@ public protocol AudioViewDelegate: NSObjectProtocol {
     func stopButtonPressed()
     func skipForwardButtonPressed()
     func skipBackwardButtonPressed()
+    func audioRateChanged(speed: Float)
     func playbackSliderValueChanged(value: Float)
 }
 
@@ -45,6 +46,24 @@ class AudioView: UIView {
     
     var previousSliderValue: Float = 0.0
     var isFirstLoad = true
+    
+    
+    var settingsButton = UIButton()
+    
+    lazy var alertController: UIAlertController = {
+        let alert = UIAlertController(title: "Player Speed", message: "", preferredStyle: .actionSheet)
+        let times: [Float] = [1.0,1.2,1.4,1.6,1.8,2.0,2.5,3.0]
+        times.forEach({ (time) in
+            alert.addAction(UIAlertAction(title: String(time), style: .default) { action in
+                // perhaps use action.title here
+                self.delegate?.audioRateChanged(speed: time)
+            })
+        })
+        alert.addAction(title: "Cancel", style: .cancel, isEnabled: true) { (action) in
+            self.alertController.dismiss(animated: true, completion: nil)
+        }
+        return alert
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -116,6 +135,14 @@ class AudioView: UIView {
         skipForwardButton.addTarget(self, action: #selector(self.skipForwardButtonPressed), for: .touchUpInside)
         
         playButton.isHidden = true
+        
+        settingsButton.setIcon(icon: .fontAwesome(.ellipsisH), iconSize: 25, color: Stylesheet.Colors.secondaryColor, backgroundColor: .clear, forState: .normal)
+        settingsButton.addTarget(self, action: #selector(self.settingsButtonPressed), for: .touchUpInside)
+        self.addSubview(settingsButton)
+        settingsButton.snp.makeConstraints { (make) -> Void in
+            make.bottom.equalToSuperview()
+            make.right.equalToSuperview()
+        }
         
         setupActivityIndicator()
         addPlaybackSlider()
@@ -216,14 +243,13 @@ class AudioView: UIView {
         }
     }
     
-    func playbackSliderValueChanged(_ slider: UISlider) {
+    @objc func playbackSliderValueChanged(_ slider: UISlider) {
         let timeInSeconds = slider.value
         
         if (playbackSlider.isTracking) && (timeInSeconds != previousSliderValue) {
             // Update Labels
             // Do this without using functions because this views controller use the functions and they have a !isTracking guard
             //@TODO: Figure out how to fix not being able to use functions
-            log.debug("value is tracking and changing")
 //            self.updateSlider(currentValue: timeInSeconds)
             playbackSlider.value = timeInSeconds
             let duration = playbackSlider.maximumValue
@@ -235,8 +261,13 @@ class AudioView: UIView {
             self.currentTimeLabel.text = currentTimeString
             self.timeLeftLabel.text = timeLeftString
         } else {
-            log.debug("drag did end")
             self.delegate?.playbackSliderValueChanged(value: timeInSeconds)
+            let duration = playbackSlider.maximumValue
+            let timeLeft = Float(duration - timeInSeconds)
+            let currentTimeString = Helpers.createTimeString(time: timeInSeconds)
+            let timeLeftString = Helpers.createTimeString(time: timeLeft)
+            self.currentTimeLabel.text = currentTimeString
+            self.timeLeftLabel.text = timeLeftString
         }
         previousSliderValue = timeInSeconds
     }
@@ -335,24 +366,29 @@ class AudioView: UIView {
 
 extension AudioView {
     // MARK: Function
-    func playButtonPressed() {
+    @objc func playButtonPressed() {
         delegate?.playButtonPressed()
     }
     
-    func pauseButtonPressed() {
+    @objc func pauseButtonPressed() {
         delegate?.pauseButtonPressed()
     }
     
-    func stopButtonPressed() {
+    @objc func stopButtonPressed() {
         delegate?.stopButtonPressed()
     }
     
-    func skipForwardButtonPressed() {
+    @objc func skipForwardButtonPressed() {
         delegate?.skipForwardButtonPressed()
     }
     
     @objc func skipBackwardButtonPressed() {
         delegate?.skipBackwardButtonPressed()
+    }
+    
+    @objc func settingsButtonPressed() {
+        // Present alert view
+        self.parentViewController?.present(alertController, animated: true, completion: nil)
     }
 }
 

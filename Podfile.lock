@@ -12,6 +12,8 @@ PODS:
   - KTResponsiveUI (0.2.2):
     - SwiftIcons
   - ObjectMapper (3.0.0)
+  - Pageboy (2.0.0)
+  - PureLayout (3.0.2)
   - Realm (2.10.1):
     - Realm/Headers (= 2.10.1)
   - Realm/Headers (2.10.1)
@@ -40,6 +42,9 @@ PODS:
   - SwiftIcons (1.5.1)
   - SwiftyBeaver (1.4.2)
   - SwiftyJSON (3.1.4)
+  - Tabman (1.0.1):
+    - Pageboy (~> 2.0.0)
+    - PureLayout (~> 3.0.0)
   - UIFontComplete (2.0.1)
   - XLPagerTabStrip (7.0.0)
 
@@ -63,6 +68,7 @@ DEPENDENCIES:
   - SwiftIcons
   - SwiftyBeaver
   - SwiftyJSON
+  - Tabman (~> 1.0)
   - UIFontComplete
   - XLPagerTabStrip
 
@@ -78,6 +84,8 @@ SPEC CHECKSUMS:
   KoalaTeaPlayer: a4c57d597cdced682c4167ce308493e5d6f0e7f2
   KTResponsiveUI: fa61c6f9da890187f6df85e30da0e69bf4849463
   ObjectMapper: 92230db59bf8f341a5c3a3cf0b9fbdde3cf0d87f
+  Pageboy: a43a4e34fad98ebfa415a5d33cd0389e5005a101
+  PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   Realm: fc7a317a5c2c9ba91f5f235ede4e2ea76e9eba0c
   RealmSwift: 505ed6c15942a2e76f5cfa78a8667cfa997ee75b
   Reusable: 98e5fff1e0e2e00872199699b276dde08ee56c07
@@ -87,9 +95,10 @@ SPEC CHECKSUMS:
   SwiftIcons: 287593643898af5a9ef16be4b1f9cf91a436cbc7
   SwiftyBeaver: 91057725648ee4980308f1650af077d04b3654a0
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  Tabman: 627b2bddc6c054bcd86c60919000c30c4adf2ec4
   UIFontComplete: 7e3ce7f0a12d2529fb07f537e262aabfa87df280
   XLPagerTabStrip: 9be80a66c6b7d60306b2c0a6004965016d68f813
 
-PODFILE CHECKSUM: e4b75c6c2c1d34afb50d5d4e9b0831670eed69cf
+PODFILE CHECKSUM: cd208a587a098caa8649b5e4f8d48a84e49f35ca
 
 COCOAPODS: 1.4.0.beta.1

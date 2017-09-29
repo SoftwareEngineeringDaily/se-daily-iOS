@@ -29,6 +29,7 @@ target 'SEDaily-IOS' do
 #  pod 'KTResponsiveUI', :git => 'https://github.com/KoalaTeaCode/KTResponsiveUI'
   pod 'KTResponsiveUI'
   pod 'KoalaTeaPlayer'
+  pod 'Tabman', '~> 1.0'
 
   target 'SEDaily-IOSTests' do
     inherit! :search_paths

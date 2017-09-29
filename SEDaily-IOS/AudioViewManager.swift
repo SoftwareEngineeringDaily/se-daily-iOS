@@ -11,6 +11,7 @@ import SwiftIcons
 import AVFoundation
 import SnapKit
 import SwifterSwift
+import KTResponsiveUI
 import KoalaTeaPlayer
 
 class AudioViewManager: NSObject {
@@ -197,7 +198,7 @@ extension AudioViewManager: AssetPlayerDelegate {
     func playerCurrentTimeDidChange(_ player: AssetPlayer) {
         podcastModel?.update(currentTime: Float(player.currentTime))
         
-        audioView?.updateTimeLabels(currentTimeText: player.timeElapsedText, timeLeftText: player.timeLeftText)
+        audioView?.updateTimeLabels(currentTimeText: player.currentTimeText, timeLeftText: player.timeLeftText)
         
         audioView?.updateSlider(currentValue: Float(player.currentTime))
     }
@@ -240,5 +241,10 @@ extension AudioViewManager: AudioViewDelegate {
     
     func skipBackwardButtonPressed() {
         assetPlaybackManager?.skipBackward(30)
+    }
+    
+    func audioRateChanged(speed: Float) {
+        // Change audio player speed
+        assetPlaybackManager?.changePlayerSpeedTo(speed: speed)
     }
 }

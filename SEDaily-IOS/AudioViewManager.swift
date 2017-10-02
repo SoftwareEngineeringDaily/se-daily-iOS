@@ -198,7 +198,7 @@ extension AudioViewManager: AssetPlayerDelegate {
     func playerCurrentTimeDidChange(_ player: AssetPlayer) {
         podcastModel?.update(currentTime: Float(player.currentTime))
         
-        audioView?.updateTimeLabels(currentTimeText: player.currentTimeText, timeLeftText: player.timeLeftText)
+        audioView?.updateTimeLabels(currentTimeText: player.timeElapsedText, timeLeftText: player.timeLeftText)
         
         audioView?.updateSlider(currentValue: Float(player.currentTime))
     }

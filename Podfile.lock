@@ -8,7 +8,7 @@ PODS:
   - IQKeyboardManagerSwift (5.0.2)
   - Kingfisher (4.0.1)
   - KoalaTeaFlowLayout (0.3.0)
-  - KoalaTeaPlayer (0.1.3)
+  - KoalaTeaPlayer (0.1.4)
   - KTResponsiveUI (0.2.2):
     - SwiftIcons
   - ObjectMapper (3.0.0)
@@ -42,7 +42,7 @@ PODS:
   - SwiftIcons (1.5.1)
   - SwiftyBeaver (1.4.2)
   - SwiftyJSON (3.1.4)
-  - Tabman (1.0.1):
+  - Tabman (1.0.2):
     - Pageboy (~> 2.0.0)
     - PureLayout (~> 3.0.0)
   - UIFontComplete (2.0.1)
@@ -68,7 +68,7 @@ DEPENDENCIES:
   - SwiftIcons
   - SwiftyBeaver
   - SwiftyJSON
-  - Tabman (~> 1.0)
+  - Tabman
   - UIFontComplete
   - XLPagerTabStrip
 
@@ -81,7 +81,7 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: e580da046d804d2836ee84668cc17e43a850a35d
   Kingfisher: b771785e9461ed4b8686d40e7145f9e58100cb24
   KoalaTeaFlowLayout: 816ab599e3ddcf3234b8a02e2eeff4aed5ad71c0
-  KoalaTeaPlayer: a4c57d597cdced682c4167ce308493e5d6f0e7f2
+  KoalaTeaPlayer: 16b7a42b87573d1fa3c3287256df419088d6f58f
   KTResponsiveUI: fa61c6f9da890187f6df85e30da0e69bf4849463
   ObjectMapper: 92230db59bf8f341a5c3a3cf0b9fbdde3cf0d87f
   Pageboy: a43a4e34fad98ebfa415a5d33cd0389e5005a101
@@ -95,10 +95,10 @@ SPEC CHECKSUMS:
   SwiftIcons: 287593643898af5a9ef16be4b1f9cf91a436cbc7
   SwiftyBeaver: 91057725648ee4980308f1650af077d04b3654a0
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
-  Tabman: 627b2bddc6c054bcd86c60919000c30c4adf2ec4
+  Tabman: 558bede024627206c554e1c8cee728d380655ebf
   UIFontComplete: 7e3ce7f0a12d2529fb07f537e262aabfa87df280
   XLPagerTabStrip: 9be80a66c6b7d60306b2c0a6004965016d68f813
 
-PODFILE CHECKSUM: cd208a587a098caa8649b5e4f8d48a84e49f35ca
+PODFILE CHECKSUM: 90fef563f1a9147d788f05ac8dbf5bfe3b2dd8c0
 
 COCOAPODS: 1.4.0.beta.1

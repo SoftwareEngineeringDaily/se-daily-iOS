@@ -10,6 +10,32 @@ import UIKit
 import AVFoundation
 import SwifterSwift
 
+enum PlaybackSpeeds: Float {
+    case _1x = 1.0
+    case _1_2x = 1.2
+    case _1_4x = 1.4
+    case _1_6x = 1.6
+    case _1_8x = 1.8
+    case _2x = 2.0
+    
+    var title: String {
+        switch self {
+        case ._1x:
+            return "1x"
+        case ._1_2x:
+            return "1.2x"
+        case ._1_4x:
+            return "1.4x"
+        case ._1_6x:
+            return "1.6x"
+        case ._1_8x:
+            return "1.8x"
+        case ._2x:
+            return "2x"
+        }
+    }
+}
+
 // MARK: - PlayerDelegate
 
 /// Player delegate protocol
@@ -51,14 +77,15 @@ class AudioView: UIView {
     var settingsButton = UIButton()
     
     lazy var alertController: UIAlertController = {
-        let alert = UIAlertController(title: "Playback Speed", message: "", preferredStyle: .actionSheet)
-        let times: [Float] = [1.0,1.2,1.4,1.6,1.8,2.0,2.5,3.0]
+        let alert = UIAlertController(title: "", message: "Playback Speed", preferredStyle: .actionSheet)
+        let times: [PlaybackSpeeds] = [._1x,._1_2x,._1_4x,._1_6x,._1_8x,._2x]
+//        let times: [Float] = [1.0,1.2,1.4,1.6,1.8,2.0]
         times.forEach({ (time) in
-            let title = String(time) + "x"
+            let title = time.title
             alert.addAction(UIAlertAction(title: title, style: .default) { action in
                 self.settingsButton.setTitle(title, for: .normal)
                 // perhaps use action.title here
-                self.delegate?.audioRateChanged(speed: time)
+                self.delegate?.audioRateChanged(speed: time.rawValue)
             })
         })
         alert.addAction(title: "Cancel", style: .cancel, isEnabled: true) { (action) in
@@ -138,7 +165,7 @@ class AudioView: UIView {
         
         playButton.isHidden = true
         
-        settingsButton.setTitle("1.0x", for: .normal)
+        settingsButton.setTitle(PlaybackSpeeds._1x.title, for: .normal)
         settingsButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .normal)
         settingsButton.addTarget(self, action: #selector(self.settingsButtonPressed), for: .touchUpInside)
         self.addSubview(settingsButton)

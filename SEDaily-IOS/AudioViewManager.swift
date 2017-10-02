@@ -184,6 +184,7 @@ class AudioViewManager: NSObject {
 extension AudioViewManager: AssetPlayerDelegate {
     func currentAssetDidChange(_ player: AssetPlayer) {
         log.debug("asset did change")
+        audioView?.settingsButton.setTitle(PlaybackSpeeds._1x.title, for: .normal)
     }
     
     func playerIsSetup(_ player: AssetPlayer) {
@@ -198,7 +199,7 @@ extension AudioViewManager: AssetPlayerDelegate {
     func playerCurrentTimeDidChange(_ player: AssetPlayer) {
         podcastModel?.update(currentTime: Float(player.currentTime))
         
-        audioView?.updateTimeLabels(currentTimeText: player.currentTimeText, timeLeftText: player.timeLeftText)
+        audioView?.updateTimeLabels(currentTimeText: player.timeElapsedText, timeLeftText: player.timeLeftText)
         
         audioView?.updateSlider(currentValue: Float(player.currentTime))
     }

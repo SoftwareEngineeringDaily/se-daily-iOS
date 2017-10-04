@@ -120,13 +120,13 @@ class HeaderView: UIView {
         scoreLabel.baselineAdjustment = .alignCenters
         scoreLabel.font = UIFont(font: .helveticaNeue, size: 24.calculateWidth())
 
-        downVoteButton.setIcon(icon: .fontAwesome(.arrowCircleODown), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.offBlack, forState: .normal)
-        downVoteButton.setIcon(icon: .fontAwesome(.arrowCircleODown), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.base, forState: .selected)
+        downVoteButton.setIcon(icon: .fontAwesome(.thumbsODown), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.offBlack, forState: .normal)
+        downVoteButton.setIcon(icon: .fontAwesome(.thumbsDown), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.base, forState: .selected)
         downVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
         downVoteButton.addTarget(self, action: #selector(self.downVoteButtonPressed), for: .touchUpInside)
         
-        upVoteButton.setIcon(icon: .fontAwesome(.arrowCircleOUp), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.offBlack, forState: .normal)
-        upVoteButton.setIcon(icon: .fontAwesome(.arrowCircleOUp), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.base, forState: .selected)
+        upVoteButton.setIcon(icon: .fontAwesome(.thumbsOUp), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.offBlack, forState: .normal)
+        upVoteButton.setIcon(icon: .fontAwesome(.thumbsUp), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.base, forState: .selected)
         upVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
         upVoteButton.addTarget(self, action: #selector(self.upvoteButtonPressed), for: .touchUpInside)
     }
@@ -153,7 +153,7 @@ class HeaderView: UIView {
 }
 
 extension HeaderView {
-    func playButtonPressed() {
+    @objc func playButtonPressed() {
         //@TODO: Switch button and/or stop if playing
 //        AudioViewManager.shared.presentAudioView()
         let string = "http://traffic.libsyn.com/rtpodcast/podcast_update.mp3"
@@ -162,7 +162,7 @@ extension HeaderView {
         AudioViewManager.shared.setupManager(podcastModel: model)
     }
     
-    func upvoteButtonPressed() {
+    @objc func upvoteButtonPressed() {
         guard User.checkAndAlert() else { return }
         guard let podcastId = model.podcastId else { return }
         API.sharedInstance.upvotePodcast(podcastId: podcastId, completion: { (success, active) in
@@ -179,7 +179,7 @@ extension HeaderView {
         })
     }
     
-    func downVoteButtonPressed() {
+    @objc func downVoteButtonPressed() {
         guard User.checkAndAlert() else { return }
         guard let podcastId = model.podcastId else { return }
         API.sharedInstance.downvotePodcast(podcastId: podcastId, completion: { (success, active) in

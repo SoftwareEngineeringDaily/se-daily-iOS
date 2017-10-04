@@ -8,7 +8,7 @@ PODS:
   - IQKeyboardManagerSwift (5.0.2)
   - Kingfisher (4.0.1)
   - KoalaTeaFlowLayout (0.3.0)
-  - KoalaTeaPlayer (0.1.4)
+  - KoalaTeaPlayer (0.1.5)
   - KTResponsiveUI (0.2.2):
     - SwiftIcons
   - ObjectMapper (3.0.0)
@@ -81,7 +81,7 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: e580da046d804d2836ee84668cc17e43a850a35d
   Kingfisher: b771785e9461ed4b8686d40e7145f9e58100cb24
   KoalaTeaFlowLayout: 816ab599e3ddcf3234b8a02e2eeff4aed5ad71c0
-  KoalaTeaPlayer: 16b7a42b87573d1fa3c3287256df419088d6f58f
+  KoalaTeaPlayer: 273022bc12ffa2e62b25053cb387939fd04e51f2
   KTResponsiveUI: fa61c6f9da890187f6df85e30da0e69bf4849463
   ObjectMapper: 92230db59bf8f341a5c3a3cf0b9fbdde3cf0d87f
   Pageboy: a43a4e34fad98ebfa415a5d33cd0389e5005a101

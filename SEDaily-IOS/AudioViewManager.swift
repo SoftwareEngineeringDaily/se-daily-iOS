@@ -244,8 +244,8 @@ extension AudioViewManager: AudioViewDelegate {
         assetPlaybackManager?.skipBackward(30)
     }
     
-    func audioRateChanged(speed: Float) {
+    func audioRateChanged(newRate: Float) {
         // Change audio player speed
-        assetPlaybackManager?.changePlayerSpeedTo(speed: speed)
+        assetPlaybackManager?.changePlayerPlaybackRate(to: newRate)
     }
 }

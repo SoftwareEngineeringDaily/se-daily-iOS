@@ -17,6 +17,8 @@ enum PlaybackSpeeds: Float {
     case _1_6x = 1.6
     case _1_8x = 1.8
     case _2x = 2.0
+    case _2_5x = 2.5
+    case _3x = 3.0
     
     var title: String {
         switch self {
@@ -32,6 +34,10 @@ enum PlaybackSpeeds: Float {
             return "1.8x"
         case ._2x:
             return "2x"
+        case ._2_5x:
+            return "2.5x"
+        case ._3x:
+            return "3x"
         }
     }
 }
@@ -45,7 +51,7 @@ public protocol AudioViewDelegate: NSObjectProtocol {
     func stopButtonPressed()
     func skipForwardButtonPressed()
     func skipBackwardButtonPressed()
-    func audioRateChanged(speed: Float)
+    func audioRateChanged(newRate: Float)
     func playbackSliderValueChanged(value: Float)
 }
 
@@ -78,14 +84,14 @@ class AudioView: UIView {
     
     lazy var alertController: UIAlertController = {
         let alert = UIAlertController(title: "", message: "Playback Speed", preferredStyle: .actionSheet)
-        let times: [PlaybackSpeeds] = [._1x,._1_2x,._1_4x,._1_6x,._1_8x,._2x]
-//        let times: [Float] = [1.0,1.2,1.4,1.6,1.8,2.0]
+        let times: [PlaybackSpeeds] = [._1x,._1_2x,._1_4x,._1_6x,._1_8x,._2x,._2_5x,._3x]
+
         times.forEach({ (time) in
             let title = time.title
             alert.addAction(UIAlertAction(title: title, style: .default) { action in
                 self.settingsButton.setTitle(title, for: .normal)
                 // perhaps use action.title here
-                self.delegate?.audioRateChanged(speed: time.rawValue)
+                self.delegate?.audioRateChanged(newRate: time.rawValue)
             })
         })
         alert.addAction(title: "Cancel", style: .cancel, isEnabled: true) { (action) in

@@ -9,11 +9,10 @@
 import UIKit
 import RealmSwift
 import KoalaTeaFlowLayout
-import XLPagerTabStrip
 
 private let reuseIdentifier = "Cell"
 
-class LatestCollectionViewController: UICollectionViewController, IndicatorInfoProvider {
+class LatestCollectionViewController: UICollectionViewController {
     
     let activityView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     
@@ -125,10 +124,6 @@ extension LatestCollectionViewController {
         let vc = PostDetailTableViewController()
         vc.model = item
         self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return IndicatorInfo(title: self.tabTitle)
     }
 }
 

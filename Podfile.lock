@@ -5,20 +5,20 @@ PODS:
     - Fabric (~> 1.6.3)
   - Eureka (4.0.0)
   - Fabric (1.6.13)
-  - IQKeyboardManagerSwift (5.0.2)
-  - Kingfisher (4.0.1)
+  - IQKeyboardManagerSwift (5.0.3)
+  - Kingfisher (4.1.0)
   - KoalaTeaFlowLayout (0.3.0)
-  - KoalaTeaPlayer (0.1.5)
+  - KoalaTeaPlayer (0.1.6)
   - KTResponsiveUI (0.2.2):
     - SwiftIcons
   - ObjectMapper (3.0.0)
   - Pageboy (2.0.0)
   - PureLayout (3.0.2)
-  - Realm (2.10.1):
-    - Realm/Headers (= 2.10.1)
-  - Realm/Headers (2.10.1)
-  - RealmSwift (2.10.1):
-    - Realm (= 2.10.1)
+  - Realm (2.10.2):
+    - Realm/Headers (= 2.10.2)
+  - Realm/Headers (2.10.2)
+  - RealmSwift (2.10.2):
+    - Realm (= 2.10.2)
   - Reusable (4.0.0):
     - Reusable/Storyboard (= 4.0.0)
     - Reusable/View (= 4.0.0)
@@ -46,10 +46,9 @@ PODS:
     - Pageboy (~> 2.0.0)
     - PureLayout (~> 3.0.0)
   - UIFontComplete (2.0.1)
-  - XLPagerTabStrip (7.0.0)
 
 DEPENDENCIES:
-  - ActiveLabel
+  - ActiveLabel (from `https://github.com/optonaut/ActiveLabel.swift.git`)
   - Alamofire (~> 4.0)
   - Crashlytics
   - Eureka
@@ -65,40 +64,53 @@ DEPENDENCIES:
   - SideMenu
   - SnapKit
   - SwifterSwift
-  - SwiftIcons
+  - SwiftIcons (from `https://github.com/themisterholliday/SwiftIcons.git`, branch `swift-4`)
   - SwiftyBeaver
   - SwiftyJSON
   - Tabman
   - UIFontComplete
-  - XLPagerTabStrip
+
+EXTERNAL SOURCES:
+  ActiveLabel:
+    :git: https://github.com/optonaut/ActiveLabel.swift.git
+  SwiftIcons:
+    :branch: swift-4
+    :git: https://github.com/themisterholliday/SwiftIcons.git
+
+CHECKOUT OPTIONS:
+  ActiveLabel:
+    :commit: 3f869d1245e3663379d92a2b918f0af7aec9cf89
+    :git: https://github.com/optonaut/ActiveLabel.swift.git
+  SwiftIcons:
+    :commit: 56e9cf1019b01a4a9a2f22a78e84618f4ea094aa
+    :git: https://github.com/themisterholliday/SwiftIcons.git
 
 SPEC CHECKSUMS:
-  ActiveLabel: 68625f22775f51c31bb691ca8de20f1e5a3bc825
+  ActiveLabel: faa96b5f50507770536a3e48a4cf291ee88fb7db
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   Crashlytics: 95d05f4e4c19a771250c4bd9ce344d996de32bbf
   Eureka: c0b55d2aec82050c1400c7d65960b700be8d10ef
   Fabric: 2fb5676bc811af011a04513451f463dac6803206
-  IQKeyboardManagerSwift: e580da046d804d2836ee84668cc17e43a850a35d
-  Kingfisher: b771785e9461ed4b8686d40e7145f9e58100cb24
+  IQKeyboardManagerSwift: e257e513744cf32123eca7061272acea0246fc83
+  Kingfisher: f14df8cbe576bf55f211fa589e9869bceb4ea87d
   KoalaTeaFlowLayout: 816ab599e3ddcf3234b8a02e2eeff4aed5ad71c0
-  KoalaTeaPlayer: 273022bc12ffa2e62b25053cb387939fd04e51f2
+  KoalaTeaPlayer: f160b122c1c3f877682ba12518b0e9c2e41f887f
   KTResponsiveUI: fa61c6f9da890187f6df85e30da0e69bf4849463
   ObjectMapper: 92230db59bf8f341a5c3a3cf0b9fbdde3cf0d87f
   Pageboy: a43a4e34fad98ebfa415a5d33cd0389e5005a101
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
-  Realm: fc7a317a5c2c9ba91f5f235ede4e2ea76e9eba0c
-  RealmSwift: 505ed6c15942a2e76f5cfa78a8667cfa997ee75b
+  Realm: 0ef72b837fb67e9f4b098bac771ddd72c7fdbb69
+  RealmSwift: 07a9ae0505091eda6b2ee7c190c3786d6e90a7b0
   Reusable: 98e5fff1e0e2e00872199699b276dde08ee56c07
   SideMenu: 8fe957e0f5dcf1a1175c8ba5d47978d4eb2a89da
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SwifterSwift: 0b63ade1ec0c5bc4d6228df993de41fe44bc123e
-  SwiftIcons: 287593643898af5a9ef16be4b1f9cf91a436cbc7
+  SwiftIcons: b20641adce6b71fcb2e72389b4b5f2e87252df99
   SwiftyBeaver: 91057725648ee4980308f1650af077d04b3654a0
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   Tabman: 558bede024627206c554e1c8cee728d380655ebf
   UIFontComplete: 7e3ce7f0a12d2529fb07f537e262aabfa87df280
-  XLPagerTabStrip: 9be80a66c6b7d60306b2c0a6004965016d68f813
 
-PODFILE CHECKSUM: 90fef563f1a9147d788f05ac8dbf5bfe3b2dd8c0
+PODFILE CHECKSUM: 66b19d5ea05da768f11f82f3d16acb7e731bf857
 
-COCOAPODS: 1.4.0.beta.1
+COCOAPODS: 1.3.1

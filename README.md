@@ -9,7 +9,7 @@ We are using [CocoaPods](http://cocoapods.org) to manage dependencies.
 Clone the repo and then run:
 
 ```
-$ sudo gem install cocoapods --pre
+$ sudo gem install cocoapods
 $ pod install
 ```
 

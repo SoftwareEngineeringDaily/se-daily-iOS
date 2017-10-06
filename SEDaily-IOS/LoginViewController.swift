@@ -186,13 +186,13 @@ class LoginViewController: UIViewController {
         addBottomBorderToView(view: firstNameTextField, height: 36.calculateHeight(), width: 316.calculateWidth())
         addBottomBorderToView(view: lastNameTextField, height: 36.calculateHeight(), width: 316.calculateWidth())
         
-        emailTextField.placeholder = "Email"
+        emailTextField.placeholder = NSLocalizedString("EmailAddressPlaceholder", comment: "")
         emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
         emailTextField.textColor = Stylesheet.Colors.white
         emailTextField.autocorrectionType = .no
         emailTextField.autocapitalizationType = .none
         
-        passwordTextField.placeholder = "Password"
+        passwordTextField.placeholder = NSLocalizedString("PasswordPlaceholder", comment: "")
         passwordTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
         passwordTextField.textColor = Stylesheet.Colors.white
         passwordTextField.autocorrectionType = .no
@@ -200,20 +200,20 @@ class LoginViewController: UIViewController {
         passwordTextField.isSecureTextEntry = true
         
         passwordConfirmTextField.isHidden = true
-        passwordConfirmTextField.placeholder = "Confirm Password"
+        passwordConfirmTextField.placeholder = NSLocalizedString("ConfirmPasswordPlaceholder", comment: "")
         passwordConfirmTextField.textColor = Stylesheet.Colors.white
         passwordConfirmTextField.autocorrectionType = .no
         passwordConfirmTextField.autocapitalizationType = .none
         passwordConfirmTextField.isSecureTextEntry = true
         
         firstNameTextField.isHidden = true
-        firstNameTextField.placeholder = "First Name"
+        firstNameTextField.placeholder = NSLocalizedString("FirstNamePlaceholder", comment: "")
         firstNameTextField.textColor = Stylesheet.Colors.white
         firstNameTextField.autocorrectionType = .no
         firstNameTextField.autocapitalizationType = .none
         
         lastNameTextField.isHidden = true
-        lastNameTextField.placeholder = "Last Name"
+        lastNameTextField.placeholder = NSLocalizedString("LastNamePlaceholder", comment: "")
         lastNameTextField.textColor = Stylesheet.Colors.white
         lastNameTextField.autocorrectionType = .no
         lastNameTextField.autocapitalizationType = .none
@@ -235,20 +235,20 @@ class LoginViewController: UIViewController {
             make.height.equalTo(42.calculateHeight())
         }
         
-        loginButton.setTitle("Login", for: .normal)
+        loginButton.setTitle(NSLocalizedString("LoginButtonTitle", comment: ""), for: .normal)
         loginButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
         loginButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
         loginButton.addTarget(self, action: #selector(self.loginButtonPressed), for: .touchUpInside)
         loginButton.cornerRadius = 4.calculateWidth()
         
-        cancelButton.setTitle("Cancel", for: .normal)
+        cancelButton.setTitle(NSLocalizedString("CancelButtonTitle", comment: ""), for: .normal)
         cancelButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
         cancelButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
         cancelButton.addTarget(self, action: #selector(self.cancelButtonPressed), for: .touchUpInside)
         cancelButton.cornerRadius = 4.calculateWidth()
         cancelButton.isHidden = true
         
-        signUpButton.setTitle("Sign Up", for: .normal)
+        signUpButton.setTitle(NSLocalizedString("SignUpButtonTitle", comment: ""), for: .normal)
         signUpButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
         signUpButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
         signUpButton.addTarget(self, action: #selector(self.signUpButtonPressed), for: .touchUpInside)

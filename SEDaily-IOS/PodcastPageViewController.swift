@@ -47,47 +47,47 @@ class PodcastPageViewController: TabmanViewController, PageboyViewControllerData
         let layout = UICollectionViewLayout()
         
         let child_1 = GeneralCollectionViewController(collectionViewLayout: layout, type: API.Types.new)
-        child_1.tabTitle = "All"
+        child_1.tabTitle = NSLocalizedString("TabTitleAll", comment: "")
         viewControllers.append(child_1)
         
         let child_2 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1068, type: API.Types.new)
-        child_2.tabTitle = "Business and Philosophy"
+        child_2.tabTitle = NSLocalizedString("TabTitleBusinessAndPhilosophy", comment: "")
         viewControllers.append(child_2)
         
         let child_3 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1082, type: API.Types.new)
-        child_3.tabTitle = "Blockchain"
+        child_3.tabTitle = NSLocalizedString("TabTitleBlockchain", comment: "")
         viewControllers.append(child_3)
 
         let child_4 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1079, type: API.Types.new)
-        child_4.tabTitle = "Cloud Engineering"
+        child_4.tabTitle = NSLocalizedString("TabTitleCloudEngineering", comment: "")
         viewControllers.append(child_4)
 
         let child_5 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1081, type: API.Types.new)
-        child_5.tabTitle = "Data"
+        child_5.tabTitle = NSLocalizedString("TabTitleData", comment: "")
         viewControllers.append(child_5)
 
         let child_6 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1084, type: API.Types.new)
-        child_6.tabTitle = "JavaScript"
+        child_6.tabTitle = NSLocalizedString("TabTitleJavaScript", comment: "")
         viewControllers.append(child_6)
 
         let child_7 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1080, type: API.Types.new)
-        child_7.tabTitle = "Machine Learning"
+        child_7.tabTitle = NSLocalizedString("TabTitleMachineLearning", comment: "")
         viewControllers.append(child_7)
 
         let child_8 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1078, type: API.Types.new)
-        child_8.tabTitle = "Open Source"
+        child_8.tabTitle = NSLocalizedString("TabTitleOpenSource", comment: "")
         viewControllers.append(child_8)
 
         let child_9 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1083, type: API.Types.new)
-        child_9.tabTitle = "Security"
+        child_9.tabTitle = NSLocalizedString("TabTitleSecurity", comment: "")
         viewControllers.append(child_9)
 
         let child_10 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1085, type: API.Types.new)
-        child_10.tabTitle = "Hackers"
+        child_10.tabTitle = NSLocalizedString("TabTitleHackers", comment: "")
         viewControllers.append(child_10)
 
         let child_11 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1069, type: API.Types.new)
-        child_11.tabTitle = "Greatest Hits"
+        child_11.tabTitle = NSLocalizedString("TabTitleGreatestHits", comment: "")
         viewControllers.append(child_11)
         
         viewControllers.forEach { (controller) in

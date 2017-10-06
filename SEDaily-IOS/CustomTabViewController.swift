@@ -49,13 +49,11 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
         
         switch User.getActiveUser().isLoggedIn() {
         case false:
-            let leftBarButton = UIBarButtonItem(title: "Login", style: .done, target: self, action: #selector(self.loginButtonPressed))
+            let leftBarButton = UIBarButtonItem(title: NSLocalizedString("LoginTitle", comment: ""), style: .done, target: self, action: #selector(self.loginButtonPressed))
             self.navigationItem.leftBarButtonItem = leftBarButton
-            break
         case true:
-            let leftBarButton = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(self.logoutButtonPressed))
+            let leftBarButton = UIBarButtonItem(title: NSLocalizedString("LogoutTitle", comment: ""), style: .done, target: self, action: #selector(self.logoutButtonPressed))
             self.navigationItem.leftBarButtonItem = leftBarButton
-            break
         }
     }
     
@@ -99,8 +97,8 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 //        let vc2 = GeneralCollectionViewController(collectionViewLayout: layout, type: API.Types.recommended)
 //        let vc3 = GeneralCollectionViewController(collectionViewLayout: layout, type: API.Types.top)
         
-        let icon1 = UITabBarItem(title: "Latest", image: #imageLiteral(resourceName: "mic_stand"), selectedImage: #imageLiteral(resourceName: "mic_stand_selected"))
-        let icon2 = UITabBarItem(title: "Just For You", image: #imageLiteral(resourceName: "activity_feed"), selectedImage: #imageLiteral(resourceName: "activity_feed_selected"))
+        let icon1 = UITabBarItem(title: NSLocalizedString("TabBarTitleLatest", comment: ""), image: #imageLiteral(resourceName: "mic_stand"), selectedImage: #imageLiteral(resourceName: "mic_stand_selected"))
+        let icon2 = UITabBarItem(title: NSLocalizedString("TabBarJustForYou", comment: ""), image: #imageLiteral(resourceName: "activity_feed"), selectedImage: #imageLiteral(resourceName: "activity_feed_selected"))
         let icon3 = UITabBarItem(tabBarSystemItem: .mostViewed, tag: 0)
         
         vc1.tabBarItem = icon1

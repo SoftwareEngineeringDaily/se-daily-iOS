@@ -255,7 +255,7 @@ class LoginViewController: UIViewController {
         signUpButton.cornerRadius = 4.calculateWidth()
     }
     
-    func loginButtonPressed() {
+    @objc func loginButtonPressed() {
         guard !emailTextField.isEmpty else {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.emailEmpty)
             return
@@ -291,7 +291,7 @@ class LoginViewController: UIViewController {
         })
     }
     
-    func cancelButtonPressed() {
+    @objc func cancelButtonPressed() {
         loginButton.isHidden = false
         cancelButton.isHidden = true
         passwordConfirmTextField.isHidden = true
@@ -299,7 +299,7 @@ class LoginViewController: UIViewController {
         lastNameTextField.isHidden = true
     }
     
-    func signUpButtonPressed() {
+    @objc func signUpButtonPressed() {
         if passwordConfirmTextField.isHidden == true {
             loginButton.isHidden = true
             cancelButton.isHidden = false

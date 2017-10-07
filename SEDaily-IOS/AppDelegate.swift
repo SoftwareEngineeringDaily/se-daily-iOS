@@ -82,7 +82,7 @@ extension AppDelegate {
         window!.makeKeyAndVisible()
         
         let realm = try! Realm()
-        log.info(realm.configuration.fileURL)
+        log.info(realm.configuration.fileURL ?? "")
     }
     
     func migrateRealmDatabaseIfNeeded() {

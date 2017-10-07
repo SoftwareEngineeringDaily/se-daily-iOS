@@ -12,13 +12,13 @@ import ObjectMapper
 import SwifterSwift
 
 public class User: Object, Mappable {
-    dynamic var key = 1
-    dynamic var firstName: String? = nil
-    dynamic var lastName: String? = nil
-    dynamic var email: String? = nil
-    dynamic var token: String? = nil
-    dynamic var pushNotificationsSetting: Bool = false
-    dynamic var deviceToken: String = ""
+    @objc dynamic var key = 1
+    @objc dynamic var firstName: String? = nil
+    @objc dynamic var lastName: String? = nil
+    @objc dynamic var email: String? = nil
+    @objc dynamic var token: String? = nil
+    @objc dynamic var pushNotificationsSetting: Bool = false
+    @objc dynamic var deviceToken: String = ""
     
     override public static func primaryKey() -> String? {
         return "key"

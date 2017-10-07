@@ -156,7 +156,7 @@ class DetailTableViewCell: UITableViewCell, Reusable {
         buttonStackView.isUserInteractionEnabled = false
     }
     
-    func contactButtonPressed() {
+    @objc func contactButtonPressed() {
 //        guard let urlString = model.websiteURL, model.websiteURL != "" else {
 //            Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.noWebsite)
 //            return

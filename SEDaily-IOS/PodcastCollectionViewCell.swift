@@ -51,7 +51,6 @@ class PodcastCollectionViewCell: UICollectionViewCell {
         titleLabel.snp.makeConstraints{ (make) in
             make.bottom.equalToSuperview().inset(topBottomInset)
             make.left.right.equalToSuperview().inset(10.calculateWidth())
-            make.height.equalToSuperview().multipliedBy(oneThird)
             make.height.equalTo(((self.height * oneThird) - amountToSubtract))
         }
 

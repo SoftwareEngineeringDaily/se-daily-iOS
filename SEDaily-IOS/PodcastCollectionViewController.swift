@@ -35,7 +35,7 @@ class PodcastCollectionViewController: UICollectionViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)
     }
     
-    func loginObserver() {
+    @objc func loginObserver() {
         self.collectionView?.reloadData()
     }
 

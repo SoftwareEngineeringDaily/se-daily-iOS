@@ -55,7 +55,7 @@ class TopCollectionViewController: UICollectionViewController {
         loadData()
     }
     
-    func loginObserver() {
+    @objc func loginObserver() {
         loadData()
     }
     

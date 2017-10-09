@@ -63,7 +63,7 @@ class LatestCollectionViewController: UICollectionViewController {
         }
     }
     
-    func loginObserver() {
+    @objc func loginObserver() {
 //        loadData()
     }
     

@@ -35,7 +35,7 @@ class Tracker {
     class func logLogin(user: User) {
         Answers.logLogin(withMethod: "SEDaily_API", success: 1, customAttributes:
             [
-                "username": user.email
+                "username": user.email ?? ""
             ]
         )
     }
@@ -44,7 +44,7 @@ class Tracker {
         Answers.logSignUp(withMethod: "SEDaily_API", success: 1,
                                customAttributes:
             [
-                "username": user.email
+                "username": user.email ?? ""
             ]
         )
     }
@@ -52,7 +52,7 @@ class Tracker {
     class func logFacebookLogin(user: User) {
         Answers.logLogin(withMethod: "Facebook", success: 1, customAttributes:
             [
-                "username": user.email
+                "username": user.email ?? ""
             ]
         )
     }

@@ -13,32 +13,32 @@ import ObjectMapper
 import SwifterSwift
 
 public class RealmString: Object {
-    dynamic var stringValue = ""
+    @objc dynamic var stringValue = ""
 }
 
 public class PodcastModel: Object, Mappable {
-    dynamic var key: String? = nil
-    dynamic var podcastId: String? = nil
-    dynamic var podcastName: String? = nil
-    dynamic var podcastDesc: String? = nil
-    dynamic var uploadDate: String? = nil
-    dynamic var mp3URL: String? = nil
-    dynamic var link: String? = nil
-    dynamic var type: String? = nil
-    dynamic var score: String? = nil
-    dynamic var currentTime: String = "0"
-    dynamic var imageURLString: String? = nil
-    dynamic var tags: String = ""
-    dynamic var categories: String = ""
+    @objc dynamic var key: String? = nil
+    @objc dynamic var podcastId: String? = nil
+    @objc dynamic var podcastName: String? = nil
+    @objc dynamic var podcastDesc: String? = nil
+    @objc dynamic var uploadDate: String? = nil
+    @objc dynamic var mp3URL: String? = nil
+    @objc dynamic var link: String? = nil
+    @objc dynamic var type: String? = nil
+    @objc dynamic var score: String? = nil
+    @objc dynamic var currentTime: String = "0"
+    @objc dynamic var imageURLString: String? = nil
+    @objc dynamic var tags: String = ""
+    @objc dynamic var categories: String = ""
     
-    dynamic var mp3Saved: Bool = false
+    @objc dynamic var mp3Saved: Bool = false
     
-    dynamic var isNew: Bool = false
-    dynamic var isTop: Bool = false
-    dynamic var isRecommended: Bool = false
+    @objc dynamic var isNew: Bool = false
+    @objc dynamic var isTop: Bool = false
+    @objc dynamic var isRecommended: Bool = false
     
-    dynamic var isUpvoted: Bool = false
-    dynamic var isDownvoted: Bool = false
+    @objc dynamic var isUpvoted: Bool = false
+    @objc dynamic var isDownvoted: Bool = false
     
     override public static func primaryKey() -> String? {
         return "key"

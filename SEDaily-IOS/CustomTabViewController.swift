@@ -59,17 +59,17 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
         }
     }
     
-    func leftBarButtonPressed() {
+    @objc func leftBarButtonPressed() {
         let vc = SearchTableViewController()
         self.navigationController?.pushViewController(vc)
     }
-    
-    func loginButtonPressed() {
+      
+    @objc func loginButtonPressed() {
         let vc = LoginViewController()
         self.navigationController?.pushViewController(vc)
     }
     
-    func logoutButtonPressed() {
+    @objc func logoutButtonPressed() {
         User.logout()
         self.setupNavBar()
     }

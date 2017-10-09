@@ -55,7 +55,7 @@ class JustForYouCollectionViewController: UICollectionViewController {
         loadData()
     }
     
-    func loginObserver() {
+    @objc func loginObserver() {
         itemCount = 0
         loadData()
     }

@@ -77,7 +77,7 @@ class GeneralCollectionViewController: UICollectionViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func loginObserver() {
+    @objc func loginObserver() {
         loadData(lastItemDate: "")
     }
     
@@ -235,14 +235,10 @@ extension GeneralCollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //        if !data.isEmpty {
         if itemCount < 10 {
             self.getData()
         }
         return itemCount
-        //        }
-        self.getData()
-        return 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

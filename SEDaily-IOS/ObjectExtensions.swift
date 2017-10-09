@@ -11,7 +11,7 @@ import UIKit
 import RealmSwift
 
 extension Object {
-    func toDictionary() -> NSDictionary {
+    @objc func toDictionary() -> NSDictionary {
         let properties = self.objectSchema.properties.map { $0.name }
         let dictionary = self.dictionaryWithValues(forKeys: properties)
         let mutabledic = NSMutableDictionary()

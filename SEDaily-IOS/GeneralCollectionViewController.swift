@@ -53,13 +53,14 @@ class GeneralCollectionViewController: UICollectionViewController {
         // self.clearsSelectionOnViewWillAppear = false
         
         // Register cell classes
-        self.collectionView!.register(PodcastCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(PodcastCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
         self.collectionView?.backgroundColor = UIColor(hex: 0xfafafa)
         self.collectionView?.showsHorizontalScrollIndicator = false
         self.collectionView?.showsVerticalScrollIndicator = false
         
-        let layout = KoalaTeaFlowLayout(ratio: 1, topBottomMargin: 12, leftRightMargin: 12, cellsAcross: 2, cellSpacing: 8)
+        let ratio: CGFloat = 250/158
+        let layout = KoalaTeaFlowLayout(ratio: ratio, topBottomMargin: 12, leftRightMargin: 12, cellsAcross: 2, cellSpacing: 8)
         self.collectionView?.collectionViewLayout = layout
         
         // User Login observer
@@ -242,14 +243,15 @@ extension GeneralCollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PodcastCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PodcastCell
         
         let item = data[indexPath.row]
         
         checkPage(indexPath: indexPath, item: item)
         
         // Configure the cell
-        cell.setupCell(model: item)
+        let uploadDate = Date(iso8601String: (item.uploadDate ?? ""))
+        cell.setupCell(imageURLString: item.imageURLString, title: item.podcastName!, timeLength: nil, date: uploadDate)
         
         return cell
     }

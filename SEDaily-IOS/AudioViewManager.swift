@@ -184,7 +184,7 @@ class AudioViewManager: NSObject {
 extension AudioViewManager: AssetPlayerDelegate {
     func currentAssetDidChange(_ player: AssetPlayer) {
         log.debug("asset did change")
-        audioView?.settingsButton.setTitle(PlaybackSpeeds._1x.title, for: .normal)
+        audioView?.currentSpeed = ._1x
     }
     
     func playerIsSetup(_ player: AssetPlayer) {

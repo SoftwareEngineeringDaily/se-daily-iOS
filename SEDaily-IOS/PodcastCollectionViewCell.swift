@@ -8,9 +8,9 @@
 
 import UIKit
 import SnapKit
-import KoalaTeaFlowLayout
 import RealmSwift
 import Kingfisher
+import KTResponsiveUI
 
 class PodcastCollectionViewCell: UICollectionViewCell {
     
@@ -81,5 +81,69 @@ class PodcastCollectionViewCell: UICollectionViewCell {
             self.imageView.kf.indicatorType = .activity
             self.imageView.kf.setImage(with: url)
         }
+    }
+}
+
+class PodcastCell: UICollectionViewCell {
+    var imageView: UIImageView!
+    var titleLabel: UILabel!
+    var timeDayLabel: UILabel!
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        let newContentView = UIView(width: 158, height: 250)
+        self.contentView.frame = newContentView.frame
+        
+        imageView = UIImageView(leftInset: 0, topInset: 4, width: 158)
+        self.contentView.addSubview(imageView)
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 6)
+        
+        titleLabel = UILabel(origin: imageView.bottomLeftPoint(), topInset: 15, width: 158, height: 50)
+        self.contentView.addSubview(titleLabel)
+        titleLabel.numberOfLines = 0
+        titleLabel.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 16))
+        
+        timeDayLabel = UILabel(origin: titleLabel.bottomLeftPoint(), topInset: 8, width: 158, height: 14)
+        self.contentView.addSubview(timeDayLabel)
+        timeDayLabel.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 12))
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:)")
+    }
+    
+    func setupCell(imageURLString: String?, title: String?, timeLength: Int?, date: Date?) {
+        self.setupImageView(imageURLString: imageURLString)
+        titleLabel.text = title ?? ""
+        setupTimeDayLabel(timeLength: timeLength, date: date)
+    }
+    
+    func setupImageView(imageURLString: String?) {
+        guard let imageURLString = imageURLString else {
+            self.imageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
+            return
+        }
+        if let url = URL(string: imageURLString) {
+            self.imageView.kf.indicatorType = .activity
+            self.imageView.kf.setImage(with: url)
+        }
+    }
+    
+    func setupTimeDayLabel(timeLength: Int?, date: Date?) {
+        let timeString = Helpers.createTimeString(time: (Float(timeLength ?? 0)))
+        let dateString = date?.dateString() ?? ""
+        guard timeString != "0:00" else {
+            timeDayLabel.text = dateString
+            return
+        }
+        timeDayLabel.text = timeString + " \u{2022} " + dateString
+    }
+}
+
+extension PodcastCell {
+    func setupSkeletonCell() {
+        
     }
 }

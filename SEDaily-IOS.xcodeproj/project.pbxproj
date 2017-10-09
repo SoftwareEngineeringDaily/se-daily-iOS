@@ -12,9 +12,7 @@
 		161F3DEA1F62703100A8F825 /* PodcastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */; };
 		1649A78A1F204EC6005C4A6E /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1649A7891F204EC6005C4A6E /* ContainerViewController.swift */; };
 		164C71051F021AC8003803BC /* CustomTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C71041F021AC8003803BC /* CustomTabViewController.swift */; };
-		164C71071F021C8D003803BC /* PodcastCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C71061F021C8D003803BC /* PodcastCollectionViewController.swift */; };
 		164C71091F021C97003803BC /* FeedCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C71081F021C97003803BC /* FeedCollectionViewController.swift */; };
-		164FE9D51F02CC53009419CA /* EmbeddedCollectonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9D41F02CC53009419CA /* EmbeddedCollectonViewCell.swift */; };
 		164FE9D71F02CD99009419CA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9D61F02CD99009419CA /* Extensions.swift */; };
 		164FE9D91F02D611009419CA /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9D81F02D611009419CA /* CollectionReusableView.swift */; };
 		164FE9DC1F02DAB5009419CA /* PodcastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9DB1F02DAB5009419CA /* PodcastCollectionViewCell.swift */; };
@@ -66,9 +64,7 @@
 		161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastTableViewCell.swift; sourceTree = "<group>"; };
 		1649A7891F204EC6005C4A6E /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		164C71041F021AC8003803BC /* CustomTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabViewController.swift; sourceTree = "<group>"; };
-		164C71061F021C8D003803BC /* PodcastCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCollectionViewController.swift; sourceTree = "<group>"; };
 		164C71081F021C97003803BC /* FeedCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewController.swift; sourceTree = "<group>"; };
-		164FE9D41F02CC53009419CA /* EmbeddedCollectonViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmbeddedCollectonViewCell.swift; sourceTree = "<group>"; };
 		164FE9D61F02CD99009419CA /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		164FE9D81F02D611009419CA /* CollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionReusableView.swift; sourceTree = "<group>"; };
 		164FE9DB1F02DAB5009419CA /* PodcastCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -143,7 +139,6 @@
 		164FE9DA1F02DAA5009419CA /* CollectionViews */ = {
 			isa = PBXGroup;
 			children = (
-				164C71061F021C8D003803BC /* PodcastCollectionViewController.swift */,
 				164C71081F021C97003803BC /* FeedCollectionViewController.swift */,
 				1673B8FC1F27AA3200923BB8 /* LatestCollectionViewController.swift */,
 				1673B8FE1F27E56100923BB8 /* TopCollectionViewController.swift */,
@@ -156,7 +151,6 @@
 		164FE9DD1F02DAB8009419CA /* CollectionViewCells */ = {
 			isa = PBXGroup;
 			children = (
-				164FE9D41F02CC53009419CA /* EmbeddedCollectonViewCell.swift */,
 				164FE9DB1F02DAB5009419CA /* PodcastCollectionViewCell.swift */,
 			);
 			name = CollectionViewCells;
@@ -573,7 +567,6 @@
 				164FE9EF1F03065C009419CA /* NavigationControllerExtension.swift in Sources */,
 				167AFAB21F043CF600A1332F /* PostDetailTableViewController.swift in Sources */,
 				161F3DE61F61F73D00A8F825 /* SearchTableViewController.swift in Sources */,
-				164FE9D51F02CC53009419CA /* EmbeddedCollectonViewCell.swift in Sources */,
 				16D67C4D1F33AE370065E838 /* ObjectExtensions.swift in Sources */,
 				164FE9D91F02D611009419CA /* CollectionReusableView.swift in Sources */,
 				167AFAB91F04624E00A1332F /* SingleLabelTableViewCell.swift in Sources */,
@@ -586,7 +579,6 @@
 				164C71091F021C97003803BC /* FeedCollectionViewController.swift in Sources */,
 				16B147B11F16BF9C00433A42 /* AudioViewManager.swift in Sources */,
 				1673B9011F27E70200923BB8 /* JustForYouCollectionViewController.swift in Sources */,
-				164C71071F021C8D003803BC /* PodcastCollectionViewController.swift in Sources */,
 				1673B8FF1F27E56100923BB8 /* TopCollectionViewController.swift in Sources */,
 				1673B8FD1F27AA3200923BB8 /* LatestCollectionViewController.swift in Sources */,
 				164C71051F021AC8003803BC /* CustomTabViewController.swift in Sources */,

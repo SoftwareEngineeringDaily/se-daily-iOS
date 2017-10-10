@@ -11,6 +11,7 @@ import SnapKit
 import RealmSwift
 import Kingfisher
 import KTResponsiveUI
+import Skeleton
 
 class PodcastCollectionViewCell: UICollectionViewCell {
     
@@ -139,10 +140,54 @@ class PodcastCell: UICollectionViewCell {
         }
         timeDayLabel.text = timeString + " \u{2022} " + dateString
     }
+    
+    // MARK: Skeleton
+    var skeletonImageView: GradientContainerView!
+    var skeletonTitleLabel: GradientContainerView!
+    var skeletontimeDayLabel: GradientContainerView!
+    
+    private func setupSkeletonView() {
+        self.skeletonImageView = GradientContainerView(frame: self.imageView.frame)
+        self.skeletonImageView.cornerRadius = self.imageView.cornerRadius
+        self.skeletonImageView.backgroundColor = UIColor(red:0.87, green:0.87, blue:0.87, alpha:1.0)
+        self.contentView.addSubview(skeletonImageView)
+        skeletonTitleLabel = GradientContainerView(origin: imageView.bottomLeftPoint(), topInset: 15, width: 158, height: 14)
+        self.contentView.addSubview(skeletonTitleLabel)
+        skeletontimeDayLabel = GradientContainerView(origin: skeletonTitleLabel.bottomLeftPoint(), topInset: 15, width: 158, height: 14)
+        self.contentView.addSubview(skeletontimeDayLabel)
+        
+        let baseColor = self.skeletonImageView.backgroundColor!
+        let gradients = baseColor.getGradientColors(brightenedBy: 1.07)
+        self.skeletonImageView.gradientLayer.colors = gradients
+        self.skeletonTitleLabel.gradientLayer.colors = gradients
+        self.skeletontimeDayLabel.gradientLayer.colors = gradients
+    }
+    
+    func setupSkeletonCell() {
+        self.setupSkeletonView()
+        self.slide(to: .right)
+    }
 }
 
-extension PodcastCell {
-    func setupSkeletonCell() {
-        
+extension PodcastCell: GradientsOwner {
+    var gradientLayers: [CAGradientLayer] {
+        return [skeletonImageView.gradientLayer,
+                skeletonTitleLabel.gradientLayer,
+                skeletontimeDayLabel.gradientLayer
+        ]
+    }
+}
+
+extension UIColor {
+    func brightened(by factor: CGFloat) -> UIColor {
+        var h: CGFloat = 0, s: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        getHue(&h, saturation: &s, brightness: &b, alpha: &a)
+        return UIColor(hue: h, saturation: s, brightness: b * factor, alpha: a)
+    }
+    
+    func getGradientColors(brightenedBy: CGFloat) -> [Any] {
+        return [self.cgColor,
+                self.brightened(by: brightenedBy).cgColor,
+                self.cgColor]
     }
 }

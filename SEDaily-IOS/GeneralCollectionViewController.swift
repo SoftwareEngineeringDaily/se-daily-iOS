@@ -14,7 +14,7 @@ import SwifterSwift
 private let reuseIdentifier = "Cell"
 
 class GeneralCollectionViewController: UICollectionViewController {
-    let activityView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    var skeletonCollectionView = SkeletonCollectionView(frame: .zero)
     
     var type: String = ""
     var tabTitle = ""
@@ -59,18 +59,18 @@ class GeneralCollectionViewController: UICollectionViewController {
         self.collectionView?.showsHorizontalScrollIndicator = false
         self.collectionView?.showsVerticalScrollIndicator = false
         
-        let ratio: CGFloat = 250/158
-        let layout = KoalaTeaFlowLayout(ratio: ratio, topBottomMargin: 12, leftRightMargin: 12, cellsAcross: 2, cellSpacing: 8)
+        let layout = KoalaTeaFlowLayout(cellWidth: 158,
+                                       cellHeight: 250,
+                                       topBottomMargin: 12,
+                                       leftRightMargin: 20,
+                                       cellSpacing: 8)
         self.collectionView?.collectionViewLayout = layout
         
         // User Login observer
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)
         
-        // Add activity view
-        self.view.addSubview(activityView)
-        activityView.snp.makeConstraints {(make) -> Void in
-            make.center.equalToSuperview()
-        }
+        self.skeletonCollectionView = SkeletonCollectionView(frame: collectionView!.frame)
+        self.collectionView?.addSubview(skeletonCollectionView)
     }
     
     override func didReceiveMemoryWarning() {
@@ -109,8 +109,6 @@ class GeneralCollectionViewController: UICollectionViewController {
     
     // @TODO: Move to repository
     func loadNewLocalPodcasts (hasChanges: Bool) {
-        self.activityView.stopAnimating()
-        
         //@TODO: Fix this, right now it stops all loading completely
         //        if hasChanges {
         self.loading = false
@@ -177,8 +175,6 @@ class GeneralCollectionViewController: UICollectionViewController {
                 return;
             }
             
-            self.activityView.startAnimating()
-            
             API.sharedInstance.getPosts(type: type, createdAtBefore: lastItemDate, categoires: String(self.tagId), completion: { (hasChanges) in
                 self.setLoadedNewToday(tagId: self.tagId, lastItemDate: lastItemDate)
                 self.loadNewLocalPodcasts(hasChanges: hasChanges)
@@ -187,7 +183,6 @@ class GeneralCollectionViewController: UICollectionViewController {
         case API.Types.recommended:
             guard User.getActiveUser().isLoggedIn() else {
                 API.sharedInstance.getPosts(type: API.Types.top, createdAtBefore: lastItemDate, completion: { (hasChanges) in
-                    self.activityView.stopAnimating()
                     
                     if hasChanges {
                         self.loading = false
@@ -199,8 +194,6 @@ class GeneralCollectionViewController: UICollectionViewController {
                 break
             }
             API.sharedInstance.getRecommendedPosts(completion: { (hasChanges) in
-                self.activityView.stopAnimating()
-                
                 if hasChanges {
                     self.loading = false
                 }
@@ -211,8 +204,6 @@ class GeneralCollectionViewController: UICollectionViewController {
             break
         case API.Types.top:
             API.sharedInstance.getPosts(type: API.Types.top, createdAtBefore: lastItemDate, completion: { (hasChanges) in
-                self.activityView.stopAnimating()
-                
                 if hasChanges {
                     self.loading = false
                 }
@@ -236,6 +227,9 @@ extension GeneralCollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if itemCount > 0 {
+            self.skeletonCollectionView.fadeOut()
+        }
         if itemCount < 10 {
             self.getData()
         }
@@ -252,7 +246,7 @@ extension GeneralCollectionViewController {
         // Configure the cell
         let uploadDate = Date(iso8601String: (item.uploadDate ?? ""))
         cell.setupCell(imageURLString: item.imageURLString, title: item.podcastName!, timeLength: nil, date: uploadDate)
-        
+
         return cell
     }
     

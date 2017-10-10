@@ -12,7 +12,6 @@
 		161F3DEA1F62703100A8F825 /* PodcastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */; };
 		1649A78A1F204EC6005C4A6E /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1649A7891F204EC6005C4A6E /* ContainerViewController.swift */; };
 		164C71051F021AC8003803BC /* CustomTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C71041F021AC8003803BC /* CustomTabViewController.swift */; };
-		164C71091F021C97003803BC /* FeedCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C71081F021C97003803BC /* FeedCollectionViewController.swift */; };
 		164FE9D71F02CD99009419CA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9D61F02CD99009419CA /* Extensions.swift */; };
 		164FE9D91F02D611009419CA /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9D81F02D611009419CA /* CollectionReusableView.swift */; };
 		164FE9DC1F02DAB5009419CA /* PodcastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9DB1F02DAB5009419CA /* PodcastCollectionViewCell.swift */; };
@@ -28,7 +27,6 @@
 		166036211F266FF300A22B7B /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166036201F266FF300A22B7B /* Notifications.swift */; };
 		1668124A1F350737007F288B /* GeneralCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166812491F350737007F288B /* GeneralCollectionViewController.swift */; };
 		1672FAC41F06C141008445B1 /* NotificationCenterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */; };
-		1673B8FD1F27AA3200923BB8 /* LatestCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1673B8FC1F27AA3200923BB8 /* LatestCollectionViewController.swift */; };
 		1673B8FF1F27E56100923BB8 /* TopCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1673B8FE1F27E56100923BB8 /* TopCollectionViewController.swift */; };
 		1673B9011F27E70200923BB8 /* JustForYouCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1673B9001F27E70200923BB8 /* JustForYouCollectionViewController.swift */; };
 		167AFAB21F043CF600A1332F /* PostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */; };
@@ -65,7 +63,6 @@
 		161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastTableViewCell.swift; sourceTree = "<group>"; };
 		1649A7891F204EC6005C4A6E /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		164C71041F021AC8003803BC /* CustomTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabViewController.swift; sourceTree = "<group>"; };
-		164C71081F021C97003803BC /* FeedCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewController.swift; sourceTree = "<group>"; };
 		164FE9D61F02CD99009419CA /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		164FE9D81F02D611009419CA /* CollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionReusableView.swift; sourceTree = "<group>"; };
 		164FE9DB1F02DAB5009419CA /* PodcastCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -81,7 +78,6 @@
 		166036201F266FF300A22B7B /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		166812491F350737007F288B /* GeneralCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralCollectionViewController.swift; sourceTree = "<group>"; };
 		1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterExtension.swift; sourceTree = "<group>"; };
-		1673B8FC1F27AA3200923BB8 /* LatestCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatestCollectionViewController.swift; sourceTree = "<group>"; };
 		1673B8FE1F27E56100923BB8 /* TopCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopCollectionViewController.swift; sourceTree = "<group>"; };
 		1673B9001F27E70200923BB8 /* JustForYouCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JustForYouCollectionViewController.swift; sourceTree = "<group>"; };
 		167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewController.swift; sourceTree = "<group>"; };
@@ -141,8 +137,6 @@
 		164FE9DA1F02DAA5009419CA /* CollectionViews */ = {
 			isa = PBXGroup;
 			children = (
-				164C71081F021C97003803BC /* FeedCollectionViewController.swift */,
-				1673B8FC1F27AA3200923BB8 /* LatestCollectionViewController.swift */,
 				1673B8FE1F27E56100923BB8 /* TopCollectionViewController.swift */,
 				1673B9001F27E70200923BB8 /* JustForYouCollectionViewController.swift */,
 				166812491F350737007F288B /* GeneralCollectionViewController.swift */,
@@ -581,11 +575,9 @@
 				164FE9E51F02EE83009419CA /* API.swift in Sources */,
 				164FE9E91F02F049009419CA /* Stylesheet.swift in Sources */,
 				1668124A1F350737007F288B /* GeneralCollectionViewController.swift in Sources */,
-				164C71091F021C97003803BC /* FeedCollectionViewController.swift in Sources */,
 				16B147B11F16BF9C00433A42 /* AudioViewManager.swift in Sources */,
 				1673B9011F27E70200923BB8 /* JustForYouCollectionViewController.swift in Sources */,
 				1673B8FF1F27E56100923BB8 /* TopCollectionViewController.swift in Sources */,
-				1673B8FD1F27AA3200923BB8 /* LatestCollectionViewController.swift in Sources */,
 				164C71051F021AC8003803BC /* CustomTabViewController.swift in Sources */,
 				164FE9DC1F02DAB5009419CA /* PodcastCollectionViewCell.swift in Sources */,
 				165A5B681F7C32FD00FDE80B /* TempObjectMapper.swift in Sources */,

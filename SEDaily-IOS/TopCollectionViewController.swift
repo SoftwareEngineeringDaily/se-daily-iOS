@@ -86,7 +86,7 @@ extension TopCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if itemCount > 0 {
-            self.skeletonCollectionView.fadeOut()
+            self.skeletonCollectionView.fadeOut(duration: 0.5, completion: nil)
         }
         return itemCount
     }

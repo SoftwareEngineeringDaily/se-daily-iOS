@@ -25,6 +25,7 @@ PODS:
   - Reusable/Storyboard (4.0.0)
   - Reusable/View (4.0.0)
   - SideMenu (3.0.2)
+  - Skeleton (0.1.0)
   - SnapKit (4.0.0)
   - SwifterSwift (4.0.0):
     - SwifterSwift/AppKit (= 4.0.0)
@@ -62,6 +63,7 @@ DEPENDENCIES:
   - RealmSwift
   - Reusable
   - SideMenu
+  - Skeleton
   - SnapKit
   - SwifterSwift
   - SwiftIcons (from `https://github.com/themisterholliday/SwiftIcons.git`, branch `swift-4`)
@@ -103,6 +105,7 @@ SPEC CHECKSUMS:
   RealmSwift: 07a9ae0505091eda6b2ee7c190c3786d6e90a7b0
   Reusable: 98e5fff1e0e2e00872199699b276dde08ee56c07
   SideMenu: 8fe957e0f5dcf1a1175c8ba5d47978d4eb2a89da
+  Skeleton: b76249b7d6a73a9913e164c8030647a3e005c700
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SwifterSwift: 0b63ade1ec0c5bc4d6228df993de41fe44bc123e
   SwiftIcons: b20641adce6b71fcb2e72389b4b5f2e87252df99
@@ -111,6 +114,6 @@ SPEC CHECKSUMS:
   Tabman: 558bede024627206c554e1c8cee728d380655ebf
   UIFontComplete: 7e3ce7f0a12d2529fb07f537e262aabfa87df280
 
-PODFILE CHECKSUM: 66b19d5ea05da768f11f82f3d16acb7e731bf857
+PODFILE CHECKSUM: 91930b5c65d03f7292d133a0897bf104a30be60f
 
 COCOAPODS: 1.3.1

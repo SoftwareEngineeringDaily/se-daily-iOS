@@ -13,8 +13,7 @@ import KoalaTeaFlowLayout
 private let reuseIdentifier = "Cell"
 
 class TopCollectionViewController: UICollectionViewController {
-    
-    let activityView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    var skeletonCollectionView = SkeletonCollectionView(frame: .zero)
     
     var token: NotificationToken?
     var data: Results<PodcastModel> = {
@@ -32,25 +31,24 @@ class TopCollectionViewController: UICollectionViewController {
         // self.clearsSelectionOnViewWillAppear = false
         
         // Register cell classes
-        self.collectionView!.register(PodcastCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(PodcastCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
         self.collectionView?.backgroundColor = UIColor(hex: 0xfafafa)
         self.collectionView?.showsHorizontalScrollIndicator = false
         self.collectionView?.showsVerticalScrollIndicator = false
         
-        let layout = KoalaTeaFlowLayout(ratio: 1, topBottomMargin: 12, leftRightMargin: 12, cellsAcross: 2, cellSpacing: 8)
+        let layout = KoalaTeaFlowLayout(cellWidth: 158,
+                                        cellHeight: 250,
+                                        topBottomMargin: 12,
+                                        leftRightMargin: 20,
+                                        cellSpacing: 8)
         self.collectionView?.collectionViewLayout = layout
         
         // User Login observer
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)
         
-        
-        // Add activity view
-        self.view.addSubview(activityView)
-        activityView.snp.makeConstraints {(make) -> Void in
-            make.top.equalToSuperview().inset(20.calculateHeight())
-            make.centerX.equalToSuperview()
-        }
+        self.skeletonCollectionView = SkeletonCollectionView(frame: collectionView!.frame)
+        self.collectionView?.addSubview(skeletonCollectionView)
         
         loadData()
     }
@@ -69,9 +67,8 @@ class TopCollectionViewController: UICollectionViewController {
     }
     
     func loadData() {
-        activityView.startAnimating()
         API.sharedInstance.getPosts(type: API.Types.top, completion: {_ in 
-            self.activityView.stopAnimating()
+            
         })
         self.registerNotifications()
     }
@@ -88,24 +85,20 @@ extension TopCollectionViewController {
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        if !data.isEmpty {
-//            //            if data.count < 20 {
-//            //                self.getData()
-//            //            }
-//            return data.count
-//        }
-//        //        self.getData()
-//        return 0
+        if itemCount > 0 {
+            self.skeletonCollectionView.fadeOut(duration: 0.5, completion: nil)
+        }
         return itemCount
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PodcastCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PodcastCell
         
         let item = data[indexPath.row]
         
         // Configure the cell
-        cell.setupCell(model: item)
+        let uploadDate = Date(iso8601String: (item.uploadDate ?? ""))
+        cell.setupCell(imageURLString: item.imageURLString, title: item.podcastName!, timeLength: nil, date: uploadDate)
         
         return cell
     }

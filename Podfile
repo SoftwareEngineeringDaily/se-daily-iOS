@@ -6,7 +6,7 @@ target 'SEDaily-IOS' do
   use_frameworks!
 
   # Pods for SEDaily-IOS
-  pod 'Alamofire', '~> 4.0’
+  pod 'Alamofire', '~> 4.0'
   pod 'ObjectMapper'
   pod 'RealmSwift'
   pod 'SwiftyJSON'

@@ -14,7 +14,9 @@ import SwifterSwift
 private let reuseIdentifier = "Cell"
 
 class GeneralCollectionViewController: UICollectionViewController {
-    var skeletonCollectionView = SkeletonCollectionView(frame: .zero)
+    lazy var skeletonCollectionView: SkeletonCollectionView = {
+        return SkeletonCollectionView(frame: self.collectionView!.frame)
+    }()
     
     var type: String = ""
     var tabTitle = ""
@@ -69,7 +71,7 @@ class GeneralCollectionViewController: UICollectionViewController {
         // User Login observer
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)
         
-        self.skeletonCollectionView = SkeletonCollectionView(frame: collectionView!.frame)
+        
         self.collectionView?.addSubview(skeletonCollectionView)
     }
     

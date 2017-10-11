@@ -6,7 +6,7 @@ target 'SEDaily-IOS' do
   use_frameworks!
 
   # Pods for SEDaily-IOS
-  pod 'Alamofire', '~> 4.0'
+  pod 'Alamofire'
   pod 'ObjectMapper'
   pod 'RealmSwift'
   pod 'SwiftyJSON'
@@ -16,7 +16,7 @@ target 'SEDaily-IOS' do
   pod 'SwiftyBeaver'
   pod 'KoalaTeaFlowLayout'
   pod 'UIFontComplete'
-  pod 'SwiftIcons', :git => 'https://github.com/themisterholliday/SwiftIcons.git', :branch => 'swift-4'
+  pod 'SwiftIcons'
   pod 'IQKeyboardManagerSwift'
   pod 'Eureka'
   pod 'SideMenu'

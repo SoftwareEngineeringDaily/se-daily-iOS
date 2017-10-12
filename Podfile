@@ -16,7 +16,7 @@ target 'SEDaily-IOS' do
   pod 'SwiftyBeaver'
   pod 'KoalaTeaFlowLayout'
   pod 'UIFontComplete'
-  pod 'SwiftIcons'
+  pod 'SwiftIcons', :git => 'https://github.com/themisterholliday/SwiftIcons.git', :branch => 'swift-4'
   pod 'IQKeyboardManagerSwift'
   pod 'Eureka'
   pod 'SideMenu'

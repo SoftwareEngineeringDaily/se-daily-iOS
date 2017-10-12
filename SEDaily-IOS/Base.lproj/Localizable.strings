@@ -42,7 +42,6 @@
 "AlertMessageLastNameNotLongEnough" = "Last Name must be longer than 1 characters";
 "AlertMessagePleaseLogin" = "Please Login";
 "AlertMessageIssueWithUserToken" = "Issue with User Token";
-"AlertMessageNoWebsite" = "No linked webste.";
 "AlertMessageYouMustLogin" = "You must login to use this feature.";
 "AlertMessageLogoutSuccess" = "Successfully Logged Out";
 "GenericSuccess" = "Success";

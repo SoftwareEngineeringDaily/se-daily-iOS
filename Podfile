@@ -29,6 +29,7 @@ target 'SEDaily-IOS' do
   pod 'KTResponsiveUI'
   pod 'KoalaTeaPlayer'
   pod 'Tabman'
+  pod 'SwiftGen'
 
   target 'SEDaily-IOSTests' do
     inherit! :search_paths

@@ -15,26 +15,25 @@ extension Helpers {
     static var alert: UIAlertController!
     
     enum Alerts {
-        static let error = NSLocalizedString("GenericError", comment: "")
-        static let success = NSLocalizedString("GenericSuccess", comment: "")
+        static let error = L10n.genericError
+        static let success = L10n.genericSuccess
     }
     
     enum Messages {
-        static let emailEmpty = NSLocalizedString("AlertMessageEmailEmpty", comment: "")
-        static let passwordEmpty = NSLocalizedString("AlertMessagePasswordEmpty", comment: "")
-        static let passwordConfirmEmpty = NSLocalizedString("AlertMessagePasswordConfirmEmpty", comment: "")
-        static let emailWrongFormat = NSLocalizedString("AlertMessageEmailWrongFormat", comment: "")
-        static let passwordNotLongEnough = NSLocalizedString("AlertMessagePasswordNotLongEnough", comment: "")
-        static let passwordsDonotMatch = NSLocalizedString("AlertMessagePasswordsDonotMatch", comment: "")
-        static let firstNameEmpty = NSLocalizedString("AlertMessageFirstNameEmpty", comment: "")
-        static let firstNameNotLongEnough = NSLocalizedString("AlertMessageFirstNameNotLongEnough", comment: "")
-        static let lastNameEmpty = NSLocalizedString("AlertMessageLastNameEmpty", comment: "")
-        static let lastNameNotLongEnough = NSLocalizedString("AlertMessageLastNameNotLongEnough", comment: "")
-        static let pleaseLogin = NSLocalizedString("AlertMessagePleaseLogin", comment: "")
-        static let issueWithUserToken = NSLocalizedString("AlertMessageIssueWithUserToken", comment: "")
-        static let noWebsite = NSLocalizedString("AlertMessageNoWebsite", comment: "")
-        static let youMustLogin = NSLocalizedString("AlertMessageYouMustLogin", comment: "")
-        static let logoutSuccess = NSLocalizedString("AlertMessageLogoutSuccess", comment: "")
+        static let emailEmpty = L10n.alertMessageEmailEmpty
+        static let passwordEmpty = L10n.alertMessagePasswordEmpty
+        static let passwordConfirmEmpty = L10n.alertMessagePasswordConfirmEmpty
+        static let emailWrongFormat = L10n.alertMessageEmailWrongFormat
+        static let passwordNotLongEnough = L10n.alertMessagePasswordNotLongEnough
+        static let passwordsDonotMatch = L10n.alertMessagePasswordsDonotMatch
+        static let firstNameEmpty = L10n.alertMessageFirstNameEmpty
+        static let firstNameNotLongEnough = L10n.alertMessageFirstNameNotLongEnough
+        static let lastNameEmpty = L10n.alertMessageLastNameEmpty
+        static let lastNameNotLongEnough = L10n.alertMessageLastNameNotLongEnough
+        static let pleaseLogin = L10n.alertMessagePleaseLogin
+        static let issueWithUserToken = L10n.alertMessageIssueWithUserToken
+        static let youMustLogin = L10n.alertMessageYouMustLogin
+        static let logoutSuccess = L10n.alertMessageLogoutSuccess
     }
 }
 
@@ -53,7 +52,7 @@ class Helpers {
             }
             
             alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("GenericOkay", comment: ""), style: UIAlertActionStyle.default, handler: nil))
+            alert.addAction(UIAlertAction(title: L10n.genericOkay, style: UIAlertActionStyle.default, handler: nil))
             topController.present(alert, animated: true, completion: nil)
             completionHandler?()
         }

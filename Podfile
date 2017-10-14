@@ -29,6 +29,7 @@ target 'SEDaily-IOS' do
   pod 'Tabman'
   pod 'SwiftGen'
   pod 'Skeleton'
+  pod 'WaitForIt'
 
   target 'SEDaily-IOSTests' do
     inherit! :search_paths

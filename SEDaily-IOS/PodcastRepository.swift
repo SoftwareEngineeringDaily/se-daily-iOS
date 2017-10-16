@@ -86,48 +86,48 @@ class PodcastRepository: Repository<Podcast> {
         // Check if we made requests today
         let alreadLoadedStartToday = self.alreadyLoadedNewToday(tag: self.tag, lastItemDate: lastItemDate)
 log.debug(lastItemDate)
-//        if alreadLoadedStartToday {
-//            self.loading = true
-//            log.warning("from disk")
-//            // Check if we have realm data saved
-//            //@TODO: Replace get all
-//            let persistantData = self.dataSource.getAllWith(filters: filtersRepo.getActiveFilters())
-//            guard let data = persistantData, !data.isEmpty else {
-//                self.loading = false
-//                onFailure(.ErrorGettingFromRealm)
-//                return
-//            }
-//            guard data != self.lastReturnedDataArray else {
-//                self.loading = false
-//                onFailure(.ReturnedDataEqualsLastData)
-//                return
-//            }
-//
-//            self.setLoadedNewToday(tagId: self.tag, lastItemDate: lastItemDate)
-//            self.lastReturnedDataArray = data
-//            self.loading = false
-//            onSucces(data)
-//            return
-//        }
-        log.warning("from api")
-        guard self.loading == false else { return }
-        self.loading = true
-
-        // API Call and return
-        API.sharedInstance.getPosts(type: type, createdAtBefore: lastItemDate, tags: tags, categories: categories, onSucces: { (podcasts) in
-            self.loading = false
-            guard podcasts != self.lastReturnedDataArray else {
+        if alreadLoadedStartToday {
+            self.loading = true
+            log.warning("from disk")
+            // Check if we have realm data saved
+            //@TODO: Replace get all
+            let persistantData = self.dataSource.getAllWith(filters: filtersRepo.getActiveFilters(), lastItemDate: lastItemDate)
+            guard let data = persistantData, !data.isEmpty else {
+                self.loading = false
+                onFailure(.ErrorGettingFromRealm)
+                return
+            }
+            guard data != self.lastReturnedDataArray else {
+                self.loading = false
                 onFailure(.ReturnedDataEqualsLastData)
                 return
             }
-            self.dataSource.insert(items: podcasts)
+
             self.setLoadedNewToday(tagId: self.tag, lastItemDate: lastItemDate)
-            self.lastReturnedDataArray = podcasts
-            onSucces(podcasts)
-        }) { (apiError) in
+            self.lastReturnedDataArray = data
             self.loading = false
-            onFailure(.ErrorGettingFromAPI)
+            onSucces(data)
+            return
         }
+        log.warning("from api")
+//        guard self.loading == false else { return }
+//        self.loading = true
+//
+//        // API Call and return
+//        API.sharedInstance.getPosts(type: type, createdAtBefore: lastItemDate, tags: tags, categories: categories, onSucces: { (podcasts) in
+//            self.loading = false
+//            guard podcasts != self.lastReturnedDataArray else {
+//                onFailure(.ReturnedDataEqualsLastData)
+//                return
+//            }
+//            self.dataSource.insert(items: podcasts)
+//            self.setLoadedNewToday(tagId: self.tag, lastItemDate: lastItemDate)
+//            self.lastReturnedDataArray = podcasts
+//            onSucces(podcasts)
+//        }) { (apiError) in
+//            self.loading = false
+//            onFailure(.ErrorGettingFromAPI)
+//        }
     }
     
     // MARK: Already loaded today checks
@@ -181,7 +181,7 @@ class PodcastDataSource: DataSource {
         return retrievedObjects
     }
     
-    func getAllWith(filters: FilterDictionary) -> [T]? {
+    func getAllWith(filters: FilterDictionary, lastItemDate: String?) -> [T]? {
         let all = self.getAll()
 //        var predicates = [NSPredicate]()
 //        for (key,value) in filters {
@@ -198,15 +198,28 @@ class PodcastDataSource: DataSource {
 //        let filteredObjects = realmObjects.filter(compoundPredicate)
         let filteredObjects = all
 
-        if let dateString = filters[.lastItemDate] {
+//        if let dateString = filters[.lastItemDate] {
+        if let dateString = lastItemDate {
+            log.debug("her")
             if let passedDate = Date(iso8601String: dateString) {
                 //@TODO: Gaurd
-                let dateFilteredObjects = filteredObjects?.filter { $0.getLastUpdatedAsDate()! >= passedDate }
+                let dateFilteredObjects = filteredObjects?.filter({ (podcast) -> Bool in
+                    return podcast.getLastUpdatedAsDate()! < passedDate
+                })
                 //@TODO: Gaurd
+                for i in all! {
+                    log.debug(i.title)
+                    log.debug(i.getLastUpdatedAsDate())
+                }
                 return Array(dateFilteredObjects!.prefix(10))
             }
         }
         // Prefix = to max paging
+        let this = Array(filteredObjects!.prefix(10))
+        for t in this {
+            log.info(t.title)
+            log.info(t.getLastUpdatedAsDate())
+        }
         return Array(filteredObjects!.prefix(10))
     }
     
@@ -232,8 +245,8 @@ class PodcastDataSource: DataSource {
     func insert(items: [T]) {
         DispatchQueue.global(qos: .userInitiated).async {
             do {
-                try Disk.save(items, to: .caches, as: DiskKeys.PodcastFolder.folderPath)
-//                try Disk.append(items, to: DiskKeys.PodcastFolder.folderPath, in: .caches)
+//                try Disk.save(items, to: .caches, as: DiskKeys.PodcastFolder.folderPath)
+                try Disk.append(items, to: DiskKeys.PodcastFolder.folderPath, in: .caches)
             } catch {
                 //@TODO: Handle errors?
                 // ...

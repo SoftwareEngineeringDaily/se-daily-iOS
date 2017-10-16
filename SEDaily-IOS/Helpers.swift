@@ -123,22 +123,33 @@ extension Helpers {
     }
 }
 
+import SwiftSoup
+
 public extension String {
     /// Decodes string with html encoding.
+//    var htmlDecoded: String {
+//        guard let encodedData = self.data(using: .utf8) else { return self }
+//
+//        let attributedOptions: [NSAttributedString.DocumentReadingOptionKey : Any] = [
+//            NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html,
+//            NSAttributedString.DocumentReadingOptionKey.characterEncoding: String.Encoding.utf8.rawValue]
+//
+//        do {
+//            let attributedString = try NSAttributedString(data: encodedData,
+//                                                          options: attributedOptions,
+//                                                          documentAttributes: nil)
+//            return attributedString.string
+//        } catch {
+//            print("Error: \(error)")
+//            return self
+//        }
+//    }
     var htmlDecoded: String {
-        guard let encodedData = self.data(using: .utf8) else { return self }
-        
-        let attributedOptions: [NSAttributedString.DocumentReadingOptionKey : Any] = [
-            NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html,
-            NSAttributedString.DocumentReadingOptionKey.characterEncoding: String.Encoding.utf8.rawValue]
-        
         do {
-            let attributedString = try NSAttributedString(data: encodedData,
-                                                          options: attributedOptions,
-                                                          documentAttributes: nil)
-            return attributedString.string
+            let html = self
+            let doc: Document = try SwiftSoup.parse(html)
+            return try doc.text()
         } catch {
-            print("Error: \(error)")
             return self
         }
     }

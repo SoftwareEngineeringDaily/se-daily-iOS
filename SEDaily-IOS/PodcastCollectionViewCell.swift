@@ -89,6 +89,14 @@ class PodcastCell: UICollectionViewCell {
     var titleLabel: UILabel!
     var timeDayLabel: UILabel!
     
+    var viewModel: PodcastViewModel = PodcastViewModel() {
+        didSet {
+            self.titleLabel.text = viewModel.podcastTitle
+            self.setupTimeDayLabel(timeLength: nil, date: viewModel.uploadDateAsDate)
+            self.setupImageView(imageURL: viewModel.featuredImageURL)
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         let newContentView = UIView(width: 158, height: 250)
@@ -115,12 +123,8 @@ class PodcastCell: UICollectionViewCell {
     }
     
     func setupCell(imageURLString: String?, title: String?, timeLength: Int?, date: Date?) {
-        self.setupImageView(imageURLString: imageURLString)
         titleLabel.text = title ?? ""
-        setupTimeDayLabel(timeLength: timeLength, date: date)
-    }
-    
-    func setupImageView(imageURLString: String?) {
+        self.setupTimeDayLabel(timeLength: timeLength, date: date)
         guard let imageURLString = imageURLString else {
             self.imageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
             return
@@ -131,14 +135,23 @@ class PodcastCell: UICollectionViewCell {
         }
     }
     
-    func setupTimeDayLabel(timeLength: Int?, date: Date?) {
-        let timeString = Helpers.createTimeString(time: (Float(timeLength ?? 0)))
-        let dateString = date?.dateString() ?? ""
-        guard timeString != "0:00" else {
-            timeDayLabel.text = dateString
+    func setupImageView(imageURL: URL?) {
+        guard let imageURL = imageURL else {
+            self.imageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
             return
         }
-        timeDayLabel.text = timeString + " \u{2022} " + dateString
+        self.imageView.kf.indicatorType = .activity
+        self.imageView.kf.setImage(with: imageURL)
+    }
+    
+    func setupTimeDayLabel(timeLength: Int?, date: Date?) {
+//        let timeString = Helpers.createTimeString(time: (Float(timeLength ?? 0)))
+        let dateString = date?.dateString() ?? ""
+//        guard timeString != "00:00" else {
+            timeDayLabel.text = dateString
+//            return
+//        }
+//        timeDayLabel.text = timeString + " \u{2022} " + dateString
     }
     
     // MARK: Skeleton

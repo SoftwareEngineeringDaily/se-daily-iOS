@@ -246,8 +246,6 @@ extension GeneralCollectionViewController {
         checkPage(indexPath: indexPath, item: item)
         
         // Configure the cell
-        let uploadDate = Date(iso8601String: (item.uploadDate ?? ""))
-        cell.setupCell(imageURLString: item.imageURLString, title: item.podcastName!, timeLength: nil, date: uploadDate)
 
         return cell
     }

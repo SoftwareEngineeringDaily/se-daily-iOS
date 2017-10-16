@@ -322,6 +322,62 @@ extension API {
     }
 }
 
+// MARK: - MVVM Getters
+extension API {
+    func getPosts(type: String = "",
+                  createdAtBefore beforeDate: String = "",
+                  tags: String = "-1",
+                  categories: String = "",
+                  onSucces: @escaping ([Podcast]) -> Void,
+                  onFailure: @escaping (APIError?) -> Void) {
+        typealias model = Podcast
+        let api = API.sharedInstance
+        let urlString = api.rootURL + API.Endpoints.posts
+        
+        // Params
+        var params = [String: String]()
+        params[Params.type] = type
+        params[Params.createdAtBefore] = beforeDate
+        // @TODO: Allow for an array and join the array
+        if (tags != "-1") {
+            params[Params.tags] = tags
+        }
+        
+        if (categories != "-1") {
+            params[Params.categories] = categories
+        }
+        
+        let user = User.getActiveUser()
+        guard let userToken = user.token else { return }
+        let _headers : HTTPHeaders = [
+            Headers.authorization:Headers.bearer + userToken,
+            ]
+        
+        Alamofire.request(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let responseData = response.data else {
+                    // Handle error here
+                    print("response has no data")
+                    onFailure(.NoResponseDataError)
+                    return
+                }
+                
+                do {
+                    let data = try JSONDecoder().decode([model].self, from: responseData)
+                    onSucces(data)
+                }
+                catch {
+                    // Handle error
+                    onFailure(.JSONParseError)
+                }
+            case .failure(let error):
+                onFailure(.GeneralFailure)
+            }
+        }
+    }
+}
+
 extension API {
     func upvotePodcast(podcastId: String, completion: @escaping (_ success: Bool?, _ active: Bool?) -> Void) {
         let urlString = rootURL + Endpoints.posts + "/" + podcastId + Endpoints.upvote

@@ -10,16 +10,27 @@ import Foundation
 import WaitForIt
 
 struct AskForReview: ScenarioProtocol {
+    static let completedReviewKey = "completedReview"
+
     static func config() {
         /*
-            I believe this means that we need to trigger an even three times minimum
-            There has to be a day between events being triggered
-            We will only show the review 3 times (There needs to be some check if the user has already reviewed)
-         
-            So the popup will only be showed every three days and only 3 times
+            Trigger an event three times minimum before executing
+            Wait at least one day after the first event to execute
+            Execute at most three times with a check if the review has been completed
         */
         minEventsRequired = 3
-        minSecondsSinceFirstEvent = 86400 // seconds in one day
+        minSecondsSinceFirstEvent = 86_400 // seconds in one day
         maxExecutionsPermitted = 3
+        customConditions = {
+            let defaults = UserDefaults.standard
+            return !(defaults.object(forKey: completedReviewKey) != nil &&
+                defaults.bool(forKey: completedReviewKey))
+        }
+    }
+
+    static func setReviewed() {
+        let defaults = UserDefaults.standard
+        defaults.set(true, forKey: AskForReview.completedReviewKey)
+        defaults.synchronize()
     }
 }

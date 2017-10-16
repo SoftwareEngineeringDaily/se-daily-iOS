@@ -162,6 +162,7 @@ extension CustomTabViewController {
         let feedbackYesButton = DefaultButton(title: L10n.enthusiasticSure) {
             if MFMailComposeViewController.canSendMail() {
                 let mail = MFMailComposeViewController()
+                mail.mailComposeDelegate = self
                 mail.setToRecipients(["jeff@softwareengineeringdaily.com"])
                 mail.setSubject(L10n.appReviewEmailSubject)
                 
@@ -175,6 +176,7 @@ extension CustomTabViewController {
 
         let yesButton = DefaultButton(title: L10n.enthusiasticYes) {
             SKStoreReviewController.requestReview()
+            AskForReview.setReviewed()
         }
 
         let noButton = DefaultButton(title: L10n.genericNo) {
@@ -185,5 +187,15 @@ extension CustomTabViewController {
         popup.addButtons([yesButton, noButton])
         feedbackPopup.addButtons([feedbackYesButton, feedbackNoButton])
         self.present(popup, animated: true, completion: nil)
+    }
+}
+
+extension CustomTabViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        switch result {
+        case .sent:
+            AskForReview.setReviewed()
+        default: break
+        }
     }
 }

@@ -7,6 +7,13 @@
 */
 
 /* */
+"EnthusiasticHello" = "Hello!";
+"EnthusiasticYes" = "Yes!";
+"EnthusiasticSure" = "Sure!";
+"AppReviewPromptQuestion" = "Enjoying the SEDaily app?";
+"AppReviewEmailSubject" = "SEDaily iOS App Feedback";
+"AppReviewApology" = "Oh, sorry you're not liking the SEDaily app";
+"AppReviewGiveFeedbackQuestion" = "Would you help us out by sending us your feedback?";
 "TabBarTitleLatest" = "Latest";
 "TabBarJustForYou" = "Just For You";
 "TabTitleAll" = "All";
@@ -48,3 +55,5 @@
 "GenericError" = "Error";
 "GenericOkay" = "Okay";
 "GenericOK" = "OK";
+"GenericNo" = "No";
+"NoWithGratitude" = "No thanks";

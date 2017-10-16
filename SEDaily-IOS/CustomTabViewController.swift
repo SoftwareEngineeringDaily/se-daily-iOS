@@ -154,30 +154,30 @@ extension CustomTabViewController {
     }
 
     fileprivate func askForReview() {
-        let popup = PopupDialog(title: "Hello! 👋",
-                                message: "Enjoying the SEDaily app?",
+        let popup = PopupDialog(title: L10n.enthusiasticHello,
+                                message: L10n.appReviewPromptQuestion,
                                 gestureDismissal: false)
-        let feedbackPopup = PopupDialog(title: "Oh, sorry you're not liking the SEDaily app",
-                                        message: "Would you help us out by sending us your feedback?")
-        let feedbackYesButton = DefaultButton(title: "Sure! 👍") {
+        let feedbackPopup = PopupDialog(title: L10n.appReviewApology,
+                                        message: L10n.appReviewGiveFeedbackQuestion)
+        let feedbackYesButton = DefaultButton(title: L10n.enthusiasticSure) {
             if MFMailComposeViewController.canSendMail() {
                 let mail = MFMailComposeViewController()
                 mail.setToRecipients(["jeff@softwareengineeringdaily.com"])
-                mail.setSubject("SEDaily iOS App Feedback")
+                mail.setSubject(L10n.appReviewEmailSubject)
                 
                 self.present(mail, animated: true, completion: nil)
             }
         }
         
-        let feedbackNoButton = DefaultButton(title: "No thanks.") {
+        let feedbackNoButton = DefaultButton(title: L10n.noWithGratitude) {
             popup.dismiss()
         }
 
-        let yesButton = DefaultButton(title: "Yep! 👍") {
+        let yesButton = DefaultButton(title: L10n.enthusiasticYes) {
             SKStoreReviewController.requestReview()
         }
 
-        let noButton = DefaultButton(title: "No") {
+        let noButton = DefaultButton(title: L10n.genericNo) {
             popup.dismiss()
             self.present(feedbackPopup, animated: true, completion: nil)
         }

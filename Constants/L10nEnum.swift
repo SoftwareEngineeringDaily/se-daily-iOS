@@ -34,16 +34,32 @@ enum L10n {
   static let alertMessagePleaseLogin = L10n.tr("Localizable", "AlertMessagePleaseLogin")
   /// You must login to use this feature.
   static let alertMessageYouMustLogin = L10n.tr("Localizable", "AlertMessageYouMustLogin")
+  /// Oh, sorry you're not liking the SEDaily app
+  static let appReviewApology = L10n.tr("Localizable", "AppReviewApology")
+  /// SEDaily iOS App Feedback
+  static let appReviewEmailSubject = L10n.tr("Localizable", "AppReviewEmailSubject")
+  /// Would you help us out by sending us your feedback?
+  static let appReviewGiveFeedbackQuestion = L10n.tr("Localizable", "AppReviewGiveFeedbackQuestion")
+  /// Enjoying the SEDaily app?
+  static let appReviewPromptQuestion = L10n.tr("Localizable", "AppReviewPromptQuestion")
   /// Cancel
   static let cancelButtonTitle = L10n.tr("Localizable", "CancelButtonTitle")
   /// Confirm Password
   static let confirmPasswordPlaceholder = L10n.tr("Localizable", "ConfirmPasswordPlaceholder")
   /// Email
   static let emailAddressPlaceholder = L10n.tr("Localizable", "EmailAddressPlaceholder")
+  /// Hello!
+  static let enthusiasticHello = L10n.tr("Localizable", "EnthusiasticHello")
+  /// Sure!
+  static let enthusiasticSure = L10n.tr("Localizable", "EnthusiasticSure")
+  /// Yes!
+  static let enthusiasticYes = L10n.tr("Localizable", "EnthusiasticYes")
   /// First Name
   static let firstNamePlaceholder = L10n.tr("Localizable", "FirstNamePlaceholder")
   /// Error
   static let genericError = L10n.tr("Localizable", "GenericError")
+  /// No
+  static let genericNo = L10n.tr("Localizable", "GenericNo")
   /// OK
   static let genericOK = L10n.tr("Localizable", "GenericOK")
   /// Okay
@@ -58,6 +74,8 @@ enum L10n {
   static let loginTitle = L10n.tr("Localizable", "LoginTitle")
   /// Logout
   static let logoutTitle = L10n.tr("Localizable", "LogoutTitle")
+  /// No thanks
+  static let noWithGratitude = L10n.tr("Localizable", "NoWithGratitude")
   /// Password
   static let passwordPlaceholder = L10n.tr("Localizable", "PasswordPlaceholder")
   /// Sign Up

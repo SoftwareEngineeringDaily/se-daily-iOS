@@ -38,10 +38,12 @@
 		1686FC081F009EC00088A6C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC071F009EC00088A6C1 /* Assets.xcassets */; };
 		1686FC0B1F009EC00088A6C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC091F009EC00088A6C1 /* LaunchScreen.storyboard */; };
 		1686FC161F009EC00088A6C1 /* SEDaily_IOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */; };
+		169806A61F8EF3970075D8AD /* L10nEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169806A51F8EF08F0075D8AD /* L10nEnum.swift */; };
 		16B147B11F16BF9C00433A42 /* AudioViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B147B01F16BF9C00433A42 /* AudioViewManager.swift */; };
 		16D67C4A1F33AC620065E838 /* AnswersTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D67C491F33AC620065E838 /* AnswersTracker.swift */; };
 		16D67C4D1F33AE370065E838 /* ObjectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D67C4C1F33AE370065E838 /* ObjectExtensions.swift */; };
 		16D766BA1F06B4850066C143 /* AudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D766B91F06B4850066C143 /* AudioView.swift */; };
+		1E44AF031F87B08D00221B22 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1E44AF051F87B08D00221B22 /* Localizable.strings */; };
 		16FA84031F8D323700A45D9B /* SkeletonCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FA84021F8D323700A45D9B /* SkeletonCollectionView.swift */; };
 		238E99F4E37C7365658113B8 /* Pods_SEDaily_IOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C9F051C6C2F8638D2ABF8 /* Pods_SEDaily_IOSTests.framework */; };
 		24412438C753126FDDD37CBF /* Pods_SEDaily_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */; };
@@ -93,10 +95,15 @@
 		1686FC111F009EC00088A6C1 /* SEDaily-IOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SEDaily-IOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SEDaily_IOSTests.swift; sourceTree = "<group>"; };
 		1686FC171F009EC00088A6C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		169806A51F8EF08F0075D8AD /* L10nEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10nEnum.swift; sourceTree = "<group>"; };
 		16B147B01F16BF9C00433A42 /* AudioViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioViewManager.swift; sourceTree = "<group>"; };
 		16D67C491F33AC620065E838 /* AnswersTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswersTracker.swift; sourceTree = "<group>"; };
 		16D67C4C1F33AE370065E838 /* ObjectExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectExtensions.swift; sourceTree = "<group>"; };
 		16D766B91F06B4850066C143 /* AudioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioView.swift; sourceTree = "<group>"; };
+		1E44AEFF1F87ACF500221B22 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		1E44AF001F87ACF500221B22 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		1E44AF061F87B09100221B22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1E44AF081F87B0A700221B22 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		16FA84021F8D323700A45D9B /* SkeletonCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonCollectionView.swift; sourceTree = "<group>"; };
 		675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.release.xcconfig"; sourceTree = "<group>"; };
 		995F64385352A79BA0DF7DEB /* Pods-SEDaily-IOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -231,11 +238,13 @@
 		1686FBFF1F009EC00088A6C1 /* SEDaily-IOS */ = {
 			isa = PBXGroup;
 			children = (
+				169806A41F8EF08F0075D8AD /* Constants */,
 				1610E2C21F227BE0006C8E83 /* Managers */,
 				1686FC0C1F009EC00088A6C1 /* Info.plist */,
 				164FE9E41F02EE83009419CA /* API.swift */,
 				1686FC001F009EC00088A6C1 /* AppDelegate.swift */,
 				164C71041F021AC8003803BC /* CustomTabViewController.swift */,
+				1E44AF051F87B08D00221B22 /* Localizable.strings */,
 				1686FC071F009EC00088A6C1 /* Assets.xcassets */,
 				164FE9DD1F02DAB8009419CA /* CollectionViewCells */,
 				164FE9DA1F02DAA5009419CA /* CollectionViews */,
@@ -261,6 +270,14 @@
 			);
 			path = "SEDaily-IOSTests";
 			sourceTree = "<group>";
+		};
+		169806A41F8EF08F0075D8AD /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				169806A51F8EF08F0075D8AD /* L10nEnum.swift */,
+			);
+			path = Constants;
+			sourceTree = SOURCE_ROOT;
 		};
 		4E74333675FE5899EC260076 /* Pods */ = {
 			isa = PBXGroup;
@@ -296,6 +313,7 @@
 				AE5F616C12D0339AD2CE40F0 /* [CP] Embed Pods Frameworks */,
 				4B6DBB81C87D23ABC98202EB /* [CP] Copy Pods Resources */,
 				16D67C4B1F33AD1D0065E838 /* ShellScript */,
+				169806A21F8EED850075D8AD /* Swiftgen Localize Strings Script */,
 			);
 			buildRules = (
 			);
@@ -364,6 +382,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = 1686FBF41F009EC00088A6C1;
 			productRefGroup = 1686FBFE1F009EC00088A6C1 /* Products */;
@@ -382,6 +401,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1686FC0B1F009EC00088A6C1 /* LaunchScreen.storyboard in Resources */,
+				1E44AF031F87B08D00221B22 /* Localizable.strings in Resources */,
 				1686FC081F009EC00088A6C1 /* Assets.xcassets in Resources */,
 				1686FC061F009EC00088A6C1 /* Main.storyboard in Resources */,
 			);
@@ -414,6 +434,20 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		169806A21F8EED850075D8AD /* Swiftgen Localize Strings Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Swiftgen Localize Strings Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which \"$PODS_ROOT\"/SwiftGen/bin/swiftgen >/dev/null; then\nset -e\n\"$PODS_ROOT\"/SwiftGen/bin/swiftgen strings -t structured-swift3 \"$PROJECT_DIR/SEDaily-IOS/Base.lproj/Localizable.strings\" --output \"$PROJECT_DIR/Constants/L10nEnum.swift\"\nelse\necho \"warning: SwiftGen not installed, download it from https://github.com/SwiftGen/SwiftGen\"\nfi";
 		};
 		16D67C4B1F33AD1D0065E838 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -586,6 +620,7 @@
 				16FA84031F8D323700A45D9B /* SkeletonCollectionView.swift in Sources */,
 				166036211F266FF300A22B7B /* Notifications.swift in Sources */,
 				1672FAC41F06C141008445B1 /* NotificationCenterExtension.swift in Sources */,
+				169806A61F8EF3970075D8AD /* L10nEnum.swift in Sources */,
 				01BB1D6D1F29999E004A912E /* PodcastPageViewController.swift in Sources */,
 				164FE9F11F030A2E009419CA /* PodcastModel.swift in Sources */,
 				164FE9ED1F02F7E2009419CA /* UIButtonExtension.swift in Sources */,
@@ -618,6 +653,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				1686FC051F009EC00088A6C1 /* Base */,
+				1E44AF001F87ACF500221B22 /* fr */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -626,8 +662,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				1686FC0A1F009EC00088A6C1 /* Base */,
+				1E44AEFF1F87ACF500221B22 /* fr */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		1E44AF051F87B08D00221B22 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1E44AF061F87B09100221B22 /* Base */,
+				1E44AF081F87B0A700221B22 /* fr */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -637,6 +683,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -696,6 +743,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";

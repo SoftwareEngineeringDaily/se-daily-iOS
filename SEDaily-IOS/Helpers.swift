@@ -15,26 +15,25 @@ extension Helpers {
     static var alert: UIAlertController!
     
     enum Alerts {
-        static let error = "Error"
-        static let success = "Success"
+        static let error = L10n.genericError
+        static let success = L10n.genericSuccess
     }
     
     enum Messages {
-        static let emailEmpty = "Email Field Empty"
-        static let passwordEmpty = "Password Field Empty"
-        static let passwordConfirmEmpty = "Confirm Password Field Empty"
-        static let emailWrongFormat = "Invalid Email Format"
-        static let passwordNotLongEnough = "Password must be longer than 6 characters"
-        static let passwordsDonotMatch = "Password do not match"
-        static let firstNameEmpty = "First Name Field Empty"
-        static let firstNameNotLongEnough = "First Name must be longer than 1 characters"
-        static let lastNameEmpty = "Last Name Field Empty"
-        static let lastNameNotLongEnough = "Last Name must be longer than 1 characters"
-        static let pleaseLogin = "Please Login"
-        static let issueWithUserToken = "Issue with User Token"
-        static let noWebsite = "No linked webste."
-        static let youMustLogin = "You must login to use this feature."
-        static let logoutSuccess = "Successfully Logged Out"
+        static let emailEmpty = L10n.alertMessageEmailEmpty
+        static let passwordEmpty = L10n.alertMessagePasswordEmpty
+        static let passwordConfirmEmpty = L10n.alertMessagePasswordConfirmEmpty
+        static let emailWrongFormat = L10n.alertMessageEmailWrongFormat
+        static let passwordNotLongEnough = L10n.alertMessagePasswordNotLongEnough
+        static let passwordsDonotMatch = L10n.alertMessagePasswordsDonotMatch
+        static let firstNameEmpty = L10n.alertMessageFirstNameEmpty
+        static let firstNameNotLongEnough = L10n.alertMessageFirstNameNotLongEnough
+        static let lastNameEmpty = L10n.alertMessageLastNameEmpty
+        static let lastNameNotLongEnough = L10n.alertMessageLastNameNotLongEnough
+        static let pleaseLogin = L10n.alertMessagePleaseLogin
+        static let issueWithUserToken = L10n.alertMessageIssueWithUserToken
+        static let youMustLogin = L10n.alertMessageYouMustLogin
+        static let logoutSuccess = L10n.alertMessageLogoutSuccess
     }
 }
 
@@ -53,7 +52,7 @@ class Helpers {
             }
             
             alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: nil))
+            alert.addAction(UIAlertAction(title: L10n.genericOkay, style: UIAlertActionStyle.default, handler: nil))
             topController.present(alert, animated: true, completion: nil)
             completionHandler?()
         }

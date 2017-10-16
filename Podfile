@@ -27,6 +27,7 @@ target 'SEDaily-IOS' do
   pod 'KTResponsiveUI'
   pod 'KoalaTeaPlayer'
   pod 'Tabman'
+  pod 'SwiftGen'
   pod 'Skeleton'
 
   target 'SEDaily-IOSTests' do

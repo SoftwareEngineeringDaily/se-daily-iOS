@@ -1,0 +1,50 @@
+/* 
+  Localizable.strings
+  SEDaily-IOS
+
+  Created by Justin Lam on 10/6/17.
+  Copyright © 2017 Koala Tea. All rights reserved.
+*/
+
+/* */
+"TabBarTitleLatest" = "Latest";
+"TabBarJustForYou" = "Just For You";
+"TabTitleAll" = "All";
+"TabTitleBusinessAndPhilosophy" = "Business and Philosophy";
+"TabTitleBlockchain" = "Blockchain";
+"TabTitleCloudEngineering" = "Cloud Engineering";
+"TabTitleData" = "Data";
+"TabTitleJavaScript" = "JavaScript";
+"TabTitleMachineLearning" = "Machine Learning";
+"TabTitleOpenSource" = "Open Source";
+"TabTitleSecurity" = "Security";
+"TabTitleHackers" = "Hackers";
+"TabTitleGreatestHits" = "Greatest Hits";
+"LoginTitle" = "Login";
+"LogoutTitle" = "Logout";
+"EmailAddressPlaceholder" = "Email";
+"PasswordPlaceholder" = "Password";
+"ConfirmPasswordPlaceholder" = "Confirm Password";
+"FirstNamePlaceholder" = "First Name";
+"LastNamePlaceholder" = "Last Name";
+"LoginButtonTitle" = "Login";
+"CancelButtonTitle" = "Cancel";
+"SignUpButtonTitle" = "Sign Up";
+"AlertMessageEmailEmpty" = "Email Field Empty";
+"AlertMessagePasswordEmpty" = "Password Field Empty";
+"AlertMessagePasswordConfirmEmpty" = "Confirm Password Field Empty";
+"AlertMessageEmailWrongFormat" = "Invalid Email Format";
+"AlertMessagePasswordNotLongEnough" = "Password must be longer than 6 characters";
+"AlertMessagePasswordsDonotMatch" = "Password do not match";
+"AlertMessageFirstNameEmpty" = "First Name Field Empty";
+"AlertMessageFirstNameNotLongEnough" = "First Name must be longer than 1 characters";
+"AlertMessageLastNameEmpty" = "Last Name Field Empty";
+"AlertMessageLastNameNotLongEnough" = "Last Name must be longer than 1 characters";
+"AlertMessagePleaseLogin" = "Please Login";
+"AlertMessageIssueWithUserToken" = "Issue with User Token";
+"AlertMessageYouMustLogin" = "You must login to use this feature.";
+"AlertMessageLogoutSuccess" = "Successfully Logged Out";
+"GenericSuccess" = "Success";
+"GenericError" = "Error";
+"GenericOkay" = "Okay";
+"GenericOK" = "OK";

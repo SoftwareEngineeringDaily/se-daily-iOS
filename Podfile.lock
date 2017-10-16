@@ -66,6 +66,7 @@ DEPENDENCIES:
   - Skeleton
   - SnapKit
   - SwifterSwift
+  - SwiftGen
   - SwiftIcons (from `https://github.com/themisterholliday/SwiftIcons.git`, branch `swift-4`)
   - SwiftyBeaver
   - SwiftyJSON
@@ -107,6 +108,7 @@ SPEC CHECKSUMS:
   SideMenu: 1bf32e90afaa2dc0e0ab68e938a0ff85014c4217
   Skeleton: b76249b7d6a73a9913e164c8030647a3e005c700
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  SwiftGen: dd2892e7fb008151f30e6ce0cf465b8b8d89e80e
   SwifterSwift: 5f406a5f831343312d6d5b34282b57ef3f52c40b
   SwiftIcons: b20641adce6b71fcb2e72389b4b5f2e87252df99
   SwiftyBeaver: 91057725648ee4980308f1650af077d04b3654a0

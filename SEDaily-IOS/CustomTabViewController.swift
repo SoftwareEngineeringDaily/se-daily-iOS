@@ -44,7 +44,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         setupNavBar()
-
+        
         AskForReview.tryToExecute { didExecute in
             if didExecute {
                 self.askForReview()
@@ -157,24 +157,33 @@ extension CustomTabViewController {
         let popup = PopupDialog(title: "Hello! 👋",
                                 message: "Enjoying the SEDaily app?",
                                 gestureDismissal: false)
+        let feedbackPopup = PopupDialog(title: "Oh, sorry you're not liking the SEDaily app",
+                                        message: "Would you help us out by sending us your feedback?")
+        let feedbackYesButton = DefaultButton(title: "Sure! 👍") {
+            if MFMailComposeViewController.canSendMail() {
+                let mail = MFMailComposeViewController()
+                mail.setToRecipients(["jeff@softwareengineeringdaily.com"])
+                mail.setSubject("SEDaily iOS App Feedback")
+                
+                self.present(mail, animated: true, completion: nil)
+            }
+        }
+        
+        let feedbackNoButton = DefaultButton(title: "No thanks.") {
+            popup.dismiss()
+        }
 
         let yesButton = DefaultButton(title: "Yep! 👍") {
             SKStoreReviewController.requestReview()
         }
 
-        let noButton = DefaultButton(title: "No") {}
-
-        let noEmailButton = DefaultButton(title: "No, 📧 Feedback") {
-            if MFMailComposeViewController.canSendMail() {
-                let mail = MFMailComposeViewController()
-                mail.setToRecipients(["jeff@softwareengineeringdaily.com"])
-                mail.setSubject("SEDaily iOS App Feedback")
-
-                self.present(mail, animated: true, completion: nil)
-            }
+        let noButton = DefaultButton(title: "No") {
+            popup.dismiss()
+            self.present(feedbackPopup, animated: true, completion: nil)
         }
 
-        popup.addButtons([yesButton, noButton, noEmailButton])
+        popup.addButtons([yesButton, noButton])
+        feedbackPopup.addButtons([feedbackYesButton, feedbackNoButton])
         self.present(popup, animated: true, completion: nil)
     }
 }

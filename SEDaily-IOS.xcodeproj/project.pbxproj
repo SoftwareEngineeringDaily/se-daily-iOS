@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		01BB1D6D1F29999E004A912E /* PodcastPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */; };
+		08EA4B771F94008D00A9A6E9 /* AskForReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EA4B761F94008D00A9A6E9 /* AskForReview.swift */; };
 		161F3DE61F61F73D00A8F825 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161F3DE51F61F73D00A8F825 /* SearchTableViewController.swift */; };
 		161F3DEA1F62703100A8F825 /* PodcastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */; };
 		1649A78A1F204EC6005C4A6E /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1649A7891F204EC6005C4A6E /* ContainerViewController.swift */; };
@@ -61,6 +62,7 @@
 
 /* Begin PBXFileReference section */
 		01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastPageViewController.swift; sourceTree = "<group>"; };
+		08EA4B761F94008D00A9A6E9 /* AskForReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskForReview.swift; sourceTree = "<group>"; };
 		161F3DE51F61F73D00A8F825 /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastTableViewCell.swift; sourceTree = "<group>"; };
 		1649A7891F204EC6005C4A6E /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 			isa = PBXGroup;
 			children = (
 				169806A41F8EF08F0075D8AD /* Constants */,
+				08EA4B761F94008D00A9A6E9 /* AskForReview.swift */,
 				1610E2C21F227BE0006C8E83 /* Managers */,
 				1686FC0C1F009EC00088A6C1 /* Info.plist */,
 				164FE9E41F02EE83009419CA /* API.swift */,
@@ -542,6 +545,7 @@
 				"${BUILT_PRODUCTS_DIR}/KoalaTeaPlayer/KoalaTeaPlayer.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
+				"${BUILT_PRODUCTS_DIR}/PopupDialog/PopupDialog.framework",
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
@@ -569,6 +573,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KoalaTeaPlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupDialog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
@@ -625,6 +630,7 @@
 				169806A61F8EF3970075D8AD /* L10nEnum.swift in Sources */,
 				01BB1D6D1F29999E004A912E /* PodcastPageViewController.swift in Sources */,
 				164FE9F11F030A2E009419CA /* PodcastModel.swift in Sources */,
+				08EA4B771F94008D00A9A6E9 /* AskForReview.swift in Sources */,
 				164FE9ED1F02F7E2009419CA /* UIButtonExtension.swift in Sources */,
 				1686FC011F009EC00088A6C1 /* AppDelegate.swift in Sources */,
 				161F3DEA1F62703100A8F825 /* PodcastTableViewCell.swift in Sources */,

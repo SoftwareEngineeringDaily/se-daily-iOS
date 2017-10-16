@@ -19,6 +19,9 @@ import SideMenu
 import SwifterSwift
 import SnapKit
 import SwiftIcons
+import PopupDialog
+import StoreKit
+import MessageUI
 
 class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     
@@ -41,6 +44,12 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         setupNavBar()
+
+        AskForReview.tryToExecute { didExecute in
+            if didExecute {
+                self.askForReview()
+            }
+        }
     }
     
     func setupNavBar() {
@@ -142,5 +151,30 @@ extension CustomTabViewController {
     
     func presentLeftSideMenu() {
         present(SideMenuManager.menuLeftNavigationController!, animated: true, completion: nil)
+    }
+
+    fileprivate func askForReview() {
+        let popup = PopupDialog(title: "Hello! 👋",
+                                message: "Enjoying the SEDaily app?",
+                                gestureDismissal: false)
+
+        let yesButton = DefaultButton(title: "Yep! 👍") {
+            SKStoreReviewController.requestReview()
+        }
+
+        let noButton = DefaultButton(title: "No") {}
+
+        let noEmailButton = DefaultButton(title: "No, 📧 Feedback") {
+            if MFMailComposeViewController.canSendMail() {
+                let mail = MFMailComposeViewController()
+                mail.setToRecipients(["jeff@softwareengineeringdaily.com"])
+                mail.setSubject("SEDaily iOS App Feedback")
+
+                self.present(mail, animated: true, completion: nil)
+            }
+        }
+
+        popup.addButtons([yesButton, noButton, noEmailButton])
+        self.present(popup, animated: true, completion: nil)
     }
 }

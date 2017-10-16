@@ -160,6 +160,8 @@ extension HeaderView {
 
         // Podcast model checks here
         AudioViewManager.shared.setupManager(podcastModel: model)
+
+        AskForReview.triggerEvent()
     }
     
     @objc func upvoteButtonPressed() {

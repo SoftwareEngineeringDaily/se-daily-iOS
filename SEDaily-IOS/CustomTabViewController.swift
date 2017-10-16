@@ -116,7 +116,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
         let height = 40.calculateHeight()
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: height, height: height))
         imageView.contentMode = .scaleAspectFit
-        imageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
+        imageView.image = #imageLiteral(resourceName: "Logo_BarButton")
         self.navigationItem.titleView = imageView
     }
 }

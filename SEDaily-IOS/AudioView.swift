@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import SwifterSwift
 
-enum PlaybackSpeeds: Float {
+enum PlaybackSpeed: Float {
     case _1x = 1.0
     case _1_2x = 1.2
     case _1_4x = 1.4
@@ -21,6 +21,27 @@ enum PlaybackSpeeds: Float {
     case _3x = 3.0
     
     var title: String {
+        switch self {
+        case ._1x:
+            return "1x (Normal Speed)"
+        case ._1_2x:
+            return "1.2x"
+        case ._1_4x:
+            return "1.4x"
+        case ._1_6x:
+            return "1.6x"
+        case ._1_8x:
+            return "1.8x"
+        case ._2x:
+            return "⏩ 2x ⏩"
+        case ._2_5x:
+            return "2.5x"
+        case ._3x:
+            return "🔥 3x 🔥"
+        }
+    }
+    
+    var shortTitle: String {
         switch self {
         case ._1x:
             return "1x"
@@ -78,27 +99,33 @@ class AudioView: UIView {
     
     var previousSliderValue: Float = 0.0
     var isFirstLoad = true
-    
-    
     var settingsButton = UIButton()
     
-    lazy var alertController: UIAlertController = {
-        let alert = UIAlertController(title: "", message: "Playback Speed", preferredStyle: .actionSheet)
-        let times: [PlaybackSpeeds] = [._1x,._1_2x,._1_4x,._1_6x,._1_8x,._2x,._2_5x,._3x]
-
-        times.forEach({ (time) in
-            let title = time.title
-            alert.addAction(UIAlertAction(title: title, style: .default) { action in
-                self.settingsButton.setTitle(title, for: .normal)
-                // perhaps use action.title here
-                self.delegate?.audioRateChanged(newRate: time.rawValue)
-            })
-        })
-        alert.addAction(title: "Cancel", style: .cancel, isEnabled: true) { (action) in
-            self.alertController.dismiss(animated: true, completion: nil)
+    var currentSpeed: PlaybackSpeed = ._1x {
+        willSet {
+            guard currentSpeed != newValue else { return }
+            self.settingsButton.setTitle(newValue.shortTitle, for: .normal)
+            self.delegate?.audioRateChanged(newRate: newValue.rawValue)
         }
-        return alert
-    }()
+    }
+    
+    var alertController: UIAlertController! {
+        get {
+            let alert = UIAlertController(title: "Change Playback Speed", message: "Current Speed: \(self.currentSpeed.shortTitle)", preferredStyle: .actionSheet)
+            let times: [PlaybackSpeed] = [._1x,._1_2x,._1_4x,._1_6x,._1_8x,._2x,._2_5x,._3x]
+            
+            times.forEach({ (time) in
+                let title = time.title
+                alert.addAction(UIAlertAction(title: title, style: .default) { action in
+                    self.currentSpeed = time
+                })
+            })
+            alert.addAction(title: "Cancel", style: .cancel, isEnabled: true) { (action) in
+                self.alertController.dismiss(animated: true, completion: nil)
+            }
+            return alert
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -171,7 +198,7 @@ class AudioView: UIView {
         
         playButton.isHidden = true
         
-        settingsButton.setTitle(PlaybackSpeeds._1x.title, for: .normal)
+        settingsButton.setTitle(PlaybackSpeed._1x.shortTitle, for: .normal)
         settingsButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .normal)
         settingsButton.addTarget(self, action: #selector(self.settingsButtonPressed), for: .touchUpInside)
         self.addSubview(settingsButton)
@@ -432,13 +459,3 @@ extension AudioView {
         self.parentViewController?.present(alertController, animated: true, completion: nil)
     }
 }
-
-class MySlider: UISlider {
-//    override func trackRect(forBounds bounds: CGRect) -> CGRect {
-//        return CGRect(origin: bounds.origin, size: CGSize(width: bounds.width, height: 5))
-//    }
-//    override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-//        return true
-//    }
-}
-

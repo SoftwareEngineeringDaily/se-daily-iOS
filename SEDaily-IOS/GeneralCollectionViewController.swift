@@ -14,7 +14,9 @@ import SwifterSwift
 private let reuseIdentifier = "Cell"
 
 class GeneralCollectionViewController: UICollectionViewController {
-    let activityView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    lazy var skeletonCollectionView: SkeletonCollectionView = {
+        return SkeletonCollectionView(frame: self.collectionView!.frame)
+    }()
     
     var type: String = ""
     var tabTitle = ""
@@ -53,23 +55,24 @@ class GeneralCollectionViewController: UICollectionViewController {
         // self.clearsSelectionOnViewWillAppear = false
         
         // Register cell classes
-        self.collectionView!.register(PodcastCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(PodcastCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
         self.collectionView?.backgroundColor = UIColor(hex: 0xfafafa)
         self.collectionView?.showsHorizontalScrollIndicator = false
         self.collectionView?.showsVerticalScrollIndicator = false
         
-        let layout = KoalaTeaFlowLayout(ratio: 1, topBottomMargin: 12, leftRightMargin: 12, cellsAcross: 2, cellSpacing: 8)
+        let layout = KoalaTeaFlowLayout(cellWidth: 158,
+                                       cellHeight: 250,
+                                       topBottomMargin: 12,
+                                       leftRightMargin: 20,
+                                       cellSpacing: 8)
         self.collectionView?.collectionViewLayout = layout
         
         // User Login observer
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)
         
-        // Add activity view
-        self.view.addSubview(activityView)
-        activityView.snp.makeConstraints {(make) -> Void in
-            make.center.equalToSuperview()
-        }
+        
+        self.collectionView?.addSubview(skeletonCollectionView)
     }
     
     override func didReceiveMemoryWarning() {
@@ -108,8 +111,6 @@ class GeneralCollectionViewController: UICollectionViewController {
     
     // @TODO: Move to repository
     func loadNewLocalPodcasts (hasChanges: Bool) {
-        self.activityView.stopAnimating()
-        
         //@TODO: Fix this, right now it stops all loading completely
         //        if hasChanges {
         self.loading = false
@@ -176,8 +177,6 @@ class GeneralCollectionViewController: UICollectionViewController {
                 return;
             }
             
-            self.activityView.startAnimating()
-            
             API.sharedInstance.getPosts(type: type, createdAtBefore: lastItemDate, categoires: String(self.tagId), completion: { (hasChanges) in
                 self.setLoadedNewToday(tagId: self.tagId, lastItemDate: lastItemDate)
                 self.loadNewLocalPodcasts(hasChanges: hasChanges)
@@ -186,7 +185,6 @@ class GeneralCollectionViewController: UICollectionViewController {
         case API.Types.recommended:
             guard User.getActiveUser().isLoggedIn() else {
                 API.sharedInstance.getPosts(type: API.Types.top, createdAtBefore: lastItemDate, completion: { (hasChanges) in
-                    self.activityView.stopAnimating()
                     
                     if hasChanges {
                         self.loading = false
@@ -198,8 +196,6 @@ class GeneralCollectionViewController: UICollectionViewController {
                 break
             }
             API.sharedInstance.getRecommendedPosts(completion: { (hasChanges) in
-                self.activityView.stopAnimating()
-                
                 if hasChanges {
                     self.loading = false
                 }
@@ -210,8 +206,6 @@ class GeneralCollectionViewController: UICollectionViewController {
             break
         case API.Types.top:
             API.sharedInstance.getPosts(type: API.Types.top, createdAtBefore: lastItemDate, completion: { (hasChanges) in
-                self.activityView.stopAnimating()
-                
                 if hasChanges {
                     self.loading = false
                 }
@@ -235,6 +229,9 @@ extension GeneralCollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if itemCount > 0 {
+            self.skeletonCollectionView.fadeOut(duration: 0.5, completion: nil)
+        }
         if itemCount < 10 {
             self.getData()
         }
@@ -242,15 +239,16 @@ extension GeneralCollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PodcastCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PodcastCell
         
         let item = data[indexPath.row]
         
         checkPage(indexPath: indexPath, item: item)
         
         // Configure the cell
-        cell.setupCell(model: item)
-        
+        let uploadDate = Date(iso8601String: (item.uploadDate ?? ""))
+        cell.setupCell(imageURLString: item.imageURLString, title: item.podcastName!, timeLength: nil, date: uploadDate)
+
         return cell
     }
     

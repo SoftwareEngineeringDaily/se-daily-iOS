@@ -6,8 +6,7 @@ target 'SEDaily-IOS' do
   use_frameworks!
 
   # Pods for SEDaily-IOS
-  pod 'Alamofire', '~> 4.0’
-  #pod 'AlamofireObjectMapper'
+  pod 'Alamofire'
   pod 'ObjectMapper'
   pod 'RealmSwift'
   pod 'SwiftyJSON'
@@ -25,11 +24,11 @@ target 'SEDaily-IOS' do
   pod 'Kingfisher'
   pod 'Fabric'
   pod 'Crashlytics'
-#  pod 'KTResponsiveUI', :git => 'https://github.com/KoalaTeaCode/KTResponsiveUI'
   pod 'KTResponsiveUI'
   pod 'KoalaTeaPlayer'
   pod 'Tabman'
   pod 'SwiftGen'
+  pod 'Skeleton'
 
   target 'SEDaily-IOSTests' do
     inherit! :search_paths

@@ -13,6 +13,13 @@ private let reuseIdentifier = "reuseIdentifier"
 
 class SearchTableViewController: UITableViewController {
     
+    lazy var footerView: UIActivityIndicatorView = {
+        let footerView = UIActivityIndicatorView(height: 44)
+        footerView.width = self.tableView.width
+        footerView.activityIndicatorViewStyle = .gray
+        return footerView
+    }()
+    
     var lastData = [PodcastModel]()
     var filteredData = [PodcastModel]()
     
@@ -28,28 +35,19 @@ class SearchTableViewController: UITableViewController {
         }
     }
     
-    lazy var activityView: UIActivityIndicatorView = {
-        let view = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-        view.hidesWhenStopped = true
-        return view
-    }()
-    
     var isLoading = false {
         didSet {
             switch isLoading {
             case true:
-                activityView.startAnimating()
+                footerView.startAnimating()
             case false:
-                activityView.stopAnimating()
+                footerView.stopAnimating()
             }
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.activityView.center = self.view.center
-        self.view.addSubview(activityView)
         
         self.tableView.register(PodcastTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
         
@@ -64,6 +62,8 @@ class SearchTableViewController: UITableViewController {
         
         tableView.separatorStyle = .singleLine
         tableView.rowHeight = UIView.getValueScaledByScreenHeightFor(baseValue: 75)
+        
+        self.tableView.tableFooterView = footerView
         
         self.title = "Search"
     }

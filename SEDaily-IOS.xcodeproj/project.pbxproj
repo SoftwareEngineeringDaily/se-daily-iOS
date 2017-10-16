@@ -12,9 +12,6 @@
 		161F3DEA1F62703100A8F825 /* PodcastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */; };
 		1649A78A1F204EC6005C4A6E /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1649A7891F204EC6005C4A6E /* ContainerViewController.swift */; };
 		164C71051F021AC8003803BC /* CustomTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C71041F021AC8003803BC /* CustomTabViewController.swift */; };
-		164C71071F021C8D003803BC /* PodcastCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C71061F021C8D003803BC /* PodcastCollectionViewController.swift */; };
-		164C71091F021C97003803BC /* FeedCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C71081F021C97003803BC /* FeedCollectionViewController.swift */; };
-		164FE9D51F02CC53009419CA /* EmbeddedCollectonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9D41F02CC53009419CA /* EmbeddedCollectonViewCell.swift */; };
 		164FE9D71F02CD99009419CA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9D61F02CD99009419CA /* Extensions.swift */; };
 		164FE9D91F02D611009419CA /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9D81F02D611009419CA /* CollectionReusableView.swift */; };
 		164FE9DC1F02DAB5009419CA /* PodcastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9DB1F02DAB5009419CA /* PodcastCollectionViewCell.swift */; };
@@ -30,7 +27,6 @@
 		166036211F266FF300A22B7B /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166036201F266FF300A22B7B /* Notifications.swift */; };
 		1668124A1F350737007F288B /* GeneralCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166812491F350737007F288B /* GeneralCollectionViewController.swift */; };
 		1672FAC41F06C141008445B1 /* NotificationCenterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */; };
-		1673B8FD1F27AA3200923BB8 /* LatestCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1673B8FC1F27AA3200923BB8 /* LatestCollectionViewController.swift */; };
 		1673B8FF1F27E56100923BB8 /* TopCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1673B8FE1F27E56100923BB8 /* TopCollectionViewController.swift */; };
 		1673B9011F27E70200923BB8 /* JustForYouCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1673B9001F27E70200923BB8 /* JustForYouCollectionViewController.swift */; };
 		167AFAB21F043CF600A1332F /* PostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */; };
@@ -48,6 +44,7 @@
 		16D67C4D1F33AE370065E838 /* ObjectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D67C4C1F33AE370065E838 /* ObjectExtensions.swift */; };
 		16D766BA1F06B4850066C143 /* AudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D766B91F06B4850066C143 /* AudioView.swift */; };
 		1E44AF031F87B08D00221B22 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1E44AF051F87B08D00221B22 /* Localizable.strings */; };
+		16FA84031F8D323700A45D9B /* SkeletonCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FA84021F8D323700A45D9B /* SkeletonCollectionView.swift */; };
 		238E99F4E37C7365658113B8 /* Pods_SEDaily_IOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C9F051C6C2F8638D2ABF8 /* Pods_SEDaily_IOSTests.framework */; };
 		24412438C753126FDDD37CBF /* Pods_SEDaily_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */; };
 /* End PBXBuildFile section */
@@ -68,9 +65,6 @@
 		161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastTableViewCell.swift; sourceTree = "<group>"; };
 		1649A7891F204EC6005C4A6E /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		164C71041F021AC8003803BC /* CustomTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabViewController.swift; sourceTree = "<group>"; };
-		164C71061F021C8D003803BC /* PodcastCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCollectionViewController.swift; sourceTree = "<group>"; };
-		164C71081F021C97003803BC /* FeedCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewController.swift; sourceTree = "<group>"; };
-		164FE9D41F02CC53009419CA /* EmbeddedCollectonViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmbeddedCollectonViewCell.swift; sourceTree = "<group>"; };
 		164FE9D61F02CD99009419CA /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		164FE9D81F02D611009419CA /* CollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionReusableView.swift; sourceTree = "<group>"; };
 		164FE9DB1F02DAB5009419CA /* PodcastCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -86,7 +80,6 @@
 		166036201F266FF300A22B7B /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		166812491F350737007F288B /* GeneralCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralCollectionViewController.swift; sourceTree = "<group>"; };
 		1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterExtension.swift; sourceTree = "<group>"; };
-		1673B8FC1F27AA3200923BB8 /* LatestCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatestCollectionViewController.swift; sourceTree = "<group>"; };
 		1673B8FE1F27E56100923BB8 /* TopCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopCollectionViewController.swift; sourceTree = "<group>"; };
 		1673B9001F27E70200923BB8 /* JustForYouCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JustForYouCollectionViewController.swift; sourceTree = "<group>"; };
 		167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewController.swift; sourceTree = "<group>"; };
@@ -111,6 +104,7 @@
 		1E44AF001F87ACF500221B22 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		1E44AF061F87B09100221B22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1E44AF081F87B0A700221B22 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		16FA84021F8D323700A45D9B /* SkeletonCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonCollectionView.swift; sourceTree = "<group>"; };
 		675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.release.xcconfig"; sourceTree = "<group>"; };
 		995F64385352A79BA0DF7DEB /* Pods-SEDaily-IOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9FDA28C254F62BB468401B75 /* Pods-SEDaily-IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -150,9 +144,6 @@
 		164FE9DA1F02DAA5009419CA /* CollectionViews */ = {
 			isa = PBXGroup;
 			children = (
-				164C71061F021C8D003803BC /* PodcastCollectionViewController.swift */,
-				164C71081F021C97003803BC /* FeedCollectionViewController.swift */,
-				1673B8FC1F27AA3200923BB8 /* LatestCollectionViewController.swift */,
 				1673B8FE1F27E56100923BB8 /* TopCollectionViewController.swift */,
 				1673B9001F27E70200923BB8 /* JustForYouCollectionViewController.swift */,
 				166812491F350737007F288B /* GeneralCollectionViewController.swift */,
@@ -163,7 +154,6 @@
 		164FE9DD1F02DAB8009419CA /* CollectionViewCells */ = {
 			isa = PBXGroup;
 			children = (
-				164FE9D41F02CC53009419CA /* EmbeddedCollectonViewCell.swift */,
 				164FE9DB1F02DAB5009419CA /* PodcastCollectionViewCell.swift */,
 			);
 			name = CollectionViewCells;
@@ -175,6 +165,7 @@
 				164FE9D81F02D611009419CA /* CollectionReusableView.swift */,
 				167AFAB61F043F1100A1332F /* HeaderView.swift */,
 				16D766B91F06B4850066C143 /* AudioView.swift */,
+				16FA84021F8D323700A45D9B /* SkeletonCollectionView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -556,6 +547,7 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Reusable/Reusable.framework",
 				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
+				"${BUILT_PRODUCTS_DIR}/Skeleton/Skeleton.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftIcons/SwiftIcons.framework",
 				"${BUILT_PRODUCTS_DIR}/SwifterSwift/SwifterSwift.framework",
@@ -581,6 +573,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reusable.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Skeleton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftIcons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwifterSwift.framework",
@@ -607,7 +600,6 @@
 				164FE9EF1F03065C009419CA /* NavigationControllerExtension.swift in Sources */,
 				167AFAB21F043CF600A1332F /* PostDetailTableViewController.swift in Sources */,
 				161F3DE61F61F73D00A8F825 /* SearchTableViewController.swift in Sources */,
-				164FE9D51F02CC53009419CA /* EmbeddedCollectonViewCell.swift in Sources */,
 				16D67C4D1F33AE370065E838 /* ObjectExtensions.swift in Sources */,
 				164FE9D91F02D611009419CA /* CollectionReusableView.swift in Sources */,
 				167AFAB91F04624E00A1332F /* SingleLabelTableViewCell.swift in Sources */,
@@ -617,17 +609,15 @@
 				164FE9E51F02EE83009419CA /* API.swift in Sources */,
 				164FE9E91F02F049009419CA /* Stylesheet.swift in Sources */,
 				1668124A1F350737007F288B /* GeneralCollectionViewController.swift in Sources */,
-				164C71091F021C97003803BC /* FeedCollectionViewController.swift in Sources */,
 				16B147B11F16BF9C00433A42 /* AudioViewManager.swift in Sources */,
 				1673B9011F27E70200923BB8 /* JustForYouCollectionViewController.swift in Sources */,
-				164C71071F021C8D003803BC /* PodcastCollectionViewController.swift in Sources */,
 				1673B8FF1F27E56100923BB8 /* TopCollectionViewController.swift in Sources */,
-				1673B8FD1F27AA3200923BB8 /* LatestCollectionViewController.swift in Sources */,
 				164C71051F021AC8003803BC /* CustomTabViewController.swift in Sources */,
 				164FE9DC1F02DAB5009419CA /* PodcastCollectionViewCell.swift in Sources */,
 				165A5B681F7C32FD00FDE80B /* TempObjectMapper.swift in Sources */,
 				16D766BA1F06B4850066C143 /* AudioView.swift in Sources */,
 				164FE9EB1F02F340009419CA /* Helpers.swift in Sources */,
+				16FA84031F8D323700A45D9B /* SkeletonCollectionView.swift in Sources */,
 				166036211F266FF300A22B7B /* Notifications.swift in Sources */,
 				1672FAC41F06C141008445B1 /* NotificationCenterExtension.swift in Sources */,
 				169806A61F8EF3970075D8AD /* L10nEnum.swift in Sources */,
@@ -806,7 +796,7 @@
 			baseConfigurationReference = 9FDA28C254F62BB468401B75 /* Pods-SEDaily-IOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 6TY8WC8WPP;
 				INFOPLIST_FILE = "SEDaily-IOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -822,7 +812,7 @@
 			baseConfigurationReference = 675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 6TY8WC8WPP;
 				INFOPLIST_FILE = "SEDaily-IOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

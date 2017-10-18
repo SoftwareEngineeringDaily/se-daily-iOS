@@ -29,7 +29,7 @@ target 'SEDaily-IOS' do
   pod 'Tabman'
   pod 'Skeleton'
   pod "SwiftSoup"
-  pod 'Disk', '~> 0.3.1'
+  pod 'Disk'
 
   target 'SEDaily-IOSTests' do
     inherit! :search_paths

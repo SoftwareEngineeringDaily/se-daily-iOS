@@ -8,7 +8,6 @@
 
 import UIKit
 import Alamofire
-//import AlamofireObjectMapper
 import RealmSwift
 import SwiftyJSON
 import Fabric
@@ -335,7 +334,7 @@ extension API {
         let urlString = api.rootURL + API.Endpoints.posts
         
         // Params
-        var params = [String: String]()
+        var params = [String: Any]()
         params[Params.type] = type
         params[Params.createdAtBefore] = beforeDate
         // @TODO: Allow for an array and join the array
@@ -363,15 +362,18 @@ extension API {
                     return
                 }
                 
-                do {
-                    let data = try JSONDecoder().decode([model].self, from: responseData)
-                    onSucces(data)
+                var data: [model] = []
+                let this = JSON(responseData)
+                for (_, subJson):(String, JSON) in this {
+                    guard let jsonData = try? subJson.rawData() else { continue }
+                    let newObject = try? JSONDecoder().decode(model.self, from: jsonData)
+                    if let newObject = newObject {
+                        data.append(newObject)
+                    }
                 }
-                catch {
-                    // Handle error
-                    onFailure(.JSONParseError)
-                }
+                onSucces(data)
             case .failure(let error):
+                log.error(error.localizedDescription)
                 onFailure(.GeneralFailure)
             }
         }

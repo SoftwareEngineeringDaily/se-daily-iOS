@@ -90,10 +90,16 @@ class PodcastCell: UICollectionViewCell {
     var timeDayLabel: UILabel!
     
     var viewModel: PodcastViewModel = PodcastViewModel() {
+        willSet {
+            guard newValue != self.viewModel else { return }
+        }
         didSet {
             self.titleLabel.text = viewModel.podcastTitle
-            self.setupTimeDayLabel(timeLength: nil, date: viewModel.uploadDateAsDate)
-            self.setupImageView(imageURL: viewModel.featuredImageURL)
+            self.imageView.backgroundColor = .purple
+            viewModel.getLastUpdatedAsDateWith { (date) in
+                self.setupTimeDayLabel(timeLength: nil, date: date)
+            }
+//            self.setupImageView(imageURL: viewModel.featuredImageURL)
         }
     }
     

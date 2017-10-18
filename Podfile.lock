@@ -54,7 +54,7 @@ DEPENDENCIES:
   - ActiveLabel (from `https://github.com/optonaut/ActiveLabel.swift.git`)
   - Alamofire
   - Crashlytics
-  - Disk (~> 0.3.1)
+  - Disk
   - Eureka
   - Fabric
   - IQKeyboardManagerSwift
@@ -120,6 +120,6 @@ SPEC CHECKSUMS:
   Tabman: f922ae6412f482234b58213f51caa5f0549a5949
   UIFontComplete: 7e3ce7f0a12d2529fb07f537e262aabfa87df280
 
-PODFILE CHECKSUM: 5ae729e4ce5036e0a6304586952ae1be82df46fa
+PODFILE CHECKSUM: bec0dee5ea0152772de0bdbc34c0fb244a0fed18
 
 COCOAPODS: 1.3.1

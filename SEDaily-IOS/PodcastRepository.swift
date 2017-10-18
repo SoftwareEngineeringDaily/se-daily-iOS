@@ -23,8 +23,8 @@ enum DiskKeys: String {
 protocol DataSource {
     associatedtype T
     
-    func getAll() -> [T]?
-    func getById(id: String) -> T?
+    func getAll(completion: @escaping ([T]?) -> Void)
+    func getById(id: String, completion: @escaping (T?) -> Void)
     func insert(item: T)
     func update(item: T)
     func clean()
@@ -63,13 +63,10 @@ class PodcastRepository: Repository<Podcast> {
     var loading = false
     
     func getData(page: Int = 0,
-                 lastItemDate: String,
-                 type: String,
-                 tags: String,
-                 categories: String,
+                 filterObject: Filter,
                  onSucces: @escaping RepositorySuccessCallback,
                  onFailure: @escaping RepositoryErrorCallback) {
-        self.retrieveDataFromRealmOrAPI(type: type, lastItemDate: lastItemDate, tags: tags, categories: categories, onSucces: { (returnedData) in
+        self.retrieveDataFromRealmOrAPI(filterObject: filterObject, onSucces: { (returnedData) in
             onSucces(returnedData)
         }) { (error) in
             onFailure(error)
@@ -77,57 +74,53 @@ class PodcastRepository: Repository<Podcast> {
     }
     
     // MARK: Realm and API data getter
-    private func retrieveDataFromRealmOrAPI(type: String,
-                                            lastItemDate: String,
-                                            tags: String,
-                                            categories: String,
+    private func retrieveDataFromRealmOrAPI(filterObject: Filter,
                                             onSucces: @escaping RepositorySuccessCallback,
                                             onFailure: @escaping RepositoryErrorCallback) {
         // Check if we made requests today
-        let alreadLoadedStartToday = self.alreadyLoadedNewToday(tag: self.tag, lastItemDate: lastItemDate)
-log.debug(lastItemDate)
+        let alreadLoadedStartToday = self.alreadyLoadedNewToday(tag: self.tag, lastItemDate: filterObject.lastDate)
         if alreadLoadedStartToday {
             self.loading = true
             log.warning("from disk")
             // Check if we have realm data saved
-            //@TODO: Replace get all
-            let persistantData = self.dataSource.getAllWith(filters: filtersRepo.getActiveFilters(), lastItemDate: lastItemDate)
-            guard let data = persistantData, !data.isEmpty else {
+            self.dataSource.getAllWith(filterObject: filterObject, completion: { (returnedData) in
+                guard let data = returnedData, !data.isEmpty else {
+                    self.loading = false
+                    onFailure(.ErrorGettingFromRealm)
+                    return
+                }
+                guard data != self.lastReturnedDataArray else {
+                    self.loading = false
+                    onFailure(.ReturnedDataEqualsLastData)
+                    return
+                }
+                
+                self.setLoadedNewToday(tagId: self.tag, lastItemDate: filterObject.lastDate)
+                self.lastReturnedDataArray = data
                 self.loading = false
-                onFailure(.ErrorGettingFromRealm)
-                return
-            }
-            guard data != self.lastReturnedDataArray else {
-                self.loading = false
-                onFailure(.ReturnedDataEqualsLastData)
-                return
-            }
-
-            self.setLoadedNewToday(tagId: self.tag, lastItemDate: lastItemDate)
-            self.lastReturnedDataArray = data
-            self.loading = false
-            onSucces(data)
+                onSucces(data)
+            })
             return
         }
         log.warning("from api")
-//        guard self.loading == false else { return }
-//        self.loading = true
-//
-//        // API Call and return
-//        API.sharedInstance.getPosts(type: type, createdAtBefore: lastItemDate, tags: tags, categories: categories, onSucces: { (podcasts) in
-//            self.loading = false
-//            guard podcasts != self.lastReturnedDataArray else {
-//                onFailure(.ReturnedDataEqualsLastData)
-//                return
-//            }
-//            self.dataSource.insert(items: podcasts)
-//            self.setLoadedNewToday(tagId: self.tag, lastItemDate: lastItemDate)
-//            self.lastReturnedDataArray = podcasts
-//            onSucces(podcasts)
-//        }) { (apiError) in
-//            self.loading = false
-//            onFailure(.ErrorGettingFromAPI)
-//        }
+        guard self.loading == false else { return }
+        self.loading = true
+
+        // API Call and return
+        API.sharedInstance.getPosts(type: filterObject.type, createdAtBefore: filterObject.lastDate, tags: filterObject.tagsAsString, categories: filterObject.categoriesAsString, onSucces: { (podcasts) in
+            self.loading = false
+            guard podcasts != self.lastReturnedDataArray else {
+                onFailure(.ReturnedDataEqualsLastData)
+                return
+            }
+            self.dataSource.insert(items: podcasts)
+            self.setLoadedNewToday(tagId: self.tag, lastItemDate: filterObject.lastDate)
+            self.lastReturnedDataArray = podcasts
+            onSucces(podcasts)
+        }) { (apiError) in
+            self.loading = false
+            onFailure(.ErrorGettingFromAPI)
+        }
     }
     
     // MARK: Already loaded today checks
@@ -175,59 +168,60 @@ import Disk
 
 class PodcastDataSource: DataSource {
     typealias T = Podcast
+    let realm = try! Realm()
     
-    func getAll() -> [T]? {
-        let retrievedObjects = try? Disk.retrieve(DiskKeys.PodcastFolder.folderPath, from: .caches, as: [T].self)
-        return retrievedObjects
-    }
-    
-    func getAllWith(filters: FilterDictionary, lastItemDate: String?) -> [T]? {
-        let all = self.getAll()
-//        var predicates = [NSPredicate]()
-//        for (key,value) in filters {
-//            print(key)
-//            print(value)
-//            if value == "" { continue }
-//            if let key = key.realmKey {
-//                let predicate = NSPredicate(format: "%K = %@", key, value)
-//                predicates.append(predicate)
-//            }
-//        }
-
-//        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-//        let filteredObjects = realmObjects.filter(compoundPredicate)
-        let filteredObjects = all
-
-//        if let dateString = filters[.lastItemDate] {
-        if let dateString = lastItemDate {
-            log.debug("her")
-            if let passedDate = Date(iso8601String: dateString) {
-                //@TODO: Gaurd
-                let dateFilteredObjects = filteredObjects?.filter({ (podcast) -> Bool in
-                    return podcast.getLastUpdatedAsDate()! < passedDate
-                })
-                //@TODO: Gaurd
-                for i in all! {
-                    log.debug(i.title)
-                    log.debug(i.getLastUpdatedAsDate())
-                }
-                return Array(dateFilteredObjects!.prefix(10))
+    func getAll(completion: @escaping ([T]?) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let retrievedObjects = try? Disk.retrieve(DiskKeys.PodcastFolder.folderPath, from: .caches, as: [T].self)
+            DispatchQueue.main.async {
+                completion(retrievedObjects)
             }
         }
-        // Prefix = to max paging
-        let this = Array(filteredObjects!.prefix(10))
-        for t in this {
-            log.info(t.title)
-            log.info(t.getLastUpdatedAsDate())
-        }
-        return Array(filteredObjects!.prefix(10))
     }
     
-    func getById(id: String) -> T? {
-        let retrievedObjects = try? Disk.retrieve(DiskKeys.PodcastFolder.folderPath, from: .caches, as: [T].self)
-        return retrievedObjects?.filter({ (item) -> Bool in
-            return item._id == id
-        }).first
+    func getAllWith(filterObject: Filter, completion: @escaping ([T]?) -> Void) {
+        self.getAll { (returnedData) in
+            DispatchQueue.global(qos: .userInitiated).async {
+                //@TODO: Guard
+                log.info(filterObject.tags)
+                log.info(filterObject.categories)
+                let filteredObjects = returnedData?.filter({ (podcast) -> Bool in
+                    //                log.error(podcast.tags)
+                    //                log.error(podcast.categories)
+                    return podcast.tags!.contains(filterObject.tags) && podcast.categories!.contains(filterObject.categories)
+                })
+                log.debug(filteredObjects?.count)
+                let dateString = filterObject.lastDate
+                if let passedDate = Date(iso8601String: dateString) {
+                    //@TODO: Gaurd
+                    let dateFilteredObjects = filteredObjects?.filter({ (podcast) -> Bool in
+                        return podcast.getLastUpdatedAsDate()! < passedDate
+                    })
+                    //@TODO: Gaurd
+                    DispatchQueue.main.async {
+                        completion(Array(dateFilteredObjects!.prefix(10)))
+                        
+                    }
+                    return
+                }
+                DispatchQueue.main.async {
+                    // Prefix = to max paging
+                    completion(Array(filteredObjects!.prefix(10)))
+                    
+                }
+                return
+            }
+        }
+    }
+    
+    func getById(id: String, completion: @escaping (T?) -> Void) {
+        self.getAll { (returnedData) in
+            let foundObject = returnedData?.filter({ (item) -> Bool in
+                return item._id == id
+            }).first
+            completion(foundObject)
+        }
+        
     }
     
     func insert(item: T) {
@@ -245,7 +239,6 @@ class PodcastDataSource: DataSource {
     func insert(items: [T]) {
         DispatchQueue.global(qos: .userInitiated).async {
             do {
-//                try Disk.save(items, to: .caches, as: DiskKeys.PodcastFolder.folderPath)
                 try Disk.append(items, to: DiskKeys.PodcastFolder.folderPath, in: .caches)
             } catch {
                 //@TODO: Handle errors?
@@ -263,7 +256,18 @@ class PodcastDataSource: DataSource {
     }
     
     func deleteById(id: String) {
+        
     }
+
+    //@TODO: We may need to check if items exist?
+//    func checkIfExists(item: Podcast) {
+//        self.getById(id: item._id) { (returnedItem) in
+//            if returnedItem != nil {
+//                log.info("not nil")
+//            }
+//            log.info("nil?")
+//        }
+//    }
 }
 
 import Foundation
@@ -293,27 +297,39 @@ enum FilterKeys: String, Hashable {
     }
 }
 
-// Realm Keys
-extension FilterKeys {
-    var realmKey: String? {
-        switch self {
-        case .state:
-            return "contact.state"
-        case .city:
-            return "contact.city"
-        case .tag:
-            return nil
-        case .lastItemDate:
-            return "lastUpdate"
-        case .type:
-            return "animal"
-        }
-    }
-}
-
 extension FilterKeys: Equatable {
     static func == (lhs: FilterKeys, rhs: FilterKeys) -> Bool {
         return lhs.rawValue == rhs.rawValue
+    }
+}
+
+struct Filter: Codable {
+    let type: String
+    let tags: [Int]
+    var tagsAsString: String {
+        get {
+            let stringArray = tags.map { String($0) }
+            return stringArray.joined(separator: " ")
+        }
+        
+    }
+    let lastDate: String
+    let categories: [Int]
+    var categoriesAsString: String {
+        get {
+            let stringArray = categories.map { String($0) }
+            return stringArray.joined(separator: " ")
+        }
+    }
+    
+    init(type: String = "",
+         tags: [Int] = [],
+         lastDate: String = "",
+         categories: [Int] = []) {
+        self.type = type
+        self.tags = tags
+        self.lastDate = lastDate
+        self.categories = categories
     }
 }
 
@@ -329,5 +345,10 @@ public class Filters: NSObject {
     
     func add(filter: String, for key: FilterKeys) {
         activeFilters[key] = filter
+    }
+    
+    func add(filter: [Int], for key: FilterKeys) {
+        let stringArray = filter.map { String($0) }
+        activeFilters[key] = stringArray.joined(separator: " ")
     }
 }

@@ -72,7 +72,8 @@ extension AppDelegate {
     
     func setupFirstScreen() {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let rootVC = CollectionViewController(collectionViewLayout: UICollectionViewLayout())
+//        let rootVC = CollectionViewController(collectionViewLayout: UICollectionViewLayout())
+        let rootVC = PodcastPageViewController()
         rootVC.view.backgroundColor = .white
 //        let navVC = UINavigationController(rootViewController: rootVC)
 //        navVC.view.backgroundColor = .white

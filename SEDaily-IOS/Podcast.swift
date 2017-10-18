@@ -12,10 +12,10 @@ public struct Podcast: Codable {
     let _id: String
     let date: String
     let link: String
-    let categories: [Int]
-    let tags: [Int]
+    let categories: [Int]?
+    let tags: [Int]?
     let mp3: String
-    let featuredImage: String
+    let featuredImage: String?
     struct Content: Codable {
         let rendered: String
     }
@@ -32,8 +32,8 @@ extension Podcast: Equatable {
         return lhs._id == rhs._id &&
             lhs.date == rhs.date &&
             lhs.link == rhs.link &&
-            lhs.categories == rhs.categories &&
-            lhs.tags == rhs.tags &&
+            lhs.categories ?? [] == rhs.categories ?? [] &&
+            lhs.tags ?? [] == rhs.tags ?? [] &&
             lhs.mp3 == rhs.mp3 &&
             lhs.featuredImage == rhs.featuredImage &&
             lhs.content.rendered == rhs.content.rendered &&
@@ -43,6 +43,16 @@ extension Podcast: Equatable {
 }
 
 extension Podcast {
+    func getLastUpdatedAsDateWith(completion: @escaping (Date?) -> Void) {
+        DispatchQueue.global().async {
+            // slow calculations performed here
+            let date = Date(iso8601String: self.date)
+            DispatchQueue.main.async {
+                completion(date)
+            }
+        }
+    }
+    
     func getLastUpdatedAsDate() -> Date? {
         return Date(iso8601String: self.date)
     }
@@ -50,11 +60,10 @@ extension Podcast {
 
 public struct PodcastViewModel {
     let _id: String
-    let uploadDateAsDate: Date?
     let uploadDateiso8601: String
     let postLinkURL: URL?
-    let categories: [Int]
-    let tags: [Int]
+    let categories: [Int]?
+    let tags: [Int]?
     let mp3URL: URL?
     let featuredImageURL: URL?
     private let encodedPodcastTitle: String
@@ -74,13 +83,12 @@ public struct PodcastViewModel {
     
     init(podcast: Podcast) {
         self._id = podcast._id
-        self.uploadDateAsDate = Date(iso8601String: podcast.date)
         self.uploadDateiso8601 = podcast.date
         self.postLinkURL = URL(string: podcast.link)
         self.categories = podcast.categories
         self.tags = podcast.tags
         self.mp3URL = URL(string: podcast.mp3)
-        self.featuredImageURL = URL(string: podcast.featuredImage)
+        self.featuredImageURL = URL(string: podcast.featuredImage ?? "")
         self.encodedPodcastTitle = podcast.title.rendered
         self.encodedPodcastDescription = podcast.content.rendered
         self.score = podcast.score
@@ -88,7 +96,6 @@ public struct PodcastViewModel {
     
     init() {
         self._id = ""
-        self.uploadDateAsDate = Date()
         self.uploadDateiso8601 = ""
         self.postLinkURL = nil
         self.categories = []
@@ -98,5 +105,37 @@ public struct PodcastViewModel {
         self.encodedPodcastTitle = ""
         self.encodedPodcastDescription = ""
         self.score = 0
+    }
+}
+
+extension PodcastViewModel: Equatable {
+    public static func ==(lhs: PodcastViewModel, rhs: PodcastViewModel) -> Bool {
+        return lhs._id == rhs._id &&
+            lhs.uploadDateiso8601 == rhs.uploadDateiso8601 &&
+            lhs.postLinkURL == rhs.postLinkURL &&
+            lhs.categories ?? [] == rhs.categories ?? [] &&
+            lhs.tags ?? [] == rhs.tags ?? [] &&
+            lhs.mp3URL == rhs.mp3URL &&
+            lhs.featuredImageURL == rhs.featuredImageURL &&
+            lhs.encodedPodcastTitle == rhs.encodedPodcastTitle &&
+            lhs.encodedPodcastDescription == rhs.encodedPodcastDescription &&
+            lhs.score == rhs.score
+    }
+}
+
+extension PodcastViewModel {
+    func getLastUpdatedAsDateWith(completion: @escaping (Date?) -> Void) {
+        DispatchQueue.global().async {
+            // slow calculations performed here
+            let date = Date(iso8601String: self.uploadDateiso8601)
+            DispatchQueue.main.async {
+                completion(date)
+            }
+        }
+    }
+    
+    // This is too slow for a cell collection view call
+    func getLastUpdatedAsDate() -> Date? {
+        return Date(iso8601String: self.uploadDateiso8601)
     }
 }

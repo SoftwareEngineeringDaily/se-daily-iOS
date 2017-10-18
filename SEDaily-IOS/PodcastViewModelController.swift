@@ -34,12 +34,13 @@ public class PodcastViewModelController {
     
     func fetchData(type: String = "",
                    createdAtBefore beforeDate: String = "",
-                   tags: String = "-1",
-                   categories: String = "",
+                   tags: [Int] = [],
+                   categories: [Int] = [],
                    page: Int = 0,
                    onSucces: @escaping SuccessCallback,
                    onFailure: @escaping ErrorCallback) {
-        repository.getData(lastItemDate: beforeDate, type: type, tags: tags, categories: categories, onSucces: { (podcasts) in
+        let filterObject = Filter(type: type, tags: tags, lastDate: beforeDate, categories: categories)
+        repository.getData(filterObject: filterObject, onSucces: { (podcasts) in
             let newViewModels: [ViewModel?] = podcasts.map { model in
                 return ViewModel(podcast: model)
             }

@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import SwifterSwift
+import KTResponsiveUI
 
 enum PlaybackSpeed: Float {
     case _1x = 1.0
@@ -99,12 +100,12 @@ class AudioView: UIView {
     
     var previousSliderValue: Float = 0.0
     var isFirstLoad = true
-    var settingsButton = UIButton()
+    var playbackSpeedButton = UIButton()
     
     var currentSpeed: PlaybackSpeed = ._1x {
         willSet {
             guard currentSpeed != newValue else { return }
-            self.settingsButton.setTitle(newValue.shortTitle, for: .normal)
+            self.playbackSpeedButton.setTitle(newValue.shortTitle, for: .normal)
             self.delegate?.audioRateChanged(newRate: newValue.rawValue)
         }
     }
@@ -198,18 +199,19 @@ class AudioView: UIView {
         
         playButton.isHidden = true
         
-        settingsButton.setTitle(PlaybackSpeed._1x.shortTitle, for: .normal)
-        settingsButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .normal)
-        settingsButton.addTarget(self, action: #selector(self.settingsButtonPressed), for: .touchUpInside)
-        self.addSubview(settingsButton)
+        playbackSpeedButton.titleLabel?.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 20))
+        playbackSpeedButton.setTitle(PlaybackSpeed._1x.shortTitle, for: .normal)
+        playbackSpeedButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .normal)
+        playbackSpeedButton.addTarget(self, action: #selector(self.settingsButtonPressed), for: .touchUpInside)
+        self.addSubview(playbackSpeedButton)
         
         let width = UIView.getValueScaledByScreenWidthFor(baseValue: 40)
         let height = UIView.getValueScaledByScreenHeightFor(baseValue: 40)
-        settingsButton.snp.makeConstraints { (make) -> Void in
+        playbackSpeedButton.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(width)
             make.height.equalTo(height)
             make.bottom.equalToSuperview()
-            make.right.equalToSuperview()
+            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 2))
         }
 
         setupActivityIndicator()
@@ -284,14 +286,15 @@ class AudioView: UIView {
     }
     
     func addLabels() {
-        currentTimeLabel.text = "00.00.00"
+        let labelFontSize = UIView.getValueScaledByScreenWidthFor(baseValue: 12)
+        currentTimeLabel.text = "00:00"
         currentTimeLabel.textAlignment = .left
-        currentTimeLabel.font = UIFont.systemFont(ofSize: 12)
+        currentTimeLabel.font = UIFont.systemFont(ofSize: labelFontSize)
         
-        timeLeftLabel.text = "00.00.00"
+        timeLeftLabel.text = "00:00"
         timeLeftLabel.textAlignment = .right
         timeLeftLabel.adjustsFontSizeToFitWidth = true
-        timeLeftLabel.font = UIFont.systemFont(ofSize: 12)
+        timeLeftLabel.font = UIFont.systemFont(ofSize: labelFontSize)
 
         self.containerView.addSubview(currentTimeLabel)
         self.containerView.addSubview(timeLeftLabel)

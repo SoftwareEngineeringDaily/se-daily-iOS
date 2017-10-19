@@ -57,6 +57,7 @@ class AudioViewManager: NSObject {
         remoteCommandManager.toggleChangePlaybackPositionCommand(true)
         remoteCommandManager.toggleSkipBackwardCommand(true, interval: 30)
         remoteCommandManager.toggleSkipForwardCommand(true, interval: 30)
+        remoteCommandManager.toggleChangePlaybackPositionCommand(true)
     }
 
     fileprivate func presentAudioView() {

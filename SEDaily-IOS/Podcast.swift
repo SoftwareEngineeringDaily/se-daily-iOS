@@ -8,6 +8,54 @@
 
 import Foundation
 
+enum PodcastTypes: String {
+    case new = "new"
+    case top = "top"
+    case recommended = "recommended"
+}
+
+enum PodcastCategoryIds: Int {
+    case All = -1
+    case Business_and_Philosophy = 1068
+    case Blockchain = 1082
+    case Cloud_Engineering = 1079
+    case Data = 1081
+    case JavaScript = 1084
+    case Machine_Learning = 1080
+    case Open_Source = 1078
+    case Security = 1083
+    case Hackers = 1085
+    case Greatest_Hits = 1069
+    
+    //@TODO: Add l10n here
+    var description: String {
+        switch self {
+        case .All:
+            return "All"
+        case .Business_and_Philosophy:
+            return "Business and Philosophy"
+        case .Blockchain:
+            return "Blockchain"
+        case .Cloud_Engineering:
+            return "Cloud Engineering"
+        case .Data:
+            return "Data"
+        case .JavaScript:
+            return "JavaScript"
+        case .Machine_Learning:
+            return "Machine Learning"
+        case .Open_Source:
+            return "Open Source"
+        case .Security:
+            return "Security"
+        case .Hackers:
+            return "Hackers"
+        case .Greatest_Hits:
+            return "Greatest Hits"
+        }
+    }
+}
+
 public struct Podcast: Codable {
     let _id: String
     let date: String
@@ -25,6 +73,7 @@ public struct Podcast: Codable {
     }
     let title: Title
     let score: Int
+    var type: String? = "new"
 }
 
 extension Podcast: Equatable {
@@ -38,7 +87,8 @@ extension Podcast: Equatable {
             lhs.featuredImage == rhs.featuredImage &&
             lhs.content.rendered == rhs.content.rendered &&
             lhs.title.rendered == rhs.title.rendered &&
-            lhs.score == rhs.score
+            lhs.score == rhs.score &&
+            lhs.type == rhs.type
     }
 }
 
@@ -55,6 +105,15 @@ extension Podcast {
     
     func getLastUpdatedAsDate() -> Date? {
         return Date(iso8601String: self.date)
+    }
+}
+
+extension Encodable {
+    var dictionary: [String: Any] {
+        return (try? JSONSerialization.jsonObject(with: JSONEncoder().encode(self))) as? [String: Any] ?? [:]
+    }
+    var nsDictionary: NSDictionary {
+        return dictionary as NSDictionary
     }
 }
 

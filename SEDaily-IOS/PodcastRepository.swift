@@ -53,7 +53,6 @@ class PodcastRepository: Repository<Podcast> {
     typealias RepositoryErrorCallback = (RepositoryError) -> Void
     
     private let dataSource = PodcastDataSource()
-    let filtersRepo = Filters.shared
     
     // MARK: Getters With Paging
     let tag = "podcasts"
@@ -63,7 +62,7 @@ class PodcastRepository: Repository<Podcast> {
     var loading = false
     
     func getData(page: Int = 0,
-                 filterObject: Filter,
+                 filterObject: FilterObject,
                  onSucces: @escaping RepositorySuccessCallback,
                  onFailure: @escaping RepositoryErrorCallback) {
         self.retrieveDataFromRealmOrAPI(filterObject: filterObject, onSucces: { (returnedData) in
@@ -74,11 +73,11 @@ class PodcastRepository: Repository<Podcast> {
     }
     
     // MARK: Realm and API data getter
-    private func retrieveDataFromRealmOrAPI(filterObject: Filter,
+    private func retrieveDataFromRealmOrAPI(filterObject: FilterObject,
                                             onSucces: @escaping RepositorySuccessCallback,
                                             onFailure: @escaping RepositoryErrorCallback) {
         // Check if we made requests today
-        let alreadLoadedStartToday = self.alreadyLoadedNewToday(tag: self.tag, lastItemDate: filterObject.lastDate)
+        let alreadLoadedStartToday = self.checkAlreadyLoadedNewToday(filterObject: filterObject)
         if alreadLoadedStartToday {
             self.loading = true
             log.warning("from disk")
@@ -95,7 +94,7 @@ class PodcastRepository: Repository<Podcast> {
                     return
                 }
                 
-                self.setLoadedNewToday(tagId: self.tag, lastItemDate: filterObject.lastDate)
+                self.setLoadedNewToday(filterObject: filterObject)
                 self.lastReturnedDataArray = data
                 self.loading = false
                 onSucces(data)
@@ -114,7 +113,7 @@ class PodcastRepository: Repository<Podcast> {
                 return
             }
             self.dataSource.insert(items: podcasts)
-            self.setLoadedNewToday(tagId: self.tag, lastItemDate: filterObject.lastDate)
+            self.setLoadedNewToday(filterObject: filterObject)
             self.lastReturnedDataArray = podcasts
             onSucces(podcasts)
         }) { (apiError) in
@@ -124,18 +123,10 @@ class PodcastRepository: Repository<Podcast> {
     }
     
     // MARK: Already loaded today checks
-    func alreadyLoadedNewToday (tag: String, lastItemDate: String?) -> Bool {
+    func checkAlreadyLoadedNewToday(filterObject: FilterObject) -> Bool {
+        let key = "\(APICheckDates.newFeedLastCheck)-\(filterObject.dictionary)"
+
         let defaults = UserDefaults.standard
-        // @TODO: we may be able to add this to the filters dictionary
-        var key = APICheckDates.newFeedLastCheck
-        
-        filtersRepo.add(filter: lastItemDate ?? "", for: .lastItemDate)
-        filtersRepo.add(filter: String(tag), for: .tag)
-        
-        let filters = filtersRepo.getActiveFilters()
-        
-        key = "\(key)-\(filters.description)"
-        
         if let newFeedLastCheck = defaults.string(forKey: key) {
             let todayDate = Date().dateString()
             let newFeedDate = Date(iso8601String: newFeedLastCheck)!.dateString()
@@ -148,16 +139,9 @@ class PodcastRepository: Repository<Podcast> {
         return false
     }
     
-    func setLoadedNewToday (tagId: String, lastItemDate: String?) {
+    func setLoadedNewToday (filterObject: FilterObject) {
         let todayString = Date().iso8601String
-        var key = APICheckDates.newFeedLastCheck
-        
-        filtersRepo.add(filter: lastItemDate ?? "", for: .lastItemDate)
-        filtersRepo.add(filter: String(tag), for: .tag)
-        let filters = filtersRepo.getActiveFilters()
-        
-        key = "\(key)-\(filters.description)"
-        
+        let key = "\(APICheckDates.newFeedLastCheck)-\(filterObject.dictionary)"
         let defaults = UserDefaults.standard
         defaults.set(todayString, forKey: key)
     }
@@ -179,12 +163,14 @@ class PodcastDataSource: DataSource {
         }
     }
     
-    func getAllWith(filterObject: Filter, completion: @escaping ([T]?) -> Void) {
+    func getAllWith(filterObject: FilterObject, completion: @escaping ([T]?) -> Void) {
         self.getAll { (returnedData) in
             DispatchQueue.global(qos: .userInitiated).async {
                 //@TODO: Guard
                 let filteredObjects = returnedData?.filter({ (podcast) -> Bool in
-                    return podcast.tags!.contains(filterObject.tags) && podcast.categories!.contains(filterObject.categories)
+                    return podcast.tags!.contains(filterObject.tags) &&
+                        podcast.categories!.contains(filterObject.categories) &&
+                        podcast.type == filterObject.type
                 })
                 
                 let dateString = filterObject.lastDate
@@ -266,40 +252,7 @@ class PodcastDataSource: DataSource {
 //    }
 }
 
-import Foundation
-
-typealias FilterDictionary = [FilterKeys: String]
-
-enum FilterKeys: String, Hashable {
-    case state = "state"
-    case city = "city"
-    case tag = "tag"
-    case lastItemDate = "lastItemDate"
-    case type = "type"
-    
-    var hashValue: Int {
-        switch self {
-        case .state:
-            return 0
-        case .city:
-            return 1
-        case .tag:
-            return 2
-        case .lastItemDate:
-            return 3
-        case .type:
-            return 4
-        }
-    }
-}
-
-extension FilterKeys: Equatable {
-    static func == (lhs: FilterKeys, rhs: FilterKeys) -> Bool {
-        return lhs.rawValue == rhs.rawValue
-    }
-}
-
-struct Filter: Codable {
+struct FilterObject: Codable {
     let type: String
     let tags: [Int]
     var tagsAsString: String {
@@ -325,25 +278,5 @@ struct Filter: Codable {
         self.tags = tags
         self.lastDate = lastDate
         self.categories = categories
-    }
-}
-
-public class Filters: NSObject {
-    static let shared: Filters = Filters()
-    private override init() {}
-    
-    private var activeFilters = FilterDictionary()
-    
-    func getActiveFilters() -> FilterDictionary {
-        return self.activeFilters
-    }
-    
-    func add(filter: String, for key: FilterKeys) {
-        activeFilters[key] = filter
-    }
-    
-    func add(filter: [Int], for key: FilterKeys) {
-        let stringArray = filter.map { String($0) }
-        activeFilters[key] = stringArray.joined(separator: " ")
     }
 }

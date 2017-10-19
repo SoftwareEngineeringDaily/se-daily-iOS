@@ -12,7 +12,7 @@ import Pageboy
 
 class PodcastPageViewController: TabmanViewController, PageboyViewControllerDataSource {
     
-    var viewControllers = [CollectionViewController]()
+    var viewControllers = [GeneralCollectionViewController]()
     var barItems = [TabmanBar.Item]()
     
     override func viewDidLoad() {
@@ -46,48 +46,59 @@ class PodcastPageViewController: TabmanViewController, PageboyViewControllerData
     func loadViewControllers() {
         let layout = UICollectionViewLayout()
         
-        let child_1 = CollectionViewController(collectionViewLayout: layout, type: API.Types.new)
-        child_1.tabTitle = "All"
+        let child_1 = GeneralCollectionViewController(collectionViewLayout: layout,
+                                                      tabTitle: PodcastCategoryIds.All.description)
         viewControllers.append(child_1)
         
-        let child_2 = CollectionViewController(collectionViewLayout: layout, categories: [1068], type: API.Types.new)
-        child_2.tabTitle = "Business and Philosophy"
+        
+        let child_2 = GeneralCollectionViewController(collectionViewLayout: layout,
+                                                      categories: [PodcastCategoryIds.Business_and_Philosophy],
+                                                      tabTitle: PodcastCategoryIds.Business_and_Philosophy.description)
         viewControllers.append(child_2)
 
-        let child_3 = CollectionViewController(collectionViewLayout: layout, categories: [1082], type: API.Types.new)
-        child_3.tabTitle = "Blockchain"
+        let child_3 = GeneralCollectionViewController(collectionViewLayout: layout,
+                                                      categories: [PodcastCategoryIds.Blockchain],
+                                                      tabTitle: PodcastCategoryIds.Blockchain.description)
         viewControllers.append(child_3)
 
-        let child_4 = CollectionViewController(collectionViewLayout: layout, categories: [1079], type: API.Types.new)
-        child_4.tabTitle = "Cloud Engineering"
+        let child_4 = GeneralCollectionViewController(collectionViewLayout: layout,
+                                                      categories: [PodcastCategoryIds.Cloud_Engineering],
+                                                      tabTitle: PodcastCategoryIds.Cloud_Engineering.description)
         viewControllers.append(child_4)
 
-        let child_5 = CollectionViewController(collectionViewLayout: layout, categories: [1081], type: API.Types.new)
-        child_5.tabTitle = "Data"
+        let child_5 = GeneralCollectionViewController(collectionViewLayout: layout,
+                                                      categories: [PodcastCategoryIds.Data],
+                                                      tabTitle: PodcastCategoryIds.Data.description)
         viewControllers.append(child_5)
 
-        let child_6 = CollectionViewController(collectionViewLayout: layout, categories: [1084], type: API.Types.new)
-        child_6.tabTitle = "JavaScript"
+        let child_6 = GeneralCollectionViewController(collectionViewLayout: layout,
+                                                      categories: [PodcastCategoryIds.JavaScript],
+                                                      tabTitle: PodcastCategoryIds.JavaScript.description)
         viewControllers.append(child_6)
 
-        let child_7 = CollectionViewController(collectionViewLayout: layout, categories: [1080], type: API.Types.new)
-        child_7.tabTitle = "Machine Learning"
+        let child_7 = GeneralCollectionViewController(collectionViewLayout: layout,
+                                                      categories: [PodcastCategoryIds.Machine_Learning],
+                                                      tabTitle: PodcastCategoryIds.Machine_Learning.description)
         viewControllers.append(child_7)
 
-        let child_8 = CollectionViewController(collectionViewLayout: layout, categories: [1078], type: API.Types.new)
-        child_8.tabTitle = "Open Source"
+        let child_8 = GeneralCollectionViewController(collectionViewLayout: layout,
+                                                      categories: [PodcastCategoryIds.Open_Source],
+                                                      tabTitle: PodcastCategoryIds.Open_Source.description)
         viewControllers.append(child_8)
 
-        let child_9 = CollectionViewController(collectionViewLayout: layout, categories: [1083], type: API.Types.new)
-        child_9.tabTitle = "Security"
+        let child_9 = GeneralCollectionViewController(collectionViewLayout: layout,
+                                                      categories: [PodcastCategoryIds.Security],
+                                                      tabTitle: PodcastCategoryIds.Security.description)
         viewControllers.append(child_9)
 
-        let child_10 = CollectionViewController(collectionViewLayout: layout, categories: [1085], type: API.Types.new)
-        child_10.tabTitle = "Hackers"
+        let child_10 = GeneralCollectionViewController(collectionViewLayout: layout,
+                                                       categories: [PodcastCategoryIds.Hackers],
+                                                       tabTitle: PodcastCategoryIds.Hackers.description)
         viewControllers.append(child_10)
 
-        let child_11 = CollectionViewController(collectionViewLayout: layout, categories: [1069], type: API.Types.new)
-        child_11.tabTitle = "Greatest Hits"
+        let child_11 = GeneralCollectionViewController(collectionViewLayout: layout,
+                                                       categories: [PodcastCategoryIds.Greatest_Hits],
+                                                       tabTitle: PodcastCategoryIds.Greatest_Hits.description)
         viewControllers.append(child_11)
         
         viewControllers.forEach { (controller) in

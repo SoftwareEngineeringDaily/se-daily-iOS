@@ -26,9 +26,9 @@ class AudioViewManager: NSObject {
     var remoteCommandManager: RemoteCommandManager! = nil
 
     var audioView: AudioView?
-    var podcastModel: PodcastModel?
+    var podcastModel: PodcastViewModel?
     
-    func setupManager(podcastModel: PodcastModel) {
+    func setupManager(podcastModel: PodcastViewModel) {
         self.podcastModel = podcastModel
         Tracker.logPlayPodcast(podcast: podcastModel)
         self.presentAudioView()
@@ -36,11 +36,12 @@ class AudioViewManager: NSObject {
     
     fileprivate func setupAudioManager(url: URL, name: String) {
         var savedTime: Float = 0
-        if let time = podcastModel?.currentTime {
-            if let float = Float(time) {
-                savedTime = float
-            }
-        }
+        //@TODO: Add tracking for current time again
+//        if let time = podcastModel?.currentTime {
+//            if let float = Float(time) {
+//                savedTime = float
+//            }
+//        }
         log.info(savedTime, "savedtime")
         
         let asset = Asset(assetName: name, url: url, savedTime: savedTime)
@@ -76,8 +77,8 @@ class AudioViewManager: NSObject {
                 controller.setContainerViewInset()
             }
             
-            guard let url = self.podcastModel?.getMP3asURL() else { return }
-            guard let name = self.podcastModel?.podcastName else { return }
+            guard let url = self.podcastModel?.mp3URL else { return }
+            guard let name = self.podcastModel?.podcastTitle else { return }
             
             self.setupAudioManager(url: url, name: name)
         }
@@ -104,7 +105,7 @@ class AudioViewManager: NSObject {
     fileprivate func setupView(over vc: UIViewController) {
         if audioView != nil {
             // Setup progress, text, other stuff
-            setText(text: podcastModel?.podcastName)
+            setText(text: podcastModel?.podcastTitle)
             return
         }
         
@@ -119,7 +120,7 @@ class AudioViewManager: NSObject {
         audioView?.center.x = vc.view.center.x
         audioView?.frame.origin.y = UIScreen.main.bounds.height
 
-        setText(text: podcastModel?.podcastName)
+        setText(text: podcastModel?.podcastTitle)
         
         audioView?.animateIn()
     }
@@ -133,7 +134,7 @@ class AudioViewManager: NSObject {
     //@TODO: Add manager param and update everything here (maybe)
     fileprivate func handleStateChange(for state: AssetPlayerPlaybackState) {
         if let model = podcastModel {
-            self.setText(text: model.podcastName)
+            self.setText(text: model.podcastTitle)
         }
         
         switch state {
@@ -197,7 +198,8 @@ extension AudioViewManager: AssetPlayerDelegate {
     }
     
     func playerCurrentTimeDidChange(_ player: AssetPlayer) {
-        podcastModel?.update(currentTime: Float(player.currentTime))
+        //@TODO: Add back current time tracking
+//        podcastModel?.update(currentTime: Float(player.currentTime))
         
         audioView?.updateTimeLabels(currentTimeText: player.timeElapsedText, timeLeftText: player.timeLeftText)
         
@@ -205,7 +207,8 @@ extension AudioViewManager: AssetPlayerDelegate {
     }
     
     func playerPlaybackDidEnd(_ player: AssetPlayer) {
-        podcastModel?.update(currentTime: 0.0)
+        //@TODO: Add back current time tracking
+//        podcastModel?.update(currentTime: 0.0)
     }
     
     func playerIsLikelyToKeepUp(_ player: AssetPlayer) {

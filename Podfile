@@ -28,7 +28,7 @@ target 'SEDaily-IOS' do
   pod 'KoalaTeaPlayer'
   pod 'Tabman'
   pod 'Skeleton'
-  pod "SwiftSoup"
+  pod 'SwiftSoup'
   pod 'Disk'
 
   target 'SEDaily-IOSTests' do

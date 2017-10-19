@@ -183,14 +183,10 @@ class PodcastDataSource: DataSource {
         self.getAll { (returnedData) in
             DispatchQueue.global(qos: .userInitiated).async {
                 //@TODO: Guard
-                log.info(filterObject.tags)
-                log.info(filterObject.categories)
                 let filteredObjects = returnedData?.filter({ (podcast) -> Bool in
-                    //                log.error(podcast.tags)
-                    //                log.error(podcast.categories)
                     return podcast.tags!.contains(filterObject.tags) && podcast.categories!.contains(filterObject.categories)
                 })
-                log.debug(filteredObjects?.count)
+                
                 let dateString = filterObject.lastDate
                 if let passedDate = Date(iso8601String: dateString) {
                     //@TODO: Gaurd
@@ -311,7 +307,6 @@ struct Filter: Codable {
             let stringArray = tags.map { String($0) }
             return stringArray.joined(separator: " ")
         }
-        
     }
     let lastDate: String
     let categories: [Int]

@@ -334,9 +334,10 @@ extension API {
         let urlString = api.rootURL + API.Endpoints.posts
         
         // Params
-        var params = [String: Any]()
+        var params = [String: String]()
         params[Params.type] = type
         params[Params.createdAtBefore] = beforeDate
+        
         // @TODO: Allow for an array and join the array
         if (tags != "-1") {
             params[Params.tags] = tags
@@ -351,7 +352,7 @@ extension API {
         let _headers : HTTPHeaders = [
             Headers.authorization:Headers.bearer + userToken,
             ]
-        
+
         Alamofire.request(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:

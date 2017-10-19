@@ -12,7 +12,29 @@ import KoalaTeaFlowLayout
 private let reuseIdentifier = "Cell"
 
 class CollectionViewController: UICollectionViewController {
+    lazy var skeletonCollectionView: SkeletonCollectionView = {
+        return SkeletonCollectionView(frame: self.collectionView!.frame)
+    }()
+    
+    var type: String
+    var tabTitle = ""
+    var tags: [Int]
+    var categories: [Int]
+    
+    // ViewModelController
     private let podcastViewModelController = PodcastViewModelController()
+    
+    init(collectionViewLayout layout: UICollectionViewLayout, tags: [Int] = [], categories: [Int] = [], type: String) {
+        self.type = type
+        self.tags = tags
+        self.categories = categories
+        
+        super.init(collectionViewLayout: layout)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +53,17 @@ class CollectionViewController: UICollectionViewController {
         self.collectionView?.collectionViewLayout = layout
         self.collectionView?.backgroundColor = .white
         
-        // Do any additional setup after loading the view.
+        // Load initial data
+        self.getData(lastIdentifier: "", nextPage: 0)
+        
+        // User Login observer
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)
+        
+        
+        self.collectionView?.addSubview(skeletonCollectionView)
+    }
+    
+    @objc func loginObserver() {
         self.getData(lastIdentifier: "", nextPage: 0)
     }
 
@@ -49,8 +81,9 @@ class CollectionViewController: UICollectionViewController {
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        log.warning(podcastViewModelController.viewModelsCount)
+        if podcastViewModelController.viewModelsCount > 0 {
+            self.skeletonCollectionView.fadeOut(duration: 0.5, completion: nil)
+        }
         return podcastViewModelController.viewModelsCount
     }
 
@@ -90,7 +123,7 @@ class CollectionViewController: UICollectionViewController {
     func getData(lastIdentifier: String, nextPage: Int) {
         guard self.loading == false else { return }
         self.loading = true
-        podcastViewModelController.fetchData(createdAtBefore: lastIdentifier, page: nextPage, onSucces: {
+        podcastViewModelController.fetchData(createdAtBefore: lastIdentifier, tags: self.tags, categories: self.categories, page: nextPage, onSucces: {
             self.loading = false
             self.lastLoadedPage = nextPage
             DispatchQueue.main.async {
@@ -104,33 +137,12 @@ class CollectionViewController: UICollectionViewController {
 
     // MARK: UICollectionViewDelegate
 
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
+            let vc = PostDetailViewController()
+            vc.model = viewModel
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
 
 }

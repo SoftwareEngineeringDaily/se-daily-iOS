@@ -58,26 +58,37 @@ extension Podcast {
     }
 }
 
-public struct PodcastViewModel {
+public struct PodcastViewModel: Codable {
     let _id: String
     let uploadDateiso8601: String
     let postLinkURL: URL?
     let categories: [Int]?
+    var categoriesAsString: String {
+        get {
+            guard let categories = self.categories else { return "" }
+            let stringArray = categories.map { String(describing: $0) }
+            return stringArray.joined(separator: " ")
+        }
+    }
     let tags: [Int]?
+    var tagsAsString: String {
+        get {
+            guard let tags = self.tags else { return "" }
+            let stringArray = tags.map { String(describing: $0) }
+            return stringArray.joined(separator: " ")
+        }
+    }
     let mp3URL: URL?
     let featuredImageURL: URL?
     private let encodedPodcastTitle: String
     private let encodedPodcastDescription: String
     let score: Int
+    var isUpvoted: Bool = false
+    var isDownvoted: Bool = false
     
     var podcastTitle: String {
         get {
             return encodedPodcastTitle.htmlDecoded
-        }
-    }
-    var podcastDescription: String {
-        get {
-            return encodedPodcastDescription.htmlDecoded
         }
     }
     
@@ -137,5 +148,17 @@ extension PodcastViewModel {
     // This is too slow for a cell collection view call
     func getLastUpdatedAsDate() -> Date? {
         return Date(iso8601String: self.uploadDateiso8601)
+    }
+}
+
+extension PodcastViewModel {
+    func getHTMLDecodedDescription(completion: @escaping (String) -> Void) {
+        DispatchQueue.global().async {
+            // slow calculations performed here
+            let decodedString = self.encodedPodcastDescription.htmlDecodedWithSomeEntities ?? ""
+            DispatchQueue.main.async {
+                completion(decodedString)
+            }
+        }
     }
 }

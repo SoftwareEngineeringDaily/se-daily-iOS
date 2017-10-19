@@ -106,7 +106,8 @@ extension TopCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = data[indexPath.row]
         let vc = PostDetailTableViewController()
-        vc.model = item
+        //@TODO: Fix this controller
+//        vc.model = item
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

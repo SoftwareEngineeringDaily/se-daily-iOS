@@ -127,24 +127,8 @@ extension Helpers {
 import SwiftSoup
 
 public extension String {
-    /// Decodes string with html encoding.
-//    var htmlDecoded: String {
-//        guard let encodedData = self.data(using: .utf8) else { return self }
-//
-//        let attributedOptions: [NSAttributedString.DocumentReadingOptionKey : Any] = [
-//            NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html,
-//            NSAttributedString.DocumentReadingOptionKey.characterEncoding: String.Encoding.utf8.rawValue]
-//
-//        do {
-//            let attributedString = try NSAttributedString(data: encodedData,
-//                                                          options: attributedOptions,
-//                                                          documentAttributes: nil)
-//            return attributedString.string
-//        } catch {
-//            print("Error: \(error)")
-//            return self
-//        }
-//    }
+    // Decodes string with html encoding.
+    // This is very fast
     var htmlDecoded: String {
         do {
             let html = self
@@ -152,6 +136,28 @@ public extension String {
             return try doc.text()
         } catch {
             return self
+        }
+    }
+}
+
+extension String {
+    // Decode HTML while keeping attributes like "/n" and bulleted lists
+    // This is a bit slow
+    var htmlDecodedWithSomeEntities: String? {
+        guard let data = self.data(using: .utf8) else {
+            return nil
+        }
+        let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
+            NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html,
+            NSAttributedString.DocumentReadingOptionKey.characterEncoding: String.Encoding.utf8.rawValue
+        ]
+        do {
+            
+            let attributedString = try NSAttributedString(data: data, options: options, documentAttributes: nil)
+            return attributedString.string
+        }
+        catch {
+            return nil
         }
     }
 }

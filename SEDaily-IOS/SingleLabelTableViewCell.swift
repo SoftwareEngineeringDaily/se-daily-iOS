@@ -8,29 +8,32 @@
 
 import UIKit
 import Reusable
-import SnapKit
+import KTResponsiveUI
 import SwifterSwift
 import ActiveLabel
 
 class SingleLabelTableViewCell: UITableViewCell, Reusable {
-    let label = ActiveLabel()
+    lazy var label: ActiveLabel = {
+        return ActiveLabel(leftInset: 15, topInset: 15, width: 375 - 30, height: 20)
+    }()
+    
+    let bottomMarginForLabel = UIView.getValueScaledByScreenHeightFor(baseValue: 30)
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.contentView.addSubview(label)
-        
-        self.contentView.snp.makeConstraints { (make) in
-            make.top.left.right.equalToSuperview()
-            make.bottom.equalToSuperview().priority(99)
-            make.bottom.equalTo(label).priority(100)
-        }
-        
-        self.label.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().inset(15.calculateHeight())
-            make.left.right.equalToSuperview().inset(15.calculateWidth())
-        }
+        self.addSubview(label)
 
+//        self.heightAnchor.constraint(equalTo: label.heightAnchor,
+//                                     constant: bottomMarginForLabel).isActive = true
+//        label.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
+        
+//        self.contentView.snp.makeConstraints { (make) in
+//            make.top.left.right.equalToSuperview()
+//            make.bottom.equalToSuperview().priority(99)
+//            make.bottom.equalTo(label).priority(100)
+//        }
+        
         self.backgroundColor = Stylesheet.Colors.offWhite
 //        Stylesheet.applyOn(self)
         
@@ -52,7 +55,11 @@ class SingleLabelTableViewCell: UITableViewCell, Reusable {
         fatalError("init(coder:)")
     }
     
-    func setupCell(model: PodcastModel) {
-        label.text = model.getDescription()
+    // Setup cell with completion() because we are setting text asynchronously
+    func setupCell(model: PodcastViewModel) {
+        model.getHTMLDecodedDescription { (returnedString) in
+            self.label.text = returnedString
+            self.label.sizeToFit()
+        }
     }
 }

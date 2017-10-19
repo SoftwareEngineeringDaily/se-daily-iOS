@@ -107,7 +107,8 @@ class SearchTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = filteredData[indexPath.row]
         let vc = PostDetailTableViewController()
-        vc.model = item
+        //@TODO: Fix this controller
+//        vc.model = item
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -95,11 +95,10 @@ class PodcastCell: UICollectionViewCell {
         }
         didSet {
             self.titleLabel.text = viewModel.podcastTitle
-            self.imageView.backgroundColor = .purple
             viewModel.getLastUpdatedAsDateWith { (date) in
                 self.setupTimeDayLabel(timeLength: nil, date: date)
             }
-//            self.setupImageView(imageURL: viewModel.featuredImageURL)
+            self.setupImageView(imageURL: viewModel.featuredImageURL)
         }
     }
     
@@ -151,13 +150,8 @@ class PodcastCell: UICollectionViewCell {
     }
     
     func setupTimeDayLabel(timeLength: Int?, date: Date?) {
-//        let timeString = Helpers.createTimeString(time: (Float(timeLength ?? 0)))
         let dateString = date?.dateString() ?? ""
-//        guard timeString != "00:00" else {
-            timeDayLabel.text = dateString
-//            return
-//        }
-//        timeDayLabel.text = timeString + " \u{2022} " + dateString
+        timeDayLabel.text = dateString
     }
     
     // MARK: Skeleton

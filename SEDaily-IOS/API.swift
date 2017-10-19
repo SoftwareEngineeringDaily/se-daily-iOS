@@ -330,20 +330,25 @@ extension API {
                   onSucces: @escaping ([Podcast]) -> Void,
                   onFailure: @escaping (APIError?) -> Void) {
         typealias model = Podcast
-        let api = API.sharedInstance
-        let urlString = api.rootURL + API.Endpoints.posts
+        
+        var urlString = self.rootURL + API.Endpoints.posts
+        if type == PodcastTypes.recommended.rawValue {
+            urlString = self.rootURL + Endpoints.recommendations
+        }
         
         // Params
         var params = [String: String]()
         params[Params.type] = type
-        params[Params.createdAtBefore] = beforeDate
+        if beforeDate != "" {
+            params[Params.createdAtBefore] = beforeDate
+        }
         
         // @TODO: Allow for an array and join the array
-        if (tags != "-1") {
+        if (tags != "") {
             params[Params.tags] = tags
         }
         
-        if (categories != "-1") {
+        if (categories != "") {
             params[Params.categories] = categories
         }
         
@@ -368,7 +373,8 @@ extension API {
                 for (_, subJson):(String, JSON) in this {
                     guard let jsonData = try? subJson.rawData() else { continue }
                     let newObject = try? JSONDecoder().decode(model.self, from: jsonData)
-                    if let newObject = newObject {
+                    if var newObject = newObject {
+                        newObject.type = type
                         data.append(newObject)
                     }
                 }

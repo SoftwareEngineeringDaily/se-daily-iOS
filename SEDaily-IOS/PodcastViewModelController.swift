@@ -39,7 +39,7 @@ public class PodcastViewModelController {
                    page: Int = 0,
                    onSucces: @escaping SuccessCallback,
                    onFailure: @escaping ErrorCallback) {
-        let filterObject = Filter(type: type, tags: tags, lastDate: beforeDate, categories: categories)
+        let filterObject = FilterObject(type: type, tags: tags, lastDate: beforeDate, categories: categories)
         repository.getData(filterObject: filterObject, onSucces: { (podcasts) in
             let newViewModels: [ViewModel?] = podcasts.map { model in
                 return ViewModel(podcast: model)

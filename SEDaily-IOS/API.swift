@@ -330,6 +330,16 @@ extension API {
                   onSucces: @escaping ([Podcast]) -> Void,
                   onFailure: @escaping (APIError?) -> Void) {
         typealias model = Podcast
+        var type = type
+        
+        let user = User.getActiveUser()
+        guard let userToken = user.token else { return }
+        let _headers : HTTPHeaders = [
+            Headers.authorization:Headers.bearer + userToken,
+            ]
+        if userToken == "" && type == PodcastTypes.recommended.rawValue {
+            type = PodcastTypes.top.rawValue
+        }
         
         var urlString = self.rootURL + API.Endpoints.posts
         if type == PodcastTypes.recommended.rawValue {
@@ -339,7 +349,7 @@ extension API {
         // Params
         var params = [String: String]()
         params[Params.type] = type
-        if beforeDate != "" {
+        if beforeDate != "" && type != PodcastTypes.recommended.rawValue {
             params[Params.createdAtBefore] = beforeDate
         }
         
@@ -351,12 +361,6 @@ extension API {
         if (categories != "") {
             params[Params.categories] = categories
         }
-        
-        let user = User.getActiveUser()
-        guard let userToken = user.token else { return }
-        let _headers : HTTPHeaders = [
-            Headers.authorization:Headers.bearer + userToken,
-            ]
 
         Alamofire.request(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
             switch response.result {
@@ -374,6 +378,7 @@ extension API {
                     guard let jsonData = try? subJson.rawData() else { continue }
                     let newObject = try? JSONDecoder().decode(model.self, from: jsonData)
                     if var newObject = newObject {
+                        log.warning(newObject.title)
                         newObject.type = type
                         data.append(newObject)
                     }

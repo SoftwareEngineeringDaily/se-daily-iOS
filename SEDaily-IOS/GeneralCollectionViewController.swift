@@ -253,7 +253,7 @@ extension GeneralCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = data[indexPath.row]
         let vc = PostDetailTableViewController()
-        vc.model = item
+//        vc.model = item
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

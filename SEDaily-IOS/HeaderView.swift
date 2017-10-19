@@ -10,7 +10,7 @@ import UIKit
 import SwiftIcons
 
 class HeaderView: UIView {
-    var model: PodcastModel!
+    var model = PodcastViewModel()
     
     let titleLabel = UILabel()
     let dateLabel = UILabel()
@@ -131,21 +131,21 @@ class HeaderView: UIView {
         upVoteButton.addTarget(self, action: #selector(self.upvoteButtonPressed), for: .touchUpInside)
     }
     
-    func setupHeader(model: PodcastModel) {
+    func setupHeader(model: PodcastViewModel) {
         self.model = model
-        self.titleLabel.text = model.podcastName!
-        self.dateLabel.text = Helpers.formatDate(dateString: model.uploadDate!)
-        self.scoreLabel.text = model.score!
+        self.titleLabel.text = model.podcastTitle
+        self.dateLabel.text = model.getLastUpdatedAsDate()?.dateString() ?? ""
+        self.scoreLabel.text = model.score.string
         
         if self.model.isUpvoted {
             upVoteButton.isSelected = self.model.isUpvoted
-            guard var int = Int(model.score!) else { return }
+            var int = model.score
             int += 1
             self.scoreLabel.text = String(int)
         }
         if self.model.isDownvoted {
             downVoteButton.isSelected = self.model.isDownvoted
-            guard var int = Int(model.score!) else { return }
+            var int = model.score
             int -= 1
             self.scoreLabel.text = String(int)
         }
@@ -164,7 +164,7 @@ extension HeaderView {
     
     @objc func upvoteButtonPressed() {
         guard User.checkAndAlert() else { return }
-        guard let podcastId = model.podcastId else { return }
+        let podcastId = model._id
         API.sharedInstance.upvotePodcast(podcastId: podcastId, completion: { (success, active) in
             guard success != nil else { return }
             if success == true {
@@ -181,7 +181,7 @@ extension HeaderView {
     
     @objc func downVoteButtonPressed() {
         guard User.checkAndAlert() else { return }
-        guard let podcastId = model.podcastId else { return }
+        let podcastId = model._id
         API.sharedInstance.downvotePodcast(podcastId: podcastId, completion: { (success, active) in
             guard success != nil else { return }
             if success == true {
@@ -199,20 +199,19 @@ extension HeaderView {
     
     func addScore(active: Bool) {
         if active == false {
-            self.scoreLabel.text = String(model.score!)
-            self.model.update(isUpvoted: false)
+            self.scoreLabel.text = String(model.score)
+            self.model.isUpvoted = false
             upVoteButton.isSelected = self.model.isUpvoted
             downVoteButton.isSelected = self.model.isDownvoted
             return
         }
 
-        guard let score = self.model.score else { return }
-        guard var int = Int(score) else { return }
+        var int = self.model.score
         int += 1
         // Update score label
         self.scoreLabel.text = String(int)
         
-        self.model.update(isUpvoted: true)
+        self.model.isUpvoted = true
         
         upVoteButton.isSelected = self.model.isUpvoted
         downVoteButton.isSelected = self.model.isDownvoted
@@ -220,19 +219,18 @@ extension HeaderView {
     
     func subtractScore(active: Bool) {
         if active == false {
-            self.scoreLabel.text = String(model.score!)
-            self.model.update(isDownvoted: false)
+            self.scoreLabel.text = String(model.score)
+            self.model.isDownvoted = false
             upVoteButton.isSelected = self.model.isUpvoted
             downVoteButton.isSelected = self.model.isDownvoted
             return
         }
-        guard let score = self.model.score else { return }
-        guard var int = Int(score) else { return }
+        var int = self.model.score
         int -= 1
         // Update score label
         self.scoreLabel.text = String(int)
 
-        self.model.update(isDownvoted: true)
+        self.model.isDownvoted = true
         
         upVoteButton.isSelected = self.model.isUpvoted
         downVoteButton.isSelected = self.model.isDownvoted

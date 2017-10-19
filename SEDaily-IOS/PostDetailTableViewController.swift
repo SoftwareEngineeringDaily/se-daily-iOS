@@ -11,7 +11,7 @@ import Reusable
 
 class PostDetailTableViewController: UITableViewController {
     
-    var model: PodcastModel!
+    var model = PodcastViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +20,7 @@ class PostDetailTableViewController: UITableViewController {
 
         tableView.allowsSelection = false
         tableView.alwaysBounceVertical = false
-        tableView.estimatedRowHeight = 20
+        tableView.estimatedRowHeight = UITableViewAutomaticDimension
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.separatorStyle = .none
         tableView.showsHorizontalScrollIndicator = false
@@ -69,21 +69,5 @@ class PostDetailTableViewController: UITableViewController {
         cell.setupCell(model: model)
         
         return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        if cell.responds(to: #selector(setter: UITableViewCell.separatorInset)) {
-            cell.separatorInset = .zero
-        }
-        
-        if cell.responds(to: #selector(setter: UIView.preservesSuperviewLayoutMargins))  {
-            cell.preservesSuperviewLayoutMargins = false
-        }
-        
-        if cell.responds(to: #selector(setter: UIView.layoutMargins))  {
-            cell.layoutMargins = .zero
-        }
-        //        cell.isSelected = (indexPath as NSIndexPath).row == selectedRowIndex
     }
 }

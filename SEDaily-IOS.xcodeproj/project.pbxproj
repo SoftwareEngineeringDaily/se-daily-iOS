@@ -43,6 +43,8 @@
 		1686FC161F009EC00088A6C1 /* SEDaily_IOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */; };
 		169806A61F8EF3970075D8AD /* L10nEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169806A51F8EF08F0075D8AD /* L10nEnum.swift */; };
 		16B147B11F16BF9C00433A42 /* AudioViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B147B01F16BF9C00433A42 /* AudioViewManager.swift */; };
+		16CE698F1F98029E0057BAC3 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CE698E1F98029E0057BAC3 /* PostDetailViewController.swift */; };
+		16CE69911F9807CF0057BAC3 /* PodcastDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CE69901F9807CF0057BAC3 /* PodcastDescriptionView.swift */; };
 		16D67C4A1F33AC620065E838 /* AnswersTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D67C491F33AC620065E838 /* AnswersTracker.swift */; };
 		16D67C4D1F33AE370065E838 /* ObjectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D67C4C1F33AE370065E838 /* ObjectExtensions.swift */; };
 		16D766BA1F06B4850066C143 /* AudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D766B91F06B4850066C143 /* AudioView.swift */; };
@@ -104,6 +106,8 @@
 		1686FC171F009EC00088A6C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		169806A51F8EF08F0075D8AD /* L10nEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10nEnum.swift; sourceTree = "<group>"; };
 		16B147B01F16BF9C00433A42 /* AudioViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioViewManager.swift; sourceTree = "<group>"; };
+		16CE698E1F98029E0057BAC3 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
+		16CE69901F9807CF0057BAC3 /* PodcastDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastDescriptionView.swift; sourceTree = "<group>"; };
 		16D67C491F33AC620065E838 /* AnswersTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswersTracker.swift; sourceTree = "<group>"; };
 		16D67C4C1F33AE370065E838 /* ObjectExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectExtensions.swift; sourceTree = "<group>"; };
 		16D766B91F06B4850066C143 /* AudioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioView.swift; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 				167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */,
 				1649A7891F204EC6005C4A6E /* ContainerViewController.swift */,
 				01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */,
+				16CE698E1F98029E0057BAC3 /* PostDetailViewController.swift */,
+				16CE69901F9807CF0057BAC3 /* PodcastDescriptionView.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -633,6 +639,7 @@
 				164FE9D71F02CD99009419CA /* Extensions.swift in Sources */,
 				164FE9E51F02EE83009419CA /* API.swift in Sources */,
 				164FE9E91F02F049009419CA /* Stylesheet.swift in Sources */,
+				16CE698F1F98029E0057BAC3 /* PostDetailViewController.swift in Sources */,
 				1668124A1F350737007F288B /* GeneralCollectionViewController.swift in Sources */,
 				16B147B11F16BF9C00433A42 /* AudioViewManager.swift in Sources */,
 				1673B9011F27E70200923BB8 /* JustForYouCollectionViewController.swift in Sources */,
@@ -648,6 +655,7 @@
 				169806A61F8EF3970075D8AD /* L10nEnum.swift in Sources */,
 				01BB1D6D1F29999E004A912E /* PodcastPageViewController.swift in Sources */,
 				164FE9F11F030A2E009419CA /* PodcastModel.swift in Sources */,
+				16CE69911F9807CF0057BAC3 /* PodcastDescriptionView.swift in Sources */,
 				16307FCC1F8FEE3A001783CB /* PodcastViewModelController.swift in Sources */,
 				164FE9ED1F02F7E2009419CA /* UIButtonExtension.swift in Sources */,
 				16307FCA1F8FDD02001783CB /* Podcast.swift in Sources */,

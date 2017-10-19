@@ -29,7 +29,7 @@ target 'SEDaily-IOS' do
   pod 'Tabman'
   pod 'SwiftGen'
   pod 'Skeleton'
-  pod "SwiftSoup"
+  pod 'SwiftSoup'
   pod 'Disk'
 
   target 'SEDaily-IOSTests' do

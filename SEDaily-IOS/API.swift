@@ -378,7 +378,6 @@ extension API {
                     guard let jsonData = try? subJson.rawData() else { continue }
                     let newObject = try? JSONDecoder().decode(model.self, from: jsonData)
                     if var newObject = newObject {
-                        log.warning(newObject.title)
                         newObject.type = type
                         data.append(newObject)
                     }

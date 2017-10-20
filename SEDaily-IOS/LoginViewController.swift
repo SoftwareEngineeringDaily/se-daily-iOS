@@ -279,16 +279,12 @@ class LoginViewController: UIViewController {
         }
         
         // API Login Call
-        API.sharedInstance.login(username: email, password: password, completion: { (success) -> Void in
-            
+        API.sharedInstance.login(firstName: "", lastName: "", email: email, password: password) { (success) in
             if success == false {
-//                HUD.hide()
                 return
             }
-//            HUD.hide({ _ in
             self.navigationController?.popViewController()
-//            })
-        })
+        }
     }
     
     @objc func cancelButtonPressed() {
@@ -343,15 +339,11 @@ class LoginViewController: UIViewController {
         }
         
         // API Login Call
-        API.sharedInstance.register(username: email, password: password, completion: { (success) -> Void in
-            
+        API.sharedInstance.register(firstName: "", lastName: "", email: email, password: password, completion: { (success) -> Void in
             if success == false {
-//                HUD.hide()
                 return
             }
-//            HUD.hide({ _ in
-                self.navigationController?.popViewController()
-//            })
+            self.navigationController?.popViewController()
         })
     }
 }

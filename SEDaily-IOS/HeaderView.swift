@@ -163,7 +163,10 @@ extension HeaderView {
     }
     
     @objc func upvoteButtonPressed() {
-        guard User.checkAndAlert() else { return }
+        guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
+            Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
+            return
+        }
         let podcastId = model._id
         API.sharedInstance.upvotePodcast(podcastId: podcastId, completion: { (success, active) in
             guard success != nil else { return }
@@ -180,7 +183,10 @@ extension HeaderView {
     }
     
     @objc func downVoteButtonPressed() {
-        guard User.checkAndAlert() else { return }
+        guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
+            Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
+            return
+        }
         let podcastId = model._id
         API.sharedInstance.downvotePodcast(podcastId: podcastId, completion: { (success, active) in
             guard success != nil else { return }

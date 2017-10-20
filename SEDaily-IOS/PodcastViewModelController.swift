@@ -44,22 +44,70 @@ public class PodcastViewModelController {
             let newViewModels: [ViewModel?] = podcasts.map { model in
                 return ViewModel(podcast: model)
             }
+            
+            //@TODO: Do this in the background?
+            let filteredArray = newViewModels.filter { newPodcast in
+                let contains = self.viewModels.contains { currentPodcast in
+                    return newPodcast == currentPodcast
+                }
+                return !contains
+            }
+            
+            guard filteredArray.count != 0 else {
+                // OnFailure Nothing to append
+                //@TODO: Change handle error
+                onFailure(.ReturnedDataIsZero)
+                return
+            }
+            
+            self.viewModels.append(contentsOf: filteredArray)
+            onSucces()
+        }) { (error) in
+            //@TODO: make this not api error
+            onFailure(error)
+        }
+    }
+    
+    func fetchSearchData(searchTerm: String,
+                         createdAtBefore beforeDate: String = "",
+                         firstSearch: Bool,
+                         onSucces: @escaping SuccessCallback,
+                         onFailure: @escaping (APIError?) -> Void) {
+        if firstSearch {
+            self.viewModels = []
+        }
+        API.sharedInstance.getPostsWith(searchTerm: searchTerm, createdAtBefore: beforeDate, onSucces: { (podcasts) in
+            let newViewModels: [ViewModel?] = podcasts.map { model in
+                return ViewModel(podcast: model)
+            }
             let currentModelIDs = self.viewModels.map { $0?._id }
             guard !currentModelIDs.isEmpty else {
                 self.viewModels.append(contentsOf: newViewModels)
                 onSucces()
                 return
             }
-            let filteredArray = newViewModels.filter({ (podcast) -> Bool in
-                return currentModelIDs.contains(where: { (element) -> Bool in
-                    return podcast?._id != element
-                })
-            })
+            
+            //@TODO: Do this in the background?
+            let filteredArray = newViewModels.filter { newPodcast in
+                let contains = self.viewModels.contains { currentPodcast in
+                    return newPodcast == currentPodcast
+                }
+                return !contains
+            }
+
+            guard filteredArray.count != 0 else {
+                // OnFailure Nothing to append
+                //@TODO: Change handle error
+                onFailure(.GeneralFailure)
+                return
+            }
+
             self.viewModels.append(contentsOf: filteredArray)
             onSucces()
-        }) { (error) in
-            //@TODO: make this not api error
-            onFailure(error)
+        }) { (apiError) in
+            //@TODO: handle error
+            log.error(apiError?.localizedDescription)
+            onFailure(apiError)
         }
     }
 }

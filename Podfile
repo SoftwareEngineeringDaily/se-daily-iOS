@@ -7,8 +7,6 @@ target 'SEDaily-IOS' do
 
   # Pods for SEDaily-IOS
   pod 'Alamofire'
-  pod 'ObjectMapper'
-  pod 'RealmSwift'
   pod 'SwiftyJSON'
   pod 'SwifterSwift'
   pod 'SnapKit'

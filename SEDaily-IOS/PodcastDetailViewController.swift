@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PostDetailViewController: UIViewController {
+class PodcastDetailViewController: UIViewController {
     
     var model = PodcastViewModel()
     

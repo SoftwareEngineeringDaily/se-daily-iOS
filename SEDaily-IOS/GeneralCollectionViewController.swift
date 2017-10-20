@@ -108,6 +108,7 @@ class GeneralCollectionViewController: UICollectionViewController {
     
         return cell
     }
+    
     var loading = false
     let pageSize = 10
     let preloadMargin = 5
@@ -117,7 +118,7 @@ class GeneralCollectionViewController: UICollectionViewController {
     func checkPage(currentIndexPath: IndexPath, lastIndexPath: IndexPath, lastIdentifier: String) {
         let nextPage: Int = Int(currentIndexPath.item / self.pageSize) + 1
         let preloadIndex = nextPage * self.pageSize - self.preloadMargin
-        
+
         if (currentIndexPath.item >= preloadIndex && self.lastLoadedPage < nextPage) || currentIndexPath == lastIndexPath {
             // @TODO: Turn lastIdentifier into some T
             self.getData(lastIdentifier: lastIdentifier, nextPage: nextPage)
@@ -143,7 +144,7 @@ class GeneralCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
-            let vc = PostDetailViewController()
+            let vc = PodcastDetailViewController()
             vc.model = viewModel
             self.navigationController?.pushViewController(vc, animated: true)
         }

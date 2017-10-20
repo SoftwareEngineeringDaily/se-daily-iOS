@@ -13,6 +13,9 @@ private let reuseIdentifier = "reuseIdentifier"
 
 class SearchTableViewController: UITableViewController {
     
+    // ViewModelController
+    private let podcastViewModelController = PodcastViewModelController()
+    
     lazy var footerView: UIActivityIndicatorView = {
         let footerView = UIActivityIndicatorView(height: 44)
         footerView.width = self.tableView.width
@@ -20,13 +23,11 @@ class SearchTableViewController: UITableViewController {
         return footerView
     }()
     
-    var lastData = [PodcastModel]()
-    var filteredData = [PodcastModel]()
-    
     // MARK: - Paging
     let pageSize = 10
     let preloadMargin = 5
     var lastLoadedPage = 0
+    var loading = false
     
     let searchController = UISearchController(searchResultsController: nil)
     var searchText: String {
@@ -53,7 +54,6 @@ class SearchTableViewController: UITableViewController {
         
         searchController.searchBar.delegate = self
         searchController.searchBar.tintColor = Stylesheet.Colors.base
-        searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
 //        definesPresentationContext = true
@@ -89,65 +89,58 @@ class SearchTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredData.count
+        return podcastViewModelController.viewModelsCount
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! PodcastTableViewCell
-
-        let item = filteredData[indexPath.row]
-        // Configure the cell...
-        cell.setupCell(title: item.podcastName ?? "", imageURLString: item.imageURLString ?? nil)
-        
-        checkPage(indexPath: indexPath, item: item)
+    
+        if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
+            cell.viewModel = viewModel
+            if let lastIndexPath = self.tableView?.indexPathForLastRow {
+                if let lastItem = podcastViewModelController.viewModel(at: lastIndexPath.row) {
+                    self.checkPage(currentIndexPath: indexPath,
+                                   lastIndexPath: lastIndexPath,
+                                   lastIdentifier: lastItem.uploadDateiso8601)
+                }
+            }
+        }
 
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = filteredData[indexPath.row]
-        let vc = PostDetailTableViewController()
-        //@TODO: Fix this controller
-//        vc.model = item
-        self.navigationController?.pushViewController(vc, animated: true)
+        if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
+            let vc = PodcastDetailViewController()
+            vc.model = viewModel
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }
 
 extension SearchTableViewController {
     // MARK: Data/Paging
-    func checkPage(indexPath: IndexPath, item: PodcastModel) {
-        let nextPage: Int = Int(indexPath.item / pageSize) + 1
-        let preloadIndex = nextPage * pageSize - preloadMargin
+    func checkPage(currentIndexPath: IndexPath, lastIndexPath: IndexPath, lastIdentifier: String) {
+        let nextPage: Int = Int(currentIndexPath.item / self.pageSize) + 1
+        let preloadIndex = nextPage * self.pageSize - self.preloadMargin
         
-        if (indexPath.item >= preloadIndex && lastLoadedPage < nextPage) || indexPath == tableView?.indexPathForLastRow! {
-            if let lastDate = item.uploadDate {
-                guard !self.isLoading else { return }
-                self.isLoading = true
-                getData(page: nextPage, lastItemDate: lastDate)
-            }
+        if (currentIndexPath.item >= preloadIndex && self.lastLoadedPage < nextPage) || currentIndexPath == lastIndexPath {
+            self.getData(lastIdentifier: lastIdentifier, nextPage: nextPage, firstSearch: false)
         }
     }
     
-    func getData(page: Int = 0, lastItemDate: String = "") {
-        lastLoadedPage = page
-        loadData(lastItemDate: lastItemDate)
-    }
-    
-    func loadData(lastItemDate: String) {
-        API.sharedInstance.getPostsWith(searchTerm: searchText.lowercased(), createdAtBefore: lastItemDate) { (podcastArray) in
-            self.isLoading = false
-            //@TODO: add podcastArray?.count is 0 check
-            if let podcastArray = podcastArray {
-                for item in podcastArray {
-                    let existingObject = self.filteredData.filter { $0.podcastName! == item.podcastName! }.first
-                    guard existingObject == nil else { continue }
-                    self.filteredData.append(item)
-                }
-                // Guard for new data
-                guard self.lastData != podcastArray else { return }
-                self.lastData = podcastArray
+    func getData(lastIdentifier: String, nextPage: Int, firstSearch: Bool) {
+        guard self.loading == false else { return }
+        self.loading = true
+        podcastViewModelController.fetchSearchData(searchTerm: self.searchText.lowercased(), createdAtBefore: lastIdentifier, firstSearch: firstSearch, onSucces: {
+            self.loading = false
+            self.lastLoadedPage = nextPage
+            DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
+        }) { (apiError) in
+            self.loading = false
+            log.error(apiError)
         }
     }
 }
@@ -157,9 +150,7 @@ extension SearchTableViewController {
     
     func filterContentForSearchText(_ searchText: String) {
         guard !searchBarIsEmpty() else { return }
-        
-        self.isLoading = true
-        self.loadData(lastItemDate: "")
+        self.getData(lastIdentifier: "", nextPage: 0, firstSearch: true)
     }
     
     func searchBarIsEmpty() -> Bool {
@@ -175,17 +166,6 @@ extension SearchTableViewController {
 extension SearchTableViewController: UISearchBarDelegate {
     // MARK: - UISearchBar Delegate
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if !filteredData.isEmpty {
-            filteredData = [PodcastModel]()
-        }
         filterContentForSearchText(searchController.searchBar.text!)
     }
 }
-
-extension SearchTableViewController: UISearchResultsUpdating {
-    // MARK: - UISearchResultsUpdating Delegate
-    func updateSearchResults(for searchController: UISearchController) {
-
-    }
-}
-

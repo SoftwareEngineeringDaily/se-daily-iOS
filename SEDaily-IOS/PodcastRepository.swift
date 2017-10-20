@@ -46,6 +46,7 @@ enum RepositoryError: Error {
     case ErrorGettingFromAPI
     case ErrorGettingFromRealm
     case ReturnedDataEqualsLastData
+    case ReturnedDataIsZero
 }
     
 class PodcastRepository: Repository<Podcast> {
@@ -147,12 +148,10 @@ class PodcastRepository: Repository<Podcast> {
     }
 }
 
-import RealmSwift
 import Disk
 
 class PodcastDataSource: DataSource {
     typealias T = Podcast
-    let realm = try! Realm()
     
     func getAll(completion: @escaping ([T]?) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {

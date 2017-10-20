@@ -8,7 +8,6 @@
 
 import UIKit
 import Alamofire
-import RealmSwift
 import SwiftyJSON
 import Fabric
 import Crashlytics
@@ -67,15 +66,13 @@ class API {
 
 extension API {
     // MARK: Auth
-    func login(username: String, password: String, completion: @escaping (_ success: Bool?) -> Void) {
+    func login(firstName: String, lastName: String, email: String, password: String, completion: @escaping (_ success: Bool?) -> Void) {
         let urlString = rootURL + Endpoints.login
         
         let _headers : HTTPHeaders = [Headers.contentType:Headers.x_www_form_urlencoded]
         var params = [String: String]()
-        params[Params.username] = username
+        params[Params.username] = email
         params[Params.password] = password
-        
-        typealias model = PodcastModel
         
         Alamofire.request(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody , headers: _headers).responseJSON { response in
             switch response.result {
@@ -89,11 +86,9 @@ extension API {
                     return
                 }
                 
-                if let token = jsonResponse["token"] {
-                    let user = User()
-                    user.email = username
-                    user.token = token as? String
-                    user.save()
+                if let token = jsonResponse["token"] as? String {
+                    let user = User(firstName: firstName, lastName: lastName, email: email, token: token)
+                    UserManager.sharedInstance.setCurrentUser(to: user)
                     
                     NotificationCenter.default.post(name: .loginChanged, object: nil)
                     completion(true)
@@ -108,15 +103,13 @@ extension API {
         }
     }
     
-    func register(username: String, password: String, completion: @escaping (_ success: Bool?) -> Void) {
+    func register(firstName: String, lastName: String, email: String, password: String, completion: @escaping (_ success: Bool?) -> Void) {
         let urlString = rootURL + Endpoints.register
         
         let _headers : HTTPHeaders = [Headers.contentType:Headers.x_www_form_urlencoded]
         var params = [String: String]()
-        params[Params.username] = username
+        params[Params.username] = email
         params[Params.password] = password
-        
-        typealias model = PodcastModel
         
         Alamofire.request(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody , headers: _headers).responseJSON { response in
             switch response.result {
@@ -132,11 +125,9 @@ extension API {
                     return
                 }
                 
-                if let token = jsonResponse["token"] {
-                    let user = User()
-                    user.email = username
-                    user.token = token as? String
-                    user.save()
+                if let token = jsonResponse["token"] as? String {
+                    let user = User(firstName: firstName, lastName: lastName, email: email, token: token)
+                    UserManager.sharedInstance.setCurrentUser(to: user)
                     
                     NotificationCenter.default.post(name: .loginChanged, object: nil)
                     completion(true)
@@ -153,169 +144,49 @@ extension API {
 
 }
 
+typealias podcastModel = Podcast
+// MARK: Search
 extension API {
-    //MARK: Getters
-    func getPosts(type: String, createdAtBefore beforeDate: String = "", tags: String = "-1", categoires: String = "", completion: @escaping (_ hasChanges: Bool) -> Void) {
-        let urlString = rootURL + Endpoints.posts
-        
-        var params = [String: String]()
-        params[Params.type] = type
-        params[Params.createdAtBefore] = beforeDate
-        // @TODO: Allow for an array and join the array
-        if (tags != "-1") {
-            params[Params.tags] = tags
-        }
-        
-        if (categoires != "-1") {
-            params[Params.categories] = categoires
-        }
-
-        let user = User.getActiveUser()
-        guard let userToken = user.token else { return }
-        let _headers : HTTPHeaders = [
-            Headers.authorization:Headers.bearer + userToken,
-        ]
-        
-        typealias model = PodcastModel
-
-        Alamofire.request(urlString, method: .get, parameters: params, headers: _headers).responseArray { (response: DataResponse<[model]>) in
-            
-            // Variable to check if this function returns changes
-            var hasChanges = false
-            
-            switch response.result {
-            case .success:
-                let modelsArray = response.result.value
-                guard let array = modelsArray else { return }
-
-                if array.isEmpty {
-                    completion(hasChanges)
-                }
-                for item in array {
-                    hasChanges = true
-                    
-                    let realm = try! Realm()
-                    let existingItem = realm.object(ofType: model.self, forPrimaryKey: item.key)
-                    
-                    if item.key != existingItem?.key {
-                        switch type {
-                        case API.Types.top:
-                            item.isTop = true
-                        case API.Types.new:
-                            item.isNew = true
-                        default:
-                            break
-                        }
-                        item.save()
-                    }
-                    else {
-                        // Just update the existing item
-                        let recommended = existingItem!.isRecommended
-                        
-                        existingItem?.updateFrom(item: item)
-                        
-                        existingItem?.update(isRecommended: recommended)
-                        
-                        switch type {
-                        case API.Types.top:
-                            existingItem?.update(isTop: true)
-                        case API.Types.new:
-                            existingItem?.update(isNew: true)
-                        default:
-                            break
-                        }
-                    }
-                }
-                completion(hasChanges)
-            case .failure(let error):
-                log.error(error)
-                Tracker.logGeneralError(error: error)
-                completion(false)
-            }
-        }
-    }
-    
-    func getRecommendedPosts(createdAtBefore beforeDate: String = "", completion: @escaping (_ hasChanges: Bool) -> Void) {
-        let urlString = rootURL + Endpoints.recommendations
-        
-        let user = User.getActiveUser()
-        guard let userToken = user.token else { return }
-        let _headers : HTTPHeaders = [
-            Headers.authorization:Headers.bearer + userToken,
-        ]
-
-        typealias model = PodcastModel
-        
-        // Variable to check if this function returns changes
-        var hasChanges = false
-        
-        Alamofire.request(urlString, method: .get, parameters: nil, headers: _headers).responseArray { (response: DataResponse<[model]>) in
-            
-            switch response.result {
-                
-            case .success:
-                let modelsArray = response.result.value
-                guard let array = modelsArray else { return }
-
-                if array.isEmpty {
-                    completion(hasChanges)
-                }
-                
-                for item in array {
-                    hasChanges = true
-                    // Check if Achievement Model already exists
-                    let realm = try! Realm()
-                    let existingItem = realm.object(ofType: model.self, forPrimaryKey: item.key)
-                    
-                    if item.key != existingItem?.key {
-                        item.isRecommended = true
-                        item.save()
-                    }
-                    else {
-                        // Just update the existing item
-                        existingItem?.updateFrom(item: item)
-                        existingItem?.update(isRecommended: true)
-                    }
-                }
-                completion(hasChanges)
-                break
-            case .failure(let error):
-                log.error(error)
-                Tracker.logGeneralError(error: error)
-                completion(false)
-                break
-            }
-        }
-    }
-    
-    func getPostsWith(searchTerm: String, createdAtBefore beforeDate: String = "", completion: @escaping (_ posts: [PodcastModel]?) -> Void) {
+    func getPostsWith(searchTerm: String,
+                      createdAtBefore beforeDate: String = "",
+                      onSucces: @escaping ([Podcast]) -> Void,
+                      onFailure: @escaping (APIError?) -> Void) {
         let urlString = rootURL + Endpoints.posts
         
         var params = [String: String]()
         params[Params.search] = searchTerm
         params[Params.createdAtBefore] = beforeDate
         
-        let user = User.getActiveUser()
-        guard let userToken = user.token else { return }
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
         let _headers : HTTPHeaders = [
             Headers.authorization:Headers.bearer + userToken,
             ]
         
-        typealias model = PodcastModel
-        
-        Alamofire.request(urlString, method: .get, parameters: params, headers: _headers).responseArray { (response: DataResponse<[model]>) in
+        Alamofire.request(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
-                let modelsArray = response.result.value
-                guard let array = modelsArray else {
-                    completion(nil)
+                guard let responseData = response.data else {
+                    // Handle error here
+                    print("response has no data")
+                    onFailure(.NoResponseDataError)
                     return
                 }
-                completion(array)
+                
+                var data: [podcastModel] = []
+                let this = JSON(responseData)
+                for (_, subJson):(String, JSON) in this {
+                    guard let jsonData = try? subJson.rawData() else { continue }
+                    let newObject = try? JSONDecoder().decode(podcastModel.self, from: jsonData)
+                    if let newObject = newObject {
+                        data.append(newObject)
+                    }
+                }
+                onSucces(data)
             case .failure(let error):
-                log.error(error)
+                log.error(error.localizedDescription)
                 Tracker.logGeneralError(error: error)
-                completion(nil)
+                onFailure(.GeneralFailure)
             }
         }
     }
@@ -329,11 +200,10 @@ extension API {
                   categories: String = "",
                   onSucces: @escaping ([Podcast]) -> Void,
                   onFailure: @escaping (APIError?) -> Void) {
-        typealias model = Podcast
         var type = type
         
-        let user = User.getActiveUser()
-        guard let userToken = user.token else { return }
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
         let _headers : HTTPHeaders = [
             Headers.authorization:Headers.bearer + userToken,
             ]
@@ -372,11 +242,11 @@ extension API {
                     return
                 }
                 
-                var data: [model] = []
+                var data: [podcastModel] = []
                 let this = JSON(responseData)
                 for (_, subJson):(String, JSON) in this {
                     guard let jsonData = try? subJson.rawData() else { continue }
-                    let newObject = try? JSONDecoder().decode(model.self, from: jsonData)
+                    let newObject = try? JSONDecoder().decode(podcastModel.self, from: jsonData)
                     if var newObject = newObject {
                         newObject.type = type
                         data.append(newObject)
@@ -385,24 +255,24 @@ extension API {
                 onSucces(data)
             case .failure(let error):
                 log.error(error.localizedDescription)
+                Tracker.logGeneralError(error: error)
                 onFailure(.GeneralFailure)
             }
         }
     }
 }
 
+// MARK: Voting
 extension API {
     func upvotePodcast(podcastId: String, completion: @escaping (_ success: Bool?, _ active: Bool?) -> Void) {
         let urlString = rootURL + Endpoints.posts + "/" + podcastId + Endpoints.upvote
         
-        let user = User.getActiveUser()
-        guard let userToken = user.token else { return }
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
         let _headers : HTTPHeaders = [
             Headers.authorization:Headers.bearer + userToken,
             Headers.contentType:Headers.x_www_form_urlencoded
         ]
-
-        typealias model = PodcastModel
         
         Alamofire.request(urlString, method: .post, parameters: nil, encoding: URLEncoding.httpBody , headers: _headers).responseJSON { response in
             switch response.result {
@@ -430,14 +300,12 @@ extension API {
     func downvotePodcast(podcastId: String, completion: @escaping (_ success: Bool?, _ active: Bool?) -> Void) {
         let urlString = rootURL + Endpoints.posts + "/" + podcastId + Endpoints.downvote
         
-        let user = User.getActiveUser()
-        guard let userToken = user.token else { return }
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
         let _headers : HTTPHeaders = [
             Headers.authorization:Headers.bearer + userToken,
             Headers.contentType:Headers.x_www_form_urlencoded
         ]
-        
-        typealias model = PodcastModel
         
         Alamofire.request(urlString, method: .post, parameters: nil, encoding: URLEncoding.httpBody , headers: _headers).responseJSON { response in
             switch response.result {
@@ -460,34 +328,4 @@ extension API {
             }
         }
     }
-}
-
-extension API {
-    func createDefaultData() {
-//        User.createDefault()
-    }
-    
-//    func loadAllObjects() {
-//        self.getEvents()
-//        self.getPets()
-//        self.getShelters()
-//    }
-//    
-//    func loadLoggedInData() {
-//        self.getFavorites()
-//        self.getFollowingShelters()
-//    }
-//    
-//    func reloadAllObjects() {
-//        let realm = try! Realm()
-//        try! realm.write {
-//            realm.delete(EventModel.all())
-//            realm.delete(PetModel.all())
-//            realm.delete(ShelterModel.all())
-//            realm.delete(UpdatesModel.all())
-//        }
-//        self.getEvents()
-//        self.getPets()
-//        self.getShelters()
-//    }
 }

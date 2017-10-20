@@ -24,28 +24,19 @@
 		164FE9EB1F02F340009419CA /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9EA1F02F340009419CA /* Helpers.swift */; };
 		164FE9ED1F02F7E2009419CA /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9EC1F02F7E2009419CA /* UIButtonExtension.swift */; };
 		164FE9EF1F03065C009419CA /* NavigationControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9EE1F03065C009419CA /* NavigationControllerExtension.swift */; };
-		164FE9F11F030A2E009419CA /* PodcastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9F01F030A2E009419CA /* PodcastModel.swift */; };
 		165484551F902D3F005AEA23 /* GeneralCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165484541F902D3F005AEA23 /* GeneralCollectionViewController.swift */; };
-		165A5B681F7C32FD00FDE80B /* TempObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165A5B671F7C32FD00FDE80B /* TempObjectMapper.swift */; };
 		166036211F266FF300A22B7B /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166036201F266FF300A22B7B /* Notifications.swift */; };
-		1668124A1F350737007F288B /* GeneralCollectionViewControllerTEMP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166812491F350737007F288B /* GeneralCollectionViewControllerTEMP.swift */; };
 		1672FAC41F06C141008445B1 /* NotificationCenterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */; };
-		1673B8FF1F27E56100923BB8 /* TopCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1673B8FE1F27E56100923BB8 /* TopCollectionViewController.swift */; };
-		1673B9011F27E70200923BB8 /* JustForYouCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1673B9001F27E70200923BB8 /* JustForYouCollectionViewController.swift */; };
-		167AFAB21F043CF600A1332F /* PostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */; };
-		167AFAB51F043ED500A1332F /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB41F043ED500A1332F /* DetailTableViewCell.swift */; };
 		167AFAB71F043F1100A1332F /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB61F043F1100A1332F /* HeaderView.swift */; };
-		167AFAB91F04624E00A1332F /* SingleLabelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB81F04624E00A1332F /* SingleLabelTableViewCell.swift */; };
 		1686FC011F009EC00088A6C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1686FC001F009EC00088A6C1 /* AppDelegate.swift */; };
 		1686FC061F009EC00088A6C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC041F009EC00088A6C1 /* Main.storyboard */; };
 		1686FC081F009EC00088A6C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC071F009EC00088A6C1 /* Assets.xcassets */; };
 		1686FC0B1F009EC00088A6C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC091F009EC00088A6C1 /* LaunchScreen.storyboard */; };
 		1686FC161F009EC00088A6C1 /* SEDaily_IOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */; };
 		16B147B11F16BF9C00433A42 /* AudioViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B147B01F16BF9C00433A42 /* AudioViewManager.swift */; };
-		16CE698F1F98029E0057BAC3 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CE698E1F98029E0057BAC3 /* PostDetailViewController.swift */; };
+		16CE698F1F98029E0057BAC3 /* PodcastDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CE698E1F98029E0057BAC3 /* PodcastDetailViewController.swift */; };
 		16CE69911F9807CF0057BAC3 /* PodcastDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CE69901F9807CF0057BAC3 /* PodcastDescriptionView.swift */; };
 		16D67C4A1F33AC620065E838 /* AnswersTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D67C491F33AC620065E838 /* AnswersTracker.swift */; };
-		16D67C4D1F33AE370065E838 /* ObjectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D67C4C1F33AE370065E838 /* ObjectExtensions.swift */; };
 		16D766BA1F06B4850066C143 /* AudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D766B91F06B4850066C143 /* AudioView.swift */; };
 		16F3A1BA1F90918D00364709 /* PodcastRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F3A1B91F90918D00364709 /* PodcastRepository.swift */; };
 		16FA84031F8D323700A45D9B /* SkeletonCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FA84021F8D323700A45D9B /* SkeletonCollectionView.swift */; };
@@ -81,18 +72,10 @@
 		164FE9EA1F02F340009419CA /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		164FE9EC1F02F7E2009419CA /* UIButtonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 		164FE9EE1F03065C009419CA /* NavigationControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationControllerExtension.swift; sourceTree = "<group>"; };
-		164FE9F01F030A2E009419CA /* PodcastModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastModel.swift; sourceTree = "<group>"; };
 		165484541F902D3F005AEA23 /* GeneralCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralCollectionViewController.swift; sourceTree = "<group>"; };
-		165A5B671F7C32FD00FDE80B /* TempObjectMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempObjectMapper.swift; sourceTree = "<group>"; };
 		166036201F266FF300A22B7B /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
-		166812491F350737007F288B /* GeneralCollectionViewControllerTEMP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralCollectionViewControllerTEMP.swift; sourceTree = "<group>"; };
 		1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterExtension.swift; sourceTree = "<group>"; };
-		1673B8FE1F27E56100923BB8 /* TopCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopCollectionViewController.swift; sourceTree = "<group>"; };
-		1673B9001F27E70200923BB8 /* JustForYouCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JustForYouCollectionViewController.swift; sourceTree = "<group>"; };
-		167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewController.swift; sourceTree = "<group>"; };
-		167AFAB41F043ED500A1332F /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		167AFAB61F043F1100A1332F /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
-		167AFAB81F04624E00A1332F /* SingleLabelTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLabelTableViewCell.swift; sourceTree = "<group>"; };
 		1686FBFD1F009EC00088A6C1 /* SEDaily-IOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SEDaily-IOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1686FC001F009EC00088A6C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1686FC051F009EC00088A6C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -103,10 +86,9 @@
 		1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SEDaily_IOSTests.swift; sourceTree = "<group>"; };
 		1686FC171F009EC00088A6C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		16B147B01F16BF9C00433A42 /* AudioViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioViewManager.swift; sourceTree = "<group>"; };
-		16CE698E1F98029E0057BAC3 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
+		16CE698E1F98029E0057BAC3 /* PodcastDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastDetailViewController.swift; sourceTree = "<group>"; };
 		16CE69901F9807CF0057BAC3 /* PodcastDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastDescriptionView.swift; sourceTree = "<group>"; };
 		16D67C491F33AC620065E838 /* AnswersTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswersTracker.swift; sourceTree = "<group>"; };
-		16D67C4C1F33AE370065E838 /* ObjectExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectExtensions.swift; sourceTree = "<group>"; };
 		16D766B91F06B4850066C143 /* AudioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioView.swift; sourceTree = "<group>"; };
 		16F3A1B91F90918D00364709 /* PodcastRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastRepository.swift; sourceTree = "<group>"; };
 		16FA84021F8D323700A45D9B /* SkeletonCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonCollectionView.swift; sourceTree = "<group>"; };
@@ -156,16 +138,6 @@
 			name = PodcastModels;
 			sourceTree = "<group>";
 		};
-		164FE9DA1F02DAA5009419CA /* CollectionViews */ = {
-			isa = PBXGroup;
-			children = (
-				1673B8FE1F27E56100923BB8 /* TopCollectionViewController.swift */,
-				1673B9001F27E70200923BB8 /* JustForYouCollectionViewController.swift */,
-				166812491F350737007F288B /* GeneralCollectionViewControllerTEMP.swift */,
-			);
-			name = CollectionViews;
-			sourceTree = "<group>";
-		};
 		164FE9DD1F02DAB8009419CA /* CollectionViewCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,10 +161,9 @@
 			isa = PBXGroup;
 			children = (
 				164FE9E01F02EE67009419CA /* LoginViewController.swift */,
-				167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */,
 				1649A7891F204EC6005C4A6E /* ContainerViewController.swift */,
 				01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */,
-				16CE698E1F98029E0057BAC3 /* PostDetailViewController.swift */,
+				16CE698E1F98029E0057BAC3 /* PodcastDetailViewController.swift */,
 				16CE69901F9807CF0057BAC3 /* PodcastDescriptionView.swift */,
 			);
 			name = ViewControllers;
@@ -201,7 +172,6 @@
 		164FE9E21F02EE71009419CA /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				164FE9F01F030A2E009419CA /* PodcastModel.swift */,
 				164FE9E61F02F02F009419CA /* UserModel.swift */,
 			);
 			name = Models;
@@ -225,8 +195,6 @@
 		167AFAB31F043E8F00A1332F /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				167AFAB41F043ED500A1332F /* DetailTableViewCell.swift */,
-				167AFAB81F04624E00A1332F /* SingleLabelTableViewCell.swift */,
 				161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */,
 			);
 			name = TableViewCell;
@@ -263,7 +231,6 @@
 				164C71041F021AC8003803BC /* CustomTabViewController.swift */,
 				1686FC071F009EC00088A6C1 /* Assets.xcassets */,
 				164FE9DD1F02DAB8009419CA /* CollectionViewCells */,
-				164FE9DA1F02DAA5009419CA /* CollectionViews */,
 				164FE9E31F02EE77009419CA /* Helpers */,
 				1686FC091F009EC00088A6C1 /* LaunchScreen.storyboard */,
 				1686FC041F009EC00088A6C1 /* Main.storyboard */,
@@ -271,9 +238,7 @@
 				167AFAB31F043E8F00A1332F /* TableViewCell */,
 				164FE9DF1F02EE4E009419CA /* ViewControllers */,
 				164FE9DE1F02DACA009419CA /* Views */,
-				16D67C4C1F33AE370065E838 /* ObjectExtensions.swift */,
 				161F3DE51F61F73D00A8F825 /* SearchTableViewController.swift */,
-				165A5B671F7C32FD00FDE80B /* TempObjectMapper.swift */,
 				165484541F902D3F005AEA23 /* GeneralCollectionViewController.swift */,
 			);
 			path = "SEDaily-IOS";
@@ -533,11 +498,8 @@
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/KoalaTeaFlowLayout/KoalaTeaFlowLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/KoalaTeaPlayer/KoalaTeaPlayer.framework",
-				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
-				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Reusable/Reusable.framework",
 				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/Skeleton/Skeleton.framework",
@@ -561,11 +523,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KoalaTeaFlowLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KoalaTeaPlayer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reusable.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Skeleton.framework",
@@ -590,36 +549,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				167AFAB51F043ED500A1332F /* DetailTableViewCell.swift in Sources */,
 				164FE9E11F02EE67009419CA /* LoginViewController.swift in Sources */,
 				1649A78A1F204EC6005C4A6E /* ContainerViewController.swift in Sources */,
 				164FE9EF1F03065C009419CA /* NavigationControllerExtension.swift in Sources */,
 				165484551F902D3F005AEA23 /* GeneralCollectionViewController.swift in Sources */,
-				167AFAB21F043CF600A1332F /* PostDetailTableViewController.swift in Sources */,
 				161F3DE61F61F73D00A8F825 /* SearchTableViewController.swift in Sources */,
-				16D67C4D1F33AE370065E838 /* ObjectExtensions.swift in Sources */,
 				164FE9D91F02D611009419CA /* CollectionReusableView.swift in Sources */,
-				167AFAB91F04624E00A1332F /* SingleLabelTableViewCell.swift in Sources */,
 				167AFAB71F043F1100A1332F /* HeaderView.swift in Sources */,
 				16D67C4A1F33AC620065E838 /* AnswersTracker.swift in Sources */,
 				164FE9D71F02CD99009419CA /* Extensions.swift in Sources */,
 				164FE9E51F02EE83009419CA /* API.swift in Sources */,
 				164FE9E91F02F049009419CA /* Stylesheet.swift in Sources */,
-				16CE698F1F98029E0057BAC3 /* PostDetailViewController.swift in Sources */,
-				1668124A1F350737007F288B /* GeneralCollectionViewControllerTEMP.swift in Sources */,
+				16CE698F1F98029E0057BAC3 /* PodcastDetailViewController.swift in Sources */,
 				16B147B11F16BF9C00433A42 /* AudioViewManager.swift in Sources */,
-				1673B9011F27E70200923BB8 /* JustForYouCollectionViewController.swift in Sources */,
-				1673B8FF1F27E56100923BB8 /* TopCollectionViewController.swift in Sources */,
 				164C71051F021AC8003803BC /* CustomTabViewController.swift in Sources */,
 				164FE9DC1F02DAB5009419CA /* PodcastCollectionViewCell.swift in Sources */,
-				165A5B681F7C32FD00FDE80B /* TempObjectMapper.swift in Sources */,
 				16D766BA1F06B4850066C143 /* AudioView.swift in Sources */,
 				164FE9EB1F02F340009419CA /* Helpers.swift in Sources */,
 				16FA84031F8D323700A45D9B /* SkeletonCollectionView.swift in Sources */,
 				166036211F266FF300A22B7B /* Notifications.swift in Sources */,
 				1672FAC41F06C141008445B1 /* NotificationCenterExtension.swift in Sources */,
 				01BB1D6D1F29999E004A912E /* PodcastPageViewController.swift in Sources */,
-				164FE9F11F030A2E009419CA /* PodcastModel.swift in Sources */,
 				16CE69911F9807CF0057BAC3 /* PodcastDescriptionView.swift in Sources */,
 				16307FCC1F8FEE3A001783CB /* PodcastViewModelController.swift in Sources */,
 				164FE9ED1F02F7E2009419CA /* UIButtonExtension.swift in Sources */,

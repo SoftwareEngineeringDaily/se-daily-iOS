@@ -47,7 +47,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
         let rightBarButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(self.leftBarButtonPressed))
         self.navigationItem.rightBarButtonItem = rightBarButton
         
-        switch User.getActiveUser().isLoggedIn() {
+        switch UserManager.sharedInstance.getActiveUser().isLoggedIn() {
         case false:
             let leftBarButton = UIBarButtonItem(title: "Login", style: .done, target: self, action: #selector(self.loginButtonPressed))
             self.navigationItem.leftBarButtonItem = leftBarButton
@@ -70,7 +70,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     }
     
     @objc func logoutButtonPressed() {
-        User.logout()
+        UserManager.sharedInstance.logoutUser()
         self.setupNavBar()
     }
     

@@ -9,7 +9,6 @@
 
 import UIKit
 import SwifterSwift
-import RealmSwift
 
 extension Helpers {
     static var alert: UIAlertController!

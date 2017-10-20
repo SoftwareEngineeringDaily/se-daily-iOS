@@ -17,6 +17,20 @@ class PodcastTableViewCell: UITableViewCell, Reusable {
     private var cellLabel: UILabel!
     private var cellImageView: UIImageView!
     
+    var viewModel: PodcastViewModel = PodcastViewModel() {
+        willSet {
+            guard newValue != self.viewModel else { return }
+        }
+        didSet {
+            self.cellLabel.text = viewModel.podcastTitle
+            
+            if let url = viewModel.featuredImageURL {
+                self.cellImageView.kf.indicatorType = .activity
+                self.cellImageView.kf.setImage(with: url)
+            }
+        }
+    }
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         cellImageView = UIImageView(leftInset: 10, height: 75)
@@ -35,15 +49,5 @@ class PodcastTableViewCell: UITableViewCell, Reusable {
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:)")
-    }
-    
-    func setupCell(title: String, imageURLString: String?) {
-        self.cellLabel.text = title
-        
-        guard let imageURLString = imageURLString else { return }
-        if let url = URL(string: imageURLString) {
-            self.cellImageView.kf.indicatorType = .activity
-            self.cellImageView.kf.setImage(with: url)
-        }
     }
 }

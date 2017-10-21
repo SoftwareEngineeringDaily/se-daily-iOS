@@ -117,7 +117,7 @@ class AudioViewManager: NSObject {
         vc.view.addSubview(audioView!)
         
         audioView?.width = UIScreen.main.bounds.width
-        audioView?.height = 110.calculateHeight()
+        audioView?.height = UIView.getValueScaledByScreenHeightFor(baseValue: 110)
         audioView?.center.x = vc.view.center.x
         audioView?.frame.origin.y = UIScreen.main.bounds.height
 

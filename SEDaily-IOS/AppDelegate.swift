@@ -71,10 +71,6 @@ extension AppDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         let rootVC = ContainerViewController()
         rootVC.view.backgroundColor = .white
-//        let navVC = UINavigationController(rootViewController: rootVC)
-//        navVC.view.backgroundColor = .white
-//        navVC.navigationBar.isTranslucent = false
-//        window!.rootViewController = navVC
         window!.rootViewController = rootVC
         window!.makeKeyAndVisible()
     }

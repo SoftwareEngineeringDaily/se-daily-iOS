@@ -55,20 +55,9 @@ class LoginViewController: UIViewController {
         return .lightContent
     }
     
-    override func viewDidLayoutSubviews() {
-//        if User.getActiveUser().isLoggedIn() != false {
-//            
-//            // If so move on to the next screen
-////            let vc = CustomTabViewController()
-////            self.navigationController?.pushViewController(vc, animated: true)
-//            User.logout()
-//            self.navigationController?.popViewController()
-//        }
-    }
-    
     func addBottomBorderToView(view: UIView, height: CGFloat, width: CGFloat) {
         let border = CALayer()
-        let borderWidth = CGFloat(2.0.calculateHeight())
+        let borderWidth = CGFloat(UIView.getValueScaledByScreenHeightFor(baseValue: 2))
         border.borderColor = Stylesheet.Colors.secondaryColor.cgColor
         border.frame = CGRect(x: 0, y: height - borderWidth, width:  width, height: height)
         
@@ -148,43 +137,45 @@ class LoginViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(50)
             
-            let height = 200.calculateHeight()
+            let height = UIView.getValueScaledByScreenHeightFor(baseValue: 200)
             make.height.equalTo(height)
             make.width.equalTo(height)
         }
     }
     
     private func setupTextFields() {
+        let width = UIView.getValueScaledByScreenWidthFor(baseValue: 316)
+        let height = UIView.getValueScaledByScreenHeightFor(baseValue: 36)
         emailTextField.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(316.calculateWidth())
-            make.height.equalTo(36.calculateHeight())
+            make.width.equalTo(width)
+            make.height.equalTo(height)
         }
         
         passwordTextField.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(316.calculateWidth())
-            make.height.equalTo(36.calculateHeight())
+            make.width.equalTo(width)
+            make.height.equalTo(height)
         }
         
         passwordConfirmTextField.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(316.calculateWidth())
-            make.height.equalTo(36.calculateHeight())
+            make.width.equalTo(width)
+            make.height.equalTo(height)
         }
         
         firstNameTextField.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(316.calculateWidth())
-            make.height.equalTo(36.calculateHeight())
+            make.width.equalTo(width)
+            make.height.equalTo(height)
         }
         
         lastNameTextField.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(316.calculateWidth())
-            make.height.equalTo(36.calculateHeight())
+            make.width.equalTo(width)
+            make.height.equalTo(height)
         }
         
-        addBottomBorderToView(view: emailTextField, height: 36.calculateHeight(), width: 316.calculateWidth())
-        addBottomBorderToView(view: passwordTextField, height: 36.calculateHeight(), width: 316.calculateWidth())
-        addBottomBorderToView(view: passwordConfirmTextField, height: 36.calculateHeight(), width: 316.calculateWidth())
-        addBottomBorderToView(view: firstNameTextField, height: 36.calculateHeight(), width: 316.calculateWidth())
-        addBottomBorderToView(view: lastNameTextField, height: 36.calculateHeight(), width: 316.calculateWidth())
+        addBottomBorderToView(view: emailTextField, height: height, width: width)
+        addBottomBorderToView(view: passwordTextField, height: height, width: width)
+        addBottomBorderToView(view: passwordConfirmTextField, height: height, width: width)
+        addBottomBorderToView(view: firstNameTextField, height: height, width: width)
+        addBottomBorderToView(view: lastNameTextField, height: height, width: width)
         
         emailTextField.placeholder = "Email"
         emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
@@ -220,39 +211,43 @@ class LoginViewController: UIViewController {
     }
     
     private func setupButtons() {
+        let width = UIView.getValueScaledByScreenWidthFor(baseValue: 94)
+        let height = UIView.getValueScaledByScreenHeightFor(baseValue: 42)
         loginButton.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(94.calculateWidth())
-            make.height.equalTo(42.calculateHeight())
+            make.width.equalTo(width)
+            make.height.equalTo(height)
         }
         
         cancelButton.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(94.calculateWidth())
-            make.height.equalTo(42.calculateHeight())
+            make.width.equalTo(width)
+            make.height.equalTo(height)
         }
         
         signUpButton.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(94.calculateWidth())
-            make.height.equalTo(42.calculateHeight())
+            make.width.equalTo(width)
+            make.height.equalTo(height)
         }
+        
+        let cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 4)
         
         loginButton.setTitle("Login", for: .normal)
         loginButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
         loginButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
         loginButton.addTarget(self, action: #selector(self.loginButtonPressed), for: .touchUpInside)
-        loginButton.cornerRadius = 4.calculateWidth()
+        loginButton.cornerRadius = cornerRadius
         
         cancelButton.setTitle("Cancel", for: .normal)
         cancelButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
         cancelButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
         cancelButton.addTarget(self, action: #selector(self.cancelButtonPressed), for: .touchUpInside)
-        cancelButton.cornerRadius = 4.calculateWidth()
+        cancelButton.cornerRadius = cornerRadius
         cancelButton.isHidden = true
         
         signUpButton.setTitle("Sign Up", for: .normal)
         signUpButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
         signUpButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
         signUpButton.addTarget(self, action: #selector(self.signUpButtonPressed), for: .touchUpInside)
-        signUpButton.cornerRadius = 4.calculateWidth()
+        signUpButton.cornerRadius = cornerRadius
     }
     
     @objc func loginButtonPressed() {

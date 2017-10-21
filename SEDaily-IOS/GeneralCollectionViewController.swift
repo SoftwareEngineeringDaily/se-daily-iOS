@@ -68,6 +68,12 @@ class GeneralCollectionViewController: UICollectionViewController {
     }
     
     @objc func loginObserver() {
+        if self.type == .recommended {
+            self.podcastViewModelController.clearViewModels()
+            DispatchQueue.main.async {
+                self.collectionView?.reloadData()
+            }
+        }
         self.getData(lastIdentifier: "", nextPage: 0)
     }
 
@@ -128,7 +134,7 @@ class GeneralCollectionViewController: UICollectionViewController {
     func getData(lastIdentifier: String, nextPage: Int) {
         guard self.loading == false else { return }
         self.loading = true
-        podcastViewModelController.fetchData(type: self.type.rawValue,createdAtBefore: lastIdentifier, tags: self.tags, categories: self.categories, page: nextPage, onSucces: {
+        podcastViewModelController.fetchData(type: self.type.rawValue, createdAtBefore: lastIdentifier, tags: self.tags, categories: self.categories, page: nextPage, onSucces: {
             self.loading = false
             self.lastLoadedPage = nextPage
             DispatchQueue.main.async {

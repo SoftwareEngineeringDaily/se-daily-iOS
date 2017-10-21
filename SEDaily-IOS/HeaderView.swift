@@ -45,28 +45,28 @@ class HeaderView: UIView {
         setupPlayView()
         
         titleLabel.snp.makeConstraints{ (make) in
-            make.bottom.equalTo(playView.snp.top).offset(-60.calculateHeight())
-            make.left.equalToSuperview().offset(15.calculateHeight())
-            make.right.equalToSuperview().inset(15.calculateHeight())
+            make.bottom.equalTo(playView.snp.top).offset(UIView.getValueScaledByScreenHeightFor(baseValue: -60))
+            make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenHeightFor(baseValue: 15))
         }
         
         dateLabel.snp.makeConstraints{ (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(10.calculateHeight())
-            make.left.equalToSuperview().offset(15.calculateHeight())
-            make.right.equalToSuperview().inset(15.calculateHeight())
+            make.top.equalTo(titleLabel.snp.bottom).offset(UIView.getValueScaledByScreenHeightFor(baseValue: 10))
+            make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenHeightFor(baseValue: 15))
         }
         
         setupLabels()
     }
     
     func setupLabels() {
-        titleLabel.font = UIFont(font: .helveticaNeue, size: 20.calculateHeight())
+        titleLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 20))
         titleLabel.adjustsFontSizeToFitWidth = false
         titleLabel.minimumScaleFactor = 0.25
         titleLabel.numberOfLines = 0
         titleLabel.textColor = Stylesheet.Colors.white
         
-        dateLabel.font = UIFont(font: .helveticaNeue, size: 16.calculateHeight())
+        dateLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 16))
         dateLabel.adjustsFontSizeToFitWidth = false
         dateLabel.minimumScaleFactor = 0.25
         dateLabel.numberOfLines = 1
@@ -80,27 +80,27 @@ class HeaderView: UIView {
         playView.snp.makeConstraints{ (make) in
             make.bottom.equalToSuperview()
             make.width.equalToSuperview()
-            make.height.equalTo(65.calculateHeight())
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 65))
         }
         
         playView.addSubview(playButton)
         playButton.setTitle("Play", for: .normal)
         playButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
         playButton.addTarget(self, action: #selector(self.playButtonPressed), for: .touchUpInside)
-        playButton.cornerRadius = 4.calculateWidth()
+        playButton.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 4)
         
         playButton.snp.makeConstraints{ (make) in
             make.centerY.equalToSuperview()
-            make.right.equalToSuperview().inset(15.calculateWidth())
-            make.width.equalTo(84.calculateWidth())
-            make.height.equalTo(42.calculateHeight())
+            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 84))
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 42))
         }
         
         playView.addSubview(voteView)
         voteView.snp.makeConstraints{ (make) in
             make.centerY.equalToSuperview()
-            make.left.equalToSuperview().inset(15.calculateWidth())
-            make.width.equalTo((35 * 3).calculateWidth())
+            make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: (35 * 3)))
             make.height.equalToSuperview()
         }
         
@@ -118,15 +118,16 @@ class HeaderView: UIView {
         
         scoreLabel.textAlignment = .center
         scoreLabel.baselineAdjustment = .alignCenters
-        scoreLabel.font = UIFont(font: .helveticaNeue, size: 24.calculateWidth())
+        scoreLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 24))
 
-        downVoteButton.setIcon(icon: .fontAwesome(.thumbsODown), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.offBlack, forState: .normal)
-        downVoteButton.setIcon(icon: .fontAwesome(.thumbsDown), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.base, forState: .selected)
+        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 35)
+        downVoteButton.setIcon(icon: .fontAwesome(.thumbsODown), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
+        downVoteButton.setIcon(icon: .fontAwesome(.thumbsDown), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
         downVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
         downVoteButton.addTarget(self, action: #selector(self.downVoteButtonPressed), for: .touchUpInside)
         
-        upVoteButton.setIcon(icon: .fontAwesome(.thumbsOUp), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.offBlack, forState: .normal)
-        upVoteButton.setIcon(icon: .fontAwesome(.thumbsUp), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.base, forState: .selected)
+        upVoteButton.setIcon(icon: .fontAwesome(.thumbsOUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
+        upVoteButton.setIcon(icon: .fontAwesome(.thumbsUp), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
         upVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
         upVoteButton.addTarget(self, action: #selector(self.upvoteButtonPressed), for: .touchUpInside)
     }

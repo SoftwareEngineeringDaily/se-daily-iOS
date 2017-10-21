@@ -111,7 +111,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     }
     
     func setupTitleView() {
-        let height = 40.calculateHeight()
+        let height = UIView.getValueScaledByScreenHeightFor(baseValue: 40)
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: height, height: height))
         imageView.contentMode = .scaleAspectFit
         imageView.image = #imageLiteral(resourceName: "Logo_BarButton")

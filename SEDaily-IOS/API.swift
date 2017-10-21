@@ -207,6 +207,7 @@ extension API {
         let _headers : HTTPHeaders = [
             Headers.authorization:Headers.bearer + userToken,
             ]
+
         if userToken == "" && type == PodcastTypes.recommended.rawValue {
             type = PodcastTypes.top.rawValue
         }

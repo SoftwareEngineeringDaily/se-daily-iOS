@@ -12,7 +12,7 @@
 //Uninstalls
 //Returning Users
 //Follows
-//FAvorites
+//Favorites
 
 import Foundation
 import Crashlytics

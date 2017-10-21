@@ -32,17 +32,30 @@ public class PodcastViewModelController {
         return viewModels[index]
     }
     
+    func clearViewModels() {
+        self.viewModels = []
+    }
+    
     func fetchData(type: String = "",
                    createdAtBefore beforeDate: String = "",
                    tags: [Int] = [],
                    categories: [Int] = [],
                    page: Int = 0,
+                   clearData: Bool = false,
                    onSucces: @escaping SuccessCallback,
                    onFailure: @escaping ErrorCallback) {
+        if clearData {
+            self.clearViewModels()
+        }
         let filterObject = FilterObject(type: type, tags: tags, lastDate: beforeDate, categories: categories)
         repository.getData(filterObject: filterObject, onSucces: { (podcasts) in
             let newViewModels: [ViewModel?] = podcasts.map { model in
                 return ViewModel(podcast: model)
+            }
+            guard !self.viewModels.isEmpty else {
+                self.viewModels.append(contentsOf: newViewModels)
+                onSucces()
+                return
             }
             
             //@TODO: Do this in the background?
@@ -74,14 +87,14 @@ public class PodcastViewModelController {
                          onSucces: @escaping SuccessCallback,
                          onFailure: @escaping (APIError?) -> Void) {
         if firstSearch {
-            self.viewModels = []
+            self.clearViewModels()
         }
         API.sharedInstance.getPostsWith(searchTerm: searchTerm, createdAtBefore: beforeDate, onSucces: { (podcasts) in
             let newViewModels: [ViewModel?] = podcasts.map { model in
                 return ViewModel(podcast: model)
             }
-            let currentModelIDs = self.viewModels.map { $0?._id }
-            guard !currentModelIDs.isEmpty else {
+
+            guard !self.viewModels.isEmpty else {
                 self.viewModels.append(contentsOf: newViewModels)
                 onSucces()
                 return
@@ -101,7 +114,7 @@ public class PodcastViewModelController {
                 onFailure(.GeneralFailure)
                 return
             }
-
+            
             self.viewModels.append(contentsOf: filteredArray)
             onSucces()
         }) { (apiError) in

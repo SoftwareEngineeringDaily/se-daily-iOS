@@ -148,13 +148,12 @@ class AudioView: UIView {
         containerView.addSubview(podcastLabel)
         
         podcastLabel.snp.makeConstraints { (make) -> Void in
-            make.left.equalToSuperview().inset(60.calculateWidth())
-            make.right.equalToSuperview().inset(60.calculateWidth())
+            make.left.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 60))
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().inset(-30.calculateHeight())
+            make.centerY.equalToSuperview().inset(UIView.getValueScaledByScreenHeightFor(baseValue: -30))
         }
         
-        podcastLabel.font = UIFont.systemFont(ofSize: 16.calculateWidth())
+        podcastLabel.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 16))
         podcastLabel.numberOfLines = 0
         podcastLabel.textAlignment = .center
         
@@ -165,8 +164,8 @@ class AudioView: UIView {
         stackView.distribution = .fillEqually
         
         stackView.snp.makeConstraints { (make) -> Void in
-            make.height.equalTo(70.calculateHeight())
-            make.width.equalTo((50 * 5).calculateHeight())
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 70))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: (50 * 5)))
             make.top.equalTo(podcastLabel.snp.bottom)
             make.centerX.equalToSuperview()
         }
@@ -177,7 +176,7 @@ class AudioView: UIView {
         stackView.addArrangedSubview(pauseButton)
         stackView.addArrangedSubview(skipForwardButton)
         
-        let iconHeight = (70 / 2).calculateHeight()
+        let iconHeight = UIView.getValueScaledByScreenHeightFor(baseValue: (70 / 2))
         
         skipBackwardbutton.setImage(#imageLiteral(resourceName: "Backward"), for: .normal)
         skipBackwardbutton.height = iconHeight
@@ -235,7 +234,7 @@ class AudioView: UIView {
         
         playbackSlider.snp.makeConstraints { (make) -> Void in
             make.top.equalToSuperview().inset(-10)
-            make.height.equalTo(20.calculateHeight())
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
             make.left.right.equalToSuperview()
         }
         
@@ -260,7 +259,7 @@ class AudioView: UIView {
         
         bufferBackgroundSlider.snp.makeConstraints { (make) -> Void in
             make.top.equalToSuperview().inset(-10)
-            make.height.equalTo(20.calculateHeight())
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
             make.left.right.equalToSuperview()
         }
         
@@ -278,7 +277,7 @@ class AudioView: UIView {
         
         bufferSlider.snp.makeConstraints { (make) -> Void in
             make.top.equalToSuperview().inset(-10)
-            make.height.equalTo(20.calculateHeight())
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
             make.left.right.equalToSuperview()
         }
         
@@ -300,17 +299,17 @@ class AudioView: UIView {
         self.containerView.addSubview(timeLeftLabel)
         
         currentTimeLabel.snp.makeConstraints { (make) -> Void in
-            make.left.equalTo(playbackSlider).inset(5.calculateWidth())
-            make.top.equalTo(playbackSlider.snp.bottom).inset(5.calculateHeight())
-            make.height.equalTo(20.calculateHeight())
-            make.width.equalTo(55.calculateWidth())
+            make.left.equalTo(playbackSlider).inset(UIView.getValueScaledByScreenWidthFor(baseValue: 5))
+            make.top.equalTo(playbackSlider.snp.bottom).inset(UIView.getValueScaledByScreenHeightFor(baseValue: 5))
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 55))
         }
         
         timeLeftLabel.snp.makeConstraints { (make) -> Void in
-            make.right.equalTo(playbackSlider).inset(5.calculateWidth())
-            make.top.equalTo(playbackSlider.snp.bottom).inset(5.calculateHeight())
-            make.height.equalTo(20.calculateHeight())
-            make.width.equalTo(55.calculateWidth())
+            make.right.equalTo(playbackSlider).inset(UIView.getValueScaledByScreenWidthFor(baseValue: 5))
+            make.top.equalTo(playbackSlider.snp.bottom).inset(UIView.getValueScaledByScreenHeightFor(baseValue: 5))
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 55))
         }
     }
     
@@ -411,7 +410,7 @@ class AudioView: UIView {
         
         activityView.snp.makeConstraints { (make) -> Void in
             make.centerY.equalToSuperview()
-            make.right.equalToSuperview().inset(10.calculateWidth())
+            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 10))
         }
     }
     

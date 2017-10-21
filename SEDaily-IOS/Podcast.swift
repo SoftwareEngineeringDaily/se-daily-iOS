@@ -31,27 +31,27 @@ enum PodcastCategoryIds: Int {
     var description: String {
         switch self {
         case .All:
-            return "All"
+            return L10n.tabTitleAll
         case .Business_and_Philosophy:
-            return "Business and Philosophy"
+            return L10n.tabTitleBusinessAndPhilosophy
         case .Blockchain:
-            return "Blockchain"
+            return L10n.tabTitleBlockchain
         case .Cloud_Engineering:
-            return "Cloud Engineering"
+            return L10n.tabTitleCloudEngineering
         case .Data:
-            return "Data"
+            return L10n.tabTitleData
         case .JavaScript:
-            return "JavaScript"
+            return L10n.tabTitleJavaScript
         case .Machine_Learning:
-            return "Machine Learning"
+            return L10n.tabTitleMachineLearning
         case .Open_Source:
-            return "Open Source"
+            return L10n.tabTitleOpenSource
         case .Security:
-            return "Security"
+            return L10n.tabTitleSecurity
         case .Hackers:
-            return "Hackers"
+            return L10n.tabTitleHackers
         case .Greatest_Hits:
-            return "Greatest Hits"
+            return L10n.tabTitleGreatestHits
         }
     }
 }

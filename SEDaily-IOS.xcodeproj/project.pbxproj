@@ -143,9 +143,9 @@
 		164FE9DF1F02EE4E009419CA /* Podcasts */ = {
 			isa = PBXGroup;
 			children = (
-				16307FC81F8FDCE4001783CB /* PodcastModels */,
 				165484541F902D3F005AEA23 /* GeneralCollectionViewController.swift */,
 				16FA84021F8D323700A45D9B /* SkeletonCollectionView.swift */,
+				16307FC81F8FDCE4001783CB /* PodcastModels */,
 				16AD3E001F9A975F0084C545 /* PodcastDetail */,
 			);
 			name = Podcasts;

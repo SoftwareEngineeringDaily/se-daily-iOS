@@ -27,7 +27,6 @@ enum PodcastCategoryIds: Int {
     case Hackers = 1085
     case Greatest_Hits = 1069
     
-    //@TODO: Add l10n here
     var description: String {
         switch self {
         case .All:

@@ -168,7 +168,7 @@ extension API {
             case .success:
                 guard let responseData = response.data else {
                     // Handle error here
-                    print("response has no data")
+                    log.error("response has no data")
                     onFailure(.NoResponseDataError)
                     return
                 }
@@ -208,7 +208,7 @@ extension API {
             Headers.authorization:Headers.bearer + userToken,
             ]
 
-        if userToken == "" && type == PodcastTypes.recommended.rawValue {
+        if userToken.isEmpty && type == PodcastTypes.recommended.rawValue {
             type = PodcastTypes.top.rawValue
         }
         
@@ -238,7 +238,7 @@ extension API {
             case .success:
                 guard let responseData = response.data else {
                     // Handle error here
-                    print("response has no data")
+                    log.error("response has no data")
                     onFailure(.NoResponseDataError)
                     return
                 }

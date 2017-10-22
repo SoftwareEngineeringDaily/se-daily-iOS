@@ -156,8 +156,6 @@ class HeaderView: UIView {
 extension HeaderView {
     @objc func playButtonPressed() {
         //@TODO: Switch button and/or stop if playing
-//        AudioViewManager.shared.presentAudioView()
-        _ = "http://traffic.libsyn.com/rtpodcast/podcast_update.mp3"
 
         // Podcast model checks here
         AudioViewManager.shared.setupManager(podcastModel: model)
@@ -173,12 +171,7 @@ extension HeaderView {
             guard success != nil else { return }
             if success == true {
                 guard let active = active else { return }
-                switch active {
-                case true:
-                    self.addScore(active: active)
-                case false:
-                    self.addScore(active: active)
-                }
+                self.addScore(active: active)
             }
         })
     }
@@ -194,12 +187,7 @@ extension HeaderView {
             if success == true {
                 // Switch if active
                 guard let active = active else { return }
-                switch active {
-                case true:
-                    self.subtractScore(active: active)
-                case false:
-                    self.subtractScore(active: active)
-                }
+                self.subtractScore(active: active)
             }
         })
     }
@@ -212,11 +200,8 @@ extension HeaderView {
             downVoteButton.isSelected = self.model.isDownvoted
             return
         }
-
-        var int = self.model.score
-        int += 1
         // Update score label
-        self.scoreLabel.text = String(int)
+        self.scoreLabel.text = String(describing: (self.model.score += 1))
         
         self.model.isUpvoted = true
         
@@ -232,10 +217,8 @@ extension HeaderView {
             downVoteButton.isSelected = self.model.isDownvoted
             return
         }
-        var int = self.model.score
-        int -= 1
         // Update score label
-        self.scoreLabel.text = String(int)
+        self.scoreLabel.text = String(describing: (self.model.score -= 1))
 
         self.model.isDownvoted = true
         

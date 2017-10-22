@@ -32,7 +32,7 @@ public struct PodcastViewModel: Codable {
     let featuredImageURL: URL?
     private let encodedPodcastTitle: String
     private let encodedPodcastDescription: String
-    let score: Int
+    var score: Int
     var isUpvoted: Bool = false
     var isDownvoted: Bool = false
     

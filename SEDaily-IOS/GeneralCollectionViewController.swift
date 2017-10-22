@@ -21,6 +21,26 @@ class GeneralCollectionViewController: UICollectionViewController {
     var tags: [Int]
     var categories: [Int]
     
+    // Paging Properties
+    var loading = false
+    let pageSize = 10
+    let preloadMargin = 5
+    
+    var lastLoadedPage = 0
+    
+    var customTabBarItem: UITabBarItem! {
+        get {
+            switch type {
+            case .new:
+                return nil
+            case .recommended:
+                return UITabBarItem(title: L10n.tabBarJustForYou, image: #imageLiteral(resourceName: "activity_feed"), selectedImage: #imageLiteral(resourceName: "activity_feed_selected"))
+            case .top:
+                return UITabBarItem(tabBarSystemItem: .mostViewed, tag: 0)
+            }
+        }
+    }
+    
     // ViewModelController
     private let podcastViewModelController = PodcastViewModelController()
     
@@ -33,8 +53,8 @@ class GeneralCollectionViewController: UICollectionViewController {
         self.type = type
         self.tags = tags
         self.categories = categories.flatMap { $0.rawValue }
-        
         super.init(collectionViewLayout: layout)
+        self.tabBarItem = self.customTabBarItem
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -48,7 +68,7 @@ class GeneralCollectionViewController: UICollectionViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        self.collectionView!.register(PodcastCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView?.register(PodcastCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
         let layout = KoalaTeaFlowLayout(cellWidth: UIView.getValueScaledByScreenWidthFor(baseValue: 158),
                                         cellHeight: UIView.getValueScaledByScreenHeightFor(baseValue: 250),
@@ -85,7 +105,6 @@ class GeneralCollectionViewController: UICollectionViewController {
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
@@ -115,12 +134,6 @@ class GeneralCollectionViewController: UICollectionViewController {
         return cell
     }
     
-    var loading = false
-    let pageSize = 10
-    let preloadMargin = 5
-    
-    var lastLoadedPage = 0
-    
     func checkPage(currentIndexPath: IndexPath, lastIndexPath: IndexPath, lastIdentifier: String) {
         let nextPage: Int = Int(currentIndexPath.item / self.pageSize) + 1
         let preloadIndex = nextPage * self.pageSize - self.preloadMargin
@@ -142,7 +155,7 @@ class GeneralCollectionViewController: UICollectionViewController {
             }
         }) { (apiError) in
             self.loading = false
-            print(apiError)
+            log.error(apiError)
         }
     }
 

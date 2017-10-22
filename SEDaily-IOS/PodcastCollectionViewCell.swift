@@ -8,9 +8,9 @@
 
 import UIKit
 import SnapKit
-import Kingfisher
 import KTResponsiveUI
 import Skeleton
+import SDWebImage
 
 class PodcastCell: UICollectionViewCell {
     var imageView: UIImageView!
@@ -55,29 +55,16 @@ class PodcastCell: UICollectionViewCell {
         fatalError("init(coder:)")
     }
     
-    func setupCell(imageURLString: String?, title: String?, timeLength: Int?, date: Date?) {
-        titleLabel.text = title ?? ""
-        self.setupTimeDayLabel(timeLength: timeLength, date: date)
-        guard let imageURLString = imageURLString else {
-            self.imageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
-            return
-        }
-        if let url = URL(string: imageURLString) {
-            self.imageView.kf.indicatorType = .activity
-            self.imageView.kf.setImage(with: url)
-        }
-    }
-    
-    func setupImageView(imageURL: URL?) {
+    private func setupImageView(imageURL: URL?) {
         guard let imageURL = imageURL else {
             self.imageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
             return
         }
-        self.imageView.kf.indicatorType = .activity
-        self.imageView.kf.setImage(with: imageURL)
+
+        imageView.sd_setImage(with: imageURL)
     }
     
-    func setupTimeDayLabel(timeLength: Int?, date: Date?) {
+    private func setupTimeDayLabel(timeLength: Int?, date: Date?) {
         let dateString = date?.dateString() ?? ""
         timeDayLabel.text = dateString
     }

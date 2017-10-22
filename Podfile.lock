@@ -19,6 +19,9 @@ PODS:
     - Reusable/View (= 4.0.0)
   - Reusable/Storyboard (4.0.0)
   - Reusable/View (4.0.0)
+  - SDWebImage (4.1.2):
+    - SDWebImage/Core (= 4.1.2)
+  - SDWebImage/Core (4.1.2)
   - SideMenu (3.1.1)
   - Skeleton (0.1.0)
   - SnapKit (4.0.0)
@@ -58,6 +61,7 @@ DEPENDENCIES:
   - KoalaTeaPlayer
   - KTResponsiveUI
   - Reusable
+  - SDWebImage
   - SideMenu
   - Skeleton
   - SnapKit
@@ -100,6 +104,7 @@ SPEC CHECKSUMS:
   Pageboy: a43a4e34fad98ebfa415a5d33cd0389e5005a101
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   Reusable: 98e5fff1e0e2e00872199699b276dde08ee56c07
+  SDWebImage: cb6f9f266a9977741efcbc21e618e8be3734c774
   SideMenu: 1bf32e90afaa2dc0e0ab68e938a0ff85014c4217
   Skeleton: b76249b7d6a73a9913e164c8030647a3e005c700
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
@@ -112,6 +117,6 @@ SPEC CHECKSUMS:
   Tabman: f922ae6412f482234b58213f51caa5f0549a5949
   UIFontComplete: 7e3ce7f0a12d2529fb07f537e262aabfa87df280
 
-PODFILE CHECKSUM: 1d3f0b479dc164ec5a66d72478a0afe6e6a0dc6c
+PODFILE CHECKSUM: 3e14d1c878fc9390b9500bfa97cdfc37b7650dfa
 
 COCOAPODS: 1.3.1

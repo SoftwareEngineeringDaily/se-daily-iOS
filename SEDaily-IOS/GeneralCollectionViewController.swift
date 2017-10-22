@@ -42,7 +42,7 @@ class GeneralCollectionViewController: UICollectionViewController {
     }
     
     // ViewModelController
-    private let podcastViewModelController = PodcastViewModelController()
+    private let podcastViewModelController: PodcastViewModelController = PodcastViewModelController()
     
     init(collectionViewLayout layout: UICollectionViewLayout,
          tags: [Int] = [],

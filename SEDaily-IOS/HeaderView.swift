@@ -201,7 +201,7 @@ extension HeaderView {
             return
         }
         // Update score label
-        self.scoreLabel.text = String(describing: (self.model.score += 1))
+        self.scoreLabel.text = String(describing: (self.model.score + 1))
         
         self.model.isUpvoted = true
         
@@ -218,7 +218,7 @@ extension HeaderView {
             return
         }
         // Update score label
-        self.scoreLabel.text = String(describing: (self.model.score -= 1))
+        self.scoreLabel.text = String(describing: (self.model.score - 1))
 
         self.model.isDownvoted = true
         

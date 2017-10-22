@@ -33,7 +33,7 @@ public class PodcastViewModelController {
     }
     
     func clearViewModels() {
-        self.viewModels = []
+        self.viewModels.removeAll()
     }
     
     func fetchData(type: String = "",

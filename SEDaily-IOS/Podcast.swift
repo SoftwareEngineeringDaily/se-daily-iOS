@@ -73,6 +73,8 @@ public struct Podcast: Codable {
     let title: Title
     let score: Int
     var type: String? = "new"
+    var upvoted: Bool?
+    var downvoted: Bool?
 }
 
 extension Podcast: Equatable {

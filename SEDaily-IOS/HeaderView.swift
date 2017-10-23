@@ -28,7 +28,6 @@ class HeaderView: UIView {
         super.init(frame: frame);
         
         self.performLayout()
-//        Stylesheet.applyOn(self)
     }
     
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented"); }
@@ -84,7 +83,7 @@ class HeaderView: UIView {
         }
         
         playView.addSubview(playButton)
-        playButton.setTitle("Play", for: .normal)
+        playButton.setTitle(L10n.play, for: .normal)
         playButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
         playButton.addTarget(self, action: #selector(self.playButtonPressed), for: .touchUpInside)
         playButton.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 4)
@@ -138,18 +137,9 @@ class HeaderView: UIView {
         self.dateLabel.text = model.getLastUpdatedAsDate()?.dateString() ?? ""
         self.scoreLabel.text = model.score.string
         
-        if self.model.isUpvoted {
-            upVoteButton.isSelected = self.model.isUpvoted
-            var int = model.score
-            int += 1
-            self.scoreLabel.text = String(int)
-        }
-        if self.model.isDownvoted {
-            downVoteButton.isSelected = self.model.isDownvoted
-            var int = model.score
-            int -= 1
-            self.scoreLabel.text = String(int)
-        }
+        upVoteButton.isSelected = self.model.isUpvoted
+        downVoteButton.isSelected = self.model.isDownvoted
+        self.scoreLabel.text = String(self.model.score)
     }
 }
 
@@ -166,6 +156,11 @@ extension HeaderView {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
             return
         }
+        
+        // Immediately set UI to upvote
+        self.setUpvoteTo(!self.upVoteButton.isSelected)
+        self.setDownvoteTo(false)
+        
         let podcastId = model._id
         API.sharedInstance.upvotePodcast(podcastId: podcastId, completion: { (success, active) in
             guard success != nil else { return }
@@ -181,6 +176,11 @@ extension HeaderView {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
             return
         }
+        
+        // Immediately set UI to downvote
+        self.setUpvoteTo(false)
+        self.setDownvoteTo(!self.downVoteButton.isSelected)
+        
         let podcastId = model._id
         API.sharedInstance.downvotePodcast(podcastId: podcastId, completion: { (success, active) in
             guard success != nil else { return }
@@ -193,36 +193,36 @@ extension HeaderView {
     }
     
     func addScore(active: Bool) {
-        if active == false {
-            self.scoreLabel.text = String(model.score)
-            self.model.isUpvoted = false
-            upVoteButton.isSelected = self.model.isUpvoted
-            downVoteButton.isSelected = self.model.isDownvoted
+        self.setUpvoteTo(active)
+        guard active != false else {
+            self.setScoreTo(self.model.score - 1)
             return
         }
-        // Update score label
-        self.scoreLabel.text = String(describing: (self.model.score + 1))
-        
-        self.model.isUpvoted = true
-        
-        upVoteButton.isSelected = self.model.isUpvoted
-        downVoteButton.isSelected = self.model.isDownvoted
+        self.setScoreTo(self.model.score + 1)
     }
     
     func subtractScore(active: Bool) {
-        if active == false {
-            self.scoreLabel.text = String(model.score)
-            self.model.isDownvoted = false
-            upVoteButton.isSelected = self.model.isUpvoted
-            downVoteButton.isSelected = self.model.isDownvoted
+        self.setDownvoteTo(active)
+        guard active != false else {
+            self.setScoreTo(self.model.score + 1)
             return
         }
-        // Update score label
-        self.scoreLabel.text = String(describing: (self.model.score - 1))
-
-        self.model.isDownvoted = true
-        
-        upVoteButton.isSelected = self.model.isUpvoted
-        downVoteButton.isSelected = self.model.isDownvoted
+        self.setScoreTo(self.model.score - 1)
+    }
+    
+    func setUpvoteTo(_ bool: Bool) {
+        self.model.isUpvoted = bool
+        self.upVoteButton.isSelected = bool
+    }
+    
+    func setDownvoteTo(_ bool: Bool) {
+        self.model.isDownvoted = bool
+        self.downVoteButton.isSelected = bool
+    }
+    
+    func setScoreTo(_ score: Int) {
+        guard self.model.score != score else { return }
+        self.model.score = score
+        self.scoreLabel.text = String(score)
     }
 }

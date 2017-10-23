@@ -53,6 +53,13 @@ public struct PodcastViewModel: Codable {
         self.encodedPodcastTitle = podcast.title.rendered
         self.encodedPodcastDescription = podcast.content.rendered
         self.score = podcast.score
+        
+        if let upvoted = podcast.upvoted {
+            self.isUpvoted = upvoted
+        }
+        if let downvoted = podcast.downvoted {
+            self.isDownvoted = downvoted
+        }
     }
     
     init() {

@@ -38,14 +38,6 @@ class LoginViewController: UIViewController {
         self.view.backgroundColor = Stylesheet.Colors.base
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-//        self.navigationBar?.setColors(background: Stylesheet.Colors.base, text: Stylesheet.Colors.white)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-//        self.navigationBar?.setColors(background: Stylesheet.Colors.white, text: Stylesheet.Colors.base)
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

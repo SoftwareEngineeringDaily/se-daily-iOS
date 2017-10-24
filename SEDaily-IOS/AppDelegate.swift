@@ -12,7 +12,6 @@ let log = SwiftyBeaver.self
 import IQKeyboardManagerSwift
 import Fabric
 import Crashlytics
-import Kingfisher
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

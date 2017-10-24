@@ -34,6 +34,9 @@ class PodcastPageViewController: TabmanViewController, PageboyViewControllerData
         self.bar.items = barItems
         
         self.reloadPages()
+        
+        // Set the tab bar controller first selected item here
+        self.tabBarController?.selectedIndex = 0
     }
     
     func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {

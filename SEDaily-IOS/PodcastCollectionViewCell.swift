@@ -61,6 +61,8 @@ class PodcastCell: UICollectionViewCell {
             return
         }
 
+        imageView.sd_setShowActivityIndicatorView(true)
+        imageView.sd_setIndicatorStyle(.gray)
         imageView.sd_setImage(with: imageURL)
     }
     

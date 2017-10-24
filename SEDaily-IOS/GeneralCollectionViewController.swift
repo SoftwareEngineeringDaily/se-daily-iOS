@@ -8,6 +8,7 @@
 
 import UIKit
 import KoalaTeaFlowLayout
+import SDWebImage
 
 private let reuseIdentifier = "Cell"
 
@@ -85,6 +86,11 @@ class GeneralCollectionViewController: UICollectionViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)
         
         self.collectionView?.addSubview(skeletonCollectionView)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        //@TODO: Find a better way to manage cached Images
+        SDImageCache.shared().clearMemory()
     }
     
     @objc func loginObserver() {

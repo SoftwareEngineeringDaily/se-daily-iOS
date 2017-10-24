@@ -15,7 +15,6 @@
 //
 
 import UIKit
-import SideMenu
 import SwifterSwift
 import SnapKit
 import SwiftIcons
@@ -34,9 +33,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
         self.view.backgroundColor = .white
         
         setupTabs()
-        setupSideMenu()
         setupTitleView()
-        self.selectedIndex = 0
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -72,18 +69,6 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
         self.setupNavBar()
     }
     
-//    func setupNavButton() {
-//        let navBarHeight = 44.0
-//        let height = navBarHeight / 1.5
-//        let icon = #imageLiteral(resourceName: "Bell")
-//        let iconSize = CGRect(origin: .zero, size: CGSize(width: height, height: height))
-//        bellButton = UIButton(frame: iconSize)
-//        bellButton.setBackgroundImage(icon, for: .normal)
-//        bellButton.addTarget(self, action: #selector(self.updatesButtonPressed), for: .touchUpInside)
-//        let barButton = UIBarButtonItem(customView: bellButton)
-//        navigationItem.rightBarButtonItem = barButton
-//    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -108,29 +93,5 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
         imageView.contentMode = .scaleAspectFit
         imageView.image = #imageLiteral(resourceName: "Logo_BarButton")
         self.navigationItem.titleView = imageView
-    }
-}
-
-extension CustomTabViewController {
-    fileprivate func setupSideMenu() {
-        // Define the menus
-        guard !ifset else { return }
-//        let leftSideMenu = UISideMenuNavigationController(rootViewController: LeftViewController())
-//        SideMenuManager.menuLeftNavigationController = leftSideMenu
-        ifset = true
-        // Enable gestures. The left and/or right menus must be set up above for these to work.
-        // Note that these continue to work on the Navigation Controller independent of the View Controller it displays!
-        //        SideMenuManager.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
-        //        SideMenuManager.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
-        
-        // Set up a cool background image for demo purposes
-        //        SideMenuManager.menuAnimationBackgroundColor = UIColor(patternImage: UIImage(named: "background")!)
-        SideMenuManager.menuFadeStatusBar = false
-        
-        SideMenuManager.menuPresentMode = .viewSlideInOut
-    }
-    
-    func presentLeftSideMenu() {
-        present(SideMenuManager.menuLeftNavigationController!, animated: true, completion: nil)
     }
 }

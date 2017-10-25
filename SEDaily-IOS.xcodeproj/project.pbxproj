@@ -203,7 +203,7 @@
 				1686FC071F009EC00088A6C1 /* Assets.xcassets */,
 				16AD3E011F9B06480084C545 /* Audio */,
 				16AD3E071F9B07520084C545 /* Auth */,
-				16AD3E061F9B07320084C545 /* BaseVCs */,
+				16AD3E061F9B07320084C545 /* CommonVCs */,
 				16AD3E051F9B07160084C545 /* CommonCells */,
 				164FE9E21F02EE71009419CA /* CommonModels */,
 				16AD3E081F9B07A70084C545 /* Core */,
@@ -267,14 +267,14 @@
 			name = CommonCells;
 			sourceTree = "<group>";
 		};
-		16AD3E061F9B07320084C545 /* BaseVCs */ = {
+		16AD3E061F9B07320084C545 /* CommonVCs */ = {
 			isa = PBXGroup;
 			children = (
 				164C71041F021AC8003803BC /* CustomTabViewController.swift */,
 				01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */,
 				1649A7891F204EC6005C4A6E /* ContainerViewController.swift */,
 			);
-			name = BaseVCs;
+			name = CommonVCs;
 			sourceTree = "<group>";
 		};
 		16AD3E071F9B07520084C545 /* Auth */ = {
@@ -808,7 +808,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 6TY8WC8WPP;
 				INFOPLIST_FILE = "SEDaily-IOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -827,7 +827,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 6TY8WC8WPP;
 				INFOPLIST_FILE = "SEDaily-IOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

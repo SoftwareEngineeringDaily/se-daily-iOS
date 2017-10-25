@@ -79,13 +79,17 @@ class GeneralCollectionViewController: UICollectionViewController {
         self.collectionView?.collectionViewLayout = layout
         self.collectionView?.backgroundColor = .white
         
-        // Load initial data
-        self.getData(lastIdentifier: "", nextPage: 0)
-        
         // User Login observer
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)
         
         self.collectionView?.addSubview(skeletonCollectionView)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        // Make sure skeletonCollectionView is animating when the view is visible
+        if self.skeletonCollectionView.alpha != 0 {
+            self.skeletonCollectionView.collectionView.reloadData()
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -114,10 +118,13 @@ class GeneralCollectionViewController: UICollectionViewController {
         return 1
     }
 
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if podcastViewModelController.viewModelsCount > 0 {
             self.skeletonCollectionView.fadeOut(duration: 0.5, completion: nil)
+        }
+        if podcastViewModelController.viewModelsCount <= 0 {
+            // Load initial data
+            self.getData(lastIdentifier: "", nextPage: 0)
         }
         return podcastViewModelController.viewModelsCount
     }

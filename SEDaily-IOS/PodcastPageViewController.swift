@@ -14,9 +14,15 @@ class PodcastPageViewController: TabmanViewController, PageboyViewControllerData
     
     var viewControllers = [GeneralCollectionViewController]()
     var barItems = [TabmanBar.Item]()
+    var customTabBarItem: UITabBarItem! {
+        get {
+            return UITabBarItem(title: L10n.tabBarTitleLatest, image: #imageLiteral(resourceName: "mic_stand"), selectedImage: #imageLiteral(resourceName: "mic_stand_selected"))
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tabBarItem = customTabBarItem
         
         self.dataSource = self
         
@@ -28,6 +34,9 @@ class PodcastPageViewController: TabmanViewController, PageboyViewControllerData
         self.bar.items = barItems
         
         self.reloadPages()
+        
+        // Set the tab bar controller first selected item here
+        self.tabBarController?.selectedIndex = 0
     }
     
     func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
@@ -46,49 +55,40 @@ class PodcastPageViewController: TabmanViewController, PageboyViewControllerData
     func loadViewControllers() {
         let layout = UICollectionViewLayout()
         
-        let child_1 = GeneralCollectionViewController(collectionViewLayout: layout, type: API.Types.new)
-        child_1.tabTitle = L10n.tabTitleAll
-        viewControllers.append(child_1)
-        
-        let child_2 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1068, type: API.Types.new)
-        child_2.tabTitle = L10n.tabTitleBusinessAndPhilosophy
-        viewControllers.append(child_2)
-        
-        let child_3 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1082, type: API.Types.new)
-        child_3.tabTitle = L10n.tabTitleBlockchain
-        viewControllers.append(child_3)
-
-        let child_4 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1079, type: API.Types.new)
-        child_4.tabTitle = L10n.tabTitleCloudEngineering
-        viewControllers.append(child_4)
-
-        let child_5 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1081, type: API.Types.new)
-        child_5.tabTitle = L10n.tabTitleData
-        viewControllers.append(child_5)
-
-        let child_6 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1084, type: API.Types.new)
-        child_6.tabTitle = L10n.tabTitleJavaScript
-        viewControllers.append(child_6)
-
-        let child_7 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1080, type: API.Types.new)
-        child_7.tabTitle = L10n.tabTitleMachineLearning
-        viewControllers.append(child_7)
-
-        let child_8 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1078, type: API.Types.new)
-        child_8.tabTitle = L10n.tabTitleOpenSource
-        viewControllers.append(child_8)
-
-        let child_9 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1083, type: API.Types.new)
-        child_9.tabTitle = L10n.tabTitleSecurity
-        viewControllers.append(child_9)
-
-        let child_10 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1085, type: API.Types.new)
-        child_10.tabTitle = L10n.tabTitleHackers
-        viewControllers.append(child_10)
-
-        let child_11 = GeneralCollectionViewController(collectionViewLayout: layout, tagId: 1069, type: API.Types.new)
-        child_11.tabTitle = L10n.tabTitleGreatestHits
-        viewControllers.append(child_11)
+        viewControllers = [
+            GeneralCollectionViewController(collectionViewLayout: layout,
+                                            tabTitle: PodcastCategoryIds.All.description),
+            GeneralCollectionViewController(collectionViewLayout: layout,
+                                            categories: [PodcastCategoryIds.Business_and_Philosophy],
+                                            tabTitle: PodcastCategoryIds.Business_and_Philosophy.description),
+            GeneralCollectionViewController(collectionViewLayout: layout,
+                                            categories: [PodcastCategoryIds.Blockchain],
+                                            tabTitle: PodcastCategoryIds.Blockchain.description),
+            GeneralCollectionViewController(collectionViewLayout: layout,
+                                            categories: [PodcastCategoryIds.Cloud_Engineering],
+                                            tabTitle: PodcastCategoryIds.Cloud_Engineering.description),
+            GeneralCollectionViewController(collectionViewLayout: layout,
+                                            categories: [PodcastCategoryIds.Data],
+                                            tabTitle: PodcastCategoryIds.Data.description),
+            GeneralCollectionViewController(collectionViewLayout: layout,
+                                            categories: [PodcastCategoryIds.JavaScript],
+                                            tabTitle: PodcastCategoryIds.JavaScript.description),
+            GeneralCollectionViewController(collectionViewLayout: layout,
+                                            categories: [PodcastCategoryIds.Machine_Learning],
+                                            tabTitle: PodcastCategoryIds.Machine_Learning.description),
+            GeneralCollectionViewController(collectionViewLayout: layout,
+                                            categories: [PodcastCategoryIds.Open_Source],
+                                            tabTitle: PodcastCategoryIds.Open_Source.description),
+            GeneralCollectionViewController(collectionViewLayout: layout,
+                                            categories: [PodcastCategoryIds.Security],
+                                            tabTitle: PodcastCategoryIds.Security.description),
+            GeneralCollectionViewController(collectionViewLayout: layout,
+                                            categories: [PodcastCategoryIds.Hackers],
+                                            tabTitle: PodcastCategoryIds.Hackers.description),
+            GeneralCollectionViewController(collectionViewLayout: layout,
+                                            categories: [PodcastCategoryIds.Greatest_Hits],
+                                            tabTitle: PodcastCategoryIds.Greatest_Hits.description)
+        ]
         
         viewControllers.forEach { (controller) in
             barItems.append(Item(title: controller.tabTitle))

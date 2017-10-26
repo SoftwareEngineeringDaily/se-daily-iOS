@@ -10,10 +10,10 @@
 		01BB1D6D1F29999E004A912E /* PodcastPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */; };
 		161F3DE61F61F73D00A8F825 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161F3DE51F61F73D00A8F825 /* SearchTableViewController.swift */; };
 		161F3DEA1F62703100A8F825 /* PodcastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */; };
+		16307FCA1F8FDD02001783CB /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16307FC91F8FDD02001783CB /* Podcast.swift */; };
+		16307FCC1F8FEE3A001783CB /* PodcastViewModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16307FCB1F8FEE3A001783CB /* PodcastViewModelController.swift */; };
 		1649A78A1F204EC6005C4A6E /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1649A7891F204EC6005C4A6E /* ContainerViewController.swift */; };
 		164C71051F021AC8003803BC /* CustomTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C71041F021AC8003803BC /* CustomTabViewController.swift */; };
-		164FE9D71F02CD99009419CA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9D61F02CD99009419CA /* Extensions.swift */; };
-		164FE9D91F02D611009419CA /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9D81F02D611009419CA /* CollectionReusableView.swift */; };
 		164FE9DC1F02DAB5009419CA /* PodcastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9DB1F02DAB5009419CA /* PodcastCollectionViewCell.swift */; };
 		164FE9E11F02EE67009419CA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9E01F02EE67009419CA /* LoginViewController.swift */; };
 		164FE9E51F02EE83009419CA /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9E41F02EE83009419CA /* API.swift */; };
@@ -22,29 +22,26 @@
 		164FE9EB1F02F340009419CA /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9EA1F02F340009419CA /* Helpers.swift */; };
 		164FE9ED1F02F7E2009419CA /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9EC1F02F7E2009419CA /* UIButtonExtension.swift */; };
 		164FE9EF1F03065C009419CA /* NavigationControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9EE1F03065C009419CA /* NavigationControllerExtension.swift */; };
-		164FE9F11F030A2E009419CA /* PodcastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FE9F01F030A2E009419CA /* PodcastModel.swift */; };
-		165A5B681F7C32FD00FDE80B /* TempObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165A5B671F7C32FD00FDE80B /* TempObjectMapper.swift */; };
+		165484551F902D3F005AEA23 /* GeneralCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165484541F902D3F005AEA23 /* GeneralCollectionViewController.swift */; };
 		166036211F266FF300A22B7B /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166036201F266FF300A22B7B /* Notifications.swift */; };
-		1668124A1F350737007F288B /* GeneralCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166812491F350737007F288B /* GeneralCollectionViewController.swift */; };
-		1672FAC41F06C141008445B1 /* NotificationCenterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */; };
-		1673B8FF1F27E56100923BB8 /* TopCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1673B8FE1F27E56100923BB8 /* TopCollectionViewController.swift */; };
-		1673B9011F27E70200923BB8 /* JustForYouCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1673B9001F27E70200923BB8 /* JustForYouCollectionViewController.swift */; };
-		167AFAB21F043CF600A1332F /* PostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */; };
-		167AFAB51F043ED500A1332F /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB41F043ED500A1332F /* DetailTableViewCell.swift */; };
 		167AFAB71F043F1100A1332F /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB61F043F1100A1332F /* HeaderView.swift */; };
-		167AFAB91F04624E00A1332F /* SingleLabelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB81F04624E00A1332F /* SingleLabelTableViewCell.swift */; };
 		1686FC011F009EC00088A6C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1686FC001F009EC00088A6C1 /* AppDelegate.swift */; };
 		1686FC061F009EC00088A6C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC041F009EC00088A6C1 /* Main.storyboard */; };
 		1686FC081F009EC00088A6C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC071F009EC00088A6C1 /* Assets.xcassets */; };
 		1686FC0B1F009EC00088A6C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC091F009EC00088A6C1 /* LaunchScreen.storyboard */; };
 		1686FC161F009EC00088A6C1 /* SEDaily_IOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */; };
 		169806A61F8EF3970075D8AD /* L10nEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169806A51F8EF08F0075D8AD /* L10nEnum.swift */; };
+		16AD3E0A1F9B138D0084C545 /* PodcastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AD3E091F9B138D0084C545 /* PodcastViewModel.swift */; };
+		16AD3E0C1F9B13EE0084C545 /* FilterObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AD3E0B1F9B13EE0084C545 /* FilterObject.swift */; };
+		16AD3E0E1F9B14130084C545 /* PodcastDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AD3E0D1F9B14130084C545 /* PodcastDataSource.swift */; };
 		16B147B11F16BF9C00433A42 /* AudioViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B147B01F16BF9C00433A42 /* AudioViewManager.swift */; };
+		16CE698F1F98029E0057BAC3 /* PodcastDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CE698E1F98029E0057BAC3 /* PodcastDetailViewController.swift */; };
+		16CE69911F9807CF0057BAC3 /* PodcastDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CE69901F9807CF0057BAC3 /* PodcastDescriptionView.swift */; };
 		16D67C4A1F33AC620065E838 /* AnswersTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D67C491F33AC620065E838 /* AnswersTracker.swift */; };
-		16D67C4D1F33AE370065E838 /* ObjectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D67C4C1F33AE370065E838 /* ObjectExtensions.swift */; };
 		16D766BA1F06B4850066C143 /* AudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D766B91F06B4850066C143 /* AudioView.swift */; };
-		1E44AF031F87B08D00221B22 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1E44AF051F87B08D00221B22 /* Localizable.strings */; };
+		16F3A1BA1F90918D00364709 /* PodcastRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F3A1B91F90918D00364709 /* PodcastRepository.swift */; };
 		16FA84031F8D323700A45D9B /* SkeletonCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FA84021F8D323700A45D9B /* SkeletonCollectionView.swift */; };
+		1E44AF031F87B08D00221B22 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1E44AF051F87B08D00221B22 /* Localizable.strings */; };
 		238E99F4E37C7365658113B8 /* Pods_SEDaily_IOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C9F051C6C2F8638D2ABF8 /* Pods_SEDaily_IOSTests.framework */; };
 		24412438C753126FDDD37CBF /* Pods_SEDaily_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */; };
 /* End PBXBuildFile section */
@@ -63,10 +60,10 @@
 		01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastPageViewController.swift; sourceTree = "<group>"; };
 		161F3DE51F61F73D00A8F825 /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastTableViewCell.swift; sourceTree = "<group>"; };
+		16307FC91F8FDD02001783CB /* Podcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
+		16307FCB1F8FEE3A001783CB /* PodcastViewModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastViewModelController.swift; sourceTree = "<group>"; };
 		1649A7891F204EC6005C4A6E /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		164C71041F021AC8003803BC /* CustomTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabViewController.swift; sourceTree = "<group>"; };
-		164FE9D61F02CD99009419CA /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		164FE9D81F02D611009419CA /* CollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionReusableView.swift; sourceTree = "<group>"; };
 		164FE9DB1F02DAB5009419CA /* PodcastCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCollectionViewCell.swift; sourceTree = "<group>"; };
 		164FE9E01F02EE67009419CA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		164FE9E41F02EE83009419CA /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -75,17 +72,9 @@
 		164FE9EA1F02F340009419CA /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		164FE9EC1F02F7E2009419CA /* UIButtonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 		164FE9EE1F03065C009419CA /* NavigationControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationControllerExtension.swift; sourceTree = "<group>"; };
-		164FE9F01F030A2E009419CA /* PodcastModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastModel.swift; sourceTree = "<group>"; };
-		165A5B671F7C32FD00FDE80B /* TempObjectMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempObjectMapper.swift; sourceTree = "<group>"; };
+		165484541F902D3F005AEA23 /* GeneralCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralCollectionViewController.swift; sourceTree = "<group>"; };
 		166036201F266FF300A22B7B /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
-		166812491F350737007F288B /* GeneralCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralCollectionViewController.swift; sourceTree = "<group>"; };
-		1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterExtension.swift; sourceTree = "<group>"; };
-		1673B8FE1F27E56100923BB8 /* TopCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopCollectionViewController.swift; sourceTree = "<group>"; };
-		1673B9001F27E70200923BB8 /* JustForYouCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JustForYouCollectionViewController.swift; sourceTree = "<group>"; };
-		167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewController.swift; sourceTree = "<group>"; };
-		167AFAB41F043ED500A1332F /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		167AFAB61F043F1100A1332F /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
-		167AFAB81F04624E00A1332F /* SingleLabelTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLabelTableViewCell.swift; sourceTree = "<group>"; };
 		1686FBFD1F009EC00088A6C1 /* SEDaily-IOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SEDaily-IOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1686FC001F009EC00088A6C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1686FC051F009EC00088A6C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -96,15 +85,20 @@
 		1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SEDaily_IOSTests.swift; sourceTree = "<group>"; };
 		1686FC171F009EC00088A6C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		169806A51F8EF08F0075D8AD /* L10nEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10nEnum.swift; sourceTree = "<group>"; };
+		16AD3E091F9B138D0084C545 /* PodcastViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastViewModel.swift; sourceTree = "<group>"; };
+		16AD3E0B1F9B13EE0084C545 /* FilterObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterObject.swift; sourceTree = "<group>"; };
+		16AD3E0D1F9B14130084C545 /* PodcastDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastDataSource.swift; sourceTree = "<group>"; };
 		16B147B01F16BF9C00433A42 /* AudioViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioViewManager.swift; sourceTree = "<group>"; };
+		16CE698E1F98029E0057BAC3 /* PodcastDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastDetailViewController.swift; sourceTree = "<group>"; };
+		16CE69901F9807CF0057BAC3 /* PodcastDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastDescriptionView.swift; sourceTree = "<group>"; };
 		16D67C491F33AC620065E838 /* AnswersTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswersTracker.swift; sourceTree = "<group>"; };
-		16D67C4C1F33AE370065E838 /* ObjectExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectExtensions.swift; sourceTree = "<group>"; };
 		16D766B91F06B4850066C143 /* AudioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioView.swift; sourceTree = "<group>"; };
+		16F3A1B91F90918D00364709 /* PodcastRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastRepository.swift; sourceTree = "<group>"; };
+		16FA84021F8D323700A45D9B /* SkeletonCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonCollectionView.swift; sourceTree = "<group>"; };
 		1E44AEFF1F87ACF500221B22 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		1E44AF001F87ACF500221B22 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		1E44AF061F87B09100221B22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1E44AF081F87B0A700221B22 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		16FA84021F8D323700A45D9B /* SkeletonCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonCollectionView.swift; sourceTree = "<group>"; };
 		675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.release.xcconfig"; sourceTree = "<group>"; };
 		995F64385352A79BA0DF7DEB /* Pods-SEDaily-IOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9FDA28C254F62BB468401B75 /* Pods-SEDaily-IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -133,86 +127,49 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1610E2C21F227BE0006C8E83 /* Managers */ = {
+		16307FC81F8FDCE4001783CB /* PodcastModels */ = {
 			isa = PBXGroup;
 			children = (
-				16B147B01F16BF9C00433A42 /* AudioViewManager.swift */,
+				16AD3E0B1F9B13EE0084C545 /* FilterObject.swift */,
+				16307FC91F8FDD02001783CB /* Podcast.swift */,
+				16AD3E0D1F9B14130084C545 /* PodcastDataSource.swift */,
+				16F3A1B91F90918D00364709 /* PodcastRepository.swift */,
+				16AD3E091F9B138D0084C545 /* PodcastViewModel.swift */,
+				16307FCB1F8FEE3A001783CB /* PodcastViewModelController.swift */,
 			);
-			name = Managers;
+			name = PodcastModels;
 			sourceTree = "<group>";
 		};
-		164FE9DA1F02DAA5009419CA /* CollectionViews */ = {
+		164FE9DF1F02EE4E009419CA /* Podcasts */ = {
 			isa = PBXGroup;
 			children = (
-				1673B8FE1F27E56100923BB8 /* TopCollectionViewController.swift */,
-				1673B9001F27E70200923BB8 /* JustForYouCollectionViewController.swift */,
-				166812491F350737007F288B /* GeneralCollectionViewController.swift */,
-			);
-			name = CollectionViews;
-			sourceTree = "<group>";
-		};
-		164FE9DD1F02DAB8009419CA /* CollectionViewCells */ = {
-			isa = PBXGroup;
-			children = (
-				164FE9DB1F02DAB5009419CA /* PodcastCollectionViewCell.swift */,
-			);
-			name = CollectionViewCells;
-			sourceTree = "<group>";
-		};
-		164FE9DE1F02DACA009419CA /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				164FE9D81F02D611009419CA /* CollectionReusableView.swift */,
-				167AFAB61F043F1100A1332F /* HeaderView.swift */,
-				16D766B91F06B4850066C143 /* AudioView.swift */,
+				165484541F902D3F005AEA23 /* GeneralCollectionViewController.swift */,
 				16FA84021F8D323700A45D9B /* SkeletonCollectionView.swift */,
+				16307FC81F8FDCE4001783CB /* PodcastModels */,
+				16AD3E001F9A975F0084C545 /* PodcastDetail */,
 			);
-			name = Views;
+			name = Podcasts;
 			sourceTree = "<group>";
 		};
-		164FE9DF1F02EE4E009419CA /* ViewControllers */ = {
+		164FE9E21F02EE71009419CA /* CommonModels */ = {
 			isa = PBXGroup;
 			children = (
-				164FE9E01F02EE67009419CA /* LoginViewController.swift */,
-				167AFAB11F043CF600A1332F /* PostDetailTableViewController.swift */,
-				1649A7891F204EC6005C4A6E /* ContainerViewController.swift */,
-				01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */,
-			);
-			name = ViewControllers;
-			sourceTree = "<group>";
-		};
-		164FE9E21F02EE71009419CA /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				164FE9F01F030A2E009419CA /* PodcastModel.swift */,
 				164FE9E61F02F02F009419CA /* UserModel.swift */,
 			);
-			name = Models;
+			name = CommonModels;
 			sourceTree = "<group>";
 		};
 		164FE9E31F02EE77009419CA /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				164FE9D61F02CD99009419CA /* Extensions.swift */,
 				164FE9E81F02F049009419CA /* Stylesheet.swift */,
 				164FE9EA1F02F340009419CA /* Helpers.swift */,
 				164FE9EC1F02F7E2009419CA /* UIButtonExtension.swift */,
 				164FE9EE1F03065C009419CA /* NavigationControllerExtension.swift */,
-				1672FAC31F06C141008445B1 /* NotificationCenterExtension.swift */,
 				166036201F266FF300A22B7B /* Notifications.swift */,
 				16D67C491F33AC620065E838 /* AnswersTracker.swift */,
 			);
 			name = Helpers;
-			sourceTree = "<group>";
-		};
-		167AFAB31F043E8F00A1332F /* TableViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				167AFAB41F043ED500A1332F /* DetailTableViewCell.swift */,
-				167AFAB81F04624E00A1332F /* SingleLabelTableViewCell.swift */,
-				161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */,
-			);
-			name = TableViewCell;
 			sourceTree = "<group>";
 		};
 		1686FBF41F009EC00088A6C1 = {
@@ -239,25 +196,20 @@
 			isa = PBXGroup;
 			children = (
 				169806A41F8EF08F0075D8AD /* Constants */,
-				1610E2C21F227BE0006C8E83 /* Managers */,
 				1686FC0C1F009EC00088A6C1 /* Info.plist */,
 				164FE9E41F02EE83009419CA /* API.swift */,
 				1686FC001F009EC00088A6C1 /* AppDelegate.swift */,
-				164C71041F021AC8003803BC /* CustomTabViewController.swift */,
 				1E44AF051F87B08D00221B22 /* Localizable.strings */,
 				1686FC071F009EC00088A6C1 /* Assets.xcassets */,
-				164FE9DD1F02DAB8009419CA /* CollectionViewCells */,
-				164FE9DA1F02DAA5009419CA /* CollectionViews */,
+				16AD3E011F9B06480084C545 /* Audio */,
+				16AD3E071F9B07520084C545 /* Auth */,
+				16AD3E061F9B07320084C545 /* CommonVCs */,
+				16AD3E051F9B07160084C545 /* CommonCells */,
+				164FE9E21F02EE71009419CA /* CommonModels */,
+				16AD3E081F9B07A70084C545 /* Core */,
 				164FE9E31F02EE77009419CA /* Helpers */,
-				1686FC091F009EC00088A6C1 /* LaunchScreen.storyboard */,
-				1686FC041F009EC00088A6C1 /* Main.storyboard */,
-				164FE9E21F02EE71009419CA /* Models */,
-				167AFAB31F043E8F00A1332F /* TableViewCell */,
-				164FE9DF1F02EE4E009419CA /* ViewControllers */,
-				164FE9DE1F02DACA009419CA /* Views */,
-				16D67C4C1F33AE370065E838 /* ObjectExtensions.swift */,
-				161F3DE51F61F73D00A8F825 /* SearchTableViewController.swift */,
-				165A5B671F7C32FD00FDE80B /* TempObjectMapper.swift */,
+				164FE9DF1F02EE4E009419CA /* Podcasts */,
+				16AD3E031F9B06950084C545 /* Search */,
 			);
 			path = "SEDaily-IOS";
 			sourceTree = "<group>";
@@ -278,6 +230,69 @@
 			);
 			path = Constants;
 			sourceTree = SOURCE_ROOT;
+		};
+		16AD3E001F9A975F0084C545 /* PodcastDetail */ = {
+			isa = PBXGroup;
+			children = (
+				167AFAB61F043F1100A1332F /* HeaderView.swift */,
+				16CE69901F9807CF0057BAC3 /* PodcastDescriptionView.swift */,
+				16CE698E1F98029E0057BAC3 /* PodcastDetailViewController.swift */,
+			);
+			name = PodcastDetail;
+			sourceTree = "<group>";
+		};
+		16AD3E011F9B06480084C545 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				16B147B01F16BF9C00433A42 /* AudioViewManager.swift */,
+				16D766B91F06B4850066C143 /* AudioView.swift */,
+			);
+			name = Audio;
+			sourceTree = "<group>";
+		};
+		16AD3E031F9B06950084C545 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				161F3DE51F61F73D00A8F825 /* SearchTableViewController.swift */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
+		16AD3E051F9B07160084C545 /* CommonCells */ = {
+			isa = PBXGroup;
+			children = (
+				161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */,
+				164FE9DB1F02DAB5009419CA /* PodcastCollectionViewCell.swift */,
+			);
+			name = CommonCells;
+			sourceTree = "<group>";
+		};
+		16AD3E061F9B07320084C545 /* CommonVCs */ = {
+			isa = PBXGroup;
+			children = (
+				164C71041F021AC8003803BC /* CustomTabViewController.swift */,
+				01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */,
+				1649A7891F204EC6005C4A6E /* ContainerViewController.swift */,
+			);
+			name = CommonVCs;
+			sourceTree = "<group>";
+		};
+		16AD3E071F9B07520084C545 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				164FE9E01F02EE67009419CA /* LoginViewController.swift */,
+			);
+			name = Auth;
+			sourceTree = "<group>";
+		};
+		16AD3E081F9B07A70084C545 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				1686FC091F009EC00088A6C1 /* LaunchScreen.storyboard */,
+				1686FC041F009EC00088A6C1 /* Main.storyboard */,
+			);
+			name = Core;
+			sourceTree = "<group>";
 		};
 		4E74333675FE5899EC260076 /* Pods */ = {
 			isa = PBXGroup;
@@ -534,22 +549,21 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ActiveLabel/ActiveLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Disk/Disk.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/KTResponsiveUI/KTResponsiveUI.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/KoalaTeaFlowLayout/KoalaTeaFlowLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/KoalaTeaPlayer/KoalaTeaPlayer.framework",
-				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
-				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Reusable/Reusable.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/Skeleton/Skeleton.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftIcons/SwiftIcons.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework",
 				"${BUILT_PRODUCTS_DIR}/SwifterSwift/SwifterSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -560,22 +574,21 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActiveLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Disk.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KTResponsiveUI.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KoalaTeaFlowLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KoalaTeaPlayer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reusable.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Skeleton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftIcons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSoup.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwifterSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
@@ -594,36 +607,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				167AFAB51F043ED500A1332F /* DetailTableViewCell.swift in Sources */,
 				164FE9E11F02EE67009419CA /* LoginViewController.swift in Sources */,
 				1649A78A1F204EC6005C4A6E /* ContainerViewController.swift in Sources */,
 				164FE9EF1F03065C009419CA /* NavigationControllerExtension.swift in Sources */,
-				167AFAB21F043CF600A1332F /* PostDetailTableViewController.swift in Sources */,
+				165484551F902D3F005AEA23 /* GeneralCollectionViewController.swift in Sources */,
 				161F3DE61F61F73D00A8F825 /* SearchTableViewController.swift in Sources */,
-				16D67C4D1F33AE370065E838 /* ObjectExtensions.swift in Sources */,
-				164FE9D91F02D611009419CA /* CollectionReusableView.swift in Sources */,
-				167AFAB91F04624E00A1332F /* SingleLabelTableViewCell.swift in Sources */,
 				167AFAB71F043F1100A1332F /* HeaderView.swift in Sources */,
 				16D67C4A1F33AC620065E838 /* AnswersTracker.swift in Sources */,
-				164FE9D71F02CD99009419CA /* Extensions.swift in Sources */,
 				164FE9E51F02EE83009419CA /* API.swift in Sources */,
 				164FE9E91F02F049009419CA /* Stylesheet.swift in Sources */,
-				1668124A1F350737007F288B /* GeneralCollectionViewController.swift in Sources */,
+				16CE698F1F98029E0057BAC3 /* PodcastDetailViewController.swift in Sources */,
+				16AD3E0C1F9B13EE0084C545 /* FilterObject.swift in Sources */,
+				16AD3E0A1F9B138D0084C545 /* PodcastViewModel.swift in Sources */,
 				16B147B11F16BF9C00433A42 /* AudioViewManager.swift in Sources */,
-				1673B9011F27E70200923BB8 /* JustForYouCollectionViewController.swift in Sources */,
-				1673B8FF1F27E56100923BB8 /* TopCollectionViewController.swift in Sources */,
 				164C71051F021AC8003803BC /* CustomTabViewController.swift in Sources */,
 				164FE9DC1F02DAB5009419CA /* PodcastCollectionViewCell.swift in Sources */,
-				165A5B681F7C32FD00FDE80B /* TempObjectMapper.swift in Sources */,
 				16D766BA1F06B4850066C143 /* AudioView.swift in Sources */,
 				164FE9EB1F02F340009419CA /* Helpers.swift in Sources */,
 				16FA84031F8D323700A45D9B /* SkeletonCollectionView.swift in Sources */,
 				166036211F266FF300A22B7B /* Notifications.swift in Sources */,
-				1672FAC41F06C141008445B1 /* NotificationCenterExtension.swift in Sources */,
 				169806A61F8EF3970075D8AD /* L10nEnum.swift in Sources */,
 				01BB1D6D1F29999E004A912E /* PodcastPageViewController.swift in Sources */,
-				164FE9F11F030A2E009419CA /* PodcastModel.swift in Sources */,
+				16CE69911F9807CF0057BAC3 /* PodcastDescriptionView.swift in Sources */,
+				16307FCC1F8FEE3A001783CB /* PodcastViewModelController.swift in Sources */,
+				16AD3E0E1F9B14130084C545 /* PodcastDataSource.swift in Sources */,
 				164FE9ED1F02F7E2009419CA /* UIButtonExtension.swift in Sources */,
+				16307FCA1F8FDD02001783CB /* Podcast.swift in Sources */,
+				16F3A1BA1F90918D00364709 /* PodcastRepository.swift in Sources */,
 				1686FC011F009EC00088A6C1 /* AppDelegate.swift in Sources */,
 				161F3DEA1F62703100A8F825 /* PodcastTableViewCell.swift in Sources */,
 				164FE9E71F02F02F009419CA /* UserModel.swift in Sources */,
@@ -796,12 +806,15 @@
 			baseConfigurationReference = 9FDA28C254F62BB468401B75 /* Pods-SEDaily-IOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 6;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 6TY8WC8WPP;
 				INFOPLIST_FILE = "SEDaily-IOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "koala-tea.SEDaily";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
@@ -812,12 +825,15 @@
 			baseConfigurationReference = 675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 6;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 6TY8WC8WPP;
 				INFOPLIST_FILE = "SEDaily-IOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "koala-tea.SEDaily";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};

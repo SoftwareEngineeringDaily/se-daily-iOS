@@ -27,14 +27,14 @@ class PodcastCollectionViewController: UICollectionViewController {
         self.collectionView?.backgroundColor = UIColor(hex: 0xfafafa)
         self.collectionView?.showsHorizontalScrollIndicator = false
         self.collectionView?.showsVerticalScrollIndicator = false
-        
+
         let layout = KoalaTeaFlowLayout(ratio: 0.5, cellsAcross: 1, cellSpacing: 0)
         self.collectionView?.collectionViewLayout = layout
-        
+
         // User Login observer
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)
     }
-    
+
     @objc func loginObserver() {
         self.collectionView?.reloadData()
     }
@@ -51,45 +51,45 @@ class PodcastCollectionViewController: UICollectionViewController {
         return 3
     }
 
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         return 1
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! EmbeddedCollectonViewCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? EmbeddedCollectonViewCell else {
+            return UICollectionViewCell()
+        }
 
         // Configure the cell
         switch indexPath.section {
         case 1:
-            
+
             cell.setupCell(type: API.Types.recommended, fromViewController: self)
-            
+
             return cell
         case 2:
             cell.setupCell(type: API.Types.top, fromViewController: self)
-            
+
             return cell
         default:
             cell.setupCell(type: API.Types.new, fromViewController: self)
-            
+
             return cell
         }
-        
+
     }
 }
 
 extension PodcastCollectionViewController {
     // MARK: Header
-    
+
     override func collectionView(_ collectionView: UICollectionView,
                                  viewForSupplementaryElementOfKind kind: String,
                                  at indexPath: IndexPath) -> UICollectionReusableView {
-        
+
         let reusableview = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: CollectionReusableView.self, for: indexPath)
-        
-        
+
         switch indexPath.section {
         case 1:
             reusableview?.setupTitleLabel(title: "Just For You")
@@ -98,12 +98,12 @@ extension PodcastCollectionViewController {
         default:
             reusableview?.setupTitleLabel(title: "Latest")
         }
-        
+
         return reusableview!
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        
+
         return CGSize(width: self.collectionView!.width, height: 60.calculateHeight())
     }
 }

@@ -29,7 +29,7 @@
 		1686FC061F009EC00088A6C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC041F009EC00088A6C1 /* Main.storyboard */; };
 		1686FC081F009EC00088A6C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC071F009EC00088A6C1 /* Assets.xcassets */; };
 		1686FC0B1F009EC00088A6C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC091F009EC00088A6C1 /* LaunchScreen.storyboard */; };
-		1686FC161F009EC00088A6C1 /* SEDaily_IOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */; };
+		1686FC161F009EC00088A6C1 /* SEDailyIOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1686FC151F009EC00088A6C1 /* SEDailyIOSTests.swift */; };
 		169806A61F8EF3970075D8AD /* L10nEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169806A51F8EF08F0075D8AD /* L10nEnum.swift */; };
 		16AD3E0A1F9B138D0084C545 /* PodcastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AD3E091F9B138D0084C545 /* PodcastViewModel.swift */; };
 		16AD3E0C1F9B13EE0084C545 /* FilterObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AD3E0B1F9B13EE0084C545 /* FilterObject.swift */; };
@@ -82,7 +82,7 @@
 		1686FC0A1F009EC00088A6C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1686FC0C1F009EC00088A6C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1686FC111F009EC00088A6C1 /* SEDaily-IOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SEDaily-IOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SEDaily_IOSTests.swift; sourceTree = "<group>"; };
+		1686FC151F009EC00088A6C1 /* SEDailyIOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SEDailyIOSTests.swift; sourceTree = "<group>"; };
 		1686FC171F009EC00088A6C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		169806A51F8EF08F0075D8AD /* L10nEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10nEnum.swift; sourceTree = "<group>"; };
 		16AD3E091F9B138D0084C545 /* PodcastViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastViewModel.swift; sourceTree = "<group>"; };
@@ -217,7 +217,7 @@
 		1686FC141F009EC00088A6C1 /* SEDaily-IOSTests */ = {
 			isa = PBXGroup;
 			children = (
-				1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */,
+				1686FC151F009EC00088A6C1 /* SEDailyIOSTests.swift */,
 				1686FC171F009EC00088A6C1 /* Info.plist */,
 			);
 			path = "SEDaily-IOSTests";
@@ -329,6 +329,7 @@
 				4B6DBB81C87D23ABC98202EB /* [CP] Copy Pods Resources */,
 				16D67C4B1F33AD1D0065E838 /* ShellScript */,
 				169806A21F8EED850075D8AD /* Swiftgen Localize Strings Script */,
+				1E884C331FA428D400400781 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -476,6 +477,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "./Fabric.framework/run f0ec5c4da42e81dc990c190bf79ca81fd9fdcf7d 8f1f2cea85347d8df665cfe1460a1391be0d1c99e81197b80ef43259ec294b0d";
+		};
+		1E884C331FA428D400400781 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"";
 		};
 		43BA1A9ED42DE22C48E64092 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -644,7 +659,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1686FC161F009EC00088A6C1 /* SEDaily_IOSTests.swift in Sources */,
+				1686FC161F009EC00088A6C1 /* SEDailyIOSTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -850,7 +865,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "koala-tea.SEDaily-IOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SEDaily-IOS.app/SEDaily-IOS";
 			};
@@ -867,7 +882,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "koala-tea.SEDaily-IOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SEDaily-IOS.app/SEDaily-IOS";
 			};

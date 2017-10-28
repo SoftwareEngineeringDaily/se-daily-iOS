@@ -19,23 +19,23 @@ public class PodcastViewModelController {
     typealias ViewModel = PodcastViewModel
     typealias SuccessCallback = () -> Void
     typealias ErrorCallback = (RepositoryError?) -> Void
-    
+
     fileprivate let repository = PodcastRepository()
     fileprivate var viewModels: [ViewModel?] = []
-    
+
     var viewModelsCount: Int {
         return viewModels.count
     }
-    
+
     func viewModel(at index: Int) -> ViewModel? {
         guard index >= 0 && index < viewModelsCount else { return nil }
         return viewModels[index]
     }
-    
+
     func clearViewModels() {
         self.viewModels.removeAll()
     }
-    
+
     func fetchData(type: String = "",
                    createdAtBefore beforeDate: String = "",
                    tags: [Int] = [],
@@ -48,39 +48,40 @@ public class PodcastViewModelController {
             self.clearViewModels()
         }
         let filterObject = FilterObject(type: type, tags: tags, lastDate: beforeDate, categories: categories)
-        repository.getData(filterObject: filterObject, onSucces: { (podcasts) in
-            let newViewModels: [ViewModel?] = podcasts.map { model in
-                return ViewModel(podcast: model)
-            }
-            guard !self.viewModels.isEmpty else {
-                self.viewModels.append(contentsOf: newViewModels)
-                onSucces()
-                return
-            }
-            
-            //@TODO: Do this in the background?
-            let filteredArray = newViewModels.filter { newPodcast in
-                let contains = self.viewModels.contains { currentPodcast in
-                    return newPodcast == currentPodcast
+        repository.getData(
+            filterObject: filterObject,
+            onSucces: { (podcasts) in
+                let newViewModels: [ViewModel?] = podcasts.map { model in
+                    return ViewModel(podcast: model)
                 }
-                return !contains
-            }
-            
-            guard filteredArray.count != 0 else {
-                // OnFailure Nothing to append
-                //@TODO: Change handle error
-                onFailure(.ReturnedDataIsZero)
-                return
-            }
-            
-            self.viewModels.append(contentsOf: filteredArray)
-            onSucces()
-        }) { (error) in
-            //@TODO: make this not api error
-            onFailure(error)
-        }
+                guard !self.viewModels.isEmpty else {
+                    self.viewModels.append(contentsOf: newViewModels)
+                    onSucces()
+                    return
+                }
+
+                //@TODO: Do this in the background?
+                let filteredArray = newViewModels.filter { newPodcast in
+                    let contains = self.viewModels.contains { currentPodcast in
+                        return newPodcast == currentPodcast
+                    }
+                    return !contains
+                }
+
+                guard filteredArray.count != 0 else {
+                    // OnFailure Nothing to append
+                    //@TODO: Change handle error
+                    onFailure(.ReturnedDataIsZero)
+                    return
+                }
+
+                self.viewModels.append(contentsOf: filteredArray)
+                onSucces() },
+            onFailure: { (error) in
+                //@TODO: make this not api error
+                onFailure(error) })
     }
-    
+
     func fetchSearchData(searchTerm: String,
                          createdAtBefore beforeDate: String = "",
                          firstSearch: Bool,
@@ -89,38 +90,40 @@ public class PodcastViewModelController {
         if firstSearch {
             self.clearViewModels()
         }
-        API.sharedInstance.getPostsWith(searchTerm: searchTerm, createdAtBefore: beforeDate, onSucces: { (podcasts) in
-            let newViewModels: [ViewModel?] = podcasts.map { model in
-                return ViewModel(podcast: model)
-            }
-
-            guard !self.viewModels.isEmpty else {
-                self.viewModels.append(contentsOf: newViewModels)
-                onSucces()
-                return
-            }
-            
-            //@TODO: Do this in the background?
-            let filteredArray = newViewModels.filter { newPodcast in
-                let contains = self.viewModels.contains { currentPodcast in
-                    return newPodcast == currentPodcast
+        API.sharedInstance.getPostsWith(
+            searchTerm: searchTerm,
+            createdAtBefore: beforeDate,
+            onSucces: { (podcasts) in
+                let newViewModels: [ViewModel?] = podcasts.map { model in
+                    return ViewModel(podcast: model)
                 }
-                return !contains
-            }
 
-            guard filteredArray.count != 0 else {
-                // OnFailure Nothing to append
-                //@TODO: Change handle error
-                onFailure(.GeneralFailure)
-                return
-            }
-            
-            self.viewModels.append(contentsOf: filteredArray)
-            onSucces()
-        }) { (apiError) in
-            //@TODO: handle error
-            log.error(apiError?.localizedDescription)
-            onFailure(apiError)
-        }
+                guard !self.viewModels.isEmpty else {
+                    self.viewModels.append(contentsOf: newViewModels)
+                    onSucces()
+                    return
+                }
+
+                //@TODO: Do this in the background?
+                let filteredArray = newViewModels.filter { newPodcast in
+                    let contains = self.viewModels.contains { currentPodcast in
+                        return newPodcast == currentPodcast
+                    }
+                    return !contains
+                }
+
+                guard filteredArray.count != 0 else {
+                    // OnFailure Nothing to append
+                    //@TODO: Change handle error
+                    onFailure(.GeneralFailure)
+                    return
+                }
+
+                self.viewModels.append(contentsOf: filteredArray)
+                onSucces() },
+            onFailure: { (apiError) in
+                //@TODO: handle error
+                log.error(apiError?.localizedDescription ?? "")
+                onFailure(apiError) })
     }
 }

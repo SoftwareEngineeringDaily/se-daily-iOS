@@ -29,7 +29,7 @@ public extension KTLayoutProtocol where Self: UIView {
          width: CGFloat,
          height: CGFloat,
          keepEqual: Bool) {
-        
+
         // Calculate position of new frame
         let cx = origin.x + UIView.getValueScaledByScreenWidthFor(baseValue: leftInset)
         let cy = origin.y + UIView.getValueScaledByScreenHeightFor(baseValue: topInset)
@@ -37,7 +37,7 @@ public extension KTLayoutProtocol where Self: UIView {
         // Calculate width and height
         var cWidth = UIView.getValueScaledByScreenWidthFor(baseValue: width)
         var cHeight = UIView.getValueScaledByScreenHeightFor(baseValue: height)
-        
+
         // Here we check if either width or height is 0 which we are assuming means that the variable that isn't 0 should be equal to the variable that has been set
         if keepEqual {
             if width == 0 {
@@ -47,18 +47,18 @@ public extension KTLayoutProtocol where Self: UIView {
                 cHeight = cWidth
             }
         }
-        
+
         // Create new frame
         let newFrame = CGRect(x: cx, y: cy, width: cWidth, height: cHeight)
-        
+
         self.init()
         self.frame = newFrame
         self.performLayout()
     }
-    
+
     // ---
     init(leftInset: CGFloat, topInset: CGFloat, width: CGFloat, height: CGFloat) {
-        self.init(origin: CGPoint(x: 0,y: 0),
+        self.init(origin: CGPoint(x: 0, y: 0),
                   leftInset: leftInset,
                   topInset: topInset,
                   width: width,
@@ -66,7 +66,7 @@ public extension KTLayoutProtocol where Self: UIView {
                   keepEqual: false)
     }
     init(leftInset: CGFloat, width: CGFloat, height: CGFloat) {
-        self.init(origin: CGPoint(x: 0,y: 0),
+        self.init(origin: CGPoint(x: 0, y: 0),
                   leftInset: leftInset,
                   topInset: 0,
                   width: width,
@@ -74,14 +74,14 @@ public extension KTLayoutProtocol where Self: UIView {
                   keepEqual: false)
     }
     init(topInset: CGFloat, width: CGFloat, height: CGFloat) {
-        self.init(origin: CGPoint(x: 0,y: 0),
+        self.init(origin: CGPoint(x: 0, y: 0),
                   leftInset: 0,
                   topInset: topInset,
                   width: width,
                   height: height,
                   keepEqual: false)
     }
-    
+
     // ---
     init(origin: CGPoint, leftInset: CGFloat, topInset: CGFloat, width: CGFloat, height: CGFloat) {
         self.init(origin: origin,
@@ -107,10 +107,10 @@ public extension KTLayoutProtocol where Self: UIView {
                   height: height,
                   keepEqual: false)
     }
-    
+
     // ---
     init(leftInset: CGFloat, topInset: CGFloat, width: CGFloat) {
-        self.init(origin: CGPoint(x: 0,y: 0),
+        self.init(origin: CGPoint(x: 0, y: 0),
                   leftInset: leftInset,
                   topInset: topInset,
                   width: width,
@@ -118,14 +118,14 @@ public extension KTLayoutProtocol where Self: UIView {
                   keepEqual: true)
     }
     init(leftInset: CGFloat, topInset: CGFloat, height: CGFloat) {
-        self.init(origin: CGPoint(x: 0,y: 0),
+        self.init(origin: CGPoint(x: 0, y: 0),
                   leftInset: leftInset,
                   topInset: topInset,
                   width: 0,
                   height: height,
                   keepEqual: true)
     }
-    
+
     // ---
     init(origin: CGPoint, leftInset: CGFloat, topInset: CGFloat, width: CGFloat) {
         self.init(origin: origin,
@@ -143,10 +143,10 @@ public extension KTLayoutProtocol where Self: UIView {
                   height: height,
                   keepEqual: true)
     }
-    
+
     // ---
     init(leftInset: CGFloat, width: CGFloat) {
-        self.init(origin: CGPoint(x: 0,y: 0),
+        self.init(origin: CGPoint(x: 0, y: 0),
                   leftInset: leftInset,
                   topInset: 0,
                   width: width,
@@ -154,7 +154,7 @@ public extension KTLayoutProtocol where Self: UIView {
                   keepEqual: true)
     }
     init(leftInset: CGFloat, height: CGFloat) {
-        self.init(origin: CGPoint(x: 0,y: 0),
+        self.init(origin: CGPoint(x: 0, y: 0),
                   leftInset: leftInset,
                   topInset: 0,
                   width: 0,
@@ -162,7 +162,7 @@ public extension KTLayoutProtocol where Self: UIView {
                   keepEqual: true)
     }
     init(topInset: CGFloat, width: CGFloat) {
-        self.init(origin: CGPoint(x: 0,y: 0),
+        self.init(origin: CGPoint(x: 0, y: 0),
                   leftInset: 0,
                   topInset: topInset,
                   width: width,
@@ -170,14 +170,14 @@ public extension KTLayoutProtocol where Self: UIView {
                   keepEqual: true)
     }
     init(topInset: CGFloat, height: CGFloat) {
-        self.init(origin: CGPoint(x: 0,y: 0),
+        self.init(origin: CGPoint(x: 0, y: 0),
                   leftInset: 0,
                   topInset: topInset,
                   width: 0,
                   height: height,
                   keepEqual: true)
     }
-    
+
     // ---
     init(origin: CGPoint, leftInset: CGFloat, width: CGFloat) {
         self.init(origin: origin,
@@ -211,10 +211,10 @@ public extension KTLayoutProtocol where Self: UIView {
                   height: height,
                   keepEqual: true)
     }
-    
+
     // ---
     init(width: CGFloat, height: CGFloat) {
-        self.init(origin: CGPoint(x: 0,y: 0),
+        self.init(origin: CGPoint(x: 0, y: 0),
                   leftInset: 0,
                   topInset: 0,
                   width: width,
@@ -229,10 +229,10 @@ public extension KTLayoutProtocol where Self: UIView {
                   height: height,
                   keepEqual: false)
     }
-    
+
     // ---
     init(width: CGFloat) {
-        self.init(origin: CGPoint(x: 0,y: 0),
+        self.init(origin: CGPoint(x: 0, y: 0),
                   leftInset: 0,
                   topInset: 0,
                   width: width,
@@ -240,14 +240,14 @@ public extension KTLayoutProtocol where Self: UIView {
                   keepEqual: true)
     }
     init(height: CGFloat) {
-        self.init(origin: CGPoint(x: 0,y: 0),
+        self.init(origin: CGPoint(x: 0, y: 0),
                   leftInset: 0,
                   topInset: 0,
                   width: 0,
                   height: height,
                   keepEqual: true)
     }
-    
+
     // ---
     init(origin: CGPoint, width: CGFloat) {
         self.init(origin: origin,
@@ -265,7 +265,7 @@ public extension KTLayoutProtocol where Self: UIView {
                   height: height,
                   keepEqual: true)
     }
-    
+
 }
 
 // Everything boiled down to a single extension

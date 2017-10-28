@@ -11,19 +11,19 @@ import ActiveLabel
 import KTResponsiveUI
 
 class PodcastDescriptionView: UIView {
-    
+
     private lazy var label: ActiveLabel = {
         return ActiveLabel(leftInset: 15, topInset: 15, width: 375 - 30, height: 600)
     }()
-    
+
     private let bottomMarginForLabel = UIView.getValueScaledByScreenHeightFor(baseValue: 30)
-    
+
     override func performLayout() {
         self.backgroundColor = Stylesheet.Colors.offWhite
-        
+
         self.addSubview(label)
         self.height = label.height
-        
+
         label.numberOfLines = 0
         label.enabledTypes = [.url]
         label.textColor = Stylesheet.Colors.offBlack
@@ -37,7 +37,7 @@ class PodcastDescriptionView: UIView {
             }
         }
     }
-    
+
     func setupView(podcastModel: PodcastViewModel) {
         podcastModel.getHTMLDecodedDescription { (returnedString) in
             self.label.text = returnedString

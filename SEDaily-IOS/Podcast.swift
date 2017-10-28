@@ -9,9 +9,9 @@
 import Foundation
 
 enum PodcastTypes: String {
-    case new = "new"
-    case top = "top"
-    case recommended = "recommended"
+    case new
+    case top
+    case recommended
 }
 
 enum PodcastCategoryIds: Int {
@@ -26,7 +26,7 @@ enum PodcastCategoryIds: Int {
     case Security = 1083
     case Hackers = 1085
     case Greatest_Hits = 1069
-    
+
     var description: String {
         switch self {
         case .All:
@@ -78,7 +78,7 @@ public struct Podcast: Codable {
 }
 
 extension Podcast: Equatable {
-    public static func ==(lhs: Podcast, rhs: Podcast) -> Bool {
+    public static func == (lhs: Podcast, rhs: Podcast) -> Bool {
         return lhs._id == rhs._id &&
             lhs.date == rhs.date &&
             lhs.link == rhs.link &&
@@ -103,7 +103,7 @@ extension Podcast {
             }
         }
     }
-    
+
     func getLastUpdatedAsDate() -> Date? {
         return Date(iso8601String: self.date)
     }
@@ -118,4 +118,3 @@ extension Encodable {
         return dictionary as NSDictionary
     }
 }
-

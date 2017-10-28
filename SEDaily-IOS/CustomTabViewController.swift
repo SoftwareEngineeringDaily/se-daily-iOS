@@ -20,30 +20,30 @@ import SnapKit
 import SwiftIcons
 
 class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
-    
+
     var ifset = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Do any additional setup after loading the view.
-        
+
         delegate = self
-        
+
         self.view.backgroundColor = .white
-        
+
         setupTabs()
         setupTitleView()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         setupNavBar()
     }
-    
+
     func setupNavBar() {
         let rightBarButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(self.leftBarButtonPressed))
         self.navigationItem.rightBarButtonItem = rightBarButton
-        
+
         switch UserManager.sharedInstance.getActiveUser().isLoggedIn() {
         case false:
             let leftBarButton = UIBarButtonItem(title: L10n.loginTitle, style: .done, target: self, action: #selector(self.loginButtonPressed))
@@ -53,40 +53,40 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
             self.navigationItem.leftBarButtonItem = leftBarButton
         }
     }
-    
+
     @objc func leftBarButtonPressed() {
         let vc = SearchTableViewController()
         self.navigationController?.pushViewController(vc)
     }
-      
+
     @objc func loginButtonPressed() {
         let vc = LoginViewController()
         self.navigationController?.pushViewController(vc)
     }
-    
+
     @objc func logoutButtonPressed() {
         UserManager.sharedInstance.logoutUser()
         self.setupNavBar()
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     func setupTabs() {
         let layout = UICollectionViewLayout()
-        
+
         self.viewControllers = [
             PodcastPageViewController(),
             GeneralCollectionViewController(collectionViewLayout: layout, type: .recommended),
-            GeneralCollectionViewController(collectionViewLayout: layout, type: .top),
+            GeneralCollectionViewController(collectionViewLayout: layout, type: .top)
         ]
-        
+
         self.tabBar.backgroundColor = .white
         self.tabBar.isTranslucent = false
     }
-    
+
     func setupTitleView() {
         let height = UIView.getValueScaledByScreenHeightFor(baseValue: 40)
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: height, height: height))

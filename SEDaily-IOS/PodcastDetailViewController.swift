@@ -9,9 +9,9 @@
 import UIKit
 
 class PodcastDetailViewController: UIViewController {
-    
+
     var model = PodcastViewModel()
-    
+
     lazy var scrollView: UIScrollView = {
         return UIScrollView(frame: self.view.frame)
     }()
@@ -20,12 +20,12 @@ class PodcastDetailViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = Stylesheet.Colors.base
         self.view.addSubview(scrollView)
-        
+
         let headerView = HeaderView(width: 375, height: 200)
         headerView.setupHeader(model: model)
         self.scrollView.addSubview(headerView)
-        
-        let view = PodcastDescriptionView(origin: headerView.bottomLeftPoint(),width: 375, height: 20)
+
+        let view = PodcastDescriptionView(origin: headerView.bottomLeftPoint(), width: 375, height: 20)
         view.setupView(podcastModel: model)
         scrollView.addSubview(view)
         view.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor,

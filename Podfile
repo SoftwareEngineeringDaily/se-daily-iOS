@@ -25,6 +25,7 @@ target 'SEDaily-IOS' do
   pod 'SwifterSwift'
   pod 'SwiftIcons', :git => 'https://github.com/themisterholliday/SwiftIcons.git', :branch => 'swift-4'
   pod 'SwiftGen'
+  pod 'SwiftLint'
   pod 'SwiftSoup'
   pod 'SwiftyJSON'
   pod 'Tabman'

@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import SwifterSwift
+import KTResponsiveUI
 
 enum PlaybackSpeed: Float {
     case _1x = 1.0
@@ -99,12 +100,12 @@ class AudioView: UIView {
     
     var previousSliderValue: Float = 0.0
     var isFirstLoad = true
-    var settingsButton = UIButton()
+    var playbackSpeedButton = UIButton()
     
     var currentSpeed: PlaybackSpeed = ._1x {
         willSet {
             guard currentSpeed != newValue else { return }
-            self.settingsButton.setTitle(newValue.shortTitle, for: .normal)
+            self.playbackSpeedButton.setTitle(newValue.shortTitle, for: .normal)
             self.delegate?.audioRateChanged(newRate: newValue.rawValue)
         }
     }
@@ -147,13 +148,12 @@ class AudioView: UIView {
         containerView.addSubview(podcastLabel)
         
         podcastLabel.snp.makeConstraints { (make) -> Void in
-            make.left.equalToSuperview().inset(60.calculateWidth())
-            make.right.equalToSuperview().inset(60.calculateWidth())
+            make.left.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 60))
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().inset(-30.calculateHeight())
+            make.centerY.equalToSuperview().inset(UIView.getValueScaledByScreenHeightFor(baseValue: -30))
         }
         
-        podcastLabel.font = UIFont.systemFont(ofSize: 16.calculateWidth())
+        podcastLabel.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 16))
         podcastLabel.numberOfLines = 0
         podcastLabel.textAlignment = .center
         
@@ -164,8 +164,8 @@ class AudioView: UIView {
         stackView.distribution = .fillEqually
         
         stackView.snp.makeConstraints { (make) -> Void in
-            make.height.equalTo(70.calculateHeight())
-            make.width.equalTo((50 * 5).calculateHeight())
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 70))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: (50 * 5)))
             make.top.equalTo(podcastLabel.snp.bottom)
             make.centerX.equalToSuperview()
         }
@@ -176,7 +176,7 @@ class AudioView: UIView {
         stackView.addArrangedSubview(pauseButton)
         stackView.addArrangedSubview(skipForwardButton)
         
-        let iconHeight = (70 / 2).calculateHeight()
+        let iconHeight = UIView.getValueScaledByScreenHeightFor(baseValue: (70 / 2))
         
         skipBackwardbutton.setImage(#imageLiteral(resourceName: "Backward"), for: .normal)
         skipBackwardbutton.height = iconHeight
@@ -198,18 +198,19 @@ class AudioView: UIView {
         
         playButton.isHidden = true
         
-        settingsButton.setTitle(PlaybackSpeed._1x.shortTitle, for: .normal)
-        settingsButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .normal)
-        settingsButton.addTarget(self, action: #selector(self.settingsButtonPressed), for: .touchUpInside)
-        self.addSubview(settingsButton)
+        playbackSpeedButton.titleLabel?.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 20))
+        playbackSpeedButton.setTitle(PlaybackSpeed._1x.shortTitle, for: .normal)
+        playbackSpeedButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .normal)
+        playbackSpeedButton.addTarget(self, action: #selector(self.settingsButtonPressed), for: .touchUpInside)
+        self.addSubview(playbackSpeedButton)
         
         let width = UIView.getValueScaledByScreenWidthFor(baseValue: 40)
         let height = UIView.getValueScaledByScreenHeightFor(baseValue: 40)
-        settingsButton.snp.makeConstraints { (make) -> Void in
+        playbackSpeedButton.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(width)
             make.height.equalTo(height)
             make.bottom.equalToSuperview()
-            make.right.equalToSuperview()
+            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 2))
         }
 
         setupActivityIndicator()
@@ -233,7 +234,7 @@ class AudioView: UIView {
         
         playbackSlider.snp.makeConstraints { (make) -> Void in
             make.top.equalToSuperview().inset(-10)
-            make.height.equalTo(20.calculateHeight())
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
             make.left.right.equalToSuperview()
         }
         
@@ -258,7 +259,7 @@ class AudioView: UIView {
         
         bufferBackgroundSlider.snp.makeConstraints { (make) -> Void in
             make.top.equalToSuperview().inset(-10)
-            make.height.equalTo(20.calculateHeight())
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
             make.left.right.equalToSuperview()
         }
         
@@ -276,7 +277,7 @@ class AudioView: UIView {
         
         bufferSlider.snp.makeConstraints { (make) -> Void in
             make.top.equalToSuperview().inset(-10)
-            make.height.equalTo(20.calculateHeight())
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
             make.left.right.equalToSuperview()
         }
         
@@ -284,30 +285,31 @@ class AudioView: UIView {
     }
     
     func addLabels() {
-        currentTimeLabel.text = "00.00.00"
+        let labelFontSize = UIView.getValueScaledByScreenWidthFor(baseValue: 12)
+        currentTimeLabel.text = "00:00"
         currentTimeLabel.textAlignment = .left
-        currentTimeLabel.font = UIFont.systemFont(ofSize: 12)
+        currentTimeLabel.font = UIFont.systemFont(ofSize: labelFontSize)
         
-        timeLeftLabel.text = "00.00.00"
+        timeLeftLabel.text = "00:00"
         timeLeftLabel.textAlignment = .right
         timeLeftLabel.adjustsFontSizeToFitWidth = true
-        timeLeftLabel.font = UIFont.systemFont(ofSize: 12)
+        timeLeftLabel.font = UIFont.systemFont(ofSize: labelFontSize)
 
         self.containerView.addSubview(currentTimeLabel)
         self.containerView.addSubview(timeLeftLabel)
         
         currentTimeLabel.snp.makeConstraints { (make) -> Void in
-            make.left.equalTo(playbackSlider).inset(5.calculateWidth())
-            make.top.equalTo(playbackSlider.snp.bottom).inset(5.calculateHeight())
-            make.height.equalTo(20.calculateHeight())
-            make.width.equalTo(55.calculateWidth())
+            make.left.equalTo(playbackSlider).inset(UIView.getValueScaledByScreenWidthFor(baseValue: 5))
+            make.top.equalTo(playbackSlider.snp.bottom).inset(UIView.getValueScaledByScreenHeightFor(baseValue: 5))
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 55))
         }
         
         timeLeftLabel.snp.makeConstraints { (make) -> Void in
-            make.right.equalTo(playbackSlider).inset(5.calculateWidth())
-            make.top.equalTo(playbackSlider.snp.bottom).inset(5.calculateHeight())
-            make.height.equalTo(20.calculateHeight())
-            make.width.equalTo(55.calculateWidth())
+            make.right.equalTo(playbackSlider).inset(UIView.getValueScaledByScreenWidthFor(baseValue: 5))
+            make.top.equalTo(playbackSlider.snp.bottom).inset(UIView.getValueScaledByScreenHeightFor(baseValue: 5))
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 55))
         }
     }
     
@@ -408,7 +410,7 @@ class AudioView: UIView {
         
         activityView.snp.makeConstraints { (make) -> Void in
             make.centerY.equalToSuperview()
-            make.right.equalToSuperview().inset(10.calculateWidth())
+            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 10))
         }
     }
     

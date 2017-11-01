@@ -54,12 +54,10 @@ class ContainerViewController: UIViewController {
     
     func setContainerViewInset() {
         self.containerView.snp.updateConstraints { (make) -> Void in
-            make.bottom.equalToSuperview().inset(110.calculateHeight())
+            make.bottom.equalToSuperview().inset(UIView.getValueScaledByScreenHeightFor(baseValue: 110))
         }
         
-//        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
-            self.view.layoutIfNeeded()
-//        })
+        self.view.layoutIfNeeded()
     }
     
     func removeContainerViewInset() {

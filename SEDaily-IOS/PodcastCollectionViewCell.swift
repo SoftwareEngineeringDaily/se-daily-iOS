@@ -8,86 +8,27 @@
 
 import UIKit
 import SnapKit
-import RealmSwift
-import Kingfisher
 import KTResponsiveUI
 import Skeleton
-
-class PodcastCollectionViewCell: UICollectionViewCell {
-    
-    var podcastModel: PodcastModel!
-    
-    let imageView = UIImageView()
-    let titleLabel = UILabel()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        self.contentView.addSubview(imageView)
-        self.contentView.addSubview(titleLabel)
-        
-        self.contentView.backgroundColor = .white
-        contentView.layer.cornerRadius = 2.calculateWidth()
-        
-        contentView.layer.shadowColor = UIColor.lightGray.cgColor
-        contentView.layer.shadowOpacity = 0.75
-        contentView.layer.shadowOffset = CGSize(width: 0, height: 1.calculateHeight())
-        contentView.layer.shadowRadius = 2.calculateWidth()
-        
-        let topBottomInset = 5.0.calculateHeight()
-        let amountToSubtract = topBottomInset * 2
-        
-        let twoThirds: CGFloat = (2.0/3.0)
-        
-        imageView.snp.makeConstraints{ (make) in
-            make.top.equalToSuperview().inset(topBottomInset)
-            make.left.right.equalToSuperview().inset(10.calculateWidth())
-            make.height.equalTo(((self.height * twoThirds) - amountToSubtract))
-        }
-        
-        imageView.contentMode = .scaleAspectFit
-        
-        let oneThird: CGFloat = (1.0/3.0)
-        
-        titleLabel.snp.makeConstraints{ (make) in
-            make.bottom.equalToSuperview().inset(topBottomInset)
-            make.left.right.equalToSuperview().inset(10.calculateWidth())
-            make.height.equalTo(((self.height * oneThird) - amountToSubtract))
-        }
-
-        titleLabel.font = UIFont.systemFont(ofSize: 16.calculateWidth())
-        titleLabel.adjustsFontSizeToFitWidth = false
-        titleLabel.lineBreakMode = .byTruncatingTail
-        titleLabel.minimumScaleFactor = 0.25
-        titleLabel.numberOfLines = 0
-        titleLabel.textAlignment = .center
-        titleLabel.textColor = Stylesheet.Colors.offBlack
-    }
-    
-    required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:)")
-    }
-    
-    func setupCell(model: PodcastModel) {
-        self.podcastModel = model
-        guard let name = model.podcastName else { return }
-        titleLabel.text = name
-        
-        guard let imageURLString = model.imageURLString else {
-            self.imageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
-            return
-        }
-        if let url = URL(string: imageURLString) {
-            self.imageView.kf.indicatorType = .activity
-            self.imageView.kf.setImage(with: url)
-        }
-    }
-}
+import SDWebImage
 
 class PodcastCell: UICollectionViewCell {
     var imageView: UIImageView!
     var titleLabel: UILabel!
     var timeDayLabel: UILabel!
+    
+    var viewModel: PodcastViewModel = PodcastViewModel() {
+        willSet {
+            guard newValue != self.viewModel else { return }
+        }
+        didSet {
+            self.titleLabel.text = viewModel.podcastTitle
+            viewModel.getLastUpdatedAsDateWith { (date) in
+                self.setupTimeDayLabel(timeLength: nil, date: date)
+            }
+            self.setupImageView(imageURL: viewModel.featuredImageURL)
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -114,31 +55,20 @@ class PodcastCell: UICollectionViewCell {
         fatalError("init(coder:)")
     }
     
-    func setupCell(imageURLString: String?, title: String?, timeLength: Int?, date: Date?) {
-        self.setupImageView(imageURLString: imageURLString)
-        titleLabel.text = title ?? ""
-        setupTimeDayLabel(timeLength: timeLength, date: date)
-    }
-    
-    func setupImageView(imageURLString: String?) {
-        guard let imageURLString = imageURLString else {
+    private func setupImageView(imageURL: URL?) {
+        guard let imageURL = imageURL else {
             self.imageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
             return
         }
-        if let url = URL(string: imageURLString) {
-            self.imageView.kf.indicatorType = .activity
-            self.imageView.kf.setImage(with: url)
-        }
+
+        imageView.sd_setShowActivityIndicatorView(true)
+        imageView.sd_setIndicatorStyle(.gray)
+        imageView.sd_setImage(with: imageURL)
     }
     
-    func setupTimeDayLabel(timeLength: Int?, date: Date?) {
-        let timeString = Helpers.createTimeString(time: (Float(timeLength ?? 0)))
+    private func setupTimeDayLabel(timeLength: Int?, date: Date?) {
         let dateString = date?.dateString() ?? ""
-        guard timeString != "0:00" else {
-            timeDayLabel.text = dateString
-            return
-        }
-        timeDayLabel.text = timeString + " \u{2022} " + dateString
+        timeDayLabel.text = dateString
     }
     
     // MARK: Skeleton

@@ -21,11 +21,11 @@ class SkeletonCollectionView: UIView, UICollectionViewDataSource {
         
         self.collectionView!.register(PodcastCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
-        let layout = KoalaTeaFlowLayout(cellWidth: 158,
-                                        cellHeight: 250,
-                                        topBottomMargin: 12,
-                                        leftRightMargin: 20,
-                                        cellSpacing: 8)
+        let layout = KoalaTeaFlowLayout(cellWidth: UIView.getValueScaledByScreenWidthFor(baseValue: 158),
+                                        cellHeight: UIView.getValueScaledByScreenHeightFor(baseValue: 250),
+                                        topBottomMargin: UIView.getValueScaledByScreenHeightFor(baseValue: 12),
+                                        leftRightMargin: UIView.getValueScaledByScreenWidthFor(baseValue: 20),
+                                        cellSpacing: UIView.getValueScaledByScreenWidthFor(baseValue: 8))
         self.collectionView?.collectionViewLayout = layout
         
         self.collectionView?.backgroundColor = .white

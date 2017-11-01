@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RealmSwift
 import SwiftyBeaver
 let log = SwiftyBeaver.self
 import IQKeyboardManagerSwift
@@ -24,11 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         Fabric.with([Crashlytics.self])
-        migrateRealmDatabaseIfNeeded()
         setupSwiftyBeaver()
         setupIQKeyboard()
         setupFirstScreen()
-        API.sharedInstance.createDefaultData()
         
         return true
     }
@@ -74,23 +71,8 @@ extension AppDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         let rootVC = ContainerViewController()
         rootVC.view.backgroundColor = .white
-//        let navVC = UINavigationController(rootViewController: rootVC)
-//        navVC.view.backgroundColor = .white
-//        navVC.navigationBar.isTranslucent = false
-//        window!.rootViewController = navVC
         window!.rootViewController = rootVC
         window!.makeKeyAndVisible()
-        
-        let realm = try! Realm()
-        log.info(realm.configuration.fileURL ?? "")
-    }
-    
-    func migrateRealmDatabaseIfNeeded() {
-        var config = Realm.Configuration()
-        config.deleteRealmIfMigrationNeeded = true
-
-        Realm.Configuration.defaultConfiguration = config
-        _ = try! Realm()
     }
 }
 

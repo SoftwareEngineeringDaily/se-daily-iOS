@@ -10,7 +10,7 @@ import UIKit
 import SwiftIcons
 
 class HeaderView: UIView {
-    var model: PodcastModel!
+    var model = PodcastViewModel()
     
     let titleLabel = UILabel()
     let dateLabel = UILabel()
@@ -28,7 +28,6 @@ class HeaderView: UIView {
         super.init(frame: frame);
         
         self.performLayout()
-//        Stylesheet.applyOn(self)
     }
     
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented"); }
@@ -45,28 +44,28 @@ class HeaderView: UIView {
         setupPlayView()
         
         titleLabel.snp.makeConstraints{ (make) in
-            make.bottom.equalTo(playView.snp.top).offset(-60.calculateHeight())
-            make.left.equalToSuperview().offset(15.calculateHeight())
-            make.right.equalToSuperview().inset(15.calculateHeight())
+            make.bottom.equalTo(playView.snp.top).offset(UIView.getValueScaledByScreenHeightFor(baseValue: -60))
+            make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenHeightFor(baseValue: 15))
         }
         
         dateLabel.snp.makeConstraints{ (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(10.calculateHeight())
-            make.left.equalToSuperview().offset(15.calculateHeight())
-            make.right.equalToSuperview().inset(15.calculateHeight())
+            make.top.equalTo(titleLabel.snp.bottom).offset(UIView.getValueScaledByScreenHeightFor(baseValue: 10))
+            make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenHeightFor(baseValue: 15))
         }
         
         setupLabels()
     }
     
     func setupLabels() {
-        titleLabel.font = UIFont(font: .helveticaNeue, size: 20.calculateHeight())
+        titleLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 20))
         titleLabel.adjustsFontSizeToFitWidth = false
         titleLabel.minimumScaleFactor = 0.25
         titleLabel.numberOfLines = 0
         titleLabel.textColor = Stylesheet.Colors.white
         
-        dateLabel.font = UIFont(font: .helveticaNeue, size: 16.calculateHeight())
+        dateLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 16))
         dateLabel.adjustsFontSizeToFitWidth = false
         dateLabel.minimumScaleFactor = 0.25
         dateLabel.numberOfLines = 1
@@ -80,27 +79,27 @@ class HeaderView: UIView {
         playView.snp.makeConstraints{ (make) in
             make.bottom.equalToSuperview()
             make.width.equalToSuperview()
-            make.height.equalTo(65.calculateHeight())
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 65))
         }
         
         playView.addSubview(playButton)
-        playButton.setTitle("Play", for: .normal)
+        playButton.setTitle(L10n.play, for: .normal)
         playButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
         playButton.addTarget(self, action: #selector(self.playButtonPressed), for: .touchUpInside)
-        playButton.cornerRadius = 4.calculateWidth()
+        playButton.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 4)
         
         playButton.snp.makeConstraints{ (make) in
             make.centerY.equalToSuperview()
-            make.right.equalToSuperview().inset(15.calculateWidth())
-            make.width.equalTo(84.calculateWidth())
-            make.height.equalTo(42.calculateHeight())
+            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 84))
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 42))
         }
         
         playView.addSubview(voteView)
         voteView.snp.makeConstraints{ (make) in
             make.centerY.equalToSuperview()
-            make.left.equalToSuperview().inset(15.calculateWidth())
-            make.width.equalTo((35 * 3).calculateWidth())
+            make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: (35 * 3)))
             make.height.equalToSuperview()
         }
         
@@ -118,123 +117,112 @@ class HeaderView: UIView {
         
         scoreLabel.textAlignment = .center
         scoreLabel.baselineAdjustment = .alignCenters
-        scoreLabel.font = UIFont(font: .helveticaNeue, size: 24.calculateWidth())
+        scoreLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 24))
 
-        downVoteButton.setIcon(icon: .fontAwesome(.thumbsODown), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.offBlack, forState: .normal)
-        downVoteButton.setIcon(icon: .fontAwesome(.thumbsDown), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.base, forState: .selected)
+        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 35)
+        downVoteButton.setIcon(icon: .fontAwesome(.thumbsODown), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
+        downVoteButton.setIcon(icon: .fontAwesome(.thumbsDown), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
         downVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
         downVoteButton.addTarget(self, action: #selector(self.downVoteButtonPressed), for: .touchUpInside)
         
-        upVoteButton.setIcon(icon: .fontAwesome(.thumbsOUp), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.offBlack, forState: .normal)
-        upVoteButton.setIcon(icon: .fontAwesome(.thumbsUp), iconSize: 35.calculateHeight(), color: Stylesheet.Colors.base, forState: .selected)
+        upVoteButton.setIcon(icon: .fontAwesome(.thumbsOUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
+        upVoteButton.setIcon(icon: .fontAwesome(.thumbsUp), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
         upVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
         upVoteButton.addTarget(self, action: #selector(self.upvoteButtonPressed), for: .touchUpInside)
     }
     
-    func setupHeader(model: PodcastModel) {
+    func setupHeader(model: PodcastViewModel) {
         self.model = model
-        self.titleLabel.text = model.podcastName!
-        self.dateLabel.text = Helpers.formatDate(dateString: model.uploadDate!)
-        self.scoreLabel.text = model.score!
+        self.titleLabel.text = model.podcastTitle
+        self.dateLabel.text = model.getLastUpdatedAsDate()?.dateString() ?? ""
+        self.scoreLabel.text = model.score.string
         
-        if self.model.isUpvoted {
-            upVoteButton.isSelected = self.model.isUpvoted
-            guard var int = Int(model.score!) else { return }
-            int += 1
-            self.scoreLabel.text = String(int)
-        }
-        if self.model.isDownvoted {
-            downVoteButton.isSelected = self.model.isDownvoted
-            guard var int = Int(model.score!) else { return }
-            int -= 1
-            self.scoreLabel.text = String(int)
-        }
+        upVoteButton.isSelected = self.model.isUpvoted
+        downVoteButton.isSelected = self.model.isDownvoted
+        self.scoreLabel.text = String(self.model.score)
     }
 }
 
 extension HeaderView {
     @objc func playButtonPressed() {
         //@TODO: Switch button and/or stop if playing
-//        AudioViewManager.shared.presentAudioView()
-        _ = "http://traffic.libsyn.com/rtpodcast/podcast_update.mp3"
 
         // Podcast model checks here
         AudioViewManager.shared.setupManager(podcastModel: model)
     }
     
     @objc func upvoteButtonPressed() {
-        guard User.checkAndAlert() else { return }
-        guard let podcastId = model.podcastId else { return }
+        guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
+            Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
+            return
+        }
+        
+        // Immediately set UI to upvote
+        self.setUpvoteTo(!self.upVoteButton.isSelected)
+        self.setDownvoteTo(false)
+        
+        let podcastId = model._id
         API.sharedInstance.upvotePodcast(podcastId: podcastId, completion: { (success, active) in
             guard success != nil else { return }
             if success == true {
                 guard let active = active else { return }
-                switch active {
-                case true:
-                    self.addScore(active: active)
-                case false:
-                    self.addScore(active: active)
-                }
+                self.addScore(active: active)
             }
         })
     }
     
     @objc func downVoteButtonPressed() {
-        guard User.checkAndAlert() else { return }
-        guard let podcastId = model.podcastId else { return }
+        guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
+            Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
+            return
+        }
+        
+        // Immediately set UI to downvote
+        self.setUpvoteTo(false)
+        self.setDownvoteTo(!self.downVoteButton.isSelected)
+        
+        let podcastId = model._id
         API.sharedInstance.downvotePodcast(podcastId: podcastId, completion: { (success, active) in
             guard success != nil else { return }
             if success == true {
                 // Switch if active
                 guard let active = active else { return }
-                switch active {
-                case true:
-                    self.subtractScore(active: active)
-                case false:
-                    self.subtractScore(active: active)
-                }
+                self.subtractScore(active: active)
             }
         })
     }
     
     func addScore(active: Bool) {
-        if active == false {
-            self.scoreLabel.text = String(model.score!)
-            self.model.update(isUpvoted: false)
-            upVoteButton.isSelected = self.model.isUpvoted
-            downVoteButton.isSelected = self.model.isDownvoted
+        self.setUpvoteTo(active)
+        guard active != false else {
+            self.setScoreTo(self.model.score - 1)
             return
         }
-
-        guard let score = self.model.score else { return }
-        guard var int = Int(score) else { return }
-        int += 1
-        // Update score label
-        self.scoreLabel.text = String(int)
-        
-        self.model.update(isUpvoted: true)
-        
-        upVoteButton.isSelected = self.model.isUpvoted
-        downVoteButton.isSelected = self.model.isDownvoted
+        self.setScoreTo(self.model.score + 1)
     }
     
     func subtractScore(active: Bool) {
-        if active == false {
-            self.scoreLabel.text = String(model.score!)
-            self.model.update(isDownvoted: false)
-            upVoteButton.isSelected = self.model.isUpvoted
-            downVoteButton.isSelected = self.model.isDownvoted
+        self.setDownvoteTo(active)
+        guard active != false else {
+            self.setScoreTo(self.model.score + 1)
             return
         }
-        guard let score = self.model.score else { return }
-        guard var int = Int(score) else { return }
-        int -= 1
-        // Update score label
-        self.scoreLabel.text = String(int)
-
-        self.model.update(isDownvoted: true)
-        
-        upVoteButton.isSelected = self.model.isUpvoted
-        downVoteButton.isSelected = self.model.isDownvoted
+        self.setScoreTo(self.model.score - 1)
+    }
+    
+    func setUpvoteTo(_ bool: Bool) {
+        self.model.isUpvoted = bool
+        self.upVoteButton.isSelected = bool
+    }
+    
+    func setDownvoteTo(_ bool: Bool) {
+        self.model.isDownvoted = bool
+        self.downVoteButton.isSelected = bool
+    }
+    
+    func setScoreTo(_ score: Int) {
+        guard self.model.score != score else { return }
+        self.model.score = score
+        self.scoreLabel.text = String(score)
     }
 }

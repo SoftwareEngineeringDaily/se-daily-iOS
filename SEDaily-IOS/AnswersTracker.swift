@@ -12,7 +12,7 @@
 //Uninstalls
 //Returning Users
 //Follows
-//FAvorites
+//Favorites
 
 import Foundation
 import Crashlytics
@@ -27,9 +27,15 @@ class Tracker {
         )
     }
     
-    class func logPlayPodcast(podcast: PodcastModel) {
-        let dictionary = podcast.podcastToDictionary() as? [String : Any]
-        Answers.logCustomEvent(withName: "Podcast_Play", customAttributes: dictionary)
+    class func logPlayPodcast(podcast: PodcastViewModel) {
+        Answers.logCustomEvent(withName: "Podcast_Play", customAttributes:
+            [
+                "podcastId": podcast._id,
+                "podcastTitle": podcast.podcastTitle,
+                "tags": podcast.tagsAsString,
+                "categories": podcast.categoriesAsString
+            ]
+        )
     }
     
     class func logLogin(user: User) {

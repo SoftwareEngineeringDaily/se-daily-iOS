@@ -178,8 +178,14 @@ class GeneralCollectionViewController: UICollectionViewController {
         if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
             let vc = PodcastDetailViewController()
             vc.model = viewModel
+            vc.delegate = self
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
+}
 
+extension GeneralCollectionViewController: PodcastDetailViewControllerDelegate {
+    func modelDidChange(viewModel: PodcastViewModel) {
+        self.podcastViewModelController.update(with: viewModel)
+    }
 }

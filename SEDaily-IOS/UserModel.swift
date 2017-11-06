@@ -17,7 +17,7 @@ public struct User: Codable {
     let token: String
     let pushNotificationsSetting: Bool = false
     let deviceToken: String? = nil
-    
+
     init(firstName: String,
          lastName: String,
          email: String,
@@ -27,20 +27,18 @@ public struct User: Codable {
         self.email = email
         self.token = token
     }
-    
+
     init() {
         self.firstName = ""
         self.lastName = ""
         self.email = ""
         self.token = ""
     }
-    
-    // Mark: Getters
-    
+
     func getFullName() -> String {
         return self.firstName + self.lastName
     }
-    
+
     func isLoggedIn() -> Bool {
         if token != "" {
             return true
@@ -50,7 +48,7 @@ public struct User: Codable {
 }
 
 extension User: Equatable {
-    public static func ==(lhs: User, rhs: User) -> Bool {
+    public static func == (lhs: User, rhs: User) -> Bool {
         return lhs.key == rhs.key &&
             lhs.firstName == rhs.firstName &&
             lhs.lastName == rhs.lastName &&
@@ -64,17 +62,17 @@ extension User: Equatable {
 public class UserManager {
     static let sharedInstance: UserManager = UserManager()
     private init() {}
-    
+
     let defaults = UserDefaults.standard
-    
+
     let staticUserKey = "user"
-    
+
     var currentUser: User = User() {
         didSet {
             self.saveUserToDefaults(user: self.currentUser)
         }
     }
-    
+
     public func getActiveUser() -> User {
         switch checkIfSavedUserEqualsCurrentUser() {
         case true:
@@ -90,36 +88,36 @@ public class UserManager {
             return self.currentUser
         }
     }
-    
+
     public func setCurrentUser(to newUser: User) {
         guard currentUser != newUser else { return }
         self.currentUser = newUser
     }
-    
+
     public func isCurrentUserLoggedIn() -> Bool {
         let token = self.currentUser.token
         guard token != "" else { return false }
         return true
     }
-    
+
     public func logoutUser() {
         self.setCurrentUser(to: User())
         NotificationCenter.default.post(name: .loginChanged, object: nil)
     }
-    
+
     private func checkIfSavedUserEqualsCurrentUser() -> Bool {
         guard let retrievedUser = self.retriveCurrentUserFromDefaults() else { return false }
         guard retrievedUser == self.currentUser else { return false }
         return true
     }
-    
+
     private func saveUserToDefaults(user: User) {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(user) {
             defaults.set(encoded, forKey: staticUserKey)
         }
     }
-    
+
     private func retriveCurrentUserFromDefaults() -> User? {
         let decoder = JSONDecoder()
         if let returnedEncodedUser = defaults.data(forKey: staticUserKey),

@@ -26,7 +26,7 @@ class Tracker {
             ]
         )
     }
-    
+
     class func logPlayPodcast(podcast: PodcastViewModel) {
         Answers.logCustomEvent(withName: "Podcast_Play", customAttributes:
             [
@@ -37,36 +37,34 @@ class Tracker {
             ]
         )
     }
-    
+
     class func logLogin(user: User) {
         Answers.logLogin(withMethod: "SEDaily_API", success: 1, customAttributes:
             [
-                "username": user.email ?? ""
+                "username": user.email
             ]
         )
     }
-    
+
     class func logRegister(user: User) {
         Answers.logSignUp(withMethod: "SEDaily_API", success: 1,
                                customAttributes:
             [
-                "username": user.email ?? ""
+                "username": user.email
             ]
         )
     }
-    
+
     class func logFacebookLogin(user: User) {
         Answers.logLogin(withMethod: "Facebook", success: 1, customAttributes:
             [
-                "username": user.email ?? ""
+                "username": user.email
             ]
         )
     }
 }
 
 extension Tracker {
-    //MARK: errors
-    
     class func logLoginError(error: Error) {
         Answers.logLogin(withMethod: "SEDaily_API", success: 0, customAttributes:
             [
@@ -74,7 +72,7 @@ extension Tracker {
             ]
         )
     }
-    
+
     class func logLoginError(string: String) {
         Answers.logLogin(withMethod: "SEDaily_API", success: 0, customAttributes:
             [
@@ -82,7 +80,7 @@ extension Tracker {
             ]
         )
     }
-    
+
     class func logRegisterError(error: Error) {
         Answers.logSignUp(withMethod: "SEDaily_API", success: 0, customAttributes:
             [
@@ -90,7 +88,7 @@ extension Tracker {
             ]
         )
     }
-    
+
     class func logRegisterError(string: String) {
         Answers.logSignUp(withMethod: "SEDaily_API", success: 0, customAttributes:
             [
@@ -98,7 +96,7 @@ extension Tracker {
             ]
         )
     }
-    
+
     class func logFacebookLoginError(error: Error) {
         Answers.logLogin(withMethod: "Facebook_Login", success: 0, customAttributes:
             [
@@ -106,7 +104,7 @@ extension Tracker {
             ]
         )
     }
-    
+
     class func logGeneralError(error: Error) {
         Answers.logCustomEvent(withName: "Error_General",
                                customAttributes:
@@ -115,7 +113,7 @@ extension Tracker {
             ]
         )
     }
-    
+
     class func logGeneralError(string: String) {
         Answers.logCustomEvent(withName: "Error_General",
                                customAttributes:

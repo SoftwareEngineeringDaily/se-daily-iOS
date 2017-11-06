@@ -25,6 +25,8 @@ target 'SEDaily-IOS' do
   pod 'SnapKit', '~> 4.0.0'
   pod 'SwiftGen', '~> 5.2.1'
   pod 'SwiftIcons', :git => 'https://github.com/themisterholliday/SwiftIcons.git', :branch => 'swift-4'
+  pod 'SwiftGen'
+  pod 'SwiftLint'
   pod 'SwiftSoup', '~> 1.5.8'
   pod 'SwifterSwift', '~> 4.0.1'
   pod 'SwiftyBeaver', '~> 1.4.2'

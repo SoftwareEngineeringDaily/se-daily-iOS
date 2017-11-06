@@ -13,8 +13,9 @@ protocol PodcastDetailViewControllerDelegate {
 }
 
 class PodcastDetailViewController: UIViewController {
+
     var delegate: PodcastDetailViewControllerDelegate?
-    
+  
     var model = PodcastViewModel()
 
     lazy var scrollView: UIScrollView = {

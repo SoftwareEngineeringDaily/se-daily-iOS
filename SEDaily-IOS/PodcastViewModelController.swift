@@ -35,7 +35,7 @@ public class PodcastViewModelController {
     func clearViewModels() {
         self.viewModels.removeAll()
     }
-    
+
     func update(with podcast: PodcastViewModel) {
         let index = self.viewModels.index { (item) -> Bool in
             return item?._id == podcast._id
@@ -44,7 +44,7 @@ public class PodcastViewModelController {
         self.viewModels.remove(at: modelsIndex)
         self.viewModels.insert(podcast, at: modelsIndex)
     }
-    
+  
     func fetchData(type: String = "",
                    createdAtBefore beforeDate: String = "",
                    tags: [Int] = [],

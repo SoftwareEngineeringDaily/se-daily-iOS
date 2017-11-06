@@ -39,6 +39,7 @@ PODS:
   - SwifterSwift/UIKit (4.0.1)
   - SwiftGen (5.2.1)
   - SwiftIcons (1.5.1)
+  - SwiftLint (0.23.1)
   - SwiftSoup (1.5.8)
   - SwiftLint (0.23.1)
   - SwiftyBeaver (1.4.2)
@@ -69,6 +70,7 @@ DEPENDENCIES:
   - SwifterSwift (~> 4.0.1)
   - SwiftGen (~> 5.2.1)
   - SwiftIcons (from `https://github.com/themisterholliday/SwiftIcons.git`, branch `swift-4`)
+  - SwiftLint
   - SwiftSoup (~> 1.5.8)
   - SwiftyBeaver (~> 1.4.2)
   - SwiftyJSON (~> 3.1.4)
@@ -112,6 +114,7 @@ SPEC CHECKSUMS:
   SwifterSwift: 5f406a5f831343312d6d5b34282b57ef3f52c40b
   SwiftGen: 444b4c467e512a4812b8a800d731643fd265139e
   SwiftIcons: b20641adce6b71fcb2e72389b4b5f2e87252df99
+  SwiftLint: 1b670ce79284c76520f84060e87d645078fd32fa
   SwiftSoup: 86a1f5ad07b7e3d14ab1a9324a58c75ae2215e79
   SwiftLint: 1b670ce79284c76520f84060e87d645078fd32fa
   SwiftyBeaver: 91057725648ee4980308f1650af077d04b3654a0

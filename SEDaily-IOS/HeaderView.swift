@@ -9,7 +9,13 @@
 import UIKit
 import SwiftIcons
 
+protocol HeaderViewDelegate {
+    func modelDidChange(viewModel: PodcastViewModel)
+}
+
 class HeaderView: UIView {
+    var delegate: HeaderViewDelegate?
+    
     var model = PodcastViewModel()
 
     let titleLabel = UILabel()
@@ -196,18 +202,22 @@ extension HeaderView {
         self.setUpvoteTo(active)
         guard active != false else {
             self.setScoreTo(self.model.score - 1)
+            self.delegate?.modelDidChange(viewModel: self.model)
             return
         }
         self.setScoreTo(self.model.score + 1)
+        self.delegate?.modelDidChange(viewModel: self.model)
     }
 
     func subtractScore(active: Bool) {
         self.setDownvoteTo(active)
         guard active != false else {
             self.setScoreTo(self.model.score + 1)
+            self.delegate?.modelDidChange(viewModel: self.model)
             return
         }
         self.setScoreTo(self.model.score - 1)
+        self.delegate?.modelDidChange(viewModel: self.model)
     }
 
     func setUpvoteTo(_ bool: Bool) {

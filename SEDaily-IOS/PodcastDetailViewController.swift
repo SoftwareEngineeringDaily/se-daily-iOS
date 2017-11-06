@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol PodcastDetailViewControllerDelegate {
+    func modelDidChange(viewModel: PodcastViewModel)
+}
+
 class PodcastDetailViewController: UIViewController {
 
+    var delegate: PodcastDetailViewControllerDelegate?
+  
     var model = PodcastViewModel()
 
     lazy var scrollView: UIScrollView = {
@@ -23,6 +29,7 @@ class PodcastDetailViewController: UIViewController {
 
         let headerView = HeaderView(width: 375, height: 200)
         headerView.setupHeader(model: model)
+        headerView.delegate = self
         self.scrollView.addSubview(headerView)
 
         let view = PodcastDescriptionView(origin: headerView.bottomLeftPoint(), width: 375, height: 20)
@@ -35,5 +42,11 @@ class PodcastDetailViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+}
+
+extension PodcastDetailViewController: HeaderViewDelegate {
+    func modelDidChange(viewModel: PodcastViewModel) {
+        self.delegate?.modelDidChange(viewModel: viewModel)
     }
 }

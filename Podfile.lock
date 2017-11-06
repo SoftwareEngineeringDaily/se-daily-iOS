@@ -41,6 +41,7 @@ PODS:
   - SwiftIcons (1.5.1)
   - SwiftLint (0.23.1)
   - SwiftSoup (1.5.8)
+  - SwiftLint (0.23.1)
   - SwiftyBeaver (1.4.2)
   - SwiftyJSON (3.1.4)
   - Tabman (1.0.5):
@@ -75,6 +76,7 @@ DEPENDENCIES:
   - SwiftyJSON (~> 3.1.4)
   - Tabman (~> 1.0.5)
   - UIFontComplete (~> 2.0.1)
+  - SwiftLint
 
 EXTERNAL SOURCES:
   ActiveLabel:
@@ -114,6 +116,7 @@ SPEC CHECKSUMS:
   SwiftIcons: b20641adce6b71fcb2e72389b4b5f2e87252df99
   SwiftLint: 1b670ce79284c76520f84060e87d645078fd32fa
   SwiftSoup: 86a1f5ad07b7e3d14ab1a9324a58c75ae2215e79
+  SwiftLint: 1b670ce79284c76520f84060e87d645078fd32fa
   SwiftyBeaver: 91057725648ee4980308f1650af077d04b3654a0
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   Tabman: 9f87244fdbbd070fe6a518f445880b2b4a56ea1b

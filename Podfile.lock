@@ -28,6 +28,7 @@ PODS:
   - SideMenu (3.1.5)
   - Skeleton (0.1.2)
   - SnapKit (4.0.0)
+  - StatefulViewController (3.0)
   - SwifterSwift (4.0.1):
     - SwifterSwift/AppKit (= 4.0.1)
     - SwifterSwift/CoreGraphics (= 4.0.1)
@@ -73,6 +74,7 @@ DEPENDENCIES:
   - SideMenu (~> 3.1.4)
   - Skeleton (~> 0.1.0)
   - SnapKit (~> 4.0.0)
+  - StatefulViewController (~> 3.0)
   - SwifterSwift (~> 4.0.1)
   - SwiftGen (~> 5.2.1)
   - SwiftIcons (from `https://github.com/themisterholliday/SwiftIcons.git`, branch `swift-4`)
@@ -119,6 +121,7 @@ SPEC CHECKSUMS:
   SideMenu: 47dbf9e4d878062d8994aed43f6e4bf6c1fea30b
   Skeleton: 0d2941ce8d24f60a7e85ee39e55203256300b538
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwifterSwift: 5f406a5f831343312d6d5b34282b57ef3f52c40b
   SwiftGen: 444b4c467e512a4812b8a800d731643fd265139e
   SwiftIcons: b20641adce6b71fcb2e72389b4b5f2e87252df99

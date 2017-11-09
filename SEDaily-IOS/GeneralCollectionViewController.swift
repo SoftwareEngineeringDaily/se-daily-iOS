@@ -27,7 +27,6 @@ class GeneralCollectionViewController: UICollectionViewController {
     let preloadMargin = 5
 
     var lastLoadedPage = 0
-    
     var errorChecks = 0
     let maximumErrorChecks = 5
 
@@ -86,6 +85,7 @@ class GeneralCollectionViewController: UICollectionViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         // Make sure skeletonCollectionView is animating when the view is visible
         if self.skeletonCollectionView.alpha != 0 {
             self.skeletonCollectionView.collectionView.reloadData()
@@ -160,8 +160,7 @@ class GeneralCollectionViewController: UICollectionViewController {
             createdAtBefore: lastIdentifier,
             tags: self.tags,
             categories: self.categories,
-            page: nextPage,
-            onSucces: {
+            onSuccess: {
                 self.errorChecks = 0
                 self.loading = false
                 self.lastLoadedPage = nextPage

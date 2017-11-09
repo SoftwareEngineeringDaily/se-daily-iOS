@@ -27,6 +27,10 @@ extension API {
         static let register = "/auth/register"
         static let upvote = "/upvote"
         static let downvote = "/downvote"
+        static let favorites = "/favorites"
+        static let favorite = "/favorite"
+        static let unfavorite = "/unfavorite"
+        static let myBookmarked = "/users/me/bookmarked"
     }
 
     enum Types {
@@ -59,7 +63,18 @@ extension API {
 }
 
 class API {
-    let rootURL: String = "https://software-enginnering-daily-api.herokuapp.com/api"
+    private let prodRootURL = "https://software-enginnering-daily-api.herokuapp.com/api"
+    private let stagingRootURL = "https://sedaily-backend-staging.herokuapp.com/api"
+
+    private var rootURL: String {
+        #if DEBUG
+            if let useStagingEndpointTestHook = TestHookManager.testHookBool(id: TestHookId.useStagingEndpoint),
+                useStagingEndpointTestHook.value {
+                return stagingRootURL
+            }
+        #endif
+        return prodRootURL
+    }
 
     static let sharedInstance: API = API()
     private init() {}
@@ -94,9 +109,9 @@ extension API {
                 if let token = jsonResponse["token"] as? String {
                     let user = User(firstName: "", lastName: "", usernameOrEmail: usernameOrEmail, token: token)
                     UserManager.sharedInstance.setCurrentUser(to: user)
-                    
+
                     // Clear disk cache
-                    PodcastDataSource.clean()
+                    PodcastDataSource.clean(diskKey: .podcastFolder)
                     NotificationCenter.default.post(name: .loginChanged, object: nil)
                     completion(true)
                 }
@@ -162,9 +177,9 @@ typealias PodcastModel = Podcast
 extension API {
     func getPostsWith(searchTerm: String,
                       createdAtBefore beforeDate: String = "",
-                      onSucces: @escaping ([Podcast]) -> Void,
+                      onSuccess: @escaping ([Podcast]) -> Void,
                       onFailure: @escaping (APIError?) -> Void) {
-        let urlString = rootURL + Endpoints.posts
+        let urlString = self.rootURL + Endpoints.posts
 
         var params = [String: String]()
         params[Params.search] = searchTerm
@@ -195,7 +210,7 @@ extension API {
                         data.append(newObject)
                     }
                 }
-                onSucces(data)
+                onSuccess(data)
             case .failure(let error):
                 log.error(error.localizedDescription)
                 Tracker.logGeneralError(error: error)
@@ -207,11 +222,47 @@ extension API {
 
 // MARK: - MVVM Getters
 extension API {
+    func getPost(podcastId: String, completion: @escaping (_ success: Bool, _ result: Podcast?) -> Void) {
+        let urlString = self.rootURL + Endpoints.posts + "/" + podcastId
+
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
+        let _headers: HTTPHeaders = [
+            Headers.authorization: Headers.bearer + userToken,
+            Headers.contentType: Headers.x_www_form_urlencoded
+        ]
+
+        Alamofire.request(urlString, method: .get, parameters: nil, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let responseData = response.data else {
+                    log.error("response has no data")
+                    completion(false, nil)
+                    return
+                }
+
+                let jsonData = JSON(responseData)
+                guard let data = try? jsonData.rawData() else {
+                    log.error("response has no data")
+                    completion(false, nil)
+                    return
+                }
+                let podcast = try? JSONDecoder().decode(PodcastModel.self, from: data)
+                completion(true, podcast)
+            case .failure(let error):
+                log.error(error)
+                Tracker.logGeneralError(error: error)
+                Helpers.alertWithMessage(title: Helpers.Alerts.error, message: error.localizedDescription, completionHandler: nil)
+                completion(false, nil)
+            }
+        }
+    }
+
     func getPosts(type: String = "",
                   createdAtBefore beforeDate: String = "",
                   tags: String = "-1",
                   categories: String = "",
-                  onSucces: @escaping ([Podcast]) -> Void,
+                  onSuccess: @escaping ([Podcast]) -> Void,
                   onFailure: @escaping (APIError?) -> Void) {
         var type = type
 
@@ -266,7 +317,7 @@ extension API {
                         data.append(newObject)
                     }
                 }
-                onSucces(data)
+                onSuccess(data)
             case .failure(let error):
                 log.error(error.localizedDescription)
                 Tracker.logGeneralError(error: error)
@@ -276,10 +327,121 @@ extension API {
     }
 }
 
+// MARK: Bookmarks
+extension API {
+    /// Network call to get bookmarks for the current user
+    ///
+    /// - Parameter completion: Callback when the network call completes.
+    func podcastBookmarks(completion: @escaping (_ success: Bool, _ results: [PodcastModel]?) -> Void) {
+        let urlString = self.rootURL + Endpoints.myBookmarked
+
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
+        let headers = [
+            Headers.authorization: Headers.bearer + userToken,
+            Headers.contentType: Headers.x_www_form_urlencoded
+        ]
+
+        Alamofire.request(
+            urlString,
+            method: .get,
+            parameters: nil,
+            encoding: URLEncoding.httpBody,
+            headers: headers).responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let responseData = response.data else {
+                    log.error("response has no data")
+                    completion(false, nil)
+                    return
+                }
+
+                let jsonData = JSON(responseData)
+
+                var podcastModels = [PodcastModel]()
+                jsonData.forEach({ (_, itemJsonData) in
+                    if let rawData = try? itemJsonData.rawData(),
+                        let podcast = try? JSONDecoder().decode(PodcastModel.self, from: rawData) {
+                        podcastModels.push(podcast)
+                    }
+                })
+
+                completion(true, podcastModels)
+            case .failure(let error):
+                log.error(error)
+                Tracker.logGeneralError(error: error)
+                Helpers.alertWithMessage(
+                    title: Helpers.Alerts.error,
+                    message: error.localizedDescription,
+                    completionHandler: nil)
+                completion(false, nil)
+            }
+        }
+    }
+
+    /// Network call to bookmark or unbookmark a pod cast.
+    ///
+    /// - Parameters:
+    ///   - value: True to bookmark the pod cast, false to unbookmark the pod cast
+    ///   - podcastId: The id of the pod cast
+    ///   - completion: Callback when network call completes
+    func setBookmarkPodcast(
+        value: Bool,
+        podcastId: String,
+        completion: @escaping (_ success: Bool?, _ active: Bool?) -> Void) {
+        let urlString = self.rootURL + Endpoints.posts + "/" + podcastId +
+            (value ? Endpoints.favorite : Endpoints.unfavorite)
+
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
+        let headers = [
+            Headers.authorization: Headers.bearer + userToken,
+            Headers.contentType: Headers.x_www_form_urlencoded
+        ]
+
+        Alamofire.request(
+            urlString,
+            method: .post,
+            parameters: nil,
+            encoding: URLEncoding.httpBody,
+            headers: headers).responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let jsonResponse = response.result.value as? NSDictionary else {
+                    Tracker.logGeneralError(string: "Error result value is not a NSDictionary")
+                    completion(false, nil)
+                    return
+                }
+
+                if let message = jsonResponse["message"] {
+                    Helpers.alertWithMessage(
+                        title: Helpers.Alerts.error,
+                        message: String(describing: message),
+                        completionHandler: nil)
+                    completion(false, nil)
+                    return
+                }
+
+                if let active = jsonResponse["active"] as? Bool {
+                    completion(true, active)
+                }
+            case .failure(let error):
+                log.error(error)
+                Tracker.logGeneralError(error: error)
+                Helpers.alertWithMessage(
+                    title: Helpers.Alerts.error,
+                    message: error.localizedDescription,
+                    completionHandler: nil)
+                completion(false, nil)
+            }
+        }
+    }
+}
+
 // MARK: Voting
 extension API {
     func upvotePodcast(podcastId: String, completion: @escaping (_ success: Bool?, _ active: Bool?) -> Void) {
-        let urlString = rootURL + Endpoints.posts + "/" + podcastId + Endpoints.upvote
+        let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.upvote
 
         let user = UserManager.sharedInstance.getActiveUser()
         let userToken = user.token
@@ -316,7 +478,7 @@ extension API {
     }
 
     func downvotePodcast(podcastId: String, completion: @escaping (_ success: Bool?, _ active: Bool?) -> Void) {
-        let urlString = rootURL + Endpoints.posts + "/" + podcastId + Endpoints.downvote
+        let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.downvote
 
         let user = UserManager.sharedInstance.getActiveUser()
         let userToken = user.token

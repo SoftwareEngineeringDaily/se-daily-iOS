@@ -57,10 +57,14 @@ enum L10n {
   static let lastNamePlaceholder = L10n.tr("Localizable", "LastNamePlaceholder")
   /// Login
   static let loginButtonTitle = L10n.tr("Localizable", "LoginButtonTitle")
+  /// Login to see your bookmarks
+  static let loginSeeBookmarks = L10n.tr("Localizable", "LoginSeeBookmarks")
   /// Login
   static let loginTitle = L10n.tr("Localizable", "LoginTitle")
   /// Logout
   static let logoutTitle = L10n.tr("Localizable", "LogoutTitle")
+  /// No Bookmarks
+  static let noBookmarks = L10n.tr("Localizable", "NoBookmarks")
   /// Password
   static let passwordPlaceholder = L10n.tr("Localizable", "PasswordPlaceholder")
   /// Play

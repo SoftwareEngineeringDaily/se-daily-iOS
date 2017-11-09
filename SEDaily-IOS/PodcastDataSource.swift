@@ -9,33 +9,33 @@
 import Foundation
 import Disk
 
-protocol DataSource {
-    associatedtype GenericType
-
-    static func getAll(completion: @escaping ([GenericType]?) -> Void)
-    static func getById(id: String, completion: @escaping (GenericType?) -> Void)
-    static func insert(item: GenericType)
-    static func update(item: GenericType)
-    static func clean()
-    static func deleteById(id: String)
-}
-
-class PodcastDataSource: DataSource {
+class PodcastDataSource {
     typealias GenericType = Podcast
 
-    static func getAll(completion: @escaping ([GenericType]?) -> Void) {
+    static func getAllBookmarks(diskKey: DiskKeys, completion: @escaping ([GenericType]?) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            let retrievedObjects = try? Disk.retrieve(DiskKeys.PodcastFolder.folderPath, from: .caches, as: [GenericType].self)
+            let retrievedObjects = try? Disk.retrieve(diskKey.folderPath, from: .caches, as: [GenericType].self)
+            let bookmarks = retrievedObjects?.filter({ podcast -> Bool in
+                return podcast.bookmarked == true
+            })
+            DispatchQueue.main.async {
+                completion(bookmarks)
+            }
+        }
+    }
+
+    static func getAll(diskKey: DiskKeys, completion: @escaping ([GenericType]?) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let retrievedObjects = try? Disk.retrieve(diskKey.folderPath, from: .caches, as: [GenericType].self)
             DispatchQueue.main.async {
                 completion(retrievedObjects)
             }
         }
     }
 
-    static func getAllWith(filterObject: FilterObject, completion: @escaping ([GenericType]?) -> Void) {
-        self.getAll { (returnedData) in
+    static func getAllWith(diskKey: DiskKeys, filterObject: FilterObject, completion: @escaping ([GenericType]?) -> Void) {
+        self.getAll(diskKey: diskKey) { (returnedData) in
             DispatchQueue.global(qos: .userInitiated).async {
-                //@TODO: Guard
                 guard let filteredObjects = returnedData?.filter({ (podcast) -> Bool in
                     return podcast.tags!.contains(filterObject.tags) &&
                         podcast.categories!.contains(filterObject.categories) &&
@@ -65,78 +65,53 @@ class PodcastDataSource: DataSource {
         }
     }
 
-    static func getById(id: String, completion: @escaping (GenericType?) -> Void) {
-        self.getAll { (returnedData) in
-            let foundObject = returnedData?.filter({ (item) -> Bool in
-                return item._id == id
-            }).first
-            completion(foundObject)
-        }
-    }
-
-    static func getIndexById(id: String, completion: @escaping (Int?) -> Void) {
-        self.getAll { (returnedData) in
-            let index = returnedData?.index { (item) -> Bool in
-                return item._id == id
-            }
-            completion(index)
-        }
-    }
-
-    static func insert(item: GenericType) {
-        //@TODO: When would this fail
-        DispatchQueue.global(qos: .userInitiated).async {
-            do {
-                try Disk.append(item, to: DiskKeys.PodcastFolder.folderPath, in: .caches)
-            } catch {
-                //@TODO: Handle errors?
-                // ...
-            }
-        }
-    }
-
-    static func insert(items: [GenericType]) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            do {
-                try Disk.append(items, to: DiskKeys.PodcastFolder.folderPath, in: .caches)
-            } catch {
-                //@TODO: Handle errors?
-                // ...
-            }
-        }
-    }
-
-    static func update(item: GenericType) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            self.getIndexById(id: item._id, completion: { (index) in
-                guard let index = index else { return }
-                self.getAll(completion: { (podcasts) in
-                    guard var allPodcasts = podcasts else { return }
-                    allPodcasts.remove(at: index)
-                    allPodcasts.insert(item, at: index)
-                    self.override(with: allPodcasts)
-                })
+    static func insert(diskKey: DiskKeys, items: [GenericType]) {
+        self.getAll(diskKey: .podcastFolder) { (results) in
+            var newResults = results ?? [GenericType]()
+            items.forEach({ newPodcast in
+                if let index = results?.index(where: { oldPodcast -> Bool in
+                    return newPodcast._id == oldPodcast._id
+                }) {
+                    newResults[index] = newPodcast
+                } else {
+                    newResults.append(newPodcast)
+                }
             })
+
+            self.override(diskKey: diskKey, items: newResults)
         }
     }
 
-    static func override(with items: [GenericType]) {
+    static func update(diskKey: DiskKeys, item: GenericType) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.getAll(diskKey: .podcastFolder) { (results) in
+                var newResults = results ?? [GenericType]()
+                if let index = results?.index(where: { oldPodcast -> Bool in
+                    return item._id == oldPodcast._id
+                }) {
+                    newResults[index] = item
+                } else {
+                    newResults.append(item)
+                }
+
+                self.override(diskKey: diskKey, items: newResults)
+            }
+        }
+    }
+
+    static func override(diskKey: DiskKeys, items: [GenericType]) {
         do {
-            try Disk.save(items, to: .caches, as: DiskKeys.PodcastFolder.folderPath)
+            try Disk.save(items, to: .caches, as: diskKey.folderPath)
         } catch let error {
             log.error(error.localizedDescription)
         }
     }
 
-    static func clean() {
+    static func clean(diskKey: DiskKeys) {
         do {
-            try Disk.remove(DiskKeys.PodcastFolder.folderPath, from: .caches)
+            try Disk.remove(diskKey.folderPath, from: .caches)
         } catch let error {
             log.error(error.localizedDescription)
         }
-    }
-
-    static func deleteById(id: String) {
-
     }
 }

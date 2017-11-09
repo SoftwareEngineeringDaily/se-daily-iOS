@@ -31,6 +31,7 @@ public struct PodcastViewModel: Codable {
     var score: Int
     var isUpvoted: Bool = false
     var isDownvoted: Bool = false
+    var isBookmarked: Bool = false
 
     var podcastTitle: String {
         return encodedPodcastTitle.htmlDecoded
@@ -53,6 +54,10 @@ public struct PodcastViewModel: Codable {
         }
         if let downvoted = podcast.downvoted {
             self.isDownvoted = downvoted
+        }
+
+        if let bookmarked = podcast.bookmarked {
+            self.isBookmarked = bookmarked
         }
     }
 

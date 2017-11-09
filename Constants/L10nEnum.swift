@@ -37,16 +37,36 @@ enum L10n {
   static let alertMessageUsernameEmpty = L10n.tr("Localizable", "AlertMessageUsernameEmpty")
   /// You must login to use this feature.
   static let alertMessageYouMustLogin = L10n.tr("Localizable", "AlertMessageYouMustLogin")
+  /// Oh, sorry you're not liking the SEDaily app
+  static let appReviewApology = L10n.tr("Localizable", "AppReviewApology")
+  /// SEDaily iOS App Feedback
+  static let appReviewEmailSubject = L10n.tr("Localizable", "AppReviewEmailSubject")
+  /// Would you help us out by sending us your feedback?
+  static let appReviewGiveFeedbackQuestion = L10n.tr("Localizable", "AppReviewGiveFeedbackQuestion")
+  /// Enjoying the SEDaily app?
+  static let appReviewPromptQuestion = L10n.tr("Localizable", "AppReviewPromptQuestion")
   /// Cancel
   static let cancelButtonTitle = L10n.tr("Localizable", "CancelButtonTitle")
   /// Confirm Password
   static let confirmPasswordPlaceholder = L10n.tr("Localizable", "ConfirmPasswordPlaceholder")
   /// Email
   static let emailAddressPlaceholder = L10n.tr("Localizable", "EmailAddressPlaceholder")
+  /// Please send an email to jeff@softwareengineeringdaily.com
+  static let emailUnsupportedMessage = L10n.tr("Localizable", "EmailUnsupportedMessage")
+  /// Email unsupported on this device
+  static let emailUnsupportedOnDevice = L10n.tr("Localizable", "EmailUnsupportedOnDevice")
+  /// Hello!
+  static let enthusiasticHello = L10n.tr("Localizable", "EnthusiasticHello")
+  /// Sure! Send email
+  static let enthusiasticSureSendEmail = L10n.tr("Localizable", "EnthusiasticSureSendEmail")
+  /// Yes!
+  static let enthusiasticYes = L10n.tr("Localizable", "EnthusiasticYes")
   /// First Name
   static let firstNamePlaceholder = L10n.tr("Localizable", "FirstNamePlaceholder")
   /// Error
   static let genericError = L10n.tr("Localizable", "GenericError")
+  /// No
+  static let genericNo = L10n.tr("Localizable", "GenericNo")
   /// OK
   static let genericOK = L10n.tr("Localizable", "GenericOK")
   /// Okay
@@ -65,6 +85,8 @@ enum L10n {
   static let logoutTitle = L10n.tr("Localizable", "LogoutTitle")
   /// No Bookmarks
   static let noBookmarks = L10n.tr("Localizable", "NoBookmarks")
+  /// No thanks
+  static let noWithGratitude = L10n.tr("Localizable", "NoWithGratitude")
   /// Password
   static let passwordPlaceholder = L10n.tr("Localizable", "PasswordPlaceholder")
   /// Play

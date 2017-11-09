@@ -25,6 +25,7 @@ PODS:
     - Mockingjay/Core
   - Nimble (7.0.3)
   - Pageboy (2.0.4)
+  - PopupDialog (0.6.2)
   - PureLayout (3.0.2)
   - Quick (1.2.0)
   - Reusable (4.0.0):
@@ -60,6 +61,7 @@ PODS:
     - PureLayout (~> 3.0)
   - UIFontComplete (2.0.1)
   - URITemplate (2.0.3)
+  - WaitForIt (2.0.0)
 
 DEPENDENCIES:
   - ActiveLabel (from `https://github.com/optonaut/ActiveLabel.swift.git`)
@@ -77,6 +79,7 @@ DEPENDENCIES:
   - Mockingjay
   - Nimble
   - Pageboy (~> 2.0.2)
+  - PopupDialog (~> 0.6.0)
   - PureLayout (~> 3.0.2)
   - Quick
   - Reusable (~> 4.0.0)
@@ -93,6 +96,7 @@ DEPENDENCIES:
   - SwiftyJSON (~> 3.1.4)
   - Tabman (~> 1.0.5)
   - UIFontComplete (~> 2.0.1)
+  - WaitForIt (~> 2.0.0)
 
 EXTERNAL SOURCES:
   ActiveLabel:
@@ -125,6 +129,7 @@ SPEC CHECKSUMS:
   Mockingjay: 11a621880d2887f1775bdcf824341eb68f218450
   Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
   Pageboy: 5970f6138b035380fd633b1813b7cc056784b784
+  PopupDialog: d4336d7274a6aa3af4cb26d8b6691510eba90cc3
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   Reusable: 98e5fff1e0e2e00872199699b276dde08ee56c07
@@ -142,7 +147,8 @@ SPEC CHECKSUMS:
   Tabman: 9f9a25595516c7dffb747be271ec8a0a5ac2341e
   UIFontComplete: 7e3ce7f0a12d2529fb07f537e262aabfa87df280
   URITemplate: ace0c4c46dcf8afe6e89b4060621852886b15c3b
+  WaitForIt: 2c7ad6deaffe3bf727b7242a2263167bf2ce3e57
 
-PODFILE CHECKSUM: f1a8e362aef24672be8206493c00809172bb6381
+PODFILE CHECKSUM: 3369fb077c3a5c100909832643ce501010bc2650
 
 COCOAPODS: 1.3.1

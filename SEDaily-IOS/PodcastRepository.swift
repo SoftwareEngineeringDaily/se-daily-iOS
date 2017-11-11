@@ -111,7 +111,7 @@ class PodcastRepository: Repository<Podcast> {
 
     // MARK: Already loaded today checks
     func checkAlreadyLoadedNewToday(filterObject: FilterObject) -> Bool {
-        let key = "\(APICheckDates.newFeedLastCheck)-\(filterObject.dictionary)"
+        let key = "\(APICheckDates.newFeedLastCheck)-\(filterObject.nsDictionary)"
 
         let defaults = UserDefaults.standard
         if let newFeedLastCheck = defaults.string(forKey: key) {
@@ -128,7 +128,7 @@ class PodcastRepository: Repository<Podcast> {
 
     func setLoadedNewToday (filterObject: FilterObject) {
         let todayString = Date().iso8601String
-        let key = "\(APICheckDates.newFeedLastCheck)-\(filterObject.dictionary)"
+        let key = "\(APICheckDates.newFeedLastCheck)-\(filterObject.nsDictionary)"
         let defaults = UserDefaults.standard
         defaults.set(todayString, forKey: key)
     }

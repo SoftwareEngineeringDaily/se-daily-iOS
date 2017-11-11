@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import KTResponsiveUI
 import Skeleton
-import SDWebImage
+import Kingfisher
 
 class PodcastCell: UICollectionViewCell {
     var imageView: UIImageView!
@@ -40,6 +40,7 @@ class PodcastCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 6)
+        self.imageView.kf.indicatorType = .activity
 
         titleLabel = UILabel(origin: imageView.bottomLeftPoint(), topInset: 15, width: 158, height: 50)
         self.contentView.addSubview(titleLabel)
@@ -56,14 +57,15 @@ class PodcastCell: UICollectionViewCell {
     }
 
     private func setupImageView(imageURL: URL?) {
+        self.imageView.kf.cancelDownloadTask()
         guard let imageURL = imageURL else {
             self.imageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
             return
         }
 
-        imageView.sd_setShowActivityIndicatorView(true)
-        imageView.sd_setIndicatorStyle(.gray)
-        imageView.sd_setImage(with: imageURL)
+        self.imageView.kf.setImage(with: imageURL, options: [.transition(.fade(0.2))])
+//        self.imageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
+//        imageView.sd_setImageWithPreviousCachedImage(with: imageURL, placeholderImage: nil, options: [], progress: nil, completed: nil)
     }
 
     private func setupTimeDayLabel(timeLength: Int?, date: Date?) {

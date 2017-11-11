@@ -40,7 +40,10 @@ class PodcastDescriptionView: UIView {
 
     func setupView(podcastModel: PodcastViewModel) {
         podcastModel.getHTMLDecodedDescription { (returnedString) in
-            self.label.text = returnedString
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.paragraphSpacing = 10
+
+            self.label.attributedText = NSAttributedString(string: returnedString, attributes: [NSAttributedStringKey.paragraphStyle: paragraphStyle])
             self.label.sizeToFit()
             self.height = self.label.height + self.bottomMarginForLabel
         }

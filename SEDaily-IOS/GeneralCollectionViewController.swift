@@ -8,7 +8,6 @@
 
 import UIKit
 import KoalaTeaFlowLayout
-import SDWebImage
 
 private let reuseIdentifier = "Cell"
 
@@ -88,11 +87,6 @@ class GeneralCollectionViewController: UICollectionViewController {
         if self.skeletonCollectionView.alpha != 0 {
             self.skeletonCollectionView.collectionView.reloadData()
         }
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        //@TODO: Find a better way to manage cached Images
-        SDImageCache.shared().clearMemory()
     }
 
     @objc func loginObserver() {

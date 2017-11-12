@@ -64,8 +64,6 @@ class PodcastCell: UICollectionViewCell {
         }
 
         self.imageView.kf.setImage(with: imageURL, options: [.transition(.fade(0.2))])
-//        self.imageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
-//        imageView.sd_setImageWithPreviousCachedImage(with: imageURL, placeholderImage: nil, options: [], progress: nil, completed: nil)
     }
 
     private func setupTimeDayLabel(timeLength: Int?, date: Date?) {

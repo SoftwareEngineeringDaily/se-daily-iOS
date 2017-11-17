@@ -26,8 +26,8 @@ public struct PodcastViewModel: Codable {
     }
     let mp3URL: URL?
     let featuredImageURL: URL?
-    private let encodedPodcastTitle: String
-    private let encodedPodcastDescription: String
+    let encodedPodcastTitle: String
+    let encodedPodcastDescription: String
     var score: Int
     var isUpvoted: Bool = false
     var isDownvoted: Bool = false
@@ -67,6 +67,10 @@ public struct PodcastViewModel: Codable {
         self.encodedPodcastTitle = ""
         self.encodedPodcastDescription = ""
         self.score = 0
+    }
+
+    var baseModelRepresentation: Podcast {
+        return Podcast(viewModel: self)
     }
 }
 

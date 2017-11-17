@@ -77,6 +77,35 @@ public struct Podcast: Codable {
     var downvoted: Bool?
 }
 
+extension Podcast {
+    init(viewModel: PodcastViewModel) {
+        self._id = viewModel._id
+        self.date = viewModel.uploadDateiso8601
+        var link = ""
+        if let postLinkString = viewModel.postLinkURL?.absoluteString {
+            link = postLinkString
+        }
+        self.link = link
+        self.categories = viewModel.categories
+        self.tags = viewModel.tags
+        var mp3 = ""
+        if let mp3UrlString = viewModel.mp3URL?.absoluteString {
+            mp3 = mp3UrlString
+        }
+        self.mp3 = mp3
+        var featuredImage = ""
+        if let featuredImageUrlString = viewModel.featuredImageURL?.absoluteString {
+            featuredImage = featuredImageUrlString
+        }
+        self.featuredImage = featuredImage
+        self.content = Content(rendered: viewModel.encodedPodcastDescription)
+        self.title = Title(rendered: viewModel.encodedPodcastTitle)
+        self.score = viewModel.score
+        self.upvoted = viewModel.isUpvoted
+        self.downvoted = viewModel.isDownvoted
+    }
+}
+
 extension Podcast: Equatable {
     public static func == (lhs: Podcast, rhs: Podcast) -> Bool {
         return lhs._id == rhs._id &&

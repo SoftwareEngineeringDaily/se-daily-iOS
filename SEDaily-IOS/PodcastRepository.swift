@@ -45,12 +45,13 @@ class PodcastRepository: Repository<Podcast> {
                  filterObject: FilterObject,
                  onSucces: @escaping RepositorySuccessCallback,
                  onFailure: @escaping RepositoryErrorCallback) {
-        self.retrieveDataFromRealmOrAPI(
-            filterObject: filterObject,
-            onSucces: { (returnedData) in
-                onSucces(returnedData) },
-            onFailure: { (error) in
-                onFailure(error) })
+        self.retrieveDataFromRealmOrAPI(filterObject: filterObject, onSucces: { (returnedData) in
+            onSucces(returnedData)
+        },
+        onFailure: { (error) in
+            self.clearLoadedToday()
+            onFailure(error)
+        })
     }
 
     // MARK: Disk and API data getter
@@ -70,7 +71,8 @@ class PodcastRepository: Repository<Podcast> {
                     onFailure(.ErrorGettingFromRealm)
                     return
                 }
-                guard data != self.lastReturnedDataArray else {
+                //@TODO: check how to clear this or remove completely
+                if self.returnedDataEqualLastData(returnedData: data) {
                     self.loading = false
                     onFailure(.ReturnedDataEqualsLastData)
                     return
@@ -95,7 +97,7 @@ class PodcastRepository: Repository<Podcast> {
             categories: filterObject.categoriesAsString,
             onSucces: { (podcasts) in
                 self.loading = false
-                guard podcasts != self.lastReturnedDataArray else {
+                if self.returnedDataEqualLastData(returnedData: podcasts) {
                     onFailure(.ReturnedDataEqualsLastData)
                     return
                 }
@@ -131,5 +133,28 @@ class PodcastRepository: Repository<Podcast> {
         let key = "\(APICheckDates.newFeedLastCheck)-\(filterObject.nsDictionary)"
         let defaults = UserDefaults.standard
         defaults.set(todayString, forKey: key)
+    }
+
+    func clearLoadedToday() {
+        let defaults = UserDefaults.standard
+        let keys = defaults.dictionaryRepresentation()
+        for key in keys {
+            if key.key.contains(APICheckDates.newFeedLastCheck) {
+                defaults.removeObject(forKey: key.key)
+            }
+        }
+    }
+
+    func returnedDataEqualLastData(returnedData: [DataModel]) -> Bool {
+        guard returnedData != self.lastReturnedDataArray else {
+            return true
+        }
+        return false
+    }
+}
+
+extension PodcastRepository {
+    func updateDataSource(with item: DataModel) {
+        self.dataSource.update(item: item)
     }
 }

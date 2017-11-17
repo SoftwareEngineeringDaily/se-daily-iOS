@@ -43,8 +43,11 @@ public class PodcastViewModelController {
         guard let modelsIndex = index else { return }
         self.viewModels.remove(at: modelsIndex)
         self.viewModels.insert(podcast, at: modelsIndex)
+        
+        // Tell repository to update Datasource
+        self.repository.updateDataSource(with: podcast.baseModelRepresentation)
     }
-  
+
     func fetchData(type: String = "",
                    createdAtBefore beforeDate: String = "",
                    tags: [Int] = [],
@@ -87,7 +90,11 @@ public class PodcastViewModelController {
                 self.viewModels.append(contentsOf: filteredArray)
                 onSucces() },
             onFailure: { (error) in
-                //@TODO: make this not api error
+                // If there is no data, clear loaded today and clear last returned data
+                if self.viewModelsCount == 0 {
+                    self.repository.lastReturnedDataArray.removeAll()
+                    self.repository.clearLoadedToday()
+                }
                 onFailure(error) })
     }
 

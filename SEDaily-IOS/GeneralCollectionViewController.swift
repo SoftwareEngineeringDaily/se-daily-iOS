@@ -28,6 +28,9 @@ class GeneralCollectionViewController: UICollectionViewController {
     let preloadMargin = 5
 
     var lastLoadedPage = 0
+    
+    var errorChecks = 0
+    let maximumErrorChecks = 5
 
     var customTabBarItem: UITabBarItem! {
         switch type {
@@ -96,11 +99,9 @@ class GeneralCollectionViewController: UICollectionViewController {
     }
 
     @objc func loginObserver() {
-        if self.type == .recommended {
-            self.podcastViewModelController.clearViewModels()
-            DispatchQueue.main.async {
-                self.collectionView?.reloadData()
-            }
+        self.podcastViewModelController.clearViewModels()
+        DispatchQueue.main.async {
+            self.collectionView?.reloadData()
         }
         self.getData(lastIdentifier: "", nextPage: 0)
     }
@@ -167,6 +168,7 @@ class GeneralCollectionViewController: UICollectionViewController {
             categories: self.categories,
             page: nextPage,
             onSucces: {
+                self.errorChecks = 0
                 self.loading = false
                 self.lastLoadedPage = nextPage
                 DispatchQueue.main.async {
@@ -174,7 +176,11 @@ class GeneralCollectionViewController: UICollectionViewController {
                 }},
             onFailure: { (apiError) in
                 self.loading = false
-                log.error(apiError ?? "") })
+                self.errorChecks += 1
+                log.error(apiError ?? "")
+                guard self.errorChecks <= self.maximumErrorChecks else { return }
+                self.getData(lastIdentifier: lastIdentifier, nextPage: nextPage)
+        })
     }
 
     // MARK: UICollectionViewDelegate

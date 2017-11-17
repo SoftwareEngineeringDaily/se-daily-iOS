@@ -93,7 +93,9 @@ extension API {
                 if let token = jsonResponse["token"] as? String {
                     let user = User(firstName: firstName, lastName: lastName, email: email, token: token)
                     UserManager.sharedInstance.setCurrentUser(to: user)
-
+                    
+                    // Clear disk cache
+                    PodcastDataSource.clean()
                     NotificationCenter.default.post(name: .loginChanged, object: nil)
                     completion(true)
                 }

@@ -102,6 +102,9 @@ public class UserManager {
 
     public func logoutUser() {
         self.setCurrentUser(to: User())
+
+        // Clear disk cache
+        PodcastDataSource.clean()
         NotificationCenter.default.post(name: .loginChanged, object: nil)
     }
 

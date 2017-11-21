@@ -12,6 +12,7 @@ let log = SwiftyBeaver.self
 import IQKeyboardManagerSwift
 import Fabric
 import Crashlytics
+import Kingfisher
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,6 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupSwiftyBeaver()
         setupIQKeyboard()
         setupFirstScreen()
+
+        // Max size for Kingfisher ImageCache
+        let maxByteSize: UInt = 50 * 1024 * 1024
+        ImageCache.default.maxDiskCacheSize = maxByteSize
+        ImageCache.default.maxMemoryCost = maxByteSize
 
         return true
     }

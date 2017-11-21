@@ -11,7 +11,7 @@ import Reusable
 import SnapKit
 import SwifterSwift
 import KTResponsiveUI
-import SDWebImage
+import Kingfisher
 
 class PodcastTableViewCell: UITableViewCell, Reusable {
     private var cellLabel: UILabel!
@@ -25,7 +25,7 @@ class PodcastTableViewCell: UITableViewCell, Reusable {
             self.cellLabel.text = viewModel.podcastTitle
 
             if let url = viewModel.featuredImageURL {
-                cellImageView.sd_setImage(with: url)
+                cellImageView.kf.setImage(with: url)
             }
         }
     }
@@ -36,6 +36,7 @@ class PodcastTableViewCell: UITableViewCell, Reusable {
         cellImageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
         cellImageView.contentMode = .scaleAspectFit
         cellImageView.clipsToBounds = true
+        cellImageView.kf.indicatorType = .activity
 
         cellLabel = UILabel(origin: cellImageView.topRightPoint(), leftInset: 10, width: 250, height: 75)
         cellLabel.textColor = .black

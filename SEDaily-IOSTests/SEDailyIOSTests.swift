@@ -7,8 +7,6 @@
 //
 
 import XCTest
-import SwiftSoup
-import Atributika
 @testable import SEDaily_IOS
 
 class SEDailyIOSTests: XCTestCase {

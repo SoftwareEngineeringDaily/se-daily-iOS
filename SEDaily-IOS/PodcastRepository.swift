@@ -33,8 +33,7 @@ enum RepositoryError: Error {
 class PodcastRepository: Repository<Podcast> {
     typealias RepositorySuccessCallback = ([DataModel]) -> Void
     typealias RepositoryErrorCallback = (RepositoryError) -> Void
-
-    private let dataSource = PodcastDataSource()
+    typealias DataSource = PodcastDataSource
 
     // MARK: Getters With Paging
     let tag = "podcasts"
@@ -45,12 +44,13 @@ class PodcastRepository: Repository<Podcast> {
                  filterObject: FilterObject,
                  onSucces: @escaping RepositorySuccessCallback,
                  onFailure: @escaping RepositoryErrorCallback) {
-        self.retrieveDataFromRealmOrAPI(
-            filterObject: filterObject,
-            onSucces: { (returnedData) in
-                onSucces(returnedData) },
-            onFailure: { (error) in
-                onFailure(error) })
+        self.retrieveDataFromRealmOrAPI(filterObject: filterObject, onSucces: { (returnedData) in
+            onSucces(returnedData)
+        },
+        onFailure: { (error) in
+            self.clearLoadedToday()
+            onFailure(error)
+        })
     }
 
     // MARK: Disk and API data getter
@@ -64,13 +64,14 @@ class PodcastRepository: Repository<Podcast> {
             self.loading = true
             log.warning("from disk")
             // Check if we have realm data saved
-            self.dataSource.getAllWith(filterObject: filterObject, completion: { (returnedData) in
+            DataSource.getAllWith(filterObject: filterObject, completion: { (returnedData) in
                 guard let data = returnedData, !data.isEmpty else {
                     self.loading = false
                     onFailure(.ErrorGettingFromRealm)
                     return
                 }
-                guard data != self.lastReturnedDataArray else {
+                //@TODO: check how to clear this or remove completely
+                if self.returnedDataEqualLastData(returnedData: data) {
                     self.loading = false
                     onFailure(.ReturnedDataEqualsLastData)
                     return
@@ -95,11 +96,11 @@ class PodcastRepository: Repository<Podcast> {
             categories: filterObject.categoriesAsString,
             onSucces: { (podcasts) in
                 self.loading = false
-                guard podcasts != self.lastReturnedDataArray else {
+                if self.returnedDataEqualLastData(returnedData: podcasts) {
                     onFailure(.ReturnedDataEqualsLastData)
                     return
                 }
-                self.dataSource.insert(items: podcasts)
+                DataSource.insert(items: podcasts)
                 self.setLoadedNewToday(filterObject: filterObject)
                 self.lastReturnedDataArray = podcasts
                 onSucces(podcasts) },
@@ -111,7 +112,7 @@ class PodcastRepository: Repository<Podcast> {
 
     // MARK: Already loaded today checks
     func checkAlreadyLoadedNewToday(filterObject: FilterObject) -> Bool {
-        let key = "\(APICheckDates.newFeedLastCheck)-\(filterObject.dictionary)"
+        let key = "\(APICheckDates.newFeedLastCheck)-\(filterObject.nsDictionary)"
 
         let defaults = UserDefaults.standard
         if let newFeedLastCheck = defaults.string(forKey: key) {
@@ -128,8 +129,31 @@ class PodcastRepository: Repository<Podcast> {
 
     func setLoadedNewToday (filterObject: FilterObject) {
         let todayString = Date().iso8601String
-        let key = "\(APICheckDates.newFeedLastCheck)-\(filterObject.dictionary)"
+        let key = "\(APICheckDates.newFeedLastCheck)-\(filterObject.nsDictionary)"
         let defaults = UserDefaults.standard
         defaults.set(todayString, forKey: key)
+    }
+
+    func clearLoadedToday() {
+        let defaults = UserDefaults.standard
+        let keys = defaults.dictionaryRepresentation()
+        for key in keys {
+            if key.key.contains(APICheckDates.newFeedLastCheck) {
+                defaults.removeObject(forKey: key.key)
+            }
+        }
+    }
+
+    func returnedDataEqualLastData(returnedData: [DataModel]) -> Bool {
+        guard returnedData != self.lastReturnedDataArray else {
+            return true
+        }
+        return false
+    }
+}
+
+extension PodcastRepository {
+    func updateDataSource(with item: DataModel) {
+        DataSource.update(item: item)
     }
 }

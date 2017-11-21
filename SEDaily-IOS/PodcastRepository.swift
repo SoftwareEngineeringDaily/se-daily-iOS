@@ -33,8 +33,7 @@ enum RepositoryError: Error {
 class PodcastRepository: Repository<Podcast> {
     typealias RepositorySuccessCallback = ([DataModel]) -> Void
     typealias RepositoryErrorCallback = (RepositoryError) -> Void
-
-    private let dataSource = PodcastDataSource()
+    typealias DataSource = PodcastDataSource
 
     // MARK: Getters With Paging
     let tag = "podcasts"
@@ -65,7 +64,7 @@ class PodcastRepository: Repository<Podcast> {
             self.loading = true
             log.warning("from disk")
             // Check if we have realm data saved
-            self.dataSource.getAllWith(filterObject: filterObject, completion: { (returnedData) in
+            DataSource.getAllWith(filterObject: filterObject, completion: { (returnedData) in
                 guard let data = returnedData, !data.isEmpty else {
                     self.loading = false
                     onFailure(.ErrorGettingFromRealm)
@@ -101,7 +100,7 @@ class PodcastRepository: Repository<Podcast> {
                     onFailure(.ReturnedDataEqualsLastData)
                     return
                 }
-                self.dataSource.insert(items: podcasts)
+                DataSource.insert(items: podcasts)
                 self.setLoadedNewToday(filterObject: filterObject)
                 self.lastReturnedDataArray = podcasts
                 onSucces(podcasts) },
@@ -155,6 +154,6 @@ class PodcastRepository: Repository<Podcast> {
 
 extension PodcastRepository {
     func updateDataSource(with item: DataModel) {
-        self.dataSource.update(item: item)
+        DataSource.update(item: item)
     }
 }

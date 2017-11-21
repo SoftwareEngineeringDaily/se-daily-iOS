@@ -12,18 +12,18 @@ import Disk
 protocol DataSource {
     associatedtype GenericType
 
-    func getAll(completion: @escaping ([GenericType]?) -> Void)
-    func getById(id: String, completion: @escaping (GenericType?) -> Void)
-    func insert(item: GenericType)
-    func update(item: GenericType)
+    static func getAll(completion: @escaping ([GenericType]?) -> Void)
+    static func getById(id: String, completion: @escaping (GenericType?) -> Void)
+    static func insert(item: GenericType)
+    static func update(item: GenericType)
     static func clean()
-    func deleteById(id: String)
+    static func deleteById(id: String)
 }
 
 class PodcastDataSource: DataSource {
     typealias GenericType = Podcast
 
-    func getAll(completion: @escaping ([GenericType]?) -> Void) {
+    static func getAll(completion: @escaping ([GenericType]?) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             let retrievedObjects = try? Disk.retrieve(DiskKeys.PodcastFolder.folderPath, from: .caches, as: [GenericType].self)
             DispatchQueue.main.async {
@@ -32,7 +32,7 @@ class PodcastDataSource: DataSource {
         }
     }
 
-    func getAllWith(filterObject: FilterObject, completion: @escaping ([GenericType]?) -> Void) {
+    static func getAllWith(filterObject: FilterObject, completion: @escaping ([GenericType]?) -> Void) {
         self.getAll { (returnedData) in
             DispatchQueue.global(qos: .userInitiated).async {
                 //@TODO: Guard
@@ -65,7 +65,7 @@ class PodcastDataSource: DataSource {
         }
     }
 
-    func getById(id: String, completion: @escaping (GenericType?) -> Void) {
+    static func getById(id: String, completion: @escaping (GenericType?) -> Void) {
         self.getAll { (returnedData) in
             let foundObject = returnedData?.filter({ (item) -> Bool in
                 return item._id == id
@@ -74,7 +74,7 @@ class PodcastDataSource: DataSource {
         }
     }
 
-    func getIndexById(id: String, completion: @escaping (Int?) -> Void) {
+    static func getIndexById(id: String, completion: @escaping (Int?) -> Void) {
         self.getAll { (returnedData) in
             let index = returnedData?.index { (item) -> Bool in
                 return item._id == id
@@ -83,7 +83,7 @@ class PodcastDataSource: DataSource {
         }
     }
 
-    func insert(item: GenericType) {
+    static func insert(item: GenericType) {
         //@TODO: When would this fail
         DispatchQueue.global(qos: .userInitiated).async {
             do {
@@ -95,7 +95,7 @@ class PodcastDataSource: DataSource {
         }
     }
 
-    func insert(items: [GenericType]) {
+    static func insert(items: [GenericType]) {
         DispatchQueue.global(qos: .userInitiated).async {
             do {
                 try Disk.append(items, to: DiskKeys.PodcastFolder.folderPath, in: .caches)
@@ -106,7 +106,7 @@ class PodcastDataSource: DataSource {
         }
     }
 
-    func update(item: GenericType) {
+    static func update(item: GenericType) {
         DispatchQueue.global(qos: .userInitiated).async {
             self.getIndexById(id: item._id, completion: { (index) in
                 guard let index = index else { return }
@@ -120,7 +120,7 @@ class PodcastDataSource: DataSource {
         }
     }
 
-    func override(with items: [GenericType]) {
+    static func override(with items: [GenericType]) {
         do {
             try Disk.save(items, to: .caches, as: DiskKeys.PodcastFolder.folderPath)
         } catch let error {
@@ -136,7 +136,7 @@ class PodcastDataSource: DataSource {
         }
     }
 
-    func deleteById(id: String) {
+    static func deleteById(id: String) {
 
     }
 }

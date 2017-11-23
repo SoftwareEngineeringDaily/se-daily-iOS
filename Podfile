@@ -17,6 +17,7 @@ target 'SEDaily-IOS' do
   pod 'KTResponsiveUI', '~> 0.2.4'
   pod 'KoalaTeaFlowLayout', '~> 0.3.1'
   pod 'KoalaTeaPlayer', '~> 0.1.7'
+  pod 'MBProgressHUD', '~> 1.1.0'
   pod 'Pageboy', '~> 2.0.2'
   pod 'PureLayout', '~> 3.0.2'
   pod 'Reusable', '~> 4.0.0'

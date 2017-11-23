@@ -9,12 +9,12 @@
 import UIKit
 import SwiftIcons
 
-protocol HeaderViewDelegate {
+protocol HeaderViewDelegate: class {
     func modelDidChange(viewModel: PodcastViewModel)
 }
 
 class HeaderView: UIView {
-    var delegate: HeaderViewDelegate?
+    weak var delegate: HeaderViewDelegate?
     
     var model = PodcastViewModel()
 

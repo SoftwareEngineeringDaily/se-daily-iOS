@@ -37,7 +37,6 @@
 		16AD3E0E1F9B14130084C545 /* PodcastDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AD3E0D1F9B14130084C545 /* PodcastDataSource.swift */; };
 		16B147B11F16BF9C00433A42 /* AudioViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B147B01F16BF9C00433A42 /* AudioViewManager.swift */; };
 		16CE698F1F98029E0057BAC3 /* PodcastDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CE698E1F98029E0057BAC3 /* PodcastDetailViewController.swift */; };
-		16CE69911F9807CF0057BAC3 /* PodcastDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CE69901F9807CF0057BAC3 /* PodcastDescriptionView.swift */; };
 		16D67C4A1F33AC620065E838 /* AnswersTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D67C491F33AC620065E838 /* AnswersTracker.swift */; };
 		16D766BA1F06B4850066C143 /* AudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D766B91F06B4850066C143 /* AudioView.swift */; };
 		16F3A1BA1F90918D00364709 /* PodcastRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F3A1B91F90918D00364709 /* PodcastRepository.swift */; };
@@ -92,7 +91,6 @@
 		16AD3E0D1F9B14130084C545 /* PodcastDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastDataSource.swift; sourceTree = "<group>"; };
 		16B147B01F16BF9C00433A42 /* AudioViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioViewManager.swift; sourceTree = "<group>"; };
 		16CE698E1F98029E0057BAC3 /* PodcastDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastDetailViewController.swift; sourceTree = "<group>"; };
-		16CE69901F9807CF0057BAC3 /* PodcastDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastDescriptionView.swift; sourceTree = "<group>"; };
 		16D67C491F33AC620065E838 /* AnswersTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswersTracker.swift; sourceTree = "<group>"; };
 		16D766B91F06B4850066C143 /* AudioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioView.swift; sourceTree = "<group>"; };
 		16F3A1B91F90918D00364709 /* PodcastRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastRepository.swift; sourceTree = "<group>"; };
@@ -238,7 +236,6 @@
 			isa = PBXGroup;
 			children = (
 				167AFAB61F043F1100A1332F /* HeaderView.swift */,
-				16CE69901F9807CF0057BAC3 /* PodcastDescriptionView.swift */,
 				16CE698E1F98029E0057BAC3 /* PodcastDetailViewController.swift */,
 			);
 			name = PodcastDetail;
@@ -646,7 +643,6 @@
 				166036211F266FF300A22B7B /* Notifications.swift in Sources */,
 				169806A61F8EF3970075D8AD /* L10nEnum.swift in Sources */,
 				01BB1D6D1F29999E004A912E /* PodcastPageViewController.swift in Sources */,
-				16CE69911F9807CF0057BAC3 /* PodcastDescriptionView.swift in Sources */,
 				162FFD401FBE200E0026288D /* DiskKeys.swift in Sources */,
 				16307FCC1F8FEE3A001783CB /* PodcastViewModelController.swift in Sources */,
 				16AD3E0E1F9B14130084C545 /* PodcastDataSource.swift in Sources */,

@@ -11,8 +11,10 @@ PODS:
   - KoalaTeaPlayer (0.1.7)
   - KTResponsiveUI (0.2.4):
     - SwiftIcons
+  - Nimble (7.0.3)
   - Pageboy (2.0.2)
   - PureLayout (3.0.2)
+  - Quick (1.2.0)
   - Reusable (4.0.0):
     - Reusable/Storyboard (= 4.0.0)
     - Reusable/View (= 4.0.0)
@@ -58,8 +60,10 @@ DEPENDENCIES:
   - KoalaTeaFlowLayout (~> 0.3.1)
   - KoalaTeaPlayer (~> 0.1.7)
   - KTResponsiveUI (~> 0.2.4)
+  - Nimble
   - Pageboy (~> 2.0.2)
   - PureLayout (~> 3.0.2)
+  - Quick
   - Reusable (~> 4.0.0)
   - SDWebImage (~> 4.2.1)
   - SideMenu (~> 3.1.4)
@@ -100,8 +104,10 @@ SPEC CHECKSUMS:
   KoalaTeaFlowLayout: 219c45709d0873d405b2de1b27080a9c411246b7
   KoalaTeaPlayer: 52b9f24cf3730099164e06767e5d480b0532064e
   KTResponsiveUI: 34a7f474fe9fcb8d99597b162b4ad5ca5d56342b
+  Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
   Pageboy: d5b9fe9a59202674c44111e513e67ccc680e18b7
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
+  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   Reusable: 98e5fff1e0e2e00872199699b276dde08ee56c07
   SDWebImage: 1fa4c9edf525b744f002db89f3f5a38b3cd4c541
   SideMenu: 99021e70b3f2eee65b5dd88e4274d09031b1221e
@@ -116,6 +122,6 @@ SPEC CHECKSUMS:
   Tabman: 9f87244fdbbd070fe6a518f445880b2b4a56ea1b
   UIFontComplete: 7e3ce7f0a12d2529fb07f537e262aabfa87df280
 
-PODFILE CHECKSUM: eda67d2e802f0442870d2d12c35e79ee9fe94cc0
+PODFILE CHECKSUM: 84c184db7aa90bc865dacc46033b6143c2511127
 
 COCOAPODS: 1.3.1

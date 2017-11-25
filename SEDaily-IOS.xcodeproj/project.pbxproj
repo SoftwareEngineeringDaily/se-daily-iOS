@@ -44,6 +44,7 @@
 		1E44AF031F87B08D00221B22 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1E44AF051F87B08D00221B22 /* Localizable.strings */; };
 		238E99F4E37C7365658113B8 /* Pods_SEDaily_IOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C9F051C6C2F8638D2ABF8 /* Pods_SEDaily_IOSTests.framework */; };
 		24412438C753126FDDD37CBF /* Pods_SEDaily_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */; };
+		C079B6541FCA07F800B4B304 /* HelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C079B6531FCA07F800B4B304 /* HelpersTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +105,7 @@
 		9FDA28C254F62BB468401B75 /* Pods-SEDaily-IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.debug.xcconfig"; sourceTree = "<group>"; };
 		A2EFA433B346D70E958FFC73 /* Pods-SEDaily-IOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SEDaily_IOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C079B6531FCA07F800B4B304 /* HelpersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpersTests.swift; sourceTree = "<group>"; };
 		DF0C9F051C6C2F8638D2ABF8 /* Pods_SEDaily_IOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SEDaily_IOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -219,6 +221,7 @@
 			children = (
 				1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */,
 				1686FC171F009EC00088A6C1 /* Info.plist */,
+				C079B6531FCA07F800B4B304 /* HelpersTests.swift */,
 			);
 			path = "SEDaily-IOSTests";
 			sourceTree = "<group>";
@@ -483,9 +486,14 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
+				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -645,6 +653,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1686FC161F009EC00088A6C1 /* SEDaily_IOSTests.swift in Sources */,
+				C079B6541FCA07F800B4B304 /* HelpersTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -843,7 +852,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 995F64385352A79BA0DF7DEB /* Pods-SEDaily-IOSTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 6MS9QWALYV;
 				INFOPLIST_FILE = "SEDaily-IOSTests/Info.plist";
@@ -860,7 +869,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A2EFA433B346D70E958FFC73 /* Pods-SEDaily-IOSTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 6MS9QWALYV;
 				INFOPLIST_FILE = "SEDaily-IOSTests/Info.plist";

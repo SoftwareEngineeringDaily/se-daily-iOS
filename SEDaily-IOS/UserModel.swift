@@ -57,6 +57,7 @@ extension User: Equatable {
 public class UserManager {
     static let sharedInstance: UserManager = UserManager()
     
+    // Put in this init for tests, but it'd be great to turn this into a non-singleton in general
     init(userDefaults: UserDefaultsProtocol = UserDefaults.standard) {
         defaults = userDefaults
     }

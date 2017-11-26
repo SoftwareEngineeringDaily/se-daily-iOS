@@ -62,6 +62,16 @@ class HelpersTests: QuickSpec {
             }
 
         }
+        
+        describe("getStringFrom tests") {
+            it("displays the value if the value is above 10") {
+                expect(Helpers.getStringFrom(seconds: 15)).to(equal("15"))
+            }
+            
+            it("displays the value with a leading zero if it's below 10") {
+                expect(Helpers.getStringFrom(seconds: 9)).to(equal("09"))
+            }
+        }
       
     }
     

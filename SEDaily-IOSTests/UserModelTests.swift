@@ -7,29 +7,34 @@
 //
 
 import XCTest
+import Quick
+import Nimble
+@testable import SEDaily_IOS
 
 class UserModelTests: QuickSpec {
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    override func spec() {
+        describe("isCurrentUserLoggedIn tests") {
+            var userManager: UserManager!
+
+            beforeEach {
+                let dict = [String : Any]()
+                userManager = UserManager(userDefaults: UserDefaultsMock(dict: dict))
+            }
+            it("returns false when user is not logged in") {
+                expect(userManager.isCurrentUserLoggedIn()).to(beFalse())
+            }
+            
+            it("returns true when user is logged in") {
+                let user = User(firstName: "firstName",
+                                lastName: "lastName",
+                                email: "email@email.com",
+                                token: "abcdefg")
+                userManager.setCurrentUser(to: user)
+                expect(userManager.isCurrentUserLoggedIn()).to(beTrue())
+            }
         }
     }
+    
     
 }

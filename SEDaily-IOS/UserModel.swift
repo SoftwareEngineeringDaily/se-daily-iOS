@@ -29,11 +29,11 @@ public struct User: Codable {
     }
     
     // Mark: Getters
-    
+
     func getFullName() -> String {
         return self.firstName + self.lastName
     }
-    
+
     func isLoggedIn() -> Bool {
         if token != "" {
             return true
@@ -43,7 +43,7 @@ public struct User: Codable {
 }
 
 extension User: Equatable {
-    public static func ==(lhs: User, rhs: User) -> Bool {
+    public static func == (lhs: User, rhs: User) -> Bool {
         return lhs.key == rhs.key &&
             lhs.firstName == rhs.firstName &&
             lhs.lastName == rhs.lastName &&
@@ -63,15 +63,15 @@ public class UserManager {
     }
     
     let defaults: UserDefaultsProtocol
-    
+
     let staticUserKey = "user"
-    
+
     var currentUser: User = User() {
         didSet {
             self.saveUserToDefaults(user: self.currentUser)
         }
     }
-    
+
     public func getActiveUser() -> User {
         switch checkIfSavedUserEqualsCurrentUser() {
         case true:
@@ -87,36 +87,39 @@ public class UserManager {
             return self.currentUser
         }
     }
-    
+
     public func setCurrentUser(to newUser: User) {
         guard currentUser != newUser else { return }
         self.currentUser = newUser
     }
-    
+
     public func isCurrentUserLoggedIn() -> Bool {
         let token = self.currentUser.token
         guard token != "" else { return false }
         return true
     }
-    
+
     public func logoutUser() {
         self.setCurrentUser(to: User())
+
+        // Clear disk cache
+        PodcastDataSource.clean()
         NotificationCenter.default.post(name: .loginChanged, object: nil)
     }
-    
+
     private func checkIfSavedUserEqualsCurrentUser() -> Bool {
         guard let retrievedUser = self.retriveCurrentUserFromDefaults() else { return false }
         guard retrievedUser == self.currentUser else { return false }
         return true
     }
-    
+
     private func saveUserToDefaults(user: User) {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(user) {
             defaults.set(encoded, forKey: staticUserKey)
         }
     }
-    
+
     private func retriveCurrentUserFromDefaults() -> User? {
         let decoder = JSONDecoder()
         if let returnedEncodedUser = defaults.data(forKey: staticUserKey),
@@ -132,5 +135,4 @@ public protocol UserDefaultsProtocol {
     func data(forKey defaultName: String) -> Data?
 }
 
-extension UserDefaults : UserDefaultsProtocol {}
-
+extension UserDefaults: UserDefaultsProtocol {}

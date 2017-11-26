@@ -10,80 +10,80 @@ import Foundation
 import Disk
 
 protocol DataSource {
-    associatedtype T
-    
-    func getAll(completion: @escaping ([T]?) -> Void)
-    func getById(id: String, completion: @escaping (T?) -> Void)
-    func insert(item: T)
-    func update(item: T)
-    func clean()
-    func deleteById(id: String)
-}
+    associatedtype GenericType
 
-enum DiskKeys: String {
-    case PodcastFolder = "Podcasts"
-    
-    var folderPath: String {
-        return self.rawValue + "/" + self.rawValue + ".json"
-    }
+    static func getAll(completion: @escaping ([GenericType]?) -> Void)
+    static func getById(id: String, completion: @escaping (GenericType?) -> Void)
+    static func insert(item: GenericType)
+    static func update(item: GenericType)
+    static func clean()
+    static func deleteById(id: String)
 }
 
 class PodcastDataSource: DataSource {
-    typealias T = Podcast
-    
-    func getAll(completion: @escaping ([T]?) -> Void) {
+    typealias GenericType = Podcast
+
+    static func getAll(completion: @escaping ([GenericType]?) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            let retrievedObjects = try? Disk.retrieve(DiskKeys.PodcastFolder.folderPath, from: .caches, as: [T].self)
+            let retrievedObjects = try? Disk.retrieve(DiskKeys.PodcastFolder.folderPath, from: .caches, as: [GenericType].self)
             DispatchQueue.main.async {
                 completion(retrievedObjects)
             }
         }
     }
-    
-    func getAllWith(filterObject: FilterObject, completion: @escaping ([T]?) -> Void) {
+
+    static func getAllWith(filterObject: FilterObject, completion: @escaping ([GenericType]?) -> Void) {
         self.getAll { (returnedData) in
             DispatchQueue.global(qos: .userInitiated).async {
                 //@TODO: Guard
-                let filteredObjects = returnedData?.filter({ (podcast) -> Bool in
+                guard let filteredObjects = returnedData?.filter({ (podcast) -> Bool in
                     return podcast.tags!.contains(filterObject.tags) &&
                         podcast.categories!.contains(filterObject.categories) &&
                         podcast.type == filterObject.type
                 })
-                
+                else {
+                    completion(nil)
+                    return
+                }
+
                 let dateString = filterObject.lastDate
                 if let passedDate = Date(iso8601String: dateString) {
-                    //@TODO: Gaurd
-                    let dateFilteredObjects = filteredObjects?.filter({ (podcast) -> Bool in
+                    let dateFilteredObjects = filteredObjects.filter({ (podcast) -> Bool in
                         return podcast.getLastUpdatedAsDate()! < passedDate
                     })
-                    //@TODO: Gaurd
                     DispatchQueue.main.async {
-                        completion(Array(dateFilteredObjects!.prefix(10)))
-                        
+                        completion(Array(dateFilteredObjects.prefix(10)))
                     }
                     return
                 }
                 DispatchQueue.main.async {
-                    // Prefix = to max paging
-                    completion(Array(filteredObjects!.prefix(10)))
-                    
+                    // Prefix = max paging
+                    completion(Array(filteredObjects.prefix(10)))
                 }
                 return
             }
         }
     }
-    
-    func getById(id: String, completion: @escaping (T?) -> Void) {
+
+    static func getById(id: String, completion: @escaping (GenericType?) -> Void) {
         self.getAll { (returnedData) in
             let foundObject = returnedData?.filter({ (item) -> Bool in
                 return item._id == id
             }).first
             completion(foundObject)
         }
-        
     }
-    
-    func insert(item: T) {
+
+    static func getIndexById(id: String, completion: @escaping (Int?) -> Void) {
+        self.getAll { (returnedData) in
+            let index = returnedData?.index { (item) -> Bool in
+                return item._id == id
+            }
+            completion(index)
+        }
+    }
+
+    static func insert(item: GenericType) {
         //@TODO: When would this fail
         DispatchQueue.global(qos: .userInitiated).async {
             do {
@@ -94,8 +94,8 @@ class PodcastDataSource: DataSource {
             }
         }
     }
-    
-    func insert(items: [T]) {
+
+    static func insert(items: [GenericType]) {
         DispatchQueue.global(qos: .userInitiated).async {
             do {
                 try Disk.append(items, to: DiskKeys.PodcastFolder.folderPath, in: .caches)
@@ -105,26 +105,38 @@ class PodcastDataSource: DataSource {
             }
         }
     }
-    
-    func update(item: T) {
-        
+
+    static func update(item: GenericType) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.getIndexById(id: item._id, completion: { (index) in
+                guard let index = index else { return }
+                self.getAll(completion: { (podcasts) in
+                    guard var allPodcasts = podcasts else { return }
+                    allPodcasts.remove(at: index)
+                    allPodcasts.insert(item, at: index)
+                    self.override(with: allPodcasts)
+                })
+            })
+        }
     }
-    
-    func clean() {
-        try? Disk.remove(DiskKeys.PodcastFolder.rawValue, from: .caches)
+
+    static func override(with items: [GenericType]) {
+        do {
+            try Disk.save(items, to: .caches, as: DiskKeys.PodcastFolder.folderPath)
+        } catch let error {
+            log.error(error.localizedDescription)
+        }
     }
-    
-    func deleteById(id: String) {
-        
+
+    static func clean() {
+        do {
+            try Disk.remove(DiskKeys.PodcastFolder.folderPath, from: .caches)
+        } catch let error {
+            log.error(error.localizedDescription)
+        }
     }
-    
-    //@TODO: We may need to check if items exist?
-    //    func checkIfExists(item: Podcast) {
-    //        self.getById(id: item._id) { (returnedItem) in
-    //            if returnedItem != nil {
-    //                log.info("not nil")
-    //            }
-    //            log.info("nil?")
-    //        }
-    //    }
+
+    static func deleteById(id: String) {
+
+    }
 }

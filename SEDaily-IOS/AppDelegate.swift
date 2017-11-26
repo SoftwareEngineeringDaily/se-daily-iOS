@@ -12,21 +12,26 @@ let log = SwiftyBeaver.self
 import IQKeyboardManagerSwift
 import Fabric
 import Crashlytics
+import Kingfisher
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
+
         Fabric.with([Crashlytics.self])
         setupSwiftyBeaver()
         setupIQKeyboard()
         setupFirstScreen()
-        
+
+        // Max size for Kingfisher ImageCache
+        let maxByteSize: UInt = 50 * 1024 * 1024
+        ImageCache.default.maxDiskCacheSize = maxByteSize
+        ImageCache.default.maxMemoryCost = maxByteSize
+
         return true
     }
 
@@ -52,7 +57,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
 }
 
 extension AppDelegate {
@@ -62,11 +66,11 @@ extension AppDelegate {
         let console = ConsoleDestination()
         log.addDestination(console) // add to SwiftyBeaver
     }
-    
+
     func setupIQKeyboard() {
         IQKeyboardManager.sharedManager().enable = true
     }
-    
+
     func setupFirstScreen() {
         window = UIWindow(frame: UIScreen.main.bounds)
         let rootVC = ContainerViewController()
@@ -75,4 +79,3 @@ extension AppDelegate {
         window!.makeKeyAndVisible()
     }
 }
-

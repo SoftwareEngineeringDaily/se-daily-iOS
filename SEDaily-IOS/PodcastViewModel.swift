@@ -14,34 +14,28 @@ public struct PodcastViewModel: Codable {
     let postLinkURL: URL?
     let categories: [Int]?
     var categoriesAsString: String {
-        get {
-            guard let categories = self.categories else { return "" }
-            let stringArray = categories.map { String(describing: $0) }
-            return stringArray.joined(separator: " ")
-        }
+        guard let categories = self.categories else { return "" }
+        let stringArray = categories.map { String(describing: $0) }
+        return stringArray.joined(separator: " ")
     }
     let tags: [Int]?
     var tagsAsString: String {
-        get {
-            guard let tags = self.tags else { return "" }
-            let stringArray = tags.map { String(describing: $0) }
-            return stringArray.joined(separator: " ")
-        }
+        guard let tags = self.tags else { return "" }
+        let stringArray = tags.map { String(describing: $0) }
+        return stringArray.joined(separator: " ")
     }
     let mp3URL: URL?
     let featuredImageURL: URL?
-    private let encodedPodcastTitle: String
-    private let encodedPodcastDescription: String
+    let encodedPodcastTitle: String
+    let encodedPodcastDescription: String
     var score: Int
     var isUpvoted: Bool = false
     var isDownvoted: Bool = false
-    
+
     var podcastTitle: String {
-        get {
-            return encodedPodcastTitle.htmlDecoded
-        }
+        return encodedPodcastTitle.htmlDecoded
     }
-    
+
     init(podcast: Podcast) {
         self._id = podcast._id
         self.uploadDateiso8601 = podcast.date
@@ -53,7 +47,7 @@ public struct PodcastViewModel: Codable {
         self.encodedPodcastTitle = podcast.title.rendered
         self.encodedPodcastDescription = podcast.content.rendered
         self.score = podcast.score
-        
+
         if let upvoted = podcast.upvoted {
             self.isUpvoted = upvoted
         }
@@ -61,7 +55,7 @@ public struct PodcastViewModel: Codable {
             self.isDownvoted = downvoted
         }
     }
-    
+
     init() {
         self._id = ""
         self.uploadDateiso8601 = ""
@@ -74,10 +68,14 @@ public struct PodcastViewModel: Codable {
         self.encodedPodcastDescription = ""
         self.score = 0
     }
+
+    var baseModelRepresentation: Podcast {
+        return Podcast(viewModel: self)
+    }
 }
 
 extension PodcastViewModel: Equatable {
-    public static func ==(lhs: PodcastViewModel, rhs: PodcastViewModel) -> Bool {
+    public static func == (lhs: PodcastViewModel, rhs: PodcastViewModel) -> Bool {
         return lhs._id == rhs._id &&
             lhs.uploadDateiso8601 == rhs.uploadDateiso8601 &&
             lhs.postLinkURL == rhs.postLinkURL &&
@@ -101,7 +99,7 @@ extension PodcastViewModel {
             }
         }
     }
-    
+
     // This is too slow for a cell collection view call
     func getLastUpdatedAsDate() -> Date? {
         return Date(iso8601String: self.uploadDateiso8601)

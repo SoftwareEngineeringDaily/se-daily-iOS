@@ -8,7 +8,6 @@
 
 import UIKit
 import KoalaTeaFlowLayout
-import SDWebImage
 
 private let reuseIdentifier = "Cell"
 
@@ -16,35 +15,36 @@ class GeneralCollectionViewController: UICollectionViewController {
     lazy var skeletonCollectionView: SkeletonCollectionView = {
         return SkeletonCollectionView(frame: self.collectionView!.frame)
     }()
-    
+
     var type: PodcastTypes
     var tabTitle: String
     var tags: [Int]
     var categories: [Int]
-    
+
     // Paging Properties
     var loading = false
     let pageSize = 10
     let preloadMargin = 5
-    
+
     var lastLoadedPage = 0
     
+    var errorChecks = 0
+    let maximumErrorChecks = 5
+
     var customTabBarItem: UITabBarItem! {
-        get {
-            switch type {
-            case .new:
-                return nil
-            case .recommended:
-                return UITabBarItem(title: L10n.tabBarJustForYou, image: #imageLiteral(resourceName: "activity_feed"), selectedImage: #imageLiteral(resourceName: "activity_feed_selected"))
-            case .top:
-                return UITabBarItem(tabBarSystemItem: .mostViewed, tag: 0)
-            }
+        switch type {
+        case .new:
+            return nil
+        case .recommended:
+            return UITabBarItem(title: L10n.tabBarJustForYou, image: #imageLiteral(resourceName: "activity_feed"), selectedImage: #imageLiteral(resourceName: "activity_feed_selected"))
+        case .top:
+            return UITabBarItem(tabBarSystemItem: .mostViewed, tag: 0)
         }
     }
-    
+
     // ViewModelController
     private let podcastViewModelController: PodcastViewModelController = PodcastViewModelController()
-    
+
     init(collectionViewLayout layout: UICollectionViewLayout,
          tags: [Int] = [],
          categories: [PodcastCategoryIds] = [],
@@ -57,7 +57,7 @@ class GeneralCollectionViewController: UICollectionViewController {
         super.init(collectionViewLayout: layout)
         self.tabBarItem = self.customTabBarItem
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -70,7 +70,7 @@ class GeneralCollectionViewController: UICollectionViewController {
 
         // Register cell classes
         self.collectionView?.register(PodcastCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
+
         let layout = KoalaTeaFlowLayout(cellWidth: UIView.getValueScaledByScreenWidthFor(baseValue: 158),
                                         cellHeight: UIView.getValueScaledByScreenHeightFor(baseValue: 250),
                                         topBottomMargin: UIView.getValueScaledByScreenHeightFor(baseValue: 12),
@@ -78,31 +78,24 @@ class GeneralCollectionViewController: UICollectionViewController {
                                         cellSpacing: UIView.getValueScaledByScreenWidthFor(baseValue: 8))
         self.collectionView?.collectionViewLayout = layout
         self.collectionView?.backgroundColor = .white
-        
+
         // User Login observer
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)
-        
+
         self.collectionView?.addSubview(skeletonCollectionView)
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         // Make sure skeletonCollectionView is animating when the view is visible
         if self.skeletonCollectionView.alpha != 0 {
             self.skeletonCollectionView.collectionView.reloadData()
         }
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        //@TODO: Find a better way to manage cached Images
-        SDImageCache.shared().clearMemory()
-    }
-    
+
     @objc func loginObserver() {
-        if self.type == .recommended {
-            self.podcastViewModelController.clearViewModels()
-            DispatchQueue.main.async {
-                self.collectionView?.reloadData()
-            }
+        self.podcastViewModelController.clearViewModels()
+        DispatchQueue.main.async {
+            self.collectionView?.reloadData()
         }
         self.getData(lastIdentifier: "", nextPage: 0)
     }
@@ -130,8 +123,10 @@ class GeneralCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PodcastCell
-    
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PodcastCell else {
+            return UICollectionViewCell()
+        }
+
         // Configure the cell
         if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
             cell.viewModel = viewModel
@@ -143,10 +138,10 @@ class GeneralCollectionViewController: UICollectionViewController {
                 }
             }
         }
-    
+
         return cell
     }
-    
+
     func checkPage(currentIndexPath: IndexPath, lastIndexPath: IndexPath, lastIdentifier: String) {
         let nextPage: Int = Int(currentIndexPath.item / self.pageSize) + 1
         let preloadIndex = nextPage * self.pageSize - self.preloadMargin
@@ -156,20 +151,30 @@ class GeneralCollectionViewController: UICollectionViewController {
             self.getData(lastIdentifier: lastIdentifier, nextPage: nextPage)
         }
     }
-    
+
     func getData(lastIdentifier: String, nextPage: Int) {
         guard self.loading == false else { return }
         self.loading = true
-        podcastViewModelController.fetchData(type: self.type.rawValue, createdAtBefore: lastIdentifier, tags: self.tags, categories: self.categories, page: nextPage, onSucces: {
-            self.loading = false
-            self.lastLoadedPage = nextPage
-            DispatchQueue.main.async {
-                self.collectionView?.reloadData()
-            }
-        }) { (apiError) in
-            self.loading = false
-            log.error(apiError)
-        }
+        podcastViewModelController.fetchData(
+            type: self.type.rawValue,
+            createdAtBefore: lastIdentifier,
+            tags: self.tags,
+            categories: self.categories,
+            page: nextPage,
+            onSucces: {
+                self.errorChecks = 0
+                self.loading = false
+                self.lastLoadedPage = nextPage
+                DispatchQueue.main.async {
+                    self.collectionView?.reloadData()
+                }},
+            onFailure: { (apiError) in
+                self.loading = false
+                self.errorChecks += 1
+                log.error(apiError ?? "")
+                guard self.errorChecks <= self.maximumErrorChecks else { return }
+                self.getData(lastIdentifier: lastIdentifier, nextPage: nextPage)
+        })
     }
 
     // MARK: UICollectionViewDelegate

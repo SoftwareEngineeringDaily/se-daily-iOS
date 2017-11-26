@@ -14,27 +14,53 @@ import Nimble
 class UserModelTests: QuickSpec {
     
     override func spec() {
-        describe("isCurrentUserLoggedIn tests") {
+        describe("userModel tests") {
             var userManager: UserManager!
-
+            var encoder = JSONEncoder()
+            var decoder = JSONDecoder()
+            
             beforeEach {
                 let dict = [String : Any]()
                 userManager = UserManager(userDefaults: UserDefaultsMock(dict: dict))
             }
-            it("returns false when user is not logged in") {
-                expect(userManager.isCurrentUserLoggedIn()).to(beFalse())
+            
+            describe("isCurrentUserLoggedIn tests") {
+                it("returns false when user is not logged in") {
+                    expect(userManager.isCurrentUserLoggedIn()).to(beFalse())
+                }
+                
+                it("returns true when user is logged in") {
+                    let user = User(firstName: "firstName",
+                                    lastName: "lastName",
+                                    email: "email@email.com",
+                                    token: "abcdefg")
+                    userManager.setCurrentUser(to: user)
+                    expect(userManager.isCurrentUserLoggedIn()).to(beTrue())
+                }
             }
             
-            it("returns true when user is logged in") {
-                let user = User(firstName: "firstName",
-                                lastName: "lastName",
-                                email: "email@email.com",
-                                token: "abcdefg")
-                userManager.setCurrentUser(to: user)
-                expect(userManager.isCurrentUserLoggedIn()).to(beTrue())
+            describe("getActiveUser tests") {
+                var user : User!
+                beforeEach {
+                    user = User(firstName: "firstName",
+                                    lastName: "lastName",
+                                    email: "email@email.com",
+                                    token: "abcdefg")
+                    userManager.setCurrentUser(to: user)
+                }
+                
+                it("returns the active user when the saved user matches the current user") {
+                    expect(userManager.getActiveUser()).to(equal(user))
+                }
+                
+                it("returns the current user rather than stale value from defaults if they differ") {
+                    userManager.defaults.set(User(), forKey: "user")
+                    expect(userManager.getActiveUser()).to(equal(user))
+                }
+
+
             }
         }
+        
     }
-    
-    
 }

@@ -9,6 +9,7 @@
 import UIKit
 import SwifterSwift
 import SideMenu
+import MBProgressHUD
 
 class LoginViewController: UIViewController {
 
@@ -264,8 +265,9 @@ class LoginViewController: UIViewController {
             return
         }
 
-        // API Login Call
+        ProgressIndicator.showBlockingProgress()
         API.sharedInstance.login(firstName: "", lastName: "", email: email, password: password) { (success) in
+            ProgressIndicator.hideBlockingProgress()
             if success == false {
                 return
             }

@@ -9,12 +9,12 @@
 import UIKit
 import SwiftIcons
 
-protocol HeaderViewDelegate {
+protocol HeaderViewDelegate: class {
     func modelDidChange(viewModel: PodcastViewModel)
 }
 
 class HeaderView: UIView {
-    var delegate: HeaderViewDelegate?
+    weak var delegate: HeaderViewDelegate?
     
     var model = PodcastViewModel()
 
@@ -84,7 +84,7 @@ class HeaderView: UIView {
 
         playView.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview()
-            make.width.equalToSuperview()
+            make.left.right.equalToSuperview()
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 65))
         }
 

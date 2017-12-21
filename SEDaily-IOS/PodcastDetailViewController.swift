@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol PodcastDetailViewControllerDelegate {
+protocol PodcastDetailViewControllerDelegate: class {
     func modelDidChange(viewModel: PodcastViewModel)
 }
 
 class PodcastDetailViewController: UIViewController {
 
-    var delegate: PodcastDetailViewControllerDelegate?
+    weak var delegate: PodcastDetailViewControllerDelegate?
   
     var model = PodcastViewModel()
 

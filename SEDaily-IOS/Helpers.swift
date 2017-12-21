@@ -59,7 +59,7 @@ class Helpers {
     class func isValidEmailAddress(emailAddressString: String) -> Bool {
 
         var returnValue = true
-        let emailRegEx = "[A-Z0-9a-z.-_]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}"
+        let emailRegEx = "^[A-Z0-9a-z._-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}$"
 
         do {
             let regex = try NSRegularExpression(pattern: emailRegEx)

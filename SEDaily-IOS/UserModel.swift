@@ -17,23 +17,18 @@ public struct User: Codable {
     let token: String
     let pushNotificationsSetting: Bool = false
     let deviceToken: String? = nil
-
-    init(firstName: String,
-         lastName: String,
-         email: String,
-         token: String) {
+    
+    init(firstName: String = "",
+         lastName: String = "",
+         email: String = "",
+         token: String = "") {
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
         self.token = token
     }
-
-    init() {
-        self.firstName = ""
-        self.lastName = ""
-        self.email = ""
-        self.token = ""
-    }
+    
+    // Mark: Getters
 
     func getFullName() -> String {
         return self.firstName + self.lastName
@@ -61,9 +56,13 @@ extension User: Equatable {
 
 public class UserManager {
     static let sharedInstance: UserManager = UserManager()
-    private init() {}
-
-    let defaults = UserDefaults.standard
+    
+    // Put in this init for tests, but it'd be great to turn this into a non-singleton in general
+    init(userDefaults: UserDefaultsProtocol = UserDefaults.standard) {
+        defaults = userDefaults
+    }
+    
+    let defaults: UserDefaultsProtocol
 
     let staticUserKey = "user"
 
@@ -130,3 +129,10 @@ public class UserManager {
         return nil
     }
 }
+
+public protocol UserDefaultsProtocol {
+    func set(_ value: Any?, forKey defaultName: String)
+    func data(forKey defaultName: String) -> Data?
+}
+
+extension UserDefaults: UserDefaultsProtocol {}

@@ -84,7 +84,7 @@ class HeaderView: UIView {
 
         playView.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview()
-            make.width.equalToSuperview()
+            make.left.right.equalToSuperview()
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 65))
         }
 

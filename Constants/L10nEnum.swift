@@ -33,6 +33,8 @@ enum L10n {
   static let alertMessagePasswordsDonotMatch = L10n.tr("Localizable", "AlertMessagePasswordsDonotMatch")
   /// Please Login
   static let alertMessagePleaseLogin = L10n.tr("Localizable", "AlertMessagePleaseLogin")
+  /// Username Field Empty
+  static let alertMessageUsernameEmpty = L10n.tr("Localizable", "AlertMessageUsernameEmpty")
   /// You must login to use this feature.
   static let alertMessageYouMustLogin = L10n.tr("Localizable", "AlertMessageYouMustLogin")
   /// Cancel
@@ -91,6 +93,10 @@ enum L10n {
   static let tabTitleOpenSource = L10n.tr("Localizable", "TabTitleOpenSource")
   /// Security
   static let tabTitleSecurity = L10n.tr("Localizable", "TabTitleSecurity")
+  /// Username or Email
+  static let usernameOrEmailPlaceholder = L10n.tr("Localizable", "UsernameOrEmailPlaceholder")
+  /// Username
+  static let usernamePlaceholder = L10n.tr("Localizable", "UsernamePlaceholder")
 }
 // swiftlint:enable explicit_type_interface identifier_name line_length nesting type_body_length type_name
 

@@ -48,6 +48,7 @@ extension API {
         static let deviceToken = "deviceToken"
         static let accessToken = "accessToken"
         static let type = "type"
+        static let email = "email"
         static let username = "username"
         static let password = "password"
         static let token = "token"
@@ -66,12 +67,12 @@ class API {
 
 extension API {
     // MARK: Auth
-    func login(firstName: String, lastName: String, email: String, password: String, completion: @escaping (_ success: Bool?) -> Void) {
+    func login(usernameOrEmail: String, password: String, completion: @escaping (_ success: Bool?) -> Void) {
         let urlString = rootURL + Endpoints.login
 
         let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded]
         var params = [String: String]()
-        params[Params.username] = email
+        params[Params.username] = usernameOrEmail
         params[Params.password] = password
 
         Alamofire.request(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
@@ -91,7 +92,7 @@ extension API {
                 }
 
                 if let token = jsonResponse["token"] as? String {
-                    let user = User(firstName: firstName, lastName: lastName, email: email, token: token)
+                    let user = User(firstName: "", lastName: "", usernameOrEmail: usernameOrEmail, token: token)
                     UserManager.sharedInstance.setCurrentUser(to: user)
                     
                     // Clear disk cache
@@ -109,12 +110,13 @@ extension API {
         }
     }
 
-    func register(firstName: String, lastName: String, email: String, password: String, completion: @escaping (_ success: Bool?) -> Void) {
+    func register(firstName: String, lastName: String, email: String, username: String, password: String, completion: @escaping (_ success: Bool?) -> Void) {
         let urlString = rootURL + Endpoints.register
 
         let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded]
         var params = [String: String]()
-        params[Params.username] = email
+        params[Params.username] = username
+        params[Params.email] = email
         params[Params.password] = password
 
         Alamofire.request(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
@@ -136,7 +138,7 @@ extension API {
                 }
 
                 if let token = jsonResponse["token"] as? String {
-                    let user = User(firstName: firstName, lastName: lastName, email: email, token: token)
+                    let user = User(firstName: firstName, lastName: lastName, usernameOrEmail: username, token: token)
                     UserManager.sharedInstance.setCurrentUser(to: user)
 
                     NotificationCenter.default.post(name: .loginChanged, object: nil)

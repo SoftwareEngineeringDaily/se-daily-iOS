@@ -59,7 +59,9 @@ extension API {
 }
 
 class API {
-    let rootURL: String = "https://software-enginnering-daily-api.herokuapp.com/api"
+//    let rootURL: String = "https://software-enginnering-daily-api.herokuapp.com/api"
+    //@TODO: REMOVE STAGING
+    let rootURL: String = "http://sedaily-backend-staging.herokuapp.com/api"
 
     static let sharedInstance: API = API()
     private init() {}

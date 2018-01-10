@@ -23,6 +23,7 @@ class LoginViewController: UIViewController {
     let stackView = UIStackView()
 
     let emailTextField = TextField()
+    let usernameTextField = TextField()
     let passwordTextField = TextField()
     let passwordConfirmTextField = TextField()
     let firstNameTextField = TextField()
@@ -106,6 +107,7 @@ class LoginViewController: UIViewController {
         stackView.spacing = 10
 
         self.stackView.addArrangedSubview(emailTextField)
+        self.stackView.addArrangedSubview(usernameTextField)
         self.stackView.addArrangedSubview(passwordTextField)
         self.stackView.addArrangedSubview(passwordConfirmTextField)
         self.stackView.addArrangedSubview(firstNameTextField)
@@ -143,6 +145,11 @@ class LoginViewController: UIViewController {
             make.width.equalTo(width)
             make.height.equalTo(height)
         }
+        
+        usernameTextField.snp.makeConstraints { (make) -> Void in
+            make.width.equalTo(width)
+            make.height.equalTo(height)
+        }
 
         passwordTextField.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(width)
@@ -165,16 +172,24 @@ class LoginViewController: UIViewController {
         }
 
         addBottomBorderToView(view: emailTextField, height: height, width: width)
+        addBottomBorderToView(view: usernameTextField, height: height, width: width)
         addBottomBorderToView(view: passwordTextField, height: height, width: width)
         addBottomBorderToView(view: passwordConfirmTextField, height: height, width: width)
         addBottomBorderToView(view: firstNameTextField, height: height, width: width)
         addBottomBorderToView(view: lastNameTextField, height: height, width: width)
 
-        emailTextField.placeholder = L10n.emailAddressPlaceholder
+        emailTextField.placeholder = L10n.usernameOrEmailPlaceholder
         emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
         emailTextField.textColor = Stylesheet.Colors.white
         emailTextField.autocorrectionType = .no
         emailTextField.autocapitalizationType = .none
+        
+        usernameTextField.isHidden = true
+        usernameTextField.placeholder = L10n.usernamePlaceholder
+        usernameTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
+        usernameTextField.textColor = Stylesheet.Colors.white
+        usernameTextField.autocorrectionType = .no
+        usernameTextField.autocapitalizationType = .none
 
         passwordTextField.placeholder = L10n.passwordPlaceholder
         passwordTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
@@ -185,6 +200,7 @@ class LoginViewController: UIViewController {
 
         passwordConfirmTextField.isHidden = true
         passwordConfirmTextField.placeholder = L10n.confirmPasswordPlaceholder
+        passwordConfirmTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
         passwordConfirmTextField.textColor = Stylesheet.Colors.white
         passwordConfirmTextField.autocorrectionType = .no
         passwordConfirmTextField.autocapitalizationType = .none
@@ -192,12 +208,14 @@ class LoginViewController: UIViewController {
 
         firstNameTextField.isHidden = true
         firstNameTextField.placeholder = L10n.firstNamePlaceholder
+        firstNameTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
         firstNameTextField.textColor = Stylesheet.Colors.white
         firstNameTextField.autocorrectionType = .no
         firstNameTextField.autocapitalizationType = .none
 
         lastNameTextField.isHidden = true
         lastNameTextField.placeholder = L10n.lastNamePlaceholder
+        lastNameTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
         lastNameTextField.textColor = Stylesheet.Colors.white
         lastNameTextField.autocorrectionType = .no
         lastNameTextField.autocapitalizationType = .none
@@ -248,11 +266,12 @@ class LoginViewController: UIViewController {
             return
         }
 
-        guard let email = emailTextField.text else { return }
-        guard Helpers.isValidEmailAddress(emailAddressString: email) else {
-            Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.emailWrongFormat)
-            return
-        }
+        guard let usernameOrEmail = emailTextField.text else { return }
+        // @TODO: Maybe add another check here
+//        guard Helpers.isValidEmailAddress(emailAddressString: email) else {
+//            Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.emailWrongFormat)
+//            return
+//        }
 
         guard !passwordTextField.isEmpty else {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.passwordEmpty)
@@ -266,7 +285,7 @@ class LoginViewController: UIViewController {
         }
 
         ProgressIndicator.showBlockingProgress()
-        API.sharedInstance.login(firstName: "", lastName: "", email: email, password: password) { (success) in
+        API.sharedInstance.login(usernameOrEmail: usernameOrEmail, password: password) { (success) in
             ProgressIndicator.hideBlockingProgress()
             if success == false {
                 return
@@ -276,20 +295,44 @@ class LoginViewController: UIViewController {
     }
 
     @objc func cancelButtonPressed() {
-        loginButton.isHidden = false
-        cancelButton.isHidden = true
-        passwordConfirmTextField.isHidden = true
-        firstNameTextField.isHidden = true
-        lastNameTextField.isHidden = true
+        UIView.animate(withDuration: 0.15, animations: {
+            self.loginButton.isHidden = false
+            self.cancelButton.isHidden = true
+            
+            // Set email field back to "username or email"
+            self.emailTextField.placeholder = L10n.usernameOrEmailPlaceholder
+            self.emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.15, animations: {
+                self.usernameTextField.alpha = 0
+                self.passwordConfirmTextField.alpha = 0
+                self.usernameTextField.isHidden = true
+                self.passwordConfirmTextField.isHidden = true
+//            self.firstNameTextField.isHidden = true
+//            self.lastNameTextField.isHidden = true
+            })
+        })
     }
 
     @objc func signUpButtonPressed() {
         if passwordConfirmTextField.isHidden == true {
-            loginButton.isHidden = true
-            cancelButton.isHidden = false
-            passwordConfirmTextField.isHidden = false
-            firstNameTextField.isHidden = false
-            lastNameTextField.isHidden = false
+            UIView.animate(withDuration: 0.15, animations: {
+                self.loginButton.isHidden = true
+                self.cancelButton.isHidden = false
+                
+                // Set email field to just email for signup
+                self.emailTextField.placeholder = L10n.emailAddressPlaceholder
+                self.emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
+            }, completion: { _ in
+                UIView.animate(withDuration: 0.15, animations: {
+                    self.usernameTextField.alpha = 1
+                    self.passwordConfirmTextField.alpha = 1
+                    self.usernameTextField.isHidden = false
+                    self.passwordConfirmTextField.isHidden = false
+//                self.firstNameTextField.isHidden = false
+//                self.lastNameTextField.isHidden = false
+                })
+            })
             return
         }
 
@@ -303,6 +346,18 @@ class LoginViewController: UIViewController {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.emailWrongFormat)
             return
         }
+        
+        guard !usernameTextField.isEmpty else {
+            Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.usernameEmpty)
+            return
+        }
+        
+        guard let username = usernameTextField.text else { return }
+        // @TODO: Maybe add another check here
+//        guard Helpers.isValidEmailAddress(emailAddressString: email) else {
+//            Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.emailWrongFormat)
+//            return
+//        }
 
         guard !passwordTextField.isEmpty else {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.passwordEmpty)
@@ -327,7 +382,7 @@ class LoginViewController: UIViewController {
         }
 
         // API Login Call
-        API.sharedInstance.register(firstName: "", lastName: "", email: email, password: password, completion: { (success) -> Void in
+        API.sharedInstance.register(firstName: "", lastName: "", email: email, username: username, password: password, completion: { (success) -> Void in
             if success == false {
                 return
             }

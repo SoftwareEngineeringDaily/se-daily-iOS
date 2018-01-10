@@ -22,7 +22,9 @@
 "TabTitleGreatestHits" = "Greatest Hits";
 "LoginTitle" = "Login";
 "LogoutTitle" = "Logout";
+"UsernameOrEmailPlaceholder" = "Username or Email";
 "EmailAddressPlaceholder" = "Email";
+"UsernamePlaceholder" = "Username";
 "PasswordPlaceholder" = "Password";
 "ConfirmPasswordPlaceholder" = "Confirm Password";
 "FirstNamePlaceholder" = "First Name";
@@ -31,6 +33,7 @@
 "CancelButtonTitle" = "Cancel";
 "SignUpButtonTitle" = "Sign Up";
 "AlertMessageEmailEmpty" = "Email Field Empty";
+"AlertMessageUsernameEmpty" = "Username Field Empty";
 "AlertMessagePasswordEmpty" = "Password Field Empty";
 "AlertMessagePasswordConfirmEmpty" = "Confirm Password Field Empty";
 "AlertMessageEmailWrongFormat" = "Invalid Email Format";

@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftIcons
+import SwiftyBeaver
 
 protocol HeaderViewDelegate: class {
     func modelDidChange(viewModel: PodcastViewModel)
@@ -23,6 +24,9 @@ class HeaderView: UIView {
 
     let playView = UIView()
     let playButton = UIButton()
+    
+    let shareView = UIView()
+    let shareButtonCtrl = ShareButtonViewController()
 
     let voteView = UIView()
     let stackView = UIStackView()
@@ -81,38 +85,30 @@ class HeaderView: UIView {
     func setupPlayView() {
         self.addSubview(playView)
         playView.backgroundColor = Stylesheet.Colors.white
-
+        playView.addSubview(voteView)
+        voteView.addSubview(stackView)
+        playView.addSubview(playButton)
+        playView.addSubview(shareButtonCtrl.view)
+        
+        // container view for controls.
         playView.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview()
             make.left.right.equalToSuperview()
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 65))
         }
-
-        playView.addSubview(playButton)
-        playButton.setTitle(L10n.play, for: .normal)
-        playButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
-        playButton.addTarget(self, action: #selector(self.playButtonPressed), for: .touchUpInside)
-        playButton.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 4)
-
-        playButton.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
-            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 84))
-            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 42))
-        }
-
-        playView.addSubview(voteView)
+        
+        // vote view.
+        //voteView.backgroundColor = UIColor.orange
         voteView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: (35 * 3)))
             make.height.equalToSuperview()
         }
 
-        voteView.addSubview(stackView)
         stackView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
+        
         stackView.axis = .horizontal
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
@@ -135,6 +131,27 @@ class HeaderView: UIView {
         upVoteButton.setIcon(icon: .fontAwesome(.thumbsUp), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
         upVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
         upVoteButton.addTarget(self, action: #selector(self.upvoteButtonPressed), for: .touchUpInside)
+        
+        // play button.
+        playButton.setTitle(L10n.play, for: .normal)
+        playButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
+        playButton.addTarget(self, action: #selector(self.playButtonPressed), for: .touchUpInside)
+        playButton.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 4)
+        playButton.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.right.equalTo(shareButtonCtrl.view.snp.left).inset(UIView.getValueScaledByScreenWidthFor(baseValue: -15))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 90))
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 42))
+        }
+        
+        // share button.
+        shareButtonCtrl.view.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 90))
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 42))
+        }
+
     }
 
     func setupHeader(model: PodcastViewModel) {
@@ -142,6 +159,7 @@ class HeaderView: UIView {
         self.titleLabel.text = model.podcastTitle
         self.dateLabel.text = model.getLastUpdatedAsDate()?.dateString() ?? ""
         self.scoreLabel.text = model.score.string
+        self.shareButtonCtrl.shareObj = model.postLinkURL
 
         upVoteButton.isSelected = self.model.isUpvoted
         downVoteButton.isSelected = self.model.isDownvoted

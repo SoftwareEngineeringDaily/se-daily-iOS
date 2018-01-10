@@ -45,6 +45,8 @@
 		1E638E561FC794AC00A29BDC /* ProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E638E551FC794AC00A29BDC /* ProgressIndicator.swift */; };
 		238E99F4E37C7365658113B8 /* Pods_SEDaily_IOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C9F051C6C2F8638D2ABF8 /* Pods_SEDaily_IOSTests.framework */; };
 		24412438C753126FDDD37CBF /* Pods_SEDaily_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */; };
+		8F22502A2003440100FDF3F1 /* SharePodcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2250292003440100FDF3F1 /* SharePodcastViewController.swift */; };
+		8F22502C2005B2D100FDF3F1 /* ShareButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F22502B2005B2D100FDF3F1 /* ShareButtonViewController.swift */; };
 		C079B6541FCA07F800B4B304 /* HelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C079B6531FCA07F800B4B304 /* HelpersTests.swift */; };
 		C0E64BB41FCB3F9100753AF0 /* UserModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E64BB31FCB3F9100753AF0 /* UserModelTests.swift */; };
 		C0E64BB71FCB406000753AF0 /* UserDefaultsMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E64BB61FCB406000753AF0 /* UserDefaultsMock.swift */; };
@@ -105,6 +107,8 @@
 		1E44AF081F87B0A700221B22 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1E638E551FC794AC00A29BDC /* ProgressIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicator.swift; sourceTree = "<group>"; };
 		675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.release.xcconfig"; sourceTree = "<group>"; };
+		8F2250292003440100FDF3F1 /* SharePodcastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePodcastViewController.swift; sourceTree = "<group>"; };
+		8F22502B2005B2D100FDF3F1 /* ShareButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareButtonViewController.swift; sourceTree = "<group>"; };
 		995F64385352A79BA0DF7DEB /* Pods-SEDaily-IOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9FDA28C254F62BB468401B75 /* Pods-SEDaily-IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.debug.xcconfig"; sourceTree = "<group>"; };
 		A2EFA433B346D70E958FFC73 /* Pods-SEDaily-IOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -228,7 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				C0E64BB51FCB404B00753AF0 /* Mocks */,
-				1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */,
+				1686FC151F009EC00088A6C1 /* SEDailyIOSTests.swift */,
 				1686FC171F009EC00088A6C1 /* Info.plist */,
 				C079B6531FCA07F800B4B304 /* HelpersTests.swift */,
 				C0E64BB31FCB3F9100753AF0 /* UserModelTests.swift */,
@@ -285,6 +289,8 @@
 				164C71041F021AC8003803BC /* CustomTabViewController.swift */,
 				01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */,
 				1649A7891F204EC6005C4A6E /* ContainerViewController.swift */,
+				8F2250292003440100FDF3F1 /* SharePodcastViewController.swift */,
+				8F22502B2005B2D100FDF3F1 /* ShareButtonViewController.swift */,
 			);
 			name = CommonVCs;
 			sourceTree = "<group>";
@@ -393,7 +399,6 @@
 				TargetAttributes = {
 					1686FBFC1F009EC00088A6C1 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = 6TY8WC8WPP;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -652,6 +657,7 @@
 				164FE9E11F02EE67009419CA /* LoginViewController.swift in Sources */,
 				1649A78A1F204EC6005C4A6E /* ContainerViewController.swift in Sources */,
 				164FE9EF1F03065C009419CA /* NavigationControllerExtension.swift in Sources */,
+				8F22502C2005B2D100FDF3F1 /* ShareButtonViewController.swift in Sources */,
 				165484551F902D3F005AEA23 /* GeneralCollectionViewController.swift in Sources */,
 				1E638E561FC794AC00A29BDC /* ProgressIndicator.swift in Sources */,
 				161F3DE61F61F73D00A8F825 /* SearchTableViewController.swift in Sources */,
@@ -671,6 +677,7 @@
 				166036211F266FF300A22B7B /* Notifications.swift in Sources */,
 				169806A61F8EF3970075D8AD /* L10nEnum.swift in Sources */,
 				01BB1D6D1F29999E004A912E /* PodcastPageViewController.swift in Sources */,
+				8F22502A2003440100FDF3F1 /* SharePodcastViewController.swift in Sources */,
 				162FFD401FBE200E0026288D /* DiskKeys.swift in Sources */,
 				16307FCC1F8FEE3A001783CB /* PodcastViewModelController.swift in Sources */,
 				16AD3E0E1F9B14130084C545 /* PodcastDataSource.swift in Sources */,
@@ -687,11 +694,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1686FC161F009EC00088A6C1 /* SEDaily_IOSTests.swift in Sources */,
+				1686FC161F009EC00088A6C1 /* SEDailyIOSTests.swift in Sources */,
 				C0E64BB41FCB3F9100753AF0 /* UserModelTests.swift in Sources */,
 				C0E64BB71FCB406000753AF0 /* UserDefaultsMock.swift in Sources */,
 				C079B6541FCA07F800B4B304 /* HelpersTests.swift in Sources */,
-
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -856,7 +862,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 13;
-				DEVELOPMENT_TEAM = 6TY8WC8WPP;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "SEDaily-IOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "koala-tea.SEDaily";
@@ -876,7 +882,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 13;
-				DEVELOPMENT_TEAM = 6TY8WC8WPP;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "SEDaily-IOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "koala-tea.SEDaily";

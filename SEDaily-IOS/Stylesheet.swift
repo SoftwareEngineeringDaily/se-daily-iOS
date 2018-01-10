@@ -31,6 +31,8 @@ enum Stylesheet {
 
         static let secondaryColor = UIColor(hex: 0xfc4482)!
         static let bufferColor = UIColor(hex: 0xb6b8b9)!
+        
+        static let shareButtonDefault = UIColor.blue
     }
 
     enum Fonts {

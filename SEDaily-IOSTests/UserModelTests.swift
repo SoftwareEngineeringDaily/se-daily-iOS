@@ -26,7 +26,7 @@ class UserModelTests: QuickSpec {
                 
                 user = User(firstName: "firstName",
                                 lastName: "lastName",
-                                email: "email@email.com",
+                                usernameOrEmail: "email@email.com",
                                 token: "abcdefg")
                 userManager.setCurrentUser(to: user)
             }
@@ -65,7 +65,7 @@ class UserModelTests: QuickSpec {
                 it("changes user if the value passed in is a different user") {
                     let newUser = User(firstName: "firstName",
                                        lastName: "lastName",
-                                       email: "email@email.com",
+                                       usernameOrEmail: "email@email.com",
                                        token: "abcdefg")
                     
                     userManager.setCurrentUser(to: newUser)
@@ -75,13 +75,13 @@ class UserModelTests: QuickSpec {
                 it("doesn't change user if the same user is passed in") {
                     let localUser = User(firstName: "firstName",
                                          lastName: "lastName",
-                                         email: "email@email.com",
+                                         usernameOrEmail: "email@email.com",
                                          token: "abcdefg")
                     
                     userManager.setCurrentUser(to: localUser)
                     let sameUser = User(firstName: "firstName",
                                         lastName: "lastName",
-                                        email: "email@email.com",
+                                        usernameOrEmail: "email@email.com",
                                         token: "abcdefg")
                     
                     userManager.setCurrentUser(to: sameUser)

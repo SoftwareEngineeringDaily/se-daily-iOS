@@ -25,7 +25,6 @@ class HeaderView: UIView {
     let playView = UIView()
     let playButton = UIButton()
     
-    let shareView = UIView()
     let shareButtonCtrl = ShareButtonViewController()
 
     let voteView = UIView()

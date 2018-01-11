@@ -19,7 +19,7 @@ class ShareButtonViewController: UIViewController {
         
         let button = UIButton()
         button.addTarget(self, action: #selector(self.shareButtonPressed), for: .touchUpInside)
-        button.setTitle("Share", for: .normal)
+        button.setTitle(L10n.share, for: .normal)
         button.setBackgroundColor(color: Stylesheet.Colors.shareButtonDefault, forState: .normal)
         button.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 4)
         
@@ -27,7 +27,13 @@ class ShareButtonViewController: UIViewController {
     }
     
     @objc func shareButtonPressed() {
+        
         SwiftyBeaver.info("Share UI Button Pressed")
+        if ( shareObj == nil ) {
+            SwiftyBeaver.warning("shareObj is nil.  taking no action")
+            return
+        }
+        
         let shareUI = SharePodcastViewController(activityItems: [shareObj!], applicationActivities: nil)
         
         shareUI.modalPresentationStyle = .popover

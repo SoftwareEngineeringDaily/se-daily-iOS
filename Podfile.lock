@@ -25,6 +25,7 @@ PODS:
   - SideMenu (3.1.4)
   - Skeleton (0.1.0)
   - SnapKit (4.0.0)
+  - Stripe (11.5.0)
   - SwifterSwift (4.0.1):
     - SwifterSwift/AppKit (= 4.0.1)
     - SwifterSwift/CoreGraphics (= 4.0.1)
@@ -70,6 +71,7 @@ DEPENDENCIES:
   - SideMenu (~> 3.1.4)
   - Skeleton (~> 0.1.0)
   - SnapKit (~> 4.0.0)
+  - Stripe (~> 11.5.0)
   - SwifterSwift (~> 4.0.1)
   - SwiftGen (~> 5.2.1)
   - SwiftIcons (from `https://github.com/themisterholliday/SwiftIcons.git`, branch `swift-4`)
@@ -116,6 +118,7 @@ SPEC CHECKSUMS:
   SideMenu: 99021e70b3f2eee65b5dd88e4274d09031b1221e
   Skeleton: b76249b7d6a73a9913e164c8030647a3e005c700
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  Stripe: 10761682d20dc491c52287393c800db056c9748d
   SwifterSwift: 5f406a5f831343312d6d5b34282b57ef3f52c40b
   SwiftGen: 444b4c467e512a4812b8a800d731643fd265139e
   SwiftIcons: b20641adce6b71fcb2e72389b4b5f2e87252df99
@@ -126,6 +129,6 @@ SPEC CHECKSUMS:
   Tabman: 9f87244fdbbd070fe6a518f445880b2b4a56ea1b
   UIFontComplete: 7e3ce7f0a12d2529fb07f537e262aabfa87df280
 
-PODFILE CHECKSUM: eb8bdd098bac7237fdb364f45b866ba9c75ce2bf
+PODFILE CHECKSUM: 8d8d0c8fd0d2525dd57b832387d3926ffa1b6602
 
 COCOAPODS: 1.3.1

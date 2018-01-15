@@ -22,6 +22,8 @@ import SwiftIcons
 class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 
     var ifset = false
+    
+    var actionSheet = UIAlertController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +43,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     }
 
     func setupNavBar() {
-        let rightBarButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(self.leftBarButtonPressed))
+        let rightBarButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(self.rightBarButtonPressed))
         self.navigationItem.rightBarButtonItem = rightBarButton
 
         switch UserManager.sharedInstance.getActiveUser().isLoggedIn() {
@@ -49,14 +51,26 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
             let leftBarButton = UIBarButtonItem(title: L10n.loginTitle, style: .done, target: self, action: #selector(self.loginButtonPressed))
             self.navigationItem.leftBarButtonItem = leftBarButton
         case true:
-            let leftBarButton = UIBarButtonItem(title: L10n.logoutTitle, style: .done, target: self, action: #selector(self.logoutButtonPressed))
+            let leftBarButton = UIBarButtonItem(title: L10n.logoutTitle, style: .plain, target: self, action: #selector(self.leftBarButtonPressed))
+            
+            // Hacky way to show bars icon
+            let iconSize: CGFloat = 16.0
+            let image = UIImage(bgIcon: .fontAwesome(.bars), bgTextColor: .clear, bgBackgroundColor: .clear, topIcon: .fontAwesome(.bars), topTextColor: .white, bgLarge: false, size: CGSize(width: iconSize, height: iconSize))
+            leftBarButton.image = image
+            leftBarButton.imageInsets = UIEdgeInsets(top: 0, left: -(iconSize / 2), bottom: 0, right: 0)
+
             self.navigationItem.leftBarButtonItem = leftBarButton
         }
     }
 
-    @objc func leftBarButtonPressed() {
+    @objc func rightBarButtonPressed() {
         let vc = SearchTableViewController()
         self.navigationController?.pushViewController(vc)
+    }
+    
+    @objc func leftBarButtonPressed() {
+        self.setupLogoutSubscriptionActionSheet()
+        self.actionSheet.show()
     }
 
     @objc func loginButtonPressed() {
@@ -93,5 +107,33 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
         imageView.contentMode = .scaleAspectFit
         imageView.image = #imageLiteral(resourceName: "Logo_BarButton")
         self.navigationItem.titleView = imageView
+    }
+    
+    func setupLogoutSubscriptionActionSheet() {
+        self.actionSheet = UIAlertController(title: "", message: "Whatcha wanna do?", preferredStyle: .actionSheet)
+        
+        switch UserManager.sharedInstance.getActiveUser().hasPremium {
+        case true:
+            self.actionSheet.addAction(title: "View Subscription", style: .default, isEnabled: true) { _ in
+                // Show view subscription status view
+                let rootVC = SubscriptionStatusViewController()
+                let navVC = UINavigationController(rootViewController: rootVC)
+                self.present(navVC, animated: true, completion: nil)
+            }
+        case false:
+            self.actionSheet.addAction(title: "Purchase Subscription", style: .default, isEnabled: true) { _ in
+                // Show purchase subscription view
+                let rootVC = PurchaseSubscriptionViewController()
+                let navVC = UINavigationController(rootViewController: rootVC)
+                self.present(navVC, animated: true, completion: nil)
+            }
+        }
+        
+        self.actionSheet.addAction(title: "Logout", style: .destructive, isEnabled: true) { _ in
+            self.logoutButtonPressed()
+        }
+        self.actionSheet.addAction(title: "Cancel", style: .cancel, isEnabled: true) { _ in
+            self.actionSheet.dismiss(animated: true, completion: nil)
+        }
     }
 }

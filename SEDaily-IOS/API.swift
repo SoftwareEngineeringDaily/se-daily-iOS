@@ -27,6 +27,7 @@ extension API {
         static let register = "/auth/register"
         static let upvote = "/upvote"
         static let downvote = "/downvote"
+        static let usersMe = "/users/me"
     }
 
     enum Types {
@@ -59,9 +60,9 @@ extension API {
 }
 
 class API {
-//    let rootURL: String = "https://software-enginnering-daily-api.herokuapp.com/api"
-    //@TODO: REMOVE STAGING
-    let rootURL: String = "http://sedaily-backend-staging.herokuapp.com/api"
+//    static let rootURL: String = "https://software-enginnering-daily-api.herokuapp.com/api"
+    // Staging server
+    static let rootURL: String = "http://sedaily-backend-staging.herokuapp.com/api"
 
     static let sharedInstance: API = API()
     private init() {}
@@ -70,7 +71,7 @@ class API {
 extension API {
     // MARK: Auth
     func login(usernameOrEmail: String, password: String, completion: @escaping (_ success: Bool?) -> Void) {
-        let urlString = rootURL + Endpoints.login
+        let urlString = API.rootURL + Endpoints.login
 
         let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded]
         var params = [String: String]()
@@ -100,6 +101,10 @@ extension API {
                     // Clear disk cache
                     PodcastDataSource.clean()
                     NotificationCenter.default.post(name: .loginChanged, object: nil)
+                    
+                    // Check for subscription or other info
+                    self.loadUserInfo()
+                    
                     completion(true)
                 }
             case .failure(let error):
@@ -113,7 +118,7 @@ extension API {
     }
 
     func register(firstName: String, lastName: String, email: String, username: String, password: String, completion: @escaping (_ success: Bool?) -> Void) {
-        let urlString = rootURL + Endpoints.register
+        let urlString = API.rootURL + Endpoints.register
 
         let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded]
         var params = [String: String]()
@@ -156,6 +161,80 @@ extension API {
         }
     }
 
+    func loadUserInfo(completion: ((SubscriptionModel?) -> Void)? = nil) {
+        let urlString = API.rootURL + Endpoints.usersMe
+        
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
+        
+        let _headers: HTTPHeaders = [
+            Headers.contentType: Headers.x_www_form_urlencoded,
+            Headers.authorization: Headers.bearer + userToken
+        ]
+        
+        Alamofire.request(urlString, method: .get, parameters: nil, encoding: URLEncoding.httpBody, headers: _headers)
+            .validate(statusCode: 200..<300)
+            .responseJSON { response in
+                switch response.result {
+                case .success:
+                    guard let jsonResponse = response.result.value as? NSDictionary else {
+                        Tracker.logGeneralError(string: "Error result value is not a NSDictionary")
+                        completion?(nil)
+                        return
+                    }
+                    
+                    if let message = jsonResponse["message"] {
+                        Helpers.alertWithMessage(title: Helpers.Alerts.error, message: String(describing: message), completionHandler: nil)
+                        completion?(nil)
+                        return
+                    }
+
+                    guard let responseData = response.data else {
+                        // Handle error here
+                        log.error("response has no data")
+                        return
+                    }
+
+                    // @TODO: Dictionary for subscription model
+                    if let subscriptionDictionary = jsonResponse["subscription"] as? [String: Any?] {
+                        let modifiedUser = User(firstName: user.firstName,
+                                                lastName: user.lastName,
+                                                usernameOrEmail: user.usernameOrEmail,
+                                                token: user.token,
+                                                hasPremium: true)
+
+                        UserManager.sharedInstance.setCurrentUser(to: modifiedUser)
+                        NotificationCenter.default.post(name: .loginChanged, object: nil)
+                    } else {
+                        let modifiedUser = User(firstName: user.firstName,
+                                                lastName: user.lastName,
+                                                usernameOrEmail: user.usernameOrEmail,
+                                                token: user.token,
+                                                hasPremium: false)
+                        
+                        UserManager.sharedInstance.setCurrentUser(to: modifiedUser)
+                        NotificationCenter.default.post(name: .loginChanged, object: nil)
+                    }
+
+                    let json = JSON(responseData)
+                    let subscriptionJSON = json
+
+                    guard let jsonData = try? subscriptionJSON.rawData() else {
+                        log.error("Error with data")
+                        return
+                    }
+
+                    do {
+                        let newObject = try JSONDecoder().decode(SubscriptionModel.self, from: jsonData)
+                        completion?(newObject)
+                    } catch {
+                        log.error("Can't decode to subscription model")
+                    }
+                case .failure(let error):
+                    log.error(error.localizedDescription)
+                }
+        }
+    }
 }
 
 typealias PodcastModel = Podcast
@@ -166,7 +245,7 @@ extension API {
                       createdAtBefore beforeDate: String = "",
                       onSucces: @escaping ([Podcast]) -> Void,
                       onFailure: @escaping (APIError?) -> Void) {
-        let urlString = rootURL + Endpoints.posts
+        let urlString = API.rootURL + Endpoints.posts
 
         var params = [String: String]()
         params[Params.search] = searchTerm
@@ -227,9 +306,9 @@ extension API {
             type = PodcastTypes.top.rawValue
         }
 
-        var urlString = self.rootURL + API.Endpoints.posts
+        var urlString = API.rootURL + API.Endpoints.posts
         if type == PodcastTypes.recommended.rawValue {
-            urlString = self.rootURL + Endpoints.recommendations
+            urlString = API.rootURL + Endpoints.recommendations
         }
 
         // Params
@@ -281,7 +360,7 @@ extension API {
 // MARK: Voting
 extension API {
     func upvotePodcast(podcastId: String, completion: @escaping (_ success: Bool?, _ active: Bool?) -> Void) {
-        let urlString = rootURL + Endpoints.posts + "/" + podcastId + Endpoints.upvote
+        let urlString = API.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.upvote
 
         let user = UserManager.sharedInstance.getActiveUser()
         let userToken = user.token
@@ -318,7 +397,7 @@ extension API {
     }
 
     func downvotePodcast(podcastId: String, completion: @escaping (_ success: Bool?, _ active: Bool?) -> Void) {
-        let urlString = rootURL + Endpoints.posts + "/" + podcastId + Endpoints.downvote
+        let urlString = API.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.downvote
 
         let user = UserManager.sharedInstance.getActiveUser()
         let userToken = user.token

@@ -24,6 +24,7 @@ target 'SEDaily-IOS' do
   pod 'SideMenu', '~> 3.1.4'
   pod 'Skeleton', '~> 0.1.0'
   pod 'SnapKit', '~> 4.0.0'
+  pod 'Stripe', '~> 11.5.0'
   pod 'SwiftGen', '~> 5.2.1'
   pod 'SwiftIcons', :git => 'https://github.com/themisterholliday/SwiftIcons.git', :branch => 'swift-4'
   pod 'SwiftLint', '~> 0.23.1'

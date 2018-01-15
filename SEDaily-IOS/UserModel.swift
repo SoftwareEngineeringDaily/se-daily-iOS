@@ -53,7 +53,7 @@ extension User: Equatable {
             lhs.usernameOrEmail == rhs.usernameOrEmail &&
             lhs.token == rhs.token &&
             lhs.pushNotificationsSetting == rhs.pushNotificationsSetting &&
-            lhs.deviceToken == rhs.deviceToken
+            lhs.deviceToken == rhs.deviceToken &&
             lhs.hasPremium == rhs.hasPremium
     }
 }

@@ -34,6 +34,8 @@ class PodcastRepository: Repository<Podcast> {
     typealias RepositorySuccessCallback = ([DataModel]) -> Void
     typealias RepositoryErrorCallback = (RepositoryError) -> Void
     typealias DataSource = PodcastDataSource
+    
+    let networkService = API()
 
     // MARK: Getters With Paging
     let tag = "podcasts"
@@ -92,7 +94,7 @@ class PodcastRepository: Repository<Podcast> {
         self.loading = true
 
         // API Call and return
-        API.sharedInstance.getPosts(
+        networkService.getPosts(
             type: filterObject.type,
             createdAtBefore: filterObject.lastDate,
             tags: filterObject.tagsAsString,

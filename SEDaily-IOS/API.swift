@@ -60,14 +60,14 @@ extension API {
 
 class API {
     let rootURL: String = "https://software-enginnering-daily-api.herokuapp.com/api"
+    
+    var networkService: NetworkService?
 
-    static let sharedInstance: API = API()
-    private init() {}
 }
 
 extension API {
     // MARK: Auth
-    func login(usernameOrEmail: String, password: String, completion: @escaping (_ success: Bool?) -> Void) {
+    func login(usernameOrEmail: String, password: String, completion: @escaping (_ success: Bool) -> Void) {
         let urlString = rootURL + Endpoints.login
 
         let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded]
@@ -75,7 +75,7 @@ extension API {
         params[Params.username] = usernameOrEmail
         params[Params.password] = password
 
-        networkRequest(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: _headers) { response in
+        networkRequest(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
                 guard let jsonResponse = response.result.value as? NSDictionary else {
@@ -119,7 +119,7 @@ extension API {
         params[Params.email] = email
         params[Params.password] = password
         
-        networkRequest(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: _headers) { response in
+        networkService?.networkRequest(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
                 guard let jsonResponse = response.result.value as? NSDictionary else {
@@ -176,7 +176,7 @@ extension API {
             Headers.authorization: Headers.bearer + userToken
             ]
 
-        networkRequest(urlString, method: .get, parameters: params, headers: _headers) { response in
+        networkRequest(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
                 guard let responseData = response.data else {
@@ -246,7 +246,7 @@ extension API {
             params[Params.categories] = categories
         }
 
-        networkRequest(urlString, method: .get, parameters: params, headers: _headers) { response in
+        networkRequest(urlString, method: .get, parameters: params, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
                 guard let responseData = response.data else {
@@ -288,7 +288,7 @@ extension API {
             Headers.contentType: Headers.x_www_form_urlencoded
         ]
 
-        networkRequest(urlString, method: .post, parameters: nil, encoding: URLEncoding.httpBody, headers: _headers) { response in
+        networkRequest(urlString, method: .post, parameters: nil, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
                 guard let jsonResponse = response.result.value as? NSDictionary else {
@@ -325,7 +325,7 @@ extension API {
             Headers.contentType: Headers.x_www_form_urlencoded
         ]
 
-        networkRequest(urlString, method: .post, parameters: nil, encoding: URLEncoding.httpBody, headers: _headers) { response in
+        networkRequest(urlString, method: .post, parameters: nil, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
                 guard let jsonResponse = response.result.value as? NSDictionary else {
@@ -353,8 +353,8 @@ extension API {
 }
 
 extension API: NetworkService {
-    func networkRequest(_ urlString: URLConvertible, method: HTTPMethod, parameters: Parameters?, encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders?, responseCallback: @escaping (DataResponse<Any>) -> Void) {
-        Alamofire.request(urlString, method: method, parameters: parameters, encoding: encoding, headers: headers).responseJSON(completionHandler: responseCallback)
+    func networkRequest(_ urlString: URLConvertible, method: HTTPMethod, parameters: Parameters?, encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders?) -> DataRequest {
+        return Alamofire.request(urlString, method: method, parameters: parameters, encoding: encoding, headers: headers)
     }
-    
 }
+

@@ -10,5 +10,11 @@ import Foundation
 import Alamofire
 
 protocol NetworkService {
-    func networkRequest(_ urlString: URLConvertible, method: HTTPMethod, parameters: Parameters?, encoding: ParameterEncoding, headers: HTTPHeaders?, responseCallback: @escaping (DataResponse<Any>) -> Void)
+    func networkRequest(_ urlString: URLConvertible, method: HTTPMethod, parameters: Parameters?, encoding: ParameterEncoding, headers: HTTPHeaders?) -> DataRequest
+}
+
+extension NetworkService {
+    func networkRequest(_ urlString: URLConvertible, method: HTTPMethod, parameters: Parameters?, encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders?) {
+        return networkRequest(urlString, method: method, parameters: parameters, encoding: encoding, headers: headers)
+    }
 }

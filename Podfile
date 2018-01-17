@@ -38,6 +38,7 @@ target 'SEDaily-IOS' do
     inherit! :search_paths
     pod 'Quick'
     pod 'Nimble'
+    pod 'Mockingjay'
   end
 
 end

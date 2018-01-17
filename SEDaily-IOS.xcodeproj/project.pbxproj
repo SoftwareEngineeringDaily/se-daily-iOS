@@ -45,6 +45,9 @@
 		1E638E561FC794AC00A29BDC /* ProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E638E551FC794AC00A29BDC /* ProgressIndicator.swift */; };
 		238E99F4E37C7365658113B8 /* Pods_SEDaily_IOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C9F051C6C2F8638D2ABF8 /* Pods_SEDaily_IOSTests.framework */; };
 		24412438C753126FDDD37CBF /* Pods_SEDaily_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */; };
+		C04C37FD200E94AE00C6EFC6 /* login_success.json in Resources */ = {isa = PBXBuildFile; fileRef = C04C37FC200E94AE00C6EFC6 /* login_success.json */; };
+		C04C3800200EA6F400C6EFC6 /* login_wrongpass.json in Resources */ = {isa = PBXBuildFile; fileRef = C04C37FF200EA6F400C6EFC6 /* login_wrongpass.json */; };
+		C04C3802200EA99200C6EFC6 /* login_nonexistinguser.json in Resources */ = {isa = PBXBuildFile; fileRef = C04C3801200EA99200C6EFC6 /* login_nonexistinguser.json */; };
 		C0590D78200AC2A500A00E4D /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0590D77200AC2A500A00E4D /* NetworkService.swift */; };
 		C0590D7A200AD36500A00E4D /* APITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0590D79200AD36400A00E4D /* APITests.swift */; };
 		C079B6541FCA07F800B4B304 /* HelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C079B6531FCA07F800B4B304 /* HelpersTests.swift */; };
@@ -111,6 +114,9 @@
 		9FDA28C254F62BB468401B75 /* Pods-SEDaily-IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.debug.xcconfig"; sourceTree = "<group>"; };
 		A2EFA433B346D70E958FFC73 /* Pods-SEDaily-IOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SEDaily_IOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C04C37FC200E94AE00C6EFC6 /* login_success.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = login_success.json; sourceTree = "<group>"; };
+		C04C37FF200EA6F400C6EFC6 /* login_wrongpass.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = login_wrongpass.json; sourceTree = "<group>"; };
+		C04C3801200EA99200C6EFC6 /* login_nonexistinguser.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = login_nonexistinguser.json; sourceTree = "<group>"; };
 		C0590D77200AC2A500A00E4D /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		C0590D79200AD36400A00E4D /* APITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITests.swift; sourceTree = "<group>"; };
 		C079B6531FCA07F800B4B304 /* HelpersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpersTests.swift; sourceTree = "<group>"; };
@@ -323,9 +329,28 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		C04C37FB200E948F00C6EFC6 /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				C04C37FE200EA5D000C6EFC6 /* login */,
+			);
+			path = Responses;
+			sourceTree = "<group>";
+		};
+		C04C37FE200EA5D000C6EFC6 /* login */ = {
+			isa = PBXGroup;
+			children = (
+				C04C37FC200E94AE00C6EFC6 /* login_success.json */,
+				C04C37FF200EA6F400C6EFC6 /* login_wrongpass.json */,
+				C04C3801200EA99200C6EFC6 /* login_nonexistinguser.json */,
+			);
+			path = login;
+			sourceTree = "<group>";
+		};
 		C0E64BB51FCB404B00753AF0 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				C04C37FB200E948F00C6EFC6 /* Responses */,
 				C0E64BB61FCB406000753AF0 /* UserDefaultsMock.swift */,
 			);
 			path = Mocks;
@@ -453,6 +478,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C04C3802200EA99200C6EFC6 /* login_nonexistinguser.json in Resources */,
+				C04C3800200EA6F400C6EFC6 /* login_wrongpass.json in Resources */,
+				C04C37FD200E94AE00C6EFC6 /* login_success.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,13 +553,17 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Mockingjay/Mockingjay.framework",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
 				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
+				"${BUILT_PRODUCTS_DIR}/URITemplate/URITemplate.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mockingjay.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/URITemplate.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

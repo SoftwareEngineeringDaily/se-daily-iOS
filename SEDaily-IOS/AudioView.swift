@@ -78,6 +78,8 @@ public protocol AudioViewDelegate: NSObjectProtocol {
 }
 
 class AudioView: UIView {
+    static var userSettingPlaybackSpeedKey = "PlaybackSpeed";
+
     open weak var delegate: AudioViewDelegate?
 
     var activityView: UIActivityIndicatorView!
@@ -107,6 +109,7 @@ class AudioView: UIView {
             guard currentSpeed != newValue else { return }
             self.playbackSpeedButton.setTitle(newValue.shortTitle, for: .normal)
             self.delegate?.audioRateChanged(newRate: newValue.rawValue)
+            UserDefaults.standard.set(newValue.rawValue, forKey: AudioView.userSettingPlaybackSpeedKey)
         }
     }
 

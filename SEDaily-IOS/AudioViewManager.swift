@@ -180,7 +180,12 @@ class AudioViewManager: NSObject {
 extension AudioViewManager: AssetPlayerDelegate {
     func currentAssetDidChange(_ player: AssetPlayer) {
         log.debug("asset did change")
-        audioView?.currentSpeed = ._1x
+        if let playbackSpeedValue = UserDefaults.standard.object(forKey: AudioView.userSettingPlaybackSpeedKey) as? Float,
+            let playbackSpeed = PlaybackSpeed(rawValue: playbackSpeedValue) {
+            audioView?.currentSpeed = playbackSpeed
+        } else {
+            audioView?.currentSpeed = ._1x
+        }
     }
 
     func playerIsSetup(_ player: AssetPlayer) {

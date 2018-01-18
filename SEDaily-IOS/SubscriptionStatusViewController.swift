@@ -30,17 +30,18 @@ class SubscriptionStatusViewController: UIViewController {
         self.view.addSubview(yearlyContainerView)
 
         let typeLabel = UILabel(leftInset: 0, topInset: 30, width: 335, height: 40)
-        typeLabel.text = "Your "
-        let fontSize = UIView.getValueScaledByScreenWidthFor(baseValue: 22)
-        typeLabel.font = UIFont.systemFont(ofSize: fontSize)
-//        typeLabel.textColor = Stylesheet.Colors.base
         typeLabel.textAlignment = .center
-
         yearlyContainerView.addSubview(typeLabel)
+
+        let startDateLeftInset = typeLabel.frame.minX
+        let startDateTopInset = typeLabel.frame.maxY
+        let startDateLabel = UILabel(leftInset: startDateLeftInset, topInset: startDateTopInset, width: 335, height: 40)
+        startDateLabel.textAlignment = .center
+        yearlyContainerView.addSubview(startDateLabel)
 
         let selectButton = UIButton(leftInset: 0, topInset: 0, width: 220, height: 40)
         let leftInset = yearlyContainerView.center.x - 20 - (selectButton.width / 2)
-        let topInset = typeLabel.frame.maxY + UIView.getValueScaledByScreenHeightFor(baseValue: 15)
+        let topInset = startDateLabel.frame.maxY + UIView.getValueScaledByScreenHeightFor(baseValue: 15)
         selectButton.x = leftInset
         selectButton.y = topInset
         selectButton.setTitle("Cancel Subscription", for: .normal)
@@ -56,21 +57,18 @@ class SubscriptionStatusViewController: UIViewController {
                 return
             }
 
+            let fontSize = UIView.getValueScaledByScreenWidthFor(baseValue: 22)
+
             let attributedText = NSMutableAttributedString(string: "Your plan: ", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: fontSize)])
             let attributedText2 = NSMutableAttributedString(string: subscriptionModel.getPlanFrequency(), attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: fontSize)])
             attributedText.append(attributedText2)
             typeLabel.attributedText = attributedText
-        }
 
-//        attributedText.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.blue, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Bold", size: 15)!], range: getRangeOfSubString(subString: "BLUE", fromString: normalString)) // Blue color attribute
-//
-//        attributedText.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.red, NSAttributedStringKey.font: UIFont(name: "Baskerville-BoldItalic", size: 27)!], range: getRangeOfSubString(subString: "RED", fromString: normalString)) // RED color attribute
-//
-//        attributedText.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.green, NSAttributedStringKey.font: UIFont(name: "Chalkduster", size: 19)!], range: getRangeOfSubString(subString: "GREEN", fromString: normalString)) // GREEN color attribute
-//
-//        attributedText.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.purple, NSAttributedStringKey.font: UIFont(name: "DINCondensed-Bold", size: 13)!], range: getRangeOfSubString(subString: "PURPLE", fromString: normalString)) // PURPLE color attribute
-//
-//        attributedText.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.yellow, NSAttributedStringKey.font: UIFont(name: "Futura-CondensedExtraBold", size: 24)!], range: getRangeOfSubString(subString: "YELLOW", fromString: normalString)) // YELLOW color attribute
+            let startDateAttrText1 = NSMutableAttributedString(string: "Start Date: ", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: fontSize)])
+            let startDateAttrText2 = NSMutableAttributedString(string: subscriptionModel.getCreatedAtDate()!.dateString(), attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: fontSize)])
+            startDateAttrText1.append(startDateAttrText2)
+            startDateLabel.attributedText = startDateAttrText1
+        }
     }
 
     override func didReceiveMemoryWarning() {

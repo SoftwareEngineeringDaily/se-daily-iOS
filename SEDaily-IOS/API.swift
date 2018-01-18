@@ -60,9 +60,9 @@ extension API {
 }
 
 class API {
-//    static let rootURL: String = "https://software-enginnering-daily-api.herokuapp.com/api"
+    static let rootURL: String = "https://software-enginnering-daily-api.herokuapp.com/api"
     // Staging server
-    static let rootURL: String = "http://sedaily-backend-staging.herokuapp.com/api"
+//    static let rootURL: String = "http://sedaily-backend-staging.herokuapp.com/api"
 
     static let sharedInstance: API = API()
     private init() {}

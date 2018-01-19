@@ -11,6 +11,7 @@ import SwiftIcons
 
 protocol HeaderViewDelegate: class {
     func modelDidChange(viewModel: PodcastViewModel)
+    func reTweetsButtonPressed()
 }
 
 class HeaderView: UIView {
@@ -23,7 +24,11 @@ class HeaderView: UIView {
 
     let playView = UIView()
     let playButton = UIButton()
-
+    
+    // Related Links
+    let relatedLinksButton = UIButton()
+    
+    //
     let voteView = UIView()
     let stackView = UIStackView()
     let upVoteButton = UIButton()
@@ -87,7 +92,26 @@ class HeaderView: UIView {
             make.left.right.equalToSuperview()
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 65))
         }
-
+        
+        /*
+        // Related links
+        playView.addSubview(relatedLinksButton)
+        relatedLinksButton.setTitle("RL", for: .normal)
+     
+        relatedLinksButton.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 84))
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 42))
+        }
+        
+        relatedLinksButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
+        relatedLinksButton.addTarget(self, action: #selector(self.playButtonPressed), for: .touchUpInside)
+        relatedLinksButton.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 4)
+        // Related links -------------------
+        */
+        
+        // Play button ----------------------
         playView.addSubview(playButton)
         playButton.setTitle(L10n.play, for: .normal)
         playButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
@@ -100,7 +124,9 @@ class HeaderView: UIView {
             make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 84))
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 42))
         }
-
+ 
+        // play button end-----------------------
+        
         playView.addSubview(voteView)
         voteView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
@@ -136,7 +162,8 @@ class HeaderView: UIView {
         upVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
         upVoteButton.addTarget(self, action: #selector(self.upvoteButtonPressed), for: .touchUpInside)
     }
-
+    
+    
     func setupHeader(model: PodcastViewModel) {
         self.model = model
         self.titleLabel.text = model.podcastTitle
@@ -153,6 +180,8 @@ extension HeaderView {
     @objc func playButtonPressed() {
         //@TODO: Switch button and/or stop if playing
 
+//        self.delegate?.reTweetsButtonPressed()
+        
         // Podcast model checks here
         AudioViewManager.shared.setupManager(podcastModel: model)
     }

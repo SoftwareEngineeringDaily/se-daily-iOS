@@ -47,7 +47,13 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
         webView.scrollView.addSubview(headerView)
     }
 
+    func reTweetsButtonPressed() {
+        let vc = RelatedLinksViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     private func removePowerPressPlayerTags(html: String) -> String {
+        // We shouldn't need this anymore, we now have a cleanContent field on the server
         var modifiedHtml = html
         let powerPressPlayerRange = modifiedHtml.range(of: "<!--powerpress_player-->")
         modifiedHtml.removeSubrange(powerPressPlayerRange!)

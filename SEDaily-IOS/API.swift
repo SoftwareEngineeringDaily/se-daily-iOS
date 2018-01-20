@@ -61,8 +61,6 @@ extension API {
 class API {
     let rootURL: String = "https://software-enginnering-daily-api.herokuapp.com/api"
     
-    var networkService: NetworkService?
-
 }
 
 extension API {
@@ -246,7 +244,7 @@ extension API {
             params[Params.categories] = categories
         }
 
-        networkRequest(urlString, method: .get, parameters: params, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
+        networkRequest(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
                 guard let responseData = response.data else {

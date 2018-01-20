@@ -1,0 +1,11 @@
+{
+    "user": {
+        "__v": 0,
+        "username": "testuser@test.com",
+        "password": "$2a$08$PmyX0n5VMY8zVte7.dDGMOdSIP1oU7FfBWN9uCukjp1.V4ryFqtmW",
+        "_id": "5a60ff9de29fa3002a639e5a",
+        "createdAt": "2018-01-18T20:12:13.358Z",
+        "verified": false
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfX3YiOjAsInVzZXJuYW1lIjoiYmVya3Rlc3QxMTExMUB0ZXN0LmNvbSIsInBhc3N3b3JkIjoiJDJhJDA4JFBteVgwbjVWTVk4elZ0ZTcuZERHTU9kU0lQMW9VN0ZmQldOOXVDdWtqcDEuVjRyeUZxdG1XIiwiX2lkIjoiNWE2MGZmOWRlMjlmYTMwMDJhNjM5ZTVhIiwiY3JlYXRlZEF0IjoiMjAxOC0wMS0xOFQyMDoxMjoxMy4zNThaIiwidmVyaWZpZWQiOmZhbHNlLCJpYXQiOjE1MTYzMDYzMzMsImV4cCI6MTY2MDMwNjMzM30.uk4ixawSQ11vcS2Cvw3MoxlTvwNlCBnu8MUzE9QgqQM"
+}

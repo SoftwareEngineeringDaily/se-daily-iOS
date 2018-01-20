@@ -60,14 +60,14 @@ extension API {
 
 class API {
     let rootURL: String = "https://software-enginnering-daily-api.herokuapp.com/api"
+    
+    var networkService: NetworkService?
 
-    static let sharedInstance: API = API()
-    private init() {}
 }
 
 extension API {
     // MARK: Auth
-    func login(usernameOrEmail: String, password: String, completion: @escaping (_ success: Bool?) -> Void) {
+    func login(usernameOrEmail: String, password: String, completion: @escaping (_ success: Bool) -> Void) {
         let urlString = rootURL + Endpoints.login
 
         let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded]
@@ -75,7 +75,7 @@ extension API {
         params[Params.username] = usernameOrEmail
         params[Params.password] = password
 
-        Alamofire.request(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
+        networkRequest(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
                 guard let jsonResponse = response.result.value as? NSDictionary else {
@@ -112,14 +112,14 @@ extension API {
 
     func register(firstName: String, lastName: String, email: String, username: String, password: String, completion: @escaping (_ success: Bool?) -> Void) {
         let urlString = rootURL + Endpoints.register
-
+        
         let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded]
         var params = [String: String]()
         params[Params.username] = username
         params[Params.email] = email
         params[Params.password] = password
-
-        Alamofire.request(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
+        
+        networkRequest(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
                 guard let jsonResponse = response.result.value as? NSDictionary else {
@@ -162,7 +162,7 @@ typealias PodcastModel = Podcast
 extension API {
     func getPostsWith(searchTerm: String,
                       createdAtBefore beforeDate: String = "",
-                      onSucces: @escaping ([Podcast]) -> Void,
+                      onSuccess: @escaping ([Podcast]) -> Void,
                       onFailure: @escaping (APIError?) -> Void) {
         let urlString = rootURL + Endpoints.posts
 
@@ -176,7 +176,7 @@ extension API {
             Headers.authorization: Headers.bearer + userToken
             ]
 
-        Alamofire.request(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
+        networkRequest(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
                 guard let responseData = response.data else {
@@ -195,7 +195,7 @@ extension API {
                         data.append(newObject)
                     }
                 }
-                onSucces(data)
+                onSuccess(data)
             case .failure(let error):
                 log.error(error.localizedDescription)
                 Tracker.logGeneralError(error: error)
@@ -211,7 +211,7 @@ extension API {
                   createdAtBefore beforeDate: String = "",
                   tags: String = "-1",
                   categories: String = "",
-                  onSucces: @escaping ([Podcast]) -> Void,
+                  onSuccess: @escaping ([Podcast]) -> Void,
                   onFailure: @escaping (APIError?) -> Void) {
         var type = type
 
@@ -246,7 +246,7 @@ extension API {
             params[Params.categories] = categories
         }
 
-        Alamofire.request(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
+        networkRequest(urlString, method: .get, parameters: params, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
                 guard let responseData = response.data else {
@@ -266,7 +266,7 @@ extension API {
                         data.append(newObject)
                     }
                 }
-                onSucces(data)
+                onSuccess(data)
             case .failure(let error):
                 log.error(error.localizedDescription)
                 Tracker.logGeneralError(error: error)
@@ -288,7 +288,7 @@ extension API {
             Headers.contentType: Headers.x_www_form_urlencoded
         ]
 
-        Alamofire.request(urlString, method: .post, parameters: nil, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
+        networkRequest(urlString, method: .post, parameters: nil, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
                 guard let jsonResponse = response.result.value as? NSDictionary else {
@@ -325,7 +325,7 @@ extension API {
             Headers.contentType: Headers.x_www_form_urlencoded
         ]
 
-        Alamofire.request(urlString, method: .post, parameters: nil, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
+        networkRequest(urlString, method: .post, parameters: nil, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
                 guard let jsonResponse = response.result.value as? NSDictionary else {
@@ -351,3 +351,10 @@ extension API {
         }
     }
 }
+
+extension API: NetworkService {
+    func networkRequest(_ urlString: URLConvertible, method: HTTPMethod, parameters: Parameters?, encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders?) -> DataRequest {
+        return Alamofire.request(urlString, method: method, parameters: parameters, encoding: encoding, headers: headers)
+    }
+}
+

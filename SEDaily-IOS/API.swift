@@ -119,7 +119,7 @@ extension API {
         params[Params.email] = email
         params[Params.password] = password
         
-        networkService?.networkRequest(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
+        networkRequest(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
                 guard let jsonResponse = response.result.value as? NSDictionary else {
@@ -162,7 +162,7 @@ typealias PodcastModel = Podcast
 extension API {
     func getPostsWith(searchTerm: String,
                       createdAtBefore beforeDate: String = "",
-                      onSucces: @escaping ([Podcast]) -> Void,
+                      onSuccess: @escaping ([Podcast]) -> Void,
                       onFailure: @escaping (APIError?) -> Void) {
         let urlString = rootURL + Endpoints.posts
 
@@ -195,7 +195,7 @@ extension API {
                         data.append(newObject)
                     }
                 }
-                onSucces(data)
+                onSuccess(data)
             case .failure(let error):
                 log.error(error.localizedDescription)
                 Tracker.logGeneralError(error: error)
@@ -211,7 +211,7 @@ extension API {
                   createdAtBefore beforeDate: String = "",
                   tags: String = "-1",
                   categories: String = "",
-                  onSucces: @escaping ([Podcast]) -> Void,
+                  onSuccess: @escaping ([Podcast]) -> Void,
                   onFailure: @escaping (APIError?) -> Void) {
         var type = type
 
@@ -266,7 +266,7 @@ extension API {
                         data.append(newObject)
                     }
                 }
-                onSucces(data)
+                onSuccess(data)
             case .failure(let error):
                 log.error(error.localizedDescription)
                 Tracker.logGeneralError(error: error)

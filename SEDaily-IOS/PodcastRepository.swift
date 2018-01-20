@@ -99,7 +99,7 @@ class PodcastRepository: Repository<Podcast> {
             createdAtBefore: filterObject.lastDate,
             tags: filterObject.tagsAsString,
             categories: filterObject.categoriesAsString,
-            onSucces: { (podcasts) in
+            onSuccess: { (podcasts) in
                 self.loading = false
                 if self.returnedDataEqualLastData(returnedData: podcasts) {
                     onFailure(.ReturnedDataEqualsLastData)

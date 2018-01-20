@@ -111,7 +111,7 @@ public class PodcastViewModelController {
         networkService.getPostsWith(
             searchTerm: searchTerm,
             createdAtBefore: beforeDate,
-            onSucces: { (podcasts) in
+            onSuccess: { (podcasts) in
                 let newViewModels: [ViewModel?] = podcasts.map { model in
                     return ViewModel(podcast: model)
                 }

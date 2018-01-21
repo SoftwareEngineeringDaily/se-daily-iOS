@@ -250,5 +250,6 @@ extension AudioViewManager: AudioViewDelegate {
     func audioRateChanged(newRate: Float) {
         // Change audio player speed
         assetPlaybackManager?.changePlayerPlaybackRate(to: newRate)
+        UserDefaults.standard.set(newRate, forKey: AudioView.userSettingPlaybackSpeedKey)
     }
 }

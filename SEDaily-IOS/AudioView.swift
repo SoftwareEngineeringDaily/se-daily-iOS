@@ -109,7 +109,6 @@ class AudioView: UIView {
             guard currentSpeed != newValue else { return }
             self.playbackSpeedButton.setTitle(newValue.shortTitle, for: .normal)
             self.delegate?.audioRateChanged(newRate: newValue.rawValue)
-            UserDefaults.standard.set(newValue.rawValue, forKey: AudioView.userSettingPlaybackSpeedKey)
         }
     }
 

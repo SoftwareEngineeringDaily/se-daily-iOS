@@ -1,17 +1,20 @@
 PODS:
-  - ActiveLabel (0.7.1)
+  - ActiveLabel (0.8.1)
   - Alamofire (4.5.1)
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
-  - Disk (0.3.1)
+  - Disk (0.3.3)
   - Eureka (4.0.1)
   - Fabric (1.7.2)
-  - IQKeyboardManagerSwift (5.0.5)
+  - IQKeyboardManagerSwift (5.0.7)
   - Kingfisher (4.2.0)
   - KoalaTeaFlowLayout (0.3.1)
-  - KoalaTeaPlayer (0.1.7)
-  - KTResponsiveUI (0.2.4):
+  - KoalaTeaPlayer (0.2.7):
+    - KTResponsiveUI
+    - SnapKit
+    - SwifterSwift
     - SwiftIcons
+  - KTResponsiveUI (0.2.6)
   - MBProgressHUD (1.1.0)
   - Mockingjay (2.0.1):
     - Mockingjay/Core (= 2.0.1)
@@ -21,7 +24,7 @@ PODS:
   - Mockingjay/XCTest (2.0.1):
     - Mockingjay/Core
   - Nimble (7.0.3)
-  - Pageboy (2.0.2)
+  - Pageboy (2.0.4)
   - PureLayout (3.0.2)
   - Quick (1.2.0)
   - Reusable (4.0.0):
@@ -29,8 +32,8 @@ PODS:
     - Reusable/View (= 4.0.0)
   - Reusable/Storyboard (4.0.0)
   - Reusable/View (4.0.0)
-  - SideMenu (3.1.4)
-  - Skeleton (0.1.0)
+  - SideMenu (3.1.5)
+  - Skeleton (0.1.2)
   - SnapKit (4.0.0)
   - SwifterSwift (4.0.1):
     - SwifterSwift/AppKit (= 4.0.1)
@@ -49,11 +52,11 @@ PODS:
   - SwiftIcons (1.5.1)
   - SwiftLint (0.23.1)
   - SwiftSoup (1.5.8)
-  - SwiftyBeaver (1.4.2)
+  - SwiftyBeaver (1.4.4)
   - SwiftyJSON (3.1.4)
-  - Tabman (1.0.5):
-    - Pageboy (~> 2.0.0)
-    - PureLayout (~> 3.0.0)
+  - Tabman (1.0.8):
+    - Pageboy (~> 2.0)
+    - PureLayout (~> 3.0)
   - UIFontComplete (2.0.1)
   - URITemplate (2.0.3)
 
@@ -67,7 +70,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift (~> 5.0.5)
   - Kingfisher (~> 4.2.0)
   - KoalaTeaFlowLayout (~> 0.3.1)
-  - KoalaTeaPlayer (~> 0.1.7)
+  - KoalaTeaPlayer (~> 0.2.7)
   - KTResponsiveUI (~> 0.2.4)
   - MBProgressHUD (~> 1.1.0)
   - Mockingjay
@@ -98,45 +101,45 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   ActiveLabel:
-    :commit: 3f869d1245e3663379d92a2b918f0af7aec9cf89
+    :commit: 2f4b1dd809d7c40df72c949fface1ee2426e412d
     :git: https://github.com/optonaut/ActiveLabel.swift.git
   SwiftIcons:
     :commit: 56e9cf1019b01a4a9a2f22a78e84618f4ea094aa
     :git: https://github.com/themisterholliday/SwiftIcons.git
 
 SPEC CHECKSUMS:
-  ActiveLabel: faa96b5f50507770536a3e48a4cf291ee88fb7db
+  ActiveLabel: 2fc3cdffed0dcdaad82d50af46233b9ef2f401e4
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
-  Disk: 64f0f95a4163314aba6f09f010f17de964762140
+  Disk: d1f55cd61f6ca20f368232d0c6e37e3c3dfcb63e
   Eureka: c8bd5cc07143b6f66268c208d28a246c99b41955
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
-  IQKeyboardManagerSwift: ee393093cfb41069a72584a8f599ba5519a7febe
+  IQKeyboardManagerSwift: 30fb3a61de1af53a95e02b80fb54ed0a19d5ede5
   Kingfisher: 9ee7e788d8ba07c3f21ce0d43f33cec310a4f781
   KoalaTeaFlowLayout: 219c45709d0873d405b2de1b27080a9c411246b7
-  KoalaTeaPlayer: 52b9f24cf3730099164e06767e5d480b0532064e
-  KTResponsiveUI: 34a7f474fe9fcb8d99597b162b4ad5ca5d56342b
+  KoalaTeaPlayer: 6f9df0f08113765d5195c0e447b1a64966dc1507
+  KTResponsiveUI: c8a75fe5270e05749a5ca8d20ab008a285b5e260
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   Mockingjay: 11a621880d2887f1775bdcf824341eb68f218450
   Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
-  Pageboy: d5b9fe9a59202674c44111e513e67ccc680e18b7
+  Pageboy: 5970f6138b035380fd633b1813b7cc056784b784
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   Reusable: 98e5fff1e0e2e00872199699b276dde08ee56c07
-  SideMenu: 99021e70b3f2eee65b5dd88e4274d09031b1221e
-  Skeleton: b76249b7d6a73a9913e164c8030647a3e005c700
+  SideMenu: 47dbf9e4d878062d8994aed43f6e4bf6c1fea30b
+  Skeleton: 0d2941ce8d24f60a7e85ee39e55203256300b538
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SwifterSwift: 5f406a5f831343312d6d5b34282b57ef3f52c40b
   SwiftGen: 444b4c467e512a4812b8a800d731643fd265139e
   SwiftIcons: b20641adce6b71fcb2e72389b4b5f2e87252df99
   SwiftLint: 1b670ce79284c76520f84060e87d645078fd32fa
   SwiftSoup: 86a1f5ad07b7e3d14ab1a9324a58c75ae2215e79
-  SwiftyBeaver: 91057725648ee4980308f1650af077d04b3654a0
+  SwiftyBeaver: 25bd76281f49ca989ec2e3cbde9af89c15bc1432
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
-  Tabman: 9f87244fdbbd070fe6a518f445880b2b4a56ea1b
+  Tabman: 9f9a25595516c7dffb747be271ec8a0a5ac2341e
   UIFontComplete: 7e3ce7f0a12d2529fb07f537e262aabfa87df280
   URITemplate: ace0c4c46dcf8afe6e89b4060621852886b15c3b
 
-PODFILE CHECKSUM: c92ee2c11d8462c86d2f419554f12a03243e8746
+PODFILE CHECKSUM: 573b0b9295f64d9b8e7f120ff51012d5ed7135df
 
 COCOAPODS: 1.3.1

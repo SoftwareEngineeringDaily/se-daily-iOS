@@ -15,7 +15,7 @@ import KTResponsiveUI
 import KoalaTeaPlayer
 
 class AudioViewManager: NSObject {
-
+    static var userSettingPlaybackSpeedKey = "PlaybackSpeed";
     static let shared: AudioViewManager = AudioViewManager()
     private override init() {}
 
@@ -180,7 +180,13 @@ class AudioViewManager: NSObject {
 extension AudioViewManager: AssetPlayerDelegate {
     func currentAssetDidChange(_ player: AssetPlayer) {
         log.debug("asset did change")
-        audioView?.currentSpeed = ._1x
+        if let playbackSpeedValue = UserDefaults.standard.object(forKey: AudioViewManager.userSettingPlaybackSpeedKey) as? Float,
+            let playbackSpeed = PlaybackSpeed(rawValue: playbackSpeedValue) {
+            audioView?.currentSpeed = playbackSpeed
+            audioRateChanged(newRate: playbackSpeedValue)
+        } else {
+            audioView?.currentSpeed = ._1x
+        }
     }
 
     func playerIsSetup(_ player: AssetPlayer) {
@@ -245,5 +251,6 @@ extension AudioViewManager: AudioViewDelegate {
     func audioRateChanged(newRate: Float) {
         // Change audio player speed
         assetPlaybackManager?.changePlayerPlaybackRate(to: newRate)
+        UserDefaults.standard.set(newRate, forKey: AudioViewManager.userSettingPlaybackSpeedKey)
     }
 }

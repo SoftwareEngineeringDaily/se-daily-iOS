@@ -78,8 +78,6 @@ public protocol AudioViewDelegate: NSObjectProtocol {
 }
 
 class AudioView: UIView {
-    static var userSettingPlaybackSpeedKey = "PlaybackSpeed";
-
     open weak var delegate: AudioViewDelegate?
 
     var activityView: UIActivityIndicatorView!

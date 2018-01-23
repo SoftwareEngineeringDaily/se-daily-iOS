@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="TestHookBoolCellId" selectionStyle="default" indentationWidth="10" reuseIdentifier="TestHookBoolCellId" rowHeight="83" id="35z-71-BdB" customClass="TestHookBoolTableViewCell" customModule="SEDaily_IOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TestHookBoolCellId" rowHeight="83" id="35z-71-BdB" customClass="TestHookBoolTableViewCell" customModule="SEDaily_IOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="83"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="35z-71-BdB" id="wKn-Ye-6BL">
@@ -55,7 +55,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="boolSwitch" destination="eWN-zn-31A" id="XUu-bz-l2s"/>
+                                            <outlet property="boolSwitch" destination="eWN-zn-31A" id="btq-1x-Xa4"/>
                                             <outlet property="title" destination="89v-oM-W9w" id="Bq6-0a-8pu"/>
                                         </connections>
                                     </tableViewCell>

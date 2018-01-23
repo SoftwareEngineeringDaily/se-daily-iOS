@@ -41,19 +41,19 @@
 		16D766BA1F06B4850066C143 /* AudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D766B91F06B4850066C143 /* AudioView.swift */; };
 		16F3A1BA1F90918D00364709 /* PodcastRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F3A1B91F90918D00364709 /* PodcastRepository.swift */; };
 		16FA84031F8D323700A45D9B /* SkeletonCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FA84021F8D323700A45D9B /* SkeletonCollectionView.swift */; };
-		1E286DE11FE4C5AB00644C1D /* TestHookBoolTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E286DE01FE4C5AB00644C1D /* TestHookBoolTableViewCell.swift */; };
 		1E286DE31FE4C5BA00644C1D /* TestHookEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E286DE21FE4C5BA00644C1D /* TestHookEventTableViewCell.swift */; };
 		1E286DE51FE4C63200644C1D /* TestHookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E286DE41FE4C63200644C1D /* TestHookManager.swift */; };
 		1E286DE71FE4C64800644C1D /* TestHookBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E286DE61FE4C64800644C1D /* TestHookBool.swift */; };
 		1E286DE91FE4C65200644C1D /* TestHookEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E286DE81FE4C65200644C1D /* TestHookEvent.swift */; };
+		1E2BFDCD2017C74A00E6DE0A /* TestHookBoolTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2BFDCC2017C74A00E6DE0A /* TestHookBoolTableViewCell.swift */; };
 		1E44AF031F87B08D00221B22 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1E44AF051F87B08D00221B22 /* Localizable.strings */; };
+		1E638E561FC794AC00A29BDC /* ProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E638E551FC794AC00A29BDC /* ProgressIndicator.swift */; };
 		1E706BD21FD620B100D44AB2 /* BookmarkCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E706BD11FD620B100D44AB2 /* BookmarkCollectionViewController.swift */; };
 		1E706BD41FD62E0300D44AB2 /* BookmarkViewModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E706BD31FD62E0300D44AB2 /* BookmarkViewModelController.swift */; };
 		1EABD8F41FB430AB00959859 /* Debug.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EABD8F11FB430AA00959859 /* Debug.storyboard */; };
 		1EABD8F51FB430AB00959859 /* DebugTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EABD8F21FB430AA00959859 /* DebugTabViewController.swift */; };
 		1EABD8F61FB430AB00959859 /* TestHook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EABD8F31FB430AA00959859 /* TestHook.swift */; };
 		1EB74FFC1FE5E1AF004B733E /* StateBookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB74FFB1FE5E1AF004B733E /* StateBookmarkView.swift */; };
-		1E638E561FC794AC00A29BDC /* ProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E638E551FC794AC00A29BDC /* ProgressIndicator.swift */; };
 		238E99F4E37C7365658113B8 /* Pods_SEDaily_IOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C9F051C6C2F8638D2ABF8 /* Pods_SEDaily_IOSTests.framework */; };
 		24412438C753126FDDD37CBF /* Pods_SEDaily_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */; };
 		C079B6541FCA07F800B4B304 /* HelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C079B6531FCA07F800B4B304 /* HelpersTests.swift */; };
@@ -110,22 +110,22 @@
 		16D766B91F06B4850066C143 /* AudioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioView.swift; sourceTree = "<group>"; };
 		16F3A1B91F90918D00364709 /* PodcastRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastRepository.swift; sourceTree = "<group>"; };
 		16FA84021F8D323700A45D9B /* SkeletonCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonCollectionView.swift; sourceTree = "<group>"; };
-		1E286DE01FE4C5AB00644C1D /* TestHookBoolTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHookBoolTableViewCell.swift; sourceTree = "<group>"; };
 		1E286DE21FE4C5BA00644C1D /* TestHookEventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHookEventTableViewCell.swift; sourceTree = "<group>"; };
 		1E286DE41FE4C63200644C1D /* TestHookManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHookManager.swift; sourceTree = "<group>"; };
 		1E286DE61FE4C64800644C1D /* TestHookBool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHookBool.swift; sourceTree = "<group>"; };
 		1E286DE81FE4C65200644C1D /* TestHookEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHookEvent.swift; sourceTree = "<group>"; };
+		1E2BFDCC2017C74A00E6DE0A /* TestHookBoolTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHookBoolTableViewCell.swift; sourceTree = "<group>"; };
 		1E44AEFF1F87ACF500221B22 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		1E44AF001F87ACF500221B22 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		1E44AF061F87B09100221B22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1E44AF081F87B0A700221B22 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		1E706BD11FD620B100D44AB2 /* BookmarkCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCollectionViewController.swift; sourceTree = "<group>"; };
-		1E706BD31FD62E0300D44AB2 /* BookmarkViewModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewModelController.swift; sourceTree = "<group>"; };
+		1E638E551FC794AC00A29BDC /* ProgressIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicator.swift; sourceTree = "<group>"; };
+		1E706BD11FD620B100D44AB2 /* BookmarkCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BookmarkCollectionViewController.swift; path = Bookmark/BookmarkCollectionViewController.swift; sourceTree = "<group>"; };
+		1E706BD31FD62E0300D44AB2 /* BookmarkViewModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BookmarkViewModelController.swift; path = Bookmark/BookmarkViewModelController.swift; sourceTree = "<group>"; };
 		1EABD8F11FB430AA00959859 /* Debug.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Debug.storyboard; sourceTree = "<group>"; };
 		1EABD8F21FB430AA00959859 /* DebugTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugTabViewController.swift; sourceTree = "<group>"; };
 		1EABD8F31FB430AA00959859 /* TestHook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHook.swift; sourceTree = "<group>"; };
-		1EB74FFB1FE5E1AF004B733E /* StateBookmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateBookmarkView.swift; sourceTree = "<group>"; };
-		1E638E551FC794AC00A29BDC /* ProgressIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicator.swift; sourceTree = "<group>"; };
+		1EB74FFB1FE5E1AF004B733E /* StateBookmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StateBookmarkView.swift; path = Bookmark/StateBookmarkView.swift; sourceTree = "<group>"; };
 		675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.release.xcconfig"; sourceTree = "<group>"; };
 		995F64385352A79BA0DF7DEB /* Pods-SEDaily-IOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9FDA28C254F62BB468401B75 /* Pods-SEDaily-IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -166,7 +166,6 @@
 				16F3A1B91F90918D00364709 /* PodcastRepository.swift */,
 				16AD3E091F9B138D0084C545 /* PodcastViewModel.swift */,
 				16307FCB1F8FEE3A001783CB /* PodcastViewModelController.swift */,
-				1E706BD31FD62E0300D44AB2 /* BookmarkViewModelController.swift */,
 			);
 			name = PodcastModels;
 			sourceTree = "<group>";
@@ -174,10 +173,8 @@
 		164FE9DF1F02EE4E009419CA /* Podcasts */ = {
 			isa = PBXGroup;
 			children = (
-				1E706BD11FD620B100D44AB2 /* BookmarkCollectionViewController.swift */,
 				165484541F902D3F005AEA23 /* GeneralCollectionViewController.swift */,
 				16FA84021F8D323700A45D9B /* SkeletonCollectionView.swift */,
-				1EB74FFB1FE5E1AF004B733E /* StateBookmarkView.swift */,
 				16AD3E001F9A975F0084C545 /* PodcastDetail */,
 				16307FC81F8FDCE4001783CB /* PodcastModels */,
 			);
@@ -230,12 +227,12 @@
 		1686FBFF1F009EC00088A6C1 /* SEDaily-IOS */ = {
 			isa = PBXGroup;
 			children = (
-				1686FC0C1F009EC00088A6C1 /* Info.plist */,
 				164FE9E41F02EE83009419CA /* API.swift */,
 				1686FC001F009EC00088A6C1 /* AppDelegate.swift */,
 				1686FC071F009EC00088A6C1 /* Assets.xcassets */,
 				16AD3E011F9B06480084C545 /* Audio */,
 				16AD3E071F9B07520084C545 /* Auth */,
+				1E2BFDCE2017D91200E6DE0A /* Bookmark */,
 				16AD3E051F9B07160084C545 /* CommonCells */,
 				164FE9E21F02EE71009419CA /* CommonModels */,
 				16AD3E061F9B07320084C545 /* CommonVCs */,
@@ -243,6 +240,7 @@
 				16AD3E081F9B07A70084C545 /* Core */,
 				1EABD8F01FB430AA00959859 /* Debug */,
 				164FE9E31F02EE77009419CA /* Helpers */,
+				1686FC0C1F009EC00088A6C1 /* Info.plist */,
 				1E44AF051F87B08D00221B22 /* Localizable.strings */,
 				164FE9DF1F02EE4E009419CA /* Podcasts */,
 				16AD3E031F9B06950084C545 /* Search */,
@@ -254,7 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				C0E64BB51FCB404B00753AF0 /* Mocks */,
-				1686FC151F009EC00088A6C1 /* SEDaily_IOSTests.swift */,
+				1686FC151F009EC00088A6C1 /* SEDailyIOSTests.swift */,
 				1686FC171F009EC00088A6C1 /* Info.plist */,
 				C079B6531FCA07F800B4B304 /* HelpersTests.swift */,
 				C0E64BB31FCB3F9100753AF0 /* UserModelTests.swift */,
@@ -332,14 +330,24 @@
 			name = Core;
 			sourceTree = "<group>";
 		};
+		1E2BFDCE2017D91200E6DE0A /* Bookmark */ = {
+			isa = PBXGroup;
+			children = (
+				1E706BD11FD620B100D44AB2 /* BookmarkCollectionViewController.swift */,
+				1EB74FFB1FE5E1AF004B733E /* StateBookmarkView.swift */,
+				1E706BD31FD62E0300D44AB2 /* BookmarkViewModelController.swift */,
+			);
+			name = Bookmark;
+			sourceTree = "<group>";
+		};
 		1EABD8F01FB430AA00959859 /* Debug */ = {
 			isa = PBXGroup;
 			children = (
 				1EABD8F11FB430AA00959859 /* Debug.storyboard */,
 				1EABD8F21FB430AA00959859 /* DebugTabViewController.swift */,
+				1E2BFDCC2017C74A00E6DE0A /* TestHookBoolTableViewCell.swift */,
 				1EABD8F31FB430AA00959859 /* TestHook.swift */,
 				1E286DE61FE4C64800644C1D /* TestHookBool.swift */,
-				1E286DE01FE4C5AB00644C1D /* TestHookBoolTableViewCell.swift */,
 				1E286DE81FE4C65200644C1D /* TestHookEvent.swift */,
 				1E286DE21FE4C5BA00644C1D /* TestHookEventTableViewCell.swift */,
 				1E286DE41FE4C63200644C1D /* TestHookManager.swift */,
@@ -699,6 +707,7 @@
 				165484551F902D3F005AEA23 /* GeneralCollectionViewController.swift in Sources */,
 				1E638E561FC794AC00A29BDC /* ProgressIndicator.swift in Sources */,
 				161F3DE61F61F73D00A8F825 /* SearchTableViewController.swift in Sources */,
+				1E2BFDCD2017C74A00E6DE0A /* TestHookBoolTableViewCell.swift in Sources */,
 				167AFAB71F043F1100A1332F /* HeaderView.swift in Sources */,
 				16D67C4A1F33AC620065E838 /* AnswersTracker.swift in Sources */,
 				164FE9E51F02EE83009419CA /* API.swift in Sources */,
@@ -718,7 +727,6 @@
 				166036211F266FF300A22B7B /* Notifications.swift in Sources */,
 				169806A61F8EF3970075D8AD /* L10nEnum.swift in Sources */,
 				01BB1D6D1F29999E004A912E /* PodcastPageViewController.swift in Sources */,
-				16CE69911F9807CF0057BAC3 /* PodcastDescriptionView.swift in Sources */,
 				162FFD401FBE200E0026288D /* DiskKeys.swift in Sources */,
 				16307FCC1F8FEE3A001783CB /* PodcastViewModelController.swift in Sources */,
 				16AD3E0E1F9B14130084C545 /* PodcastDataSource.swift in Sources */,
@@ -741,11 +749,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1686FC161F009EC00088A6C1 /* SEDaily_IOSTests.swift in Sources */,
+				1686FC161F009EC00088A6C1 /* SEDailyIOSTests.swift in Sources */,
 				C0E64BB41FCB3F9100753AF0 /* UserModelTests.swift in Sources */,
 				C0E64BB71FCB406000753AF0 /* UserDefaultsMock.swift in Sources */,
 				C079B6541FCA07F800B4B304 /* HelpersTests.swift in Sources */,
-
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -183,6 +183,7 @@ extension AudioViewManager: AssetPlayerDelegate {
         if let playbackSpeedValue = UserDefaults.standard.object(forKey: AudioView.userSettingPlaybackSpeedKey) as? Float,
             let playbackSpeed = PlaybackSpeed(rawValue: playbackSpeedValue) {
             audioView?.currentSpeed = playbackSpeed
+            audioRateChanged(newRate: playbackSpeedValue)
         } else {
             audioView?.currentSpeed = ._1x
         }

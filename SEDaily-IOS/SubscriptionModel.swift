@@ -23,7 +23,7 @@ public struct SubscriptionModel: Codable {
 
 extension SubscriptionModel {
     func getCreatedAtDate() -> Date? {
-        let date = Date(iso8601String: self.createdAt)
+        let date = Date(iso8601String: self.subscription.dateCreated)
         return date
     }
 

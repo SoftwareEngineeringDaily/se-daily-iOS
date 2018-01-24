@@ -34,7 +34,7 @@ class StateBookmarkView: UIView {
 
         if showRefreshButton {
             self.refreshButton = UIButton()
-            self.refreshButton.setTitle("Tap to refresh", for: .normal)
+            self.refreshButton.setTitle(L10n.tapToRefresh, for: .normal)
             self.refreshButton.setTitleColor(UIColor.init(hex: 0x007AFF), for: .normal)
             self.refreshButton.addTarget(self, action: #selector(self.refreshPressed), for: .touchUpInside)
             self.stackView.addArrangedSubview(self.refreshButton)

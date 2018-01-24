@@ -97,6 +97,8 @@ enum L10n {
   static let tabTitleOpenSource = L10n.tr("Localizable", "TabTitleOpenSource")
   /// Security
   static let tabTitleSecurity = L10n.tr("Localizable", "TabTitleSecurity")
+  /// Tap to refresh
+  static let tapToRefresh = L10n.tr("Localizable", "TapToRefresh")
   /// Username or Email
   static let usernameOrEmailPlaceholder = L10n.tr("Localizable", "UsernameOrEmailPlaceholder")
   /// Username

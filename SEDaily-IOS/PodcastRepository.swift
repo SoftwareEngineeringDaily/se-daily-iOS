@@ -25,7 +25,7 @@ public class Repository<T>: NSObject, RepositoryProtocol {
 
 enum RepositoryError: Error {
     case ErrorGettingFromAPI
-    case ErrorGettingFromRealm
+    case ErrorGettingFromDisk
     case ReturnedDataEqualsLastData
     case ReturnedDataIsZero
 }
@@ -34,43 +34,89 @@ class PodcastRepository: Repository<Podcast> {
     typealias RepositorySuccessCallback = ([DataModel]) -> Void
     typealias RepositoryErrorCallback = (RepositoryError) -> Void
     typealias DataSource = PodcastDataSource
-
-    // MARK: Getters With Paging
     let tag = "podcasts"
-
     var loading = false
 
-    func getData(page: Int = 0,
-                 filterObject: FilterObject,
-                 onSucces: @escaping RepositorySuccessCallback,
-                 onFailure: @escaping RepositoryErrorCallback) {
-        self.retrieveDataFromRealmOrAPI(filterObject: filterObject, onSucces: { (returnedData) in
-            onSucces(returnedData)
-        },
-        onFailure: { (error) in
-            self.clearLoadedToday()
-            onFailure(error)
-        })
+    /// Retrieves the cached bookmark data from disk
+    ///
+    /// - Parameters:
+    ///   - onSuccess: Success callback
+    ///   - onFailure: Failure callback
+    func retrieveCachedBookmarkData(
+        onSuccess: @escaping RepositorySuccessCallback,
+        onFailure: @escaping RepositoryErrorCallback) {
+        DataSource.getAllBookmarks(diskKey: .podcastFolder) { diskData in
+            guard let data = diskData else {
+                onFailure(.ErrorGettingFromDisk)
+                return
+            }
+            onSuccess(data)
+        }
+    }
+
+    /// Retrieves bookmark data by making a network call
+    ///
+    /// - Parameters:
+    ///   - onSuccess: Success callback
+    ///   - onFailure: Failure callback
+    func retrieveNetworkBookmarkData(
+        onSuccess: @escaping RepositorySuccessCallback,
+        onFailure: @escaping RepositoryErrorCallback) {
+        API.sharedInstance.podcastBookmarks { (success, results) in
+            if success == true {
+                guard let podcasts = results else {
+                    onFailure(.ErrorGettingFromAPI)
+                    return
+                }
+                DataSource.insert(diskKey: .podcastFolder, items: podcasts)
+                onSuccess(podcasts)
+            } else {
+                onFailure(.ErrorGettingFromAPI)
+            }
+        }
+    }
+
+    func getData(
+        diskKey: DiskKeys,
+        filterObject: FilterObject?,
+        onSuccess: @escaping RepositorySuccessCallback,
+        onFailure: @escaping RepositoryErrorCallback) {
+
+        switch diskKey {
+        case .podcastFolder:
+            self.retrievePodcastData(
+                filterObject: filterObject,
+                onSuccess: { (returnedData) in
+                    onSuccess(returnedData) },
+                onFailure: { (error) in
+                    PodcastRepository.clearLoadedToday()
+                    onFailure(error) })
+        }
     }
 
     // MARK: Disk and API data getter
-    private func retrieveDataFromRealmOrAPI(filterObject: FilterObject,
-                                            onSucces: @escaping RepositorySuccessCallback,
-                                            onFailure: @escaping RepositoryErrorCallback) {
+    private func retrievePodcastData(
+        filterObject: FilterObject?,
+        onSuccess: @escaping RepositorySuccessCallback,
+        onFailure: @escaping RepositoryErrorCallback) {
+
+        guard let filterObject = filterObject else {
+            onFailure(.ErrorGettingFromDisk)
+            return
+        }
+
         // Check if we made requests today
-//        let alreadLoadedStartToday = self.checkAlreadyLoadedNewToday(filterObject: filterObject)
-        
-        //@TODO: Add caching back in at a later date
-        let alreadLoadedStartToday = false
+        let alreadLoadedStartToday = PodcastRepository.checkAlreadyLoadedNewToday(filterObject: filterObject)
+
         //@TODO: Fix this special case for recommneded. We can't load from disk here because we are display top podcasts when a user is not logged in
         if alreadLoadedStartToday && filterObject.type != PodcastTypes.recommended.rawValue {
             self.loading = true
             log.warning("from disk")
             // Check if we have realm data saved
-            DataSource.getAllWith(filterObject: filterObject, completion: { (returnedData) in
+            DataSource.getAllWith(diskKey: .podcastFolder, filterObject: filterObject, completion: { (returnedData) in
                 guard let data = returnedData, !data.isEmpty else {
                     self.loading = false
-                    onFailure(.ErrorGettingFromRealm)
+                    onFailure(.ErrorGettingFromDisk)
                     return
                 }
                 //@TODO: check how to clear this or remove completely
@@ -80,10 +126,10 @@ class PodcastRepository: Repository<Podcast> {
                     return
                 }
 
-                self.setLoadedNewToday(filterObject: filterObject)
+                PodcastRepository.setLoadedNewToday(filterObject: filterObject)
                 self.lastReturnedDataArray = data
                 self.loading = false
-                onSucces(data)
+                onSuccess(data)
             })
             return
         }
@@ -97,16 +143,16 @@ class PodcastRepository: Repository<Podcast> {
             createdAtBefore: filterObject.lastDate,
             tags: filterObject.tagsAsString,
             categories: filterObject.categoriesAsString,
-            onSucces: { (podcasts) in
+            onSuccess: { (podcasts) in
                 self.loading = false
                 if self.returnedDataEqualLastData(returnedData: podcasts) {
                     onFailure(.ReturnedDataEqualsLastData)
                     return
                 }
-                DataSource.insert(items: podcasts)
-                self.setLoadedNewToday(filterObject: filterObject)
+                DataSource.insert(diskKey: .podcastFolder, items: podcasts)
+                PodcastRepository.setLoadedNewToday(filterObject: filterObject)
                 self.lastReturnedDataArray = podcasts
-                onSucces(podcasts) },
+                onSuccess(podcasts) },
             onFailure: { _ in
                 self.loading = false
                 onFailure(.ErrorGettingFromAPI)
@@ -114,7 +160,7 @@ class PodcastRepository: Repository<Podcast> {
     }
 
     // MARK: Already loaded today checks
-    func checkAlreadyLoadedNewToday(filterObject: FilterObject) -> Bool {
+    static func checkAlreadyLoadedNewToday(filterObject: FilterObject) -> Bool {
         let key = "\(APICheckDates.newFeedLastCheck)-\(filterObject.nsDictionary)"
 
         let defaults = UserDefaults.standard
@@ -130,14 +176,14 @@ class PodcastRepository: Repository<Podcast> {
         return false
     }
 
-    func setLoadedNewToday (filterObject: FilterObject) {
+    static func setLoadedNewToday (filterObject: FilterObject) {
         let todayString = Date().iso8601String
         let key = "\(APICheckDates.newFeedLastCheck)-\(filterObject.nsDictionary)"
         let defaults = UserDefaults.standard
         defaults.set(todayString, forKey: key)
     }
 
-    func clearLoadedToday() {
+    static func clearLoadedToday() {
         let defaults = UserDefaults.standard
         let keys = defaults.dictionaryRepresentation()
         for key in keys {
@@ -156,7 +202,7 @@ class PodcastRepository: Repository<Podcast> {
 }
 
 extension PodcastRepository {
-    func updateDataSource(with item: DataModel) {
-        DataSource.update(item: item)
+    func updateDataSource(diskKey: DiskKeys, item: DataModel) {
+        DataSource.update(diskKey: diskKey, item: item)
     }
 }

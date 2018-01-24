@@ -37,6 +37,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     }
 
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         setupNavBar()
     }
 
@@ -80,8 +81,18 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
         self.viewControllers = [
             PodcastPageViewController(),
             GeneralCollectionViewController(collectionViewLayout: layout, type: .recommended),
-            GeneralCollectionViewController(collectionViewLayout: layout, type: .top)
+            GeneralCollectionViewController(collectionViewLayout: layout, type: .top),
+            BookmarkCollectionViewController(collectionViewLayout: layout)
         ]
+
+        #if DEBUG
+            let debugStoryboard = UIStoryboard.init(name: "Debug", bundle: nil)
+            let debugViewController = debugStoryboard.instantiateViewController(
+                withIdentifier: "DebugTabViewController")
+            if let viewControllers = self.viewControllers {
+                self.viewControllers =  viewControllers + [debugViewController]
+            }
+        #endif
 
         self.tabBar.backgroundColor = .white
         self.tabBar.isTranslucent = false

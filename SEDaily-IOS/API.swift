@@ -6,6 +6,7 @@
 //  Copyright © 2017 Koala Tea. All rights reserved.
 //
 
+import SwiftyBeaver
 import UIKit
 import Alamofire
 import SwiftyJSON

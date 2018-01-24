@@ -66,6 +66,7 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
             action: #selector(pullToRefresh(_:)),
             for: .valueChanged)
         self.collectionView?.refreshControl = refreshControl
+
     }
 
     @objc private func pullToRefresh(_ sender: Any) {

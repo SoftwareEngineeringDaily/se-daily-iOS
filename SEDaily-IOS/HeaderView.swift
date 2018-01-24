@@ -28,7 +28,6 @@ class HeaderView: UIView {
     let stackView = UIStackView()
     let upVoteButton = UIButton()
     let downVoteButton = UIButton()
-    let bookmarkButton = UIButton()
     let scoreLabel = UILabel()
 
     override init(frame: CGRect) {
@@ -121,7 +120,6 @@ class HeaderView: UIView {
         stackView.addArrangedSubview(downVoteButton)
         stackView.addArrangedSubview(scoreLabel)
         stackView.addArrangedSubview(upVoteButton)
-        stackView.addArrangedSubview(bookmarkButton)
 
         scoreLabel.textAlignment = .center
         scoreLabel.baselineAdjustment = .alignCenters
@@ -137,11 +135,6 @@ class HeaderView: UIView {
         upVoteButton.setIcon(icon: .fontAwesome(.thumbsUp), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
         upVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
         upVoteButton.addTarget(self, action: #selector(self.upvoteButtonPressed), for: .touchUpInside)
-
-        bookmarkButton.setIcon(icon: .fontAwesome(.bookmarkO), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
-        bookmarkButton.setIcon(icon: .fontAwesome(.bookmark), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
-        bookmarkButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
-        bookmarkButton.addTarget(self, action: #selector(self.bookmarkButtonPressed), for: .touchUpInside)
     }
 
     func setupHeader(model: PodcastViewModel) {
@@ -152,7 +145,7 @@ class HeaderView: UIView {
 
         upVoteButton.isSelected = self.model.isUpvoted
         downVoteButton.isSelected = self.model.isDownvoted
-        bookmarkButton.isSelected = self.model.isBookmarked
+
         self.scoreLabel.text = String(self.model.score)
     }
 }
@@ -206,30 +199,6 @@ extension HeaderView {
         })
     }
 
-    @objc func bookmarkButtonPressed() {
-        guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
-            Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
-            return
-        }
-
-        self.setBookmarked(!self.bookmarkButton.isSelected)
-
-        let podcastId = model._id
-        API.sharedInstance.setBookmarkPodcast(value: self.bookmarkButton.isSelected, podcastId: podcastId, completion: { (success, active) in
-            guard success != nil else { return }
-            if success == true {
-                guard let active = active else { return }
-                self.updateBookmarked(active: active)
-            }
-        })
-    }
-
-    func updateBookmarked(active: Bool) {
-        self.setBookmarked(active)
-        self.model.isBookmarked = active
-        self.delegate?.modelDidChange(viewModel: self.model)
-    }
-
     func addScore(active: Bool) {
         self.setUpvoteTo(active)
         guard active != false else {
@@ -260,11 +229,6 @@ extension HeaderView {
     func setDownvoteTo(_ bool: Bool) {
         self.model.isDownvoted = bool
         self.downVoteButton.isSelected = bool
-    }
-
-    func setBookmarked(_ bool: Bool) {
-        self.model.isBookmarked = bool
-        self.bookmarkButton.isSelected = bool
     }
 
     func setScoreTo(_ score: Int) {

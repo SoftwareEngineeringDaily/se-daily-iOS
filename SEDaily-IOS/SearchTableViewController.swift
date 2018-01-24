@@ -67,10 +67,12 @@ class SearchTableViewController: UITableViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.searchController.searchBar.isHidden = false
     }
 
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         self.searchController.searchBar.isHidden = true
     }
 
@@ -136,7 +138,7 @@ extension SearchTableViewController {
             searchTerm: self.searchText.lowercased(),
             createdAtBefore: lastIdentifier,
             firstSearch: firstSearch,
-            onSucces: {
+            onSuccess: {
                 self.loading = false
                 self.lastLoadedPage = nextPage
                 DispatchQueue.main.async {

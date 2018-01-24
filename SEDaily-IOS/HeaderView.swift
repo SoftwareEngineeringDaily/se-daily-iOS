@@ -107,7 +107,7 @@ class HeaderView: UIView {
         voteView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: (35 * 3)))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: (35 * 4)))
             make.height.equalToSuperview()
         }
 
@@ -148,6 +148,7 @@ class HeaderView: UIView {
         upVoteButton.isSelected = self.podcastViewModel.isUpvoted
         downVoteButton.isSelected = self.podcastViewModel.isDownvoted
         self.scoreLabel.text = String(self.podcastViewModel.score)
+
     }
 }
 

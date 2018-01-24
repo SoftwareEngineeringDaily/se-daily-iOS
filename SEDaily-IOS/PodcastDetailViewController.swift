@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import SwiftIcons
 
 protocol PodcastDetailViewControllerDelegate: class {
     func modelDidChange(viewModel: PodcastViewModel)
@@ -16,7 +17,11 @@ protocol PodcastDetailViewControllerDelegate: class {
 class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
 
     weak var delegate: PodcastDetailViewControllerDelegate?
-  
+
+    private var bookmarkButton: UIButton?
+    
+    let networkService: API = API()
+
     var model = PodcastViewModel()
 
     lazy var scrollView: UIScrollView = {
@@ -45,6 +50,62 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
         webView.loadHTMLString(htmlString, baseURL: nil)
 
         webView.scrollView.addSubview(headerView)
+
+        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 25)
+        self.bookmarkButton = UIButton()
+        self.bookmarkButton?.addTarget(self, action: #selector(self.bookmarkButtonPressed), for: .touchUpInside)
+        self.bookmarkButton?.setIcon(
+            icon: .fontAwesome(.bookmarkO),
+            iconSize: iconSize,
+            color: Stylesheet.Colors.white,
+            forState: .normal)
+        self.bookmarkButton?.setIcon(
+            icon: .fontAwesome(.bookmark),
+            iconSize: iconSize,
+            color: Stylesheet.Colors.white,
+            forState: .selected)
+        self.bookmarkButton?.isSelected = self.model.isBookmarked
+        if let bookmarkButton = self.bookmarkButton {
+            let bookmarkBarButtonItem = UIBarButtonItem(customView: bookmarkButton)
+            self.navigationItem.rightBarButtonItem = bookmarkBarButtonItem
+        }
+    }
+
+    @objc private func bookmarkButtonPressed() {
+        guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
+            Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
+            return
+        }
+
+        guard let bookmarkButton = self.bookmarkButton else {
+            log.error("There is no bookmark button")
+            return
+        }
+
+        bookmarkButton.isSelected = !bookmarkButton.isSelected
+
+        let podcastId = model._id
+        networkService.setBookmarkPodcast(
+            value: bookmarkButton.isSelected,
+            podcastId: podcastId,
+            completion: { (success, active) in
+            guard success != nil else { return }
+            if success == true {
+                guard let active = active else { return }
+                self.updateBookmarked(active: active)
+            }
+        })
+    }
+
+    private func updateBookmarked(active: Bool) {
+        self.setBookmarked(active)
+        self.model.isBookmarked = active
+        self.delegate?.modelDidChange(viewModel: self.model)
+    }
+
+    private func setBookmarked(_ bool: Bool) {
+        self.model.isBookmarked = bool
+        self.bookmarkButton?.isSelected = bool
     }
 
     private func removePowerPressPlayerTags(html: String) -> String {

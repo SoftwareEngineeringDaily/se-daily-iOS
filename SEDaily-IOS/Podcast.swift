@@ -75,6 +75,7 @@ public struct Podcast: Codable {
     var type: String? = "new"
     var upvoted: Bool?
     var downvoted: Bool?
+    var bookmarked: Bool?
 }
 
 extension Podcast {
@@ -103,6 +104,7 @@ extension Podcast {
         self.score = viewModel.score
         self.upvoted = viewModel.isUpvoted
         self.downvoted = viewModel.isDownvoted
+        self.bookmarked = viewModel.isBookmarked
     }
 }
 

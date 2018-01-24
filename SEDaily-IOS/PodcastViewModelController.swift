@@ -45,32 +45,32 @@ public class PodcastViewModelController {
         guard let modelsIndex = index else { return }
         self.viewModels.remove(at: modelsIndex)
         self.viewModels.insert(podcast, at: modelsIndex)
-        
+
         // Tell repository to update Datasource
-        self.repository.updateDataSource(with: podcast.baseModelRepresentation)
+        self.repository.updateDataSource(diskKey: .podcastFolder, item: podcast.baseModelRepresentation)
     }
 
     func fetchData(type: String = "",
                    createdAtBefore beforeDate: String = "",
                    tags: [Int] = [],
                    categories: [Int] = [],
-                   page: Int = 0,
                    clearData: Bool = false,
-                   onSucces: @escaping SuccessCallback,
+                   onSuccess: @escaping SuccessCallback,
                    onFailure: @escaping ErrorCallback) {
         if clearData {
             self.clearViewModels()
         }
         let filterObject = FilterObject(type: type, tags: tags, lastDate: beforeDate, categories: categories)
         repository.getData(
+            diskKey: .podcastFolder,
             filterObject: filterObject,
-            onSucces: { (podcasts) in
+            onSuccess: { (podcasts) in
                 let newViewModels: [ViewModel?] = podcasts.map { model in
                     return ViewModel(podcast: model)
                 }
                 guard !self.viewModels.isEmpty else {
                     self.viewModels.append(contentsOf: newViewModels)
-                    onSucces()
+                    onSuccess()
                     return
                 }
 
@@ -90,12 +90,12 @@ public class PodcastViewModelController {
                 }
 
                 self.viewModels.append(contentsOf: filteredArray)
-                onSucces() },
+                onSuccess() },
             onFailure: { (error) in
                 // If there is no data, clear loaded today and clear last returned data
                 if self.viewModelsCount == 0 {
                     self.repository.lastReturnedDataArray.removeAll()
-                    self.repository.clearLoadedToday()
+                    PodcastRepository.clearLoadedToday()
                 }
                 onFailure(error) })
     }
@@ -103,7 +103,7 @@ public class PodcastViewModelController {
     func fetchSearchData(searchTerm: String,
                          createdAtBefore beforeDate: String = "",
                          firstSearch: Bool,
-                         onSucces: @escaping SuccessCallback,
+                         onSuccess: @escaping SuccessCallback,
                          onFailure: @escaping (APIError?) -> Void) {
         if firstSearch {
             self.clearViewModels()
@@ -118,7 +118,7 @@ public class PodcastViewModelController {
 
                 guard !self.viewModels.isEmpty else {
                     self.viewModels.append(contentsOf: newViewModels)
-                    onSucces()
+                    onSuccess()
                     return
                 }
 
@@ -138,7 +138,7 @@ public class PodcastViewModelController {
                 }
 
                 self.viewModels.append(contentsOf: filteredArray)
-                onSucces() },
+                onSuccess() },
             onFailure: { (apiError) in
                 //@TODO: handle error
                 log.error(apiError?.localizedDescription ?? "")

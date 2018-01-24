@@ -9,7 +9,7 @@
 import Foundation
 
 enum DiskKeys: String {
-    case PodcastFolder = "Podcasts"
+    case podcastFolder = "Podcasts"
 
     var folderPath: String {
         return self.rawValue + "/" + self.rawValue + ".json"

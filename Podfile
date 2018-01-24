@@ -24,6 +24,7 @@ target 'SEDaily-IOS' do
   pod 'SideMenu', '~> 3.1.4'
   pod 'Skeleton', '~> 0.1.0'
   pod 'SnapKit', '~> 4.0.0'
+  pod 'StatefulViewController', '~> 3.0'
   pod 'SwiftGen', '~> 5.2.1'
   pod 'SwiftIcons', :git => 'https://github.com/themisterholliday/SwiftIcons.git', :branch => 'swift-4'
   pod 'SwiftLint', '~> 0.23.1'
@@ -33,7 +34,7 @@ target 'SEDaily-IOS' do
   pod 'SwiftyJSON', '~> 3.1.4'
   pod 'Tabman', '~> 1.0.5'
   pod 'UIFontComplete', '~> 2.0.1'
-  
+
   target 'SEDaily-IOSTests' do
     inherit! :search_paths
     pod 'Quick'

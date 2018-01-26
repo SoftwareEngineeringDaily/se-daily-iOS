@@ -34,6 +34,10 @@ class PodcastRepository: Repository<Podcast> {
     typealias RepositorySuccessCallback = ([DataModel]) -> Void
     typealias RepositoryErrorCallback = (RepositoryError) -> Void
     typealias DataSource = PodcastDataSource
+
+    let networkService = API()
+
+    // MARK: Getters With Paging
     let tag = "podcasts"
     var loading = false
 
@@ -62,7 +66,7 @@ class PodcastRepository: Repository<Podcast> {
     func retrieveNetworkBookmarkData(
         onSuccess: @escaping RepositorySuccessCallback,
         onFailure: @escaping RepositoryErrorCallback) {
-        API.sharedInstance.podcastBookmarks { (success, results) in
+        networkService.podcastBookmarks { (success, results) in
             if success == true {
                 guard let podcasts = results else {
                     onFailure(.ErrorGettingFromAPI)
@@ -138,7 +142,7 @@ class PodcastRepository: Repository<Podcast> {
         self.loading = true
 
         // API Call and return
-        API.sharedInstance.getPosts(
+        networkService.getPosts(
             type: filterObject.type,
             createdAtBefore: filterObject.lastDate,
             tags: filterObject.tagsAsString,

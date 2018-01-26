@@ -22,6 +22,8 @@ public class PodcastViewModelController {
 
     fileprivate let repository = PodcastRepository()
     fileprivate var viewModels: [ViewModel?] = []
+    
+    let networkService = API()
 
     var viewModelsCount: Int {
         return viewModels.count
@@ -106,7 +108,7 @@ public class PodcastViewModelController {
         if firstSearch {
             self.clearViewModels()
         }
-        API.sharedInstance.getPostsWith(
+        networkService.getPostsWith(
             searchTerm: searchTerm,
             createdAtBefore: beforeDate,
             onSuccess: { (podcasts) in

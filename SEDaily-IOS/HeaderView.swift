@@ -16,7 +16,7 @@ protocol HeaderViewDelegate: class {
 class HeaderView: UIView {
     weak var delegate: HeaderViewDelegate?
     
-    var model = PodcastViewModel()
+    var podcastViewModel = PodcastViewModel()
 
     let titleLabel = UILabel()
     let dateLabel = UILabel()
@@ -29,6 +29,8 @@ class HeaderView: UIView {
     let upVoteButton = UIButton()
     let downVoteButton = UIButton()
     let scoreLabel = UILabel()
+    
+    let networkService = API()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -138,15 +140,15 @@ class HeaderView: UIView {
     }
 
     func setupHeader(model: PodcastViewModel) {
-        self.model = model
+        self.podcastViewModel = model
         self.titleLabel.text = model.podcastTitle
         self.dateLabel.text = model.getLastUpdatedAsDate()?.dateString() ?? ""
         self.scoreLabel.text = model.score.string
 
-        upVoteButton.isSelected = self.model.isUpvoted
-        downVoteButton.isSelected = self.model.isDownvoted
+        upVoteButton.isSelected = self.podcastViewModel.isUpvoted
+        downVoteButton.isSelected = self.podcastViewModel.isDownvoted
+        self.scoreLabel.text = String(self.podcastViewModel.score)
 
-        self.scoreLabel.text = String(self.model.score)
     }
 }
 
@@ -155,7 +157,7 @@ extension HeaderView {
         //@TODO: Switch button and/or stop if playing
 
         // Podcast model checks here
-        AudioViewManager.shared.setupManager(podcastModel: model)
+        AudioViewManager.shared.setupManager(podcastModel: podcastViewModel)
     }
 
     @objc func upvoteButtonPressed() {
@@ -168,8 +170,9 @@ extension HeaderView {
         self.setUpvoteTo(!self.upVoteButton.isSelected)
         self.setDownvoteTo(false)
 
-        let podcastId = model._id
-        API.sharedInstance.upvotePodcast(podcastId: podcastId, completion: { (success, active) in
+        let podcastId = podcastViewModel._id
+        
+        networkService.upvotePodcast(podcastId: podcastId, completion: { (success, active) in
             guard success != nil else { return }
             if success == true {
                 guard let active = active else { return }
@@ -188,8 +191,8 @@ extension HeaderView {
         self.setUpvoteTo(false)
         self.setDownvoteTo(!self.downVoteButton.isSelected)
 
-        let podcastId = model._id
-        API.sharedInstance.downvotePodcast(podcastId: podcastId, completion: { (success, active) in
+        let podcastId = podcastViewModel._id
+        networkService.downvotePodcast(podcastId: podcastId, completion: { (success, active) in
             guard success != nil else { return }
             if success == true {
                 // Switch if active
@@ -202,38 +205,38 @@ extension HeaderView {
     func addScore(active: Bool) {
         self.setUpvoteTo(active)
         guard active != false else {
-            self.setScoreTo(self.model.score - 1)
-            self.delegate?.modelDidChange(viewModel: self.model)
+            self.setScoreTo(self.podcastViewModel.score - 1)
+            self.delegate?.modelDidChange(viewModel: self.podcastViewModel)
             return
         }
-        self.setScoreTo(self.model.score + 1)
-        self.delegate?.modelDidChange(viewModel: self.model)
+        self.setScoreTo(self.podcastViewModel.score + 1)
+        self.delegate?.modelDidChange(viewModel: self.podcastViewModel)
     }
 
     func subtractScore(active: Bool) {
         self.setDownvoteTo(active)
         guard active != false else {
-            self.setScoreTo(self.model.score + 1)
-            self.delegate?.modelDidChange(viewModel: self.model)
+            self.setScoreTo(self.podcastViewModel.score + 1)
+            self.delegate?.modelDidChange(viewModel: self.podcastViewModel)
             return
         }
-        self.setScoreTo(self.model.score - 1)
-        self.delegate?.modelDidChange(viewModel: self.model)
+        self.setScoreTo(self.podcastViewModel.score - 1)
+        self.delegate?.modelDidChange(viewModel: self.podcastViewModel)
     }
 
     func setUpvoteTo(_ bool: Bool) {
-        self.model.isUpvoted = bool
+        self.podcastViewModel.isUpvoted = bool
         self.upVoteButton.isSelected = bool
     }
 
     func setDownvoteTo(_ bool: Bool) {
-        self.model.isDownvoted = bool
+        self.podcastViewModel.isDownvoted = bool
         self.downVoteButton.isSelected = bool
     }
 
     func setScoreTo(_ score: Int) {
-        guard self.model.score != score else { return }
-        self.model.score = score
+        guard self.podcastViewModel.score != score else { return }
+        self.podcastViewModel.score = score
         self.scoreLabel.text = String(score)
     }
 }

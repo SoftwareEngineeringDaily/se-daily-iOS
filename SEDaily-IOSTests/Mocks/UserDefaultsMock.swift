@@ -13,7 +13,7 @@ class UserDefaultsMock: UserDefaultsProtocol {
     
     var dict: [String: Any]
     
-    init(dict: [String : Any]) {
+    init(dict: [String: Any]) {
         self.dict = dict
     }
     

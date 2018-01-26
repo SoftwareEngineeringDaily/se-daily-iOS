@@ -19,6 +19,8 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
     weak var delegate: PodcastDetailViewControllerDelegate?
 
     private var bookmarkButton: UIButton?
+    
+    let networkService: API = API()
 
     var model = PodcastViewModel()
 
@@ -83,7 +85,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
         bookmarkButton.isSelected = !bookmarkButton.isSelected
 
         let podcastId = model._id
-        API.sharedInstance.setBookmarkPodcast(
+        networkService.setBookmarkPodcast(
             value: bookmarkButton.isSelected,
             podcastId: podcastId,
             completion: { (success, active) in

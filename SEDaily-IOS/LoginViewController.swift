@@ -32,6 +32,8 @@ class LoginViewController: UIViewController {
     let loginButton = UIButton()
     let cancelButton = UIButton()
     let signUpButton = UIButton()
+    
+    let networkService = API()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -285,7 +287,7 @@ class LoginViewController: UIViewController {
         }
 
         ProgressIndicator.showBlockingProgress()
-        API.sharedInstance.login(usernameOrEmail: usernameOrEmail, password: password) { (success) in
+        networkService.login(usernameOrEmail: usernameOrEmail, password: password) { (success) in
             ProgressIndicator.hideBlockingProgress()
             if success == false {
                 return
@@ -382,7 +384,7 @@ class LoginViewController: UIViewController {
         }
 
         // API Login Call
-        API.sharedInstance.register(firstName: "", lastName: "", email: email, username: username, password: password, completion: { (success) -> Void in
+        networkService.register(firstName: "", lastName: "", email: email, username: username, password: password, completion: { (success) -> Void in
             if success == false {
                 return
             }

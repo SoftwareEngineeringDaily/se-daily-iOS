@@ -65,8 +65,8 @@ extension API {
 }
 
 class API {
-//  private let prodRootURL = "http://localhost:4040/api"
-    private let prodRootURL = "https://software-enginnering-daily-api.herokuapp.com/api"
+    private let prodRootURL = "http://localhost:4040/api"
+//    private let prodRootURL = "https://software-enginnering-daily-api.herokuapp.com/api"
     private let stagingRootURL = "https://sedaily-backend-staging.herokuapp.com/api"
 
     private var rootURL: String {
@@ -332,50 +332,41 @@ typealias RelatedLinkModel = RelatedLink
 
 // MARK: Related Links
 extension API {
-    func getRelatedLinks(podcastId: String) {
+    func getRelatedLinks(podcastId: String, onSuccess: @escaping ([RelatedLink]) -> Void,
+                         onFailure: @escaping (APIError?) -> Void) {
     
-        /*
-        func getRelatedLInks(type: String = "",
-                  createdAtBefore beforeDate: String = "",
-                  tags: String = "-1",
-                  categories: String = "",
-                  onSuccess: @escaping ([Podcast]) -> Void,
-                  onFailure: @escaping (APIError?) -> Void) {
-        var type = type
-    */
-        
         let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.relatedLinks
-        
         let user = UserManager.sharedInstance.getActiveUser()
         let userToken = user.token
         let _headers: HTTPHeaders = [
             Headers.authorization: Headers.bearer + userToken,
             Headers.contentType: Headers.x_www_form_urlencoded
         ]
-        
+        print(urlString)
         networkRequest(urlString, method: .get, parameters: nil, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
                 guard let responseData = response.data else {
                     // Handle error here
                     log.error("response has no data")
-                  //  onFailure(.NoResponseDataError)
+                    onFailure(.NoResponseDataError)
                     return
                 }
                 
                 do {
                     let data: [RelatedLinkModel] = try JSONDecoder().decode([RelatedLinkModel].self, from: responseData)
                     print(data)
+                    onSuccess(data)
                 } catch let jsonErr {
-                    //  onFailure(.NoResponseDataError)
+                    onFailure(.NoResponseDataError)
                     print(jsonErr)
                 }
                 
-                // onSuccess(data)
+               
             case .failure(let error):
                 log.error(error.localizedDescription)
                 Tracker.logGeneralError(error: error)
-                //onFailure(.GeneralFailure)
+                onFailure(.GeneralFailure)
             }
         }
     }

@@ -7,6 +7,13 @@
 */
 
 /* */
+"EnthusiasticHello" = "Hello!";
+"EnthusiasticYes" = "Yes!";
+"EnthusiasticSureSendEmail" = "Sure! Send email";
+"AppReviewPromptQuestion" = "Enjoying the SEDaily app?";
+"AppReviewEmailSubject" = "SEDaily iOS App Feedback";
+"AppReviewApology" = "Oh, sorry you're not liking the SEDaily app";
+"AppReviewGiveFeedbackQuestion" = "Would you help us out by sending us your feedback?";
 "TabBarTitleLatest" = "Latest";
 "TabBarJustForYou" = "Just For You";
 "TabTitleAll" = "All";
@@ -24,6 +31,8 @@
 "LogoutTitle" = "Logout";
 "UsernameOrEmailPlaceholder" = "Username or Email";
 "EmailAddressPlaceholder" = "Email";
+"EmailUnsupportedOnDevice" = "Email unsupported on this device";
+"EmailUnsupportedMessage" = "Please send an email to jeff@softwareengineeringdaily.com";
 "UsernamePlaceholder" = "Username";
 "PasswordPlaceholder" = "Password";
 "ConfirmPasswordPlaceholder" = "Confirm Password";
@@ -51,6 +60,8 @@
 "GenericError" = "Error";
 "GenericOkay" = "Okay";
 "GenericOK" = "OK";
+"GenericNo" = "No";
+"NoWithGratitude" = "No thanks";
 "Play" = "Play";
 "NoBookmarks" = "No Bookmarks";
 "LoginSeeBookmarks" = "Login to see your bookmarks";

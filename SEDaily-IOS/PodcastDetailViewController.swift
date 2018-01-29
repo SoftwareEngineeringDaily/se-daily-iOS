@@ -72,6 +72,17 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
     }
 
     @objc private func bookmarkButtonPressed() {
+        
+        let relatedLinksStoryboard = UIStoryboard.init(name: "RelatedLinks", bundle: nil)
+        guard let relatedLinksViewController = relatedLinksStoryboard.instantiateViewController(
+            withIdentifier: "RelatedLinksViewController") as? RelatedLinksViewController else {
+                return
+        }
+         let podcastId = model._id
+        relatedLinksViewController.postId = "5a57b6ffe9b21f96de35dabb"
+        self.navigationController?.pushViewController(relatedLinksViewController, animated: true)
+        
+        /*
         guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
             return
@@ -94,7 +105,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
                 guard let active = active else { return }
                 self.updateBookmarked(active: active)
             }
-        })
+        })*/
     }
 
     private func updateBookmarked(active: Bool) {

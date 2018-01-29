@@ -11,6 +11,7 @@ import UIKit
 class RelatedLinksViewController: UIViewController {
 
     let networkService: API = API()
+    var postId = ""
     var links: [RelatedLink] = []
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
@@ -23,7 +24,7 @@ class RelatedLinksViewController: UIViewController {
         self.tableView.estimatedRowHeight = 44
         
         // Do any additional setup after loading the view.
-        networkService.getRelatedLinks(podcastId: "5a57b6ffe9b21f96de35dabb", onSuccess: { relatedLinks in
+        networkService.getRelatedLinks(podcastId: self.postId, onSuccess: { relatedLinks in
             print(relatedLinks[0].title)
             print("realted links")
             print(relatedLinks)

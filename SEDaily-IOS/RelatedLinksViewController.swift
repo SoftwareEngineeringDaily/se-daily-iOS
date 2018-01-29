@@ -67,4 +67,8 @@ extension RelatedLinksViewController: UITableViewDataSource, UITableViewDelegate
         cell.textLabel?.text = self.links[indexPath.row].title
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        UIApplication.shared.openURL(URL(string: "http://www.example.com")!)
+    }
 }

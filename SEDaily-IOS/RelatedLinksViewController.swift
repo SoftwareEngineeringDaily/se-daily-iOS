@@ -10,6 +10,8 @@ import UIKit
 
 class RelatedLinksViewController: UIViewController {
 
+    let networkService: API = API()
+    var links: [RelatedLink] = []
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +23,16 @@ class RelatedLinksViewController: UIViewController {
         self.tableView.estimatedRowHeight = 44
         
         // Do any additional setup after loading the view.
+        networkService.getRelatedLinks(podcastId: "5a57b6ffe9b21f96de35dabb", onSuccess: { relatedLinks in
+            print(relatedLinks[0].title)
+            print("realted links")
+            print(relatedLinks)
+            // TODO weak self
+            self.links = relatedLinks
+            self.tableView.reloadData()
+        }) { _ in
+            print("error--getting-links")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,18 +52,19 @@ class RelatedLinksViewController: UIViewController {
 
 }
 
-extension RelatedLinksViewController : UITableViewDataSource, UITableViewDelegate {
+extension RelatedLinksViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return self.links.count
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "Hello"
+        print("row \(indexPath.row)")
+        cell.textLabel?.text = self.links[indexPath.row].title
         return cell
     }
 }

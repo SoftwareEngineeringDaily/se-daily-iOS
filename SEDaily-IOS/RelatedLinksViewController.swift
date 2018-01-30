@@ -55,6 +55,7 @@ extension RelatedLinksViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.links.count
     }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -67,11 +68,10 @@ extension RelatedLinksViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-      
+        // Add http:// prefix to url if it doesn't exist so it can be opened:
+        // Could be moved to themodel
         var urlString = links[indexPath.row].url
         let urlPrefix = urlString.prefix(4)
-        print(urlString)
-        print(urlPrefix)
         if urlPrefix != "http" {
             // Defaulting to http:
             if urlPrefix.prefix(3) == "://" {
@@ -80,12 +80,9 @@ extension RelatedLinksViewController: UITableViewDataSource, UITableViewDelegate
                 urlString = "http://\(urlString)"
             }
         }
-        print(urlString)
-        print("--------")
         
+        // Open the link:
         if let linkUrl = URL(string: urlString) {
-            print("opening up link \(links[indexPath.row])")
-//             UIApplication.shared.openURL(linkUrl)
             UIApplication.shared.open(linkUrl, options: [:], completionHandler: nil)
         } else {
             print("link null")

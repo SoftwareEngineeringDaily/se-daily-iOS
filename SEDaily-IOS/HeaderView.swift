@@ -193,6 +193,8 @@ extension HeaderView {
 
         // Podcast model checks here
         AudioViewManager.shared.setupManager(podcastModel: podcastViewModel)
+
+        AskForReview.triggerEvent()
     }
     @objc func relatedLinksButtonPressed() {
         self.delegate?.relatedLinksButtonPressed()

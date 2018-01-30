@@ -19,6 +19,7 @@ target 'SEDaily-IOS' do
   pod 'KoalaTeaPlayer', '~> 0.2.7'
   pod 'MBProgressHUD', '~> 1.1.0'
   pod 'Pageboy', '~> 2.0.2'
+  pod 'PopupDialog', '~> 0.6.0'
   pod 'PureLayout', '~> 3.0.2'
   pod 'Reusable', '~> 4.0.0'
   pod 'SideMenu', '~> 3.1.4'
@@ -34,7 +35,8 @@ target 'SEDaily-IOS' do
   pod 'SwiftyJSON', '~> 3.1.4'
   pod 'Tabman', '~> 1.0.5'
   pod 'UIFontComplete', '~> 2.0.1'
-
+  pod 'WaitForIt', '~> 2.0.0'
+  
   target 'SEDaily-IOSTests' do
     inherit! :search_paths
     pod 'Quick'

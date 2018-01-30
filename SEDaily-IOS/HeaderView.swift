@@ -63,7 +63,7 @@ class HeaderView: UIView {
         }
 
         dateLabel.snp.makeConstraints {  (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(UIView.getValueScaledByScreenHeightFor(baseValue: 10))
+            make.top.equalTo(titleLabel.snp.bottom).offset(UIView.getValueScaledByScreenHeightFor(baseValue: 15))
             make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
             make.right.equalToSuperview().inset(UIView.getValueScaledByScreenHeightFor(baseValue: 15))
         }
@@ -89,31 +89,27 @@ class HeaderView: UIView {
     func setupSecondaryView() {
         self.addSubview(secondaryView)
         
-        // The playView is the row with the Up / Down and Pink Playbutton
-//        secondaryView.backgroundColor = Stylesheet.Colors.blackText
-        
         secondaryView.backgroundColor = UIColor.clear
         
         secondaryView.snp.makeConstraints { (make) in
             make.bottom.equalTo(playView.snp.top)
             make.right.equalToSuperview()
-            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 100))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 250))
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 65))
         }
         
-        
         // Add relatedLinksButton
         secondaryView.addSubview(relatedLinksButton)
-        relatedLinksButton.setTitle("Links", for: .normal)
-        relatedLinksButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
+        relatedLinksButton.setTitle(" Related Links ", for: .normal)
+        relatedLinksButton.setBackgroundColor(color: Stylesheet.Colors.clear, forState: .normal)
         relatedLinksButton.addTarget(self, action: #selector(self.relatedLinksButtonPressed), for: .touchUpInside)
         relatedLinksButton.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 4)
         
         relatedLinksButton.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 84))
-            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 42))
+//            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 84))
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 35))
         }
         
     }
@@ -200,7 +196,6 @@ extension HeaderView {
         AudioViewManager.shared.setupManager(podcastModel: podcastViewModel)
     }
     @objc func relatedLinksButtonPressed() {
-        print("related links pressed")
         self.delegate?.relatedLinksButtonPressed()
     }
 

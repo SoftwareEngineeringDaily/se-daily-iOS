@@ -8,13 +8,12 @@
 
 import Foundation
 
-
 public struct RelatedLink : Codable {
 //    let author : String
 //    let clicks: Int
 //    let downvoted: Bool
-    let image: String
-    let score: Int
+    let image: String?
+    let score: Int?
     let title: String
-    let url:  String
+    let url: String
 }

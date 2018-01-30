@@ -79,7 +79,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
                 return
         }
          let podcastId = model._id
-        relatedLinksViewController.postId = "5a57b6ffe9b21f96de35dabb"
+        relatedLinksViewController.postId = podcastId
         self.navigationController?.pushViewController(relatedLinksViewController, animated: true)
         
         /*

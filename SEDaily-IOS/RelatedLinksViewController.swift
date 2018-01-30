@@ -22,11 +22,8 @@ class RelatedLinksViewController: UIViewController {
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 44
-        
-        // Do any additional setup after loading the view.
+        // TODO: add spinner
         networkService.getRelatedLinks(podcastId: self.postId, onSuccess: { relatedLinks in
-            print(relatedLinks[0].title)
-            print("realted links")
             print(relatedLinks)
             // TODO weak self
             self.links = relatedLinks

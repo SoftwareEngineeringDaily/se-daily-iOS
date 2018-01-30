@@ -23,13 +23,12 @@ class RelatedLinksViewController: UIViewController {
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 44
-        // TODO: add spinner
-        networkService.getRelatedLinks(podcastId: self.postId, onSuccess: { relatedLinks in
-            print(relatedLinks)
-            // TODO weak self
-            self.links = relatedLinks
-            self.tableView.reloadData()
+        // TODO: add a spinner
+        networkService.getRelatedLinks(podcastId: self.postId, onSuccess: { [weak self] relatedLinks in
+            self?.links = relatedLinks
+            self?.tableView.reloadData()
         }) { _ in
+            // TODO: show an error to user
             print("error--getting-links")
         }
     }
@@ -70,8 +69,9 @@ extension RelatedLinksViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let linkUrl = URL(string: links[indexPath.row].url) {
-            print("opening up link")
-            UIApplication.shared.openURL(linkUrl)
+            print("opening up link \(links[indexPath.row])")
+//             UIApplication.shared.openURL(linkUrl)
+            UIApplication.shared.open(linkUrl, options: [:], completionHandler: nil)
         } else {
             print("link null")
         }

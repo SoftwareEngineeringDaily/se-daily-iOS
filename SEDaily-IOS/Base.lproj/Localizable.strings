@@ -51,6 +51,7 @@
 "GenericError" = "Error";
 "GenericOkay" = "Okay";
 "GenericOK" = "OK";
+"RelatedLinks" = "Related Links";
 "Play" = "Play";
 "NoBookmarks" = "No Bookmarks";
 "LoginSeeBookmarks" = "Login to see your bookmarks";

@@ -16,7 +16,7 @@ class RelatedLinksViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Related Links"
+        self.title = L10n.relatedLinks
  
         self.tableView.dataSource = self
         self.tableView.delegate = self

@@ -17,7 +17,7 @@ class RelatedLinksViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Related Links"
-        print("Related links")
+ 
         self.tableView.dataSource = self
         self.tableView.delegate = self
         

@@ -68,6 +68,12 @@ extension RelatedLinksViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        UIApplication.shared.openURL(URL(string: "http://www.example.com")!)
+        
+        if let linkUrl = URL(string: links[indexPath.row].url) {
+            print("opening up link")
+            UIApplication.shared.openURL(linkUrl)
+        } else {
+            print("link null")
+        }
     }
 }

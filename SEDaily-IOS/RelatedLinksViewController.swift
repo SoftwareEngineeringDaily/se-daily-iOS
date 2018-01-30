@@ -67,8 +67,23 @@ extension RelatedLinksViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+      
+        var urlString = links[indexPath.row].url
+        let urlPrefix = urlString.prefix(4)
+        print(urlString)
+        print(urlPrefix)
+        if urlPrefix != "http" {
+            // Defaulting to http:
+            if urlPrefix.prefix(3) == "://" {
+                urlString = "http\(urlString)"
+            } else {
+                urlString = "http://\(urlString)"
+            }
+        }
+        print(urlString)
+        print("--------")
         
-        if let linkUrl = URL(string: links[indexPath.row].url) {
+        if let linkUrl = URL(string: urlString) {
             print("opening up link \(links[indexPath.row])")
 //             UIApplication.shared.openURL(linkUrl)
             UIApplication.shared.open(linkUrl, options: [:], completionHandler: nil)

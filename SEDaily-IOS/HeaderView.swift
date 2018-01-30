@@ -89,9 +89,9 @@ class HeaderView: UIView {
         self.addSubview(secondaryView)
         
         // The playView is the row with the Up / Down and Pink Playbutton
-        secondaryView.backgroundColor = Stylesheet.Colors.blackText
+//        secondaryView.backgroundColor = Stylesheet.Colors.blackText
         
-        //       secondaryView.backgroundColor = UIColor.clear
+        secondaryView.backgroundColor = UIColor.clear
         
         secondaryView.snp.makeConstraints { (make) in
             make.bottom.equalTo(playView.snp.top)

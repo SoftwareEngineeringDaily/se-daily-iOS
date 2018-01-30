@@ -100,15 +100,15 @@ class HeaderView: UIView {
         
         // Add relatedLinksButton
         secondaryView.addSubview(relatedLinksButton)
-        relatedLinksButton.setTitle(" Related Links ", for: .normal)
-        relatedLinksButton.setBackgroundColor(color: Stylesheet.Colors.clear, forState: .normal)
+        relatedLinksButton.setTitle("Related Links", for: .normal)
+        relatedLinksButton.setBackgroundColor(color: Stylesheet.Colors.baseLight, forState: .normal)
         relatedLinksButton.addTarget(self, action: #selector(self.relatedLinksButtonPressed), for: .touchUpInside)
         relatedLinksButton.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 4)
         
         relatedLinksButton.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-//            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 84))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 120))
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 35))
         }
         

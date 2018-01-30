@@ -11,6 +11,7 @@ import SwiftIcons
 
 protocol HeaderViewDelegate: class {
     func modelDidChange(viewModel: PodcastViewModel)
+     func relatedLinksButtonPressed()
 }
 
 class HeaderView: UIView {
@@ -199,11 +200,8 @@ extension HeaderView {
         AudioViewManager.shared.setupManager(podcastModel: podcastViewModel)
     }
     @objc func relatedLinksButtonPressed() {
-        //@TODO: Switch button and/or stop if playing
-        
-        // Podcast model checks here
-//        AudioViewManager.shared.setupManager(podcastModel: podcastViewModel)
         print("related links pressed")
+        self.delegate?.relatedLinksButtonPressed()
     }
 
     @objc func upvoteButtonPressed() {

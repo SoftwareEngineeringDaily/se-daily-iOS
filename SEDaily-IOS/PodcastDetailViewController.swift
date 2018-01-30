@@ -72,17 +72,6 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
     }
 
     @objc private func bookmarkButtonPressed() {
-        
-        let relatedLinksStoryboard = UIStoryboard.init(name: "RelatedLinks", bundle: nil)
-        guard let relatedLinksViewController = relatedLinksStoryboard.instantiateViewController(
-            withIdentifier: "RelatedLinksViewController") as? RelatedLinksViewController else {
-                return
-        }
-         let podcastId = model._id
-        relatedLinksViewController.postId = podcastId
-        self.navigationController?.pushViewController(relatedLinksViewController, animated: true)
-        
-        /*
         guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
             return
@@ -105,7 +94,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
                 guard let active = active else { return }
                 self.updateBookmarked(active: active)
             }
-        })*/
+        })
     }
 
     private func updateBookmarked(active: Bool) {
@@ -165,6 +154,18 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
 }
 
 extension PodcastDetailViewController: HeaderViewDelegate {
+    func relatedLinksButtonPressed() {
+        let relatedLinksStoryboard = UIStoryboard.init(name: "RelatedLinks", bundle: nil)
+        guard let relatedLinksViewController = relatedLinksStoryboard.instantiateViewController(
+            withIdentifier: "RelatedLinksViewController") as? RelatedLinksViewController else {
+                return
+        }
+        let podcastId = model._id
+        relatedLinksViewController.postId = podcastId
+        self.navigationController?.pushViewController(relatedLinksViewController, animated: true)
+        
+    }
+    
     func modelDidChange(viewModel: PodcastViewModel) {
         self.delegate?.modelDidChange(viewModel: viewModel)
     }

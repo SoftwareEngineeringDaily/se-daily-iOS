@@ -93,8 +93,7 @@ class HeaderView: UIView {
         
         secondaryView.snp.makeConstraints { (make) in
             make.bottom.equalTo(playView.snp.top)
-            make.right.equalToSuperview()
-            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 250))
+            make.right.left.equalToSuperview()
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 65))
         }
         
@@ -108,7 +107,7 @@ class HeaderView: UIView {
         relatedLinksButton.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 120))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 180))
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 35))
         }
         

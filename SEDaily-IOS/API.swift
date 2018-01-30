@@ -341,7 +341,6 @@ extension API {
             Headers.authorization: Headers.bearer + userToken,
             Headers.contentType: Headers.x_www_form_urlencoded
         ]
-        print(urlString)
         networkRequest(urlString, method: .get, parameters: nil, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:

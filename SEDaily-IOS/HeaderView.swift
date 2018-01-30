@@ -23,7 +23,8 @@ class HeaderView: UIView {
 
     let playView = UIView()
     let playButton = UIButton()
-
+    let secondaryView = UIView()
+    
     let voteView = UIView()
     let stackView = UIStackView()
     let upVoteButton = UIButton()
@@ -50,7 +51,8 @@ class HeaderView: UIView {
 
         self.backgroundColor = Stylesheet.Colors.base
         setupPlayView()
-
+        setupSecondaryView()
+        
         titleLabel.snp.makeConstraints { (make) in
             make.bottom.equalTo(playView.snp.top).offset(UIView.getValueScaledByScreenHeightFor(baseValue: -60))
             make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
@@ -67,6 +69,7 @@ class HeaderView: UIView {
     }
 
     func setupLabels() {
+        // This makes the post title and date pretty and large:
         titleLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 20))
         titleLabel.adjustsFontSizeToFitWidth = false
         titleLabel.minimumScaleFactor = 0.25
@@ -79,9 +82,28 @@ class HeaderView: UIView {
         dateLabel.numberOfLines = 1
         dateLabel.textColor = Stylesheet.Colors.white
     }
-
+    
+    func setupSecondaryView() {
+        self.addSubview(secondaryView)
+        
+        // The playView is the row with the Up / Down and Pink Playbutton
+        secondaryView.backgroundColor = Stylesheet.Colors.blackText
+        
+        //       secondaryView.backgroundColor = UIColor.clear
+        
+        secondaryView.snp.makeConstraints { (make) in
+            make.bottom.equalTo(playView.snp.top)
+            make.right.equalToSuperview()
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 100))
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 65))
+        }
+    }
+    
+    
     func setupPlayView() {
         self.addSubview(playView)
+        
+        // The playView is the row with the Up / Down and Pink Playbutton
         playView.backgroundColor = Stylesheet.Colors.white
 
         playView.snp.makeConstraints { (make) in

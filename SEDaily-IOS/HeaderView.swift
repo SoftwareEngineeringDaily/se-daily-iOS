@@ -23,7 +23,9 @@ class HeaderView: UIView {
 
     let playView = UIView()
     let playButton = UIButton()
+    
     let secondaryView = UIView()
+    let relatedLinksButton = UIButton()
     
     let voteView = UIView()
     let stackView = UIStackView()
@@ -97,8 +99,23 @@ class HeaderView: UIView {
             make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 100))
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 65))
         }
+        
+        
+        // Add relatedLinksButton
+        secondaryView.addSubview(relatedLinksButton)
+        relatedLinksButton.setTitle("Links", for: .normal)
+        relatedLinksButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
+        relatedLinksButton.addTarget(self, action: #selector(self.relatedLinksButtonPressed), for: .touchUpInside)
+        relatedLinksButton.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 4)
+        
+        relatedLinksButton.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 84))
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 42))
+        }
+        
     }
-    
     
     func setupPlayView() {
         self.addSubview(playView)
@@ -180,6 +197,13 @@ extension HeaderView {
 
         // Podcast model checks here
         AudioViewManager.shared.setupManager(podcastModel: podcastViewModel)
+    }
+    @objc func relatedLinksButtonPressed() {
+        //@TODO: Switch button and/or stop if playing
+        
+        // Podcast model checks here
+//        AudioViewManager.shared.setupManager(podcastModel: podcastViewModel)
+        print("related links pressed")
     }
 
     @objc func upvoteButtonPressed() {

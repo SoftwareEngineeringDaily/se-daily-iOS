@@ -107,7 +107,7 @@ public class UserManager {
         self.setCurrentUser(to: User())
 
         // Clear disk cache
-        PodcastDataSource.clean(diskKey: .podcastFolder)
+        PodcastDataSource.clean(diskKey: .PodcastFolder)
         NotificationCenter.default.post(name: .loginChanged, object: nil)
     }
 

@@ -30,7 +30,7 @@ class SEDailyIOSTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         let promise = expectation(description: "Status code: 200")
 
-        let podcast = Podcast(_id: "", date: "", link: "", categories: [], tags: [], mp3: "http://traffic.libsyn.com/sedaily/IncidentResponse.mp3", featuredImage: "", content: Podcast.Content.init(rendered: ""), title: Podcast.Title.init(rendered: ""), score: 0, type: nil, upvoted: nil, downvoted: nil)
+        let podcast = Podcast(_id: "", date: "", link: "", categories: [], tags: [], mp3: "http://traffic.libsyn.com/sedaily/IncidentResponse.mp3", featuredImage: "", content: Podcast.Content.init(rendered: ""), title: Podcast.Title.init(rendered: ""), score: 0, type: nil, upvoted: nil, downvoted: nil, bookmarked: nil)
         downloadManager.save(podcast: podcast, onProgress: { (fractionCompleted) in
             print(fractionCompleted)
         }, onSucces: {

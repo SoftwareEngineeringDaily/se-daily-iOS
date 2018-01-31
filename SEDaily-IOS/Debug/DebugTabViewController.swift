@@ -46,7 +46,7 @@ class DebugTabViewController: UIViewController {
             id: .viewDisk,
             name: "View Disk")
         viewDiskTestHook.execute = {
-            PodcastDataSource.getAll(diskKey: .podcastFolder, completion: { (podcast) in
+            PodcastDataSource.getAll(diskKey: .PodcastFolder, completion: { (podcast) in
                 print(podcast ?? "")
             })
         }

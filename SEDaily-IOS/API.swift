@@ -61,11 +61,13 @@ extension API {
         static let tags = "tags"
         static let categories = "categories"
         static let search = "search"
+        static let commentContent = "content"
     }
 }
 
 class API {
-    private let prodRootURL = "https://software-enginnering-daily-api.herokuapp.com/api"
+    private let prodRootURL = "http://localhost:4040/api"
+//    private let prodRootURL = "https://software-enginnering-daily-api.herokuapp.com/api"
     private let stagingRootURL = "https://sedaily-backend-staging.herokuapp.com/api"
 
     private var rootURL: String {
@@ -333,7 +335,7 @@ typealias RelatedLinkModel = RelatedLink
 extension API {
     func getRelatedLinks(podcastId: String, onSuccess: @escaping ([RelatedLink]) -> Void,
                          onFailure: @escaping (APIError?) -> Void) {
-    
+        print(rootURL)
         let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.relatedLinks
         let user = UserManager.sharedInstance.getActiveUser()
         let userToken = user.token
@@ -365,6 +367,45 @@ extension API {
                 log.error(error.localizedDescription)
                 Tracker.logGeneralError(error: error)
                 onFailure(.GeneralFailure)
+            }
+        }
+    }
+}
+
+
+// MARK: Comments
+extension API {
+    // get Comments
+    // create Comment
+    // create Reply
+    func createComment(podcastId: String, onSuccess: @escaping () -> Void,
+                         onFailure: @escaping (APIError?) -> Void) {
+       
+        let urlString = "http://localhost:4040/api/posts/5a57b6ffe9b21f96de35dabb/comment"
+        
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
+        let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded,
+                                     Headers.authorization: Headers.bearer + userToken
+                                     ]
+        // content
+        
+        var params = [String: String]()
+        params[Params.commentContent] = "from ios"
+
+        networkRequest(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: _headers)
+            .validate(statusCode: 200..<300)
+            .responseJSON { response in
+            
+            print(response)
+            switch response.result {
+            case .success:
+                print("success commenting")
+            case .failure(let error):
+                log.error(error)
+    
+                print("failed")
+                
             }
         }
     }

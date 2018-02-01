@@ -161,8 +161,8 @@ extension PodcastDetailViewController: HeaderViewDelegate {
             withIdentifier: "CommentsViewController") as? CommentsViewController else {
                 return
         }
-//        let podcastId = model._id
-//        relatedLinksViewController.postId = podcastId
+        let podcastId = model._id
+        commentsViewController.postId = podcastId
         self.navigationController?.pushViewController(commentsViewController, animated: true)
         
         /*

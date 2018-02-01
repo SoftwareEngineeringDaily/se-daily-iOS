@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct RelatedLink : Codable {
+public struct RelatedLink: Codable {
 //    let author : String
 //    let clicks: Int
 //    let downvoted: Bool

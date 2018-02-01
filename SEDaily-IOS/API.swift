@@ -33,7 +33,8 @@ extension API {
         static let unfavorite = "/unfavorite"
         static let myBookmarked = "/users/me/bookmarked"
         static let relatedLinks = "/related-links"
-        static let comments = "/comment"
+        static let comments = "/comments"
+        static let createComment = "/comment"
     }
 
     enum Types {
@@ -357,7 +358,6 @@ extension API {
                 
                 do {
                     let data: [RelatedLinkModel] = try JSONDecoder().decode([RelatedLinkModel].self, from: responseData)
-                    print(data)
                     onSuccess(data)
                 } catch let jsonErr {
                     onFailure(.NoResponseDataError)
@@ -373,13 +373,12 @@ extension API {
     }
 }
 
-
+typealias  CommentModel = Comment
 // MARK: Comments
 extension API {
     // get Comments
-    
-    func getComments(podcastId: String, onSuccess: @escaping () -> Void,
-                       onFailure: @escaping (APIError?) -> Void) {
+    func getComments(podcastId: String, onSuccess: @escaping ([Comment]) -> Void,
+                     onFailure: @escaping (APIError?) -> Void) {
         let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.comments
         
         let user = UserManager.sharedInstance.getActiveUser()
@@ -387,29 +386,42 @@ extension API {
         let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded,
                                      Headers.authorization: Headers.bearer + userToken
         ]
-        var params = [String: String]()
         
-        networkRequest(urlString, method: .get, parameters: params, encoding: URLEncoding.httpBody, headers: _headers)
-            .validate(statusCode: 200..<300)
-            .responseJSON { response in
-                
-                print(response)
-                switch response.result {
-                case .success:
-                    print("success commenting")
-                case .failure(let error):
-                    log.error(error)
-                    print("failed")
+        print(urlString)
+        networkRequest(urlString, method: .get, parameters: nil, headers: _headers).responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let responseData = response.data else {
+                    // Handle error here
+                    log.error("response has no data")
+                    onFailure(.NoResponseDataError)
+                    return
                 }
+                
+                do {
+          
+                    let data: CommentsResponse = try JSONDecoder().decode(CommentsResponse.self, from: responseData)
+                    print(data)
+                    onSuccess(data.result)
+                } catch let jsonErr {
+                    onFailure(.NoResponseDataError)
+                    print(jsonErr)
+                }
+                
+            case .failure(let error):
+                log.error(error.localizedDescription)
+                Tracker.logGeneralError(error: error)
+                onFailure(.GeneralFailure)
+            }
         }
     }
+    // create Reply
     
     // create Comment
-    // create Reply
     func createComment(podcastId: String, commentContent: String, onSuccess: @escaping () -> Void,
-                         onFailure: @escaping (APIError?) -> Void) {
+                       onFailure: @escaping (APIError?) -> Void) {
        
-        let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.comments
+        let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.createComment
         
         let user = UserManager.sharedInstance.getActiveUser()
         let userToken = user.token

@@ -11,15 +11,14 @@ import UIKit
 class CommentsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    
+    var postId: String? // TODO: make optional so that we can check for it and display error if nil
+    let networkService = API()
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
         
         // Do any additional setup after loading the view.
-        
-        
         /*
         networkService.createComment(podcastId: self.postId, onSuccess: {
             
@@ -27,6 +26,18 @@ class CommentsViewController: UIViewController {
             
         })
         */
+        if let postId = postId {
+            networkService.getComments(podcastId: postId, onSuccess: { (comments) in
+                print("got comments")
+                print(comments)
+                
+            }) { (error) in
+                print("error")
+                print(error)
+            }
+        } else {
+            print("postId is null")
+        }
     }
 
     override func didReceiveMemoryWarning() {

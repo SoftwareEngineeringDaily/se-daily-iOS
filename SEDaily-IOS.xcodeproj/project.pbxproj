@@ -56,6 +56,8 @@
 		238E99F4E37C7365658113B8 /* Pods_SEDaily_IOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C9F051C6C2F8638D2ABF8 /* Pods_SEDaily_IOSTests.framework */; };
 		24412438C753126FDDD37CBF /* Pods_SEDaily_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */; };
 		960BFEBB202109800073DAB2 /* AskForReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960BFEBA202109800073DAB2 /* AskForReview.swift */; };
+		960BFEBF20226B620073DAB2 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960BFEBE20226B620073DAB2 /* CommentsViewController.swift */; };
+		960BFEC120226F1D0073DAB2 /* Comments.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 960BFEC020226F1D0073DAB2 /* Comments.storyboard */; };
 		962F5365201E3C7900897A6E /* RelatedLinksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962F5364201E3C7900897A6E /* RelatedLinksViewController.swift */; };
 		962F5367201E43B200897A6E /* TestHookBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962F5366201E43B100897A6E /* TestHookBool.swift */; };
 		96600312201CEBBD00997795 /* RelatedLinks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96600311201CEBBD00997795 /* RelatedLinks.storyboard */; };
@@ -146,6 +148,8 @@
 		1EB74FFB1FE5E1AF004B733E /* StateBookmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StateBookmarkView.swift; path = Bookmark/StateBookmarkView.swift; sourceTree = "<group>"; };
 		675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.release.xcconfig"; sourceTree = "<group>"; };
 		960BFEBA202109800073DAB2 /* AskForReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AskForReview.swift; sourceTree = "<group>"; };
+		960BFEBE20226B620073DAB2 /* CommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
+		960BFEC020226F1D0073DAB2 /* Comments.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Comments.storyboard; sourceTree = "<group>"; };
 		962F5364201E3C7900897A6E /* RelatedLinksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedLinksViewController.swift; sourceTree = "<group>"; };
 		962F5366201E43B100897A6E /* TestHookBool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestHookBool.swift; path = ../../../../../Desktop/TestHookBool.swift; sourceTree = "<group>"; };
 		96600311201CEBBD00997795 /* RelatedLinks.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RelatedLinks.storyboard; sourceTree = "<group>"; };
@@ -267,6 +271,7 @@
 		1686FBFF1F009EC00088A6C1 /* SEDaily-IOS */ = {
 			isa = PBXGroup;
 			children = (
+				960BFEBD20226B420073DAB2 /* Comments */,
 				96600306201CE9F900997795 /* RelatedLinks */,
 				164FE9E41F02EE83009419CA /* API.swift */,
 				1686FC001F009EC00088A6C1 /* AppDelegate.swift */,
@@ -407,6 +412,15 @@
 				A2EFA433B346D70E958FFC73 /* Pods-SEDaily-IOSTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		960BFEBD20226B420073DAB2 /* Comments */ = {
+			isa = PBXGroup;
+			children = (
+				960BFEBE20226B620073DAB2 /* CommentsViewController.swift */,
+				960BFEC020226F1D0073DAB2 /* Comments.storyboard */,
+			);
+			name = Comments;
 			sourceTree = "<group>";
 		};
 		96600306201CE9F900997795 /* RelatedLinks */ = {
@@ -594,6 +608,7 @@
 				1686FC0B1F009EC00088A6C1 /* LaunchScreen.storyboard in Resources */,
 				1EABD8F41FB430AB00959859 /* Debug.storyboard in Resources */,
 				1E44AF031F87B08D00221B22 /* Localizable.strings in Resources */,
+				960BFEC120226F1D0073DAB2 /* Comments.storyboard in Resources */,
 				1686FC081F009EC00088A6C1 /* Assets.xcassets in Resources */,
 				1686FC061F009EC00088A6C1 /* Main.storyboard in Resources */,
 			);
@@ -839,6 +854,7 @@
 				16D67C4A1F33AC620065E838 /* AnswersTracker.swift in Sources */,
 				164FE9E51F02EE83009419CA /* API.swift in Sources */,
 				164FE9E91F02F049009419CA /* Stylesheet.swift in Sources */,
+				960BFEBF20226B620073DAB2 /* CommentsViewController.swift in Sources */,
 				16CE698F1F98029E0057BAC3 /* PodcastDetailViewController.swift in Sources */,
 				1E286DE31FE4C5BA00644C1D /* TestHookEventTableViewCell.swift in Sources */,
 				16AD3E0C1F9B13EE0084C545 /* FilterObject.swift in Sources */,

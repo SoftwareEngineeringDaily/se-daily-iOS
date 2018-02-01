@@ -14,8 +14,9 @@ public struct Comment: Codable {
     //   lete dateCreated : String  ---> use init() to initalize into date
     let deleted: Bool
     let post: String
-    let replies: [Comment]
+    let replies: [Comment]?
     let score: Int
     let upvoted: Bool?
     let downvoted: Bool?
+    let parentComment: String?
 }

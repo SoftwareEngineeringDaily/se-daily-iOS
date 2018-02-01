@@ -23,20 +23,16 @@ class RelatedLinksViewController: UIViewController {
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 44
+        
+        
         // TODO: add a spinner
-//        networkService.getRelatedLinks(podcastId: self.postId, onSuccess: { [weak self] relatedLinks in
-//            self?.links = relatedLinks
-//            self?.tableView.reloadData()
-//        }) { _ in
-//            // TODO: show an error to user
-//            print("error--getting-links")
-//        }
-//        
-        networkService.createComment(podcastId: self.postId, onSuccess: {
-            
-        }, onFailure: { _ in 
-            
-        })
+        networkService.getRelatedLinks(podcastId: self.postId, onSuccess: { [weak self] relatedLinks in
+            self?.links = relatedLinks
+            self?.tableView.reloadData()
+        }) { _ in
+            // TODO: show an error to user
+            print("error--getting-links")
+        }
     }
 
     override func didReceiveMemoryWarning() {

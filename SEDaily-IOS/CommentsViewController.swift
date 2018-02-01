@@ -18,6 +18,15 @@ class CommentsViewController: UIViewController {
         tableView.delegate = self
         
         // Do any additional setup after loading the view.
+        
+        
+        /*
+        networkService.createComment(podcastId: self.postId, onSuccess: {
+            
+        }, onFailure: { _ in
+            
+        })
+        */
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,7 +49,7 @@ class CommentsViewController: UIViewController {
 extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 20
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

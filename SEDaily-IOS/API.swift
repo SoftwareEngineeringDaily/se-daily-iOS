@@ -33,6 +33,7 @@ extension API {
         static let unfavorite = "/unfavorite"
         static let myBookmarked = "/users/me/bookmarked"
         static let relatedLinks = "/related-links"
+        static let comments = "/comment"
     }
 
     enum Types {
@@ -343,6 +344,7 @@ extension API {
             Headers.authorization: Headers.bearer + userToken,
             Headers.contentType: Headers.x_www_form_urlencoded
         ]
+        
         networkRequest(urlString, method: .get, parameters: nil, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
@@ -362,7 +364,6 @@ extension API {
                     print(jsonErr)
                 }
                 
-               
             case .failure(let error):
                 log.error(error.localizedDescription)
                 Tracker.logGeneralError(error: error)
@@ -376,22 +377,47 @@ extension API {
 // MARK: Comments
 extension API {
     // get Comments
+    
+    func getComments(podcastId: String, onSuccess: @escaping () -> Void,
+                       onFailure: @escaping (APIError?) -> Void) {
+        let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.comments
+        
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
+        let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded,
+                                     Headers.authorization: Headers.bearer + userToken
+        ]
+        var params = [String: String]()
+        
+        networkRequest(urlString, method: .get, parameters: params, encoding: URLEncoding.httpBody, headers: _headers)
+            .validate(statusCode: 200..<300)
+            .responseJSON { response in
+                
+                print(response)
+                switch response.result {
+                case .success:
+                    print("success commenting")
+                case .failure(let error):
+                    log.error(error)
+                    print("failed")
+                }
+        }
+    }
+    
     // create Comment
     // create Reply
-    func createComment(podcastId: String, onSuccess: @escaping () -> Void,
+    func createComment(podcastId: String, commentContent: String, onSuccess: @escaping () -> Void,
                          onFailure: @escaping (APIError?) -> Void) {
        
-        let urlString = "http://localhost:4040/api/posts/5a57b6ffe9b21f96de35dabb/comment"
+        let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.comments
         
         let user = UserManager.sharedInstance.getActiveUser()
         let userToken = user.token
         let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded,
                                      Headers.authorization: Headers.bearer + userToken
                                      ]
-        // content
-        
         var params = [String: String]()
-        params[Params.commentContent] = "from ios"
+        params[Params.commentContent] = commentContent
 
         networkRequest(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: _headers)
             .validate(statusCode: 200..<300)

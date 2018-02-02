@@ -68,6 +68,9 @@
                                             <constraint firstAttribute="height" constant="30" id="LSm-gJ-aWf"/>
                                         </constraints>
                                         <state key="normal" title="Post"/>
+                                        <connections>
+                                            <action selector="submitCommentPressed:" destination="REP-jV-rxu" eventType="touchUpInside" id="w0q-L7-sX6"/>
+                                        </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mhf-BZ-SlR">
                                         <rect key="frame" x="17" y="25" width="287" height="30"/>
@@ -104,6 +107,8 @@
                         <viewLayoutGuide key="safeArea" id="1sn-fD-yVb"/>
                     </view>
                     <connections>
+                        <outlet property="commentITextField" destination="Mhf-BZ-SlR" id="Gfp-Ob-6X6"/>
+                        <outlet property="submitCommentButton" destination="3n7-Ce-dR2" id="GbK-2B-0KC"/>
                         <outlet property="tableView" destination="lzo-Rq-DcB" id="yF6-hG-HEb"/>
                     </connections>
                 </viewController>

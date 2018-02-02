@@ -14,6 +14,10 @@ class CommentsViewController: UIViewController {
     var postId: String? // TODO: make optional so that we can check for it and display error if nil
     let networkService = API()
     var comments: [Comment] = []
+    
+    @IBOutlet weak var commentITextField: UITextField!
+    @IBOutlet weak var submitCommentButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
@@ -60,6 +64,16 @@ class CommentsViewController: UIViewController {
         return flatComments
     }
     
+    @IBAction func submitCommentPressed(_ sender: UIButton) {
+        print("submitting")
+        guard let postId = postId, let commentContent = commentITextField.text else { return }
+        networkService.createComment(podcastId: postId, commentContent: commentContent, onSuccess: {
+            print("submitted :)")
+        }) { (error) in
+            print("error submitting comment")
+            print(error)
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

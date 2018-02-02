@@ -67,7 +67,7 @@ class CommentsViewController: UIViewController {
     @IBAction func submitCommentPressed(_ sender: UIButton) {
         print("submitting")
         guard let postId = postId, let commentContent = commentITextField.text else { return }
-        networkService.createComment(podcastId: postId, commentContent: commentContent, onSuccess: {
+        networkService.createComment(podcastId: postId, parentCommentId: nil, commentContent: commentContent, onSuccess: {
             print("submitted :)")
         }) { (error) in
             print("error submitting comment")

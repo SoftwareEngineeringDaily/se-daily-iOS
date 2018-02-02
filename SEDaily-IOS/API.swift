@@ -64,6 +64,7 @@ extension API {
         static let categories = "categories"
         static let search = "search"
         static let commentContent = "content"
+        static let parentCommentId = "parentCommentId"
     }
 }
 
@@ -418,7 +419,7 @@ extension API {
     // create Reply
     
     // create Comment
-    func createComment(podcastId: String, commentContent: String, onSuccess: @escaping () -> Void,
+    func createComment(podcastId: String, parentCommentId: String?, commentContent: String, onSuccess: @escaping () -> Void,
                        onFailure: @escaping (APIError?) -> Void) {
        
         let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.createComment
@@ -430,7 +431,10 @@ extension API {
                                      ]
         var params = [String: String]()
         params[Params.commentContent] = commentContent
-
+        if let parentCommentId = parentCommentId {
+            params[Params.parentCommentId] = parentCommentId
+        }
+        
         networkRequest(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: _headers)
             .validate(statusCode: 200..<300)
             .responseJSON { response in

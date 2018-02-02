@@ -31,7 +31,11 @@ class CommentsViewController: UIViewController {
             networkService.getComments(podcastId: postId, onSuccess: { [weak self] (comments) in
                 print("got comments")
                 print(comments)
-                self?.comments = comments
+                guard let flatComments = self?.flattenComments(nestedComments: comments) else {
+                    print("error flattinging")
+                    return
+                }
+                self?.comments = flatComments
                 self?.tableView.reloadData()
                 
             }) { (error) in
@@ -43,6 +47,19 @@ class CommentsViewController: UIViewController {
         }
     }
 
+    func flattenComments(nestedComments: [Comment]) -> [Comment] {
+        var flatComments: [Comment] = []
+        for nestedComment in nestedComments {
+            flatComments.append(nestedComment)
+            if let replies = nestedComment.replies {
+                for reply in replies {
+                    flatComments.append(reply)
+                }
+            }
+        }
+        return flatComments
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -80,16 +97,6 @@ extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
         
-        /*
-        if indexPath.row % 2 == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "commentCell", for: indexPath)
-            cell.textLabel?.text = "Comment?"
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "replyCell", for: indexPath)
-            cell.textLabel?.text = "Comment?"
-            return cell
-        }*/
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {

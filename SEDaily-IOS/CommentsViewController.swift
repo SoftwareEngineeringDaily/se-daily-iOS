@@ -13,6 +13,7 @@ class CommentsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var postId: String? // TODO: make optional so that we can check for it and display error if nil
     let networkService = API()
+    var comments: [Comment] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
@@ -27,9 +28,11 @@ class CommentsViewController: UIViewController {
         })
         */
         if let postId = postId {
-            networkService.getComments(podcastId: postId, onSuccess: { (comments) in
+            networkService.getComments(podcastId: postId, onSuccess: { [weak self] (comments) in
                 print("got comments")
                 print(comments)
+                self?.comments = comments
+                self?.tableView.reloadData()
                 
             }) { (error) in
                 print("error")
@@ -60,10 +63,24 @@ class CommentsViewController: UIViewController {
 extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        // Sections and rows? comments and replies, neat idea
+        return comments.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let comment = comments[indexPath.row]
+        if comment.parentComment != nil {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "replyCell", for: indexPath)
+            cell.textLabel?.text = comment.content
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "commentCell", for: indexPath)
+            cell.textLabel?.text = comment.content
+            return cell
+        }
+        
+        /*
         if indexPath.row % 2 == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "commentCell", for: indexPath)
             cell.textLabel?.text = "Comment?"
@@ -72,7 +89,7 @@ extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "replyCell", for: indexPath)
             cell.textLabel?.text = "Comment?"
             return cell
-        }
+        }*/
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {

@@ -10,10 +10,15 @@ import UIKit
 
 class CommentsViewController: UIViewController {
 
+    @IBOutlet weak var replyInfoHolder: UIStackView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var heightOfReplyInfoHolder: NSLayoutConstraint!
     var postId: String? // TODO: make optional so that we can check for it and display error if nil
     let networkService = API()
     var comments: [Comment] = []
+//    var parentCommentId: String?
+    // This is set when user clicks on reply
+    var parentCommentSelected: Comment?  // Maybe just use this...
     
     @IBOutlet weak var commentITextField: UITextField!
     @IBOutlet weak var submitCommentButton: UIButton!
@@ -23,14 +28,11 @@ class CommentsViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
-        // Do any additional setup after loading the view.
-        /*
-        networkService.createComment(podcastId: self.postId, onSuccess: {
-            
-        }, onFailure: { _ in
-            
-        })
-        */
+        // Hide the reply area
+        replyInfoHolder.isHidden = true
+        heightOfReplyInfoHolder.constant = 0
+        self.view.layoutIfNeeded()
+        
         if let postId = postId {
             networkService.getComments(podcastId: postId, onSuccess: { [weak self] (comments) in
                 print("got comments")
@@ -66,12 +68,16 @@ class CommentsViewController: UIViewController {
     
     @IBAction func submitCommentPressed(_ sender: UIButton) {
         print("submitting")
+        
+        replyInfoHolder.isHidden = false
+        heightOfReplyInfoHolder.constant = 50
+        self.view.layoutIfNeeded()
+        
         guard let postId = postId, let commentContent = commentITextField.text else { return }
         networkService.createComment(podcastId: postId, parentCommentId: nil, commentContent: commentContent, onSuccess: {
             print("submitted :)")
         }) { (error) in
             print("error submitting comment")
-            print(error)
         }
     }
     override func didReceiveMemoryWarning() {

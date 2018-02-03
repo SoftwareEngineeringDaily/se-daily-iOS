@@ -431,6 +431,7 @@ extension API {
                                      ]
         var params = [String: String]()
         params[Params.commentContent] = commentContent
+        // This is included if we are replying to a comment
         if let parentCommentId = parentCommentId {
             params[Params.parentCommentId] = parentCommentId
         }

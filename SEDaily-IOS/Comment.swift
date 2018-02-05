@@ -10,6 +10,7 @@ import Foundation
 
 public struct Comment: Codable {
     //    let author : User
+    let _id: String
     let content: String
     //   lete dateCreated : String  ---> use init() to initalize into date
     let deleted: Bool

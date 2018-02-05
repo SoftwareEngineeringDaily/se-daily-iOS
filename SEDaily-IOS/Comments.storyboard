@@ -125,6 +125,9 @@
                                                     <constraint firstAttribute="width" constant="65" id="YGd-Ho-qLo"/>
                                                 </constraints>
                                                 <state key="normal" title="x"/>
+                                                <connections>
+                                                    <action selector="cancelReplyPressed:" destination="REP-jV-rxu" eventType="touchUpInside" id="p22-rq-8yq"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>

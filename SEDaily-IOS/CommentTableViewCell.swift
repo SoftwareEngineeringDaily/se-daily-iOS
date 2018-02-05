@@ -9,7 +9,7 @@
 import UIKit
 
 protocol  CommentReplyTableViewCellDelegate: class {
-    func replyToCommentPressed(comment:Comment)
+    func replyToCommentPressed(comment: Comment)
 }
 
 class CommentTableViewCell: UITableViewCell {

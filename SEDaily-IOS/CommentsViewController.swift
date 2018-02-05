@@ -20,6 +20,14 @@ class CommentsViewController: UIViewController {
     // This is set when user clicks on reply
     var parentCommentSelected: Comment?  {
         didSet {
+            guard let parentComment = parentCommentSelected else {
+                // Hide
+                replyInfoHolder.isHidden = true
+                heightOfReplyInfoHolder.constant = 0
+                self.view.layoutIfNeeded()
+                
+                return
+            }
             print("didSet parent comment")
             // Hide the reply area
             replyInfoHolder.isHidden = false
@@ -82,31 +90,27 @@ class CommentsViewController: UIViewController {
         self.view.layoutIfNeeded()
         
         guard let postId = postId, let commentContent = commentITextField.text else { return }
-        networkService.createComment(podcastId: postId, parentCommentId: nil, commentContent: commentContent, onSuccess: {
+        networkService.createComment(podcastId: postId, parentComment: parentCommentSelected, commentContent: commentContent, onSuccess: {
             print("submitted :)")
         }) { (error) in
             print("error submitting comment")
         }
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func cancelReplyPressed(_ sender: UIButton) {
+        print("cancel reply pressed")
+        parentCommentSelected = nil
     }
-    */
-
 }
 
 extension CommentsViewController: CommentReplyTableViewCellDelegate {
-    func replyToCommentPressed(comment:Comment) {
+    func replyToCommentPressed(comment: Comment) {
         parentCommentSelected = comment
         print("set comment")
         print(comment)

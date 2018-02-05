@@ -419,7 +419,7 @@ extension API {
     // create Reply
     
     // create Comment
-    func createComment(podcastId: String, parentCommentId: String?, commentContent: String, onSuccess: @escaping () -> Void,
+    func createComment(podcastId: String, parentComment: Comment?, commentContent: String, onSuccess: @escaping () -> Void,
                        onFailure: @escaping (APIError?) -> Void) {
        
         let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.createComment
@@ -432,8 +432,8 @@ extension API {
         var params = [String: String]()
         params[Params.commentContent] = commentContent
         // This is included if we are replying to a comment
-        if let parentCommentId = parentCommentId {
-            params[Params.parentCommentId] = parentCommentId
+        if let parentComment = parentComment {
+            params[Params.parentCommentId] = parentComment._id
         }
         
         networkRequest(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: _headers)

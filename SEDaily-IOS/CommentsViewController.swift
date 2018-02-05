@@ -16,9 +16,17 @@ class CommentsViewController: UIViewController {
     var postId: String? // TODO: make optional so that we can check for it and display error if nil
     let networkService = API()
     var comments: [Comment] = []
-//    var parentCommentId: String?
+    
     // This is set when user clicks on reply
-    var parentCommentSelected: Comment?  // Maybe just use this...
+    var parentCommentSelected: Comment?  {
+        didSet {
+            print("didSet parent comment")
+            // Hide the reply area
+            replyInfoHolder.isHidden = false
+            heightOfReplyInfoHolder.constant = 50
+            view.layoutIfNeeded()
+        }
+    }
     
     @IBOutlet weak var commentITextField: UITextField!
     @IBOutlet weak var submitCommentButton: UIButton!
@@ -122,6 +130,7 @@ extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
             return cell!
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "commentCell", for: indexPath) as? CommentTableViewCell
+            cell?.delegate = self
             cell?.comment = comment
             return cell!
         }

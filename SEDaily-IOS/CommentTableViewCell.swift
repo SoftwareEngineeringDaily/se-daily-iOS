@@ -9,13 +9,18 @@
 import UIKit
 
 protocol  CommentReplyTableViewCellDelegate: class {
-    func replyToCommentPressed()
+    func replyToCommentPressed(comment:Comment)
 }
 
 class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var replyButton: UIButton!
     weak var delegate: CommentReplyTableViewCellDelegate?
+    var comment: Comment? {
+        didSet {
+            contentLabel.text = comment?.content
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,7 +28,9 @@ class CommentTableViewCell: UITableViewCell {
     }
 
     @IBAction func replyButtonPressed(_ sender: UIButton) {
-        delegate?.replyToCommentPressed()
+        if let comment = comment {
+            delegate?.replyToCommentPressed(comment: comment)
+        }
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -97,6 +97,14 @@ class CommentsViewController: UIViewController {
 
 }
 
+extension CommentsViewController: CommentReplyTableViewCellDelegate {
+    func replyToCommentPressed(comment:Comment) {
+        parentCommentSelected = comment
+        print("set comment")
+        print(comment)
+    }
+}
+
 extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -114,7 +122,7 @@ extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
             return cell!
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "commentCell", for: indexPath) as? CommentTableViewCell
-            cell?.contentLabel?.text = comment.content
+            cell?.comment = comment
             return cell!
         }
         

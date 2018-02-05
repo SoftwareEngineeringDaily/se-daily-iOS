@@ -107,7 +107,7 @@ extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let comment = comments[indexPath.row]
-        // TODO: avoid force cast
+        // TODO: avoid force castt
         if comment.parentComment != nil {
             let cell = tableView.dequeueReusableCell(withIdentifier: "replyCell", for: indexPath) as? CommentReplyTableViewCell
             cell?.contentLabel.text = comment.content

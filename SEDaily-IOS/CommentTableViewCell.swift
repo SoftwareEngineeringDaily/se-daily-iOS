@@ -8,9 +8,14 @@
 
 import UIKit
 
+protocol  CommentReplyTableViewCellDelegate: class {
+    func replyToCommentPressed()
+}
+
 class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var replyButton: UIButton!
+    weak var delegate: CommentReplyTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -18,6 +23,7 @@ class CommentTableViewCell: UITableViewCell {
     }
 
     @IBAction func replyButtonPressed(_ sender: UIButton) {
+        delegate?.replyToCommentPressed()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

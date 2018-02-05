@@ -138,7 +138,7 @@
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="3n7-Ce-dR2" firstAttribute="centerY" secondItem="Mhf-BZ-SlR" secondAttribute="centerY" id="64G-rJ-oxo"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="6oV-1k-rb2"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="50" id="6oV-1k-rb2"/>
                                     <constraint firstItem="U4V-dJ-ffy" firstAttribute="leading" secondItem="IaB-MT-j8Y" secondAttribute="leading" constant="10" id="X9J-Bk-9uM"/>
                                     <constraint firstItem="Mhf-BZ-SlR" firstAttribute="leading" secondItem="IaB-MT-j8Y" secondAttribute="leading" constant="17" id="Xyk-9P-7Hn"/>
                                     <constraint firstAttribute="trailing" secondItem="U4V-dJ-ffy" secondAttribute="trailing" constant="10" id="Y8R-95-mgT"/>
@@ -147,6 +147,7 @@
                                     <constraint firstAttribute="trailing" secondItem="3n7-Ce-dR2" secondAttribute="trailing" constant="20" id="sEk-OY-6Jh"/>
                                     <constraint firstAttribute="bottom" secondItem="Mhf-BZ-SlR" secondAttribute="bottom" constant="26" id="vot-Ck-FG8"/>
                                     <constraint firstItem="3n7-Ce-dR2" firstAttribute="leading" secondItem="Mhf-BZ-SlR" secondAttribute="trailing" constant="20" id="wXS-es-T7e"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="500" id="z56-Ex-JY3"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -164,6 +165,8 @@
                     </view>
                     <connections>
                         <outlet property="commentITextField" destination="Mhf-BZ-SlR" id="Gfp-Ob-6X6"/>
+                        <outlet property="createCommentHeight" destination="z56-Ex-JY3" id="vrG-AC-IWt"/>
+                        <outlet property="createCommentHolder" destination="IaB-MT-j8Y" id="93b-Aw-Bmt"/>
                         <outlet property="heightOfReplyInfoHolder" destination="52m-Ct-Cxc" id="Yky-AJ-yHp"/>
                         <outlet property="replyInfoHolder" destination="U4V-dJ-ffy" id="kf6-iD-xkH"/>
                         <outlet property="submitCommentButton" destination="3n7-Ce-dR2" id="GbK-2B-0KC"/>

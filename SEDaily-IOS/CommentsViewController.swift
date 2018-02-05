@@ -10,6 +10,8 @@ import UIKit
 
 class CommentsViewController: UIViewController {
 
+    @IBOutlet weak var createCommentHeight: NSLayoutConstraint!
+    @IBOutlet weak var createCommentHolder: UIView!
     @IBOutlet weak var replyInfoHolder: UIStackView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var heightOfReplyInfoHolder: NSLayoutConstraint!
@@ -48,7 +50,8 @@ class CommentsViewController: UIViewController {
         replyInfoHolder.isHidden = true
         heightOfReplyInfoHolder.constant = 0
         self.view.layoutIfNeeded()
-        
+    
+        // Fetch comments
         if let postId = postId {
             networkService.getComments(podcastId: postId, onSuccess: { [weak self] (comments) in
                 print("got comments")
@@ -67,6 +70,16 @@ class CommentsViewController: UIViewController {
         } else {
             print("postId is null")
         }
+        
+        // Hide if user is not logged in OR if user is limited (no true username / email/ name)
+        // TODO: make sure user has an email & a username to post :(
+        if !UserManager.sharedInstance.isCurrentUserLoggedIn() {
+            // TODO: hide the reponse area
+            createCommentHeight.constant = 0
+            createCommentHolder.isHidden = true
+            self.view.layoutSubviews()
+        }
+    
     }
 
     func flattenComments(nestedComments: [Comment]) -> [Comment] {

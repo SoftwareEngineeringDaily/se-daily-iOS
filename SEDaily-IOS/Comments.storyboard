@@ -76,8 +76,10 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="avatarImage" destination="AvW-gt-Wnr" id="udi-1h-fEG"/>
                                             <outlet property="contentLabel" destination="wOH-lP-GmK" id="y9z-6l-bFv"/>
                                             <outlet property="replyButton" destination="UCw-kO-COF" id="pxa-qq-Odq"/>
+                                            <outlet property="usernameLabel" destination="iNW-Em-Lzr" id="UhQ-Hb-COJ"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="replyCell" rowHeight="87" id="5dq-RC-aM7" customClass="CommentReplyTableViewCell" customModule="SEDaily_IOS" customModuleProvider="target">

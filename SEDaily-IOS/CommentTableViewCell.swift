@@ -13,12 +13,22 @@ protocol  CommentReplyTableViewCellDelegate: class {
 }
 
 class CommentTableViewCell: UITableViewCell {
+    @IBOutlet weak var avatarImage: UIImageView!
+    @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var replyButton: UIButton!
     weak var delegate: CommentReplyTableViewCellDelegate?
     var comment: Comment? {
         didSet {
             contentLabel.text = comment?.content
+            if let username = comment?.author.username {
+                usernameLabel.text = username
+            }
+            if let imageString = comment?.author.avatarUrl {
+                let url = URL(string: imageString)
+                avatarImage.kf.setImage(with: url)
+            }
+            
         }
     }
     

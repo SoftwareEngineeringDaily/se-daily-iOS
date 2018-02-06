@@ -41,6 +41,7 @@ class CommentsViewController: UIViewController {
     @IBOutlet weak var commentITextField: UITextField!
     @IBOutlet weak var submitCommentButton: UIButton!
     
+    let activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
@@ -51,6 +52,14 @@ class CommentsViewController: UIViewController {
         heightOfReplyInfoHolder.constant = 0
         self.view.layoutIfNeeded()
     
+        // Add activity indicator / spinner
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.startAnimating()
+        
         // Fetch comments
         if let postId = postId {
             networkService.getComments(podcastId: postId, onSuccess: { [weak self] (comments) in
@@ -63,9 +72,11 @@ class CommentsViewController: UIViewController {
                 self?.comments = flatComments
                 self?.tableView.reloadData()
                 
+                self?.activityIndicator.stopAnimating()
             }) { (error) in
                 print("error")
                 print(error)
+                
             }
         } else {
             print("postId is null")

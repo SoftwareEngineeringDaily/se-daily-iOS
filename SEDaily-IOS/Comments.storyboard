@@ -164,11 +164,11 @@
                         <viewLayoutGuide key="safeArea" id="1sn-fD-yVb"/>
                     </view>
                     <connections>
-                        <outlet property="commentITextField" destination="Mhf-BZ-SlR" id="Gfp-Ob-6X6"/>
                         <outlet property="createCommentHeight" destination="z56-Ex-JY3" id="vrG-AC-IWt"/>
                         <outlet property="createCommentHolder" destination="IaB-MT-j8Y" id="93b-Aw-Bmt"/>
+                        <outlet property="createCommentTextField" destination="Mhf-BZ-SlR" id="Gfp-Ob-6X6"/>
                         <outlet property="heightOfReplyInfoHolder" destination="52m-Ct-Cxc" id="Yky-AJ-yHp"/>
-                        <outlet property="replyInfoHolder" destination="U4V-dJ-ffy" id="kf6-iD-xkH"/>
+                        <outlet property="statusInfoHolder" destination="U4V-dJ-ffy" id="kf6-iD-xkH"/>
                         <outlet property="submitCommentButton" destination="3n7-Ce-dR2" id="GbK-2B-0KC"/>
                         <outlet property="tableView" destination="lzo-Rq-DcB" id="yF6-hG-HEb"/>
                     </connections>

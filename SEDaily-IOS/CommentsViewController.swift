@@ -12,7 +12,8 @@ class CommentsViewController: UIViewController {
 
     @IBOutlet weak var createCommentHeight: NSLayoutConstraint!
     @IBOutlet weak var createCommentHolder: UIView!
-    @IBOutlet weak var replyInfoHolder: UIStackView!
+    
+    @IBOutlet weak var statusInfoHolder: UIStackView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var heightOfReplyInfoHolder: NSLayoutConstraint!
     var postId: String? // TODO: make optional so that we can check for it and display error if nil
@@ -24,7 +25,7 @@ class CommentsViewController: UIViewController {
         didSet {
             guard let parentComment = parentCommentSelected else {
                 // Hide
-                replyInfoHolder.isHidden = true
+                statusInfoHolder.isHidden = true
                 heightOfReplyInfoHolder.constant = 0
                 self.view.layoutIfNeeded()
                 
@@ -32,13 +33,13 @@ class CommentsViewController: UIViewController {
             }
             print("didSet parent comment")
             // Hide the reply area
-            replyInfoHolder.isHidden = false
+            statusInfoHolder.isHidden = false
             heightOfReplyInfoHolder.constant = 50
             view.layoutIfNeeded()
         }
     }
     
-    @IBOutlet weak var commentITextField: UITextField!
+    @IBOutlet weak var createCommentTextField: UITextField!
     @IBOutlet weak var submitCommentButton: UIButton!
     
     let activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
@@ -48,7 +49,7 @@ class CommentsViewController: UIViewController {
         tableView.delegate = self
         
         // Hide the reply area
-        replyInfoHolder.isHidden = true
+        statusInfoHolder.isHidden = true
         heightOfReplyInfoHolder.constant = 0
         self.view.layoutIfNeeded()
     
@@ -109,15 +110,28 @@ class CommentsViewController: UIViewController {
     @IBAction func submitCommentPressed(_ sender: UIButton) {
         print("submitting")
         
-        replyInfoHolder.isHidden = false
+        // Show Reply info holder (so we can use it to display)
+        statusInfoHolder.isHidden = false
         heightOfReplyInfoHolder.constant = 50
         self.view.layoutIfNeeded()
         
-        guard let postId = postId, let commentContent = commentITextField.text else { return }
-        networkService.createComment(podcastId: postId, parentComment: parentCommentSelected, commentContent: commentContent, onSuccess: {
+        // Disable text field:
+        createCommentTextField.isUserInteractionEnabled = false
+        submitCommentButton.isEnabled = false
+        
+        guard let postId = postId, let commentContent = createCommentTextField.text else { return }
+        networkService.createComment(podcastId: postId, parentComment: parentCommentSelected, commentContent: commentContent, onSuccess: { [weak self] in
             print("submitted :)")
-        }) { (error) in
+            
+            // Reset text field + button:
+            self?.createCommentTextField.text = ""
+            self?.createCommentTextField.isUserInteractionEnabled = true
+            self?.submitCommentButton.isEnabled = true
+            
+        })  { [weak self] (error)  in
             print("error submitting comment")
+            self?.submitCommentButton.isEnabled = true
+            self?.createCommentTextField.isUserInteractionEnabled = true
         }
     }
     

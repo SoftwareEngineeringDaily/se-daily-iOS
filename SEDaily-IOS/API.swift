@@ -444,11 +444,11 @@ extension API {
             switch response.result {
             case .success:
                 print("success commenting")
+                onSuccess()
             case .failure(let error):
                 log.error(error)
-    
                 print("failed")
-                
+                onFailure(nil)
             }
         }
     }

@@ -23,10 +23,14 @@ class CommentTableViewCell: UITableViewCell {
             contentLabel.text = comment?.content
             if let username = comment?.author.username {
                 usernameLabel.text = username
+            } else {
+                usernameLabel.text = "Anonymous"
             }
             if let imageString = comment?.author.avatarUrl {
                 let url = URL(string: imageString)
                 avatarImage.kf.setImage(with: url)
+            } else {
+                avatarImage.image = UIImage(named: "profile-icon-9")
             }
             
         }

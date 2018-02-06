@@ -11,7 +11,8 @@ import SwiftIcons
 
 protocol HeaderViewDelegate: class {
     func modelDidChange(viewModel: PodcastViewModel)
-     func relatedLinksButtonPressed()
+    func relatedLinksButtonPressed()
+    func commentsButtonPressed()
 }
 
 class HeaderView: UIView {
@@ -207,7 +208,7 @@ extension HeaderView {
     }
 
     @objc func commentsButtonPressed() {
-        self.delegate?.relatedLinksButtonPressed()
+        self.delegate?.commentsButtonPressed()
     }
     
     @objc func upvoteButtonPressed() {

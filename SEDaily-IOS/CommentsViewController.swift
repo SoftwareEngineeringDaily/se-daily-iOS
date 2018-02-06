@@ -12,8 +12,9 @@ class CommentsViewController: UIViewController {
 
     @IBOutlet weak var createCommentHeight: NSLayoutConstraint!
     @IBOutlet weak var createCommentHolder: UIView!
+    @IBOutlet weak var composeStatusLabel: UILabel!
     
-    @IBOutlet weak var statusInfoHolder: UIStackView!
+    @IBOutlet weak var composeStatusHolder: UIStackView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var heightOfReplyInfoHolder: NSLayoutConstraint!
     var postId: String? // TODO: make optional so that we can check for it and display error if nil
@@ -25,15 +26,23 @@ class CommentsViewController: UIViewController {
         didSet {
             guard let parentComment = parentCommentSelected else {
                 // Hide
-                statusInfoHolder.isHidden = true
+                composeStatusHolder.isHidden = true
                 heightOfReplyInfoHolder.constant = 0
                 self.view.layoutIfNeeded()
                 
                 return
             }
+            
             print("didSet parent comment")
-            // Hide the reply area
-            statusInfoHolder.isHidden = false
+            // Show  the reply area
+            if let replyTo = parentComment.author.username {
+                composeStatusLabel.text = "Reply to: \(replyTo)"
+                
+            } else {
+                   composeStatusLabel.text = "Reply to: \(parentComment.content)"
+            }
+            
+            composeStatusHolder.isHidden = false
             heightOfReplyInfoHolder.constant = 50
             view.layoutIfNeeded()
         }
@@ -49,7 +58,7 @@ class CommentsViewController: UIViewController {
         tableView.delegate = self
         
         // Hide the reply area
-        statusInfoHolder.isHidden = true
+        composeStatusHolder.isHidden = true
         heightOfReplyInfoHolder.constant = 0
         self.view.layoutIfNeeded()
     
@@ -74,8 +83,9 @@ class CommentsViewController: UIViewController {
                 self?.tableView.reloadData()
                 
                 self?.activityIndicator.stopAnimating()
-            }) { (error) in
+            }) { [weak self] (error) in
                 print("error")
+                self?.composeStatusLabel.text = "There was a problem :("
                 print(error)
                 
             }
@@ -111,7 +121,8 @@ class CommentsViewController: UIViewController {
         print("submitting")
         
         // Show Reply info holder (so we can use it to display)
-        statusInfoHolder.isHidden = false
+        composeStatusLabel.text = "Submitting..."
+        composeStatusHolder.isHidden = false
         heightOfReplyInfoHolder.constant = 50
         self.view.layoutIfNeeded()
         
@@ -128,8 +139,10 @@ class CommentsViewController: UIViewController {
             self?.createCommentTextField.isUserInteractionEnabled = true
             self?.submitCommentButton.isEnabled = true
             
+            self?.composeStatusLabel.text = "Successfully submitted :)"
         })  { [weak self] (error)  in
             print("error submitting comment")
+            self?.composeStatusLabel.text = "There was a problem :("
             self?.submitCommentButton.isEnabled = true
             self?.createCommentTextField.isUserInteractionEnabled = true
         }

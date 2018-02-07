@@ -377,6 +377,7 @@ extension API {
 typealias  CommentModel = Comment
 // MARK: Comments
 extension API {
+    
     // get Comments
     func getComments(podcastId: String, onSuccess: @escaping ([Comment]) -> Void,
                      onFailure: @escaping (APIError?) -> Void) {
@@ -388,7 +389,6 @@ extension API {
                                      Headers.authorization: Headers.bearer + userToken
         ]
         
-        print(urlString)
         networkRequest(urlString, method: .get, parameters: nil, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
@@ -402,11 +402,9 @@ extension API {
                 do {
           
                     let data: CommentsResponse = try JSONDecoder().decode(CommentsResponse.self, from: responseData)
-                    print(data)
                     onSuccess(data.result)
                 } catch let jsonErr {
                     onFailure(.NoResponseDataError)
-                    print(jsonErr)
                 }
                 
             case .failure(let error):
@@ -416,7 +414,6 @@ extension API {
             }
         }
     }
-    // create Reply
     
     // create Comment
     func createComment(podcastId: String, parentComment: Comment?, commentContent: String, onSuccess: @escaping () -> Void,
@@ -443,11 +440,9 @@ extension API {
             print(response)
             switch response.result {
             case .success:
-                print("success commenting")
                 onSuccess()
             case .failure(let error):
                 log.error(error)
-                print("failed")
                 onFailure(nil)
             }
         }

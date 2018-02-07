@@ -29,14 +29,12 @@ class CommentsViewController: UIViewController {
                 composeStatusHolder.isHidden = true
                 heightOfReplyInfoHolder.constant = 0
                 self.view.layoutIfNeeded()
-                
                 return
             }
             
             // Show  the reply area
             if let replyTo = parentComment.author.username {
                 composeStatusLabel.text = "Reply to: \(replyTo)"
-                
             } else {
                    composeStatusLabel.text = "Reply to: \(parentComment.content)"
             }
@@ -55,7 +53,7 @@ class CommentsViewController: UIViewController {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        
+        title = L10n.comments
         // Hide the reply area
         composeStatusHolder.isHidden = true
         heightOfReplyInfoHolder.constant = 0
@@ -88,11 +86,9 @@ class CommentsViewController: UIViewController {
         let usernameOrEmail = UserManager.sharedInstance.currentUser.usernameOrEmail
         print(usernameOrEmail)
         if isValidEmail(testStr: usernameOrEmail) {
-            print("false isFull User")
             // This means we probably don't have a real username (assuming usernames dont allow @):
             return false
         } else {
-                print(" isFull User")
             return true
         }
     }
@@ -111,20 +107,18 @@ class CommentsViewController: UIViewController {
         if let postId = postId {
             networkService.getComments(podcastId: postId, onSuccess: { [weak self] (comments) in
                 guard let flatComments = self?.flattenComments(nestedComments: comments) else {
-                    print("error flattinging")
+                    self?.composeStatusLabel.text = L10n.thereWasAProblem
                     return
                 }
                 self?.comments = flatComments
                 self?.tableView.reloadData()
-                
                 self?.activityIndicator.stopAnimating()
                 }, onFailure: { [weak self] (_) in
-                print("error fetching comments")
                 self?.activityIndicator.stopAnimating()
-                self?.composeStatusLabel.text = "There was a problem :("
+                self?.composeStatusLabel.text = L10n.thereWasAProblem
             })
         } else {
-            print("postId is null")
+            composeStatusLabel.text = L10n.thereWasAProblem
         }
     }
 
@@ -142,10 +136,8 @@ class CommentsViewController: UIViewController {
     }
     
     @IBAction func submitCommentPressed(_ sender: UIButton) {
-        print("submitting")
-        
         // Show Reply info holder (so we can use it to display)
-        composeStatusLabel.text = "Submitting..."
+        composeStatusLabel.text = L10n.submitting
         composeStatusHolder.isHidden = false
         heightOfReplyInfoHolder.constant = 50
         self.view.layoutIfNeeded()
@@ -156,18 +148,16 @@ class CommentsViewController: UIViewController {
         
         guard let postId = postId, let commentContent = createCommentTextField.text else { return }
         networkService.createComment(podcastId: postId, parentComment: parentCommentSelected, commentContent: commentContent, onSuccess: { [weak self] in
-            print("submitted :)")
-            
-            // Reset text field + button:
+
+            // Reset input field + re-enable button:
             self?.createCommentTextField.text = ""
             self?.createCommentTextField.isUserInteractionEnabled = true
             self?.submitCommentButton.isEnabled = true
             
-            self?.composeStatusLabel.text = "Successfully submitted :)"
+            self?.composeStatusLabel.text = L10n.succcessfullySubmitted
             self?.loadComments()
         }, onFailure: { [weak self] (_) in
-            print("error submitting comment")
-            self?.composeStatusLabel.text = "There was a problem :("
+            self?.composeStatusLabel.text = L10n.thereWasAProblem
             self?.submitCommentButton.isEnabled = true
             self?.createCommentTextField.isUserInteractionEnabled = true
         })
@@ -179,7 +169,6 @@ class CommentsViewController: UIViewController {
     }
     
     @IBAction func cancelReplyPressed(_ sender: UIButton) {
-        print("cancel reply pressed")
         parentCommentSelected = nil
     }
 }

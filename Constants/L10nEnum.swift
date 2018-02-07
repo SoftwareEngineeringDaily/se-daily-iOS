@@ -47,6 +47,8 @@ enum L10n {
   static let appReviewPromptQuestion = L10n.tr("Localizable", "AppReviewPromptQuestion")
   /// Cancel
   static let cancelButtonTitle = L10n.tr("Localizable", "CancelButtonTitle")
+  /// Comments
+  static let comments = L10n.tr("Localizable", "Comments")
   /// Confirm Password
   static let confirmPasswordPlaceholder = L10n.tr("Localizable", "ConfirmPasswordPlaceholder")
   /// Email
@@ -95,6 +97,10 @@ enum L10n {
   static let relatedLinks = L10n.tr("Localizable", "RelatedLinks")
   /// Sign Up
   static let signUpButtonTitle = L10n.tr("Localizable", "SignUpButtonTitle")
+  /// Submitting...
+  static let submitting = L10n.tr("Localizable", "Submitting")
+  /// Successfully submitted :)
+  static let succcessfullySubmitted = L10n.tr("Localizable", "SucccessfullySubmitted")
   /// Just For You
   static let tabBarJustForYou = L10n.tr("Localizable", "TabBarJustForYou")
   /// Latest
@@ -123,6 +129,8 @@ enum L10n {
   static let tabTitleSecurity = L10n.tr("Localizable", "TabTitleSecurity")
   /// Tap to refresh
   static let tapToRefresh = L10n.tr("Localizable", "TapToRefresh")
+  /// There was a problem :(
+  static let thereWasAProblem = L10n.tr("Localizable", "ThereWasAProblem")
   /// Username or Email
   static let usernameOrEmailPlaceholder = L10n.tr("Localizable", "UsernameOrEmailPlaceholder")
   /// Username

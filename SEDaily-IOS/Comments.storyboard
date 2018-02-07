@@ -141,7 +141,9 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <outlet property="avatarImage" destination="AVq-r1-mXu" id="YF9-JW-Uo4"/>
                                             <outlet property="contentLabel" destination="EfE-EX-gek" id="16d-sT-28u"/>
+                                            <outlet property="usernameLabel" destination="soj-uw-aY1" id="weG-Vl-QY4"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

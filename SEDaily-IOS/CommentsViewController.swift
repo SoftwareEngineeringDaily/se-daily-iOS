@@ -22,7 +22,7 @@ class CommentsViewController: UIViewController {
     var comments: [Comment] = []
     
     // This is set when user clicks on reply
-    var parentCommentSelected: Comment?  {
+    var parentCommentSelected: Comment? {
         didSet {
             guard let parentComment = parentCommentSelected else {
                 // Hide
@@ -51,7 +51,7 @@ class CommentsViewController: UIViewController {
     @IBOutlet weak var createCommentTextField: UITextField!
     @IBOutlet weak var submitCommentButton: UIButton!
     
-    let activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
@@ -84,10 +84,8 @@ class CommentsViewController: UIViewController {
                 
                 self?.activityIndicator.stopAnimating()
             }) { [weak self] (error) in
-                print("error")
+                print("error fetching comments")
                 self?.composeStatusLabel.text = "There was a problem :("
-                print(error)
-                
             }
         } else {
             print("postId is null")
@@ -153,7 +151,6 @@ class CommentsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
     @IBAction func cancelReplyPressed(_ sender: UIButton) {
         print("cancel reply pressed")
         parentCommentSelected = nil
@@ -178,10 +175,10 @@ extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let comment = comments[indexPath.row]
-        // TODO: avoid force castt
+        
         if comment.parentComment != nil {
             let cell = tableView.dequeueReusableCell(withIdentifier: "replyCell", for: indexPath) as? CommentReplyTableViewCell
-            cell?.contentLabel.text = comment.content
+            cell?.comment = comment
             return cell!
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "commentCell", for: indexPath) as? CommentTableViewCell

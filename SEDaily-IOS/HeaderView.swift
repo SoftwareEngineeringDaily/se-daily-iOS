@@ -153,7 +153,7 @@ class HeaderView: UIView {
             make.edges.equalToSuperview()
         }
         stackView.axis = .horizontal
-//        stackView.alignment = .fill
+        stackView.alignment = .fill
         stackView.distribution = .fillEqually
         
         stackView.addArrangedSubview(commentsButton)

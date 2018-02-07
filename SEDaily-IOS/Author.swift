@@ -10,7 +10,7 @@ import Foundation
 // TODO: should merge this with User constuct?
 
 public struct Author: Codable {
-    let email: String
+    let email: String?
     let username: String?
     let avatarUrl: String?
 }

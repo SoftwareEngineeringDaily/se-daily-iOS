@@ -33,7 +33,6 @@ class CommentsViewController: UIViewController {
                 return
             }
             
-            print("didSet parent comment")
             // Show  the reply area
             if let replyTo = parentComment.author.username {
                 composeStatusLabel.text = "Reply to: \(replyTo)"
@@ -70,7 +69,7 @@ class CommentsViewController: UIViewController {
         
         // Hide if user is not logged in OR if user is limited (no true username / email/ name)
         // TODO: make sure user has an email & a username to post :(
-        if !UserManager.sharedInstance.isCurrentUserLoggedIn() {
+        if !isFullUser() {
             // TODO: hide the reponse area
             createCommentHeight.constant = 0
             createCommentHolder.isHidden = true
@@ -80,14 +79,38 @@ class CommentsViewController: UIViewController {
         loadComments()
     }
     
+    // Should be in the model but only used by comments for now:
+    func isFullUser() -> Bool {
+        if !UserManager.sharedInstance.isCurrentUserLoggedIn() {
+            return false
+        }
+        
+        let usernameOrEmail = UserManager.sharedInstance.currentUser.usernameOrEmail
+        print(usernameOrEmail)
+        if isValidEmail(testStr: usernameOrEmail) {
+            print("false isFull User")
+            // This means we probably don't have a real username (assuming usernames dont allow @):
+            return false
+        } else {
+                print(" isFull User")
+            return true
+        }
+    }
+    
+    func isValidEmail(testStr:String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: testStr)
+    }
+    
+    
     func loadComments() {
         activityIndicator.startAnimating()
         
         // Fetch comments
         if let postId = postId {
             networkService.getComments(podcastId: postId, onSuccess: { [weak self] (comments) in
-                print("got comments")
-                print(comments)
                 guard let flatComments = self?.flattenComments(nestedComments: comments) else {
                     print("error flattinging")
                     return

@@ -143,7 +143,9 @@ class HeaderView: UIView {
         voteView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: (35 * 5)))
+            
+        make.right.equalTo(playButton.snp.left).inset(UIView.getValueScaledByScreenWidthFor(baseValue: -20))
+//            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: (35 * 5)))
             make.height.equalToSuperview()
         }
 
@@ -154,12 +156,15 @@ class HeaderView: UIView {
         stackView.axis = .horizontal
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
-
-        stackView.addArrangedSubview(commentsButton)
+        
         stackView.addArrangedSubview(downVoteButton)
         stackView.addArrangedSubview(scoreLabel)
         stackView.addArrangedSubview(upVoteButton)
-
+        // Gotta be a better way to do this, just adding some space:
+        let spacerView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+        stackView.addArrangedSubview(spacerView)
+        stackView.addArrangedSubview(commentsButton)
+        
         scoreLabel.textAlignment = .center
         scoreLabel.baselineAdjustment = .alignCenters
         scoreLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 24))

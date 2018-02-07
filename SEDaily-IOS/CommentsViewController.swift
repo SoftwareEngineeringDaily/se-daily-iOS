@@ -97,13 +97,12 @@ class CommentsViewController: UIViewController {
         }
     }
     
-    func isValidEmail(testStr:String) -> Bool {
+    func isValidEmail(testStr: String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         
-        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
         return emailTest.evaluate(with: testStr)
     }
-    
     
     func loadComments() {
         activityIndicator.startAnimating()
@@ -119,11 +118,11 @@ class CommentsViewController: UIViewController {
                 self?.tableView.reloadData()
                 
                 self?.activityIndicator.stopAnimating()
-            }) { [weak self] (error) in
+                }, onFailure: { [weak self] (_) in
                 print("error fetching comments")
                 self?.activityIndicator.stopAnimating()
                 self?.composeStatusLabel.text = "There was a problem :("
-            }
+            })
         } else {
             print("postId is null")
         }
@@ -166,12 +165,12 @@ class CommentsViewController: UIViewController {
             
             self?.composeStatusLabel.text = "Successfully submitted :)"
             self?.loadComments()
-        })  { [weak self] (error)  in
+        }, onFailure: { [weak self] (_) in
             print("error submitting comment")
             self?.composeStatusLabel.text = "There was a problem :("
             self?.submitCommentButton.isEnabled = true
             self?.createCommentTextField.isUserInteractionEnabled = true
-        }
+        })
     }
     
     override func didReceiveMemoryWarning() {

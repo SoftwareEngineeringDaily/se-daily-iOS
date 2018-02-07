@@ -112,7 +112,6 @@ class HeaderView: UIView {
             make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 180))
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 35))
         }
-        
     }
     
     func setupPlayView() {
@@ -144,7 +143,7 @@ class HeaderView: UIView {
         voteView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: (35 * 4)))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: (35 * 5)))
             make.height.equalToSuperview()
         }
 

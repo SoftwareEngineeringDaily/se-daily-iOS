@@ -156,20 +156,17 @@ class HeaderView: UIView {
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
         
+        stackView.addArrangedSubview(commentsButton)
         stackView.addArrangedSubview(downVoteButton)
         stackView.addArrangedSubview(scoreLabel)
         stackView.addArrangedSubview(upVoteButton)
-        // Gotta be a better way to do this, just adding some space:
-//        let spacerView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-//        stackView.addArrangedSubview(spacerView)
-        stackView.addArrangedSubview(commentsButton)
-        
+     
         scoreLabel.textAlignment = .center
         scoreLabel.baselineAdjustment = .alignCenters
         scoreLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 24))
 
-        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 30)
-        commentsButton.setIcon(icon: .fontAwesome(.commentO), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
+        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 35)
+        commentsButton.setIcon(icon: .fontAwesome(.commentO), iconSize: iconSize , color: Stylesheet.Colors.offBlack, forState: .normal)
         commentsButton.addTarget(self, action: #selector(self.commentsButtonPressed), for: .touchUpInside)
         
         downVoteButton.setIcon(icon: .fontAwesome(.thumbsODown), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)

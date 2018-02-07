@@ -166,8 +166,8 @@ class HeaderView: UIView {
         scoreLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 24))
 
         let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 35)
-        commentsButton.setIcon(icon: .fontAwesome(.comment), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
-        commentsButton.setIcon(icon: .fontAwesome(.comment), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
+        commentsButton.setIcon(icon: .fontAwesome(.comments), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
+        commentsButton.setIcon(icon: .fontAwesome(.comments), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
         commentsButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
         commentsButton.addTarget(self, action: #selector(self.commentsButtonPressed), for: .touchUpInside)
         
@@ -188,6 +188,7 @@ class HeaderView: UIView {
         self.dateLabel.text = model.getLastUpdatedAsDate()?.dateString() ?? ""
         self.scoreLabel.text = model.score.string
 
+        commentsButton.isSelected = false
         upVoteButton.isSelected = self.podcastViewModel.isUpvoted
         downVoteButton.isSelected = self.podcastViewModel.isDownvoted
         self.scoreLabel.text = String(self.podcastViewModel.score)

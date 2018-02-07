@@ -68,7 +68,6 @@ class CommentsViewController: UIViewController {
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
         view.addSubview(activityIndicator)
         
-       
         // Hide if user is not logged in OR if user is limited (no true username / email/ name)
         // TODO: make sure user has an email & a username to post :(
         if !UserManager.sharedInstance.isCurrentUserLoggedIn() {
@@ -166,8 +165,7 @@ class CommentsViewController: UIViewController {
 extension CommentsViewController: CommentReplyTableViewCellDelegate {
     func replyToCommentPressed(comment: Comment) {
         parentCommentSelected = comment
-        print("set comment")
-        print(comment)
+        createCommentTextField.becomeFirstResponder()
     }
 }
 

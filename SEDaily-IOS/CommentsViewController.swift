@@ -65,15 +65,13 @@ class CommentsViewController: UIViewController {
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
         view.addSubview(activityIndicator)
         
-        // Hide if user is not logged in OR if user is limited (no true username / email/ name)
-        // TODO: make sure user has an email & a username to post :(
+        // Hide if user is not logged in OR if user is limited (no true username)
         if !isFullUser() {
-            // TODO: hide the reponse area
             createCommentHeight.constant = 0
             createCommentHolder.isHidden = true
             self.view.layoutSubviews()
         }
-    
+
         loadComments()
     }
     
@@ -92,7 +90,7 @@ class CommentsViewController: UIViewController {
             return true
         }
     }
-    
+    // From stackoveflow:
     func isValidEmail(testStr: String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         
@@ -103,23 +101,22 @@ class CommentsViewController: UIViewController {
     func loadComments() {
         activityIndicator.startAnimating()
         
-        // Fetch comments
-        if let postId = postId {
-            networkService.getComments(podcastId: postId, onSuccess: { [weak self] (comments) in
-                guard let flatComments = self?.flattenComments(nestedComments: comments) else {
-                    self?.composeStatusLabel.text = L10n.thereWasAProblem
-                    return
-                }
-                self?.comments = flatComments
-                self?.tableView.reloadData()
-                self?.activityIndicator.stopAnimating()
-                }, onFailure: { [weak self] (_) in
-                self?.activityIndicator.stopAnimating()
-                self?.composeStatusLabel.text = L10n.thereWasAProblem
-            })
-        } else {
-            composeStatusLabel.text = L10n.thereWasAProblem
+        guard let postId = postId else {
+               composeStatusLabel.text = L10n.thereWasAProblem
+            return
         }
+        networkService.getComments(podcastId: postId, onSuccess: { [weak self] (comments) in
+            guard let flatComments = self?.flattenComments(nestedComments: comments) else {
+                self?.composeStatusLabel.text = L10n.thereWasAProblem
+                return
+            }
+            self?.comments = flatComments
+            self?.tableView.reloadData()
+            self?.activityIndicator.stopAnimating()
+            }, onFailure: { [weak self] (_) in
+            self?.activityIndicator.stopAnimating()
+            self?.composeStatusLabel.text = L10n.thereWasAProblem
+        })
     }
 
     func flattenComments(nestedComments: [Comment]) -> [Comment] {
@@ -136,7 +133,7 @@ class CommentsViewController: UIViewController {
     }
     
     @IBAction func submitCommentPressed(_ sender: UIButton) {
-        // Show Reply info holder (so we can use it to display)
+        // Show Reply info holder (so we can use it to display statuses)
         composeStatusLabel.text = L10n.submitting
         composeStatusHolder.isHidden = false
         heightOfReplyInfoHolder.constant = 50
@@ -146,7 +143,10 @@ class CommentsViewController: UIViewController {
         createCommentTextField.isUserInteractionEnabled = false
         submitCommentButton.isEnabled = false
         
-        guard let postId = postId, let commentContent = createCommentTextField.text else { return }
+        guard let postId = postId, let commentContent = createCommentTextField.text else {
+            composeStatusLabel.text = L10n.thereWasAProblem
+            return
+        }
         networkService.createComment(podcastId: postId, parentComment: parentCommentSelected, commentContent: commentContent, onSuccess: { [weak self] in
 
             // Reset input field + re-enable button:
@@ -201,7 +201,6 @@ extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
             cell?.comment = comment
             return cell!
         }
-        
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {

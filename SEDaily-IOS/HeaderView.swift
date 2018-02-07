@@ -153,7 +153,7 @@ class HeaderView: UIView {
             make.edges.equalToSuperview()
         }
         stackView.axis = .horizontal
-        stackView.alignment = .fill
+//        stackView.alignment = .fill
         stackView.distribution = .fillEqually
         
         stackView.addArrangedSubview(commentsButton)
@@ -165,8 +165,8 @@ class HeaderView: UIView {
         scoreLabel.baselineAdjustment = .alignCenters
         scoreLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 24))
 
-        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 35)
-        commentsButton.setIcon(icon: .fontAwesome(.commentO), iconSize: iconSize , color: Stylesheet.Colors.offBlack, forState: .normal)
+        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 34)
+        commentsButton.setIcon(icon: .fontAwesome(.commentO), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
         commentsButton.addTarget(self, action: #selector(self.commentsButtonPressed), for: .touchUpInside)
         
         downVoteButton.setIcon(icon: .fontAwesome(.thumbsODown), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)

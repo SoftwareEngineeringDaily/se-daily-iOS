@@ -155,6 +155,7 @@ class CommentsViewController: UIViewController {
             self?.submitCommentButton.isEnabled = true
             
             self?.composeStatusLabel.text = L10n.succcessfullySubmitted
+            self?.parentCommentSelected = nil
             self?.loadComments()
         }, onFailure: { [weak self] (_) in
             self?.composeStatusLabel.text = L10n.thereWasAProblem

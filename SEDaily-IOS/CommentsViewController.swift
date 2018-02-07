@@ -68,6 +68,20 @@ class CommentsViewController: UIViewController {
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
         view.addSubview(activityIndicator)
         
+       
+        // Hide if user is not logged in OR if user is limited (no true username / email/ name)
+        // TODO: make sure user has an email & a username to post :(
+        if !UserManager.sharedInstance.isCurrentUserLoggedIn() {
+            // TODO: hide the reponse area
+            createCommentHeight.constant = 0
+            createCommentHolder.isHidden = true
+            self.view.layoutSubviews()
+        }
+    
+        loadComments()
+    }
+    
+    func loadComments() {
         activityIndicator.startAnimating()
         
         // Fetch comments
@@ -85,21 +99,12 @@ class CommentsViewController: UIViewController {
                 self?.activityIndicator.stopAnimating()
             }) { [weak self] (error) in
                 print("error fetching comments")
+                self?.activityIndicator.stopAnimating()
                 self?.composeStatusLabel.text = "There was a problem :("
             }
         } else {
             print("postId is null")
         }
-        
-        // Hide if user is not logged in OR if user is limited (no true username / email/ name)
-        // TODO: make sure user has an email & a username to post :(
-        if !UserManager.sharedInstance.isCurrentUserLoggedIn() {
-            // TODO: hide the reponse area
-            createCommentHeight.constant = 0
-            createCommentHolder.isHidden = true
-            self.view.layoutSubviews()
-        }
-    
     }
 
     func flattenComments(nestedComments: [Comment]) -> [Comment] {
@@ -138,6 +143,7 @@ class CommentsViewController: UIViewController {
             self?.submitCommentButton.isEnabled = true
             
             self?.composeStatusLabel.text = "Successfully submitted :)"
+            self?.loadComments()
         })  { [weak self] (error)  in
             print("error submitting comment")
             self?.composeStatusLabel.text = "There was a problem :("

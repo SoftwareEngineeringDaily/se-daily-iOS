@@ -28,8 +28,6 @@ class CommentTableViewCell: UITableViewCell {
         didSet {
             let prettyDate = comment?.getPostedDate()?.dateString() ?? ""
             dateLabel.text = prettyDate
-            print("pretty date:")
-            print(prettyDate)
             contentLabel.text = comment?.content
             if let username = comment?.author.username {
                 usernameLabel.text = username

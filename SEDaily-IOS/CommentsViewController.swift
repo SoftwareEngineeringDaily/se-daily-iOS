@@ -75,7 +75,7 @@ class CommentsViewController: UIViewController {
         
         // Style (x) close button for status area:
         let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 20)
-        closeStatusAreaButton.setIcon(icon: .fontAwesome(.timesCircleO), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
+        closeStatusAreaButton.setIcon(icon: .fontAwesome(.times), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
         
         loadComments()
     }

@@ -337,7 +337,6 @@ typealias RelatedLinkModel = RelatedLink
 extension API {
     func getRelatedLinks(podcastId: String, onSuccess: @escaping ([RelatedLink]) -> Void,
                          onFailure: @escaping (APIError?) -> Void) {
-        print(rootURL)
         let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.relatedLinks
         let user = UserManager.sharedInstance.getActiveUser()
         let userToken = user.token

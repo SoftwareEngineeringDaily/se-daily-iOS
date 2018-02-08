@@ -12,7 +12,7 @@ public struct Comment: Codable {
     let author: Author
     let _id: String
     let content: String
-    //   lete dateCreated : String  ---> use init() to initalize into date
+    let dateCreated : String
     let deleted: Bool
     let post: String
     let replies: [Comment]?
@@ -20,4 +20,13 @@ public struct Comment: Codable {
     let upvoted: Bool?
     let downvoted: Bool?
     let parentComment: String?
+}
+
+
+extension Comment {
+    
+    // This is too slow for a cell collection view call
+    func getPostedDate() -> Date? {
+        return Date(iso8601String: self.dateCreated)
+    }
 }

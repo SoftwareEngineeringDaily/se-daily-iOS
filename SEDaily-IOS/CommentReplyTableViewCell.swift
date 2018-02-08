@@ -13,10 +13,12 @@ class CommentReplyTableViewCell: UITableViewCell {
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
-    
+    @IBOutlet weak var dateLabel: UILabel!
     var comment: Comment? {
         didSet {
             contentLabel.text = comment?.content
+            let prettyDate = comment?.getPostedDate()?.dateString() ?? ""
+            dateLabel.text = prettyDate
             if let username = comment?.author.username {
                 usernameLabel.text = username
             } else {

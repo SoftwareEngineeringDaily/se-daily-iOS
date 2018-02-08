@@ -94,6 +94,7 @@
                                         <connections>
                                             <outlet property="avatarImage" destination="AvW-gt-Wnr" id="udi-1h-fEG"/>
                                             <outlet property="contentLabel" destination="wOH-lP-GmK" id="y9z-6l-bFv"/>
+                                            <outlet property="dateLabel" destination="HTb-Qn-O8P" id="GPm-6L-XDn"/>
                                             <outlet property="replyButton" destination="UCw-kO-COF" id="pxa-qq-Odq"/>
                                             <outlet property="usernameLabel" destination="iNW-Em-Lzr" id="UhQ-Hb-COJ"/>
                                         </connections>
@@ -106,8 +107,9 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserThatReplied" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="soj-uw-aY1">
-                                                    <rect key="frame" x="80" y="84" width="265" height="20"/>
+                                                    <rect key="frame" x="80" y="84" width="185" height="20"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="250" constant="80" id="UAJ-B3-vS9"/>
                                                         <constraint firstAttribute="height" constant="20" id="ehx-eb-Y8y"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -143,9 +145,18 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feb 7 2018" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lBQ-uB-4Xy">
+                                                    <rect key="frame" x="275" y="84" width="70" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="70" id="lKm-MR-s12"/>
+                                                        <constraint firstAttribute="height" constant="21" id="uVX-eh-4fx"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="soj-uw-aY1" secondAttribute="trailing" constant="15" id="4Ir-Xl-sH1"/>
                                                 <constraint firstItem="FO7-5p-bL0" firstAttribute="leading" secondItem="26X-gC-hcl" secondAttribute="trailing" constant="15" id="6Hr-ru-tc3"/>
                                                 <constraint firstItem="EfE-EX-gek" firstAttribute="top" secondItem="QxP-hj-7Wy" secondAttribute="topMargin" constant="15" id="COh-pE-uJ8"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="EfE-EX-gek" secondAttribute="trailing" constant="15" id="CVv-TS-CjF"/>
@@ -154,15 +165,19 @@
                                                 <constraint firstItem="soj-uw-aY1" firstAttribute="leading" secondItem="FO7-5p-bL0" secondAttribute="trailing" constant="15" id="CoY-WG-6K8"/>
                                                 <constraint firstItem="26X-gC-hcl" firstAttribute="leading" secondItem="QxP-hj-7Wy" secondAttribute="leading" id="HbN-CM-33O"/>
                                                 <constraint firstItem="26X-gC-hcl" firstAttribute="top" secondItem="QxP-hj-7Wy" secondAttribute="top" id="LJg-no-xRe"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="lBQ-uB-4Xy" secondAttribute="trailing" constant="15" id="MQA-yH-uDA"/>
                                                 <constraint firstItem="soj-uw-aY1" firstAttribute="centerY" secondItem="AVq-r1-mXu" secondAttribute="centerY" id="WNW-Gw-vu4"/>
+                                                <constraint firstItem="lBQ-uB-4Xy" firstAttribute="centerY" secondItem="soj-uw-aY1" secondAttribute="centerY" id="XTD-TS-FUN"/>
                                                 <constraint firstItem="EfE-EX-gek" firstAttribute="leading" secondItem="26X-gC-hcl" secondAttribute="trailing" constant="15" id="diZ-eT-pTa"/>
                                                 <constraint firstAttribute="bottom" secondItem="26X-gC-hcl" secondAttribute="bottom" id="gl5-Fh-Dew"/>
+                                                <constraint firstItem="lBQ-uB-4Xy" firstAttribute="leading" secondItem="soj-uw-aY1" secondAttribute="trailing" constant="10" id="ue0-1z-eXf"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="avatarImage" destination="AVq-r1-mXu" id="YF9-JW-Uo4"/>
                                             <outlet property="contentLabel" destination="EfE-EX-gek" id="16d-sT-28u"/>
+                                            <outlet property="dateLabel" destination="lBQ-uB-4Xy" id="UpJ-5a-HfI"/>
                                             <outlet property="usernameLabel" destination="soj-uw-aY1" id="weG-Vl-QY4"/>
                                         </connections>
                                     </tableViewCell>

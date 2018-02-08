@@ -17,6 +17,7 @@ class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var replyButton: UIButton!
+    @IBOutlet weak var dateLabel: UILabel!
     weak var delegate: CommentReplyTableViewCellDelegate?
     var hideReplyCell = false {
         didSet {
@@ -26,6 +27,7 @@ class CommentTableViewCell: UITableViewCell {
     var comment: Comment? {
         didSet {
             let prettyDate = comment?.getPostedDate()?.dateString() ?? ""
+            dateLabel.text = prettyDate
             print("pretty date:")
             print(prettyDate)
             contentLabel.text = comment?.content

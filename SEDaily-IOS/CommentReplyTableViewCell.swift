@@ -16,7 +16,7 @@ class CommentReplyTableViewCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     var comment: Comment? {
         didSet {
-            contentLabel.text = comment?.content
+            contentLabel.text = comment?.computedContent()
             let prettyDate = comment?.getPostedDate()?.dateString() ?? ""
             dateLabel.text = prettyDate
             if let username = comment?.author.username {
@@ -30,7 +30,6 @@ class CommentReplyTableViewCell: UITableViewCell {
             } else {
                 avatarImage.image = UIImage(named: "profile-icon-9")
             }
-            
         }
     }
     

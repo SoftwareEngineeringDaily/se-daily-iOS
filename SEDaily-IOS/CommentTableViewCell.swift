@@ -24,11 +24,12 @@ class CommentTableViewCell: UITableViewCell {
             replyButton.isHidden = hideReplyCell
         }
     }
+    
     var comment: Comment? {
         didSet {
             let prettyDate = comment?.getPostedDate()?.dateString() ?? ""
             dateLabel.text = prettyDate
-            contentLabel.text = comment?.content
+            contentLabel.text = comment?.computedContent()
             if let username = comment?.author.username {
                 usernameLabel.text = username
             } else {

@@ -36,7 +36,7 @@ class CommentsViewController: UIViewController {
             if let replyTo = parentComment.author.username {
                 composeStatusLabel.text = "Reply to: \(replyTo)"
             } else {
-                   composeStatusLabel.text = "Reply to: \(parentComment.content)"
+                composeStatusLabel.text = "Reply to: \(parentComment.content)"
             }
             
             composeStatusHolder.isHidden = false

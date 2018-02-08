@@ -9,7 +9,7 @@
 import UIKit
 
 class RelatedLinksViewController: UIViewController {
-
+let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     let networkService: API = API()
     var postId = ""
     var links: [RelatedLink] = []
@@ -24,14 +24,23 @@ class RelatedLinksViewController: UIViewController {
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 44
         
-        // TODO: add a spinner
+        // Add activity indicator / spinner
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        
         networkService.getRelatedLinks(podcastId: self.postId, onSuccess: { [weak self] relatedLinks in
             self?.links = relatedLinks
             self?.tableView.reloadData()
-        }) { _ in
+            self?.activityIndicator.stopAnimating()
+            
+            self?.title = "\(relatedLinks.count) \(L10n.relatedLinks)"
+        }, onFailure: { _ in
             // TODO: show an error to user
             print("error--getting-links")
-        }
+        })
     }
 
     override func didReceiveMemoryWarning() {

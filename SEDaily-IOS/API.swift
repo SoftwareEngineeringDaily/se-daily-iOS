@@ -435,7 +435,6 @@ extension API {
             .validate(statusCode: 200..<300)
             .responseJSON { response in
             
-            print(response)
             switch response.result {
             case .success:
                 onSuccess()

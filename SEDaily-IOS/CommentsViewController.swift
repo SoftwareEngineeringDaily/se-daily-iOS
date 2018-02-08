@@ -87,7 +87,6 @@ class CommentsViewController: UIViewController {
         }
         
         let usernameOrEmail = UserManager.sharedInstance.currentUser.usernameOrEmail
-        print(usernameOrEmail)
         if isValidEmail(testStr: usernameOrEmail) {
             // This means we probably don't have a real username (assuming usernames dont allow @):
             return false

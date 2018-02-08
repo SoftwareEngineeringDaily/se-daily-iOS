@@ -18,6 +18,11 @@ class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var replyButton: UIButton!
     weak var delegate: CommentReplyTableViewCellDelegate?
+    var hideReplyCell = false {
+        didSet {
+            replyButton.isHidden = hideReplyCell
+        }
+    }
     var comment: Comment? {
         didSet {
             contentLabel.text = comment?.content
@@ -32,7 +37,6 @@ class CommentTableViewCell: UITableViewCell {
             } else {
                 avatarImage.image = UIImage(named: "profile-icon-9")
             }
-            
         }
     }
     

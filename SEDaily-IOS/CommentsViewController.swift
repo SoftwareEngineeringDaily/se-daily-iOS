@@ -204,6 +204,7 @@ extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "commentCell", for: indexPath) as? CommentTableViewCell
             cell?.delegate = self
+            cell?.hideReplyCell = !isFullUser()
             cell?.comment = comment
             return cell!
         }

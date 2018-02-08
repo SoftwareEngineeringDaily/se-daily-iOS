@@ -142,9 +142,8 @@ class HeaderView: UIView {
         playView.addSubview(voteView)
         voteView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-            
-            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: (37 * 5)))
+            make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 10))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: (45 * 5)))
             make.height.equalToSuperview()
         }
 

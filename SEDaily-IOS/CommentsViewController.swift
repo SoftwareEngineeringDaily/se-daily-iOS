@@ -10,6 +10,7 @@ import UIKit
 
 class CommentsViewController: UIViewController {
 
+    @IBOutlet weak var closeStatusAreaButton: UIButton!
     @IBOutlet weak var createCommentHeight: NSLayoutConstraint!
     @IBOutlet weak var createCommentHolder: UIView!
     @IBOutlet weak var composeStatusLabel: UILabel!
@@ -71,7 +72,11 @@ class CommentsViewController: UIViewController {
             createCommentHolder.isHidden = true
             self.view.layoutSubviews()
         }
-
+        
+        // Style (x) close button for status area:
+        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 20)
+        closeStatusAreaButton.setIcon(icon: .fontAwesome(.timesCircleO), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
+        
         loadComments()
     }
     

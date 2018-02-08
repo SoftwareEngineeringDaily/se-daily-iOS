@@ -230,6 +230,7 @@
                         <viewLayoutGuide key="safeArea" id="1sn-fD-yVb"/>
                     </view>
                     <connections>
+                        <outlet property="closeStatusAreaButton" destination="XY0-NH-XAD" id="uSO-r3-Adh"/>
                         <outlet property="composeStatusHolder" destination="U4V-dJ-ffy" id="kf6-iD-xkH"/>
                         <outlet property="composeStatusLabel" destination="GA5-b6-wd3" id="eI4-ja-BWw"/>
                         <outlet property="createCommentHeight" destination="z56-Ex-JY3" id="vrG-AC-IWt"/>

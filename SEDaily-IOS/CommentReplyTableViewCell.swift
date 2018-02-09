@@ -30,6 +30,12 @@ class CommentReplyTableViewCell: UITableViewCell {
             } else {
                 avatarImage.image = UIImage(named: "profile-icon-9")
             }
+            
+            if comment?.deleted == true {
+                contentLabel.textColor = UIColor.lightGray
+            } else {
+                contentLabel.textColor = UIColor.black
+            }
         }
     }
     

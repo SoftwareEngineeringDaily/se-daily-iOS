@@ -57,7 +57,7 @@ class CommentsViewController: UIViewController {
         title = L10n.comments
         // Hide the reply area
         composeStatusHolder.isHidden = true
-        heightOfReplyInfoHolder.constant = 0
+//        heightOfReplyInfoHolder.constant = 0
         self.view.layoutIfNeeded()
     
         // Add activity indicator / spinner
@@ -68,8 +68,10 @@ class CommentsViewController: UIViewController {
         
         // Hide if user is not logged in OR if user is limited (no true username)
         if !isFullUser() {
-            createCommentHeight.constant = 0
-            createCommentHolder.isHidden = true
+            
+//            createCommentHeight.constant = 0
+//            createCommentHolder.isHidden = true
+//            createCommentHolder.removeFromSuperview()
             self.view.layoutSubviews()
         }
         

@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lzo-Rq-DcB">
-                                <rect key="frame" x="0.0" y="20" width="375" height="547"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="633"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="commentCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="commentCell" rowHeight="120" id="oVA-y9-v1b" customClass="CommentTableViewCell" customModule="SEDaily_IOS" customModuleProvider="target">
@@ -184,19 +184,19 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IaB-MT-j8Y">
-                                <rect key="frame" x="0.0" y="551" width="375" height="116"/>
+                                <rect key="frame" x="0.0" y="637" width="375" height="30"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mhf-BZ-SlR">
-                                        <rect key="frame" x="17" y="60" width="287" height="30"/>
+                                        <rect key="frame" x="17" y="0.0" width="287" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="S5R-xW-MTX"/>
+                                            <constraint firstAttribute="height" priority="750" constant="30" id="S5R-xW-MTX"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3n7-Ce-dR2">
-                                        <rect key="frame" x="324" y="60" width="31" height="30"/>
+                                        <rect key="frame" x="324" y="0.0" width="31" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="LSm-gJ-aWf"/>
                                         </constraints>
@@ -206,16 +206,16 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U4V-dJ-ffy">
-                                        <rect key="frame" x="10" y="5" width="355" height="50"/>
+                                        <rect key="frame" x="10" y="0.0" width="355" height="0.0"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add your comment:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GA5-b6-wd3">
-                                                <rect key="frame" x="0.0" y="0.0" width="290" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="290" height="0.0"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XY0-NH-XAD">
-                                                <rect key="frame" x="290" y="0.0" width="65" height="50"/>
+                                                <rect key="frame" x="290" y="0.0" width="65" height="0.0"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="65" id="YGd-Ho-qLo"/>
                                                 </constraints>
@@ -226,21 +226,20 @@
                                             </button>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="52m-Ct-Cxc"/>
+                                            <constraint firstAttribute="height" id="52m-Ct-Cxc"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="3n7-Ce-dR2" firstAttribute="centerY" secondItem="Mhf-BZ-SlR" secondAttribute="centerY" id="64G-rJ-oxo"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="50" id="6oV-1k-rb2"/>
-                                    <constraint firstItem="U4V-dJ-ffy" firstAttribute="leading" secondItem="IaB-MT-j8Y" secondAttribute="leading" constant="10" id="X9J-Bk-9uM"/>
+                                    <constraint firstItem="U4V-dJ-ffy" firstAttribute="leading" secondItem="IaB-MT-j8Y" secondAttribute="leading" priority="750" constant="10" id="X9J-Bk-9uM"/>
                                     <constraint firstItem="Mhf-BZ-SlR" firstAttribute="leading" secondItem="IaB-MT-j8Y" secondAttribute="leading" constant="17" id="Xyk-9P-7Hn"/>
-                                    <constraint firstAttribute="trailing" secondItem="U4V-dJ-ffy" secondAttribute="trailing" constant="10" id="Y8R-95-mgT"/>
-                                    <constraint firstItem="Mhf-BZ-SlR" firstAttribute="top" secondItem="U4V-dJ-ffy" secondAttribute="bottom" constant="5" id="dRr-gt-x2s"/>
-                                    <constraint firstItem="U4V-dJ-ffy" firstAttribute="top" secondItem="IaB-MT-j8Y" secondAttribute="top" constant="5" id="jZN-a5-4RR"/>
+                                    <constraint firstAttribute="trailing" secondItem="U4V-dJ-ffy" secondAttribute="trailing" priority="750" constant="10" id="Y8R-95-mgT"/>
+                                    <constraint firstItem="Mhf-BZ-SlR" firstAttribute="top" secondItem="U4V-dJ-ffy" secondAttribute="bottom" id="dRr-gt-x2s"/>
+                                    <constraint firstItem="U4V-dJ-ffy" firstAttribute="top" secondItem="IaB-MT-j8Y" secondAttribute="top" id="jZN-a5-4RR"/>
                                     <constraint firstAttribute="trailing" secondItem="3n7-Ce-dR2" secondAttribute="trailing" constant="20" id="sEk-OY-6Jh"/>
-                                    <constraint firstAttribute="bottom" secondItem="Mhf-BZ-SlR" secondAttribute="bottom" constant="26" id="vot-Ck-FG8"/>
+                                    <constraint firstAttribute="bottom" secondItem="Mhf-BZ-SlR" secondAttribute="bottom" id="vot-Ck-FG8"/>
                                     <constraint firstItem="3n7-Ce-dR2" firstAttribute="leading" secondItem="Mhf-BZ-SlR" secondAttribute="trailing" constant="20" id="wXS-es-T7e"/>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="500" id="z56-Ex-JY3"/>
                                 </constraints>
@@ -263,7 +262,7 @@
                         <outlet property="composeStatusHolder" destination="U4V-dJ-ffy" id="kf6-iD-xkH"/>
                         <outlet property="composeStatusLabel" destination="GA5-b6-wd3" id="eI4-ja-BWw"/>
                         <outlet property="createCommentHeight" destination="z56-Ex-JY3" id="vrG-AC-IWt"/>
-                        <outlet property="createCommentHolder" destination="IaB-MT-j8Y" id="93b-Aw-Bmt"/>
+                        <outlet property="createCommentHolder" destination="IaB-MT-j8Y" id="7b1-ii-MuG"/>
                         <outlet property="createCommentTextField" destination="Mhf-BZ-SlR" id="Gfp-Ob-6X6"/>
                         <outlet property="heightOfReplyInfoHolder" destination="52m-Ct-Cxc" id="Yky-AJ-yHp"/>
                         <outlet property="submitCommentButton" destination="3n7-Ce-dR2" id="GbK-2B-0KC"/>

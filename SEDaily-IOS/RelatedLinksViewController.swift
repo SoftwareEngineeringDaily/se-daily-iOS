@@ -31,7 +31,9 @@ let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
         view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
         
+        print("fetch links")
         networkService.getRelatedLinks(podcastId: self.postId, onSuccess: { [weak self] relatedLinks in
+            print("got links")
             self?.links = relatedLinks
             self?.tableView.reloadData()
             self?.activityIndicator.stopAnimating()

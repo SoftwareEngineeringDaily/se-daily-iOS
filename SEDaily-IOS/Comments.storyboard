@@ -259,15 +259,20 @@
                         <viewLayoutGuide key="safeArea" id="1sn-fD-yVb"/>
                     </view>
                     <connections>
+                        <outlet property="bottomCommentTextField" destination="vot-Ck-FG8" id="0MZ-VP-NB1"/>
                         <outlet property="closeStatusAreaButton" destination="XY0-NH-XAD" id="uSO-r3-Adh"/>
                         <outlet property="composeStatusHolder" destination="U4V-dJ-ffy" id="kf6-iD-xkH"/>
                         <outlet property="composeStatusLabel" destination="GA5-b6-wd3" id="eI4-ja-BWw"/>
                         <outlet property="createCommentHeight" destination="z56-Ex-JY3" id="vrG-AC-IWt"/>
                         <outlet property="createCommentHolder" destination="IaB-MT-j8Y" id="93b-Aw-Bmt"/>
                         <outlet property="createCommentTextField" destination="Mhf-BZ-SlR" id="Gfp-Ob-6X6"/>
+                        <outlet property="heightCreateCommentTextField" destination="S5R-xW-MTX" id="eKV-ho-Rrn"/>
                         <outlet property="heightOfReplyInfoHolder" destination="52m-Ct-Cxc" id="Yky-AJ-yHp"/>
+                        <outlet property="heightReplyInfoHolder" destination="52m-Ct-Cxc" id="CZ0-AU-KD7"/>
                         <outlet property="submitCommentButton" destination="3n7-Ce-dR2" id="GbK-2B-0KC"/>
                         <outlet property="tableView" destination="lzo-Rq-DcB" id="yF6-hG-HEb"/>
+                        <outlet property="topCreateCommentTextField" destination="dRr-gt-x2s" id="B8p-iu-qBE"/>
+                        <outlet property="topStatusHolder" destination="jZN-a5-4RR" id="gUL-ag-You"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="slp-Rr-2mJ" userLabel="First Responder" sceneMemberID="firstResponder"/>

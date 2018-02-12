@@ -22,6 +22,13 @@ class CommentsViewController: UIViewController {
     let networkService = API()
     var comments: [Comment] = []
     
+    // Constraints on Comment Holder
+    @IBOutlet weak var bottomCommentTextField: NSLayoutConstraint!
+    @IBOutlet weak var topStatusHolder: NSLayoutConstraint!
+    @IBOutlet weak var topCreateCommentTextField: NSLayoutConstraint!
+    @IBOutlet weak var heightCreateCommentTextField: NSLayoutConstraint!
+    @IBOutlet weak var heightReplyInfoHolder: NSLayoutConstraint!
+    
     // This is set when user clicks on reply
     var parentCommentSelected: Comment? {
         didSet {
@@ -56,8 +63,8 @@ class CommentsViewController: UIViewController {
         tableView.delegate = self
         title = L10n.comments
         // Hide the reply area
-        composeStatusHolder.isHidden = true
-        heightOfReplyInfoHolder.constant = 0
+//        composeStatusHolder.isHidden = true
+//        heightOfReplyInfoHolder.constant = 0
         self.view.layoutIfNeeded()
     
         // Add activity indicator / spinner
@@ -68,6 +75,14 @@ class CommentsViewController: UIViewController {
         
         // Hide if user is not logged in OR if user is limited (no true username)
         if !isFullUser() {
+            // Constraints:
+            bottomCommentTextField.isActive = false
+            topStatusHolder.isActive = false
+            topCreateCommentTextField.isActive = false
+            heightCreateCommentTextField.isActive = false
+            heightReplyInfoHolder.isActive = false
+            
+            //
             createCommentHeight.constant = 0
             createCommentHolder.isHidden = true
             self.view.layoutSubviews()

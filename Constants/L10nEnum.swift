@@ -37,6 +37,8 @@ enum L10n {
   static let alertMessageUsernameEmpty = L10n.tr("Localizable", "AlertMessageUsernameEmpty")
   /// You must login to use this feature.
   static let alertMessageYouMustLogin = L10n.tr("Localizable", "AlertMessageYouMustLogin")
+  /// Anonymous
+  static let anonymous = L10n.tr("Localizable", "Anonymous")
   /// Oh, sorry you're not liking the SEDaily app
   static let appReviewApology = L10n.tr("Localizable", "AppReviewApology")
   /// SEDaily iOS App Feedback

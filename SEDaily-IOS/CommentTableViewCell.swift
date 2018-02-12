@@ -33,7 +33,7 @@ class CommentTableViewCell: UITableViewCell {
             if let username = comment?.author.username {
                 usernameLabel.text = username
             } else {
-                usernameLabel.text = "Anonymous"
+                usernameLabel.text = L10n.anonymous
             }
             if let imageString = comment?.author.avatarUrl {
                 let url = URL(string: imageString)

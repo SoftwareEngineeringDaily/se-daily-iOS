@@ -12,6 +12,7 @@ class RelatedLinksViewController: UIViewController {
 let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     let networkService: API = API()
     var postId = ""
+    @IBOutlet weak var noRelatedLinks: UILabel!
     var links: [RelatedLink] = []
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
@@ -37,6 +38,9 @@ let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
             self?.activityIndicator.stopAnimating()
             
             self?.title = "\(relatedLinks.count) \(L10n.relatedLinks)"
+            if relatedLinks.count == 0 {
+                self?.tableView.isHidden = true
+            }
         }, onFailure: { _ in
             // TODO: show an error to user
             print("error--getting-links")

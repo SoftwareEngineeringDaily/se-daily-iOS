@@ -18,6 +18,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Related Links" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LSW-h0-Bby">
+                                <rect key="frame" x="10" y="328" width="355" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Rfa-a4-0o9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0Qs-6r-x1s">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -44,7 +53,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="LSW-h0-Bby" firstAttribute="centerY" secondItem="0Qs-6r-x1s" secondAttribute="centerY" id="DpV-p4-7yz"/>
+                            <constraint firstItem="LSW-h0-Bby" firstAttribute="leading" secondItem="gzi-VR-FVz" secondAttribute="leading" constant="10" id="Sf3-Ce-qkc"/>
                             <constraint firstItem="0Qs-6r-x1s" firstAttribute="top" secondItem="gzi-VR-FVz" secondAttribute="top" id="UVh-bt-hQP"/>
+                            <constraint firstItem="LSW-h0-Bby" firstAttribute="centerX" secondItem="0Qs-6r-x1s" secondAttribute="centerX" id="Zf2-fZ-lcX"/>
+                            <constraint firstItem="gzi-VR-FVz" firstAttribute="trailing" secondItem="LSW-h0-Bby" secondAttribute="trailing" constant="10" id="cK1-Vq-wOJ"/>
                             <constraint firstItem="0Qs-6r-x1s" firstAttribute="leading" secondItem="gzi-VR-FVz" secondAttribute="leading" id="j7K-dH-UoC"/>
                             <constraint firstItem="gzi-VR-FVz" firstAttribute="trailing" secondItem="0Qs-6r-x1s" secondAttribute="trailing" id="oqi-Sj-L82"/>
                             <constraint firstItem="gzi-VR-FVz" firstAttribute="bottom" secondItem="0Qs-6r-x1s" secondAttribute="bottom" id="wN2-Kz-sF6"/>
@@ -52,6 +65,7 @@
                         <viewLayoutGuide key="safeArea" id="gzi-VR-FVz"/>
                     </view>
                     <connections>
+                        <outlet property="noRelatedLinks" destination="LSW-h0-Bby" id="b4z-OM-lF5"/>
                         <outlet property="tableView" destination="0Qs-6r-x1s" id="WX1-l5-DHj"/>
                     </connections>
                 </viewController>

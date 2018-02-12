@@ -63,8 +63,8 @@ class CommentsViewController: UIViewController {
         tableView.delegate = self
         title = L10n.comments
         // Hide the reply area
-//        composeStatusHolder.isHidden = true
-//        heightOfReplyInfoHolder.constant = 0
+        composeStatusHolder.isHidden = true
+        heightOfReplyInfoHolder.constant = 0
         self.view.layoutIfNeeded()
     
         // Add activity indicator / spinner

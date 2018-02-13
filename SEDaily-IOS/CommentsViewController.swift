@@ -20,7 +20,15 @@ class CommentsViewController: UIViewController {
     @IBOutlet weak var heightOfReplyInfoHolder: NSLayoutConstraint!
     var postId: String? // TODO: make optional so that we can check for it and display error if nil
     let networkService = API()
-    var comments: [Comment] = []
+    var comments: [Comment] = [] {
+        didSet {
+            if comments.count == 0 {
+                tableView.isHidden = true
+            } else {
+                tableView.isHidden = false
+            }
+        }
+    }
     
     // Constraints on Comment Holder
     @IBOutlet weak var bottomCommentTextField: NSLayoutConstraint!

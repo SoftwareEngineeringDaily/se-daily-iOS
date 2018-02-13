@@ -29,7 +29,7 @@ class CommentTableViewCell: UITableViewCell {
         didSet {
             let prettyDate = comment?.getPostedDate()?.dateString() ?? ""
             dateLabel.text = prettyDate
-            contentLabel.text = comment?.computedContent()
+            contentLabel.text = comment?.commentBody()
             if let username = comment?.author.username {
                 usernameLabel.text = username
             } else {

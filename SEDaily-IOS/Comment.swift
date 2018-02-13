@@ -29,7 +29,7 @@ extension Comment {
         return Date(iso8601String: self.dateCreated)
     }
     
-    func computedContent() -> String {
+    func commentBody() -> String {
         // This should be done on the server
         if self.deleted {
             return "This post has been deleted."

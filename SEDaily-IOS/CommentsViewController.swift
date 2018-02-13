@@ -83,6 +83,7 @@ class CommentsViewController: UIViewController {
         
         // Hide if user is not logged in OR if user is limited (no true username)
         if !isFullUser() {
+            // TODO: setting the table view footer would make make this much easier.
             // Constraints:
             bottomCommentTextField.isActive = false
             topStatusHolder.isActive = false

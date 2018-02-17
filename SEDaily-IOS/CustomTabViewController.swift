@@ -174,7 +174,8 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     
     func setupLogoutSubscriptionActionSheet() {
         self.actionSheet = UIAlertController(title: "", message: "Whatcha wanna do?", preferredStyle: .actionSheet)
-        
+        self.actionSheet.popoverPresentationController?.barButtonItem = self.navigationItem.leftBarButtonItem
+
         switch UserManager.sharedInstance.getActiveUser().hasPremium {
         case true:
             self.actionSheet.addAction(title: "View Subscription", style: .default, isEnabled: true) { _ in

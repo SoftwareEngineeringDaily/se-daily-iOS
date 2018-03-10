@@ -76,6 +76,7 @@ public struct Podcast: Codable {
     var upvoted: Bool?
     var downvoted: Bool?
     var bookmarked: Bool?
+    var downloaded: Bool?
 }
 
 extension Podcast {

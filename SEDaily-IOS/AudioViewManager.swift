@@ -92,7 +92,15 @@ class AudioViewManager: NSObject {
                 controller.setContainerViewInset()
             }
 
-            guard let url = self.podcastModel?.mp3URL else { return }
+            var fileURL: URL? = nil
+
+            fileURL = self.podcastModel?.mp3URL
+
+            if let urlString = self.podcastModel!.downloadedFileURLString {
+                fileURL = URL(fileURLWithPath: urlString)
+            }
+
+            guard let url = fileURL else { return }
             guard let name = self.podcastModel?.podcastTitle else { return }
 
             self.setupAudioManager(url: url, name: name)

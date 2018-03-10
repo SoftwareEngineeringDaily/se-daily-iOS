@@ -112,7 +112,8 @@ class PodcastRepository: Repository<Podcast> {
         }
 
         // Check if we made requests today
-        let alreadLoadedStartToday = PodcastRepository.checkAlreadyLoadedNewToday(filterObject: filterObject)
+//        let alreadLoadedStartToday = PodcastRepository.checkAlreadyLoadedNewToday(filterObject: filterObject)
+        let alreadLoadedStartToday = false
 
         //@TODO: Fix this special case for recommneded. We can't load from disk here because we are display top podcasts when a user is not logged in
         if alreadLoadedStartToday && filterObject.type != PodcastTypes.recommended.rawValue {

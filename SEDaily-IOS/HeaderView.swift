@@ -29,7 +29,10 @@ class HeaderView: UIView {
     let upVoteButton = UIButton()
     let downVoteButton = UIButton()
     let scoreLabel = UILabel()
-    
+
+    private var downloadButton = UIButton()
+
+    let downloadManager = OfflineDownloadsManager()
     let networkService = API()
 
     override init(frame: CGRect) {
@@ -149,6 +152,7 @@ class HeaderView: UIView {
         downVoteButton.isSelected = self.podcastViewModel.isDownvoted
         self.scoreLabel.text = String(self.podcastViewModel.score)
 
+        self.setupDownloadButton()
     }
 }
 
@@ -240,5 +244,112 @@ extension HeaderView {
         guard self.podcastViewModel.score != score else { return }
         self.podcastViewModel.score = score
         self.scoreLabel.text = String(score)
+    }
+}
+
+/* @TODO:
+ - delete podcast
+ - progress view on play button
+ - stop podcast downloading
+*/
+extension HeaderView {
+    @objc private func downloadButtonPressed() {
+        switch self.downloadButton.isSelected {
+        case true:
+            self.deletePodcast()
+        case false:
+            self.savePodcast()
+        }
+
+    }
+
+    private func savePodcast() {
+        guard !self.downloadButton.isSelected else { return }
+        self.downloadButton.isSelected = true
+
+        self.playButton.isUserInteractionEnabled = false
+
+        self.downloadManager.save(podcast: self.podcastViewModel, onProgress: { (progress) in
+            // Show progress
+            print(progress)
+            let progressAsInt = Int((progress * 100).rounded())
+            self.playButton.setTitle(String(progressAsInt) + "%", for: .normal)
+        }, onSucces: { () in
+            // Show success by changing download
+            print("success")
+
+            self.delegate?.modelDidChange(viewModel: self.podcastViewModel)
+
+            AudioViewManager.shared.setupManager(podcastModel: self.podcastViewModel)
+
+            self.playButton.setTitle("Play", for: .normal)
+            self.playButton.isUserInteractionEnabled = true
+        }) { (error) in
+            guard let error = error else { return }
+            // Alert Error
+            print(error.localizedDescription)
+            self.playButton.setTitle("Play", for: .normal)
+            self.playButton.isUserInteractionEnabled = true
+        }
+    }
+
+    private func deletePodcast() {
+        guard self.downloadButton.isSelected else { return }
+
+        let alert = UIAlertController(title: "Are you sure you want to delete this podcast?", message: nil, preferredStyle: .alert)
+
+        alert.addAction(title: "YEP! Delete it please/", style: .destructive, isEnabled: true) { _ in
+            self.downloadManager.deletePodcast(podcast: self.podcastViewModel) {
+                print("Successfully deleted")
+            }
+
+            self.downloadButton.isSelected = false
+            self.playButton.setTitle("Play", for: .normal)
+            self.playButton.isUserInteractionEnabled = true
+        }
+
+        let noAction = UIAlertAction(title: "Oh no actually...", style: .cancel, handler: nil)
+        alert.addAction(noAction)
+
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+
+            guard !(topController is UIAlertController) else {
+                // There's already a alert preseneted
+                return
+            }
+
+            topController.present(alert, animated: true, completion: nil)
+        }
+    }
+
+    private func setupDownloadButton() {
+        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 35)
+
+        self.downloadButton.addTarget(self, action: #selector(self.downloadButtonPressed), for: .touchUpInside)
+        self.downloadButton.setIcon(
+            icon: .fontAwesome(.cloudDownload),
+            iconSize: iconSize,
+            color: Stylesheet.Colors.secondaryColor,
+            forState: .normal)
+        self.downloadButton.setIcon(
+            icon: .fontAwesome(.timesCircle),
+            iconSize: iconSize,
+            color: .red,
+            forState: .selected)
+        self.downloadButton.isSelected = self.podcastViewModel.isDownloaded
+        
+        print(self.podcastViewModel)
+        print(self.podcastViewModel.dictionary)
+
+        self.playView.addSubview(self.downloadButton)
+
+        let rightInset = UIView.getValueScaledByScreenWidthFor(baseValue: 20)
+        downloadButton.snp.makeConstraints { (make) in
+            make.right.equalTo(self.playButton.snp.left).inset(-rightInset)
+            make.centerY.equalTo(self.playButton.snp.centerY)
+        }
     }
 }

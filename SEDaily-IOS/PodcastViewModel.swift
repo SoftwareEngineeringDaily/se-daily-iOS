@@ -32,6 +32,15 @@ public struct PodcastViewModel: Codable {
     var isUpvoted: Bool = false
     var isDownvoted: Bool = false
     var isBookmarked: Bool = false
+    var isDownloaded: Bool {
+        return downloadedFileURLString != "" && downloadedFileURLString != nil
+    }
+    var downloadedFileURLString: String? {
+        guard let url = OfflineDownloadsManager.findURL(for: self) else {
+            return nil
+        }
+        return url.path
+    }
 
     var podcastTitle: String {
         return encodedPodcastTitle.htmlDecoded
@@ -108,6 +117,12 @@ extension PodcastViewModel {
     // This is too slow for a cell collection view call
     func getLastUpdatedAsDate() -> Date? {
         return Date(iso8601String: self.uploadDateiso8601)
+    }
+}
+
+extension PodcastViewModel {
+    func getFilename() -> String {
+        return self.podcastTitle.lowercased().components(separatedBy: CharacterSet.alphanumerics.inverted).joined()
     }
 }
 

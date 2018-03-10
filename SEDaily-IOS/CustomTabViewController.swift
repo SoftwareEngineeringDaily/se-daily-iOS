@@ -185,12 +185,13 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
                 self.present(navVC, animated: true, completion: nil)
             }
         case false:
-            self.actionSheet.addAction(title: "Purchase Subscription", style: .default, isEnabled: true) { _ in
-                // Show purchase subscription view
-                let rootVC = PurchaseSubscriptionViewController()
-                let navVC = UINavigationController(rootViewController: rootVC)
-                self.present(navVC, animated: true, completion: nil)
-            }
+//            self.actionSheet.addAction(title: "Purchase Subscription", style: .default, isEnabled: true) { _ in
+//                // Show purchase subscription view
+//                let rootVC = PurchaseSubscriptionViewController()
+//                let navVC = UINavigationController(rootViewController: rootVC)
+//                self.present(navVC, animated: true, completion: nil)
+//            }
+            break
         }
         
         self.actionSheet.addAction(title: "Logout", style: .destructive, isEnabled: true) { _ in

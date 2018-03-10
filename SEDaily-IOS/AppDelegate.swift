@@ -13,7 +13,7 @@ import IQKeyboardManagerSwift
 import Fabric
 import Crashlytics
 import Kingfisher
-import Stripe
+//import Stripe
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        STPPaymentConfiguration.shared().publishableKey = "pk_live_Cfttsv5i5ZG5IBfrmllzNoSA"
+//        STPPaymentConfiguration.shared().publishableKey = "pk_live_Cfttsv5i5ZG5IBfrmllzNoSA"
 
         Fabric.with([Crashlytics.self])
         setupSwiftyBeaver()

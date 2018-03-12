@@ -247,11 +247,6 @@ extension HeaderView {
     }
 }
 
-/* @TODO:
- - delete podcast
- - progress view on play button
- - stop podcast downloading
-*/
 extension HeaderView {
     @objc private func downloadButtonPressed() {
         switch self.downloadButton.isSelected {
@@ -271,13 +266,10 @@ extension HeaderView {
 
         self.downloadManager.save(podcast: self.podcastViewModel, onProgress: { (progress) in
             // Show progress
-            print(progress)
             let progressAsInt = Int((progress * 100).rounded())
             self.playButton.setTitle(String(progressAsInt) + "%", for: .normal)
         }, onSucces: { () in
             // Show success by changing download
-            print("success")
-
             self.delegate?.modelDidChange(viewModel: self.podcastViewModel)
 
             AudioViewManager.shared.setupManager(podcastModel: self.podcastViewModel)
@@ -287,7 +279,7 @@ extension HeaderView {
         }) { (error) in
             guard let error = error else { return }
             // Alert Error
-            print(error.localizedDescription)
+            Helpers.alertWithMessage(title: error.localizedDescription, message: "")
             self.playButton.setTitle("Play", for: .normal)
             self.playButton.isUserInteractionEnabled = true
         }
@@ -298,7 +290,7 @@ extension HeaderView {
 
         let alert = UIAlertController(title: "Are you sure you want to delete this podcast?", message: nil, preferredStyle: .alert)
 
-        alert.addAction(title: "YEP! Delete it please/", style: .destructive, isEnabled: true) { _ in
+        alert.addAction(title: "YEP! Delete it please.", style: .destructive, isEnabled: true) { _ in
             self.downloadManager.deletePodcast(podcast: self.podcastViewModel) {
                 print("Successfully deleted")
             }
@@ -340,9 +332,6 @@ extension HeaderView {
             color: .red,
             forState: .selected)
         self.downloadButton.isSelected = self.podcastViewModel.isDownloaded
-        
-        print(self.podcastViewModel)
-        print(self.podcastViewModel.dictionary)
 
         self.playView.addSubview(self.downloadButton)
 

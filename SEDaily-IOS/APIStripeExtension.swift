@@ -26,7 +26,7 @@ enum StripeParams: String {
 
 extension API {
     func stripeCreateSubscription(token: String, planType: StripeParams.Plans, completion: @escaping (Error?) -> Void) {
-        let urlString = API.rootURL + StripeEndpoints.subscription
+        let urlString = rootURL + StripeEndpoints.subscription
 
         let user = UserManager.sharedInstance.getActiveUser()
         let userToken = user.token
@@ -55,7 +55,7 @@ extension API {
     }
     
     func stripeCancelSubscription(completion: @escaping (Error?) -> Void) {
-        let urlString = API.rootURL + StripeEndpoints.subscription
+        let urlString = rootURL + StripeEndpoints.subscription
         
         let user = UserManager.sharedInstance.getActiveUser()
         let userToken = user.token

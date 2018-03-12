@@ -10,7 +10,7 @@ import UIKit
 
 class SubscriptionStatusViewController: UIViewController {
 
-    let api = API.sharedInstance
+    let api = API()
     var yearlyContainerView = UIView()
 
     override func viewDidLoad() {

@@ -68,7 +68,7 @@ class API {
     private let prodRootURL = "https://software-enginnering-daily-api.herokuapp.com/api"
     private let stagingRootURL = "https://sedaily-backend-staging.herokuapp.com/api"
 
-    private var rootURL: String {
+    var rootURL: String {
         #if DEBUG
             if let useStagingEndpointTestHook = TestHookManager.testHookBool(id: TestHookId.useStagingEndpoint),
                 useStagingEndpointTestHook.value {
@@ -174,7 +174,7 @@ extension API {
     }
 
     func loadUserInfo(completion: ((SubscriptionModel?) -> Void)? = nil) {
-        let urlString = API.rootURL + Endpoints.usersMe
+        let urlString = rootURL + Endpoints.usersMe
         
         let user = UserManager.sharedInstance.getActiveUser()
         let userToken = user.token
@@ -354,9 +354,9 @@ extension API {
             type = PodcastTypes.top.rawValue
         }
 
-        var urlString = API.rootURL + API.Endpoints.posts
+        var urlString = rootURL + API.Endpoints.posts
         if type == PodcastTypes.recommended.rawValue {
-            urlString = API.rootURL + Endpoints.recommendations
+            urlString = rootURL + Endpoints.recommendations
         }
 
         // Params

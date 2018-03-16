@@ -48,11 +48,14 @@ class AudioViewManager: NSObject {
         var savedTime: Float = 0
         
         // Load Saved time
-        if playProgress[(podcastModel?._id)!] != nil {
-            savedTime =  playProgress[(podcastModel?._id)!]!
-        } else {
-             playProgress[(podcastModel?._id)!] = 0
+        if let podcastModel = podcastModel {
+            if playProgress[podcastModel._id] != nil {
+                savedTime =  playProgress[podcastModel._id]!
+            } else {
+                playProgress[podcastModel._id] = 0
+            }
         }
+        
         log.info(savedTime, "savedtime")
 
         let asset = Asset(assetName: name, url: url, savedTime: savedTime)
@@ -211,8 +214,8 @@ extension AudioViewManager: AssetPlayerDelegate {
 
     func playerCurrentTimeDidChange(_ player: AssetPlayer) {
         // Update progress
-        if podcastModel != nil {
-            playProgress[(podcastModel?._id)!] = Float(player.currentTime)
+        if let podcastModel = podcastModel {
+            playProgress[podcastModel._id] = Float(player.currentTime)
             
             if round(player.currentTime).truncatingRemainder(dividingBy: 5.0) == 0.0 {
                 let defaults = UserDefaults.standard
@@ -227,8 +230,8 @@ extension AudioViewManager: AssetPlayerDelegate {
 
     func playerPlaybackDidEnd(_ player: AssetPlayer) {
         // Reset progress
-        if podcastModel != nil {
-            playProgress[(podcastModel?._id)!] = 0.0
+        if let podcastModel = podcastModel {
+            playProgress[podcastModel._id] = 0.0
             let defaults = UserDefaults.standard
             defaults.set(playProgress, forKey: "sedaily-playProgress")
         }

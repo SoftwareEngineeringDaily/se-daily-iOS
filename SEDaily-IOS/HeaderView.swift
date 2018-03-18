@@ -11,6 +11,8 @@ import SwiftIcons
 
 protocol HeaderViewDelegate: class {
     func modelDidChange(viewModel: PodcastViewModel)
+    func relatedLinksButtonPressed()
+    func commentsButtonPressed()
 }
 
 class HeaderView: UIView {
@@ -23,9 +25,13 @@ class HeaderView: UIView {
 
     let playView = UIView()
     let playButton = UIButton()
-
+    
+    let secondaryView = UIView()
+    let relatedLinksButton = UIButton()
+    
     let voteView = UIView()
     let stackView = UIStackView()
+    let commentsButton = UIButton()
     let upVoteButton = UIButton()
     let downVoteButton = UIButton()
     let scoreLabel = UILabel()
@@ -50,7 +56,8 @@ class HeaderView: UIView {
 
         self.backgroundColor = Stylesheet.Colors.base
         setupPlayView()
-
+        setupSecondaryView()
+        
         titleLabel.snp.makeConstraints { (make) in
             make.bottom.equalTo(playView.snp.top).offset(UIView.getValueScaledByScreenHeightFor(baseValue: -60))
             make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
@@ -58,7 +65,7 @@ class HeaderView: UIView {
         }
 
         dateLabel.snp.makeConstraints {  (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(UIView.getValueScaledByScreenHeightFor(baseValue: 10))
+            make.top.equalTo(titleLabel.snp.bottom).offset(UIView.getValueScaledByScreenHeightFor(baseValue: 15))
             make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
             make.right.equalToSuperview().inset(UIView.getValueScaledByScreenHeightFor(baseValue: 15))
         }
@@ -67,6 +74,7 @@ class HeaderView: UIView {
     }
 
     func setupLabels() {
+        // This makes the post title and date pretty and large:
         titleLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 20))
         titleLabel.adjustsFontSizeToFitWidth = false
         titleLabel.minimumScaleFactor = 0.25
@@ -79,9 +87,37 @@ class HeaderView: UIView {
         dateLabel.numberOfLines = 1
         dateLabel.textColor = Stylesheet.Colors.white
     }
-
+    
+    func setupSecondaryView() {
+        self.addSubview(secondaryView)
+        
+        secondaryView.backgroundColor = UIColor.clear
+        
+        secondaryView.snp.makeConstraints { (make) in
+            make.bottom.equalTo(playView.snp.top)
+            make.right.left.equalToSuperview()
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 65))
+        }
+        
+        // Add relatedLinksButton
+        secondaryView.addSubview(relatedLinksButton)
+        relatedLinksButton.setTitle(L10n.relatedLinks, for: .normal)
+        relatedLinksButton.setBackgroundColor(color: Stylesheet.Colors.baseLight, forState: .normal)
+        relatedLinksButton.addTarget(self, action: #selector(self.relatedLinksButtonPressed), for: .touchUpInside)
+        relatedLinksButton.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 4)
+        
+        relatedLinksButton.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 180))
+            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 35))
+        }
+    }
+    
     func setupPlayView() {
         self.addSubview(playView)
+        
+        // The playView is the row with the Up / Down and Pink Playbutton
         playView.backgroundColor = Stylesheet.Colors.white
 
         playView.snp.makeConstraints { (make) in
@@ -106,8 +142,8 @@ class HeaderView: UIView {
         playView.addSubview(voteView)
         voteView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: (35 * 4)))
+            make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 10))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: (45 * 5)))
             make.height.equalToSuperview()
         }
 
@@ -118,16 +154,20 @@ class HeaderView: UIView {
         stackView.axis = .horizontal
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
-
+        
+        stackView.addArrangedSubview(commentsButton)
         stackView.addArrangedSubview(downVoteButton)
         stackView.addArrangedSubview(scoreLabel)
         stackView.addArrangedSubview(upVoteButton)
-
+     
         scoreLabel.textAlignment = .center
         scoreLabel.baselineAdjustment = .alignCenters
         scoreLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 24))
 
-        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 35)
+        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 34)
+        commentsButton.setIcon(icon: .fontAwesome(.commentO), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
+        commentsButton.addTarget(self, action: #selector(self.commentsButtonPressed), for: .touchUpInside)
+        
         downVoteButton.setIcon(icon: .fontAwesome(.thumbsODown), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
         downVoteButton.setIcon(icon: .fontAwesome(.thumbsDown), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
         downVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
@@ -145,10 +185,10 @@ class HeaderView: UIView {
         self.dateLabel.text = model.getLastUpdatedAsDate()?.dateString() ?? ""
         self.scoreLabel.text = model.score.string
 
+        commentsButton.isSelected = false
         upVoteButton.isSelected = self.podcastViewModel.isUpvoted
         downVoteButton.isSelected = self.podcastViewModel.isDownvoted
         self.scoreLabel.text = String(self.podcastViewModel.score)
-
     }
 }
 
@@ -161,7 +201,14 @@ extension HeaderView {
 
         AskForReview.triggerEvent()
     }
+    @objc func relatedLinksButtonPressed() {
+        self.delegate?.relatedLinksButtonPressed()
+    }
 
+    @objc func commentsButtonPressed() {
+        self.delegate?.commentsButtonPressed()
+    }
+    
     @objc func upvoteButtonPressed() {
         guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)

@@ -154,6 +154,29 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
 }
 
 extension PodcastDetailViewController: HeaderViewDelegate {
+    func relatedLinksButtonPressed() {
+        let relatedLinksStoryboard = UIStoryboard.init(name: "RelatedLinks", bundle: nil)
+        guard let relatedLinksViewController = relatedLinksStoryboard.instantiateViewController(
+            withIdentifier: "RelatedLinksViewController") as? RelatedLinksViewController else {
+                return
+        }
+        let podcastId = model._id
+        relatedLinksViewController.postId = podcastId
+        self.navigationController?.pushViewController(relatedLinksViewController, animated: true)
+    }
+    
+    func commentsButtonPressed() {
+        let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
+        guard let commentsViewController = commentsStoryboard.instantiateViewController(
+            withIdentifier: "CommentsViewController") as? CommentsViewController else {
+                return
+        }
+        let podcastId = model._id
+        commentsViewController.postId = podcastId
+        self.navigationController?.pushViewController(commentsViewController, animated: true)
+        
+    }
+    
     func modelDidChange(viewModel: PodcastViewModel) {
         self.delegate?.modelDidChange(viewModel: viewModel)
     }

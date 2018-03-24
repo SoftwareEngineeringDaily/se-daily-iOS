@@ -91,6 +91,8 @@ enum L10n {
   static let passwordPlaceholder = L10n.tr("Localizable", "PasswordPlaceholder")
   /// Play
   static let play = L10n.tr("Localizable", "Play")
+  /// Related Links
+  static let relatedLinks = L10n.tr("Localizable", "RelatedLinks")
   /// Sign Up
   static let signUpButtonTitle = L10n.tr("Localizable", "SignUpButtonTitle")
   /// Just For You

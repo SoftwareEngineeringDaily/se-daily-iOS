@@ -24,6 +24,7 @@ enum Stylesheet {
         static let grayText = UIColor(hex: 0x979390)!
 
         static let base = UIColor(hex: 0x4054b2)!
+        static let baseLight = UIColor(hex: 0x5366CD)!
         static let light1 = UIColor(hex: 0xFFC082)!
         static let light2 = UIColor(hex: 0xFFAB58)!
         static let dark1 = UIColor(hex: 0xE77607)!

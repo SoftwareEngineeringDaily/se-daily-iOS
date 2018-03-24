@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   SEDaily-IOS
 
@@ -63,6 +63,7 @@
 "GenericNo" = "No";
 "NoWithGratitude" = "No thanks";
 "Play" = "Play";
+"RelatedLinks" = "Related Links";
 "NoBookmarks" = "No Bookmarks";
 "LoginSeeBookmarks" = "Login to see your bookmarks";
 "TapToRefresh" = "Tap to refresh";

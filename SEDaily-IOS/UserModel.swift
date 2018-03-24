@@ -17,18 +17,21 @@ public struct User: Codable {
     let token: String
     let pushNotificationsSetting: Bool = false
     let deviceToken: String? = nil
+    let hasPremium: Bool
     
     init(firstName: String = "",
          lastName: String = "",
          usernameOrEmail: String = "",
-         token: String = "") {
+         token: String = "",
+         hasPremium: Bool = false) {
         self.firstName = firstName
         self.lastName = lastName
         self.usernameOrEmail = usernameOrEmail
         self.token = token
+        self.hasPremium = hasPremium
     }
     
-    // Mark: Getters
+    // MARK: Getters
 
     func getFullName() -> String {
         return self.firstName + self.lastName
@@ -50,7 +53,8 @@ extension User: Equatable {
             lhs.usernameOrEmail == rhs.usernameOrEmail &&
             lhs.token == rhs.token &&
             lhs.pushNotificationsSetting == rhs.pushNotificationsSetting &&
-            lhs.deviceToken == rhs.deviceToken
+            lhs.deviceToken == rhs.deviceToken &&
+            lhs.hasPremium == rhs.hasPremium
     }
 }
 

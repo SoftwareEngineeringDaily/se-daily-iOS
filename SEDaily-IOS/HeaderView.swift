@@ -279,7 +279,7 @@ extension HeaderView {
         }) { (error) in
             guard let error = error else { return }
             // Alert Error
-            Helpers.alertWithMessage(title: error.localizedDescription, message: "")
+            Helpers.alertWithMessage(title: error.localizedDescription.capitalized, message: "")
             self.playButton.setTitle("Play", for: .normal)
             self.playButton.isUserInteractionEnabled = true
         }

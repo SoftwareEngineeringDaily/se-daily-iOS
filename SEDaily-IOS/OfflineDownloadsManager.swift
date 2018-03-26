@@ -38,7 +38,7 @@ public class OfflineDownloadsManager: NSObject, OfflineDownloadsProtocol {
         }
         let fileName = podcast.getFilename()
 
-        guard let documentsURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first else {
+        guard let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             assertionFailure("No documents url found")
             onFailure(nil)
             return
@@ -67,16 +67,14 @@ public class OfflineDownloadsManager: NSObject, OfflineDownloadsProtocol {
             .responseData { response in
                 switch response.result {
                 case .success:
-                    guard let destinationURL = response.destinationURL else {
-                        assertionFailure("Should be destination url in success")
-                        return
-                    }
                     DispatchQueue.main.async {
                         onSucces()
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
                         onFailure(error)
+                        print(error.localizedDescription)
+
                     }
                 }
         }
@@ -102,7 +100,7 @@ public class OfflineDownloadsManager: NSObject, OfflineDownloadsProtocol {
     }
 
     public static func findURL(for podcast: PodcastViewModel) -> URL? {
-        guard let documentsURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first else {
+        guard let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             assertionFailure("No documents url found")
             return nil
         }

@@ -4,8 +4,8 @@ PODS:
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
   - Disk (0.3.3)
-  - Eureka (4.1.1)
-  - Fabric (1.7.6)
+  - Eureka (4.0.1)
+  - Fabric (1.7.5)
   - IQKeyboardManagerSwift (5.0.8)
   - Kingfisher (4.2.0)
   - KoalaTeaFlowLayout (0.3.1)
@@ -118,8 +118,8 @@ SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Disk: d1f55cd61f6ca20f368232d0c6e37e3c3dfcb63e
-  Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
-  Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
+  Eureka: c8bd5cc07143b6f66268c208d28a246c99b41955
+  Fabric: ae7146a5f505ea370a1e44820b4b1dc8890e2890
   IQKeyboardManagerSwift: 2e7dc7f98c111458c1ea2b373f893e8cf95e2b97
   Kingfisher: 9ee7e788d8ba07c3f21ce0d43f33cec310a4f781
   KoalaTeaFlowLayout: 219c45709d0873d405b2de1b27080a9c411246b7
@@ -151,4 +151,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 0257a2688bd6c587b8286344919c2a9673246e6f
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.4.0

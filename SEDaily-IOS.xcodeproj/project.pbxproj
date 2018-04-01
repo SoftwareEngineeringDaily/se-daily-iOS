@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -269,8 +269,6 @@
 			isa = PBXGroup;
 			children = (
 				1688CB4A2006BDCE00440095 /* Stripe */,
-				169806A41F8EF08F0075D8AD /* Constants */,
-				1686FC0C1F009EC00088A6C1 /* Info.plist */,
 				164FE9E41F02EE83009419CA /* API.swift */,
 				1686FC001F009EC00088A6C1 /* AppDelegate.swift */,
 				1686FC071F009EC00088A6C1 /* Assets.xcassets */,
@@ -571,7 +569,7 @@
 				};
 			};
 			buildConfigurationList = 1686FBF81F009EC00088A6C1 /* Build configuration list for PBXProject "SEDaily-IOS" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (

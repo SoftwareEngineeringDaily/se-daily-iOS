@@ -1,5 +1,5 @@
 //
-//  MoreTableViewController.swift
+//  NotificationTableViewController.swift
 //  SEDaily-IOS
 //
 //  Created by Keith Holliday on 4/1/18.
@@ -15,6 +15,9 @@ class NotificationsTableViewController: UITableViewController {
     let center = UNUserNotificationCenter.current()
     let options: UNAuthorizationOptions = [.alert, .sound]
     var notificationsSubscribed = false
+    
+    let notificationIndentifier = "sedailyNotification"
+    let notificationPrefKey = "sedaily-notificationsSubscribed"
 
     required init() {
         super.init(style: .plain)
@@ -29,7 +32,7 @@ class NotificationsTableViewController: UITableViewController {
         super.viewDidLoad()
 
         let defaults = UserDefaults.standard
-        let subscribed = defaults.object(forKey: "sedaily-notificationsSubscribed") as? Bool
+        let subscribed = defaults.object(forKey: notificationPrefKey) as? Bool
         if subscribed != nil {
             notificationsSubscribed = subscribed!
         }
@@ -41,18 +44,15 @@ class NotificationsTableViewController: UITableViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return 1
     }
 
@@ -63,9 +63,7 @@ class NotificationsTableViewController: UITableViewController {
             for: indexPath) as? NotificationTableViewCell else {
                 return UITableViewCell()
         }
-
-//        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as NotificationTableViewCell
-
+        
         // Configure the cell...
         cell.cellLabel.text = "Enable Daily Notifications"
         cell.cellToggle.addTarget(self, action: #selector(switchValueDidChange), for: .touchUpInside)
@@ -88,7 +86,7 @@ class NotificationsTableViewController: UITableViewController {
         }
         
         let defaults = UserDefaults.standard
-        defaults.set(notificationsSubscribed, forKey: "sedaily-notificationsSubscribed")
+        defaults.set(notificationsSubscribed, forKey: notificationPrefKey)
     }
     
     func assignNotifications () {
@@ -115,21 +113,20 @@ class NotificationsTableViewController: UITableViewController {
     }
     
     func createNotification() {
-        let date = self.createDate(weekday: 2, hour: 10, minute: 0, year: 2018)
-        self.scheduleNotification(at: date, body: "We have new episodes for you!", titles: "Software Daily")
+        let date = self.createDate(weekday: 2, hour: 10, minute: 0)
+        self.scheduleNotification(at: date, body: L10n.mwfNotificationBody, titles: L10n.mwfNotificationTitle)
         
-        let date2 = self.createDate(weekday: 4, hour: 10, minute: 0, year: 2018)
-        self.scheduleNotification(at: date2, body: "We have new episodes for you!", titles: "Software Daily")
+        let date2 = self.createDate(weekday: 4, hour: 10, minute: 0)
+        self.scheduleNotification(at: date, body: L10n.mwfNotificationBody, titles: L10n.mwfNotificationTitle)
         
-        let date3 = self.createDate(weekday: 6, hour: 10, minute: 0, year: 2018)
-        self.scheduleNotification(at: date3, body: "We have new episodes for you!", titles: "Software Daily")
+        let date3 = self.createDate(weekday: 6, hour: 10, minute: 0)
+        self.scheduleNotification(at: date, body: L10n.mwfNotificationBody, titles: L10n.mwfNotificationTitle)
     }
     
-    func createDate(weekday: Int, hour: Int, minute: Int, year: Int) -> Date{
+    func createDate(weekday: Int, hour: Int, minute: Int) -> Date{
         var components = DateComponents()
         components.hour = hour
         components.minute = minute
-        components.year = year
         components.weekday = weekday // sunday = 1 ... saturday = 7
         components.weekdayOrdinal = 10
         components.timeZone = .current
@@ -150,7 +147,7 @@ class NotificationsTableViewController: UITableViewController {
         content.sound = UNNotificationSound.default()
         content.categoryIdentifier = "podcast"
         
-        let request = UNNotificationRequest(identifier: "sedailyNotification", content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: notificationIndentifier, content: content, trigger: trigger)
     
         UNUserNotificationCenter.current().add(request) {(error) in
             if let error = error {
@@ -158,50 +155,4 @@ class NotificationsTableViewController: UITableViewController {
             }
         }
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

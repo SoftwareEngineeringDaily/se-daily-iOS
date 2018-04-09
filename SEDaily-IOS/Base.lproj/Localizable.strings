@@ -67,3 +67,5 @@
 "LoginSeeBookmarks" = "Login to see your bookmarks";
 "TapToRefresh" = "Tap to refresh";
 "TabBarNotifications" = "Notifications";
+"mwfNotificationTitle" = "Software Daily";
+"mwfNotificationBody" = "We have new episodes for you!";

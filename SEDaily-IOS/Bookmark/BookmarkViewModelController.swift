@@ -36,7 +36,7 @@ public class BookmarkViewModelController {
             self.viewModels.insert(podcast, at: modelsIndex)
         }
 
-        self.repository.updateDataSource(diskKey: .podcastFolder, item: podcast.baseModelRepresentation)
+        self.repository.updateDataSource(diskKey: .PodcastFolder, item: podcast.baseModelRepresentation)
     }
 
     func retrieveCachedBookmarkData(onSuccess: @escaping SuccessCallback) {

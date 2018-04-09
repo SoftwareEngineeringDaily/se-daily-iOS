@@ -37,7 +37,6 @@ extension Helpers {
 }
 
 class Helpers {
-
     static func alertWithMessage(title: String!, message: String!, completionHandler: (() -> Void)? = nil) {
         //@TODO: Guard if there's already an alert message
         if var topController = UIApplication.shared.keyWindow?.rootViewController {

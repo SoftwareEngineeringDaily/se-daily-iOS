@@ -49,7 +49,7 @@ class PodcastRepository: Repository<Podcast> {
     func retrieveCachedBookmarkData(
         onSuccess: @escaping RepositorySuccessCallback,
         onFailure: @escaping RepositoryErrorCallback) {
-        DataSource.getAllBookmarks(diskKey: .podcastFolder) { diskData in
+        DataSource.getAllBookmarks(diskKey: .PodcastFolder) { diskData in
             guard let data = diskData else {
                 onFailure(.ErrorGettingFromDisk)
                 return
@@ -72,7 +72,7 @@ class PodcastRepository: Repository<Podcast> {
                     onFailure(.ErrorGettingFromAPI)
                     return
                 }
-                DataSource.insert(diskKey: .podcastFolder, items: podcasts)
+                DataSource.insert(diskKey: .PodcastFolder, items: podcasts)
                 onSuccess(podcasts)
             } else {
                 onFailure(.ErrorGettingFromAPI)
@@ -87,7 +87,7 @@ class PodcastRepository: Repository<Podcast> {
         onFailure: @escaping RepositoryErrorCallback) {
 
         switch diskKey {
-        case .podcastFolder:
+        case .PodcastFolder:
             self.retrievePodcastData(
                 filterObject: filterObject,
                 onSuccess: { (returnedData) in
@@ -95,6 +95,8 @@ class PodcastRepository: Repository<Podcast> {
                 onFailure: { (error) in
                     PodcastRepository.clearLoadedToday()
                     onFailure(error) })
+        case .OfflineDownloads:
+            break
         }
     }
 
@@ -110,14 +112,15 @@ class PodcastRepository: Repository<Podcast> {
         }
 
         // Check if we made requests today
-        let alreadLoadedStartToday = PodcastRepository.checkAlreadyLoadedNewToday(filterObject: filterObject)
+//        let alreadLoadedStartToday = PodcastRepository.checkAlreadyLoadedNewToday(filterObject: filterObject)
+        let alreadLoadedStartToday = false
 
         //@TODO: Fix this special case for recommneded. We can't load from disk here because we are display top podcasts when a user is not logged in
         if alreadLoadedStartToday && filterObject.type != PodcastTypes.recommended.rawValue {
             self.loading = true
             log.warning("from disk")
             // Check if we have realm data saved
-            DataSource.getAllWith(diskKey: .podcastFolder, filterObject: filterObject, completion: { (returnedData) in
+            DataSource.getAllWith(diskKey: .PodcastFolder, filterObject: filterObject, completion: { (returnedData) in
                 guard let data = returnedData, !data.isEmpty else {
                     self.loading = false
                     onFailure(.ErrorGettingFromDisk)
@@ -153,7 +156,7 @@ class PodcastRepository: Repository<Podcast> {
                     onFailure(.ReturnedDataEqualsLastData)
                     return
                 }
-                DataSource.insert(diskKey: .podcastFolder, items: podcasts)
+                DataSource.insert(diskKey: .PodcastFolder, items: podcasts)
                 PodcastRepository.setLoadedNewToday(filterObject: filterObject)
                 self.lastReturnedDataArray = podcasts
                 onSuccess(podcasts) },

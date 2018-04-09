@@ -111,7 +111,7 @@ extension API {
                     UserManager.sharedInstance.setCurrentUser(to: user)
 
                     // Clear disk cache
-                    PodcastDataSource.clean(diskKey: .podcastFolder)
+                    PodcastDataSource.clean(diskKey: .PodcastFolder)
                     NotificationCenter.default.post(name: .loginChanged, object: nil)
                     
                     // Check for subscription or other info

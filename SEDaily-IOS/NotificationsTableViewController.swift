@@ -15,14 +15,19 @@ class NotificationsTableViewController: UITableViewController {
     let center = UNUserNotificationCenter.current()
     let options: UNAuthorizationOptions = [.alert, .sound]
     var notificationsSubscribed = false
-    
-    var customTabBarItem: UITabBarItem! {
-        return UITabBarItem(title: L10n.tabBarNotifications, image: #imageLiteral(resourceName: "mic_stand"), selectedImage: #imageLiteral(resourceName: "mic_stand_selected"))
+
+    required init() {
+        super.init(style: .plain)
+        self.tabBarItem = UITabBarItem(title: L10n.tabBarNotifications, image: #imageLiteral(resourceName: "mic_stand"), selectedImage: #imageLiteral(resourceName: "mic_stand_selected"))
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         let defaults = UserDefaults.standard
         let subscribed = defaults.object(forKey: "sedaily-notificationsSubscribed") as? Bool
         if subscribed != nil {
@@ -30,6 +35,8 @@ class NotificationsTableViewController: UITableViewController {
         }
         
         self.tableView.register(NotificationTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+
+        self.tableView.rowHeight = UIView.getValueScaledByScreenHeightFor(baseValue: 85)
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,11 +63,11 @@ class NotificationsTableViewController: UITableViewController {
             for: indexPath) as? NotificationTableViewCell else {
                 return UITableViewCell()
         }
-        
+
 //        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as NotificationTableViewCell
 
         // Configure the cell...
-        cell.textLabel?.text = "Enable Daily Notifications"
+        cell.cellLabel.text = "Enable Daily Notifications"
         cell.cellToggle.addTarget(self, action: #selector(switchValueDidChange), for: .touchUpInside)
         
         if notificationsSubscribed {

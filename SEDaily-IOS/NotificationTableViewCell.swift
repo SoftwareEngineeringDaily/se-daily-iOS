@@ -33,19 +33,20 @@ class NotificationTableViewCell: UITableViewCell, Reusable {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        cellImageView = UIImageView(leftInset: 10, height: 75)
+
+        cellImageView = UIImageView(leftInset: 10, topInset: 5, height: 75)
         cellImageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
         cellImageView.contentMode = .scaleAspectFit
         cellImageView.clipsToBounds = true
         cellImageView.kf.indicatorType = .activity
-        
-        cellLabel = UILabel(origin: cellImageView.topRightPoint(), leftInset: 10, width: 250, height: 75)
+
+        cellLabel = UILabel(origin: cellImageView.topRightPoint(), leftInset: 10, width: 210, height: 75)
         cellLabel.textColor = .black
         cellLabel.baselineAdjustment = .alignCenters
         cellLabel.numberOfLines = 0
-        
-        cellToggle = UISwitch(width: 20, height: 20)
-        
+
+        cellToggle = UISwitch(origin: cellLabel.topRightPoint(), leftInset: 10, topInset: 22, width: 20)
+
         self.contentView.addSubview(cellImageView)
         self.contentView.addSubview(cellLabel)
         self.contentView.addSubview(cellToggle)

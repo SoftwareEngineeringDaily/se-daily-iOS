@@ -4,9 +4,9 @@ PODS:
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
   - Disk (0.3.3)
-  - Eureka (4.0.1)
-  - Fabric (1.7.2)
-  - IQKeyboardManagerSwift (5.0.7)
+  - Eureka (4.1.1)
+  - Fabric (1.7.6)
+  - IQKeyboardManagerSwift (5.0.8)
   - Kingfisher (4.2.0)
   - KoalaTeaFlowLayout (0.3.1)
   - KoalaTeaPlayer (0.2.7):
@@ -28,11 +28,11 @@ PODS:
   - PopupDialog (0.6.2)
   - PureLayout (3.0.2)
   - Quick (1.2.0)
-  - Reusable (4.0.0):
-    - Reusable/Storyboard (= 4.0.0)
-    - Reusable/View (= 4.0.0)
-  - Reusable/Storyboard (4.0.0)
-  - Reusable/View (4.0.0)
+  - Reusable (4.0.2):
+    - Reusable/Storyboard (= 4.0.2)
+    - Reusable/View (= 4.0.2)
+  - Reusable/Storyboard (4.0.2)
+  - Reusable/View (4.0.2)
   - SideMenu (3.1.5)
   - Skeleton (0.1.2)
   - SnapKit (4.0.0)
@@ -68,7 +68,7 @@ DEPENDENCIES:
   - Alamofire (~> 4.5.1)
   - Crashlytics (~> 3.9.3)
   - Disk (~> 0.3.1)
-  - Eureka (~> 4.0.1)
+  - Eureka
   - Fabric (~> 1.7.2)
   - IQKeyboardManagerSwift (~> 5.0.5)
   - Kingfisher (~> 4.2.0)
@@ -107,7 +107,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   ActiveLabel:
-    :commit: 2f4b1dd809d7c40df72c949fface1ee2426e412d
+    :commit: 3e98a76353bcdeea879e7d2552f58d6967207dab
     :git: https://github.com/optonaut/ActiveLabel.swift.git
   SwiftIcons:
     :commit: 56e9cf1019b01a4a9a2f22a78e84618f4ea094aa
@@ -118,9 +118,9 @@ SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Disk: d1f55cd61f6ca20f368232d0c6e37e3c3dfcb63e
-  Eureka: c8bd5cc07143b6f66268c208d28a246c99b41955
-  Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
-  IQKeyboardManagerSwift: 30fb3a61de1af53a95e02b80fb54ed0a19d5ede5
+  Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
+  Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
+  IQKeyboardManagerSwift: 2e7dc7f98c111458c1ea2b373f893e8cf95e2b97
   Kingfisher: 9ee7e788d8ba07c3f21ce0d43f33cec310a4f781
   KoalaTeaFlowLayout: 219c45709d0873d405b2de1b27080a9c411246b7
   KoalaTeaPlayer: 6f9df0f08113765d5195c0e447b1a64966dc1507
@@ -132,7 +132,7 @@ SPEC CHECKSUMS:
   PopupDialog: d4336d7274a6aa3af4cb26d8b6691510eba90cc3
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
-  Reusable: 98e5fff1e0e2e00872199699b276dde08ee56c07
+  Reusable: 584a5629747c52e0f6a77841b400dc2643f6fa0f
   SideMenu: 47dbf9e4d878062d8994aed43f6e4bf6c1fea30b
   Skeleton: 0d2941ce8d24f60a7e85ee39e55203256300b538
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
@@ -149,6 +149,6 @@ SPEC CHECKSUMS:
   URITemplate: ace0c4c46dcf8afe6e89b4060621852886b15c3b
   WaitForIt: 2c7ad6deaffe3bf727b7242a2263167bf2ce3e57
 
-PODFILE CHECKSUM: 3369fb077c3a5c100909832643ce501010bc2650
+PODFILE CHECKSUM: 0257a2688bd6c587b8286344919c2a9673246e6f
 
 COCOAPODS: 1.3.1

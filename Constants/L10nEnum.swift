@@ -83,6 +83,10 @@ enum L10n {
   static let loginTitle = L10n.tr("Localizable", "LoginTitle")
   /// Logout
   static let logoutTitle = L10n.tr("Localizable", "LogoutTitle")
+  /// We have new episodes for you!
+  static let mwfNotificationBody = L10n.tr("Localizable", "mwfNotificationBody")
+  /// Software Daily
+  static let mwfNotificationTitle = L10n.tr("Localizable", "mwfNotificationTitle")
   /// No Bookmarks
   static let noBookmarks = L10n.tr("Localizable", "NoBookmarks")
   /// No thanks
@@ -95,6 +99,8 @@ enum L10n {
   static let signUpButtonTitle = L10n.tr("Localizable", "SignUpButtonTitle")
   /// Just For You
   static let tabBarJustForYou = L10n.tr("Localizable", "TabBarJustForYou")
+  /// Notifications
+  static let tabBarNotifications = L10n.tr("Localizable", "TabBarNotifications")
   /// Latest
   static let tabBarTitleLatest = L10n.tr("Localizable", "TabBarTitleLatest")
   /// All

@@ -95,6 +95,8 @@ enum L10n {
   static let signUpButtonTitle = L10n.tr("Localizable", "SignUpButtonTitle")
   /// Just For You
   static let tabBarJustForYou = L10n.tr("Localizable", "TabBarJustForYou")
+  /// Notifications
+  static let tabBarNotifications = L10n.tr("Localizable", "TabBarNotifications")
   /// Latest
   static let tabBarTitleLatest = L10n.tr("Localizable", "TabBarTitleLatest")
   /// All

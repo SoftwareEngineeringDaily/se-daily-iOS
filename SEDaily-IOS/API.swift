@@ -419,7 +419,7 @@ extension API {
             Headers.authorization: Headers.bearer + userToken,
             Headers.contentType: Headers.x_www_form_urlencoded
         ]
-
+        
         Alamofire.request(
             urlString,
             method: .get,
@@ -435,7 +435,6 @@ extension API {
                 }
 
                 let jsonData = JSON(responseData)
-
                 var podcastModels = [PodcastModel]()
                 jsonData.forEach({ (_, itemJsonData) in
                     if let rawData = try? itemJsonData.rawData(),

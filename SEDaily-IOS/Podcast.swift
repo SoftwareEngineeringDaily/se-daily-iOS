@@ -71,7 +71,7 @@ public struct Podcast: Codable {
         let rendered: String
     }
     let title: Title
-    let score: Int
+    let score: Int?
     var type: String? = "new"
     var upvoted: Bool?
     var downvoted: Bool?
@@ -103,6 +103,7 @@ extension Podcast {
         self.content = Content(rendered: viewModel.encodedPodcastDescription)
         self.title = Title(rendered: viewModel.encodedPodcastTitle)
         self.score = viewModel.score
+        
         self.upvoted = viewModel.isUpvoted
         self.downvoted = viewModel.isDownvoted
         self.bookmarked = viewModel.isBookmarked

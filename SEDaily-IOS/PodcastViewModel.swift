@@ -56,7 +56,10 @@ public struct PodcastViewModel: Codable {
         self.featuredImageURL = URL(string: podcast.featuredImage ?? "")
         self.encodedPodcastTitle = podcast.title.rendered
         self.encodedPodcastDescription = podcast.content.rendered
-        self.score = podcast.score
+        self.score = 0
+        if let podScore = podcast.score {
+            self.score = podScore
+        }
 
         if let upvoted = podcast.upvoted {
             self.isUpvoted = upvoted

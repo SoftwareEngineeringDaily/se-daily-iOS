@@ -24,7 +24,14 @@ public protocol OfflineDownloadsProtocol {
 }
 
 public class OfflineDownloadsManager: NSObject, OfflineDownloadsProtocol {
-    var downloadRequest: DownloadRequest?
+    static let sharedInstance = OfflineDownloadsManager()
+
+    private lazy var backgroundManager: Alamofire.SessionManager = {
+        let bundleIdentifier = "com.sed"
+        return Alamofire.SessionManager(configuration: URLSessionConfiguration.background(withIdentifier: bundleIdentifier + ".background"))
+    }()
+
+    private var downloadRequests: [String: DownloadRequest] = [:]
 
     public func save(podcast: PodcastViewModel,
                      onProgress: @escaping OfflineDownloadsProtocol.ProgressCallback,
@@ -37,6 +44,34 @@ public class OfflineDownloadsManager: NSObject, OfflineDownloadsProtocol {
             return
         }
         let fileName = podcast.getFilename()
+
+        if let existingRequest = self.existingDownloadRequest(with: fileName) {
+            existingRequest.downloadProgress(closure: { (progress) in
+                DispatchQueue.main.async {
+                    onProgress(progress.fractionCompleted)
+                }
+            }).responseData(completionHandler: { (response) in
+                self.downloadRequests.removeValue(forKey: fileName)
+
+                switch response.result {
+                case .success:
+                    DispatchQueue.main.async {
+                        onSucces()
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                        if error.localizedDescription == "cancelled" {
+                            onFailure(nil)
+                            return
+                        }
+                        onFailure(error)
+                    }
+                }
+            })
+
+            return
+        }
 
         guard let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             assertionFailure("No documents url found")
@@ -58,13 +93,15 @@ public class OfflineDownloadsManager: NSObject, OfflineDownloadsProtocol {
             return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
         }
 
-        let request = Alamofire.download(urlString, to: destination)
+        let request = backgroundManager.download(urlString, to: destination)
             .downloadProgress(queue: utilityQueue) { progress in
                 DispatchQueue.main.async {
                     onProgress(progress.fractionCompleted)
                 }
             }
             .responseData { response in
+                self.downloadRequests.removeValue(forKey: fileName)
+
                 switch response.result {
                 case .success:
                     DispatchQueue.main.async {
@@ -72,19 +109,25 @@ public class OfflineDownloadsManager: NSObject, OfflineDownloadsProtocol {
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
-                        onFailure(error)
                         print(error.localizedDescription)
-
+                        if error.localizedDescription == "cancelled" {
+                            onFailure(nil)
+                            return
+                        }
+                        onFailure(error)
                     }
                 }
         }
 
-        self.downloadRequest = request
+        self.downloadRequests[fileName] = request
     }
 
     public func deletePodcast(podcast: PodcastViewModel,
                               completion: @escaping () -> Void) {
-        self.downloadRequest?.cancel()
+        // Cancel download request if one is active
+        if self.downloadRequests.has(key: podcast.getFilename()) {
+            self.downloadRequests[podcast.getFilename()]?.cancel()
+        }
         
         guard let fileStringToDelete = podcast.downloadedFileURLString else {
             completion()
@@ -115,5 +158,9 @@ public class OfflineDownloadsManager: NSObject, OfflineDownloadsProtocol {
             print(error.localizedDescription)
             return nil
         }
+    }
+
+    private func existingDownloadRequest(with name: String) -> DownloadRequest? {
+        return downloadRequests[name]
     }
 }

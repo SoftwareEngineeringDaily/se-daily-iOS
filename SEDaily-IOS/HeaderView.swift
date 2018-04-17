@@ -32,7 +32,7 @@ class HeaderView: UIView {
 
     private var downloadButton = UIButton()
 
-    let downloadManager = OfflineDownloadsManager()
+    let downloadManager = OfflineDownloadsManager.sharedInstance
     let networkService = API()
 
     override init(frame: CGRect) {
@@ -273,15 +273,17 @@ extension HeaderView {
             self.delegate?.modelDidChange(viewModel: self.podcastViewModel)
 
             AudioViewManager.shared.setupManager(podcastModel: self.podcastViewModel)
+            AudioViewManager.shared.pauseButtonPressed()
 
             self.playButton.setTitle("Play", for: .normal)
             self.playButton.isUserInteractionEnabled = true
         }) { (error) in
+            self.playButton.setTitle("Play", for: .normal)
+            self.playButton.isUserInteractionEnabled = true
+
             guard let error = error else { return }
             // Alert Error
             Helpers.alertWithMessage(title: error.localizedDescription.capitalized, message: "")
-            self.playButton.setTitle("Play", for: .normal)
-            self.playButton.isUserInteractionEnabled = true
         }
     }
 

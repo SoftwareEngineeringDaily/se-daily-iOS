@@ -175,6 +175,7 @@ class AudioViewManager: NSObject {
             audioView?.playButton.isHidden = true
             audioView?.pauseButton.isHidden = false
         case .paused:
+            audioView?.enableButtons()
             audioView?.activityView.stopAnimating()
 
             audioView?.playButton.isHidden = false

@@ -10,9 +10,9 @@ target 'SEDaily-IOS' do
   pod 'Alamofire', '~> 4.5.1'
   pod 'Crashlytics', '~> 3.9.3'
   pod 'Disk', '~> 0.3.1'
-  pod 'Eureka', '~> 4.0.1'
-  pod 'Fabric', '~> 1.7.2'
-  pod 'IQKeyboardManagerSwift', '~> 5.0.5'
+  pod 'Eureka', '~> 4.1.1'
+  pod 'Fabric', '~> 1.7.5'
+  pod 'IQKeyboardManagerSwift', '~> 5.0.8'
   pod 'Kingfisher', '~> 4.2.0'
   pod 'KTResponsiveUI', '~> 0.2.4'
   pod 'KoalaTeaFlowLayout', '~> 0.3.1'
@@ -36,7 +36,7 @@ target 'SEDaily-IOS' do
   pod 'Tabman', '~> 1.0.5'
   pod 'UIFontComplete', '~> 2.0.1'
   pod 'WaitForIt', '~> 2.0.0'
-  
+
   target 'SEDaily-IOSTests' do
     inherit! :search_paths
     pod 'Quick'

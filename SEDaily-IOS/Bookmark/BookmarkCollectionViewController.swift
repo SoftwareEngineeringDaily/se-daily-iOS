@@ -55,8 +55,6 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
             name: .loginChanged,
             object: nil)
 
-        self.refreshView(useCache: true)
-
         self.errorView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         self.errorView?.backgroundColor = .green
 
@@ -87,6 +85,8 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        self.refreshView(useCache: true)
     }
 
     /// Refresh the view

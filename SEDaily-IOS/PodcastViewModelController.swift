@@ -47,7 +47,7 @@ public class PodcastViewModelController {
         self.viewModels.insert(podcast, at: modelsIndex)
 
         // Tell repository to update Datasource
-        self.repository.updateDataSource(diskKey: .podcastFolder, item: podcast.baseModelRepresentation)
+        self.repository.updateDataSource(diskKey: .PodcastFolder, item: podcast.baseModelRepresentation)
     }
 
     func fetchData(type: String = "",
@@ -62,7 +62,7 @@ public class PodcastViewModelController {
         }
         let filterObject = FilterObject(type: type, tags: tags, lastDate: beforeDate, categories: categories)
         repository.getData(
-            diskKey: .podcastFolder,
+            diskKey: .PodcastFolder,
             filterObject: filterObject,
             onSuccess: { (podcasts) in
                 let newViewModels: [ViewModel?] = podcasts.map { model in

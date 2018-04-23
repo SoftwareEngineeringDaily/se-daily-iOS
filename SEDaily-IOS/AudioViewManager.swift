@@ -27,21 +27,35 @@ class AudioViewManager: NSObject {
 
     var audioView: AudioView?
     var podcastModel: PodcastViewModel?
+    
+    // @TODO: Move to own class
+    var playProgress: [String: Float] =  [String: Float]()
 
     func setupManager(podcastModel: PodcastViewModel) {
         self.podcastModel = podcastModel
         Tracker.logPlayPodcast(podcast: podcastModel)
+        
+        let defaults = UserDefaults.standard
+        let savedProgress = defaults.object(forKey: "sedaily-playProgress") as? [String: Float]
+        if savedProgress != nil {
+            playProgress = savedProgress!
+        }
+        
         self.presentAudioView()
     }
 
     fileprivate func setupAudioManager(url: URL, name: String) {
-        let savedTime: Float = 0
-        //@TODO: Add tracking for current time again
-//        if let time = podcastModel?.currentTime {
-//            if let float = Float(time) {
-//                savedTime = float
-//            }
-//        }
+        var savedTime: Float = 0
+        
+        // Load Saved time
+        if let podcastModel = podcastModel {
+            if playProgress[podcastModel._id] != nil {
+                savedTime =  playProgress[podcastModel._id]!
+            } else {
+                playProgress[podcastModel._id] = 0
+            }
+        }
+        
         log.info(savedTime, "savedtime")
 
         let asset = Asset(assetName: name, url: url, savedTime: savedTime)
@@ -78,7 +92,15 @@ class AudioViewManager: NSObject {
                 controller.setContainerViewInset()
             }
 
-            guard let url = self.podcastModel?.mp3URL else { return }
+            var fileURL: URL? = nil
+
+            fileURL = self.podcastModel?.mp3URL
+
+            if let urlString = self.podcastModel!.downloadedFileURLString {
+                fileURL = URL(fileURLWithPath: urlString)
+            }
+
+            guard let url = fileURL else { return }
             guard let name = self.podcastModel?.podcastTitle else { return }
 
             self.setupAudioManager(url: url, name: name)
@@ -109,7 +131,7 @@ class AudioViewManager: NSObject {
             setText(text: podcastModel?.podcastTitle)
             return
         }
-
+        
         audioView = AudioView()
         audioView?.delegate = self
 
@@ -153,6 +175,7 @@ class AudioViewManager: NSObject {
             audioView?.playButton.isHidden = true
             audioView?.pauseButton.isHidden = false
         case .paused:
+            audioView?.enableButtons()
             audioView?.activityView.stopAnimating()
 
             audioView?.playButton.isHidden = false
@@ -199,17 +222,28 @@ extension AudioViewManager: AssetPlayerDelegate {
     }
 
     func playerCurrentTimeDidChange(_ player: AssetPlayer) {
-        //@TODO: Add back current time tracking
-//        podcastModel?.update(currentTime: Float(player.currentTime))
-
+        // Update progress
+        if let podcastModel = podcastModel {
+            playProgress[podcastModel._id] = Float(player.currentTime)
+            
+            if round(player.currentTime).truncatingRemainder(dividingBy: 5.0) == 0.0 {
+                let defaults = UserDefaults.standard
+                defaults.set(playProgress, forKey: "sedaily-playProgress")
+            }
+        }
+    
         audioView?.updateTimeLabels(currentTimeText: player.timeElapsedText, timeLeftText: player.timeLeftText)
 
         audioView?.updateSlider(currentValue: Float(player.currentTime))
     }
 
     func playerPlaybackDidEnd(_ player: AssetPlayer) {
-        //@TODO: Add back current time tracking
-//        podcastModel?.update(currentTime: 0.0)
+        // Reset progress
+        if let podcastModel = podcastModel {
+            playProgress[podcastModel._id] = 0.0
+            let defaults = UserDefaults.standard
+            defaults.set(playProgress, forKey: "sedaily-playProgress")
+        }
     }
 
     func playerIsLikelyToKeepUp(_ player: AssetPlayer) {

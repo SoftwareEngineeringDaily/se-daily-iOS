@@ -37,7 +37,6 @@ extension Helpers {
 }
 
 class Helpers {
-
     static func alertWithMessage(title: String!, message: String!, completionHandler: (() -> Void)? = nil) {
         //@TODO: Guard if there's already an alert message
         if var topController = UIApplication.shared.keyWindow?.rootViewController {
@@ -54,6 +53,26 @@ class Helpers {
             alert.addAction(UIAlertAction(title: L10n.genericOkay, style: UIAlertActionStyle.default, handler: nil))
             topController.present(alert, animated: true, completion: nil)
             completionHandler?()
+        }
+    }
+    
+    static func alertWithMessageCustomAction(title: String!, message: String!, actionTitle: String, completionHandler: (() -> Void)? = nil) {
+        //@TODO: Guard if there's already an alert message
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            
+            guard !(topController is UIAlertController) else {
+                // There's already a alert preseneted
+                return
+            }
+            
+            alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: actionTitle, style: .default, handler: { (_) in
+                completionHandler?()
+            }))
+            topController.present(alert, animated: true, completion: nil)
         }
     }
 

@@ -72,3 +72,6 @@
 "SucccessfullySubmitted" = "Successfully submitted :)";
 "Submitting" = "Submitting...";
 "Anonymous" = "Anonymous";
+"TabBarNotifications" = "Notifications";
+"mwfNotificationTitle" = "Software Daily";
+"mwfNotificationBody" = "We have new episodes for you!";

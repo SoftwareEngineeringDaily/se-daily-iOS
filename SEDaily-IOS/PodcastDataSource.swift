@@ -66,7 +66,7 @@ class PodcastDataSource {
     }
 
     static func insert(diskKey: DiskKeys, items: [GenericType]) {
-        self.getAll(diskKey: .podcastFolder) { (results) in
+        self.getAll(diskKey: .PodcastFolder) { (results) in
             var newResults = results ?? [GenericType]()
             items.forEach({ newPodcast in
                 if let index = results?.index(where: { oldPodcast -> Bool in
@@ -84,7 +84,7 @@ class PodcastDataSource {
 
     static func update(diskKey: DiskKeys, item: GenericType) {
         DispatchQueue.global(qos: .userInitiated).async {
-            self.getAll(diskKey: .podcastFolder) { (results) in
+            self.getAll(diskKey: .PodcastFolder) { (results) in
                 var newResults = results ?? [GenericType]()
                 if let index = results?.index(where: { oldPodcast -> Bool in
                     return item._id == oldPodcast._id

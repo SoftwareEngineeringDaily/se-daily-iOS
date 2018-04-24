@@ -193,7 +193,7 @@ class HeaderView: UIView {
         downVoteButton.isSelected = self.podcastViewModel.isDownvoted
         self.scoreLabel.text = String(self.podcastViewModel.score)
 
-        // self.setupDownloadButton()
+         self.setupDownloadButton()
     }
 }
 

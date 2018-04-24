@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct ForumThread: Codable {
+public struct ForumThreadLite: Codable {
     let _id: String
 //    let author: Author
 }

@@ -57,7 +57,7 @@ enum PodcastCategoryIds: Int {
 
 public struct Podcast: Codable {
     let _id: String
-    let thread: ForumThread?
+    let thread: ForumThreadLite?
     let date: String
     let link: String
     let categories: [Int]?

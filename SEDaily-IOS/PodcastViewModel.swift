@@ -10,7 +10,7 @@ import Foundation
 
 public struct PodcastViewModel: Codable {
     let _id: String
-    let thread: ForumThread?
+    let thread: ForumThreadLite?
     let uploadDateiso8601: String
     let postLinkURL: URL?
     let categories: [Int]?

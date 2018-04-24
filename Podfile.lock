@@ -4,6 +4,7 @@ PODS:
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
   - Disk (0.3.3)
+  - Down (0.5.1)
   - Eureka (4.1.1)
   - Fabric (1.7.5)
   - IQKeyboardManagerSwift (5.0.8)
@@ -68,6 +69,7 @@ DEPENDENCIES:
   - Alamofire (~> 4.5.1)
   - Crashlytics (~> 3.9.3)
   - Disk (~> 0.3.1)
+  - Down
   - Eureka (~> 4.1.1)
   - Fabric (~> 1.7.5)
   - IQKeyboardManagerSwift (~> 5.0.8)
@@ -103,6 +105,7 @@ SPEC REPOS:
     - Alamofire
     - Crashlytics
     - Disk
+    - Down
     - Eureka
     - Fabric
     - IQKeyboardManagerSwift
@@ -153,6 +156,7 @@ SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Disk: d1f55cd61f6ca20f368232d0c6e37e3c3dfcb63e
+  Down: 6ace44ecec0c408826342ed420002f39a18e38c3
   Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
   Fabric: ae7146a5f505ea370a1e44820b4b1dc8890e2890
   IQKeyboardManagerSwift: 2e7dc7f98c111458c1ea2b373f893e8cf95e2b97
@@ -184,6 +188,6 @@ SPEC CHECKSUMS:
   URITemplate: ace0c4c46dcf8afe6e89b4060621852886b15c3b
   WaitForIt: 2c7ad6deaffe3bf727b7242a2263167bf2ce3e57
 
-PODFILE CHECKSUM: ede6a3047980c2d8b8730c1b9bb5340f802d7f7e
+PODFILE CHECKSUM: a5ebda4e71c8401c4e6dc37ad4879348f6e6a373
 
 COCOAPODS: 1.5.0

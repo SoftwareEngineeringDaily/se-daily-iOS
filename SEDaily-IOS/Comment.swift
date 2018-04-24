@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import Down
 public struct Comment: Codable {
     let author: Author
     let _id: String
@@ -29,12 +29,19 @@ extension Comment {
         return Date(iso8601String: self.dateCreated)
     }
     
-    func commentBody() -> String {
+    func commentBody() -> NSAttributedString {
         // This should be done on the server
         if self.deleted {
-            return "This post has been deleted."
+            return NSAttributedString(string: "This post has been deleted.")
         } else {
-            return self.content
+            let down = Down(markdownString: self.content)
+            if let content = try? down.toAttributedString() {
+                print("return NEW content")
+                return content
+            } else {
+                print("return old content")
+                return NSAttributedString(string: self.content)
+            }
         }
     }
 }

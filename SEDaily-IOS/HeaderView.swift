@@ -158,7 +158,9 @@ class HeaderView: UIView {
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
         
-        stackView.addArrangedSubview(commentsButton)
+        if self.podcastViewModel.thread != nil {
+            stackView.addArrangedSubview(commentsButton)
+        }
         stackView.addArrangedSubview(downVoteButton)
         stackView.addArrangedSubview(scoreLabel)
         stackView.addArrangedSubview(upVoteButton)

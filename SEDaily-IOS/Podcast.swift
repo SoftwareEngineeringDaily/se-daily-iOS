@@ -104,7 +104,7 @@ extension Podcast {
         self.content = Content(rendered: viewModel.encodedPodcastDescription)
         self.title = Title(rendered: viewModel.encodedPodcastTitle)
         self.score = viewModel.score
-        self.thread = nil
+        self.thread = viewModel.thread
         self.upvoted = viewModel.isUpvoted
         self.downvoted = viewModel.isDownvoted
         self.bookmarked = viewModel.isBookmarked

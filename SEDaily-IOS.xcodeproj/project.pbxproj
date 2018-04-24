@@ -69,6 +69,7 @@
 		960BFEC52023C1330073DAB2 /* CommentsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960BFEC42023C1330073DAB2 /* CommentsResponse.swift */; };
 		960BFEC7202539180073DAB2 /* CommentReplyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960BFEC6202539180073DAB2 /* CommentReplyTableViewCell.swift */; };
 		960BFEC9202539640073DAB2 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960BFEC8202539640073DAB2 /* CommentTableViewCell.swift */; };
+		961A378D208FAFEF0050EF80 /* ForumThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961A378C208FAFEF0050EF80 /* ForumThread.swift */; };
 		962F5365201E3C7900897A6E /* RelatedLinksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962F5364201E3C7900897A6E /* RelatedLinksViewController.swift */; };
 		96600312201CEBBD00997795 /* RelatedLinks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96600311201CEBBD00997795 /* RelatedLinks.storyboard */; };
 		9672AA52202929C90020981F /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9672AA51202929C90020981F /* Author.swift */; };
@@ -173,6 +174,7 @@
 		960BFEC42023C1330073DAB2 /* CommentsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsResponse.swift; sourceTree = "<group>"; };
 		960BFEC6202539180073DAB2 /* CommentReplyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentReplyTableViewCell.swift; sourceTree = "<group>"; };
 		960BFEC8202539640073DAB2 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
+		961A378C208FAFEF0050EF80 /* ForumThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumThread.swift; sourceTree = "<group>"; };
 		962F5364201E3C7900897A6E /* RelatedLinksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedLinksViewController.swift; sourceTree = "<group>"; };
 		96600311201CEBBD00997795 /* RelatedLinks.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RelatedLinks.storyboard; sourceTree = "<group>"; };
 		9672AA51202929C90020981F /* Author.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 		1686FBFF1F009EC00088A6C1 /* SEDaily-IOS */ = {
 			isa = PBXGroup;
 			children = (
+				961A378B208FAFC30050EF80 /* Forum */,
 				961A378A208FAF3E0050EF80 /* User */,
 				960BFEBD20226B420073DAB2 /* Comments */,
 				96600306201CE9F900997795 /* RelatedLinks */,
@@ -488,6 +491,14 @@
 				9672AA51202929C90020981F /* Author.swift */,
 			);
 			name = User;
+			sourceTree = "<group>";
+		};
+		961A378B208FAFC30050EF80 /* Forum */ = {
+			isa = PBXGroup;
+			children = (
+				961A378C208FAFEF0050EF80 /* ForumThread.swift */,
+			);
+			name = Forum;
 			sourceTree = "<group>";
 		};
 		96600306201CE9F900997795 /* RelatedLinks */ = {
@@ -906,6 +917,7 @@
 				16B147B11F16BF9C00433A42 /* AudioViewManager.swift in Sources */,
 				164C71051F021AC8003803BC /* CustomTabViewController.swift in Sources */,
 				164FE9DC1F02DAB5009419CA /* PodcastCollectionViewCell.swift in Sources */,
+				961A378D208FAFEF0050EF80 /* ForumThread.swift in Sources */,
 				962F5365201E3C7900897A6E /* RelatedLinksViewController.swift in Sources */,
 				960BFEC7202539180073DAB2 /* CommentReplyTableViewCell.swift in Sources */,
 				1EABD8F51FB430AB00959859 /* DebugTabViewController.swift in Sources */,

@@ -458,8 +458,7 @@ extension API {
     // get Comments
     func getComments(podcastId: String, onSuccess: @escaping ([Comment]) -> Void,
                      onFailure: @escaping (APIError?) -> Void) {
-        let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.comments
-        
+        let urlString = self.rootURL + Endpoints.comments + "/forEntity/" + podcastId
         let user = UserManager.sharedInstance.getActiveUser()
         let userToken = user.token
         let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded,

@@ -18,7 +18,7 @@ class CommentsViewController: UIViewController {
     @IBOutlet weak var composeStatusHolder: UIStackView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var heightOfReplyInfoHolder: NSLayoutConstraint!
-    var postId: String? // TODO: make optional so that we can check for it and display error if nil
+    var rootEntityId: String? // TODO: make optional so that we can check for it and display error if nil
     let networkService = API()
     var comments: [Comment] = [] {
         didSet {
@@ -129,11 +129,11 @@ class CommentsViewController: UIViewController {
     func loadComments() {
         activityIndicator.startAnimating()
         
-        guard let postId = postId else {
+        guard let rootEntityId = rootEntityId else {
                composeStatusLabel.text = L10n.thereWasAProblem
             return
         }
-        networkService.getComments(podcastId: postId, onSuccess: { [weak self] (comments) in
+        networkService.getComments(rootEntityId: rootEntityId, onSuccess: { [weak self] (comments) in
             guard let flatComments = self?.flattenComments(nestedComments: comments) else {
                 self?.composeStatusLabel.text = L10n.thereWasAProblem
                 return
@@ -171,11 +171,11 @@ class CommentsViewController: UIViewController {
         createCommentTextField.isUserInteractionEnabled = false
         submitCommentButton.isEnabled = false
         
-        guard let postId = postId, let commentContent = createCommentTextField.text else {
+        guard let rootEntityId = rootEntityId, let commentContent = createCommentTextField.text else {
             composeStatusLabel.text = L10n.thereWasAProblem
             return
         }
-        networkService.createComment(podcastId: postId, parentComment: parentCommentSelected, commentContent: commentContent, onSuccess: { [weak self] in
+        networkService.createComment(rootEntityId: rootEntityId, parentComment: parentCommentSelected, commentContent: commentContent, onSuccess: { [weak self] in
 
             // Reset input field + re-enable button:
             self?.createCommentTextField.text = ""

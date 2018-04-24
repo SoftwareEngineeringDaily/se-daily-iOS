@@ -14,7 +14,7 @@ public struct Comment: Codable {
     let content: String
     let dateCreated: String
     let deleted: Bool
-    let post: String
+    let rootEntity: String
     let replies: [Comment]?
     let score: Int
     let upvoted: Bool?

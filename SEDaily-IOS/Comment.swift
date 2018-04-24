@@ -30,18 +30,13 @@ extension Comment {
     }
     
     func commentBody() -> NSAttributedString {
-        // This should be done on the server
-        if self.deleted {
-            return NSAttributedString(string: "This post has been deleted.")
+        // This should be done on the server   
+        let down = Down(markdownString: self.content)
+        if let content = try? down.toAttributedString() {
+            return content
         } else {
-            let down = Down(markdownString: self.content)
-            if let content = try? down.toAttributedString() {
-                print("return NEW content")
-                return content
-            } else {
-                print("return old content")
-                return NSAttributedString(string: self.content)
-            }
+            return NSAttributedString(string: self.content)
         }
+    
     }
 }

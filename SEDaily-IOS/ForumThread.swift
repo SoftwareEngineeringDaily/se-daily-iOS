@@ -10,5 +10,5 @@ import Foundation
 
 public struct ForumThread: Codable {
     let _id: String
-    let author: Author
+//    let author: Author
 }

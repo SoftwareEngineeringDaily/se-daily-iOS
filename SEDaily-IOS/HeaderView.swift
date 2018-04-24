@@ -157,10 +157,8 @@ class HeaderView: UIView {
         stackView.axis = .horizontal
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
+        stackView.addArrangedSubview(commentsButton)
         
-        if self.podcastViewModel.thread != nil {
-            stackView.addArrangedSubview(commentsButton)
-        }
         stackView.addArrangedSubview(downVoteButton)
         stackView.addArrangedSubview(scoreLabel)
         stackView.addArrangedSubview(upVoteButton)
@@ -186,6 +184,11 @@ class HeaderView: UIView {
 
     func setupHeader(model: PodcastViewModel) {
         self.podcastViewModel = model
+        if self.podcastViewModel.thread != nil {
+            commentsButton.isHidden = false
+        } else {
+            commentsButton.isHidden = true
+        }
         self.titleLabel.text = model.podcastTitle
         self.dateLabel.text = model.getLastUpdatedAsDate()?.dateString() ?? ""
         self.scoreLabel.text = model.score.string

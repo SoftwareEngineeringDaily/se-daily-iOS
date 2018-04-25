@@ -65,6 +65,7 @@ extension API {
         static let categories = "categories"
         static let search = "search"
         static let commentContent = "content"
+        static let entityType = "entityType"
         static let parentCommentId = "parentCommentId"
     }
 }
@@ -456,9 +457,9 @@ typealias  CommentModel = Comment
 extension API {
     
     // get Comments
-    func getComments(podcastId: String, onSuccess: @escaping ([Comment]) -> Void,
+    func getComments(rootEntityId: String, onSuccess: @escaping ([Comment]) -> Void,
                      onFailure: @escaping (APIError?) -> Void) {
-        let urlString = self.rootURL + Endpoints.comments + "/forEntity/" + podcastId
+        let urlString = self.rootURL + Endpoints.comments + "/forEntity/" + rootEntityId
         let user = UserManager.sharedInstance.getActiveUser()
         let userToken = user.token
         let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded,
@@ -492,11 +493,11 @@ extension API {
     }
     
     // create Comment
-    func createComment(podcastId: String, parentComment: Comment?, commentContent: String, onSuccess: @escaping () -> Void,
+    func createComment(rootEntityId: String, parentComment: Comment?, commentContent: String, onSuccess: @escaping () -> Void,
                        onFailure: @escaping (APIError?) -> Void) {
        
-        let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.createComment
-        
+        let urlString = self.rootURL + Endpoints.comments + "/forEntity/" + rootEntityId
+
         let user = UserManager.sharedInstance.getActiveUser()
         let userToken = user.token
         let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded,
@@ -504,6 +505,7 @@ extension API {
                                      ]
         var params = [String: String]()
         params[Params.commentContent] = commentContent
+        params[Params.entityType] = "forumthread"
         // This is included if we are replying to a comment
         if let parentComment = parentComment {
             params[Params.parentCommentId] = parentComment._id

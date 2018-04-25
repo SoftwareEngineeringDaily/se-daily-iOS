@@ -12,23 +12,17 @@ class ForumListWrapperViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
-
-        
         // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
-        guard let commentsViewController = commentsStoryboard.instantiateViewController(
-            withIdentifier: "CommentsViewController") as? CommentsViewController else {
+        let storyboard = UIStoryboard.init(name: "ForumList", bundle: nil)
+        guard let vc = storyboard.instantiateViewController(
+            withIdentifier: "ForumListViewController") as? ForumListViewController else {
                 return
         }
-        
-        commentsViewController.rootEntityId = "5ada3725f32a0060919b1089"
-        self.navigationController?.pushViewController(commentsViewController, animated: true)
+        self.navigationController?.pushViewController(vc, animated: true)
         
     }
 
@@ -36,8 +30,6 @@ class ForumListWrapperViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
     /*
     // MARK: - Navigation
 

@@ -19,6 +19,9 @@ class ForumListViewController: UIViewController {
 
     @IBAction func clickedMe(_ sender: UIButton) {
         print("clicked me")
+        dismiss(animated: true) {
+            
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

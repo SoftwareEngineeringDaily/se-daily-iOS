@@ -12,6 +12,7 @@ class ForumListWrapperViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         // Do any additional setup after loading the view.
     }
     
@@ -22,7 +23,9 @@ class ForumListWrapperViewController: UIViewController {
             withIdentifier: "ForumListViewController") as? ForumListViewController else {
                 return
         }
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.navigationController?.present(vc, animated: true, completion: {
+            
+        })
         
     }
 

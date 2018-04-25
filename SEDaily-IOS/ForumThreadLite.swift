@@ -10,5 +10,5 @@ import Foundation
 
 public struct ForumThreadLite: Codable {
     let _id: String
-//    let author: Author
+//    let author: Author // Is a string at times..
 }

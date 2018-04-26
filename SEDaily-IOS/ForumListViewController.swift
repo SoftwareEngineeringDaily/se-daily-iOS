@@ -15,16 +15,17 @@ class ForumListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)!
-        self.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 0)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
+        
+        let headerView = UIView()
+        headerView.frame  = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
+        headerView.backgroundColor = UIColor.cyan
+        tableView.tableHeaderView = headerView
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -57,7 +58,12 @@ class ForumListViewController: UIViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
+     
     */
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)!
+        self.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 0)
+    }
 }
 
 extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {

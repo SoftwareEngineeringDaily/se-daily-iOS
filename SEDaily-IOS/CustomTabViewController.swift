@@ -100,18 +100,25 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 
     func setupTabs() {
         let layout = UICollectionViewLayout()
-
+        
+        let storyboard = UIStoryboard.init(name: "ForumList", bundle: nil)
+        guard let forumViewController = storyboard.instantiateViewController(
+            withIdentifier: "ForumListViewController") as? ForumListViewController else {
+                return
+        }
+        
         self.viewControllers = [
             PodcastPageViewController(),
             GeneralCollectionViewController(collectionViewLayout: layout, type: .recommended),
-
-            ForumListWrapperViewController(),
-            //            GeneralCollectionViewController(collectionViewLayout: layout, type: .top),
+            forumViewController,
+//            ForumListWrapperViewController(),
+            GeneralCollectionViewController(collectionViewLayout: layout, type: .top),
             BookmarkCollectionViewController(collectionViewLayout: layout),
             NotificationsTableViewController()
         ]
 
         #if DEBUG
+            // This will cause the tab bar to overflow so it will be auto turned into "More ..."
             let debugStoryboard = UIStoryboard.init(name: "Debug", bundle: nil)
             let debugViewController = debugStoryboard.instantiateViewController(
                 withIdentifier: "DebugTabViewController")

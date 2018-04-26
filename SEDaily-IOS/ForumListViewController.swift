@@ -11,7 +11,8 @@ import UIKit
 class ForumListViewController: UIViewController {
 
     let networkService = API()
-
+    var threads:[ForumThread] = []
+    
     @IBOutlet weak var tableView: UITableView!
     
     required init(coder aDecoder: NSCoder) {
@@ -27,15 +28,21 @@ class ForumListViewController: UIViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
+        loadThreads()
+    }
+
+    func loadThreads() {
         networkService.getForumThreads(onSuccess: {  [weak self] (threads) in
             print("count:")
             print(threads.count)
             print(threads)
+            self?.threads = threads
+            self?.tableView.reloadData()
         }) { (error) in
             print("error")
-        }        
+        }
+        
     }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -56,14 +63,17 @@ class ForumListViewController: UIViewController {
 extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      return 10
+      return self.threads.count
     }
     
     // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
     // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "forumCell", for: indexPath)
-        cell.textLabel?.text = "Hello world"
+        let thread = self.threads[indexPath.row]
+        print("thread? \(thread.title)")
+        cell.textLabel?.text = thread.title
+        
         return cell
         
     }

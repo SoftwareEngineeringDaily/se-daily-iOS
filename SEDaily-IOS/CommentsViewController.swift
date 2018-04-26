@@ -10,6 +10,9 @@ import UIKit
 
 class CommentsViewController: UIViewController {
 
+    @IBOutlet var headerView: UIView!
+    @IBOutlet weak var headerViewLabel: UILabel!
+    
     @IBOutlet weak var closeStatusAreaButton: UIButton!
     @IBOutlet weak var createCommentHeight: NSLayoutConstraint!
     @IBOutlet weak var createCommentHolder: UIView!
@@ -69,6 +72,9 @@ class CommentsViewController: UIViewController {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        headerViewLabel.text = "adsssssssssssssssfas asfasfass adsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfass"
+        tableView.tableHeaderView = headerView
+
         title = L10n.comments
         // Hide the reply area
         composeStatusHolder.isHidden = true
@@ -80,6 +86,8 @@ class CommentsViewController: UIViewController {
         activityIndicator.hidesWhenStopped = true
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
         view.addSubview(activityIndicator)
+        
+        
         
         // Hide if user is not logged in OR if user is limited (no true username)
         if !isFullUser() {

@@ -23,7 +23,7 @@ class ForumListViewController: UIViewController {
         tableView.dataSource = self
         
         let headerView = UIView()
-        headerView.frame  = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
+        headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         headerView.backgroundColor = UIColor.cyan
         tableView.tableHeaderView = headerView
     }

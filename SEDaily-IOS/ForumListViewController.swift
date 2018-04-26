@@ -12,17 +12,18 @@ class ForumListViewController: UIViewController {
 
     let networkService = API()
 
-
+    @IBOutlet weak var tableView: UITableView!
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
         self.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 0)
-
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-     
+        tableView.delegate = self
+        tableView.dataSource = self
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -50,5 +51,20 @@ class ForumListViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+}
 
+extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+      return 10
+    }
+    
+    // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
+    // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "forumCell", for: indexPath)
+        cell.textLabel?.text = "Hello world"
+        return cell
+        
+    }
 }

@@ -73,8 +73,12 @@ class CommentsViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         headerViewLabel.text = "adsssssssssssssssfas asfasfass adsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfass"
+        
+        headerViewLabel.sizeToFit()
         tableView.tableHeaderView = headerView
-
+         tableView.tableHeaderView?.setNeedsLayout()
+        tableView.tableHeaderView?.layoutSubviews()
+        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 300)
         title = L10n.comments
         // Hide the reply area
         composeStatusHolder.isHidden = true
@@ -111,6 +115,27 @@ class CommentsViewController: UIViewController {
         
         loadComments()
     }
+    
+    
+//    func layoutTableHeaderView(width: CGFloat) {
+//        let view = UIView(frame: CGRect(x: 0, y: 0, width: width, height: 0))
+//        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+//
+//        // [add subviews and their constraints to view]
+//
+//        let widthConstraint = NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: width)
+//
+//        view.addConstraint(widthConstraint)
+//        let height = view.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+//        view.removeConstraint(constraint)
+//
+//        view.frame = CGRect(x: 0, y: 0, width: width, height: height)
+//        view.setTranslatesAutoresizingMaskIntoConstraints(true)
+//
+//        self.tableView.tableHeaderView = view
+//    }
+//
+    
     
     // Should be in the model but only used by comments for now:
     func isFullUser() -> Bool {

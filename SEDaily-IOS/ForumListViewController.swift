@@ -36,7 +36,7 @@ class ForumListViewController: UIViewController {
             print("count:")
             print(threads.count)
             print(threads)
-            self?.threads = threads
+            self?.threads += threads
             self?.tableView.reloadData()
         }) { (error) in
             print("error")
@@ -76,5 +76,11 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
         
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == self.threads.count-1 { //you might decide to load sooner than -1 I guess...
+            loadThreads()
+        }
     }
 }

@@ -412,16 +412,15 @@ extension API {
         }
     }
 }
-
+typealias ForumThreadModel = ForumThread
 // MARK: Forum
 extension API {
     
     func getForumThreads(
                   lastActivityBefore lastActivityBeforeDate: String = "",
-                  onSuccess: @escaping ([Podcast]) -> Void,
+                  onSuccess: @escaping ([ForumThreadModel]) -> Void,
                   onFailure: @escaping (APIError?) -> Void) {
         
-        print("gets forum threads ----------")
         let user = UserManager.sharedInstance.getActiveUser()
         let userToken = user.token
         let _headers: HTTPHeaders = [
@@ -435,7 +434,7 @@ extension API {
         if lastActivityBeforeDate != "" {
             params[Params.lastActivityBefore] = lastActivityBeforeDate
         }
-        
+
         networkRequest(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
@@ -446,11 +445,11 @@ extension API {
                     return
                 }
                 
-                var data: [PodcastModel] = []
+                var data: [ForumThreadModel] = []
                 let this = JSON(responseData)
                 for (_, subJson):(String, JSON) in this {
                     guard let jsonData = try? subJson.rawData() else { continue }
-                    let newObject = try? JSONDecoder().decode(PodcastModel.self, from: jsonData)
+                    let newObject = try? JSONDecoder().decode(ForumThreadModel.self, from: jsonData)
                     if let newObject = newObject {
                         data.append(newObject)
                     }

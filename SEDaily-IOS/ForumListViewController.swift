@@ -10,6 +10,8 @@ import UIKit
 
 class ForumListViewController: UIViewController {
 
+    let networkService = API()
+
 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
@@ -20,6 +22,13 @@ class ForumListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        networkService.getForumThreads(onSuccess: {  [weak self] (threads) in
+            print("count:")
+            print(threads.count)
+            print(threads)
+        }) { (error) in
+            print("error")
+        }
         
     }
 

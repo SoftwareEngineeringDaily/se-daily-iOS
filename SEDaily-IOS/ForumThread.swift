@@ -10,11 +10,14 @@ import Foundation
 
 public struct ForumThread: Codable {
     let _id: String
+    
     let title: String
+
     let content: String
+    
     let commentsCount: Int
     let dateCreated: String
-    let dateLastActivity: String
+    let dateLastAcitiy: String // An annoying bug that will require database migrations + miner update
     let score: Int
     let deleted: Bool
     

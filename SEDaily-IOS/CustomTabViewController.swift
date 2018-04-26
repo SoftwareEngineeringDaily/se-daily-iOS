@@ -111,9 +111,9 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
             PodcastPageViewController(),
             GeneralCollectionViewController(collectionViewLayout: layout, type: .recommended),
             forumViewController,
-//            ForumListWrapperViewController(),
-            GeneralCollectionViewController(collectionViewLayout: layout, type: .top),
             BookmarkCollectionViewController(collectionViewLayout: layout),
+
+            GeneralCollectionViewController(collectionViewLayout: layout, type: .top),
             NotificationsTableViewController()
         ]
 

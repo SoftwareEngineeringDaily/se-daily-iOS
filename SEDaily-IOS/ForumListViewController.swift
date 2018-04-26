@@ -22,22 +22,19 @@ class ForumListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+     
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
         networkService.getForumThreads(onSuccess: {  [weak self] (threads) in
             print("count:")
             print(threads.count)
             print(threads)
         }) { (error) in
             print("error")
-        }
-        
+        }        
     }
 
-    @IBAction func clickedMe(_ sender: UIButton) {
-        print("clicked me")
-        dismiss(animated: true) {
-            
-        }
-    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

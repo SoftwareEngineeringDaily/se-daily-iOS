@@ -24,6 +24,7 @@ extension API {
     enum Endpoints {
         static let posts = "/posts"
         static let recommendations = "/posts/recommendations"
+        static let forum = "/forum"
         static let login = "/auth/login"
         static let register = "/auth/register"
         static let upvote = "/upvote"
@@ -52,6 +53,7 @@ extension API {
         static let bearer = "Bearer"
         static let lastUpdatedBefore = "lastUpdatedBefore"
         static let createdAtBefore = "createdAtBefore"
+        static let lastActivityBefore = "lastActivityBefore"
         static let active = "active"
         static let platform = "platform"
         static let deviceToken = "deviceToken"
@@ -398,6 +400,58 @@ extension API {
                     let newObject = try? JSONDecoder().decode(PodcastModel.self, from: jsonData)
                     if var newObject = newObject {
                         newObject.type = type
+                        data.append(newObject)
+                    }
+                }
+                onSuccess(data)
+            case .failure(let error):
+                log.error(error.localizedDescription)
+                Tracker.logGeneralError(error: error)
+                onFailure(.GeneralFailure)
+            }
+        }
+    }
+}
+
+// MARK: Forum
+extension API {
+    
+    func getForumThreads(
+                  lastActivityBefore lastActivityBeforeDate: String = "",
+                  onSuccess: @escaping ([Podcast]) -> Void,
+                  onFailure: @escaping (APIError?) -> Void) {
+        
+        print("gets forum threads ----------")
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
+        let _headers: HTTPHeaders = [
+            Headers.authorization: Headers.bearer + userToken
+        ]
+        
+        let urlString = rootURL + API.Endpoints.forum
+    
+        // Params
+        var params = [String: String]()
+        if lastActivityBeforeDate != "" {
+            params[Params.lastActivityBefore] = lastActivityBeforeDate
+        }
+        
+        networkRequest(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let responseData = response.data else {
+                    // Handle error here
+                    log.error("response has no data")
+                    onFailure(.NoResponseDataError)
+                    return
+                }
+                
+                var data: [PodcastModel] = []
+                let this = JSON(responseData)
+                for (_, subJson):(String, JSON) in this {
+                    guard let jsonData = try? subJson.rawData() else { continue }
+                    let newObject = try? JSONDecoder().decode(PodcastModel.self, from: jsonData)
+                    if let newObject = newObject {
                         data.append(newObject)
                     }
                 }

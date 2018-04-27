@@ -74,11 +74,13 @@ class CommentsViewController: UIViewController {
         tableView.delegate = self
         headerViewLabel.text = "adsssssssssssssssfas asfasfass adsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfass"
         
+        headerViewLabel.preferredMaxLayoutWidth = 1000000000000
         headerViewLabel.sizeToFit()
         tableView.tableHeaderView = headerView
          tableView.tableHeaderView?.setNeedsLayout()
         tableView.tableHeaderView?.layoutSubviews()
-        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 300)
+//        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 300)
+        
         title = L10n.comments
         // Hide the reply area
         composeStatusHolder.isHidden = true

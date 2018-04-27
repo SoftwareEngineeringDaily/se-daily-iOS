@@ -93,4 +93,17 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
             loadThreads()
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
+        
+        let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
+        guard let commentsViewController = commentsStoryboard.instantiateViewController(
+            withIdentifier: "CommentsViewController") as? CommentsViewController else {
+                return
+        }
+        let thread = threads[indexPath.row]
+        commentsViewController.rootEntityId = thread._id
+        self.navigationController?.pushViewController(commentsViewController, animated: true)                
+    }
 }

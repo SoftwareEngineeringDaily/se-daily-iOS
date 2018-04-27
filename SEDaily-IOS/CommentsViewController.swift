@@ -10,7 +10,6 @@ import UIKit
 
 class CommentsViewController: UIViewController {
 
-    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     @IBOutlet var headerView: UIView!
     @IBOutlet weak var headerViewLabel: UILabel!
     
@@ -73,32 +72,7 @@ class CommentsViewController: UIViewController {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        let str = "adsssssssssssssssfas asfasfass adsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfass"
-//         headerViewLabel.text = str
-        
-         headerViewLabel.attributedText = NSAttributedString(string: str)
-        
-        headerViewLabel.preferredMaxLayoutWidth = 1000000000000
-        headerViewLabel.sizeToFit()
-        
-        tableView.tableHeaderView = headerView
-         tableView.tableHeaderView?.setNeedsLayout()
-        tableView.tableHeaderView?.layoutSubviews()
-
-        
-        let size = CGSize(width: view.frame.width, height: 5000000)
-        let boundingBox = headerViewLabel.attributedText?.boundingRect(
-            with: size,
-            options: [.usesLineFragmentOrigin, .usesFontLeading, .usesDeviceMetrics],
-            context: nil
-        )
-        
-        if let height = boundingBox?.height {
-            heightConstraint.constant = height
-            headerView.frame = CGRect(x: 0, y: 0, width: self.view.width, height: height + headerView.frame.height)
-        }
-        
-        //        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 300)
+      
         
         title = L10n.comments
         // Hide the reply area
@@ -113,6 +87,7 @@ class CommentsViewController: UIViewController {
         view.addSubview(activityIndicator)
         
         
+        setupTableHeader()
         
         // Hide if user is not logged in OR if user is limited (no true username)
         if !isFullUser() {
@@ -135,6 +110,31 @@ class CommentsViewController: UIViewController {
         closeStatusAreaButton.setIcon(icon: .fontAwesome(.times), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
         
         loadComments()
+    }
+    
+    func setupTableHeader () {
+        let str = "adsssssssssssssssfas asfasfass adsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfass"
+        //         headerViewLabel.text = str
+        let attributedStr = NSAttributedString(string: str)
+        headerViewLabel.attributedText = attributedStr
+        
+        
+        
+        let rect = attributedStr.boundingRect(with: CGSize(width: view.frame.width, height: 100000000000000000), options: [.usesFontLeading, .usesLineFragmentOrigin] , context: nil)
+        
+
+        
+        tableView.tableHeaderView = headerView
+      
+    
+        
+        let height = rect.height
+        
+      
+        print("HEIGHT:" )
+        print(height)
+        headerView.frame = CGRect(x: 0, y: 0, width: self.view.width, height: height + headerView.frame.height)
+
     }
     
     

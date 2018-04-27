@@ -95,10 +95,8 @@ class CommentsViewController: UIViewController {
         
         if let height = boundingBox?.height {
             heightConstraint.constant = height
-            headerView.frame = CGRect(x: 0, y: 0, width: self.view.width, height: height + 40)
+            headerView.frame = CGRect(x: 0, y: 0, width: self.view.width, height: height + headerView.frame.height)
         }
-        print("height:")
-        print(boundingBox?.height)
         
         //        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 300)
         

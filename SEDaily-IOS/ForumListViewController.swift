@@ -33,10 +33,15 @@ class ForumListViewController: UIViewController {
     }
 
     func loadThreads() {
-        networkService.getForumThreads(onSuccess: {  [weak self] (threads) in
-            print("count:")
-            print(threads.count)
-            print(threads)
+        
+        var lastActivityBefore =  ""
+        if threads.count > 0 {
+            let lastThread = threads[threads.count - 1]
+            lastActivityBefore = lastThread.dateLastAcitiy
+        }
+        
+        networkService.getForumThreads(lastActivityBefore: lastActivityBefore, onSuccess: {  [weak self] (threads) in
+            
             self?.threads += threads
             self?.tableView.reloadData()
         }) { (error) in
@@ -77,7 +82,6 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "forumCell", for: indexPath)
         let thread = self.threads[indexPath.row]
-        print("thread? \(thread.title)")
         cell.textLabel?.text = thread.title
         
         return cell

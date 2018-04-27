@@ -113,26 +113,14 @@ class CommentsViewController: UIViewController {
     }
     
     func setupTableHeader () {
-        let str = "adsssssssssssssssfas asfasfass adsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfass"
-        //         headerViewLabel.text = str
+        let str = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
         let attributedStr = NSAttributedString(string: str)
         headerViewLabel.attributedText = attributedStr
         
-        
-        
-        let rect = attributedStr.boundingRect(with: CGSize(width: view.frame.width, height: 100000000000000000), options: [.usesFontLeading, .usesLineFragmentOrigin] , context: nil)
-        
-
+        let rect = attributedStr.boundingRect(with: CGSize(width: view.frame.width, height: 100000000000000000), options: [.usesFontLeading, .usesLineFragmentOrigin], context: nil)
         
         tableView.tableHeaderView = headerView
-      
-    
-        
         let height = rect.height
-        
-      
-        print("HEIGHT:" )
-        print(height)
         headerView.frame = CGRect(x: 0, y: 0, width: self.view.width, height: height + headerView.frame.height)
 
     }

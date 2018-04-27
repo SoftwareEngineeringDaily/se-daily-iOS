@@ -10,6 +10,7 @@ import UIKit
 
 class CommentsViewController: UIViewController {
 
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     @IBOutlet var headerView: UIView!
     @IBOutlet weak var headerViewLabel: UILabel!
     
@@ -72,14 +73,34 @@ class CommentsViewController: UIViewController {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        headerViewLabel.text = "adsssssssssssssssfas asfasfass adsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfass"
+        let str = "adsssssssssssssssfas asfasfass adsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfassadsssssssssssssssfas asfasfass"
+//         headerViewLabel.text = str
+        
+         headerViewLabel.attributedText = NSAttributedString(string: str)
         
         headerViewLabel.preferredMaxLayoutWidth = 1000000000000
         headerViewLabel.sizeToFit()
+        
         tableView.tableHeaderView = headerView
          tableView.tableHeaderView?.setNeedsLayout()
         tableView.tableHeaderView?.layoutSubviews()
-//        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 300)
+
+        
+        let size = CGSize(width: view.frame.width, height: 5000000)
+        let boundingBox = headerViewLabel.attributedText?.boundingRect(
+            with: size,
+            options: [.usesLineFragmentOrigin, .usesFontLeading, .usesDeviceMetrics],
+            context: nil
+        )
+        
+        if let height = boundingBox?.height {
+            heightConstraint.constant = height
+            headerView.frame = CGRect(x: 0, y: 0, width: self.view.width, height: height + 40)
+        }
+        print("height:")
+        print(boundingBox?.height)
+        
+        //        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 300)
         
         title = L10n.comments
         // Hide the reply area

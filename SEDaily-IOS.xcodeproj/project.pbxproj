@@ -72,6 +72,7 @@
 		961A378D208FAFEF0050EF80 /* ForumThreadLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961A378C208FAFEF0050EF80 /* ForumThreadLite.swift */; };
 		962F5365201E3C7900897A6E /* RelatedLinksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962F5364201E3C7900897A6E /* RelatedLinksViewController.swift */; };
 		963144DE208FEA8000EA13F1 /* ForumThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963144DD208FEA8000EA13F1 /* ForumThread.swift */; };
+		964090BF2093B97D00CFF5C4 /* PodcastLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964090BE2093B97D00CFF5C4 /* PodcastLite.swift */; };
 		96600312201CEBBD00997795 /* RelatedLinks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96600311201CEBBD00997795 /* RelatedLinks.storyboard */; };
 		9672AA52202929C90020981F /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9672AA51202929C90020981F /* Author.swift */; };
 		96922EF420928D5900E9DECE /* ForumHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96922EF220928D5900E9DECE /* ForumHeaderViewController.swift */; };
@@ -182,6 +183,7 @@
 		961A378C208FAFEF0050EF80 /* ForumThreadLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumThreadLite.swift; sourceTree = "<group>"; };
 		962F5364201E3C7900897A6E /* RelatedLinksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedLinksViewController.swift; sourceTree = "<group>"; };
 		963144DD208FEA8000EA13F1 /* ForumThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumThread.swift; sourceTree = "<group>"; };
+		964090BE2093B97D00CFF5C4 /* PodcastLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastLite.swift; sourceTree = "<group>"; };
 		96600311201CEBBD00997795 /* RelatedLinks.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RelatedLinks.storyboard; sourceTree = "<group>"; };
 		9672AA51202929C90020981F /* Author.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
 		96922EF220928D5900E9DECE /* ForumHeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumHeaderViewController.swift; sourceTree = "<group>"; };
@@ -508,10 +510,11 @@
 			children = (
 				961A378C208FAFEF0050EF80 /* ForumThreadLite.swift */,
 				963144DD208FEA8000EA13F1 /* ForumThread.swift */,
-				96C8A9AA2091038100489EE4 /* ForumListViewController.swift */,
 				96C8A9AE209114C200489EE4 /* ForumList.storyboard */,
+				96C8A9AA2091038100489EE4 /* ForumListViewController.swift */,
 				96922EF220928D5900E9DECE /* ForumHeaderViewController.swift */,
 				96922EF320928D5900E9DECE /* ForumHeaderViewController.xib */,
+				964090BE2093B97D00CFF5C4 /* PodcastLite.swift */,
 			);
 			name = Forum;
 			sourceTree = "<group>";
@@ -932,6 +935,7 @@
 				96BD1C88208E9497006C5E1D /* TestHookBool.swift in Sources */,
 				16CE698F1F98029E0057BAC3 /* PodcastDetailViewController.swift in Sources */,
 				1E286DE31FE4C5BA00644C1D /* TestHookEventTableViewCell.swift in Sources */,
+				964090BF2093B97D00CFF5C4 /* PodcastLite.swift in Sources */,
 				963144DE208FEA8000EA13F1 /* ForumThread.swift in Sources */,
 				16AD3E0C1F9B13EE0084C545 /* FilterObject.swift in Sources */,
 				1671BD56200D278F00E6ED3B /* PurchaseSubscriptionViewController.swift in Sources */,

@@ -23,4 +23,5 @@ public struct ForumThread: Codable {
     
     let downvoted: Bool?
     let upvoted: Bool?
+    let podcastEpisode: PodcastLite?
 }

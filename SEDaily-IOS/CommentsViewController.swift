@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Down
 class CommentsViewController: UIViewController {
 
     @IBOutlet var headerView: ThreadHeaderView!
@@ -113,8 +113,13 @@ class CommentsViewController: UIViewController {
     }
     
     func setupTableHeader () {
-        let str = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum dsafasfsadfa Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum dsafasfsadfaLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum dsafasfsadfaLorem ipsum "
-        let attributedStr = NSAttributedString(string: str)
+//        let str = "# aaa \nnew thing\n\n\nand\n\n\n\n\n\n\n\n\nanother thing\n\n\n# cool\n\nhello"
+        let str = "aa"
+        
+        let down = Down(markdownString: str)
+        let attributedStr = try? down.toAttributedString()
+        
+//        let attributedStr = NSAttributedString(string: str)
         headerView.label.attributedText = attributedStr
         
         tableView.tableHeaderView = headerView

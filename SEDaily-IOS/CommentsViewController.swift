@@ -11,7 +11,6 @@ import Down
 class CommentsViewController: UIViewController {
 
     @IBOutlet var headerView: ThreadHeaderView!
-//    @IBOutlet weak var headerViewLabel: UILabel!
     
     @IBOutlet weak var closeStatusAreaButton: UIButton!
     @IBOutlet weak var createCommentHeight: NSLayoutConstraint!
@@ -28,7 +27,13 @@ class CommentsViewController: UIViewController {
     var comments: [Comment] = [] {
         didSet {
             if comments.count == 0 {
-                tableView.isHidden = true
+                // Still show if thread is defined because that means we'll have a header:
+                if thread == nil {
+                    tableView.isHidden = true
+                } else {
+                    tableView.isHidden = false
+                    
+                }
             } else {
                 tableView.isHidden = false
             }

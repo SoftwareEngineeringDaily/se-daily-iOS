@@ -146,7 +146,7 @@ class HeaderView: UIView {
         voteView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 10))
-            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: (45 * 5)))
+            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: (35 * 4)))
             make.height.equalToSuperview()
         }
 
@@ -157,7 +157,7 @@ class HeaderView: UIView {
         stackView.axis = .horizontal
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
-        stackView.addArrangedSubview(commentsButton)
+//        stackView.addArrangedSubview(commentsButton)
         
         stackView.addArrangedSubview(downVoteButton)
         stackView.addArrangedSubview(scoreLabel)
@@ -168,9 +168,7 @@ class HeaderView: UIView {
         scoreLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 24))
 
         let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 34)
-        commentsButton.setIcon(icon: .fontAwesome(.commentO), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
-        commentsButton.addTarget(self, action: #selector(self.commentsButtonPressed), for: .touchUpInside)
-        
+
         downVoteButton.setIcon(icon: .fontAwesome(.thumbsODown), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
         downVoteButton.setIcon(icon: .fontAwesome(.thumbsDown), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
         downVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
@@ -198,7 +196,8 @@ class HeaderView: UIView {
         downVoteButton.isSelected = self.podcastViewModel.isDownvoted
         self.scoreLabel.text = String(self.podcastViewModel.score)
 
-         self.setupDownloadButton()
+        self.setupDownloadButton()
+        self.setupCommentsButton()
     }
 }
 
@@ -394,6 +393,20 @@ extension HeaderView {
         downloadButton.snp.makeConstraints { (make) in
             make.right.equalTo(self.playButton.snp.left).inset(-rightInset)
             make.centerY.equalTo(self.playButton.snp.centerY)
+        }
+    }
+    
+    private func setupCommentsButton() {
+        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 34)
+        commentsButton.setIcon(icon: .fontAwesome(.commentO), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
+        commentsButton.addTarget(self, action: #selector(self.commentsButtonPressed), for: .touchUpInside)
+        
+        self.playView.addSubview(self.commentsButton)
+
+        let rightInset = UIView.getValueScaledByScreenWidthFor(baseValue: 20)
+        commentsButton.snp.makeConstraints { (make) in
+            make.right.equalTo(self.downloadButton.snp.left).inset(-rightInset)
+            make.centerY.equalTo(self.downloadButton.snp.centerY)
         }
     }
 }

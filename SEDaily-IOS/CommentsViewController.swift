@@ -119,11 +119,7 @@ class CommentsViewController: UIViewController {
     }
     
     func setupTableHeader (thread: ForumThread) {
-        headerView.titleLabel.text = thread.title
-        
-        let content = Down(markdownString: thread.content)
-        headerView.contentLabel.attributedText = try? content.toAttributedString()
-        
+        headerView.thread = thread
         tableView.tableHeaderView = headerView
         headerView.setNeedsLayout()
         headerView.layoutIfNeeded()

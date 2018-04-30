@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Down
 
 class ThreadHeaderView: UIView {
 
@@ -15,6 +16,17 @@ class ThreadHeaderView: UIView {
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var commentCountLabel: UILabel!
+    
+    var thread: ForumThread? {
+        didSet {
+            titleLabel.text = thread?.title
+            if let threadContent = thread?.content {
+                let content = Down(markdownString: threadContent)
+                contentLabel.attributedText = try? content.toAttributedString()
+            }
+        }
+    }
+    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

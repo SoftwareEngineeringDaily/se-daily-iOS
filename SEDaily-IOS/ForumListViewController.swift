@@ -16,7 +16,6 @@ class ForumListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -73,7 +72,6 @@ class ForumListViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
     /*
     // MARK: - Navigation
 
@@ -86,7 +84,7 @@ class ForumListViewController: UIViewController {
     */
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
-        self.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 0)
+        self.tabBarItem = UITabBarItem(title: L10n.tabBarForum, image: #imageLiteral(resourceName: "mic_stand"), selectedImage: #imageLiteral(resourceName: "mic_stand_selected"))
     }
 }
 

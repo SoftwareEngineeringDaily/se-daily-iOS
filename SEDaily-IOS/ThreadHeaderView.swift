@@ -32,7 +32,7 @@ class ThreadHeaderView: UIView {
                 }
             }
             if let author = thread?.author {
-                authorLabel.text = author.username
+                authorLabel.text = (author.name != nil) ? author.name : author.username
             }
         }
     }

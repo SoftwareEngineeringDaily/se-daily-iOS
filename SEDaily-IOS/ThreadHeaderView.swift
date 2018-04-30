@@ -34,7 +34,7 @@ class ThreadHeaderView: UIView {
             if let author = thread?.author {
                 authorLabel.text = (author.name != nil) ? author.name : author.username
             }
-            dateLabel.text = thread?.getDatePosted()?.dateString() ?? ""
+            dateLabel.text = thread?.getDatedCreatedPretty()
         }
     }
     

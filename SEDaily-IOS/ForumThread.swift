@@ -27,14 +27,22 @@ public struct ForumThread: Codable {
     let podcastEpisode: PodcastLite?
 }
 
-
-
 extension ForumThread {
     
-    // This is too slow for a cell collection view call
     func getDatePosted() -> Date? {
         return Date(iso8601String: self.dateCreated)
     }
-
+    
+    func getDateLastActivity() -> Date? {
+        return Date(iso8601String: self.dateLastAcitiy)
+    }
+    
+    func getDateLastActivityPretty() -> String {
+        return getDateLastActivity()?.dateString() ?? ""
+    }
+    
+    func getDatedCreatedPretty() -> String {
+        return getDatePosted()?.dateString() ?? ""
+    }
 
 }

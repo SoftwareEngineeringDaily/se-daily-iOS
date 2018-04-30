@@ -36,17 +36,36 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="by Jason" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JtF-Gb-WSm">
-                                                    <rect key="frame" x="25" y="61" width="55.5" height="16"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Jason" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JtF-Gb-WSm">
+                                                    <rect key="frame" x="45" y="61" width="37" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="by" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G6s-3k-ye8">
+                                                    <rect key="frame" x="25" y="61" width="15" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="April 29 2018" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ebn-l9-Tnj">
+                                                    <rect key="frame" x="95" y="61" width="81" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="200 comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ygl-7Y-o1d">
+                                                    <rect key="frame" x="195" y="61" width="91" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="JtF-Gb-WSm" secondAttribute="bottom" constant="19" id="62j-0W-pAF"/>
-                                                <constraint firstItem="JtF-Gb-WSm" firstAttribute="top" secondItem="ijZ-KK-sTA" secondAttribute="bottom" constant="15" id="6r4-Yw-spX"/>
-                                                <constraint firstItem="JtF-Gb-WSm" firstAttribute="leading" secondItem="bNn-js-Svi" secondAttribute="leadingMargin" constant="10" id="HFM-l8-3SM"/>
                                                 <constraint firstItem="ijZ-KK-sTA" firstAttribute="leading" secondItem="bNn-js-Svi" secondAttribute="leadingMargin" constant="10" id="MXU-Wf-zyV"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="ijZ-KK-sTA" secondAttribute="trailing" constant="10" id="Zsw-b6-PbI"/>
                                                 <constraint firstItem="ijZ-KK-sTA" firstAttribute="top" secondItem="bNn-js-Svi" secondAttribute="topMargin" constant="15" id="syH-gH-Rpa"/>
@@ -54,6 +73,8 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="authorLabel" destination="JtF-Gb-WSm" id="saO-jd-YhC"/>
+                                            <outlet property="commentsCountLabel" destination="Ygl-7Y-o1d" id="BuD-Cr-Hmt"/>
+                                            <outlet property="dateLabel" destination="Ebn-l9-Tnj" id="vCg-TS-7Uy"/>
                                             <outlet property="titleLabel" destination="ijZ-KK-sTA" id="iKZ-ol-xUz"/>
                                         </connections>
                                     </tableViewCell>

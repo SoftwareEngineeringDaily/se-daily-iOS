@@ -28,6 +28,13 @@ public struct ForumThread: Codable {
 }
 
 extension ForumThread {
+    func getCommentsSummary() -> String {
+        if commentsCount != 1 {
+            return  "\(commentsCount) comments"
+        } else {
+            return  "\(commentsCount) comment"
+        }
+    }
     
     func getDatePosted() -> Date? {
         return Date(iso8601String: self.dateCreated)

@@ -24,6 +24,16 @@ class ThreadHeaderView: UIView {
                 let content = Down(markdownString: threadContent)
                 contentLabel.attributedText = try? content.toAttributedString()
             }
+            if let commentCount = thread?.commentsCount {
+                if commentCount != 1 {
+                    commentCountLabel.text = "\(commentCount) comments"
+                } else {
+                    commentCountLabel.text = "\(commentCount) comment"
+                }
+            }
+            if let author = thread?.author {
+                authorLabel.text = author.username
+            }
         }
     }
     

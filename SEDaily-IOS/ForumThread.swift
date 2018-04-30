@@ -14,6 +14,7 @@ public struct ForumThread: Codable {
     let title: String
 
     let content: String
+    let author: Author
     
     let commentsCount: Int
     let dateCreated: String

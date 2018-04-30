@@ -12,5 +12,6 @@ import Foundation
 public struct Author: Codable {
     let email: String?
     let username: String?
+    let name: String?
     let avatarUrl: String?
 }

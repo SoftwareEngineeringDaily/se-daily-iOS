@@ -14,9 +14,7 @@ public struct PodcastLite: Codable {
     let thread: String?
     let date: String
     let link: String
-    let categories: [Int]?
-    let tags: [Int]?
-    let mp3: String
+   
     let featuredImage: String?
     struct Content: Codable {
         let rendered: String
@@ -27,7 +25,6 @@ public struct PodcastLite: Codable {
     }
     let title: Title
     let score: Int?
-    var type: String? = "new"
     var upvoted: Bool?
     var downvoted: Bool?
     var bookmarked: Bool?

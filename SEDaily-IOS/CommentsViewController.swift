@@ -21,7 +21,9 @@ class CommentsViewController: UIViewController {
     @IBOutlet weak var composeStatusHolder: UIStackView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var heightOfReplyInfoHolder: NSLayoutConstraint!
-    var rootEntityId: String? // TODO: make optional so that we can check for it and display error if nil
+    var rootEntityId: String?
+    var thread: ForumThread?
+    
     let networkService = API()
     var comments: [Comment] = [] {
         didSet {
@@ -73,7 +75,6 @@ class CommentsViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
       
-        
         title = L10n.comments
         // Hide the reply area
         composeStatusHolder.isHidden = true
@@ -86,8 +87,9 @@ class CommentsViewController: UIViewController {
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
         view.addSubview(activityIndicator)
         
-        
-        setupTableHeader()
+        if let thread = thread {
+            setupTableHeader(thread: thread)
+        }
         
         // Hide if user is not logged in OR if user is limited (no true username)
         if !isFullUser() {
@@ -112,8 +114,8 @@ class CommentsViewController: UIViewController {
         loadComments()
     }
     
-    func setupTableHeader () {
-        let str = "# aaa \nnew thing\n\n\nand\n\n\n\n\n\n\n\n\nanother thing\n\n\n# cool\n\nhello"
+    func setupTableHeader (thread: ForumThread) {
+        let str = thread.content
         let down = Down(markdownString: str)
         let attributedStr = try? down.toAttributedString()
         headerView.label.attributedText = attributedStr

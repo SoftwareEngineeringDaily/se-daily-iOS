@@ -121,6 +121,7 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
         }
         let thread = threads[indexPath.row]
         commentsViewController.rootEntityId = thread._id
+        commentsViewController.thread = thread
         self.navigationController?.pushViewController(commentsViewController, animated: true)                
     }
 }

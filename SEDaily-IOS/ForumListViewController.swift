@@ -11,7 +11,7 @@ import UIKit
 class ForumListViewController: UIViewController {
 
     let networkService = API()
-    var threads:[ForumThread] = []
+    var threads: [ForumThread] = []
     private let refreshControl = UIRefreshControl()
 
     @IBOutlet weak var tableView: UITableView!
@@ -62,11 +62,11 @@ class ForumListViewController: UIViewController {
             if refreshing {
                 self?.refreshControl.endRefreshing()
             }
-        }) { (error) in
+        }, onFailure: { (_ ) in
             print("error")
-        }
-        
+        })
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

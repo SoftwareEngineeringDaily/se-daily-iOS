@@ -65,7 +65,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JasonUserX" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iNW-Em-Lzr">
-                                                    <rect key="frame" x="65" y="81" width="142" height="17"/>
+                                                    <rect key="frame" x="65" y="81" width="137" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="750" constant="78" id="J9r-dK-XfU"/>
                                                     </constraints>
@@ -73,10 +73,10 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feb 12 2017" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HTb-Qn-O8P">
-                                                    <rect key="frame" x="227" y="79" width="68" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="April 12 2017" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HTb-Qn-O8P">
+                                                    <rect key="frame" x="222" y="79" width="73" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="68" id="LrO-y1-Ax9"/>
+                                                        <constraint firstAttribute="width" constant="73" id="LrO-y1-Ax9"/>
                                                         <constraint firstAttribute="height" constant="21" id="XQK-lY-bLd"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -116,7 +116,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserThatReplied" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="soj-uw-aY1">
-                                                    <rect key="frame" x="80" y="84" width="185" height="20"/>
+                                                    <rect key="frame" x="80" y="84" width="180" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="250" constant="80" id="UAJ-B3-vS9"/>
                                                         <constraint firstAttribute="height" constant="20" id="ehx-eb-Y8y"/>
@@ -155,9 +155,9 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feb 7 2018" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lBQ-uB-4Xy">
-                                                    <rect key="frame" x="275" y="84" width="70" height="21"/>
+                                                    <rect key="frame" x="270" y="84" width="75" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="70" id="lKm-MR-s12"/>
+                                                        <constraint firstAttribute="width" constant="75" id="lKm-MR-s12"/>
                                                         <constraint firstAttribute="height" constant="21" id="uVX-eh-4fx"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>

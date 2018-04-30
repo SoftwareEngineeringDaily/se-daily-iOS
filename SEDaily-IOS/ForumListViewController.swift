@@ -12,7 +12,8 @@ class ForumListViewController: UIViewController {
 
     let networkService = API()
     var threads:[ForumThread] = []
-    
+    private let refreshControl = UIRefreshControl()
+
     @IBOutlet weak var tableView: UITableView!
     
     
@@ -26,24 +27,42 @@ class ForumListViewController: UIViewController {
         headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         headerView.backgroundColor = UIColor.cyan
         tableView.tableHeaderView = headerView
+        
+        // Setup pull down to refresh
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        refreshControl.addTarget(self, action: #selector(refreshWeatherData(_:)), for: .valueChanged)
+
     }
 
     override func viewDidAppear(_ animated: Bool) {
         loadThreads()
     }
-
-    func loadThreads() {
+    @objc private func refreshWeatherData(_ sender: Any) {
+        // Fetch Weather Data
+        loadThreads(refreshing: true)
+    }
+    
+    func loadThreads(refreshing: Bool = false) {
         
         var lastActivityBefore =  ""
-        if threads.count > 0 {
+        if threads.count > 0  && refreshing == false {
             let lastThread = threads[threads.count - 1]
             lastActivityBefore = lastThread.dateLastAcitiy
         }
         
         networkService.getForumThreads(lastActivityBefore: lastActivityBefore, onSuccess: {  [weak self] (threads) in
-            
+            if refreshing {
+                self?.threads = []
+            }
             self?.threads += threads
             self?.tableView.reloadData()
+            if refreshing {
+                self?.refreshControl.endRefreshing()
+            }
         }) { (error) in
             print("error")
         }

@@ -28,11 +28,10 @@ class CommentsViewController: UIViewController {
         didSet {
             if comments.count == 0 {
                 // Still show if thread is defined because that means we'll have a header:
-                if thread == nil {
-                    tableView.isHidden = true
-                } else {
+                if thread != nil {
                     tableView.isHidden = false
-                    
+                } else {
+                    tableView.isHidden = true
                 }
             } else {
                 tableView.isHidden = false

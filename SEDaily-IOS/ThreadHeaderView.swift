@@ -19,11 +19,9 @@ class ThreadHeaderView: UIView {
     }
     */
     
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         label.preferredMaxLayoutWidth = label.bounds.width
     }
     
-
 }

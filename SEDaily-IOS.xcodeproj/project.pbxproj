@@ -494,7 +494,6 @@
 				960BFEBE20226B620073DAB2 /* CommentsViewController.swift */,
 				960BFEC42023C1330073DAB2 /* CommentsResponse.swift */,
 				960BFEC020226F1D0073DAB2 /* Comments.storyboard */,
-				96A7E2CE20951EBD002C92EC /* ThreadHeaderView.swift */,
 				960BFEC220239F0E0073DAB2 /* Comment.swift */,
 				960BFEC6202539180073DAB2 /* CommentReplyTableViewCell.swift */,
 				960BFEC8202539640073DAB2 /* CommentTableViewCell.swift */,
@@ -513,6 +512,7 @@
 		961A378B208FAFC30050EF80 /* Forum */ = {
 			isa = PBXGroup;
 			children = (
+				96A7E2CE20951EBD002C92EC /* ThreadHeaderView.swift */,
 				961A378C208FAFEF0050EF80 /* ForumThreadLite.swift */,
 				963144DD208FEA8000EA13F1 /* ForumThread.swift */,
 				96C8A9AE209114C200489EE4 /* ForumList.storyboard */,

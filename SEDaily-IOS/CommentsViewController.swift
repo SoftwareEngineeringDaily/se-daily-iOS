@@ -113,19 +113,12 @@ class CommentsViewController: UIViewController {
     }
     
     func setupTableHeader () {
-//        let str = "# aaa \nnew thing\n\n\nand\n\n\n\n\n\n\n\n\nanother thing\n\n\n# cool\n\nhello"
-        let str = "aa"
-        
+        let str = "# aaa \nnew thing\n\n\nand\n\n\n\n\n\n\n\n\nanother thing\n\n\n# cool\n\nhello"
         let down = Down(markdownString: str)
         let attributedStr = try? down.toAttributedString()
-        
-//        let attributedStr = NSAttributedString(string: str)
         headerView.label.attributedText = attributedStr
         
         tableView.tableHeaderView = headerView
-       
-        
-        
         headerView.setNeedsLayout()
         headerView.layoutIfNeeded()
         
@@ -135,37 +128,8 @@ class CommentsViewController: UIViewController {
         headerView.frame = frame
         
         tableView.tableHeaderView = headerView
-        
-        
-        /*
-        let height = attributedStr.height(forConstantWidth: self.view.frame.width)
-        print("HEIGHT:")
-        print(height)
-        headerView.frame = CGRect(x: 0, y: 0, width: self.view.width - 20, height: height * 3 + headerView.frame.height)
-        */
     }
-    
-    
-//    func layoutTableHeaderView(width: CGFloat) {
-//        let view = UIView(frame: CGRect(x: 0, y: 0, width: width, height: 0))
-//        view.setTranslatesAutoresizingMaskIntoConstraints(false)
-//
-//        // [add subviews and their constraints to view]
-//
-//        let widthConstraint = NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: width)
-//
-//        view.addConstraint(widthConstraint)
-//        let height = view.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
-//        view.removeConstraint(constraint)
-//
-//        view.frame = CGRect(x: 0, y: 0, width: width, height: height)
-//        view.setTranslatesAutoresizingMaskIntoConstraints(true)
-//
-//        self.tableView.tableHeaderView = view
-//    }
-//
-    
-    
+ 
     // Should be in the model but only used by comments for now:
     func isFullUser() -> Bool {
         if !UserManager.sharedInstance.isCurrentUserLoggedIn() {

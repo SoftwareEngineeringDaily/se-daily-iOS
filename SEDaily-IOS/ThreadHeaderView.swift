@@ -10,7 +10,8 @@ import UIKit
 
 class ThreadHeaderView: UIView {
 
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var contentLabel: UILabel!
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -21,7 +22,9 @@ class ThreadHeaderView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        label.preferredMaxLayoutWidth = label.bounds.width
+        titleLabel.preferredMaxLayoutWidth = titleLabel.bounds.width
+        
+        contentLabel.preferredMaxLayoutWidth = titleLabel.bounds.width
     }
     
 }

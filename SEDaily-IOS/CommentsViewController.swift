@@ -269,11 +269,3 @@ extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
         return 1
     }
 }
-extension NSAttributedString {
-    func height(forConstantWidth width: CGFloat) -> CGFloat {
-        print("width \(width)")
-        let constraintBox = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let calculatedBox = boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, context: nil)
-        return calculatedBox.height
-    }
-}

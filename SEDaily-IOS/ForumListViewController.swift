@@ -20,12 +20,7 @@ class ForumListViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         tableView.delegate = self
-        tableView.dataSource = self
-        
-        let headerView = UIView()
-        headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
-        headerView.backgroundColor = UIColor.cyan
-        tableView.tableHeaderView = headerView
+        tableView.dataSource = self               
         
         // Setup pull down to refresh
         if #available(iOS 10.0, *) {

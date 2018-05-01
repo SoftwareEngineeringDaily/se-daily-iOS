@@ -28,14 +28,14 @@ class ForumListViewController: UIViewController {
         } else {
             tableView.addSubview(refreshControl)
         }
-        refreshControl.addTarget(self, action: #selector(refreshWeatherData(_:)), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshForumData(_:)), for: .valueChanged)
 
     }
 
     override func viewDidAppear(_ animated: Bool) {
         loadThreads()
     }
-    @objc private func refreshWeatherData(_ sender: Any) {
+    @objc private func refreshForumData(_ sender: Any) {
         // Fetch Weather Data
         loadThreads(refreshing: true)
     }

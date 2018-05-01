@@ -22,10 +22,10 @@ class ThreadCell: UITableViewCell {
         let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 34)
 
         upvoteButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
-        upvoteButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
+        upvoteButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .selected)
     
         upvoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
-
+        upvoteButton.adjustsImageWhenHighlighted = false
     }
     
     var thread: ForumThread? {
@@ -40,7 +40,8 @@ class ThreadCell: UITableViewCell {
     }
 
     @IBAction func upvotePressed(_ sender: UIButton) {
-        upvoteButton.isSelected = !upvoteButton.isSelected
+        sender.isSelected = !upvoteButton.isSelected
+        sender.isHighlighted = false
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

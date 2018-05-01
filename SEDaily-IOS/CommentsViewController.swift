@@ -11,7 +11,7 @@ import Down
 class CommentsViewController: UIViewController {
 
     @IBOutlet var headerView: ThreadHeaderView!
-    
+
     @IBOutlet weak var closeStatusAreaButton: UIButton!
     @IBOutlet weak var createCommentHeight: NSLayoutConstraint!
     @IBOutlet weak var createCommentHolder: UIView!
@@ -140,7 +140,6 @@ class CommentsViewController: UIViewController {
         loadComments()
     }
 
-    
     func setupTableHeader (thread: ForumThread) {
         headerView.thread = thread
         tableView.tableHeaderView = headerView
@@ -213,6 +212,8 @@ class CommentsViewController: UIViewController {
     }
     
     @IBAction func submitCommentPressed(_ sender: UIButton) {
+        self.view.endEditing(true) // Hide keyboard
+        
         // Show Reply info holder (so we can use it to display statuses)
         composeStatusLabel.text = L10n.submitting
         composeStatusHolder.isHidden = false

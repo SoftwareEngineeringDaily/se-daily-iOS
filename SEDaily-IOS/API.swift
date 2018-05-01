@@ -691,6 +691,82 @@ extension API {
 
 // MARK: Voting
 extension API {
+    
+    func upvoteForum(entityId: String, completion: @escaping (_ success: Bool?, _ active: Bool?) -> Void) {
+        let urlString = self.rootURL + Endpoints.forum + "/" + entityId + Endpoints.upvote
+        
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
+        let _headers: HTTPHeaders = [
+            Headers.authorization: Headers.bearer + userToken,
+            Headers.contentType: Headers.x_www_form_urlencoded
+        ]
+        
+        networkRequest(urlString, method: .post, parameters: nil, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let jsonResponse = response.result.value as? NSDictionary else {
+                    Tracker.logGeneralError(string: "Error result value is not a NSDictionary")
+                    completion(false, nil)
+                    return
+                }
+                
+                if let message = jsonResponse["message"] {
+                    Helpers.alertWithMessage(title: Helpers.Alerts.error, message: String(describing: message), completionHandler: nil)
+                    completion(false, nil)
+                    return
+                }
+                
+                if let active = jsonResponse["active"] as? Bool {
+                    completion(true, active)
+                }
+            case .failure(let error):
+                log.error(error)
+                Tracker.logGeneralError(error: error)
+                Helpers.alertWithMessage(title: Helpers.Alerts.error, message: error.localizedDescription, completionHandler: nil)
+                completion(false, nil)
+            }
+        }
+    }
+    
+    func downvoteForum(entityId: String, completion: @escaping (_ success: Bool?, _ active: Bool?) -> Void) {
+        let urlString = self.rootURL + Endpoints.forum + "/" + entityId + Endpoints.downvote
+        
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
+        let _headers: HTTPHeaders = [
+            Headers.authorization: Headers.bearer + userToken,
+            Headers.contentType: Headers.x_www_form_urlencoded
+        ]
+        
+        networkRequest(urlString, method: .post, parameters: nil, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let jsonResponse = response.result.value as? NSDictionary else {
+                    completion(false, nil)
+                    Tracker.logGeneralError(string: "Error: result value is not a NSDictionary")
+                    return
+                }
+                
+                if let message = jsonResponse["message"] {
+                    Helpers.alertWithMessage(title: Helpers.Alerts.error, message: String(describing: message), completionHandler: nil)
+                    completion(false, nil)
+                    return
+                }
+                if let active = jsonResponse["active"] as? Bool {
+                    completion(true, active)
+                }
+            case .failure(let error):
+                log.error(error)
+                Tracker.logGeneralError(error: error)
+                Helpers.alertWithMessage(title: Helpers.Alerts.error, message: error.localizedDescription, completionHandler: nil)
+                completion(false, nil)
+            }
+        }
+    }
+    
+    
+    
     func upvotePodcast(podcastId: String, completion: @escaping (_ success: Bool?, _ active: Bool?) -> Void) {
         let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.upvote
 

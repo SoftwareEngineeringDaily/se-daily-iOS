@@ -14,9 +14,16 @@ class ThreadCell: UITableViewCell {
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var commentsCountLabel: UILabel!
+    @IBOutlet weak var upvoteButton: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 34)
+
+        upvoteButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
+        upvoteButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
+        
     }
     
     var thread: ForumThread? {

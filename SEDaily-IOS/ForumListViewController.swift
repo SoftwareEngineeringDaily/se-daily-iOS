@@ -98,11 +98,9 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
     // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "threadCell", for: indexPath) as? ThreadCell
-        let thread = self.threads[indexPath.row]
-        cell?.titleLabel.text = thread.title
-
-        return cell!
         
+        cell?.thread = self.threads[indexPath.row]
+        return cell!        
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

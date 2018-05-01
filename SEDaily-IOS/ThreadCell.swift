@@ -18,6 +18,18 @@ class ThreadCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    var thread: ForumThread? {
+        didSet {
+            titleLabel.text = thread?.title           
+            commentsCountLabel.text = thread?.getCommentsSummary()
+            if let author = thread?.author {
+                authorLabel.text = (author.name != nil) ? author.name : author.username
+            }
+            dateLabel.text = thread?.getDatedCreatedPretty()
+        }
+    }
+    
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

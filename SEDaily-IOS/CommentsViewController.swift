@@ -20,6 +20,8 @@ class CommentsViewController: UIViewController {
     @IBOutlet weak var composeStatusHolder: UIStackView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var heightOfReplyInfoHolder: NSLayoutConstraint!
+   
+    private let refreshControl = UIRefreshControl()
     var rootEntityId: String?
     var thread: ForumThread?
     
@@ -95,6 +97,17 @@ class CommentsViewController: UIViewController {
             setupTableHeader(thread: thread)
         }
         
+        updateUIBasedOnUser()
+        
+        // Style (x) close button for status area:
+        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 20)
+        closeStatusAreaButton.setIcon(icon: .fontAwesome(.times), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
+        
+        loadComments()
+        setupPullToRefresh()
+    }
+    
+    func updateUIBasedOnUser () {
         // Hide if user is not logged in OR if user is limited (no true username)
         if !isFullUser() {
             // TODO: setting the table view footer would make make this much easier.
@@ -110,13 +123,23 @@ class CommentsViewController: UIViewController {
             createCommentHolder.isHidden = true
             self.view.layoutSubviews()
         }
-        
-        // Style (x) close button for status area:
-        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 20)
-        closeStatusAreaButton.setIcon(icon: .fontAwesome(.times), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
-        
+    }
+    
+    func setupPullToRefresh () {
+        // Setup pull down to refresh
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        refreshControl.addTarget(self, action: #selector(refreshListData(_:)), for: .valueChanged)
+    }
+    
+    @objc private func refreshListData(_ sender: Any) {
+        // Fetch Weather Data
         loadComments()
     }
+
     
     func setupTableHeader (thread: ForumThread) {
         headerView.thread = thread
@@ -169,6 +192,7 @@ class CommentsViewController: UIViewController {
             self?.comments = flatComments
             self?.tableView.reloadData()
             self?.activityIndicator.stopAnimating()
+            self?.refreshControl.endRefreshing()
             }, onFailure: { [weak self] (_) in
             self?.activityIndicator.stopAnimating()
             self?.composeStatusLabel.text = L10n.thereWasAProblem

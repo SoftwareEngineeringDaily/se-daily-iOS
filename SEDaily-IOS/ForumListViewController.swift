@@ -104,9 +104,7 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
-        
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
         let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
         guard let commentsViewController = commentsStoryboard.instantiateViewController(
             withIdentifier: "CommentsViewController") as? CommentsViewController else {

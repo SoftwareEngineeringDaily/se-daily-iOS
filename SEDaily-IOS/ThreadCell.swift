@@ -23,7 +23,9 @@ class ThreadCell: UITableViewCell {
 
         upvoteButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
         upvoteButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
-        
+    
+        upvoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
+
     }
     
     var thread: ForumThread? {
@@ -36,8 +38,11 @@ class ThreadCell: UITableViewCell {
             dateLabel.text = thread?.getDatedCreatedPretty()
         }
     }
-    
 
+    @IBAction func upvotePressed(_ sender: UIButton) {
+        upvoteButton.isSelected = !upvoteButton.isSelected
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

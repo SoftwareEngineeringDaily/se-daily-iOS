@@ -19,7 +19,7 @@ public struct ForumThread: Codable {
     let commentsCount: Int
     let dateCreated: String
     let dateLastAcitiy: String // An annoying bug that will require database migrations + miner update
-    let score: Int
+    var score: Int = 0
     let deleted: Bool
     
     let downvoted: Bool?

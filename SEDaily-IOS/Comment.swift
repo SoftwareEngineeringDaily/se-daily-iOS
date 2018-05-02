@@ -24,19 +24,10 @@ public struct Comment: Codable {
     let parentComment: String?
 }
 
-extension Comment {
-    
-    // This is too slow for a cell collection view call
-    func getDatePosted() -> Date? {
-        return Date(iso8601String: self.dateCreated)
-    }
+extension Comment {    
     
     func getDatedCreatedPretty() -> String {
-        if let dateStr = getDatePosted()?.dateString() {
-            return moment(dateStr)?.fromNow() ?? ""
-        } else {
-            return ""
-        }
+        return moment(self.dateCreated)?.fromNow() ?? ""
     }
     
     func commentBody() -> NSAttributedString {

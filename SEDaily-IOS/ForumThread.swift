@@ -37,27 +37,11 @@ extension ForumThread {
         }
     }
     
-    func getDatePosted() -> Date? {
-        return Date(iso8601String: self.dateCreated)
-    }
-    
-    func getDateLastActivity() -> Date? {
-        return Date(iso8601String: self.dateLastAcitiy)
-    }
-    
     func getDateLastActivityPretty() -> String {
-        if let dateStr =  getDateLastActivity()?.dateString() {
-            return moment(dateStr)?.fromNow() ?? ""
-        } else {
-            return ""
-        }
+        return moment(self.dateLastAcitiy)?.fromNow() ?? ""
     }
     
     func getDatedCreatedPretty() -> String {
-        if let dateStr =  getDatePosted()?.dateString() {
-            return moment(dateStr)?.fromNow() ?? ""
-        } else {
-            return ""
-        }
+        return moment(self.dateCreated)?.fromNow() ?? ""
     }
 }

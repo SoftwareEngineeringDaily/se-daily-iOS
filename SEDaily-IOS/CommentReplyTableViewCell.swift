@@ -17,7 +17,7 @@ class CommentReplyTableViewCell: UITableViewCell {
     var comment: Comment? {
         didSet {
             contentLabel.attributedText = comment?.commentBody()
-            let prettyDate = comment?.getPostedDate()?.dateString() ?? ""
+            let prettyDate = comment?.getDatedCreatedPretty()
             dateLabel.text = prettyDate
             if let username = comment?.author.username {
                 usernameLabel.text = username

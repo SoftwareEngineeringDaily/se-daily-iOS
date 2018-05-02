@@ -41,7 +41,7 @@ class ForumThreadCell: UITableViewCell {
                 titleLabel.text = thread.title
                 commentsCountLabel.text = thread.getCommentsSummary()
                 
-                dateLabel.text = thread.getDatedCreatedPretty()
+                dateLabel.text = thread.getDateLastActivityPretty()
                 
                 scoreLabel.text = "\(thread.score)"
                 if let upvoted = thread.upvoted {

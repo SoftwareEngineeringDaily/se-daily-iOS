@@ -46,7 +46,11 @@ extension ForumThread {
     }
     
     func getDateLastActivityPretty() -> String {
-        return getDateLastActivity()?.dateString() ?? ""
+        if let dateStr =  getDateLastActivity()?.dateString() {
+            return moment(dateStr)?.fromNow() ?? ""
+        } else {
+            return ""
+        }
     }
     
     func getDatedCreatedPretty() -> String {

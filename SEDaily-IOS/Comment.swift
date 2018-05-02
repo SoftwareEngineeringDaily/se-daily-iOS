@@ -8,6 +8,8 @@
 
 import Foundation
 import Down
+import SwiftMoment
+
 public struct Comment: Codable {
     let author: Author
     let _id: String
@@ -25,8 +27,16 @@ public struct Comment: Codable {
 extension Comment {
     
     // This is too slow for a cell collection view call
-    func getPostedDate() -> Date? {
+    func getDatePosted() -> Date? {
         return Date(iso8601String: self.dateCreated)
+    }
+    
+    func getDatedCreatedPretty() -> String {
+        if let dateStr = getDatePosted()?.dateString() {
+            return moment(dateStr)?.fromNow() ?? ""
+        } else {
+            return ""
+        }
     }
     
     func commentBody() -> NSAttributedString {

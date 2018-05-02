@@ -48,14 +48,11 @@ class ForumThreadCell: UITableViewCell {
                 } else {
                     upVoteButton.isSelected = false
                 }
-
             }
-            
         }
     }
 
-    @IBAction func upvotePressed(_ sender: UIButton) {
-        
+    @IBAction func upvotePressed(_ sender: UIButton) {        
         guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
             return

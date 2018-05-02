@@ -102,7 +102,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
         let layout = UICollectionViewLayout()
         
         let storyboard = UIStoryboard.init(name: "ForumList", bundle: nil)
-        guard let forumViewController = storyboard.instantiateViewController(
+        guard let ForumViewController = storyboard.instantiateViewController(
             withIdentifier: "ForumListViewController") as? ForumListViewController else {
                 return
         }
@@ -110,9 +110,8 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
         self.viewControllers = [
             PodcastPageViewController(),
             GeneralCollectionViewController(collectionViewLayout: layout, type: .recommended),
-            forumViewController,
+            ForumViewController,
             BookmarkCollectionViewController(collectionViewLayout: layout),
-
             GeneralCollectionViewController(collectionViewLayout: layout, type: .top),
             NotificationsTableViewController()
         ]

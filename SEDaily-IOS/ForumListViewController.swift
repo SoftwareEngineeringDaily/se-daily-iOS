@@ -92,7 +92,7 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
     // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
     // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "threadCell", for: indexPath) as? ThreadCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "threadCell", for: indexPath) as? ForumThreadCell
         
         cell?.thread = self.threads[indexPath.row]
         return cell!        

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ThreadCell: UITableViewCell {
+class ForumThreadCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!

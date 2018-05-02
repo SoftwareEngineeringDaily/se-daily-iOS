@@ -73,10 +73,8 @@ extension API {
 }
 
 class API {
-//    private let prodRootURL = "https://software-enginnering-daily-api.herokuapp.com/api"
-    private let prodRootURL = "http://localhost:4040/api"
-    private let stagingRootURL = "http://localhost:4040/api"
-//    private let stagingRootURL = "https://sedaily-backend-staging.herokuapp.com/api"
+    private let prodRootURL = "https://software-enginnering-daily-api.herokuapp.com/api"
+    private let stagingRootURL = "https://sedaily-backend-staging.herokuapp.com/api"
 
     var rootURL: String {
         #if DEBUG

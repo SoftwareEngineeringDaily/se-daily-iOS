@@ -43,6 +43,12 @@ class ThreadCell: UITableViewCell {
                 
                 dateLabel.text = thread.getDatedCreatedPretty()
                 scoreLabel.text = "\(thread.score)"
+                if let upvoted = thread.upvoted {
+                    upVoteButton.isSelected = upvoted
+                } else {
+                    upVoteButton.isSelected = false
+                }
+
             }
             
         }
@@ -54,9 +60,6 @@ class ThreadCell: UITableViewCell {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
             return
         }
-        
-        
-//        sender.isSelected = !upVoteButton.isSelected
         
         // Immediately set UI to upvote
         self.setUpvoteTo(!self.upVoteButton.isSelected)
@@ -74,6 +77,7 @@ class ThreadCell: UITableViewCell {
     }
     
     func setUpvoteTo(_ bool: Bool) {
+        self.thread?.upvoted = bool
         self.upVoteButton.isSelected = bool
     }
     

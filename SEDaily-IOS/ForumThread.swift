@@ -23,7 +23,7 @@ public struct ForumThread: Codable {
     let deleted: Bool
     
     let downvoted: Bool?
-    let upvoted: Bool?
+    var upvoted: Bool?
     let podcastEpisode: PodcastLite?
 }
 

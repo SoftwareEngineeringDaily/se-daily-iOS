@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftMoment
 
 public struct ForumThread: Codable {
     let _id: String
@@ -49,7 +50,10 @@ extension ForumThread {
     }
     
     func getDatedCreatedPretty() -> String {
-        return getDatePosted()?.dateString() ?? ""
+        if let dateStr =  getDatePosted()?.dateString() {
+            return moment(dateStr)?.fromNow() ?? ""
+        } else {
+            return ""
+        }
     }
-
 }

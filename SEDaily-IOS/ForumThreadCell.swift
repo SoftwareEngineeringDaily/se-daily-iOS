@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftMoment
 
 class ForumThreadCell: UITableViewCell {
 
@@ -42,7 +41,7 @@ class ForumThreadCell: UITableViewCell {
                 titleLabel.text = thread.title
                 commentsCountLabel.text = thread.getCommentsSummary()
                 
-                dateLabel.text = moment(thread.getDatedCreatedPretty())?.fromNow()
+                dateLabel.text = thread.getDatedCreatedPretty()
                 
                 scoreLabel.text = "\(thread.score)"
                 if let upvoted = thread.upvoted {

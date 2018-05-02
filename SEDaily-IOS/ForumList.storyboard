@@ -120,6 +120,7 @@
                                             <outlet property="authorLabel" destination="JtF-Gb-WSm" id="saO-jd-YhC"/>
                                             <outlet property="commentsCountLabel" destination="Ygl-7Y-o1d" id="BuD-Cr-Hmt"/>
                                             <outlet property="dateLabel" destination="Ebn-l9-Tnj" id="vCg-TS-7Uy"/>
+                                            <outlet property="scoreLabel" destination="i5X-uV-LCY" id="qo0-cC-Iv9"/>
                                             <outlet property="titleLabel" destination="ijZ-KK-sTA" id="iKZ-ol-xUz"/>
                                             <outlet property="upvoteButton" destination="UtZ-WC-X22" id="asI-cV-7c7"/>
                                         </connections>

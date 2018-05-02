@@ -73,8 +73,10 @@ extension API {
 }
 
 class API {
-    private let prodRootURL = "https://software-enginnering-daily-api.herokuapp.com/api"
-    private let stagingRootURL = "https://sedaily-backend-staging.herokuapp.com/api"
+//    private let prodRootURL = "https://software-enginnering-daily-api.herokuapp.com/api"
+    private let prodRootURL = "http://localhost:4040/api"
+    private let stagingRootURL = "http://localhost:4040/api"
+//    private let stagingRootURL = "https://sedaily-backend-staging.herokuapp.com/api"
 
     var rootURL: String {
         #if DEBUG
@@ -691,6 +693,14 @@ extension API {
 
 // MARK: Voting
 extension API {
+    
+    // TODO: refactor, pass down urlString and everything else is the same
+    func upvoteEntity(entityId: String, completion: @escaping (_ success: Bool?, _ active: Bool?) -> Void) {
+        
+    }
+    
+    func downvoteEntity(entityId: String, completion: @escaping (_ success: Bool?, _ active: Bool?) -> Void) {
+    }
     
     func upvoteForum(entityId: String, completion: @escaping (_ success: Bool?, _ active: Bool?) -> Void) {
         let urlString = self.rootURL + Endpoints.forum + "/" + entityId + Endpoints.upvote

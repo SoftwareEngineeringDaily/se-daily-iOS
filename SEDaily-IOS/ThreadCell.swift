@@ -15,6 +15,8 @@ class ThreadCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var commentsCountLabel: UILabel!
     @IBOutlet weak var upvoteButton: UIButton!
+    @IBOutlet weak var scoreLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -23,25 +25,31 @@ class ThreadCell: UITableViewCell {
 
         upvoteButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
         upvoteButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .selected)
-    
+        
         upvoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
-//        upvoteButton.adjustsImageWhenHighlighted = false
     }
     
     var thread: ForumThread? {
         didSet {
-            titleLabel.text = thread?.title           
-            commentsCountLabel.text = thread?.getCommentsSummary()
-            if let author = thread?.author {
+            
+            if let thread = thread {
+                
+                let author = thread.author
                 authorLabel.text = (author.name != nil) ? author.name : author.username
+                
+                titleLabel.text = thread.title
+                commentsCountLabel.text = thread.getCommentsSummary()
+                
+                dateLabel.text = thread.getDatedCreatedPretty()
+                scoreLabel.text = "\(thread.score)"
             }
-            dateLabel.text = thread?.getDatedCreatedPretty()
+            
         }
     }
 
     @IBAction func upvotePressed(_ sender: UIButton) {
         sender.isSelected = !upvoteButton.isSelected
-//        sender.isHighlighted = false
+        
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

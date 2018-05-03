@@ -73,6 +73,7 @@
 		962F5365201E3C7900897A6E /* RelatedLinksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962F5364201E3C7900897A6E /* RelatedLinksViewController.swift */; };
 		963144DE208FEA8000EA13F1 /* ForumThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963144DD208FEA8000EA13F1 /* ForumThread.swift */; };
 		964090BF2093B97D00CFF5C4 /* PodcastLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964090BE2093B97D00CFF5C4 /* PodcastLite.swift */; };
+		96518168209BB4150088F7D1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96518167209BB4150088F7D1 /* GoogleService-Info.plist */; };
 		965798A52093FDE600104F8F /* ForumThreadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965798A42093FDE600104F8F /* ForumThreadCell.swift */; };
 		96600312201CEBBD00997795 /* RelatedLinks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96600311201CEBBD00997795 /* RelatedLinks.storyboard */; };
 		9672AA52202929C90020981F /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9672AA51202929C90020981F /* Author.swift */; };
@@ -185,6 +186,7 @@
 		962F5364201E3C7900897A6E /* RelatedLinksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedLinksViewController.swift; sourceTree = "<group>"; };
 		963144DD208FEA8000EA13F1 /* ForumThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumThread.swift; sourceTree = "<group>"; };
 		964090BE2093B97D00CFF5C4 /* PodcastLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastLite.swift; sourceTree = "<group>"; };
+		96518167209BB4150088F7D1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		965798A42093FDE600104F8F /* ForumThreadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumThreadCell.swift; sourceTree = "<group>"; };
 		96600311201CEBBD00997795 /* RelatedLinks.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RelatedLinks.storyboard; sourceTree = "<group>"; };
 		9672AA51202929C90020981F /* Author.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
@@ -348,6 +350,7 @@
 				1EABD8F01FB430AA00959859 /* Debug */,
 				164FE9E31F02EE77009419CA /* Helpers */,
 				1686FC0C1F009EC00088A6C1 /* Info.plist */,
+				96518167209BB4150088F7D1 /* GoogleService-Info.plist */,
 				1E44AF051F87B08D00221B22 /* Localizable.strings */,
 				164FE9DF1F02EE4E009419CA /* Podcasts */,
 				16AD3E031F9B06950084C545 /* Search */,
@@ -703,6 +706,7 @@
 			files = (
 				96C8A9AF209114C200489EE4 /* ForumList.storyboard in Resources */,
 				96600312201CEBBD00997795 /* RelatedLinks.storyboard in Resources */,
+				96518168209BB4150088F7D1 /* GoogleService-Info.plist in Resources */,
 				1686FC0B1F009EC00088A6C1 /* LaunchScreen.storyboard in Resources */,
 				1EABD8F41FB430AB00959859 /* Debug.storyboard in Resources */,
 				1E44AF031F87B08D00221B22 /* Localizable.strings in Resources */,
@@ -845,6 +849,7 @@
 				"${BUILT_PRODUCTS_DIR}/Disk/Disk.framework",
 				"${BUILT_PRODUCTS_DIR}/Down/Down.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/KTResponsiveUI/KTResponsiveUI.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
@@ -868,6 +873,7 @@
 				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
 				"${BUILT_PRODUCTS_DIR}/UIFontComplete/UIFontComplete.framework",
 				"${BUILT_PRODUCTS_DIR}/WaitForIt/WaitForIt.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -876,6 +882,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Disk.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Down.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KTResponsiveUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
@@ -899,6 +906,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIFontComplete.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaitForIt.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

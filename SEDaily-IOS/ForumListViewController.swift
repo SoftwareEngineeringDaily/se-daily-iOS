@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ForumListViewController: UIViewController {
 
@@ -29,11 +30,11 @@ class ForumListViewController: UIViewController {
             tableView.addSubview(refreshControl)
         }
         refreshControl.addTarget(self, action: #selector(refreshForumData(_:)), for: .valueChanged)
-
     }
 
     override func viewDidAppear(_ animated: Bool) {
         loadThreads()
+        Analytics.logEvent("forum_loaded", parameters: nil)
     }
     @objc private func refreshForumData(_ sender: Any) {
         // Fetch Weather Data

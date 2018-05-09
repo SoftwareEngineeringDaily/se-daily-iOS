@@ -11,11 +11,11 @@ import Firebase
 
 class Analytics2 {
     class func forumViewed() {
-        Analytics.logEvent("forum_loaded", parameters: nil)
+        Analytics.logEvent("forum_list_viewed", parameters: nil)
     }
     
     class func forumThreadViewed(forumThread: ForumThread) {
-        Analytics.logEvent("forumThreadViewed", parameters: [
+        Analytics.logEvent("forum_thread_viewed", parameters: [
             AnalyticsParameterItemID: "id-\(forumThread.title)",
             AnalyticsParameterItemName: forumThread.title,
             AnalyticsParameterContentType: "view"

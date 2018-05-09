@@ -40,6 +40,7 @@ class NotificationsTableViewController: UITableViewController {
         self.tableView.register(NotificationTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
 
         self.tableView.rowHeight = UIView.getValueScaledByScreenHeightFor(baseValue: 85)
+        Analytics2.notificationPageViewed()
     }
 
     override func didReceiveMemoryWarning() {

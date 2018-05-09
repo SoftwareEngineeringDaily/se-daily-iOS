@@ -12,7 +12,12 @@ import Firebase
 class Analytics2 {
     
     // MARK: Page Views
-    
+    class func notificationPageViewed() {
+        Analytics.logEvent("notifications_page_viewed", parameters: nil)
+    }
+    class func bookmarksPageViewed() {
+        Analytics.logEvent("bookmarks_page_viewed", parameters: nil)
+    }
     class func loginFormViewed() {
         Analytics.logEvent("login_form_viewed", parameters: nil)
     }

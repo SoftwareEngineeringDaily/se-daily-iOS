@@ -34,7 +34,7 @@ class ForumListViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         loadThreads()
-        Analytics.logEvent("forum_loaded", parameters: nil)
+        Analytics2.forumViewed()
     }
     @objc private func refreshForumData(_ sender: Any) {
         // Fetch Weather Data

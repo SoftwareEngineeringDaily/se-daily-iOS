@@ -85,12 +85,13 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     }
 
     @objc func loginButtonPressed() {
-         Analytics.logEvent("login_button_nav_pressed", parameters: nil)
+        Analytics2.loginNavButtonPressed()
         let vc = LoginViewController()
         self.navigationController?.pushViewController(vc)
     }
 
     @objc func logoutButtonPressed() {
+        Analytics2.logoutNavButtonPressed()
         UserManager.sharedInstance.logoutUser()
         self.setupNavBar()
     }

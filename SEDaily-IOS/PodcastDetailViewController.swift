@@ -69,6 +69,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
             let bookmarkBarButtonItem = UIBarButtonItem(customView: bookmarkButton)
             self.navigationItem.rightBarButtonItem = bookmarkBarButtonItem
         }
+        Analytics2.podcastPageViewed(podcastId: model._id)
     }
 
     @objc private func bookmarkButtonPressed() {
@@ -95,6 +96,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
                 self.updateBookmarked(active: active)
             }
         })
+        Analytics2.bookmarkButtonPressed(podcastId: model._id)
     }
 
     private func updateBookmarked(active: Bool) {
@@ -155,6 +157,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
 
 extension PodcastDetailViewController: HeaderViewDelegate {
     func relatedLinksButtonPressed() {
+        Analytics2.relatedLinksButtonPressed(podcastId: model._id)
         let relatedLinksStoryboard = UIStoryboard.init(name: "RelatedLinks", bundle: nil)
         guard let relatedLinksViewController = relatedLinksStoryboard.instantiateViewController(
             withIdentifier: "RelatedLinksViewController") as? RelatedLinksViewController else {
@@ -166,6 +169,7 @@ extension PodcastDetailViewController: HeaderViewDelegate {
     }
     
     func commentsButtonPressed() {
+        Analytics2.podcastCommentsViewed(podcastId: model._id)
         let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
         guard let commentsViewController = commentsStoryboard.instantiateViewController(
             withIdentifier: "CommentsViewController") as? CommentsViewController else {

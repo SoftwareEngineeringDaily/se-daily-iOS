@@ -196,6 +196,7 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 extension BookmarkCollectionViewController: BookmarkCollectionViewControllerDelegate {
     func refreshPressed() {
         self.refreshView(useCache: false)
+        Analytics2.refreshMyBookmarksPressed()
     }
 }
 

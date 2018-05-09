@@ -98,4 +98,8 @@ class Analytics2 {
             AnalyticsParameterContentType: "view"
             ])
     }
+    class func refreshMyBookmarksPressed() {
+        Analytics.logEvent("bookmark_refresh_button_pressed", parameters: nil)
+
+    }
 }

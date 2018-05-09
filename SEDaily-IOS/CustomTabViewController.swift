@@ -21,6 +21,7 @@ import SnapKit
 import StoreKit
 import SwifterSwift
 import SwiftIcons
+import Firebase
 
 class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 
@@ -84,6 +85,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     }
 
     @objc func loginButtonPressed() {
+         Analytics.logEvent("login_button_nav_pressed", parameters: nil)
         let vc = LoginViewController()
         self.navigationController?.pushViewController(vc)
     }

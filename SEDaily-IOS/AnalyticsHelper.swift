@@ -60,6 +60,9 @@ class Analytics2 {
     }
     
     // MARK: Button Presses
+    class func searchNavButtonPressed() {
+        Analytics.logEvent("search_button_nav_pressed", parameters: nil)
+    }
     class func loginNavButtonPressed() {
         Analytics.logEvent("login_button_nav_pressed", parameters: nil)
     }

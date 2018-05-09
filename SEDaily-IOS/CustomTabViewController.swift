@@ -77,6 +77,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     @objc func rightBarButtonPressed() {
         let vc = SearchTableViewController()
         self.navigationController?.pushViewController(vc)
+        Analytics2.searchNavButtonPressed()
     }
     
     @objc func leftBarButtonPressed() {

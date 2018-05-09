@@ -21,8 +21,18 @@ class Analytics2 {
             AnalyticsParameterContentType: "view"
         ])
     }
+    
     class func loginFormViewed() {
         
+    }
+    class func newPodcastsListViewed() {
+        Analytics.logEvent("podcast_new_list_viewed", parameters: nil)
+    }
+    class func topPodcastsListViewed() {
+        Analytics.logEvent("podcast_top_list_viewed", parameters: nil)
+    }
+    class func recommendedPodcastsListViewed() {
+        Analytics.logEvent("podcast_recommended_list_viewed", parameters: nil)
     }
     
     class func loginNavButtonPressed() {

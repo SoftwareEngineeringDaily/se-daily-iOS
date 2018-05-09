@@ -14,6 +14,13 @@ class Analytics2 {
         Analytics.logEvent("forum_loaded", parameters: nil)
     }
     
+    class func forumThreadViewed(forumThread: ForumThread) {
+        Analytics.logEvent("forumThreadViewed", parameters: [
+            AnalyticsParameterItemID: "id-\(forumThread.title)",
+            AnalyticsParameterItemName: forumThread.title,
+            AnalyticsParameterContentType: "view"
+        ])
+    }
     class func loginFormViewed() {
         
     }

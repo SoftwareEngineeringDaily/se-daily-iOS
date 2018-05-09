@@ -29,6 +29,9 @@ class ThreadHeaderView: UIView {
                 authorLabel.text = (author.name != nil) ? author.name : author.username
             }
             dateLabel.text = thread?.getDatedCreatedPretty()
+            if let thread = thread {
+                Analytics2.forumThreadViewed(forumThread: thread)
+            }
         }
     }
     

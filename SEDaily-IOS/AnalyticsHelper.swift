@@ -49,14 +49,26 @@ class Analytics2 {
             AnalyticsParameterContentType: "view"
         ])
     }
-    class func newPodcastsListViewed() {
-        Analytics.logEvent("podcast_new_list_viewed", parameters: nil)
+    class func newPodcastsListViewed(tabTitle: String) {
+        Analytics.logEvent("podcast_new_list_viewed", parameters: [
+            AnalyticsParameterItemID: "tabTitle-\(tabTitle)",
+            AnalyticsParameterItemName: tabTitle,
+            AnalyticsParameterContentType: "view"
+        ])
     }
-    class func topPodcastsListViewed() {
-        Analytics.logEvent("podcast_top_list_viewed", parameters: nil)
+    class func topPodcastsListViewed(tabTitle: String) {
+        Analytics.logEvent("podcast_top_list_viewed", parameters: [
+            AnalyticsParameterItemID: "tabTitle-\(tabTitle)",
+            AnalyticsParameterItemName: tabTitle,
+            AnalyticsParameterContentType: "view"
+        ])
     }
-    class func recommendedPodcastsListViewed() {
-        Analytics.logEvent("podcast_recommended_list_viewed", parameters: nil)
+    class func recommendedPodcastsListViewed(tabTitle: String) {
+        Analytics.logEvent("podcast_recommended_list_viewed", parameters: [
+            AnalyticsParameterItemID: "tabTitle-\(tabTitle)",
+            AnalyticsParameterItemName: tabTitle,
+            AnalyticsParameterContentType: "view"
+        ])
     }
     
     // MARK: Button Presses

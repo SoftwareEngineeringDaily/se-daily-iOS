@@ -85,11 +85,11 @@ class GeneralCollectionViewController: UICollectionViewController {
         
         switch type {
         case .new:
-            Analytics2.newPodcastsListViewed()
+            Analytics2.newPodcastsListViewed(tabTitle: self.tabTitle)
         case .recommended:
-            Analytics2.recommendedPodcastsListViewed()
+            Analytics2.recommendedPodcastsListViewed(tabTitle: self.tabTitle)
         case .top:
-            Analytics2.topPodcastsListViewed()
+            Analytics2.topPodcastsListViewed(tabTitle: self.tabTitle)
         }        
     }
 

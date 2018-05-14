@@ -55,12 +55,16 @@ enum L10n {
   static let emailUnsupportedMessage = L10n.tr("Localizable", "EmailUnsupportedMessage")
   /// Email unsupported on this device
   static let emailUnsupportedOnDevice = L10n.tr("Localizable", "EmailUnsupportedOnDevice")
+  /// No results for search
+  static let emptySearch = L10n.tr("Localizable", "EmptySearch")
   /// Hello!
   static let enthusiasticHello = L10n.tr("Localizable", "EnthusiasticHello")
   /// Sure! Send email
   static let enthusiasticSureSendEmail = L10n.tr("Localizable", "EnthusiasticSureSendEmail")
   /// Yes!
   static let enthusiasticYes = L10n.tr("Localizable", "EnthusiasticYes")
+  /// Fetching results
+  static let fetchingSearch = L10n.tr("Localizable", "FetchingSearch")
   /// First Name
   static let firstNamePlaceholder = L10n.tr("Localizable", "FirstNamePlaceholder")
   /// Error
@@ -95,6 +99,8 @@ enum L10n {
   static let passwordPlaceholder = L10n.tr("Localizable", "PasswordPlaceholder")
   /// Play
   static let play = L10n.tr("Localizable", "Play")
+  /// Search
+  static let search = L10n.tr("Localizable", "Search")
   /// Sign Up
   static let signUpButtonTitle = L10n.tr("Localizable", "SignUpButtonTitle")
   /// Just For You

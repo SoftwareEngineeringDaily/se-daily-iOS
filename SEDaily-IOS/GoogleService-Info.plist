@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>548054325478-0com808vgj6ol629959m3ke5f18ci5tq.apps.googleusercontent.com</string>
+	<string>171248788339-nfmqn8qa1nrdia90e7gojv2j8dca7nv9.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.548054325478-0com808vgj6ol629959m3ke5f18ci5tq</string>
+	<string>com.googleusercontent.apps.171248788339-nfmqn8qa1nrdia90e7gojv2j8dca7nv9</string>
 	<key>API_KEY</key>
-	<string>AIzaSyD-mEAY304ZC1_hQWyaTtoeduQtzGu6Azc</string>
+	<string>AIzaSyCoRD2vnnfswNPArVtRNQFUKHBXUvmg2CI</string>
 	<key>GCM_SENDER_ID</key>
-	<string>548054325478</string>
+	<string>171248788339</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>koala-tea.SEDaily</string>
 	<key>PROJECT_ID</key>
-	<string>sed-dev</string>
+	<string>softwaredailyprod</string>
 	<key>STORAGE_BUCKET</key>
-	<string>sed-dev.appspot.com</string>
+	<string>softwaredailyprod.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:548054325478:ios:a92590b1eee7f0b7</string>
+	<string>1:171248788339:ios:a92590b1eee7f0b7</string>
 	<key>DATABASE_URL</key>
-	<string>https://sed-dev.firebaseio.com</string>
+	<string>https://softwaredailyprod.firebaseio.com</string>
 </dict>
 </plist>

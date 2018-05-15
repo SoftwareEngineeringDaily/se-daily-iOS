@@ -8,67 +8,65 @@
 
 import UIKit
 import KTResponsiveUI
+import StatefulViewController
 
-private let reuseIdentifier = "reuseIdentifier"
-
-class SearchTableViewController: UITableViewController {
-
-    // ViewModelController
+class SearchTableViewController: UIViewController, StatefulViewController {
+    private let reuseIdentifier = "reuseIdentifier"
     private let podcastViewModelController = PodcastViewModelController()
-
-    lazy var footerView: UIActivityIndicatorView = {
-        let footerView = UIActivityIndicatorView(height: 44)
-        footerView.width = self.tableView.width
-        footerView.activityIndicatorViewStyle = .gray
-        return footerView
-    }()
-
-    // MARK: - Paging
-    let pageSize = 10
-    let preloadMargin = 5
-    var lastLoadedPage = 0
-    var loading = false
-
-    let searchController = UISearchController(searchResultsController: nil)
-    var searchText: String {
+    private let pageSize = 10
+    private let preloadMargin = 5
+    private var lastLoadedPage = 0
+    private let searchController = UISearchController(searchResultsController: nil)
+    private var searchText: String {
         return searchController.searchBar.text ?? ""
     }
-
-    var isLoading = false {
-        didSet {
-            switch isLoading {
-            case true:
-                footerView.startAnimating()
-            case false:
-                footerView.stopAnimating()
-            }
-        }
-    }
+    private var tableView: UITableView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.tableView.register(PodcastTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
 
         searchController.searchBar.delegate = self
         searchController.searchBar.tintColor = Stylesheet.Colors.base
         searchController.dimsBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
-//        definesPresentationContext = true
 
-        self.tableView.tableHeaderView = searchController.searchBar
+        self.tableView = UITableView()
+        if let tableView = self.tableView {
+            tableView.dataSource = self
+            tableView.delegate = self
+            self.view.addSubview(tableView)
+            tableView.tableFooterView = UIView()
+            tableView.snp.makeConstraints { (make) in
+                make.edges.equalToSuperview()
+            }
+            tableView.register(PodcastTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+            tableView.tableHeaderView = searchController.searchBar
+            tableView.separatorStyle = .singleLine
+            tableView.rowHeight = UIView.getValueScaledByScreenHeightFor(baseValue: 75)
+        }
+        self.title = L10n.search
 
-        tableView.separatorStyle = .singleLine
-        tableView.rowHeight = UIView.getValueScaledByScreenHeightFor(baseValue: 75)
+        self.loadingView = StateView(
+            frame: CGRect.zero,
+            text: L10n.fetchingSearch,
+            showLoadingIndicator: true,
+            showRefreshButton: false,
+            delegate: nil)
+        self.loadingView?.isUserInteractionEnabled = false
 
-        self.tableView.tableFooterView = footerView
-
-        self.title = "Search"
+        self.emptyView = StateView(
+            frame: CGRect.zero,
+            text: L10n.emptySearch,
+            showLoadingIndicator: false,
+            showRefreshButton: false,
+            delegate: nil)
+        self.emptyView?.isUserInteractionEnabled = false
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.searchController.searchBar.isHidden = false
+        self.setupInitialViewState()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -76,25 +74,35 @@ class SearchTableViewController: UITableViewController {
         self.searchController.searchBar.isHidden = true
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func hasContent() -> Bool {
+        return podcastViewModelController.viewModelsCount > 0
     }
+}
 
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+extension SearchTableViewController: UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return podcastViewModelController.viewModelsCount
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.podcastViewModelController.viewModelsCount
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? PodcastTableViewCell else {
-            return UITableViewCell()
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let viewModel = self.podcastViewModelController.viewModel(at: indexPath.row) {
+            let vc = PodcastDetailViewController()
+            vc.model = viewModel
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+}
+
+extension SearchTableViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: reuseIdentifier,
+            for: indexPath) as? PodcastTableViewCell else {
+                return UITableViewCell()
         }
 
         if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
@@ -110,18 +118,9 @@ class SearchTableViewController: UITableViewController {
 
         return cell
     }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
-            let vc = PodcastDetailViewController()
-            vc.model = viewModel
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-    }
 }
 
 extension SearchTableViewController {
-    // MARK: Data/Paging
     func checkPage(currentIndexPath: IndexPath, lastIndexPath: IndexPath, lastIdentifier: String) {
         let nextPage: Int = Int(currentIndexPath.item / self.pageSize) + 1
         let preloadIndex = nextPage * self.pageSize - self.preloadMargin
@@ -132,27 +131,25 @@ extension SearchTableViewController {
     }
 
     func getData(lastIdentifier: String, nextPage: Int, firstSearch: Bool) {
-        guard self.loading == false else { return }
-        self.loading = true
+        self.startLoading()
+
         podcastViewModelController.fetchSearchData(
             searchTerm: self.searchText.lowercased(),
             createdAtBefore: lastIdentifier,
             firstSearch: firstSearch,
-            onSuccess: {
-                self.loading = false
-                self.lastLoadedPage = nextPage
+            onSuccess: { [weak self] in
+                self?.endLoading()
+                self?.lastLoadedPage = nextPage
                 DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                    self?.tableView?.reloadData()
                 } },
-            onFailure: { (apiError) in
-                self.loading = false
+            onFailure: {  [weak self] (apiError) in
+                self?.endLoading()
                 log.error(apiError ?? "") })
     }
 }
 
 extension SearchTableViewController {
-    // MARK: - Private instance methods
-
     func filterContentForSearchText(_ searchText: String) {
         guard !searchBarIsEmpty() else { return }
         self.getData(lastIdentifier: "", nextPage: 0, firstSearch: true)
@@ -169,7 +166,6 @@ extension SearchTableViewController {
 }
 
 extension SearchTableViewController: UISearchBarDelegate {
-    // MARK: - UISearchBar Delegate
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         filterContentForSearchText(searchController.searchBar.text!)
     }

@@ -129,8 +129,8 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
 
         } else if let feedItem = self.threads[indexPath.row] as? FeedItem {
             print("url \(feedItem.relatedLink.url)")
-            /*
-            var urlString = links[indexPath.row].url
+            // TODO: move to model
+            var urlString = feedItem.relatedLink.url
             let urlPrefix = urlString.prefix(4)
             if urlPrefix != "http" {
                 // Defaulting to http:
@@ -146,14 +146,8 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
                 UIApplication.shared.open(linkUrl, options: [:], completionHandler: nil)
             } else {
                 print("link null")
-            }*/
-            
-            if let url =  URL(string: feedItem.relatedLink.url) {
-                UIApplication.shared.openURL(url)
-            } else {
-                print("url \(feedItem.relatedLink.url)")
             }
-
+            
         }
         
 //        let thread = threads[indexPath.row]

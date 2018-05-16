@@ -45,6 +45,8 @@ class ForumListViewController: UIViewController {
         
         var lastActivityBefore =  ""
         if threads.count > 0  && refreshing == false {
+            // TODO: find last thread:
+            
             let lastThread = threads[threads.count - 1]
             if  let thread = lastThread as? ForumThread {
                 lastActivityBefore = thread.dateLastAcitiy

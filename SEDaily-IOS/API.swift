@@ -428,21 +428,18 @@ extension API {
         let _headers: HTTPHeaders = [
             Headers.authorization: Headers.bearer + userToken
         ]
-        
-        let urlString = rootURL + API.Endpoints.feed
-    
+            
         // Params
+        var urlString = ""
+
         var params = [String: String]()
         if lastActivityBeforeDate != "" {
-            let urlString = rootURL + API.Endpoints.forum
+            urlString = rootURL + API.Endpoints.forum
 
             params[Params.lastActivityBefore] = lastActivityBeforeDate
         } else {
-            let urlString = rootURL + API.Endpoints.feed
+            urlString = rootURL + API.Endpoints.feed
         }
-
-        // Last activity is null / "" if first request
-        print("last activity \(lastActivityBeforeDate)")
         
         networkRequest(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
             switch response.result {

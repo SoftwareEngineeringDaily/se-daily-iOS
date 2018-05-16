@@ -25,6 +25,8 @@ extension API {
         static let posts = "/posts"
         static let recommendations = "/posts/recommendations"
         static let forum = "/forum"
+        static let feed = "/feed"
+
         static let login = "/auth/login"
         static let register = "/auth/register"
         static let upvote = "/upvote"
@@ -73,8 +75,9 @@ extension API {
 }
 
 class API {
-    private let prodRootURL = "https://software-enginnering-daily-api.herokuapp.com/api"
+//    private let prodRootURL = "https://software-enginnering-daily-api.herokuapp.com/api"
     private let stagingRootURL = "https://sedaily-backend-staging.herokuapp.com/api"
+    private let prodRootURL = "http://localhost:4040/api"
 
     var rootURL: String {
         #if DEBUG
@@ -418,7 +421,7 @@ extension API {
     
     func getForumThreads(
                   lastActivityBefore lastActivityBeforeDate: String = "",
-                  onSuccess: @escaping ([ForumThreadModel]) -> Void,
+                  onSuccess: @escaping ([Any]) -> Void,
                   onFailure: @escaping (APIError?) -> Void) {
         
         let user = UserManager.sharedInstance.getActiveUser()
@@ -427,14 +430,17 @@ extension API {
             Headers.authorization: Headers.bearer + userToken
         ]
         
-        let urlString = rootURL + API.Endpoints.forum
+        let urlString = rootURL + API.Endpoints.feed
     
         // Params
         var params = [String: String]()
         if lastActivityBeforeDate != "" {
             params[Params.lastActivityBefore] = lastActivityBeforeDate
         }
+        print(Headers.bearer + userToken)
 
+        print("userToken")
+        print(userToken)
         networkRequest(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
@@ -445,13 +451,20 @@ extension API {
                     return
                 }
                 
-                var data: [ForumThreadModel] = []
+                var data: [Any] = []
                 let this = JSON(responseData)
-                for (_, subJson):(String, JSON) in this {
+                for (blah, subJson):(String, JSON) in this {
                     guard let jsonData = try? subJson.rawData() else { continue }
                     let newObject = try? JSONDecoder().decode(ForumThreadModel.self, from: jsonData)
                     if let newObject = newObject {
+//                        print("**************")
+//                        print(blah)
+//                        print(newObject)
                         data.append(newObject)
+                    } else {
+                        print("-------------------")
+                        print(blah) 
+                        print("-------------------")
                     }
                 }
                 onSuccess(data)

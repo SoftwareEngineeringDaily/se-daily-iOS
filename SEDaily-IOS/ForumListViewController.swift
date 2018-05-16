@@ -12,7 +12,7 @@ import Firebase
 class ForumListViewController: UIViewController {
 
     let networkService = API()
-    var threads: [ForumThread] = []
+    var threads: [Any] = []
     private let refreshControl = UIRefreshControl()
 
     @IBOutlet weak var tableView: UITableView!
@@ -46,13 +46,16 @@ class ForumListViewController: UIViewController {
         var lastActivityBefore =  ""
         if threads.count > 0  && refreshing == false {
             let lastThread = threads[threads.count - 1]
-            lastActivityBefore = lastThread.dateLastAcitiy
+            if  let thread = lastThread as? ForumThread {
+                lastActivityBefore = thread.dateLastAcitiy
+            }
         }
         
         networkService.getForumThreads(lastActivityBefore: lastActivityBefore, onSuccess: {  [weak self] (threads) in
             if refreshing {
                 self?.threads = []
             }
+            
             self?.threads += threads
             self?.tableView.reloadData()
             if refreshing {
@@ -93,10 +96,16 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
     // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
     // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "threadCell", for: indexPath) as? ForumThreadCell
+        if let thread = self.threads[indexPath.row] as? ForumThread {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "threadCell", for: indexPath) as? ForumThreadCell
+            cell?.thread = thread
+            return cell!
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "threadCell", for: indexPath)
+            cell.textLabel?.text = "wassa"
+            return cell
+        }
         
-        cell?.thread = self.threads[indexPath.row]
-        return cell!        
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -111,9 +120,9 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
             withIdentifier: "CommentsViewController") as? CommentsViewController else {
                 return
         }
-        let thread = threads[indexPath.row]
-        commentsViewController.rootEntityId = thread._id
-        commentsViewController.thread = thread
-        self.navigationController?.pushViewController(commentsViewController, animated: true)                
+//        let thread = threads[indexPath.row]
+//        commentsViewController.rootEntityId = thread._id
+//        commentsViewController.thread = thread
+//        self.navigationController?.pushViewController(commentsViewController, animated: true)
     }
 }

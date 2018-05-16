@@ -75,9 +75,10 @@ extension API {
 }
 
 class API {
-    private let prodRootURL = "https://software-enginnering-daily-api.herokuapp.com/api"
+//    private let prodRootURL = "https://software-enginnering-daily-api.herokuapp.com/api"
     private let stagingRootURL = "https://sedaily-backend-staging.herokuapp.com/api"
-    
+    private let prodRootURL = "http://localhost:4040/api"
+
     var rootURL: String {
         #if DEBUG
             if let useStagingEndpointTestHook = TestHookManager.testHookBool(id: TestHookId.useStagingEndpoint),
@@ -436,10 +437,10 @@ extension API {
         if lastActivityBeforeDate != "" {
             params[Params.lastActivityBefore] = lastActivityBeforeDate
         }
-        print(Headers.bearer + userToken)
 
-        print("userToken")
-        print(userToken)
+        // Last activity is null / "" if first request
+        print("last activity \(lastActivityBeforeDate)")
+        
         networkRequest(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:

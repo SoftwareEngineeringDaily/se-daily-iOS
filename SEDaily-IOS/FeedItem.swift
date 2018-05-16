@@ -14,6 +14,6 @@ import Foundation
 
 public struct FeedItem: Codable {
     let _id: String
-//    let randomOrder: Double
+    let randomOrder: Double
     //    let author: Author // Is a string at times..
 }

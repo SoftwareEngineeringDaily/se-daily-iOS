@@ -418,7 +418,7 @@ typealias ForumThreadModel = ForumThread
 // MARK: Forum
 extension API {
     
-    func getForumThreads(
+    func getFeed(
                   lastActivityBefore lastActivityBeforeDate: String = "",
                   onSuccess: @escaping ([Any]) -> Void,
                   onFailure: @escaping (APIError?) -> Void) {
@@ -434,7 +434,11 @@ extension API {
         // Params
         var params = [String: String]()
         if lastActivityBeforeDate != "" {
+            let urlString = rootURL + API.Endpoints.forum
+
             params[Params.lastActivityBefore] = lastActivityBeforeDate
+        } else {
+            let urlString = rootURL + API.Endpoints.feed
         }
 
         // Last activity is null / "" if first request

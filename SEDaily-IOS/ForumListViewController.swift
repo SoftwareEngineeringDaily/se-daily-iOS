@@ -51,7 +51,7 @@ class ForumListViewController: UIViewController {
             }
         }
         
-        networkService.getForumThreads(lastActivityBefore: lastActivityBefore, onSuccess: {  [weak self] (threads) in
+        networkService.getFeed(lastActivityBefore: lastActivityBefore, onSuccess: {  [weak self] (threads) in
             if refreshing {
                 self?.threads = []
             }

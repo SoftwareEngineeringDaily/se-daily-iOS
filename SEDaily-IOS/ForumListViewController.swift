@@ -13,6 +13,7 @@ class ForumListViewController: UIViewController {
 
     let networkService = API()
     var threads: [Any] = []
+    var lastThread:ForumThread?
     private let refreshControl = UIRefreshControl()
 
     @IBOutlet weak var tableView: UITableView!
@@ -47,17 +48,16 @@ class ForumListViewController: UIViewController {
         if threads.count > 0  && refreshing == false {
             // TODO: find last thread:
             
-            let lastThread = threads[threads.count - 1]
-            if  let thread = lastThread as? ForumThread {
+            if  let thread = self.lastThread {
                 lastActivityBefore = thread.dateLastAcitiy
             }
         }
         
-        networkService.getFeed(lastActivityBefore: lastActivityBefore, onSuccess: {  [weak self] (threads) in
+        networkService.getFeed(lastActivityBefore: lastActivityBefore, onSuccess: {  [weak self] (threads, lastForumThread) in
             if refreshing {
                 self?.threads = []
             }
-            
+            self?.lastThread = lastForumThread
             self?.threads += threads
             self?.tableView.reloadData()
             if refreshing {

@@ -420,7 +420,7 @@ extension API {
     
     func getFeed(
                   lastActivityBefore lastActivityBeforeDate: String = "",
-                  onSuccess: @escaping ([Any]) -> Void,
+                  onSuccess: @escaping ([Any], ForumThread?) -> Void,
                   onFailure: @escaping (APIError?) -> Void) {
         
         let user = UserManager.sharedInstance.getActiveUser()
@@ -452,14 +452,13 @@ extension API {
                 
                 var data: [Any] = []
                 let this = JSON(responseData)
+                var lastThread:ForumThread?
                 for (blah, subJson):(String, JSON) in this {
                     guard let jsonData = try? subJson.rawData() else { continue }
                     let newObject = try? JSONDecoder().decode(ForumThreadModel.self, from: jsonData)
                     if let newObject = newObject {
-//                        print("**************")
-//                        print(blah)
-//                        print(newObject)
                         data.append(newObject)
+                        lastThread = newObject as ForumThread
                     } else {
                         if let feedItem = try? JSONDecoder().decode(FeedItem.self, from: jsonData) {
                             print("-------------------")
@@ -469,7 +468,7 @@ extension API {
                                               
                     }
                 }
-                onSuccess(data)
+                onSuccess(data, lastThread)
             case .failure(let error):
                 log.error(error.localizedDescription)
                 Tracker.logGeneralError(error: error)

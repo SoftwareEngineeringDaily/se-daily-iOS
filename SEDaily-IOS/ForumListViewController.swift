@@ -85,7 +85,7 @@ class ForumListViewController: UIViewController {
     */
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
-        self.tabBarItem = UITabBarItem(title: L10n.tabBarForum, image: #imageLiteral(resourceName: "bubbles"), selectedImage: #imageLiteral(resourceName: "bubbles_selected"))
+        self.tabBarItem = UITabBarItem(title: L10n.tabBarFeed, image: #imageLiteral(resourceName: "bubbles"), selectedImage: #imageLiteral(resourceName: "bubbles_selected"))
     }
 }
 

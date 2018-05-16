@@ -462,9 +462,12 @@ extension API {
 //                        print(newObject)
                         data.append(newObject)
                     } else {
-                        print("-------------------")
-                        print(blah) 
-                        print("-------------------")
+                        if let feedItem = try? JSONDecoder().decode(FeedItem.self, from: jsonData) {
+                            print("-------------------")
+                            print(blah)
+                            data.append(feedItem)
+                        }
+                                              
                     }
                 }
                 onSuccess(data)

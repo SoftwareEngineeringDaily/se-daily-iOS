@@ -101,11 +101,11 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
             cell?.thread = thread
             return cell!
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "threadCell", for: indexPath)
-            cell.textLabel?.text = "wassa"
-            return cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? UITableViewCell
+            cell?.textLabel?.text = "wassaaaaaaaaaaaaaaaaaAAAAAAAAAAAA"
+            print("WASSSSSSSSSSSSAAAAAAAAA-----------")
+            return cell!
         }
-        
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

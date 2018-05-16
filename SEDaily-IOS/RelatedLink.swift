@@ -12,7 +12,6 @@ public struct RelatedLink: Codable {
     let score: Int?
     let title: String
     let url: String
-
     
     let postId: String?
     let post: PodcastLite?
@@ -32,11 +31,9 @@ public struct RelatedLink: Codable {
         title = try container.decode(String.self, forKey: .title)
         url = try container.decode(String.self, forKey: .url)
 
-
         if let value = try? container.decode(PodcastLite.self, forKey: .post) {
-            post = try PodcastLite(from: (value as? Decoder)!)
+            post = value
             postId = post?._id
-            print("post !!! \(post)")
         } else {
             postId = try container.decode(String.self, forKey: .post)
             post = nil

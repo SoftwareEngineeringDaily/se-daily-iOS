@@ -103,7 +103,7 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? UITableViewCell
             if let feedItem = self.threads[indexPath.row] as? FeedItem {
-                cell?.textLabel?.text = feedItem._id
+                cell?.textLabel?.text = feedItem.relatedLink.title
             }
             
             return cell!

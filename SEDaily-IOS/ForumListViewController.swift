@@ -122,9 +122,40 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
             withIdentifier: "CommentsViewController") as? CommentsViewController else {
                 return
         }
+        if let thread = self.threads[indexPath.row] as? ForumThread {
+            commentsViewController.rootEntityId = thread._id
+            commentsViewController.thread = thread
+            self.navigationController?.pushViewController(commentsViewController, animated: true)
+
+        } else if let feedItem = self.threads[indexPath.row] as? FeedItem {
+            print("url \(feedItem.relatedLink.url)")
+            /*
+            var urlString = links[indexPath.row].url
+            let urlPrefix = urlString.prefix(4)
+            if urlPrefix != "http" {
+                // Defaulting to http:
+                if urlPrefix.prefix(3) == "://" {
+                    urlString = "http\(urlString)"
+                } else {
+                    urlString = "http://\(urlString)"
+                }
+            }
+            
+            // Open the link:
+            if let linkUrl = URL(string: urlString) {
+                UIApplication.shared.open(linkUrl, options: [:], completionHandler: nil)
+            } else {
+                print("link null")
+            }*/
+            
+            if let url =  URL(string: feedItem.relatedLink.url) {
+                UIApplication.shared.openURL(url)
+            } else {
+                print("url \(feedItem.relatedLink.url)")
+            }
+
+        }
+        
 //        let thread = threads[indexPath.row]
-//        commentsViewController.rootEntityId = thread._id
-//        commentsViewController.thread = thread
-//        self.navigationController?.pushViewController(commentsViewController, animated: true)
     }
 }

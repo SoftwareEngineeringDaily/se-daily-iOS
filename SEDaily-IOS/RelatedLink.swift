@@ -13,10 +13,10 @@ public struct RelatedLink: Codable {
     let title: String
     let url: String
 
-    /*
+    
     let postId: String?
     let post: PodcastLite?
-    */
+    
     /*
     init(image: String? = nil, score: Int? = nil, title: String, url: String) {
         self.image = image
@@ -26,22 +26,21 @@ public struct RelatedLink: Codable {
     }*/
     
     public init(from decoder: Decoder) throws {
-        print("Throws------------------------------")
         let container = try decoder.container(keyedBy: CodingKeys.self)
   
         score = try container.decode(Int.self, forKey: .score)
         title = try container.decode(String.self, forKey: .title)
         url = try container.decode(String.self, forKey: .url)
-        
-      /*  if let value = try? container.decode(PodcastLite.self, forKey: .post) {
+
+
+        if let value = try? container.decode(PodcastLite.self, forKey: .post) {
             post = try PodcastLite(from: (value as? Decoder)!)
             postId = post?._id
+            print("post !!! \(post)")
         } else {
             postId = try container.decode(String.self, forKey: .post)
             post = nil
+            print("nil post \(postId)")
         }
- */
     }
-    
-    
 }

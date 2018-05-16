@@ -26,6 +26,7 @@ extension API {
         static let recommendations = "/posts/recommendations"
         static let forum = "/forum"
         static let feed = "/feed"
+        static let listened = "/listened"
 
         static let login = "/auth/login"
         static let register = "/auth/register"
@@ -77,7 +78,7 @@ extension API {
 class API {
     private let prodRootURL = "https://software-enginnering-daily-api.herokuapp.com/api"
     private let stagingRootURL = "https://sedaily-backend-staging.herokuapp.com/api"
-    
+
     var rootURL: String {
         #if DEBUG
             if let useStagingEndpointTestHook = TestHookManager.testHookBool(id: TestHookId.useStagingEndpoint),
@@ -414,9 +415,40 @@ extension API {
         }
     }
 }
-typealias ForumThreadModel = ForumThread
-// MARK: Forum
+
+// MARK: Listened History
 extension API {
+    func markAsListened(postId:String) {
+    //    http://localhost:4040/api/posts/5a57b6ffe9b21f96de35dabb/listened
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
+        let _headers: HTTPHeaders = [
+            Headers.authorization: Headers.bearer + userToken
+        ]
+        
+        let urlString = rootURL + API.Endpoints.posts + "/" +  postId + API.Endpoints.listened
+        networkRequest(urlString, method: .post, parameters: nil, encoding: URLEncoding.httpBody, headers: _headers)
+            .validate(statusCode: 200..<300)
+            .responseJSON { response in
+                
+                switch response.result {
+                case .success:
+//                    onSuccess()
+                    print("success")
+                case .failure(let error):
+                    log.error(error)
+                    print("Faiure!!!!!!!!")
+//                    onFailure(nil)
+                }
+        }
+        
+        
+    }
+}
+typealias ForumThreadModel = ForumThread
+// MARK: Feed
+extension API {
+    
     
     func getFeed(
                   lastActivityBefore lastActivityBeforeDate: String = "",

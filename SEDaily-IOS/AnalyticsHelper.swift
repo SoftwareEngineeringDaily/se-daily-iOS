@@ -10,7 +10,7 @@ import Foundation
 import Firebase
 
 class Analytics2 {
-    
+    // TODO: combine with AnswerTracker.swift
     // MARK: Page Views
     class func notificationPageViewed() {
         Analytics.logEvent("notifications_page_viewed", parameters: nil)

@@ -15,6 +15,8 @@ import KTResponsiveUI
 import KoalaTeaPlayer
 
 class AudioViewManager: NSObject {
+    let networkService = API() // TODO: don't couple?
+
     static var userSettingPlaybackSpeedKey = "PlaybackSpeed";
     static let shared: AudioViewManager = AudioViewManager()
     private override init() {}
@@ -40,6 +42,7 @@ class AudioViewManager: NSObject {
         if savedProgress != nil {
             playProgress = savedProgress!
         }
+        networkService.markAsListened(postId: podcastModel._id)
         
         self.presentAudioView()
     }

@@ -20,6 +20,7 @@ class GeneralCollectionViewController: UICollectionViewController {
     var tabTitle: String
     var tags: [Int]
     var categories: [Int]
+    weak var audioOverlayDelegate: AudioOverlayDelegate?
 
     // Paging Properties
     var loading = false
@@ -45,6 +46,7 @@ class GeneralCollectionViewController: UICollectionViewController {
     private let podcastViewModelController: PodcastViewModelController = PodcastViewModelController()
 
     init(collectionViewLayout layout: UICollectionViewLayout,
+         audioOverlayDelegate: AudioOverlayDelegate?,
          tags: [Int] = [],
          categories: [PodcastCategoryIds] = [],
          type: PodcastTypes = .new,
@@ -52,6 +54,7 @@ class GeneralCollectionViewController: UICollectionViewController {
         self.tabTitle = tabTitle
         self.type = type
         self.tags = tags
+        self.audioOverlayDelegate = audioOverlayDelegate
         self.categories = categories.flatMap { $0.rawValue }
         super.init(collectionViewLayout: layout)
         self.tabBarItem = self.customTabBarItem
@@ -183,6 +186,7 @@ class GeneralCollectionViewController: UICollectionViewController {
             let vc = PodcastDetailViewController()
             vc.model = viewModel
             vc.delegate = self
+            vc.audioOverlayDelegate = self.audioOverlayDelegate
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

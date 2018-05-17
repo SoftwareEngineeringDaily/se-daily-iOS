@@ -30,7 +30,7 @@ target 'SEDaily-IOS' do
   pod 'StatefulViewController', '~> 3.0'
   pod 'SwiftGen', '~> 5.2.1'
   pod 'SwiftIcons', :git => 'https://github.com/themisterholliday/SwiftIcons.git', :branch => 'swift-4'
-  pod 'SwiftLint', '~> 0.23.1'
+  pod 'SwiftLint', '~> 0.25.1'
   pod 'SwiftSoup', '~> 1.5.8'
   pod 'SwifterSwift', '~> 4.0.1'
   pod 'SwiftyBeaver', '~> 1.4.2'

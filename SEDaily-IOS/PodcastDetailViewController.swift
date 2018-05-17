@@ -17,6 +17,7 @@ protocol PodcastDetailViewControllerDelegate: class {
 class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
 
     weak var delegate: PodcastDetailViewControllerDelegate?
+    weak var audioOverlayDelegate: AudioOverlayDelegate?
 
     private var bookmarkButton: UIButton?
     
@@ -35,6 +36,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
         let headerView = HeaderView(width: 375, height: 200)
         headerView.setupHeader(model: model)
         headerView.delegate = self
+        headerView.audioOverlayDelegate = self.audioOverlayDelegate
 
         let webView = WKWebView()
         webView.navigationDelegate = self

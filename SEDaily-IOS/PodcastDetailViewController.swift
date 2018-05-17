@@ -73,6 +73,18 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
         }
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.audioOverlayDelegate?.setCurrentShowingDetailView(
+            podcastViewModel: self.model)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.audioOverlayDelegate?.setCurrentShowingDetailView(
+            podcastViewModel: nil)
+    }
+
     @objc private func bookmarkButtonPressed() {
         guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)

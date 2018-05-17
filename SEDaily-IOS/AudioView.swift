@@ -450,6 +450,14 @@ class AudioView: UIView {
         self.playbackSlider.isHidden = false
         self.bufferBackgroundSlider.isHidden = false
     }
+
+    func showExpandCollapseButton() {
+        self.expandCollapseButton.isHidden = false
+    }
+
+    func hideExpandCollapseButton() {
+        self.expandCollapseButton.isHidden = true
+    }
 }
 
 extension AudioView {

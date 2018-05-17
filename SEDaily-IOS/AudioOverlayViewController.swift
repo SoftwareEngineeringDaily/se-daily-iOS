@@ -18,6 +18,7 @@ protocol AudioOverlayDelegate: class {
     func animateOverlayIn()
     func animateOverlayOut()
     func playAudio(podcastViewModel: PodcastViewModel)
+    func setCurrentShowingDetailView(podcastViewModel: PodcastViewModel?)
 }
 
 class AudioOverlayViewController: UIViewController {
@@ -112,8 +113,8 @@ class AudioOverlayViewController: UIViewController {
         self.podcastViewModel = podcastViewModel
         Tracker.logPlayPodcast(podcast: podcastViewModel)
 
+        self.audioView?.hideExpandCollapseButton()
         self.setText(text: podcastViewModel.podcastTitle)
-
         self.saveProgress()
         self.loadAudio(podcastViewModel: podcastViewModel)
         self.createPodcastDetailViewController(podcastViewModel: podcastViewModel)
@@ -349,5 +350,15 @@ extension AudioOverlayViewController: AudioViewDelegate {
     func audioRateChanged(newRate: Float) {
         assetPlaybackManager?.changePlayerPlaybackRate(to: newRate)
         UserDefaults.standard.set(newRate, forKey: AudioOverlayViewController.userSettingPlaybackSpeedKey)
+    }
+
+    func setCurrentShowingDetailView(podcastViewModel: PodcastViewModel?) {
+        self.audioView?.showExpandCollapseButton()
+        if let podcastViewModel = podcastViewModel,
+            let currentPlayingPodcastViewModel = self.podcastViewModel {
+            if currentPlayingPodcastViewModel._id == podcastViewModel._id {
+                self.audioView?.hideExpandCollapseButton()
+            }
+        }
     }
 }

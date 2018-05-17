@@ -9,8 +9,7 @@
 import UIKit
 
 class RelatedLinkTableViewCell: UITableViewCell {
-    @IBOutlet weak var urlLabel: UILabel!
-    
+
     @IBOutlet weak var titleLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,7 +20,6 @@ class RelatedLinkTableViewCell: UITableViewCell {
         didSet {
             if let relatedLink = relatedLink {
                 titleLabel.text = relatedLink.title
-                urlLabel.text = relatedLink.url
             }
         }
     }
@@ -31,5 +29,5 @@ class RelatedLinkTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    
 }

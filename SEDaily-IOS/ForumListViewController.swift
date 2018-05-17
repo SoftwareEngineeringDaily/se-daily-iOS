@@ -31,6 +31,9 @@ class ForumListViewController: UIViewController {
             tableView.addSubview(refreshControl)
         }
         refreshControl.addTarget(self, action: #selector(refreshForumData(_:)), for: .valueChanged)
+        
+        tableView.estimatedRowHeight = 200
+        tableView.rowHeight = UITableViewAutomaticDimension
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -103,12 +106,14 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
             cell?.thread = thread
             return cell!
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "relatedLinkFeedItemCell", for: indexPath) as? RelatedLinkTableViewCell
-            if let feedItem = self.threads[indexPath.row] as? FeedItem {
-                cell?.relatedLink = feedItem.relatedLink
-            }            
-            return cell!
+            
+            let cell = Bundle.main.loadNibNamed("RelatedLinkTableViewCell", owner: self, options: nil)?.first as? RelatedLinkTableViewCell
+                if let feedItem = self.threads[indexPath.row] as? FeedItem {
+                    cell?.relatedLink = feedItem.relatedLink
+                }
+                return cell!
         }
+        
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -152,5 +157,20 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
 //        let thread = threads[indexPath.row]
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        if let thread = self.threads[indexPath.row] as? ForumThread {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "threadCell")
+            return (cell?.bounds.size.height)!
+            
+        } else {
+            
+            let cell = Bundle.main.loadNibNamed("RelatedLinkTableViewCell", owner: self, options: nil)?.first as? RelatedLinkTableViewCell
+            if let feedItem = self.threads[indexPath.row] as? FeedItem {
+                cell?.relatedLink = feedItem.relatedLink
+            }
+            return cell!.bounds.size.height
+        }            
     }
 }

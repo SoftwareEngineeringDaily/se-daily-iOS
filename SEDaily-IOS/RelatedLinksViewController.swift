@@ -90,4 +90,5 @@ extension RelatedLinksViewController: UITableViewDataSource, UITableViewDelegate
             print("link null")
         }
     }
+    
 }

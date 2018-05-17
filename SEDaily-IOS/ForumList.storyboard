@@ -125,22 +125,41 @@
                                             <outlet property="upVoteButton" destination="UtZ-WC-X22" id="asI-cV-7c7"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="3n4-3S-GST" style="IBUITableViewCellStyleDefault" id="EjU-eI-IhY">
-                                        <rect key="frame" x="0.0" y="146" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="relatedLinkFeedItemCell" rowHeight="126" id="EjU-eI-IhY" customClass="RelatedLinkTableViewCell" customModule="SEDaily_IOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="146" width="375" height="126"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EjU-eI-IhY" id="51M-IC-2ZO">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="125.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3n4-3S-GST">
-                                                    <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CR1-d7-ztg">
+                                                    <rect key="frame" x="39" y="43" width="272" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C3b-pE-k2j">
+                                                    <rect key="frame" x="39" y="78" width="272" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="C3b-pE-k2j" secondAttribute="bottom" constant="16" id="2T5-nY-eAZ"/>
+                                                <constraint firstItem="CR1-d7-ztg" firstAttribute="leading" secondItem="51M-IC-2ZO" secondAttribute="leadingMargin" constant="24" id="4b2-cc-VbM"/>
+                                                <constraint firstItem="CR1-d7-ztg" firstAttribute="top" secondItem="51M-IC-2ZO" secondAttribute="topMargin" constant="32" id="Anj-xH-9G1"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="CR1-d7-ztg" secondAttribute="trailing" constant="49" id="BU1-8D-eTl"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="C3b-pE-k2j" secondAttribute="trailing" constant="10" id="Jur-9B-if7"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="CR1-d7-ztg" secondAttribute="bottom" constant="51" id="Sh5-82-9sX"/>
+                                                <constraint firstItem="C3b-pE-k2j" firstAttribute="top" secondItem="CR1-d7-ztg" secondAttribute="bottom" constant="14" id="aln-dh-iE5"/>
+                                                <constraint firstItem="C3b-pE-k2j" firstAttribute="leading" secondItem="51M-IC-2ZO" secondAttribute="leadingMargin" constant="24" id="hdL-Ca-KqJ"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="CR1-d7-ztg" id="YIW-k7-GRK"/>
+                                            <outlet property="urlLabel" destination="C3b-pE-k2j" id="6nE-lp-nRD"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

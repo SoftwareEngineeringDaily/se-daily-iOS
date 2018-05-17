@@ -16,6 +16,8 @@ protocol HeaderViewDelegate: class {
 }
 
 class HeaderView: UIView {
+    var iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 34)
+   
     weak var delegate: HeaderViewDelegate?
     
     var podcastViewModel = PodcastViewModel()
@@ -45,6 +47,22 @@ class HeaderView: UIView {
         super.init(frame: frame)
 
         self.performLayout()
+        
+        if UIDevice().userInterfaceIdiom == .phone {
+            switch UIScreen.main.nativeBounds.height {
+//            case 1136:
+//                print("iPhone 5 or 5S or 5C")
+//            case 1334:
+//                print("iPhone 6/6S/7/8")
+//            case 1920, 2208:
+//                print("iPhone 6+/6S+/7+/8+")
+            case 2436: // iphone X
+//                print("iPhone X-----------")
+                iconSize *= 0.5
+            default:
+                print("unknown")
+            }
+        }
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented"); }
@@ -166,9 +184,7 @@ class HeaderView: UIView {
         scoreLabel.textAlignment = .center
         scoreLabel.baselineAdjustment = .alignCenters
         scoreLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 24))
-
-        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 34)
-
+        
         downVoteButton.setIcon(icon: .fontAwesome(.thumbsODown), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
         downVoteButton.setIcon(icon: .fontAwesome(.thumbsDown), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
         downVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
@@ -372,7 +388,6 @@ extension HeaderView {
     }
 
     private func setupDownloadButton() {
-        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 35)
 
         self.downloadButton.addTarget(self, action: #selector(self.downloadButtonPressed), for: .touchUpInside)
         self.downloadButton.setIcon(
@@ -397,7 +412,6 @@ extension HeaderView {
     }
     
     private func setupCommentsButton() {
-        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 34)
         commentsButton.setIcon(icon: .fontAwesome(.commentO), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
         commentsButton.addTarget(self, action: #selector(self.commentsButtonPressed), for: .touchUpInside)
         

@@ -107,7 +107,7 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
             return cell!
         } else {
             
-            let cell = Bundle.main.loadNibNamed("RelatedLinkTableViewCell", owner: self, options: nil)?.first as? RelatedLinkTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "relatedLinkCell", for: indexPath) as? RelatedLinkTableViewCell
                 if let feedItem = self.threads[indexPath.row] as? FeedItem {
                     cell?.relatedLink = feedItem.relatedLink
                 }
@@ -153,24 +153,9 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 print("link null")
             }
-            
         }
         
 //        let thread = threads[indexPath.row]
     }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        if let thread = self.threads[indexPath.row] as? ForumThread {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "threadCell")
-            return (cell?.bounds.size.height)!
-            
-        } else {
-            
-            let cell = Bundle.main.loadNibNamed("RelatedLinkTableViewCell", owner: self, options: nil)?.first as? RelatedLinkTableViewCell
-            if let feedItem = self.threads[indexPath.row] as? FeedItem {
-                cell?.relatedLink = feedItem.relatedLink
-            }
-            return cell!.bounds.size.height
-        }            
-    }
+  
 }

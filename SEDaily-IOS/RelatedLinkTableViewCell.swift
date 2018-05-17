@@ -1,5 +1,5 @@
 //
-//  RelatedLinkTableViewCell.swift
+//  RelaedLinkTableViewCell.swift
 //  SEDaily-IOS
 //
 //  Created by jason on 5/17/18.
@@ -15,7 +15,7 @@ class RelatedLinkTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-    
+
     var relatedLink: RelatedLink? {
         didSet {
             if let relatedLink = relatedLink {
@@ -23,11 +23,10 @@ class RelatedLinkTableViewCell: UITableViewCell {
             }
         }
     }
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
-    
+
 }

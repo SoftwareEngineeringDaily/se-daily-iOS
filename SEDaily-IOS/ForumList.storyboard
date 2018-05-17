@@ -125,6 +125,34 @@
                                             <outlet property="upVoteButton" destination="UtZ-WC-X22" id="asI-cV-7c7"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="relatedLinkCell" rowHeight="117" id="xMo-aY-z9k" customClass="RelatedLinkTableViewCell" customModule="SEDaily_IOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="146" width="375" height="117"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xMo-aY-z9k" id="4iP-ez-He7">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="116.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xft-eE-Irc">
+                                                    <rect key="frame" x="34" y="37" width="42" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="z0e-gk-WCm"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Xft-eE-Irc" firstAttribute="top" secondItem="4iP-ez-He7" secondAttribute="topMargin" constant="26" id="DJL-QZ-aer"/>
+                                                <constraint firstItem="Xft-eE-Irc" firstAttribute="leading" secondItem="4iP-ez-He7" secondAttribute="leadingMargin" constant="19" id="FwE-a5-Az9"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Xft-eE-Irc" secondAttribute="bottom" constant="48" id="HDd-7H-qR5"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Xft-eE-Irc" secondAttribute="trailing" constant="284" id="Zeh-do-nOz"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="Xft-eE-Irc" id="TlX-Gb-4K9"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>

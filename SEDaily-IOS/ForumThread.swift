@@ -11,21 +11,15 @@ import SwiftMoment
 
 public struct ForumThread: BaseFeedItem {
     var _id: String
-    
-    
-    
     let title: String
-
     let content: String
     let author: Author
-    
     let commentsCount: Int
     let dateCreated: String
     let dateLastAcitiy: String // An annoying bug that will require database migrations + miner update
     var score: Int = 0
     let deleted: Bool
     var downvoted: Bool?
-
     var upvoted: Bool?
     let podcastEpisode: PodcastLite?
 }

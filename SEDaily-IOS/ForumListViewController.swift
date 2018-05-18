@@ -128,15 +128,19 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
-        let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
-        guard let commentsViewController = commentsStoryboard.instantiateViewController(
-            withIdentifier: "CommentsViewController") as? CommentsViewController else {
-                return
-        }
+        
         if let thread = self.threads[indexPath.row] as? ForumThread {
+            let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
+            guard let commentsViewController = commentsStoryboard.instantiateViewController(
+                withIdentifier: "CommentsViewController") as? CommentsViewController else {
+                    return
+            }
             commentsViewController.rootEntityId = thread._id
             commentsViewController.thread = thread
+            
             self.navigationController?.pushViewController(commentsViewController, animated: true)
+            
+            
 
         } else if let feedItem = self.threads[indexPath.row] as? FeedItem {
             print("url \(feedItem.relatedLink.url)")

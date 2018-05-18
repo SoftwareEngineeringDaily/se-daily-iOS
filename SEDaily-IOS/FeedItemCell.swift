@@ -38,7 +38,6 @@ class FeedItemCell: UITableViewCell {
     
     var thread: ForumThread? {
         didSet {
-    
             if let thread = thread {
                 _feedItem = thread
                 relatedLinkFeedItem = nil
@@ -78,7 +77,7 @@ class FeedItemCell: UITableViewCell {
                 dateLabel.text = ""
                 if let title = relatedLinkFeedItem.relatedLink.post?.rendered {
                     subtitleLabel.text = "Episode: \(title)"
-                }            
+                }
                 
                 scoreLabel.text = "\(relatedLinkFeedItem.relatedLink.score)"
                 if let upvoted = relatedLinkFeedItem.relatedLink.upvoted {

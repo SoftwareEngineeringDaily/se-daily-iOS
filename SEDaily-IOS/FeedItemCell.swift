@@ -57,7 +57,9 @@ class FeedItemCell: UITableViewCell {
                 } else {
                     upVoteButton.isSelected = false
                 }
-                
+                subtitleHeightLessThan.constant = 0
+                subtitleHeightGreaterThan.constant = 0
+                layoutSubviews()
             }
         }
     }
@@ -74,6 +76,7 @@ class FeedItemCell: UITableViewCell {
                 byLabel.text = "added by"
                 commentsCountLabel.text = ""
                 dateLabel.text = ""
+                subtitleLabel.text = "For Podcast Episode." //relatedLinkFeedItem.relatedLink.post
                 
                 scoreLabel.text = "\(relatedLinkFeedItem.relatedLink.score)"
                 if let upvoted = relatedLinkFeedItem.relatedLink.upvoted {
@@ -82,6 +85,9 @@ class FeedItemCell: UITableViewCell {
                     upVoteButton.isSelected = false
                 }
 
+                subtitleHeightLessThan.constant = 100
+                subtitleHeightGreaterThan.constant = 17
+                layoutSubviews()
             }
         }
     }

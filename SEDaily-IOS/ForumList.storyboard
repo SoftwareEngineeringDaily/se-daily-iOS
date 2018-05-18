@@ -89,7 +89,7 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode: Vue.js Animations" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fFG-9T-nhE">
-                                                    <rect key="frame" x="60" y="63.5" width="174.5" height="17"/>
+                                                    <rect key="frame" x="60" y="61.5" width="174.5" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="Bul-9z-zlL"/>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="750" constant="100" id="X4t-k2-p5D"/>
@@ -112,10 +112,10 @@
                                             <constraints>
                                                 <constraint firstItem="Ygl-7Y-o1d" firstAttribute="leading" secondItem="Ebn-l9-Tnj" secondAttribute="trailing" constant="7" id="9Op-B5-0Yb"/>
                                                 <constraint firstItem="G6s-3k-ye8" firstAttribute="top" relation="greaterThanOrEqual" secondItem="i5X-uV-LCY" secondAttribute="bottom" constant="10" id="Bm3-IF-GBl"/>
-                                                <constraint firstItem="fFG-9T-nhE" firstAttribute="top" secondItem="ijZ-KK-sTA" secondAttribute="bottom" constant="12" id="CIt-Uw-zAX"/>
+                                                <constraint firstItem="fFG-9T-nhE" firstAttribute="top" secondItem="ijZ-KK-sTA" secondAttribute="bottom" constant="10" id="CIt-Uw-zAX"/>
                                                 <constraint firstItem="G6s-3k-ye8" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ijZ-KK-sTA" secondAttribute="bottom" constant="10" id="H3u-iN-8dT"/>
                                                 <constraint firstItem="Ygl-7Y-o1d" firstAttribute="leading" secondItem="Ebn-l9-Tnj" secondAttribute="trailing" constant="7" id="Igo-Iu-xFj"/>
-                                                <constraint firstItem="G6s-3k-ye8" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="fFG-9T-nhE" secondAttribute="bottom" constant="10" id="Is4-Nm-cbB"/>
+                                                <constraint firstItem="G6s-3k-ye8" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="fFG-9T-nhE" secondAttribute="bottom" constant="30" id="Is4-Nm-cbB"/>
                                                 <constraint firstItem="Ebn-l9-Tnj" firstAttribute="leading" secondItem="JtF-Gb-WSm" secondAttribute="trailing" constant="12" id="Jw8-Vo-Rkf"/>
                                                 <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Ygl-7Y-o1d" secondAttribute="trailing" constant="10" id="KnY-by-E2c"/>
                                                 <constraint firstItem="G6s-3k-ye8" firstAttribute="leading" secondItem="bNn-js-Svi" secondAttribute="leadingMargin" constant="10" id="LKt-cy-lSr"/>

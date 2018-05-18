@@ -37,9 +37,10 @@ class FeedItemCell: UITableViewCell {
     
     var thread: ForumThread? {
         didSet {
-            _feedItem = thread
-            relatedLinkFeedItem = nil
+    
             if let thread = thread {
+                _feedItem = thread
+                relatedLinkFeedItem = nil
                 subtitleLabel.text = ""
                 let author = thread.author
                 authorLabel.text = (author.name != nil) ? author.name : author.username
@@ -61,9 +62,11 @@ class FeedItemCell: UITableViewCell {
     
     var relatedLinkFeedItem: FeedItem? {
         didSet {
+            
             if let relatedLinkFeedItem = relatedLinkFeedItem {
                 _feedItem = relatedLinkFeedItem.relatedLink
                 thread = nil
+
                 titleLabel.text = relatedLinkFeedItem.relatedLink.title
                 subtitleLabel.text = ""
 
@@ -84,6 +87,8 @@ class FeedItemCell: UITableViewCell {
         if let  feedItem = _feedItem {
             let entityId = feedItem._id
             if thread != nil {
+                print("thread----------")
+
                 networkService.upvoteForum(entityId: entityId, completion: { (success, active) in
                     guard success != nil else { return }
                     if success == true {
@@ -92,6 +97,9 @@ class FeedItemCell: UITableViewCell {
                     }
                 })
             } else if relatedLinkFeedItem != nil {
+                print("relatedLinkFeedItem----------")
+                print(relatedLinkFeedItem?.relatedLink.upvoted)
+                print("---")
                 networkService.upvoteRelatedLink(entityId: entityId, completion: { (success, active) in
                     guard success != nil else { return }
                     if success == true {
@@ -104,7 +112,10 @@ class FeedItemCell: UITableViewCell {
     }
     
     func setUpvoteTo(_ bool: Bool) {
-        _feedItem?.upvoted = bool        
+        print("set upvote:")
+        print(_feedItem?.upvoted)
+        _feedItem?.upvoted = bool
+        print(_feedItem?.upvoted)
         self.upVoteButton.isSelected = bool
     }
     

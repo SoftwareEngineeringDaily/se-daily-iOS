@@ -69,6 +69,13 @@ class FeedItemCell: UITableViewCell {
 
                 titleLabel.text = relatedLinkFeedItem.relatedLink.title
                 subtitleLabel.text = ""
+                
+                scoreLabel.text = "\(relatedLinkFeedItem.relatedLink.score)"
+                if let upvoted = relatedLinkFeedItem.relatedLink.upvoted {
+                    upVoteButton.isSelected = upvoted
+                } else {
+                    upVoteButton.isSelected = false
+                }
 
             }
         }
@@ -83,6 +90,9 @@ class FeedItemCell: UITableViewCell {
         }
         
         // Immediately set UI to upvote
+        print("isSelected \(self.upVoteButton.isSelected)")
+        print("isSelected \(!self.upVoteButton.isSelected)")
+
         self.setUpvoteTo(!self.upVoteButton.isSelected)
         if let  feedItem = _feedItem {
             let entityId = feedItem._id
@@ -93,7 +103,10 @@ class FeedItemCell: UITableViewCell {
                     guard success != nil else { return }
                     if success == true {
                         guard let active = active else { return }
-                        self.addScore(active: active)
+                        print("active? \(active)")
+                        self.thread?.score = self.addScore(active: active)
+                        self.setUpvoteTo(active)
+
                     }
                 })
             } else if relatedLinkFeedItem != nil {
@@ -104,7 +117,10 @@ class FeedItemCell: UITableViewCell {
                     guard success != nil else { return }
                     if success == true {
                         guard let active = active else { return }
-                        self.addScore(active: active)
+                        print("active? \(active)")
+                        self.relatedLinkFeedItem?.relatedLink.score = self.addScore(active: active)
+                        self.setUpvoteTo(active)
+
                     }
                 })
             }
@@ -112,30 +128,33 @@ class FeedItemCell: UITableViewCell {
     }
     
     func setUpvoteTo(_ bool: Bool) {
-        print("set upvote:")
+        print("set upvote: \(bool)")
         print(_feedItem?.upvoted)
         _feedItem?.upvoted = bool
         print(_feedItem?.upvoted)
         self.upVoteButton.isSelected = bool
     }
     
-    func addScore(active: Bool) {
+    func addScore(active: Bool)  -> Int {
         self.setUpvoteTo(active)
         if let _feedItem = _feedItem {
             guard active != false else {
-                self.setScoreTo(_feedItem.score - 1)
-                return
+                return self.setScoreTo(_feedItem.score - 1)
+                
             }
-            self.setScoreTo(_feedItem.score + 1)
+            return self.setScoreTo(_feedItem.score + 1)
         }
+        return 0
     }
     
-    func setScoreTo(_ score: Int) {
+    func setScoreTo(_ score: Int) -> Int {
         if var _feedItem = _feedItem {
-            guard _feedItem.score != score else { return }
+            guard _feedItem.score != score else { return 0}
             _feedItem.score = score
             self.scoreLabel.text = String(score)
+            return score
         }
+        return 0
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

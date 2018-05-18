@@ -130,14 +130,30 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
         
         if let thread = self.threads[indexPath.row] as? ForumThread {
-            let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
-            guard let commentsViewController = commentsStoryboard.instantiateViewController(
-                withIdentifier: "CommentsViewController") as? CommentsViewController else {
-                    return
+            if let liteEpisodeModel = thread.podcastEpisode {
+                print("litemodle", liteEpisodeModel)
+                // TODO: refactor podcast model to not have to do this fetch....
+                
+                // TODO: add spinner
+                networkService.getPost(podcastId: liteEpisodeModel._id) { (succeeded, fullPodcast) in
+                    
+                    let vc = PodcastDetailViewController()
+                    // TODO: check for safety:
+                    vc.model =  PodcastViewModel(podcast: fullPodcast!)
+//                    vc.delegate = self
+//                    vc.audioOverlayDelegate = self.audioOverlayDelegate
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+            } else {
+                let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
+                guard let commentsViewController = commentsStoryboard.instantiateViewController(
+                    withIdentifier: "CommentsViewController") as? CommentsViewController else {
+                        return
+                }
+                commentsViewController.rootEntityId = thread._id
+                commentsViewController.thread = thread
+                self.navigationController?.pushViewController(commentsViewController, animated: true)
             }
-            commentsViewController.rootEntityId = thread._id
-            commentsViewController.thread = thread
-            self.navigationController?.pushViewController(commentsViewController, animated: true)
         } else if let feedItem = self.threads[indexPath.row] as? FeedItem {
             print("url \(feedItem.relatedLink.url)")
             // TODO: move to model
@@ -159,8 +175,6 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
                 print("link null")
             }
         }
-        
-//        let thread = threads[indexPath.row]
     }
   
 }

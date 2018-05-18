@@ -90,37 +90,28 @@ class FeedItemCell: UITableViewCell {
         }
         
         // Immediately set UI to upvote
-        print("isSelected \(self.upVoteButton.isSelected)")
-        print("isSelected \(!self.upVoteButton.isSelected)")
 
         self.setUpvoteTo(!self.upVoteButton.isSelected)
         if let  feedItem = _feedItem {
             let entityId = feedItem._id
             if thread != nil {
-                print("thread----------")
 
                 networkService.upvoteForum(entityId: entityId, completion: { (success, active) in
                     guard success != nil else { return }
                     if success == true {
                         guard let active = active else { return }
-                        print("active? \(active)")
                         self.thread?.score = self.addScore(active: active)
-                        self.setUpvoteTo(active)
-
+                        self.thread?.upvoted = active
                     }
                 })
             } else if relatedLinkFeedItem != nil {
-                print("relatedLinkFeedItem----------")
-                print(relatedLinkFeedItem?.relatedLink.upvoted)
-                print("---")
                 networkService.upvoteRelatedLink(entityId: entityId, completion: { (success, active) in
                     guard success != nil else { return }
                     if success == true {
                         guard let active = active else { return }
-                        print("active? \(active)")
                         self.relatedLinkFeedItem?.relatedLink.score = self.addScore(active: active)
-                        self.setUpvoteTo(active)
-
+                         self.relatedLinkFeedItem?.relatedLink.upvoted = active
+ 
                     }
                 })
             }
@@ -128,16 +119,15 @@ class FeedItemCell: UITableViewCell {
     }
     
     func setUpvoteTo(_ bool: Bool) {
-        print("set upvote: \(bool)")
-        print(_feedItem?.upvoted)
         _feedItem?.upvoted = bool
-        print(_feedItem?.upvoted)
         self.upVoteButton.isSelected = bool
     }
     
     func addScore(active: Bool)  -> Int {
         self.setUpvoteTo(active)
-        if let _feedItem = _feedItem {
+        
+        if var _feedItem = _feedItem {
+            _feedItem.upvoted = active
             guard active != false else {
                 return self.setScoreTo(_feedItem.score - 1)
                 

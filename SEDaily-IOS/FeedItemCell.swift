@@ -105,7 +105,7 @@ class FeedItemCell: UITableViewCell {
                     }
                 })
             } else if relatedLinkFeedItem != nil {
-                networkService.upvoteRelatedLink(entityId: entityId, completion: { (success, active) in
+                    networkService.upvoteRelatedLink(entityId: entityId, completion: { (success, active) in
                     guard success != nil else { return }
                     if success == true {
                         guard let active = active else { return }
@@ -123,14 +123,11 @@ class FeedItemCell: UITableViewCell {
         self.upVoteButton.isSelected = bool
     }
     
-    func addScore(active: Bool)  -> Int {
+    func addScore(active: Bool) -> Int {
         self.setUpvoteTo(active)
-        
         if var _feedItem = _feedItem {
-            _feedItem.upvoted = active
             guard active != false else {
                 return self.setScoreTo(_feedItem.score - 1)
-                
             }
             return self.setScoreTo(_feedItem.score + 1)
         }

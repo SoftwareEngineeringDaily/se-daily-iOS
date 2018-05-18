@@ -141,6 +141,9 @@
                                             <outlet property="commentsCountLabel" destination="Ygl-7Y-o1d" id="BuD-Cr-Hmt"/>
                                             <outlet property="dateLabel" destination="Ebn-l9-Tnj" id="vCg-TS-7Uy"/>
                                             <outlet property="scoreLabel" destination="i5X-uV-LCY" id="qo0-cC-Iv9"/>
+                                            <outlet property="subtitleHeightGreaterThan" destination="aWA-GK-jGg" id="Y4e-2E-Rz9"/>
+                                            <outlet property="subtitleHeightLessThan" destination="Bul-9z-zlL" id="aGj-t2-egZ"/>
+                                            <outlet property="subtitleLabel" destination="fFG-9T-nhE" id="u4P-vb-7aL"/>
                                             <outlet property="titleLabel" destination="ijZ-KK-sTA" id="iKZ-ol-xUz"/>
                                             <outlet property="upVoteButton" destination="UtZ-WC-X22" id="asI-cV-7c7"/>
                                         </connections>

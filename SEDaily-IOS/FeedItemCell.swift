@@ -16,6 +16,11 @@ class FeedItemCell: UITableViewCell {
     @IBOutlet weak var commentsCountLabel: UILabel!
     @IBOutlet weak var upVoteButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
+    
+    @IBOutlet weak var subtitleHeightLessThan: NSLayoutConstraint!
+    @IBOutlet weak var subtitleHeightGreaterThan: NSLayoutConstraint!
+    
     let networkService = API()
 
     override func awakeFromNib() {
@@ -32,9 +37,10 @@ class FeedItemCell: UITableViewCell {
     
     var thread: ForumThread? {
         didSet {
-            
+            feedItem = thread
+            relatedLinkFeedItem = nil
             if let thread = thread {
-                
+                subtitleLabel.text = ""
                 let author = thread.author
                 authorLabel.text = (author.name != nil) ? author.name : author.username
                 
@@ -52,7 +58,20 @@ class FeedItemCell: UITableViewCell {
             }
         }
     }
+    
+    var relatedLinkFeedItem: FeedItem? {
+        didSet {
+            if let relatedLinkFeedItem = relatedLinkFeedItem {
+                feedItem = relatedLinkFeedItem.relatedLink
+                thread = nil
+                titleLabel.text = relatedLinkFeedItem.relatedLink.title
+                subtitleLabel.text = ""
 
+            }
+        }
+    }
+    
+    var feedItem: Any?
     @IBAction func upvotePressed(_ sender: UIButton) {        
         guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)

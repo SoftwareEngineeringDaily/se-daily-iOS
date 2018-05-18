@@ -83,7 +83,6 @@
 		96BD1C88208E9497006C5E1D /* TestHookBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BD1C87208E9497006C5E1D /* TestHookBool.swift */; };
 		96C8A9AB2091038100489EE4 /* ForumListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C8A9AA2091038100489EE4 /* ForumListViewController.swift */; };
 		96C8A9AF209114C200489EE4 /* ForumList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96C8A9AE209114C200489EE4 /* ForumList.storyboard */; };
-		96DE1B5120AE2E4200414B34 /* RelatedLinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DE1B5020AE2E4200414B34 /* RelatedLinkTableViewCell.swift */; };
 		96F35745201BFB0200E8B6E9 /* RelatedLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F35744201BFB0200E8B6E9 /* RelatedLink.swift */; };
 		C0109D992013ECE0008BDA69 /* upvote_success.json in Resources */ = {isa = PBXBuildFile; fileRef = C0109D982013ECE0008BDA69 /* upvote_success.json */; };
 		C0109D9B2013F064008BDA69 /* upvote_failure.json in Resources */ = {isa = PBXBuildFile; fileRef = C0109D9A2013F064008BDA69 /* upvote_failure.json */; };
@@ -198,7 +197,6 @@
 		96BD1C87208E9497006C5E1D /* TestHookBool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHookBool.swift; sourceTree = "<group>"; };
 		96C8A9AA2091038100489EE4 /* ForumListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumListViewController.swift; sourceTree = "<group>"; };
 		96C8A9AE209114C200489EE4 /* ForumList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ForumList.storyboard; sourceTree = "<group>"; };
-		96DE1B5020AE2E4200414B34 /* RelatedLinkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedLinkTableViewCell.swift; sourceTree = "<group>"; };
 		96F35744201BFB0200E8B6E9 /* RelatedLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedLink.swift; sourceTree = "<group>"; };
 		995F64385352A79BA0DF7DEB /* Pods-SEDaily-IOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9FDA28C254F62BB468401B75 /* Pods-SEDaily-IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -523,7 +521,6 @@
 				963144DD208FEA8000EA13F1 /* ForumThread.swift */,
 				96C8A9AE209114C200489EE4 /* ForumList.storyboard */,
 				96C8A9AA2091038100489EE4 /* ForumListViewController.swift */,
-				96DE1B5020AE2E4200414B34 /* RelatedLinkTableViewCell.swift */,
 				964090BE2093B97D00CFF5C4 /* PodcastLite.swift */,
 				965798A42093FDE600104F8F /* FeedItemCell.swift */,
 				965E165720ABD74900F2E4E4 /* FeedItem.swift */,
@@ -953,7 +950,6 @@
 				1671BD5A200D3D7800E6ED3B /* SubscriptionStatusViewController.swift in Sources */,
 				96BD1C88208E9497006C5E1D /* TestHookBool.swift in Sources */,
 				96A7E2CF20951EBD002C92EC /* ThreadHeaderView.swift in Sources */,
-				96DE1B5120AE2E4200414B34 /* RelatedLinkTableViewCell.swift in Sources */,
 				16CE698F1F98029E0057BAC3 /* PodcastDetailViewController.swift in Sources */,
 				1E286DE31FE4C5BA00644C1D /* TestHookEventTableViewCell.swift in Sources */,
 				964090BF2093B97D00CFF5C4 /* PodcastLite.swift in Sources */,

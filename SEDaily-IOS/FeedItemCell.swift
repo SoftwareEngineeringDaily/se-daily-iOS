@@ -76,7 +76,7 @@ class FeedItemCell: UITableViewCell {
                 byLabel.text = "added by"
                 commentsCountLabel.text = ""
                 dateLabel.text = ""
-                subtitleLabel.text = "For Podcast Episode." //relatedLinkFeedItem.relatedLink.post
+                subtitleLabel.text = "Episode: \(relatedLinkFeedItem.relatedLink.post?.rendered)"
                 
                 scoreLabel.text = "\(relatedLinkFeedItem.relatedLink.score)"
                 if let upvoted = relatedLinkFeedItem.relatedLink.upvoted {

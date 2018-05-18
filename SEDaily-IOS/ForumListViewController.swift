@@ -137,11 +137,7 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
             }
             commentsViewController.rootEntityId = thread._id
             commentsViewController.thread = thread
-            
             self.navigationController?.pushViewController(commentsViewController, animated: true)
-            
-            
-
         } else if let feedItem = self.threads[indexPath.row] as? FeedItem {
             print("url \(feedItem.relatedLink.url)")
             // TODO: move to model

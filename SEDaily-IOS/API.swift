@@ -468,9 +468,6 @@ extension API {
         if lastActivityBeforeDate != "" {
             params[Params.lastActivityBefore] = lastActivityBeforeDate
         }
-
-        // Last activity is null / "" if first request
-        print("last activity \(lastActivityBeforeDate)")
         
         networkRequest(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
             switch response.result {
@@ -484,8 +481,8 @@ extension API {
                 
                 var data: [Any] = []
                 let this = JSON(responseData)
-                var lastThread:ForumThread?
-                for (blah, subJson):(String, JSON) in this {
+                var lastThread: ForumThread?
+                for (_, subJson):(String, JSON) in this {
                     guard let jsonData = try? subJson.rawData() else { continue }
                     let newObject = try? JSONDecoder().decode(ForumThreadModel.self, from: jsonData)
                     if let newObject = newObject {
@@ -493,8 +490,6 @@ extension API {
                         lastThread = newObject as ForumThread
                     } else {
                         if let feedItem = try? JSONDecoder().decode(FeedItem.self, from: jsonData) {
-                            print("-------------------")
-                            print(blah)
                             data.append(feedItem)
                         }
                                               

@@ -51,7 +51,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="Hdl-6A-Zqc"/>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="15" id="Lg3-zV-43d"/>
-                                                        <constraint firstAttribute="width" constant="15" id="NHM-Xu-zy1"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="15" id="NHM-Xu-zy1"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -138,6 +138,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="authorLabel" destination="JtF-Gb-WSm" id="saO-jd-YhC"/>
+                                            <outlet property="byLabel" destination="G6s-3k-ye8" id="wKG-jm-PAk"/>
                                             <outlet property="commentsCountLabel" destination="Ygl-7Y-o1d" id="BuD-Cr-Hmt"/>
                                             <outlet property="dateLabel" destination="Ebn-l9-Tnj" id="vCg-TS-7Uy"/>
                                             <outlet property="scoreLabel" destination="i5X-uV-LCY" id="qo0-cC-Iv9"/>

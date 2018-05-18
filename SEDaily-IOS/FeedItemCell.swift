@@ -17,6 +17,7 @@ class FeedItemCell: UITableViewCell {
     @IBOutlet weak var upVoteButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
+    @IBOutlet weak var byLabel: UILabel!
     
     @IBOutlet weak var subtitleHeightLessThan: NSLayoutConstraint!
     @IBOutlet weak var subtitleHeightGreaterThan: NSLayoutConstraint!
@@ -49,13 +50,14 @@ class FeedItemCell: UITableViewCell {
                 commentsCountLabel.text = thread.getCommentsSummary()
                 
                 dateLabel.text = thread.getDateLastActivityPretty()
-                
+                byLabel.text = "by"
                 scoreLabel.text = "\(thread.score)"
                 if let upvoted = thread.upvoted {
                     upVoteButton.isSelected = upvoted
                 } else {
                     upVoteButton.isSelected = false
                 }
+                
             }
         }
     }
@@ -69,6 +71,9 @@ class FeedItemCell: UITableViewCell {
 
                 titleLabel.text = relatedLinkFeedItem.relatedLink.title
                 subtitleLabel.text = ""
+                byLabel.text = "added by"
+                commentsCountLabel.text = ""
+                dateLabel.text = ""
                 
                 scoreLabel.text = "\(relatedLinkFeedItem.relatedLink.score)"
                 if let upvoted = relatedLinkFeedItem.relatedLink.upvoted {

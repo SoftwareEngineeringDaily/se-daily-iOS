@@ -106,11 +106,14 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
             cell?.thread = thread
             return cell!
         } else {
+
+            let cell = tableView.dequeueReusableCell(withIdentifier: "threadCell", for: indexPath) as? FeedItemCell
+
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: "relatedLinkCell", for: indexPath) as? RelatedLinkTableViewCell
-                if let feedItem = self.threads[indexPath.row] as? FeedItem {
-                    cell?.relatedLink = feedItem.relatedLink
-                }
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "relatedLinkCell", for: indexPath) as? RelatedLinkTableViewCell
+//                if let feedItem = self.threads[indexPath.row] as? FeedItem {
+//                    cell?.relatedLink = feedItem.relatedLink
+//                }
                 return cell!
         }
         

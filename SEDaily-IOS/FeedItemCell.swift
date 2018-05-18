@@ -37,7 +37,7 @@ class FeedItemCell: UITableViewCell {
     
     var thread: ForumThread? {
         didSet {
-            feedItem = thread
+            _feedItem = thread
             relatedLinkFeedItem = nil
             if let thread = thread {
                 subtitleLabel.text = ""
@@ -62,7 +62,7 @@ class FeedItemCell: UITableViewCell {
     var relatedLinkFeedItem: FeedItem? {
         didSet {
             if let relatedLinkFeedItem = relatedLinkFeedItem {
-                feedItem = relatedLinkFeedItem.relatedLink
+                _feedItem = relatedLinkFeedItem.relatedLink
                 thread = nil
                 titleLabel.text = relatedLinkFeedItem.relatedLink.title
                 subtitleLabel.text = ""
@@ -71,7 +71,8 @@ class FeedItemCell: UITableViewCell {
         }
     }
     
-    var feedItem: Any?
+    var _feedItem: BaseFeedItem?
+    
     @IBAction func upvotePressed(_ sender: UIButton) {        
         guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
@@ -80,39 +81,50 @@ class FeedItemCell: UITableViewCell {
         
         // Immediately set UI to upvote
         self.setUpvoteTo(!self.upVoteButton.isSelected)
-        if let thread = thread {
-            let entityId = thread._id
-            
-            networkService.upvoteForum(entityId: entityId, completion: { (success, active) in
-                guard success != nil else { return }
-                if success == true {
-                    guard let active = active else { return }
-                    self.addScore(active: active)
-                }
-            })
+        if let  feedItem = _feedItem {
+            let entityId = feedItem._id
+            if thread != nil {
+                networkService.upvoteForum(entityId: entityId, completion: { (success, active) in
+                    guard success != nil else { return }
+                    if success == true {
+                        guard let active = active else { return }
+                        self.addScore(active: active)
+                    }
+                })
+            } else if relatedLinkFeedItem != nil {
+                networkService.upvoteRelatedLink(entityId: entityId, completion: { (success, active) in
+                    guard success != nil else { return }
+                    if success == true {
+                        guard let active = active else { return }
+                        self.addScore(active: active)
+                    }
+                })
+            }
         }
     }
     
     func setUpvoteTo(_ bool: Bool) {
-        self.thread?.upvoted = bool
+        _feedItem?.upvoted = bool        
         self.upVoteButton.isSelected = bool
     }
     
     func addScore(active: Bool) {
         self.setUpvoteTo(active)
-        if let thread = thread {
+        if let _feedItem = _feedItem {
             guard active != false else {
-                self.setScoreTo(thread.score - 1)
+                self.setScoreTo(_feedItem.score - 1)
                 return
             }
-            self.setScoreTo(thread.score + 1)
+            self.setScoreTo(_feedItem.score + 1)
         }
     }
     
     func setScoreTo(_ score: Int) {
-        guard self.thread?.score != score else { return }
-        self.thread?.score = score
-        self.scoreLabel.text = String(score)
+        if var _feedItem = _feedItem {
+            guard _feedItem.score != score else { return }
+            _feedItem.score = score
+            self.scoreLabel.text = String(score)
+        }
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

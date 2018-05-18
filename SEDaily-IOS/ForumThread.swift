@@ -9,8 +9,10 @@
 import Foundation
 import SwiftMoment
 
-public struct ForumThread: Codable {
-    let _id: String
+public struct ForumThread: BaseFeedItem {
+    var _id: String
+    
+    
     
     let title: String
 
@@ -22,8 +24,8 @@ public struct ForumThread: Codable {
     let dateLastAcitiy: String // An annoying bug that will require database migrations + miner update
     var score: Int = 0
     let deleted: Bool
-    
-    let downvoted: Bool?
+    var downvoted: Bool?
+
     var upvoted: Bool?
     let podcastEpisode: PodcastLite?
 }

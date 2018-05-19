@@ -72,6 +72,8 @@
 		960BFEC9202539640073DAB2 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960BFEC8202539640073DAB2 /* CommentTableViewCell.swift */; };
 		9610313E20A353B400A2D2D5 /* AnalyticsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9610313D20A353B400A2D2D5 /* AnalyticsHelper.swift */; };
 		961A378D208FAFEF0050EF80 /* ForumThreadLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961A378C208FAFEF0050EF80 /* ForumThreadLite.swift */; };
+		962226AD20AFF4CE00CC2587 /* RelatedLInkWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962226AB20AFF4CE00CC2587 /* RelatedLInkWebVC.swift */; };
+		962226AE20AFF4CE00CC2587 /* RelatedLInkWebVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 962226AC20AFF4CE00CC2587 /* RelatedLInkWebVC.xib */; };
 		962F5365201E3C7900897A6E /* RelatedLinksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962F5364201E3C7900897A6E /* RelatedLinksViewController.swift */; };
 		963144DE208FEA8000EA13F1 /* ForumThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963144DD208FEA8000EA13F1 /* ForumThread.swift */; };
 		964090BF2093B97D00CFF5C4 /* PodcastLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964090BE2093B97D00CFF5C4 /* PodcastLite.swift */; };
@@ -187,6 +189,8 @@
 		960BFEC8202539640073DAB2 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		9610313D20A353B400A2D2D5 /* AnalyticsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsHelper.swift; sourceTree = "<group>"; };
 		961A378C208FAFEF0050EF80 /* ForumThreadLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumThreadLite.swift; sourceTree = "<group>"; };
+		962226AB20AFF4CE00CC2587 /* RelatedLInkWebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedLInkWebVC.swift; sourceTree = "<group>"; };
+		962226AC20AFF4CE00CC2587 /* RelatedLInkWebVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RelatedLInkWebVC.xib; sourceTree = "<group>"; };
 		962F5364201E3C7900897A6E /* RelatedLinksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedLinksViewController.swift; sourceTree = "<group>"; };
 		963144DD208FEA8000EA13F1 /* ForumThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumThread.swift; sourceTree = "<group>"; };
 		964090BE2093B97D00CFF5C4 /* PodcastLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastLite.swift; sourceTree = "<group>"; };
@@ -527,6 +531,8 @@
 				965798A42093FDE600104F8F /* FeedItemCell.swift */,
 				965E165720ABD74900F2E4E4 /* FeedItem.swift */,
 				9662FC0920AF21FA00CFA8DF /* BaseFeedItem.swift */,
+				962226AB20AFF4CE00CC2587 /* RelatedLInkWebVC.swift */,
+				962226AC20AFF4CE00CC2587 /* RelatedLInkWebVC.xib */,
 			);
 			name = Forum;
 			sourceTree = "<group>";
@@ -717,6 +723,7 @@
 				1EABD8F41FB430AB00959859 /* Debug.storyboard in Resources */,
 				1E44AF031F87B08D00221B22 /* Localizable.strings in Resources */,
 				960BFEC120226F1D0073DAB2 /* Comments.storyboard in Resources */,
+				962226AE20AFF4CE00CC2587 /* RelatedLInkWebVC.xib in Resources */,
 				1686FC081F009EC00088A6C1 /* Assets.xcassets in Resources */,
 				1686FC061F009EC00088A6C1 /* Main.storyboard in Resources */,
 			);
@@ -977,6 +984,7 @@
 				01BB1D6D1F29999E004A912E /* PodcastPageViewController.swift in Sources */,
 				162FFD401FBE200E0026288D /* DiskKeys.swift in Sources */,
 				16307FCC1F8FEE3A001783CB /* PodcastViewModelController.swift in Sources */,
+				962226AD20AFF4CE00CC2587 /* RelatedLInkWebVC.swift in Sources */,
 				16AD3E0E1F9B14130084C545 /* PodcastDataSource.swift in Sources */,
 				01707421207192C0002E6E3C /* NotificationsTableViewController.swift in Sources */,
 				164FE9ED1F02F7E2009419CA /* UIButtonExtension.swift in Sources */,

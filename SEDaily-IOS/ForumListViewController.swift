@@ -192,7 +192,11 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
             
             // Open the link:
             if let linkUrl = URL(string: urlString) {
-                UIApplication.shared.open(linkUrl, options: [:], completionHandler: nil)
+                let vc = RelatedLInkWebVC()
+                vc.url = linkUrl
+                self.navigationController?.pushViewController(vc, animated: true)
+
+//                UIApplication.shared.open(linkUrl, options: [:], completionHandler: nil)
             } else {
                 print("link null")
             }

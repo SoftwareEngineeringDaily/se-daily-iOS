@@ -15,7 +15,8 @@ class ForumListViewController: UIViewController {
     var threads: [Any] = []
     var lastThread:ForumThread?
     private let refreshControl = UIRefreshControl()
-
+		
+    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -35,6 +36,29 @@ class ForumListViewController: UIViewController {
         tableView.estimatedRowHeight = 200
         tableView.rowHeight = UITableViewAutomaticDimension
     }
+    
+    func displaySpinner(onView : UIView) -> UIView {
+        let spinnerView = UIView.init(frame: onView.bounds)
+        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        let ai = UIActivityIndicatorView.init(activityIndicatorStyle: .whiteLarge)
+        ai.startAnimating()
+        ai.center = spinnerView.center
+        
+        DispatchQueue.main.async {
+            spinnerView.addSubview(ai)
+            onView.addSubview(spinnerView)
+        }
+        
+        return spinnerView
+    }
+    
+    func removeSpinner(spinner :UIView) {
+        DispatchQueue.main.async {
+            spinner.removeFromSuperview()
+        }
+    }
+    
+    
 
     override func viewDidAppear(_ animated: Bool) {
         loadThreads()
@@ -131,12 +155,10 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
         
         if let thread = self.threads[indexPath.row] as? ForumThread {
             if let liteEpisodeModel = thread.podcastEpisode {
-                print("litemodle", liteEpisodeModel)
-                // TODO: refactor podcast model to not have to do this fetch....
                 
-                // TODO: add spinner
+                let spinner = self.displaySpinner(onView: self.view)
                 networkService.getPost(podcastId: liteEpisodeModel._id) { (succeeded, fullPodcast) in
-                    
+                    self.removeSpinner(spinner: spinner)
                     let vc = PodcastDetailViewController()
                     // TODO: check for safety:
                     vc.model =  PodcastViewModel(podcast: fullPodcast!)

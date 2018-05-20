@@ -9,20 +9,27 @@
 import UIKit
 import WebKit
 
-class RelatedLInkWebVC: UIViewController, WKUIDelegate {
+class RelatedLInkWebVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
     var webView: WKWebView!
 
     override func loadView() {
         super.loadView()
+        print("Start loading")
         let webConfiguration = WKWebViewConfiguration()
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.uiDelegate = self
         view = webView
+        webView.navigationDelegate = self
+        print("loading")
     }
     var url:URL? {
         didSet {
             
         }
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        print("Done loading")
     }
     
     override func viewDidLoad() {

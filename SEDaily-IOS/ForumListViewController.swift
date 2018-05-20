@@ -58,8 +58,6 @@ class ForumListViewController: UIViewController {
         }
     }
     
-    
-
     override func viewDidAppear(_ animated: Bool) {
         loadThreads()
         Analytics2.forumViewed()

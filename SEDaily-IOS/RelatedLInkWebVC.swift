@@ -11,16 +11,17 @@ import WebKit
 
 class RelatedLInkWebVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
     var webView: WKWebView!
+    var currentSpinner: UIView?
 
     override func loadView() {
         super.loadView()
-        print("Start loading")
         let webConfiguration = WKWebViewConfiguration()
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.uiDelegate = self
         view = webView
         webView.navigationDelegate = self
         print("loading")
+        currentSpinner = self.displaySpinner(onView: self.view)
     }
     var url:URL? {
         didSet {
@@ -28,8 +29,31 @@ class RelatedLInkWebVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
         }
     }
     
+    func displaySpinner(onView : UIView) -> UIView {
+        let spinnerView = UIView.init(frame: onView.bounds)
+        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        let ai = UIActivityIndicatorView.init(activityIndicatorStyle: .whiteLarge)
+        ai.startAnimating()
+        ai.center = spinnerView.center
+        
+        DispatchQueue.main.async {
+            spinnerView.addSubview(ai)
+            onView.addSubview(spinnerView)
+        }
+        
+        return spinnerView
+    }
+    
+    func removeSpinner(spinner :UIView) {
+        DispatchQueue.main.async {
+            spinner.removeFromSuperview()
+        }
+    }
+    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        print("Done loading")
+        if let currentSpinner = currentSpinner {
+            removeSpinner(spinner: currentSpinner)
+        }
     }
     
     override func viewDidLoad() {

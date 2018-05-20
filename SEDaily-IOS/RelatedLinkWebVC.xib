@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RelatedLInkWebVC" customModule="SEDaily_IOS" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RelatedLinkWebVC" customModule="SEDaily_IOS" customModuleProvider="target">
             <connections>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -19,8 +19,21 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aw3-l6-fOF">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" red="0.40000000000000002" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="aw3-l6-fOF" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="9FG-xd-MoN"/>
+                <constraint firstItem="aw3-l6-fOF" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="K2Z-hr-may"/>
+                <constraint firstItem="aw3-l6-fOF" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="M7d-NX-8YH"/>
+                <constraint firstItem="aw3-l6-fOF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="uqW-XG-pFH"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="33.5" y="53.5"/>
         </view>
     </objects>
 </document>

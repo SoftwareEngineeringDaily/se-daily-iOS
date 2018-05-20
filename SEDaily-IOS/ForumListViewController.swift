@@ -15,7 +15,8 @@ class ForumListViewController: UIViewController {
     var threads: [Any] = []
     var lastThread:ForumThread?
     private let refreshControl = UIRefreshControl()
-		
+    let relatedLinksVC = RelatedLinkWebVC()
+
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -190,11 +191,10 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
             
             // Open the link:
             if let linkUrl = URL(string: urlString) {
-                let vc = RelatedLInkWebVC()
+                let vc = relatedLinksVC
                 vc.url = linkUrl
                 self.navigationController?.pushViewController(vc, animated: true)
 
-//                UIApplication.shared.open(linkUrl, options: [:], completionHandler: nil)
             } else {
                 print("link null")
             }

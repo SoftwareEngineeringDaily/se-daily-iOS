@@ -16,7 +16,7 @@ protocol HeaderViewDelegate: class {
 }
 
 class HeaderView: UIView {
-    var iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 34)
+    var iconSize = UIView.getValueScaledByScreenWidthFor(baseValue: 34)
 
     weak var delegate: HeaderViewDelegate?
 
@@ -45,24 +45,7 @@ class HeaderView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
         self.performLayout()
-
-        if UIDevice().userInterfaceIdiom == .phone {
-            switch UIScreen.main.nativeBounds.height {
-//            case 1136:
-//                print("iPhone 5 or 5S or 5C")
-//            case 1334:
-//                print("iPhone 6/6S/7/8")
-//            case 1920, 2208:
-//                print("iPhone 6+/6S+/7+/8+")
-            case 2436: // iphone X
-//                print("iPhone X-----------")
-                iconSize *= 0.5
-            default:
-                print("unknown")
-            }
-        }
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented"); }

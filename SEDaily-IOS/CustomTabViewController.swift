@@ -105,9 +105,9 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     func setupTabs() {
         let layout = UICollectionViewLayout()
         
-        let storyboard = UIStoryboard.init(name: "ForumList", bundle: nil)
+        let storyboard = UIStoryboard.init(name: "FeedList", bundle: nil)
         guard let ForumViewController = storyboard.instantiateViewController(
-            withIdentifier: "ForumListViewController") as? ForumListViewController else {
+            withIdentifier: "FeedListViewController") as? FeedListViewController else {
                 return
         }
         

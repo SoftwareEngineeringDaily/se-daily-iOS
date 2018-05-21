@@ -11,10 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Forum List View Controller-->
+        <!--Feed List View Controller-->
         <scene sceneID="SZB-Fn-JrZ">
             <objects>
-                <viewController storyboardIdentifier="ForumListViewController" id="Nd9-xI-JV2" customClass="ForumListViewController" customModule="SEDaily_IOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FeedListViewController" id="Nd9-xI-JV2" customClass="FeedListViewController" customModule="SEDaily_IOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kBV-r6-1zm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

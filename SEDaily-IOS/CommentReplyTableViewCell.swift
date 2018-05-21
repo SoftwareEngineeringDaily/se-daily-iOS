@@ -19,11 +19,8 @@ class CommentReplyTableViewCell: UITableViewCell {
             contentLabel.attributedText = comment?.commentBody()
             let prettyDate = comment?.getDatedCreatedPretty()
             dateLabel.text = prettyDate
-            if let username = comment?.author.username {
-                usernameLabel.text = username
-            } else {
-                usernameLabel.text = L10n.anonymous
-            }
+            usernameLabel.text = comment?.author.displayName()
+            
             if let imageString = comment?.author.avatarUrl {
                 let url = URL(string: imageString)
                 avatarImage.kf.setImage(with: url)

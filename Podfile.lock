@@ -53,8 +53,8 @@ PODS:
   - SwifterSwift/UIKit (4.0.1)
   - SwiftGen (5.2.1)
   - SwiftIcons (1.5.1)
-  - SwiftMoment (0.7)
   - SwiftLint (0.25.1)
+  - SwiftMoment (0.7)
   - SwiftSoup (1.5.8)
   - SwiftyBeaver (1.4.4)
   - SwiftyJSON (3.1.4)
@@ -101,43 +101,6 @@ DEPENDENCIES:
   - Tabman (~> 1.0.5)
   - UIFontComplete (~> 2.0.1)
   - WaitForIt (~> 2.0.0)
-
-SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
-    - Alamofire
-    - Crashlytics
-    - Disk
-    - Down
-    - Eureka
-    - Fabric
-    - IQKeyboardManagerSwift
-    - Kingfisher
-    - KoalaTeaFlowLayout
-    - KoalaTeaPlayer
-    - KTResponsiveUI
-    - MBProgressHUD
-    - Mockingjay
-    - Nimble
-    - Pageboy
-    - PopupDialog
-    - PureLayout
-    - Quick
-    - Reusable
-    - SideMenu
-    - Skeleton
-    - SnapKit
-    - StatefulViewController
-    - SwifterSwift
-    - SwiftGen
-    - SwiftLint
-    - SwiftMoment
-    - SwiftSoup
-    - SwiftyBeaver
-    - SwiftyJSON
-    - Tabman
-    - UIFontComplete
-    - URITemplate
-    - WaitForIt
 
 EXTERNAL SOURCES:
   ActiveLabel:
@@ -192,6 +155,6 @@ SPEC CHECKSUMS:
   URITemplate: ace0c4c46dcf8afe6e89b4060621852886b15c3b
   WaitForIt: 2c7ad6deaffe3bf727b7242a2263167bf2ce3e57
 
-PODFILE CHECKSUM: ede6a3047980c2d8b8730c1b9bb5340f802d7f7e
+PODFILE CHECKSUM: e097c0fc2b61b8ccb8ff6b9f0b0eb03198990d87
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.3.1

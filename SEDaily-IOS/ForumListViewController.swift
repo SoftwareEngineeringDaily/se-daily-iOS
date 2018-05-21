@@ -150,30 +150,41 @@ extension ForumListViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func presentThreadComments(_ thread: ForumThread) {
+        let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
+        guard let commentsViewController = commentsStoryboard.instantiateViewController(
+            withIdentifier: "CommentsViewController") as? CommentsViewController else {
+                return
+        }
+        commentsViewController.rootEntityId = thread._id
+        commentsViewController.thread = thread
+        self.navigationController?.pushViewController(commentsViewController, animated: true)
+        
+    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
         
         if let thread = self.threads[indexPath.row] as? ForumThread {
             if let liteEpisodeModel = thread.podcastEpisode {
-                
+                print("---episode id:")
+                print(liteEpisodeModel._id)
                 let spinner = self.displaySpinner(onView: self.view)
                 networkService.getPost(podcastId: liteEpisodeModel._id) { (succeeded, fullPodcast) in
                     self.removeSpinner(spinner: spinner)
-                    let vc = PodcastDetailViewController()
-                    // TODO: check for safety:
-                    vc.model =  PodcastViewModel(podcast: fullPodcast!)
-//                    vc.delegate = self
-//                    vc.audioOverlayDelegate = self.audioOverlayDelegate
-                    self.navigationController?.pushViewController(vc, animated: true)
+
+                    if succeeded && fullPodcast != nil {
+                        let vc = PodcastDetailViewController()
+                        // TODO: check for safety:
+                        vc.model =  PodcastViewModel(podcast: fullPodcast!)
+                        //                    vc.delegate = self
+                        //                    vc.audioOverlayDelegate = self.audioOverlayDelegate
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    } else {
+                        self.presentThreadComments(thread)
+                    }
+                    
                 }
             } else {
-                let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
-                guard let commentsViewController = commentsStoryboard.instantiateViewController(
-                    withIdentifier: "CommentsViewController") as? CommentsViewController else {
-                        return
-                }
-                commentsViewController.rootEntityId = thread._id
-                commentsViewController.thread = thread
-                self.navigationController?.pushViewController(commentsViewController, animated: true)
+               presentThreadComments(thread)
             }
         } else if let feedItem = self.threads[indexPath.row] as? FeedItem {
             print("url \(feedItem.relatedLink.url)")

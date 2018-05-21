@@ -57,6 +57,7 @@ enum PodcastCategoryIds: Int {
 
 public struct Podcast: Codable {
     let _id: String
+    let thread: ForumThreadLite?
     let date: String
     let link: String
     let categories: [Int]?
@@ -103,7 +104,7 @@ extension Podcast {
         self.content = Content(rendered: viewModel.encodedPodcastDescription)
         self.title = Title(rendered: viewModel.encodedPodcastTitle)
         self.score = viewModel.score
-        
+        self.thread = viewModel.thread
         self.upvoted = viewModel.isUpvoted
         self.downvoted = viewModel.isDownvoted
         self.bookmarked = viewModel.isBookmarked

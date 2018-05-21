@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   SEDaily-IOS
 
@@ -63,10 +63,17 @@
 "GenericNo" = "No";
 "NoWithGratitude" = "No thanks";
 "Play" = "Play";
+"RelatedLinks" = "Related Links";
 "NoBookmarks" = "No Bookmarks";
 "LoginSeeBookmarks" = "Login to see your bookmarks";
 "TapToRefresh" = "Tap to refresh";
+"Comments" = "Comments";
+"ThereWasAProblem" = "There was a problem :(";
+"SucccessfullySubmitted" = "Successfully submitted :)";
+"Submitting" = "Submitting...";
+"Anonymous" = "Anonymous";
 "TabBarNotifications" = "Notifications";
+"TabBarForum" = "Forum";
 "mwfNotificationTitle" = "Software Daily";
 "mwfNotificationBody" = "We have new episodes for you!";
 "Search" = "Search";

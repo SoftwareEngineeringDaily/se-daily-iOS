@@ -24,6 +24,7 @@ extension API {
     enum Endpoints {
         static let posts = "/posts"
         static let recommendations = "/posts/recommendations"
+        static let forum = "/forum"
         static let login = "/auth/login"
         static let register = "/auth/register"
         static let upvote = "/upvote"
@@ -33,6 +34,9 @@ extension API {
         static let favorite = "/favorite"
         static let unfavorite = "/unfavorite"
         static let myBookmarked = "/users/me/bookmarked"
+        static let relatedLinks = "/related-links"
+        static let comments = "/comments"
+        static let createComment = "/comment"
     }
 
     enum Types {
@@ -49,6 +53,7 @@ extension API {
         static let bearer = "Bearer"
         static let lastUpdatedBefore = "lastUpdatedBefore"
         static let createdAtBefore = "createdAtBefore"
+        static let lastActivityBefore = "lastActivityBefore"
         static let active = "active"
         static let platform = "platform"
         static let deviceToken = "deviceToken"
@@ -61,6 +66,9 @@ extension API {
         static let tags = "tags"
         static let categories = "categories"
         static let search = "search"
+        static let commentContent = "content"
+        static let entityType = "entityType"
+        static let parentCommentId = "parentCommentId"
     }
 }
 
@@ -374,7 +382,7 @@ extension API {
         if !categories.isEmpty {
             params[Params.categories] = categories
         }
-
+       
         networkRequest(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
@@ -400,6 +408,172 @@ extension API {
                 log.error(error.localizedDescription)
                 Tracker.logGeneralError(error: error)
                 onFailure(.GeneralFailure)
+            }
+        }
+    }
+}
+typealias ForumThreadModel = ForumThread
+// MARK: Forum
+extension API {
+    
+    func getForumThreads(
+                  lastActivityBefore lastActivityBeforeDate: String = "",
+                  onSuccess: @escaping ([ForumThreadModel]) -> Void,
+                  onFailure: @escaping (APIError?) -> Void) {
+        
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
+        let _headers: HTTPHeaders = [
+            Headers.authorization: Headers.bearer + userToken
+        ]
+        
+        let urlString = rootURL + API.Endpoints.forum
+    
+        // Params
+        var params = [String: String]()
+        if lastActivityBeforeDate != "" {
+            params[Params.lastActivityBefore] = lastActivityBeforeDate
+        }
+
+        networkRequest(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let responseData = response.data else {
+                    // Handle error here
+                    log.error("response has no data")
+                    onFailure(.NoResponseDataError)
+                    return
+                }
+                
+                var data: [ForumThreadModel] = []
+                let this = JSON(responseData)
+                for (_, subJson):(String, JSON) in this {
+                    guard let jsonData = try? subJson.rawData() else { continue }
+                    let newObject = try? JSONDecoder().decode(ForumThreadModel.self, from: jsonData)
+                    if let newObject = newObject {
+                        data.append(newObject)
+                    }
+                }
+                onSuccess(data)
+            case .failure(let error):
+                log.error(error.localizedDescription)
+                Tracker.logGeneralError(error: error)
+                onFailure(.GeneralFailure)
+            }
+        }
+    }
+}
+
+typealias RelatedLinkModel = RelatedLink
+
+// MARK: Related Links
+extension API {
+    func getRelatedLinks(podcastId: String, onSuccess: @escaping ([RelatedLink]) -> Void,
+                         onFailure: @escaping (APIError?) -> Void) {
+        let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.relatedLinks
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
+        let _headers: HTTPHeaders = [
+            Headers.authorization: Headers.bearer + userToken,
+            Headers.contentType: Headers.x_www_form_urlencoded
+        ]
+        
+        networkRequest(urlString, method: .get, parameters: nil, headers: _headers).responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let responseData = response.data else {
+                    // Handle error here
+                    log.error("response has no data")
+                    onFailure(.NoResponseDataError)
+                    return
+                }
+                
+                do {
+                    let data: [RelatedLinkModel] = try JSONDecoder().decode([RelatedLinkModel].self, from: responseData)
+                    onSuccess(data)
+                } catch let jsonErr {
+                    onFailure(.NoResponseDataError)
+                    print(jsonErr)
+                }
+                
+            case .failure(let error):
+                log.error(error.localizedDescription)
+                Tracker.logGeneralError(error: error)
+                onFailure(.GeneralFailure)
+            }
+        }
+    }
+}
+
+typealias  CommentModel = Comment
+// MARK: Comments
+extension API {
+    
+    // get Comments
+    func getComments(rootEntityId: String, onSuccess: @escaping ([Comment]) -> Void,
+                     onFailure: @escaping (APIError?) -> Void) {
+        let urlString = self.rootURL + Endpoints.comments + "/forEntity/" + rootEntityId
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
+        let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded,
+                                     Headers.authorization: Headers.bearer + userToken
+        ]
+        
+        networkRequest(urlString, method: .get, parameters: nil, headers: _headers).responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let responseData = response.data else {
+                    // Handle error here
+                    log.error("response has no data")
+                    onFailure(.NoResponseDataError)
+                    return
+                }
+                
+                do {
+          
+                    let data: CommentsResponse = try JSONDecoder().decode(CommentsResponse.self, from: responseData)
+                    onSuccess(data.result)
+                } catch let jsonErr {
+                    onFailure(.NoResponseDataError)
+                }
+                
+            case .failure(let error):
+                log.error(error.localizedDescription)
+                Tracker.logGeneralError(error: error)
+                onFailure(.GeneralFailure)
+            }
+        }
+    }
+    
+    // create Comment
+    func createComment(rootEntityId: String, parentComment: Comment?, commentContent: String, onSuccess: @escaping () -> Void,
+                       onFailure: @escaping (APIError?) -> Void) {
+       
+        let urlString = self.rootURL + Endpoints.comments + "/forEntity/" + rootEntityId
+
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
+        let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded,
+                                     Headers.authorization: Headers.bearer + userToken
+                                     ]
+        var params = [String: String]()
+        params[Params.commentContent] = commentContent
+        params[Params.entityType] = "forumthread"
+        // This is included if we are replying to a comment
+        if let parentComment = parentComment {
+            params[Params.parentCommentId] = parentComment._id
+        }
+        
+        networkRequest(urlString, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: _headers)
+            .validate(statusCode: 200..<300)
+            .responseJSON { response in
+            
+            switch response.result {
+            case .success:
+                onSuccess()
+            case .failure(let error):
+                log.error(error)
+                onFailure(nil)
             }
         }
     }
@@ -517,6 +691,43 @@ extension API {
 
 // MARK: Voting
 extension API {
+    func upvoteForum(entityId: String, completion: @escaping (_ success: Bool?, _ active: Bool?) -> Void) {
+        let urlString = self.rootURL + Endpoints.forum + "/" + entityId + Endpoints.upvote
+        
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
+        let _headers: HTTPHeaders = [
+            Headers.authorization: Headers.bearer + userToken,
+            Headers.contentType: Headers.x_www_form_urlencoded
+        ]
+        
+        networkRequest(urlString, method: .post, parameters: nil, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let jsonResponse = response.result.value as? NSDictionary else {
+                    Tracker.logGeneralError(string: "Error result value is not a NSDictionary")
+                    completion(false, nil)
+                    return
+                }
+                
+                if let message = jsonResponse["message"] {
+                    Helpers.alertWithMessage(title: Helpers.Alerts.error, message: String(describing: message), completionHandler: nil)
+                    completion(false, nil)
+                    return
+                }
+                
+                if let active = jsonResponse["active"] as? Bool {
+                    completion(true, active)
+                }
+            case .failure(let error):
+                log.error(error)
+                Tracker.logGeneralError(error: error)
+                Helpers.alertWithMessage(title: Helpers.Alerts.error, message: error.localizedDescription, completionHandler: nil)
+                completion(false, nil)
+            }
+        }
+    }
+    
     func upvotePodcast(podcastId: String, completion: @escaping (_ success: Bool?, _ active: Bool?) -> Void) {
         let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.upvote
 

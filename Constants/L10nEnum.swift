@@ -37,6 +37,8 @@ enum L10n {
   static let alertMessageUsernameEmpty = L10n.tr("Localizable", "AlertMessageUsernameEmpty")
   /// You must login to use this feature.
   static let alertMessageYouMustLogin = L10n.tr("Localizable", "AlertMessageYouMustLogin")
+  /// Anonymous
+  static let anonymous = L10n.tr("Localizable", "Anonymous")
   /// Oh, sorry you're not liking the SEDaily app
   static let appReviewApology = L10n.tr("Localizable", "AppReviewApology")
   /// SEDaily iOS App Feedback
@@ -47,6 +49,8 @@ enum L10n {
   static let appReviewPromptQuestion = L10n.tr("Localizable", "AppReviewPromptQuestion")
   /// Cancel
   static let cancelButtonTitle = L10n.tr("Localizable", "CancelButtonTitle")
+  /// Comments
+  static let comments = L10n.tr("Localizable", "Comments")
   /// Confirm Password
   static let confirmPasswordPlaceholder = L10n.tr("Localizable", "ConfirmPasswordPlaceholder")
   /// Email
@@ -99,10 +103,18 @@ enum L10n {
   static let passwordPlaceholder = L10n.tr("Localizable", "PasswordPlaceholder")
   /// Play
   static let play = L10n.tr("Localizable", "Play")
+  /// Related Links
+  static let relatedLinks = L10n.tr("Localizable", "RelatedLinks")
   /// Search
   static let search = L10n.tr("Localizable", "Search")
   /// Sign Up
   static let signUpButtonTitle = L10n.tr("Localizable", "SignUpButtonTitle")
+  /// Submitting...
+  static let submitting = L10n.tr("Localizable", "Submitting")
+  /// Successfully submitted :)
+  static let succcessfullySubmitted = L10n.tr("Localizable", "SucccessfullySubmitted")
+  /// Forum
+  static let tabBarForum = L10n.tr("Localizable", "TabBarForum")
   /// Just For You
   static let tabBarJustForYou = L10n.tr("Localizable", "TabBarJustForYou")
   /// Notifications
@@ -133,6 +145,8 @@ enum L10n {
   static let tabTitleSecurity = L10n.tr("Localizable", "TabTitleSecurity")
   /// Tap to refresh
   static let tapToRefresh = L10n.tr("Localizable", "TapToRefresh")
+  /// There was a problem :(
+  static let thereWasAProblem = L10n.tr("Localizable", "ThereWasAProblem")
   /// Username or Email
   static let usernameOrEmailPlaceholder = L10n.tr("Localizable", "UsernameOrEmailPlaceholder")
   /// Username

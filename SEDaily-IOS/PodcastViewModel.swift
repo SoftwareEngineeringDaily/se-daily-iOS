@@ -10,6 +10,7 @@ import Foundation
 
 public struct PodcastViewModel: Codable {
     let _id: String
+    let thread: ForumThreadLite?
     let uploadDateiso8601: String
     let postLinkURL: URL?
     let categories: [Int]?
@@ -48,6 +49,7 @@ public struct PodcastViewModel: Codable {
 
     init(podcast: Podcast) {
         self._id = podcast._id
+        self.thread = podcast.thread
         self.uploadDateiso8601 = podcast.date
         self.postLinkURL = URL(string: podcast.link)
         self.categories = podcast.categories
@@ -75,6 +77,7 @@ public struct PodcastViewModel: Codable {
 
     init() {
         self._id = ""
+        self.thread = nil
         self.uploadDateiso8601 = ""
         self.postLinkURL = nil
         self.categories = []

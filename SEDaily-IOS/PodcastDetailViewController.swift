@@ -19,7 +19,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
     weak var delegate: PodcastDetailViewControllerDelegate?
 
     private var bookmarkButton: UIButton?
-    
+
     let networkService: API = API()
 
     var model = PodcastViewModel()
@@ -167,7 +167,7 @@ extension PodcastDetailViewController: HeaderViewDelegate {
         relatedLinksViewController.postId = podcastId
         self.navigationController?.pushViewController(relatedLinksViewController, animated: true)
     }
-    
+
     func commentsButtonPressed() {
         Analytics2.podcastCommentsViewed(podcastId: model._id)
         let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
@@ -175,12 +175,12 @@ extension PodcastDetailViewController: HeaderViewDelegate {
             withIdentifier: "CommentsViewController") as? CommentsViewController else {
                 return
         }
-        if let thread = model.thread {            
+        if let thread = model.thread {
             commentsViewController.rootEntityId = thread._id
             self.navigationController?.pushViewController(commentsViewController, animated: true)
         }
     }
-    
+
     func modelDidChange(viewModel: PodcastViewModel) {
         self.delegate?.modelDidChange(viewModel: viewModel)
     }

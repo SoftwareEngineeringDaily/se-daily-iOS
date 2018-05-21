@@ -16,7 +16,7 @@ class ThreadHeaderView: UIView {
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var commentCountLabel: UILabel!
-    
+
     var thread: ForumThread? {
         didSet {
             titleLabel.text = thread?.title
@@ -34,7 +34,7 @@ class ThreadHeaderView: UIView {
             }
         }
     }
-    
+
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -42,12 +42,12 @@ class ThreadHeaderView: UIView {
         // Drawing code
     }
     */
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         titleLabel.preferredMaxLayoutWidth = titleLabel.bounds.width
-        
+
         contentLabel.preferredMaxLayoutWidth = titleLabel.bounds.width
     }
-    
+
 }

@@ -9,18 +9,22 @@
 import Foundation
 import UIKit
 
-/// Generic view for states used in BookmarkCollectionViewController
-class StateBookmarkView: UIView {
+protocol StateViewDelegate: class {
+    func refreshPressed()
+}
+
+/// Generic view for states used in view controllers
+class StateView: UIView {
     private var stackView: UIStackView!
-    private var label: UILabel!
     private var refreshButton: UIButton!
-    weak var delegate: BookmarkCollectionViewControllerDelegate?
+    weak var delegate: StateViewDelegate?
 
     init(
         frame: CGRect,
         text: String,
+        showLoadingIndicator: Bool,
         showRefreshButton: Bool,
-        delegate: BookmarkCollectionViewControllerDelegate?) {
+        delegate: StateViewDelegate?) {
         super.init(frame: frame)
 
         self.delegate = delegate
@@ -29,8 +33,19 @@ class StateBookmarkView: UIView {
         self.stackView.axis = .vertical
         self.addSubview(self.stackView)
 
-        self.label = UILabel(text: text)
-        self.stackView.addArrangedSubview(self.label)
+        let label = UILabel(text: text)
+
+        let horizontalStackView = UIStackView()
+        horizontalStackView.spacing = 10
+        if showLoadingIndicator {
+            let activityIndicator = UIActivityIndicatorView()
+            activityIndicator.startAnimating()
+            activityIndicator.color = UIColor.gray
+            horizontalStackView.addArrangedSubview(activityIndicator)
+        }
+        horizontalStackView.addArrangedSubview(label)
+
+        self.stackView.addArrangedSubview(horizontalStackView)
 
         if showRefreshButton {
             self.refreshButton = UIButton()

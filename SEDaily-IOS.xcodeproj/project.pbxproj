@@ -948,6 +948,7 @@
 				960BFEBB202109800073DAB2 /* AskForReview.swift in Sources */,
 				164FE9EF1F03065C009419CA /* NavigationControllerExtension.swift in Sources */,
 				165484551F902D3F005AEA23 /* GeneralCollectionViewController.swift in Sources */,
+				96922EF420928D5900E9DECE /* ForumHeaderViewController.swift in Sources */,
 				1E638E561FC794AC00A29BDC /* ProgressIndicator.swift in Sources */,
 				161F3DE61F61F73D00A8F825 /* SearchTableViewController.swift in Sources */,
 				1E2BFDCD2017C74A00E6DE0A /* TestHookBoolTableViewCell.swift in Sources */,

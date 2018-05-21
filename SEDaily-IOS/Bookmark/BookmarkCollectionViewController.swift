@@ -10,10 +10,6 @@ import UIKit
 import StatefulViewController
 import KoalaTeaFlowLayout
 
-protocol BookmarkCollectionViewControllerDelegate: class {
-    func refreshPressed()
-}
-
 /// Collection view controller for viewing all bookmarks for the user.
 class BookmarkCollectionViewController: UICollectionViewController, StatefulViewController {
     static private let cellId = "PodcastCellId"
@@ -97,9 +93,10 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
         if UserManager.sharedInstance.getActiveUser().isLoggedIn() {
             self.updateLoadingView(view: skeletonCollectionView)
             self.updateEmptyView(view:
-                StateBookmarkView(
+                StateView(
                     frame: CGRect.zero,
                     text: L10n.noBookmarks,
+                    showLoadingIndicator: false,
                     showRefreshButton: true,
                     delegate: self))
 
@@ -121,15 +118,17 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
             }
         } else {
             self.updateLoadingView(view:
-                StateBookmarkView(
+                StateView(
                     frame: CGRect.zero,
                     text: "",
+                    showLoadingIndicator: false,
                     showRefreshButton: false,
                     delegate: nil))
             self.updateEmptyView(view:
-                StateBookmarkView(
+                StateView(
                     frame: CGRect.zero,
                     text: L10n.loginSeeBookmarks,
+                    showLoadingIndicator: false,
                     showRefreshButton: false,
                     delegate: nil))
             self.endLoading()
@@ -193,7 +192,7 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
     }
 }
 
-extension BookmarkCollectionViewController: BookmarkCollectionViewControllerDelegate {
+extension BookmarkCollectionViewController: StateViewDelegate {
     func refreshPressed() {
         self.refreshView(useCache: false)
         Analytics2.refreshMyBookmarksPressed()

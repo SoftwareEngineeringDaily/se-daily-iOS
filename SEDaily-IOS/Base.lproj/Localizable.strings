@@ -77,3 +77,6 @@
 "TabBarFeed" = "Feed";
 "mwfNotificationTitle" = "Software Daily";
 "mwfNotificationBody" = "We have new episodes for you!";
+"Search" = "Search";
+"EmptySearch" = "No results for search";
+"FetchingSearch" = "Fetching results";

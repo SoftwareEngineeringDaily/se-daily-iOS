@@ -1,5 +1,5 @@
 //
-//  ForumListViewController.swift
+//  FeedListViewController.swift
 //  SEDaily-IOS
 //
 //  Created by jason on 4/25/18.

@@ -338,7 +338,7 @@
 		1686FBFF1F009EC00088A6C1 /* SEDaily-IOS */ = {
 			isa = PBXGroup;
 			children = (
-				961A378B208FAFC30050EF80 /* Forum */,
+				961A378B208FAFC30050EF80 /* Feed */,
 				961A378A208FAF3E0050EF80 /* User */,
 				960BFEBD20226B420073DAB2 /* Comments */,
 				96600306201CE9F900997795 /* RelatedLinks */,
@@ -519,7 +519,7 @@
 			name = User;
 			sourceTree = "<group>";
 		};
-		961A378B208FAFC30050EF80 /* Forum */ = {
+		961A378B208FAFC30050EF80 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
 				96A7E2CE20951EBD002C92EC /* ThreadHeaderView.swift */,
@@ -534,7 +534,7 @@
 				96D268F520B2250B002F95BD /* RelatedLinkWebVC.swift */,
 				96D268F620B2250B002F95BD /* RelatedLinkWebVC.xib */,
 			);
-			name = Forum;
+			name = Feed;
 			sourceTree = "<group>";
 		};
 		96600306201CE9F900997795 /* RelatedLinks */ = {

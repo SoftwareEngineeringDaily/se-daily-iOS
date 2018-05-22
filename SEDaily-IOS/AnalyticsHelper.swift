@@ -49,6 +49,23 @@ class Analytics2 {
             AnalyticsParameterContentType: "view"
         ])
     }
+    
+    class func relatedLinkSafariOpen(url: URL) {
+        Analytics.logEvent("related_link_in_safari", parameters: [
+            AnalyticsParameterItemID: "\(url.absoluteString)",
+            AnalyticsParameterItemName: url.absoluteString,
+            AnalyticsParameterContentType: "tapped"
+            ])
+    }
+    
+    class func relatedLinkViewed(url: URL) {
+        Analytics.logEvent("related_link_viewed", parameters: [
+            AnalyticsParameterItemID: "\(url.absoluteString)",
+            AnalyticsParameterItemName: url.absoluteString,
+            AnalyticsParameterContentType: "view"
+            ])
+    }
+    
     class func newPodcastsListViewed(tabTitle: String) {
         Analytics.logEvent("podcast_new_list_viewed", parameters: [
             AnalyticsParameterItemID: "tabTitle-\(tabTitle)",

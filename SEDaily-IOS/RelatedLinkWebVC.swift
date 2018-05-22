@@ -33,14 +33,13 @@ class RelatedLinkWebVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
         self.view = webView
     }
     
-    
     @IBAction func openInSafariTapped(_ sender: UIButton) {
         if let linkUrl = url {
             UIApplication.shared.open(linkUrl, options: [:], completionHandler: nil)
+            Analytics2.relatedLinkSafariOpen(url: linkUrl)
         } else {
             print("link null")
         }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,8 +55,8 @@ class RelatedLinkWebVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
             
             let myRequest = URLRequest(url: url)
             webView.load(myRequest)
+            Analytics2.relatedLinkViewed(url: url)
         }
- 
         // Do any additional setup after loading the view.
     }
     
@@ -65,7 +64,6 @@ class RelatedLinkWebVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
     
     /*
      // MARK: - Navigation

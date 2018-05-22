@@ -20,6 +20,7 @@ struct AskForReview: ScenarioProtocol {
          */
         minEventsRequired = 3
         minSecondsSinceFirstEvent = 86_400 // seconds in one day
+        minSecondsSinceLastEvent = 86_400 // seconds in one day
         maxExecutionsPermitted = 3
         customConditions = {
             let defaults = UserDefaults.standard

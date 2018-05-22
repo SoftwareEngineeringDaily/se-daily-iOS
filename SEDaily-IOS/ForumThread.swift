@@ -25,6 +25,13 @@ public struct ForumThread: BaseFeedItem {
 }
 
 extension ForumThread {
+    func getPrettyTitle() -> String {
+        if podcastEpisode == nil {
+            return self.title
+        }
+        // Remove "Discuss: " from threads with posts defined:
+        return self.title.substring(from: self.title.index(self.title.startIndex, offsetBy: 9))
+    }
     func getCommentsSummary() -> String {
         if commentsCount != 1 {
             return  "\(commentsCount) comments"

@@ -45,7 +45,7 @@ class FeedItemCell: UITableViewCell {
                 let author = thread.author
                 authorLabel.text = (author.name != nil) ? author.name : author.username
                 
-                titleLabel.text = thread.title
+                titleLabel.text = thread.getPrettyTitle()
                 commentsCountLabel.text = thread.getCommentsSummary()
                 
                 dateLabel.text = thread.getDateLastActivityPretty()

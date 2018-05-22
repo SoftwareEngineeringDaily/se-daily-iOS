@@ -22,7 +22,40 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aw3-l6-fOF">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <color key="backgroundColor" red="0.40000000000000002" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Ljz-ed-C5X">
+                            <rect key="frame" x="167.5" y="313.5" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="3ww-gj-GR2"/>
+                                <constraint firstAttribute="height" constant="40" id="W5t-UB-pcy"/>
+                            </constraints>
+                        </activityIndicatorView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xg8-T5-pkL">
+                            <rect key="frame" x="139" y="361" width="97" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="4MO-Dz-QcU"/>
+                                <constraint firstAttribute="width" constant="97" id="Ajy-0V-Cj1"/>
+                            </constraints>
+                            <state key="normal" title="Open in Safari">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                    <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="openInSafariTapped:" destination="-1" eventType="touchUpInside" id="C9c-5M-LuY"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.26364776234567899" green="0.0" blue="0.86851369598765427" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="Ljz-ed-C5X" firstAttribute="centerX" secondItem="aw3-l6-fOF" secondAttribute="centerX" id="7X3-ub-XXr"/>
+                        <constraint firstItem="Xg8-T5-pkL" firstAttribute="top" secondItem="Ljz-ed-C5X" secondAttribute="bottom" constant="7.5" id="Koi-dP-g15"/>
+                        <constraint firstItem="Ljz-ed-C5X" firstAttribute="centerY" secondItem="aw3-l6-fOF" secondAttribute="centerY" id="r1J-Lq-GaB"/>
+                        <constraint firstItem="Xg8-T5-pkL" firstAttribute="centerX" secondItem="Ljz-ed-C5X" secondAttribute="centerX" id="zha-y4-8FK"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

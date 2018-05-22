@@ -418,7 +418,7 @@ extension API {
 
 // MARK: Listened History
 extension API {
-    func markAsListened(postId:String) {
+    func markAsListened(postId: String) {
     //    http://localhost:4040/api/posts/5a57b6ffe9b21f96de35dabb/listened
         let user = UserManager.sharedInstance.getActiveUser()
         let userToken = user.token
@@ -433,23 +433,19 @@ extension API {
                 
                 switch response.result {
                 case .success:
-//                    onSuccess()
+                    // onSuccess()
                     print("success")
                 case .failure(let error):
                     log.error(error)
-                    print("Faiure!!!!!!!!")
-//                    onFailure(nil)
+                    //  onFailure(nil)
                 }
         }
-        
-        
     }
 }
 typealias ForumThreadModel = ForumThread
 // MARK: Feed
 extension API {
-    
-    
+
     func getFeed(
                   lastActivityBefore lastActivityBeforeDate: String = "",
                   onSuccess: @escaping ([Any], ForumThread?) -> Void,

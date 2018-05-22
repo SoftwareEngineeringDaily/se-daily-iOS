@@ -24,14 +24,7 @@ public struct RelatedLink: BaseFeedItem {
     let postId: String?
     let post: PodcastLite?
     
-    /*
-    init(image: String? = nil, score: Int? = nil, title: String, url: String) {
-        self.image = image
-        self.score = score
-        self.title = title
-        self.url = url
-    }*/
-    
+ 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
   

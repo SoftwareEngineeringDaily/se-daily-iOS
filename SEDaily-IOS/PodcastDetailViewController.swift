@@ -17,6 +17,7 @@ protocol PodcastDetailViewControllerDelegate: class {
 class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
 
     weak var delegate: PodcastDetailViewControllerDelegate?
+    weak var audioOverlayDelegate: AudioOverlayDelegate?
 
     private var bookmarkButton: UIButton?
 
@@ -35,6 +36,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
         let headerView = HeaderView(width: 375, height: 200)
         headerView.setupHeader(model: model)
         headerView.delegate = self
+        headerView.audioOverlayDelegate = self.audioOverlayDelegate
 
         let webView = WKWebView()
         webView.navigationDelegate = self
@@ -70,6 +72,18 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
             self.navigationItem.rightBarButtonItem = bookmarkBarButtonItem
         }
         Analytics2.podcastPageViewed(podcastId: model._id)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.audioOverlayDelegate?.setCurrentShowingDetailView(
+            podcastViewModel: self.model)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.audioOverlayDelegate?.setCurrentShowingDetailView(
+            podcastViewModel: nil)
     }
 
     @objc private func bookmarkButtonPressed() {

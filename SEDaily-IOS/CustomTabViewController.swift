@@ -6,14 +6,6 @@
 //  Copyright © 2017 Koala Tea. All rights reserved.
 //
 
-//
-//  CustomTabViewController.swift
-//  Kibbl-IOS
-//
-//  Created by Craig Holliday on 4/28/17.
-//  Copyright © 2017 Koala Tea. All rights reserved.
-//
-
 import UIKit
 import MessageUI
 import PopupDialog
@@ -29,13 +21,20 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 
     var actionSheet = UIAlertController()
 
+    weak var audioOverlayDelegate: AudioOverlayDelegate?
+
+    init(audioOverlayDelegate: AudioOverlayDelegate?) {
+        self.audioOverlayDelegate = audioOverlayDelegate
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-
         delegate = self
-
         self.view.backgroundColor = .white
 
         setupTabs()

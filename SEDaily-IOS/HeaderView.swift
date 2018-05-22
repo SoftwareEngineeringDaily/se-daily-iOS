@@ -19,6 +19,7 @@ class HeaderView: UIView {
     var iconSize = UIView.getValueScaledByScreenWidthFor(baseValue: 34)
 
     weak var delegate: HeaderViewDelegate?
+    weak var audioOverlayDelegate: AudioOverlayDelegate?
 
     var podcastViewModel = PodcastViewModel()
 
@@ -204,8 +205,8 @@ extension HeaderView {
     @objc func playButtonPressed() {
         //@TODO: Switch button and/or stop if playing
 
-        // Podcast model checks here
-        AudioViewManager.shared.setupManager(podcastModel: podcastViewModel)
+        self.audioOverlayDelegate?.animateOverlayIn()
+        self.audioOverlayDelegate?.playAudio(podcastViewModel: self.podcastViewModel)
 
         AskForReview.triggerEvent()
     }
@@ -315,27 +316,25 @@ extension HeaderView {
 
         self.playButton.isUserInteractionEnabled = false
 
-        self.downloadManager.save(podcast: self.podcastViewModel, onProgress: { (progress) in
-            // Show progress
-            let progressAsInt = Int((progress * 100).rounded())
-            self.playButton.setTitle(String(progressAsInt) + "%", for: .normal)
-        }, onSucces: { () in
-            // Show success by changing download
-            self.delegate?.modelDidChange(viewModel: self.podcastViewModel)
+        self.downloadManager.save(
+            podcast: self.podcastViewModel,
+            onProgress: { progress in
+                // Show progress
+                let progressAsInt = Int((progress * 100).rounded())
+                self.playButton.setTitle(String(progressAsInt) + "%", for: .normal)},
+            onSucces: {
+                // Show success by changing download
+                self.delegate?.modelDidChange(viewModel: self.podcastViewModel)
+                self.audioOverlayDelegate?.animateOverlayIn()
+                self.playButton.setTitle("Play", for: .normal)
+                self.playButton.isUserInteractionEnabled = true},
+            onFailure: { error in
+                self.playButton.setTitle("Play", for: .normal)
+                self.playButton.isUserInteractionEnabled = true
 
-            AudioViewManager.shared.setupManager(podcastModel: self.podcastViewModel)
-            AudioViewManager.shared.pauseButtonPressed()
-
-            self.playButton.setTitle("Play", for: .normal)
-            self.playButton.isUserInteractionEnabled = true
-        }) { (error) in
-            self.playButton.setTitle("Play", for: .normal)
-            self.playButton.isUserInteractionEnabled = true
-
-            guard let error = error else { return }
-            // Alert Error
-            Helpers.alertWithMessage(title: error.localizedDescription.capitalized, message: "")
-        }
+                guard let error = error else { return }
+                // Alert Error
+                Helpers.alertWithMessage(title: error.localizedDescription.capitalized, message: "")})
     }
 
     private func deletePodcast() {

@@ -38,8 +38,8 @@ class Analytics2 {
             AnalyticsParameterContentType: "view"
             ])
     }
-    class func forumViewed() {
-        Analytics.logEvent("forum_list_viewed", parameters: nil)
+    class func feedViewed() {
+        Analytics.logEvent("feed_list_viewed", parameters: nil)
     }
     
     class func forumThreadViewed(forumThread: ForumThread) {

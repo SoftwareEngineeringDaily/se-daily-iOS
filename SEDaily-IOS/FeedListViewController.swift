@@ -60,7 +60,7 @@ class FeedListViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         loadThreads()
-        Analytics2.forumViewed()
+        Analytics2.feedViewed()
     }
     @objc private func refreshForumData(_ sender: Any) {
         // Fetch Weather Data

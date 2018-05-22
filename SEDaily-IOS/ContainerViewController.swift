@@ -9,19 +9,14 @@
 import UIKit
 
 class ContainerViewController: UIViewController {
-
-    var containerView = UIView()
-
+    private var containerView = UIView()
     private var navController = UINavigationController()
-    private var tabController = CustomTabViewController()
-
-    // MARK: - View Life Cycle
+    private var customTabViewController: CustomTabViewController?
+    private var audioOverlayViewController: AudioOverlayViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.setupView()
-
         self.automaticallyAdjustsScrollViewInsets = false
     }
 
@@ -33,10 +28,13 @@ class ContainerViewController: UIViewController {
         self.add(asChildViewController: navController)
     }
 
-    // MARK: - View Methods
-
     private func setupView() {
+        self.customTabViewController = CustomTabViewController(audioOverlayDelegate: self)
         self.view.addSubview(containerView)
+        self.audioOverlayViewController = AudioOverlayViewController(audioOverlayDelegate: self)
+        self.addChildViewController(self.audioOverlayViewController!)
+        self.audioOverlayViewController?.view.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.audioOverlayViewController!.view)
 
         containerView.snp.makeConstraints { (make) -> Void in
             make.top.equalToSuperview()
@@ -46,7 +44,15 @@ class ContainerViewController: UIViewController {
         }
         containerView.backgroundColor = Stylesheet.Colors.white
 
-        let navVC = UINavigationController(rootViewController: tabController)
+        self.audioOverlayViewController?.view.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview()
+            make.bottom.equalToSuperview().offset(
+                UIView.getValueScaledByScreenHeightFor(
+                    baseValue: AudioOverlayViewController.audioControlsViewHeight))
+            make.top.equalToSuperview().offset(UIScreen.main.bounds.height)
+        }
+
+        let navVC = UINavigationController(rootViewController: customTabViewController!)
         navVC.view.backgroundColor = .white
 
         self.navController = navVC
@@ -54,7 +60,9 @@ class ContainerViewController: UIViewController {
 
     func setContainerViewInset() {
         self.containerView.snp.updateConstraints { (make) -> Void in
-            make.bottom.equalToSuperview().inset(UIView.getValueScaledByScreenHeightFor(baseValue: 110))
+            make.bottom.equalToSuperview().inset(
+                UIView.getValueScaledByScreenHeightFor(
+                    baseValue: AudioOverlayViewController.audioControlsViewHeight))
         }
 
         self.view.layoutIfNeeded()
@@ -69,8 +77,6 @@ class ContainerViewController: UIViewController {
             self.view.layoutIfNeeded()
         })
     }
-
-    // MARK: - Helper Methods
 
     private func add(asChildViewController viewController: UIViewController) {
         // Add Child View Controller
@@ -111,5 +117,26 @@ class ContainerViewController: UIViewController {
     // Have to set preferredStatusBarStyle here on first view controller
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+}
+
+extension ContainerViewController: AudioOverlayDelegate {
+    func animateOverlayIn() {
+        self.setContainerViewInset()
+        self.audioOverlayViewController?.animateIn()
+    }
+
+    func animateOverlayOut() {
+        self.audioOverlayViewController?.animateOut()
+        self.removeContainerViewInset()
+    }
+
+    func playAudio(podcastViewModel: PodcastViewModel) {
+        self.audioOverlayViewController?.playAudio(podcastViewModel: podcastViewModel)
+    }
+
+    func setCurrentShowingDetailView(podcastViewModel: PodcastViewModel?) {
+        self.audioOverlayViewController?.setCurrentShowingDetailView(
+            podcastViewModel: podcastViewModel)
     }
 }

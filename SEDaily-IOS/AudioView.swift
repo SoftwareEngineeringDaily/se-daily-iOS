@@ -64,49 +64,46 @@ enum PlaybackSpeed: Float {
     }
 }
 
-// MARK: - PlayerDelegate
-
-/// Player delegate protocol
 public protocol AudioViewDelegate: NSObjectProtocol {
     func playButtonPressed()
     func pauseButtonPressed()
     func stopButtonPressed()
     func skipForwardButtonPressed()
     func skipBackwardButtonPressed()
+    func expandButtonPressed()
+    func collapseButtonPressed()
     func audioRateChanged(newRate: Float)
     func playbackSliderValueChanged(value: Float)
 }
 
 class AudioView: UIView {
-    open weak var delegate: AudioViewDelegate?
+    private var isCollapsed = true
+    private weak var audioViewDelegate: AudioViewDelegate?
+    private var activityView: UIActivityIndicatorView!
+    private var podcastLabel = UILabel()
+    private var expandCollapseButton = UIButton()
+    private var skipForwardButton = UIButton()
+    private var skipBackwardbutton = UIButton()
+    private var bufferSlider = UISlider(frame: .zero)
+    private var bufferBackgroundSlider = UISlider(frame: .zero)
+    private var playbackSlider = UISlider(frame: .zero)
+    private var currentTimeLabel = UILabel()
+    private var timeLeftLabel = UILabel()
+    private var previousSliderValue: Float = 0.0
+    private var playbackSpeedButton = UIButton()
+    private var originalFrame: CGRect
+    private var viewModel: PodcastViewModel?
 
-    var activityView: UIActivityIndicatorView!
-
-    var podcastLabel = UILabel()
-    fileprivate var containerView = UIView()
-    fileprivate var stackView = UIStackView()
-    var skipForwardButton = UIButton()
-    var skipBackwardbutton = UIButton()
+    var isFirstLoad = true
     var playButton = UIButton()
     var pauseButton = UIButton()
     var stopButton = UIButton()
-
-    var bufferSlider = UISlider(frame: .zero)
-    var bufferBackgroundSlider = UISlider(frame: .zero)
-    var playbackSlider = UISlider(frame: .zero)
-
-    var currentTimeLabel = UILabel()
-    var timeLeftLabel = UILabel()
-
-    var previousSliderValue: Float = 0.0
-    var isFirstLoad = true
-    var playbackSpeedButton = UIButton()
 
     var currentSpeed: PlaybackSpeed = ._1x {
         willSet {
             guard currentSpeed != newValue else { return }
             self.playbackSpeedButton.setTitle(newValue.shortTitle, for: .normal)
-            self.delegate?.audioRateChanged(newRate: newValue.rawValue)
+            self.audioViewDelegate?.audioRateChanged(newRate: newValue.rawValue)
         }
     }
 
@@ -126,18 +123,41 @@ class AudioView: UIView {
         return alert
     }
 
-    override init(frame: CGRect) {
+    init(frame: CGRect, audioViewDelegate: AudioViewDelegate) {
+        self.audioViewDelegate = audioViewDelegate
+        self.originalFrame = frame
         super.init(frame: frame)
 
         self.performLayout()
         self.disableButtons()
+
+        self.hideSliders()
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented"); }
 
     internal override func performLayout() {
-        containerView.backgroundColor = .white
+        let containerView = UIView()
         self.addSubview(containerView)
+        self.createAudioControlView(parentView: containerView)
+
+        containerView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+    }
+
+    func startActivityAnimating() {
+        self.activityView.startAnimating()
+    }
+
+    func stopActivityAnimating() {
+        self.activityView.stopAnimating()
+    }
+
+    func createAudioControlView(parentView: UIView) {
+        let containerView = UIView()
+        containerView.backgroundColor = .white
+        parentView.addSubview(containerView)
 
         containerView.snp.makeConstraints { (make) -> Void in
             make.edges.equalToSuperview()
@@ -152,9 +172,11 @@ class AudioView: UIView {
         }
 
         podcastLabel.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 16))
-        podcastLabel.numberOfLines = 0
+        podcastLabel.numberOfLines = 2
+        podcastLabel.lineBreakMode = .byTruncatingTail
         podcastLabel.textAlignment = .center
 
+        let stackView = UIStackView()
         containerView.addSubview(stackView)
 
         stackView.axis = .horizontal
@@ -176,6 +198,8 @@ class AudioView: UIView {
 
         let iconHeight = UIView.getValueScaledByScreenHeightFor(baseValue: (70 / 2))
 
+        expandCollapseButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)
+
         skipBackwardbutton.setImage(#imageLiteral(resourceName: "Backward"), for: .normal)
         skipBackwardbutton.height = iconHeight
         skipBackwardbutton.tintColor = Stylesheet.Colors.secondaryColor
@@ -188,6 +212,7 @@ class AudioView: UIView {
         skipForwardButton.height = iconHeight
         skipForwardButton.tintColor = Stylesheet.Colors.secondaryColor
 
+        expandCollapseButton.addTarget(self, action: #selector(self.expandButtonPressed), for: .touchUpInside)
         skipBackwardbutton.addTarget(self, action: #selector(self.skipBackwardButtonPressed), for: .touchUpInside)
         playButton.addTarget(self, action: #selector(self.playButtonPressed), for: .touchUpInside)
         pauseButton.addTarget(self, action: #selector(self.pauseButtonPressed), for: .touchUpInside)
@@ -200,7 +225,7 @@ class AudioView: UIView {
         playbackSpeedButton.setTitle(PlaybackSpeed._1x.shortTitle, for: .normal)
         playbackSpeedButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .normal)
         playbackSpeedButton.addTarget(self, action: #selector(self.settingsButtonPressed), for: .touchUpInside)
-        self.addSubview(playbackSpeedButton)
+        parentView.addSubview(playbackSpeedButton)
 
         let width = UIView.getValueScaledByScreenWidthFor(baseValue: 40)
         let height = UIView.getValueScaledByScreenHeightFor(baseValue: 40)
@@ -211,13 +236,20 @@ class AudioView: UIView {
             make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 2))
         }
 
-        setupActivityIndicator()
-        addPlaybackSlider()
-        addLabels()
+        setupActivityIndicator(parentView: containerView)
+        addPlaybackSlider(parentView: parentView)
+        addLabels(parentView: containerView)
+
+        parentView.addSubview(self.expandCollapseButton)
+
+        self.expandCollapseButton.snp.makeConstraints { (make) in
+            make.bottom.left.equalToSuperview()
+            make.width.height.equalTo(iconHeight)
+        }
     }
 
-    func addPlaybackSlider() {
-        addBufferSlider()
+    func addPlaybackSlider(parentView: UIView) {
+        addBufferSlider(parentView: parentView)
 
         playbackSlider.minimumValue = 0
         playbackSlider.isContinuous = true
@@ -227,7 +259,7 @@ class AudioView: UIView {
         playbackSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
         playbackSlider.isUserInteractionEnabled = false
 
-        self.addSubview(playbackSlider)
+        parentView.addSubview(playbackSlider)
         self.bringSubview(toFront: playbackSlider)
 
         playbackSlider.snp.makeConstraints { (make) -> Void in
@@ -243,8 +275,7 @@ class AudioView: UIView {
         playbackSlider.setThumbImage(bigCircle, for: .highlighted)
     }
 
-    func addBufferSlider() {
-        // Background Buffer Slider
+    func addBufferSlider(parentView: UIView) {
         bufferBackgroundSlider.minimumValue = 0
         bufferBackgroundSlider.isContinuous = true
         bufferBackgroundSlider.tintColor = Stylesheet.Colors.bufferColor
@@ -253,7 +284,7 @@ class AudioView: UIView {
         bufferBackgroundSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
         bufferBackgroundSlider.isUserInteractionEnabled = false
 
-        self.addSubview(bufferBackgroundSlider)
+        parentView.addSubview(bufferBackgroundSlider)
 
         bufferBackgroundSlider.snp.makeConstraints { (make) -> Void in
             make.top.equalToSuperview().inset(-10)
@@ -271,7 +302,7 @@ class AudioView: UIView {
         bufferSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
         bufferSlider.isUserInteractionEnabled = false
 
-        self.addSubview(bufferSlider)
+        parentView.addSubview(bufferSlider)
 
         bufferSlider.snp.makeConstraints { (make) -> Void in
             make.top.equalToSuperview().inset(-10)
@@ -282,7 +313,7 @@ class AudioView: UIView {
         bufferSlider.setThumbImage(UIImage(), for: .normal)
     }
 
-    func addLabels() {
+    func addLabels(parentView: UIView) {
         let labelFontSize = UIView.getValueScaledByScreenWidthFor(baseValue: 12)
         currentTimeLabel.text = "00:00"
         currentTimeLabel.textAlignment = .left
@@ -293,8 +324,8 @@ class AudioView: UIView {
         timeLeftLabel.adjustsFontSizeToFitWidth = true
         timeLeftLabel.font = UIFont.systemFont(ofSize: labelFontSize)
 
-        self.containerView.addSubview(currentTimeLabel)
-        self.containerView.addSubview(timeLeftLabel)
+        parentView.addSubview(currentTimeLabel)
+        parentView.addSubview(timeLeftLabel)
 
         currentTimeLabel.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(playbackSlider).inset(UIView.getValueScaledByScreenWidthFor(baseValue: 5))
@@ -315,21 +346,16 @@ class AudioView: UIView {
         let timeInSeconds = slider.value
 
         if (playbackSlider.isTracking) && (timeInSeconds != previousSliderValue) {
-            // Update Labels
-            // Do this without using functions because this views controller use the functions and they have a !isTracking guard
-            //@TODO: Figure out how to fix not being able to use functions
-//            self.updateSlider(currentValue: timeInSeconds)
             playbackSlider.value = timeInSeconds
             let duration = playbackSlider.maximumValue
             let timeLeft = Float(duration - timeInSeconds)
 
             let currentTimeString = Helpers.createTimeString(time: timeInSeconds)
             let timeLeftString = Helpers.createTimeString(time: timeLeft)
-//            self.updateTimeLabels(currentTimeText: currentTimeString, timeLeftText: timeLeftString)
             self.currentTimeLabel.text = currentTimeString
             self.timeLeftLabel.text = timeLeftString
         } else {
-            self.delegate?.playbackSliderValueChanged(value: timeInSeconds)
+            self.audioViewDelegate?.playbackSliderValueChanged(value: timeInSeconds)
             let duration = playbackSlider.maximumValue
             let timeLeft = Float(duration - timeInSeconds)
             let currentTimeString = Helpers.createTimeString(time: timeInSeconds)
@@ -341,7 +367,6 @@ class AudioView: UIView {
     }
 
     func updateSlider(maxValue: Float) {
-        // Update max only once
         guard playbackSlider.maximumValue <= 1.0 else { return }
 
         if playbackSlider.isUserInteractionEnabled == false {
@@ -353,23 +378,8 @@ class AudioView: UIView {
     }
 
     func updateSlider(currentValue: Float) {
-        // Have to check is first load because current value may be far from 0.0
-        //@TODO: Fix this logic to fix jumping of playbackslider
         guard !playbackSlider.isTracking else { return }
-//        if isFirstLoad {
-//            playbackSlider.value = currentValue
-//            isFirstLoad = false
-//            return
-//        }
-//        
-//        let min = playbackSlider.value - 60.0
-//        let max = playbackSlider.value + 60.0
-
-        // Check if current value is within a close enough range to slider value
-        // This fixes sliders skipping around
-//        if min...max ~= currentValue && !playbackSlider.isTracking {
-            playbackSlider.value = currentValue
-//        }
+        playbackSlider.value = currentValue
     }
 
     func updateBufferSlider(bufferValue: Float) {
@@ -382,29 +392,13 @@ class AudioView: UIView {
         self.timeLeftLabel.text = timeLeftText
     }
 
-    public func animateIn() {
-        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
-            self.frame.origin.y -= self.height
-            self.frame = self.frame
-        })
-    }
-
-    public func animateOut() {
-        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
-            self.frame.origin.y += self.height
-            self.frame = self.frame
-        }, completion: { _ in
-            self.removeFromSuperview()
-        })
-    }
-
-    public func setText(text: String?) {
+    func setText(text: String?) {
         podcastLabel.text = text ?? ""
     }
 
-    func setupActivityIndicator() {
+    func setupActivityIndicator(parentView: UIView) {
         activityView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-        self.containerView.addSubview(activityView)
+        parentView.addSubview(activityView)
 
         activityView.snp.makeConstraints { (make) -> Void in
             make.centerY.equalToSuperview()
@@ -429,32 +423,75 @@ class AudioView: UIView {
         self.skipForwardButton.isEnabled = false
         self.skipBackwardbutton.isEnabled = false
     }
+
+    private func toggleExpandCollapse() {
+        self.isCollapsed = !self.isCollapsed
+        let rotationAngle: CGFloat = self.isCollapsed ? -179 : 180
+        self.expandCollapseButton.rotate(
+            byAngle: rotationAngle,
+            ofType: .degrees,
+            animated: true,
+            duration: 0.25,
+            completion: { isFinished in
+                if isFinished && self.isCollapsed {
+                    self.expandCollapseButton.transform = .identity
+                }
+        })
+    }
+
+    func hideSliders() {
+        self.bufferSlider.isHidden = true
+        self.playbackSlider.isHidden = true
+        self.bufferBackgroundSlider.isHidden = true
+    }
+
+    func showSliders() {
+        self.bufferSlider.isHidden = false
+        self.playbackSlider.isHidden = false
+        self.bufferBackgroundSlider.isHidden = false
+    }
+
+    func showExpandCollapseButton() {
+        self.expandCollapseButton.isHidden = false
+    }
+
+    func hideExpandCollapseButton() {
+        self.expandCollapseButton.isHidden = true
+    }
 }
 
 extension AudioView {
-    // MARK: Function
     @objc func playButtonPressed() {
-        delegate?.playButtonPressed()
+        self.audioViewDelegate?.playButtonPressed()
     }
 
     @objc func pauseButtonPressed() {
-        delegate?.pauseButtonPressed()
+        self.audioViewDelegate?.pauseButtonPressed()
     }
 
     @objc func stopButtonPressed() {
-        delegate?.stopButtonPressed()
+        self.audioViewDelegate?.stopButtonPressed()
     }
 
     @objc func skipForwardButtonPressed() {
-        delegate?.skipForwardButtonPressed()
+        self.audioViewDelegate?.skipForwardButtonPressed()
     }
 
     @objc func skipBackwardButtonPressed() {
-        delegate?.skipBackwardButtonPressed()
+        self.audioViewDelegate?.skipBackwardButtonPressed()
+    }
+
+    @objc func expandButtonPressed() {
+        self.toggleExpandCollapse()
+
+        if self.isCollapsed {
+            self.audioViewDelegate?.collapseButtonPressed()
+        } else {
+            self.audioViewDelegate?.expandButtonPressed()
+        }
     }
 
     @objc func settingsButtonPressed() {
-        // Present alert view
         self.parentViewController?.present(alertController, animated: true, completion: nil)
     }
 }

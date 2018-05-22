@@ -53,7 +53,7 @@ PODS:
   - SwifterSwift/UIKit (4.0.1)
   - SwiftGen (5.2.1)
   - SwiftIcons (1.5.1)
-  - SwiftLint (0.23.1)
+  - SwiftLint (0.25.1)
   - SwiftMoment (0.7)
   - SwiftSoup (1.5.8)
   - SwiftyBeaver (1.4.4)
@@ -93,7 +93,7 @@ DEPENDENCIES:
   - SwifterSwift (~> 4.0.1)
   - SwiftGen (~> 5.2.1)
   - SwiftIcons (from `https://github.com/themisterholliday/SwiftIcons.git`, branch `swift-4`)
-  - SwiftLint (~> 0.23.1)
+  - SwiftLint (~> 0.25.1)
   - SwiftMoment
   - SwiftSoup (~> 1.5.8)
   - SwiftyBeaver (~> 1.4.2)
@@ -101,43 +101,6 @@ DEPENDENCIES:
   - Tabman (~> 1.0.5)
   - UIFontComplete (~> 2.0.1)
   - WaitForIt (~> 2.0.0)
-
-SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
-    - Alamofire
-    - Crashlytics
-    - Disk
-    - Down
-    - Eureka
-    - Fabric
-    - IQKeyboardManagerSwift
-    - Kingfisher
-    - KoalaTeaFlowLayout
-    - KoalaTeaPlayer
-    - KTResponsiveUI
-    - MBProgressHUD
-    - Mockingjay
-    - Nimble
-    - Pageboy
-    - PopupDialog
-    - PureLayout
-    - Quick
-    - Reusable
-    - SideMenu
-    - Skeleton
-    - SnapKit
-    - StatefulViewController
-    - SwifterSwift
-    - SwiftGen
-    - SwiftLint
-    - SwiftMoment
-    - SwiftSoup
-    - SwiftyBeaver
-    - SwiftyJSON
-    - Tabman
-    - UIFontComplete
-    - URITemplate
-    - WaitForIt
 
 EXTERNAL SOURCES:
   ActiveLabel:
@@ -182,7 +145,7 @@ SPEC CHECKSUMS:
   SwifterSwift: 5f406a5f831343312d6d5b34282b57ef3f52c40b
   SwiftGen: 444b4c467e512a4812b8a800d731643fd265139e
   SwiftIcons: b20641adce6b71fcb2e72389b4b5f2e87252df99
-  SwiftLint: 1b670ce79284c76520f84060e87d645078fd32fa
+  SwiftLint: ce933681be10c3266e82576dad676fa815a602e9
   SwiftMoment: dc6dd27012e267819104cbb03f74ff9192dd0b42
   SwiftSoup: 86a1f5ad07b7e3d14ab1a9324a58c75ae2215e79
   SwiftyBeaver: 25bd76281f49ca989ec2e3cbde9af89c15bc1432
@@ -192,6 +155,6 @@ SPEC CHECKSUMS:
   URITemplate: ace0c4c46dcf8afe6e89b4060621852886b15c3b
   WaitForIt: 2c7ad6deaffe3bf727b7242a2263167bf2ce3e57
 
-PODFILE CHECKSUM: 90d93b8ad7962fbe7cedc9ffb1d9923db10838aa
+PODFILE CHECKSUM: e097c0fc2b61b8ccb8ff6b9f0b0eb03198990d87
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.3.1

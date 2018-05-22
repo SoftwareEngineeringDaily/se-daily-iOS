@@ -22,6 +22,8 @@ protocol AudioOverlayDelegate: class {
 }
 
 class AudioOverlayViewController: UIViewController {
+    let networkService = API()
+
     static let audioControlsViewHeight: CGFloat = 110
 
     private static var userSettingPlaybackSpeedKey = "PlaybackSpeed"
@@ -118,6 +120,7 @@ class AudioOverlayViewController: UIViewController {
         self.saveProgress()
         self.loadAudio(podcastViewModel: podcastViewModel)
         self.createPodcastDetailViewController(podcastViewModel: podcastViewModel)
+        networkService.markAsListened(postId: podcastViewModel._id)
     }
 
     private func saveProgress() {

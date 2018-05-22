@@ -632,7 +632,6 @@
 				AE5F616C12D0339AD2CE40F0 /* [CP] Embed Pods Frameworks */,
 				16D67C4B1F33AD1D0065E838 /* ShellScript */,
 				1E884C331FA428D400400781 /* SwiftLint */,
-				1FAA05CE0527101BA28F8C99 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -652,7 +651,6 @@
 				1686FC0E1F009EC00088A6C1 /* Frameworks */,
 				1686FC0F1F009EC00088A6C1 /* Resources */,
 				43BA1A9ED42DE22C48E64092 /* [CP] Embed Pods Frameworks */,
-				F235D1F6F03A2CC1A2BC35C9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -810,21 +808,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"";
 		};
-		1FAA05CE0527101BA28F8C99 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		43BA1A9ED42DE22C48E64092 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -943,21 +926,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F235D1F6F03A2CC1A2BC35C9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -980,7 +948,6 @@
 				960BFEBB202109800073DAB2 /* AskForReview.swift in Sources */,
 				164FE9EF1F03065C009419CA /* NavigationControllerExtension.swift in Sources */,
 				165484551F902D3F005AEA23 /* GeneralCollectionViewController.swift in Sources */,
-				96922EF420928D5900E9DECE /* ForumHeaderViewController.swift in Sources */,
 				1E638E561FC794AC00A29BDC /* ProgressIndicator.swift in Sources */,
 				161F3DE61F61F73D00A8F825 /* SearchTableViewController.swift in Sources */,
 				1E2BFDCD2017C74A00E6DE0A /* TestHookBoolTableViewCell.swift in Sources */,

@@ -73,7 +73,7 @@ PODS:
   - SwifterSwift/UIKit (4.0.1)
   - SwiftGen (5.2.1)
   - SwiftIcons (1.5.1)
-  - SwiftLint (0.23.1)
+  - SwiftLint (0.25.1)
   - SwiftMoment (0.7)
   - SwiftSoup (1.5.8)
   - SwiftyBeaver (1.4.4)
@@ -114,7 +114,7 @@ DEPENDENCIES:
   - SwifterSwift (~> 4.0.1)
   - SwiftGen (~> 5.2.1)
   - SwiftIcons (from `https://github.com/themisterholliday/SwiftIcons.git`, branch `swift-4`)
-  - SwiftLint (~> 0.23.1)
+  - SwiftLint (~> 0.25.1)
   - SwiftMoment
   - SwiftSoup (~> 1.5.8)
   - SwiftyBeaver (~> 1.4.2)
@@ -215,7 +215,7 @@ SPEC CHECKSUMS:
   SwifterSwift: 5f406a5f831343312d6d5b34282b57ef3f52c40b
   SwiftGen: 444b4c467e512a4812b8a800d731643fd265139e
   SwiftIcons: b20641adce6b71fcb2e72389b4b5f2e87252df99
-  SwiftLint: 1b670ce79284c76520f84060e87d645078fd32fa
+  SwiftLint: ce933681be10c3266e82576dad676fa815a602e9
   SwiftMoment: dc6dd27012e267819104cbb03f74ff9192dd0b42
   SwiftSoup: 86a1f5ad07b7e3d14ab1a9324a58c75ae2215e79
   SwiftyBeaver: 25bd76281f49ca989ec2e3cbde9af89c15bc1432
@@ -225,6 +225,6 @@ SPEC CHECKSUMS:
   URITemplate: ace0c4c46dcf8afe6e89b4060621852886b15c3b
   WaitForIt: 2c7ad6deaffe3bf727b7242a2263167bf2ce3e57
 
-PODFILE CHECKSUM: 0f2fc875995bce30c0b136f5b490b71f53c8a259
+PODFILE CHECKSUM: 900e14f47cd2ee536f721b3001b6397437682697
 
 COCOAPODS: 1.5.0

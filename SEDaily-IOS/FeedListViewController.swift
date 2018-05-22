@@ -15,7 +15,6 @@ class FeedListViewController: UIViewController {
     var threads: [Any] = []
     var lastThread:ForumThread?
     private let refreshControl = UIRefreshControl()
-    let relatedLinksVC = RelatedLinkWebVC()
 
     
     @IBOutlet weak var tableView: UITableView!
@@ -202,7 +201,7 @@ extension FeedListViewController: UITableViewDelegate, UITableViewDataSource {
             
             // Open the link:
             if let linkUrl = URL(string: urlString) {
-                let vc = relatedLinksVC
+                let vc = RelatedLinkWebVC()
                 vc.url = linkUrl
                 self.navigationController?.pushViewController(vc, animated: true)
 

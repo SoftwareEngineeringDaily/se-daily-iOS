@@ -25,8 +25,10 @@ import WebKit
 class RelatedLinkWebVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
     var webView: WKWebView!
     var url:URL?
+    @IBOutlet weak var simpleSpinner: UIActivityIndicatorView!
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        simpleSpinner.stopAnimating()
         webView.isHidden = false
         self.view = webView
     }
@@ -43,7 +45,7 @@ class RelatedLinkWebVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidLoad()
-      
+        simpleSpinner.startAnimating()
         if let url = url {
             let webConfiguration = WKWebViewConfiguration()
             webView = WKWebView(frame: .zero, configuration: webConfiguration)

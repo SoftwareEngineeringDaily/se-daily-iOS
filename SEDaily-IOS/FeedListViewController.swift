@@ -1,5 +1,5 @@
 //
-//  ForumListViewController.swift
+//  FeedListViewController.swift
 //  SEDaily-IOS
 //
 //  Created by jason on 4/25/18.
@@ -15,7 +15,6 @@ class FeedListViewController: UIViewController {
     var threads: [Any] = []
     var lastThread:ForumThread?
     private let refreshControl = UIRefreshControl()
-    let relatedLinksVC = RelatedLinkWebVC()
 
     
     @IBOutlet weak var tableView: UITableView!
@@ -61,7 +60,7 @@ class FeedListViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         loadThreads()
-        Analytics2.forumViewed()
+        Analytics2.feedViewed()
     }
     @objc private func refreshForumData(_ sender: Any) {
         // Fetch Weather Data
@@ -202,7 +201,7 @@ extension FeedListViewController: UITableViewDelegate, UITableViewDataSource {
             
             // Open the link:
             if let linkUrl = URL(string: urlString) {
-                let vc = relatedLinksVC
+                let vc = RelatedLinkWebVC()
                 vc.url = linkUrl
                 self.navigationController?.pushViewController(vc, animated: true)
 

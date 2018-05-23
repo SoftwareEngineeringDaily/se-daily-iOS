@@ -13,11 +13,12 @@ import SnapKit
 import StoreKit
 import SwifterSwift
 import SwiftIcons
+import Firebase
 
 class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 
     var ifset = false
-    
+
     var actionSheet = UIAlertController()
 
     weak var audioOverlayDelegate: AudioOverlayDelegate?
@@ -61,7 +62,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
             self.navigationItem.leftBarButtonItem = leftBarButton
         case true:
             let leftBarButton = UIBarButtonItem(title: L10n.logoutTitle, style: .plain, target: self, action: #selector(self.leftBarButtonPressed))
-            
+
             // Hacky way to show bars icon
             let iconSize: CGFloat = 16.0
             let image = UIImage(bgIcon: .fontAwesome(.bars), bgTextColor: .clear, bgBackgroundColor: .clear, topIcon: .fontAwesome(.bars), topTextColor: .white, bgLarge: false, size: CGSize(width: iconSize, height: iconSize))
@@ -75,19 +76,22 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     @objc func rightBarButtonPressed() {
         let vc = SearchTableViewController()
         self.navigationController?.pushViewController(vc)
+        Analytics2.searchNavButtonPressed()
     }
-    
+
     @objc func leftBarButtonPressed() {
         self.setupLogoutSubscriptionActionSheet()
         self.actionSheet.show()
     }
 
     @objc func loginButtonPressed() {
+        Analytics2.loginNavButtonPressed()
         let vc = LoginViewController()
         self.navigationController?.pushViewController(vc)
     }
 
     @objc func logoutButtonPressed() {
+        Analytics2.logoutNavButtonPressed()
         UserManager.sharedInstance.logoutUser()
         self.setupNavBar()
     }
@@ -99,19 +103,19 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 
     func setupTabs() {
         let layout = UICollectionViewLayout()
-        
-        let storyboard = UIStoryboard.init(name: "ForumList", bundle: nil)
+
+        let storyboard = UIStoryboard.init(name: "FeedList", bundle: nil)
         guard let ForumViewController = storyboard.instantiateViewController(
-            withIdentifier: "ForumListViewController") as? ForumListViewController else {
+            withIdentifier: "FeedListViewController") as? FeedListViewController else {
                 return
         }
-        
+
         self.viewControllers = [
             PodcastPageViewController(audioOverlayDelegate: self.audioOverlayDelegate),
             GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate, type: .recommended),
-	    ForumViewController,
+            ForumViewController,
             BookmarkCollectionViewController(collectionViewLayout: layout),
-            GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate, type: .top),
+//            GeneralCollectionViewController(collectionViewLayout: layout, type: .recommended),
             NotificationsTableViewController()
         ]
 
@@ -149,7 +153,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
                 mail.mailComposeDelegate = self
                 mail.setToRecipients(["jeff@softwareengineeringdaily.com"])
                 mail.setSubject(L10n.appReviewEmailSubject)
-                
+
                 self.present(mail, animated: true, completion: nil)
             } else {
                 let emailUnsupportedPopup = PopupDialog(title: L10n.emailUnsupportedOnDevice, message: L10n.emailUnsupportedMessage)
@@ -160,26 +164,26 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
                 self.present(emailUnsupportedPopup, animated: true, completion: nil)
             }
         }
-        
+
         let feedbackNoButton = DefaultButton(title: L10n.noWithGratitude) {
             popup.dismiss()
         }
-        
+
         let yesButton = DefaultButton(title: L10n.enthusiasticYes) {
             SKStoreReviewController.requestReview()
             AskForReview.setReviewed()
         }
-        
+
         let noButton = DefaultButton(title: L10n.genericNo) {
             popup.dismiss()
             self.present(feedbackPopup, animated: true, completion: nil)
         }
-        
+
         popup.addButtons([yesButton, noButton])
         feedbackPopup.addButtons([feedbackYesButton, feedbackNoButton])
         self.present(popup, animated: true, completion: nil)
     }
-    
+
     func setupLogoutSubscriptionActionSheet() {
         self.actionSheet = UIAlertController(title: "", message: "Whatcha wanna do?", preferredStyle: .actionSheet)
         self.actionSheet.popoverPresentationController?.barButtonItem = self.navigationItem.leftBarButtonItem
@@ -201,7 +205,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 //            }
             break
         }
-        
+
         self.actionSheet.addAction(title: "Logout", style: .destructive, isEnabled: true) { _ in
             self.logoutButtonPressed()
         }

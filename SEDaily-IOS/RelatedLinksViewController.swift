@@ -18,25 +18,25 @@ let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = L10n.relatedLinks
- 
+
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        
+
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 44
-        
+
         // Add activity indicator / spinner
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
         view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
-        
+
         networkService.getRelatedLinks(podcastId: self.postId, onSuccess: { [weak self] relatedLinks in
             self?.links = relatedLinks
             self?.tableView.reloadData()
             self?.activityIndicator.stopAnimating()
-            
+
             self?.title = "\(relatedLinks.count) \(L10n.relatedLinks)"
             if relatedLinks.count == 0 {
                 self?.tableView.isHidden = true
@@ -54,21 +54,21 @@ let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
 }
 
 extension RelatedLinksViewController: UITableViewDataSource, UITableViewDelegate {
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.links.count
     }
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = self.links[indexPath.row].title
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Add http:// prefix to url if it doesn't exist so it can be opened:
         // Could be moved to themodel
@@ -82,7 +82,7 @@ extension RelatedLinksViewController: UITableViewDataSource, UITableViewDelegate
                 urlString = "http://\(urlString)"
             }
         }
-        
+
         // Open the link:
         if let linkUrl = URL(string: urlString) {
             UIApplication.shared.open(linkUrl, options: [:], completionHandler: nil)
@@ -90,4 +90,5 @@ extension RelatedLinksViewController: UITableViewDataSource, UITableViewDelegate
             print("link null")
         }
     }
+
 }

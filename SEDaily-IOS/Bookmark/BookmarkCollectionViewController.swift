@@ -60,7 +60,7 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
             action: #selector(pullToRefresh(_:)),
             for: .valueChanged)
         self.collectionView?.refreshControl = refreshControl
-
+        Analytics2.bookmarksPageViewed()
     }
 
     @objc private func pullToRefresh(_ sender: Any) {
@@ -195,6 +195,7 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 extension BookmarkCollectionViewController: StateViewDelegate {
     func refreshPressed() {
         self.refreshView(useCache: false)
+        Analytics2.refreshMyBookmarksPressed()
     }
 }
 

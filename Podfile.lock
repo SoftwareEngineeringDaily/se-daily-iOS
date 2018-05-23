@@ -7,6 +7,21 @@ PODS:
   - Down (0.5.1)
   - Eureka (4.1.1)
   - Fabric (1.7.5)
+  - Firebase/Core (4.13.0):
+    - FirebaseAnalytics (= 4.2.0)
+    - FirebaseCore (= 4.0.20)
+  - FirebaseAnalytics (4.2.0):
+    - FirebaseCore (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - nanopb (~> 0.3)
+  - FirebaseCore (4.0.20):
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+  - FirebaseInstanceID (2.0.10):
+    - FirebaseCore (~> 4.0)
+  - GoogleToolboxForMac/Defines (2.1.4)
+  - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
+    - GoogleToolboxForMac/Defines (= 2.1.4)
   - IQKeyboardManagerSwift (5.0.8)
   - Kingfisher (4.2.0)
   - KoalaTeaFlowLayout (0.3.1)
@@ -24,6 +39,11 @@ PODS:
     - URITemplate (~> 2.0)
   - Mockingjay/XCTest (2.0.1):
     - Mockingjay/Core
+  - nanopb (0.3.8):
+    - nanopb/decode (= 0.3.8)
+    - nanopb/encode (= 0.3.8)
+  - nanopb/decode (0.3.8)
+  - nanopb/encode (0.3.8)
   - Nimble (7.0.3)
   - Pageboy (2.0.4)
   - PopupDialog (0.6.2)
@@ -73,6 +93,7 @@ DEPENDENCIES:
   - Down
   - Eureka (~> 4.1.1)
   - Fabric (~> 1.7.5)
+  - Firebase/Core
   - IQKeyboardManagerSwift (~> 5.0.8)
   - Kingfisher (~> 4.2.0)
   - KoalaTeaFlowLayout (~> 0.3.1)
@@ -102,6 +123,49 @@ DEPENDENCIES:
   - UIFontComplete (~> 2.0.1)
   - WaitForIt (~> 2.0.0)
 
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - Crashlytics
+    - Disk
+    - Down
+    - Eureka
+    - Fabric
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseInstanceID
+    - GoogleToolboxForMac
+    - IQKeyboardManagerSwift
+    - Kingfisher
+    - KoalaTeaFlowLayout
+    - KoalaTeaPlayer
+    - KTResponsiveUI
+    - MBProgressHUD
+    - Mockingjay
+    - nanopb
+    - Nimble
+    - Pageboy
+    - PopupDialog
+    - PureLayout
+    - Quick
+    - Reusable
+    - SideMenu
+    - Skeleton
+    - SnapKit
+    - StatefulViewController
+    - SwifterSwift
+    - SwiftGen
+    - SwiftLint
+    - SwiftMoment
+    - SwiftSoup
+    - SwiftyBeaver
+    - SwiftyJSON
+    - Tabman
+    - UIFontComplete
+    - URITemplate
+    - WaitForIt
+
 EXTERNAL SOURCES:
   ActiveLabel:
     :git: https://github.com/optonaut/ActiveLabel.swift.git
@@ -125,6 +189,11 @@ SPEC CHECKSUMS:
   Down: 6ace44ecec0c408826342ed420002f39a18e38c3
   Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
   Fabric: ae7146a5f505ea370a1e44820b4b1dc8890e2890
+  Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
+  FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
+  FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
+  FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
+  GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   IQKeyboardManagerSwift: 2e7dc7f98c111458c1ea2b373f893e8cf95e2b97
   Kingfisher: 9ee7e788d8ba07c3f21ce0d43f33cec310a4f781
   KoalaTeaFlowLayout: 219c45709d0873d405b2de1b27080a9c411246b7
@@ -132,6 +201,7 @@ SPEC CHECKSUMS:
   KTResponsiveUI: c8a75fe5270e05749a5ca8d20ab008a285b5e260
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   Mockingjay: 11a621880d2887f1775bdcf824341eb68f218450
+  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
   Pageboy: 5970f6138b035380fd633b1813b7cc056784b784
   PopupDialog: d4336d7274a6aa3af4cb26d8b6691510eba90cc3
@@ -155,6 +225,6 @@ SPEC CHECKSUMS:
   URITemplate: ace0c4c46dcf8afe6e89b4060621852886b15c3b
   WaitForIt: 2c7ad6deaffe3bf727b7242a2263167bf2ce3e57
 
-PODFILE CHECKSUM: e097c0fc2b61b8ccb8ff6b9f0b0eb03198990d87
+PODFILE CHECKSUM: 900e14f47cd2ee536f721b3001b6397437682697
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.5.0

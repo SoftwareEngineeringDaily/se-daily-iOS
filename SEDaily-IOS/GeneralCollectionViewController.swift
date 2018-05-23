@@ -85,6 +85,15 @@ class GeneralCollectionViewController: UICollectionViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)
 
         self.collectionView?.addSubview(skeletonCollectionView)
+        
+        switch type {
+        case .new:
+            Analytics2.newPodcastsListViewed(tabTitle: self.tabTitle)
+        case .recommended:
+            Analytics2.recommendedPodcastsListViewed(tabTitle: self.tabTitle)
+        case .top:
+            Analytics2.topPodcastsListViewed(tabTitle: self.tabTitle)
+        }        
     }
 
     override func viewDidAppear(_ animated: Bool) {

@@ -16,9 +16,11 @@ protocol HeaderViewDelegate: class {
 }
 
 class HeaderView: UIView {
+    var iconSize = UIView.getValueScaledByScreenWidthFor(baseValue: 34)
+
     weak var delegate: HeaderViewDelegate?
     weak var audioOverlayDelegate: AudioOverlayDelegate?
-    
+
     var podcastViewModel = PodcastViewModel()
 
     let titleLabel = UILabel()
@@ -26,10 +28,10 @@ class HeaderView: UIView {
 
     let playView = UIView()
     let playButton = UIButton()
-    
+
     let secondaryView = UIView()
     let relatedLinksButton = UIButton()
-    
+
     let voteView = UIView()
     let stackView = UIStackView()
     let commentsButton = UIButton()
@@ -44,7 +46,6 @@ class HeaderView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
         self.performLayout()
     }
 
@@ -61,7 +62,7 @@ class HeaderView: UIView {
         self.backgroundColor = Stylesheet.Colors.base
         setupPlayView()
         setupSecondaryView()
-        
+
         titleLabel.snp.makeConstraints { (make) in
             make.bottom.equalTo(playView.snp.top).offset(UIView.getValueScaledByScreenHeightFor(baseValue: -60))
             make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
@@ -91,25 +92,25 @@ class HeaderView: UIView {
         dateLabel.numberOfLines = 1
         dateLabel.textColor = Stylesheet.Colors.white
     }
-    
+
     func setupSecondaryView() {
         self.addSubview(secondaryView)
-        
+
         secondaryView.backgroundColor = UIColor.clear
-        
+
         secondaryView.snp.makeConstraints { (make) in
             make.bottom.equalTo(playView.snp.top)
             make.right.left.equalToSuperview()
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 65))
         }
-        
+
         // Add relatedLinksButton
         secondaryView.addSubview(relatedLinksButton)
         relatedLinksButton.setTitle(L10n.relatedLinks, for: .normal)
         relatedLinksButton.setBackgroundColor(color: Stylesheet.Colors.baseLight, forState: .normal)
         relatedLinksButton.addTarget(self, action: #selector(self.relatedLinksButtonPressed), for: .touchUpInside)
         relatedLinksButton.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 4)
-        
+
         relatedLinksButton.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
@@ -117,10 +118,10 @@ class HeaderView: UIView {
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 35))
         }
     }
-    
+
     func setupPlayView() {
         self.addSubview(playView)
-        
+
         // The playView is the row with the Up / Down and Pink Playbutton
         playView.backgroundColor = Stylesheet.Colors.white
 
@@ -159,16 +160,14 @@ class HeaderView: UIView {
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
 //        stackView.addArrangedSubview(commentsButton)
-        
+
         stackView.addArrangedSubview(downVoteButton)
         stackView.addArrangedSubview(scoreLabel)
         stackView.addArrangedSubview(upVoteButton)
-     
+
         scoreLabel.textAlignment = .center
         scoreLabel.baselineAdjustment = .alignCenters
         scoreLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 24))
-
-        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 34)
 
         downVoteButton.setIcon(icon: .fontAwesome(.thumbsODown), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
         downVoteButton.setIcon(icon: .fontAwesome(.thumbsDown), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
@@ -218,7 +217,7 @@ extension HeaderView {
     @objc func commentsButtonPressed() {
         self.delegate?.commentsButtonPressed()
     }
-    
+
     @objc func upvoteButtonPressed() {
         guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
@@ -230,7 +229,7 @@ extension HeaderView {
         self.setDownvoteTo(false)
 
         let podcastId = podcastViewModel._id
-        
+
         networkService.upvotePodcast(podcastId: podcastId, completion: { (success, active) in
             guard success != nil else { return }
             if success == true {
@@ -371,7 +370,6 @@ extension HeaderView {
     }
 
     private func setupDownloadButton() {
-        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 35)
 
         self.downloadButton.addTarget(self, action: #selector(self.downloadButtonPressed), for: .touchUpInside)
         self.downloadButton.setIcon(
@@ -394,12 +392,11 @@ extension HeaderView {
             make.centerY.equalTo(self.playButton.snp.centerY)
         }
     }
-    
+
     private func setupCommentsButton() {
-        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 34)
         commentsButton.setIcon(icon: .fontAwesome(.commentO), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
         commentsButton.addTarget(self, action: #selector(self.commentsButtonPressed), for: .touchUpInside)
-        
+
         self.playView.addSubview(self.commentsButton)
 
         let rightInset = UIView.getValueScaledByScreenWidthFor(baseValue: 20)

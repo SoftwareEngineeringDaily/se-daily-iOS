@@ -20,7 +20,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
     weak var audioOverlayDelegate: AudioOverlayDelegate?
 
     private var bookmarkButton: UIButton?
-    
+
     let networkService: API = API()
 
     var model = PodcastViewModel()
@@ -71,6 +71,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
             let bookmarkBarButtonItem = UIBarButtonItem(customView: bookmarkButton)
             self.navigationItem.rightBarButtonItem = bookmarkBarButtonItem
         }
+        Analytics2.podcastPageViewed(podcastId: model._id)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -109,6 +110,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
                 self.updateBookmarked(active: active)
             }
         })
+        Analytics2.bookmarkButtonPressed(podcastId: model._id)
     }
 
     private func updateBookmarked(active: Bool) {
@@ -169,6 +171,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
 
 extension PodcastDetailViewController: HeaderViewDelegate {
     func relatedLinksButtonPressed() {
+        Analytics2.relatedLinksButtonPressed(podcastId: model._id)
         let relatedLinksStoryboard = UIStoryboard.init(name: "RelatedLinks", bundle: nil)
         guard let relatedLinksViewController = relatedLinksStoryboard.instantiateViewController(
             withIdentifier: "RelatedLinksViewController") as? RelatedLinksViewController else {
@@ -178,19 +181,20 @@ extension PodcastDetailViewController: HeaderViewDelegate {
         relatedLinksViewController.postId = podcastId
         self.navigationController?.pushViewController(relatedLinksViewController, animated: true)
     }
-    
+
     func commentsButtonPressed() {
+        Analytics2.podcastCommentsViewed(podcastId: model._id)
         let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
         guard let commentsViewController = commentsStoryboard.instantiateViewController(
             withIdentifier: "CommentsViewController") as? CommentsViewController else {
                 return
         }
-        if let thread = model.thread {            
+        if let thread = model.thread {
             commentsViewController.rootEntityId = thread._id
             self.navigationController?.pushViewController(commentsViewController, animated: true)
         }
     }
-    
+
     func modelDidChange(viewModel: PodcastViewModel) {
         self.delegate?.modelDidChange(viewModel: viewModel)
     }

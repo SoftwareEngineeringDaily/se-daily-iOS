@@ -14,6 +14,7 @@ import Fabric
 import Crashlytics
 import Kingfisher
 //import Stripe
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -32,7 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let maxByteSize: UInt = 50 * 1024 * 1024
         ImageCache.default.maxDiskCacheSize = maxByteSize
         ImageCache.default.maxMemoryCost = maxByteSize
-
+        
+        FirebaseApp.configure()
         return true
     }
 

@@ -40,6 +40,7 @@ class LoginViewController: UIViewController {
 
         performLayout()
         self.view.backgroundColor = Stylesheet.Colors.base
+        Analytics2.loginFormViewed()
     }
 
     override func didReceiveMemoryWarning() {
@@ -297,6 +298,8 @@ class LoginViewController: UIViewController {
     }
 
     @objc func cancelButtonPressed() {
+        Analytics2.cancelRegistrationButtonPressed()
+        Analytics2.loginFormViewed()
         UIView.animate(withDuration: 0.15, animations: {
             self.loginButton.isHidden = false
             self.cancelButton.isHidden = true
@@ -319,6 +322,7 @@ class LoginViewController: UIViewController {
     @objc func signUpButtonPressed() {
         if passwordConfirmTextField.isHidden == true {
             UIView.animate(withDuration: 0.15, animations: {
+                Analytics2.registrationFormViewed()
                 self.loginButton.isHidden = true
                 self.cancelButton.isHidden = false
                 

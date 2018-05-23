@@ -15,3 +15,18 @@ public struct Author: Codable {
     let name: String?
     let avatarUrl: String?
 }
+
+
+extension Author {
+    func displayName() -> String {
+
+        if let name = self.name {
+            return name
+        }
+        if let username = self.username {
+            return username
+        }
+        
+        return L10n.anonymous
+    }
+}

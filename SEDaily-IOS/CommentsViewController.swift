@@ -159,23 +159,11 @@ class CommentsViewController: UIViewController {
         if !UserManager.sharedInstance.isCurrentUserLoggedIn() {
             return false
         }
-        
-        let usernameOrEmail = UserManager.sharedInstance.currentUser.usernameOrEmail
-        if isValidEmail(testStr: usernameOrEmail) {
-            // This means we probably don't have a real username (assuming usernames dont allow @):
-            return false
-        } else {
-            return true
-        }
+               
+        return true
+       
     }
-    // From stackoveflow:
-    func isValidEmail(testStr: String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        
-        let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluate(with: testStr)
-    }
-    
+
     func loadComments() {
         activityIndicator.startAnimating()
         

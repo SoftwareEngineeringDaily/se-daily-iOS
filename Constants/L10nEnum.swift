@@ -113,6 +113,8 @@ enum L10n {
   static let submitting = L10n.tr("Localizable", "Submitting")
   /// Successfully submitted :)
   static let succcessfullySubmitted = L10n.tr("Localizable", "SucccessfullySubmitted")
+  /// Feed
+  static let tabBarFeed = L10n.tr("Localizable", "TabBarFeed")
   /// Forum
   static let tabBarForum = L10n.tr("Localizable", "TabBarForum")
   /// Just For You

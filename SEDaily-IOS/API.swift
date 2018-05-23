@@ -25,6 +25,9 @@ extension API {
         static let posts = "/posts"
         static let recommendations = "/posts/recommendations"
         static let forum = "/forum"
+        static let feed = "/feed"
+        static let listened = "/listened"
+
         static let login = "/auth/login"
         static let register = "/auth/register"
         static let upvote = "/upvote"
@@ -75,7 +78,7 @@ extension API {
 class API {
     private let prodRootURL = "https://software-enginnering-daily-api.herokuapp.com/api"
     private let stagingRootURL = "https://sedaily-backend-staging.herokuapp.com/api"
-
+    
     var rootURL: String {
         #if DEBUG
             if let useStagingEndpointTestHook = TestHookManager.testHookBool(id: TestHookId.useStagingEndpoint),
@@ -412,13 +415,40 @@ extension API {
         }
     }
 }
-typealias ForumThreadModel = ForumThread
-// MARK: Forum
+
+// MARK: Listened History
 extension API {
-    
-    func getForumThreads(
+    func markAsListened(postId: String) {
+    //    http://localhost:4040/api/posts/5a57b6ffe9b21f96de35dabb/listened
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
+        let _headers: HTTPHeaders = [
+            Headers.authorization: Headers.bearer + userToken
+        ]
+        
+        let urlString = rootURL + API.Endpoints.posts + "/" +  postId + API.Endpoints.listened
+        networkRequest(urlString, method: .post, parameters: nil, encoding: URLEncoding.httpBody, headers: _headers)
+            .validate(statusCode: 200..<300)
+            .responseJSON { response in
+                
+                switch response.result {
+                case .success:
+                    // onSuccess()
+                    print("success")
+                case .failure(let error):
+                    log.error(error)
+                    //  onFailure(nil)
+                }
+        }
+    }
+}
+typealias ForumThreadModel = ForumThread
+// MARK: Feed
+extension API {
+
+    func getFeed(
                   lastActivityBefore lastActivityBeforeDate: String = "",
-                  onSuccess: @escaping ([ForumThreadModel]) -> Void,
+                  onSuccess: @escaping ([Any], ForumThread?) -> Void,
                   onFailure: @escaping (APIError?) -> Void) {
         
         let user = UserManager.sharedInstance.getActiveUser()
@@ -427,14 +457,14 @@ extension API {
             Headers.authorization: Headers.bearer + userToken
         ]
         
-        let urlString = rootURL + API.Endpoints.forum
+        let urlString = rootURL + API.Endpoints.feed
     
         // Params
         var params = [String: String]()
         if lastActivityBeforeDate != "" {
             params[Params.lastActivityBefore] = lastActivityBeforeDate
         }
-
+        
         networkRequest(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
             switch response.result {
             case .success:
@@ -445,16 +475,23 @@ extension API {
                     return
                 }
                 
-                var data: [ForumThreadModel] = []
+                var data: [Any] = []
                 let this = JSON(responseData)
+                var lastThread: ForumThread?
                 for (_, subJson):(String, JSON) in this {
                     guard let jsonData = try? subJson.rawData() else { continue }
                     let newObject = try? JSONDecoder().decode(ForumThreadModel.self, from: jsonData)
                     if let newObject = newObject {
                         data.append(newObject)
+                        lastThread = newObject as ForumThread
+                    } else {
+                        if let feedItem = try? JSONDecoder().decode(FeedItem.self, from: jsonData) {
+                            data.append(feedItem)
+                        }
+                                              
                     }
                 }
-                onSuccess(data)
+                onSuccess(data, lastThread)
             case .failure(let error):
                 log.error(error.localizedDescription)
                 Tracker.logGeneralError(error: error)
@@ -503,6 +540,44 @@ extension API {
             }
         }
     }
+    
+    func upvoteRelatedLink(entityId: String, completion: @escaping (_ success: Bool?, _ active: Bool?) -> Void) {
+        let urlString = self.rootURL + Endpoints.relatedLinks + "/" + entityId + Endpoints.upvote
+        
+        let user = UserManager.sharedInstance.getActiveUser()
+        let userToken = user.token
+        let _headers: HTTPHeaders = [
+            Headers.authorization: Headers.bearer + userToken,
+            Headers.contentType: Headers.x_www_form_urlencoded
+        ]
+        
+        networkRequest(urlString, method: .post, parameters: nil, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let jsonResponse = response.result.value as? NSDictionary else {
+                    Tracker.logGeneralError(string: "Error result value is not a NSDictionary")
+                    completion(false, nil)
+                    return
+                }
+                
+                if let message = jsonResponse["message"] {
+                    Helpers.alertWithMessage(title: Helpers.Alerts.error, message: String(describing: message), completionHandler: nil)
+                    completion(false, nil)
+                    return
+                }
+                
+                if let active = jsonResponse["active"] as? Bool {
+                    completion(true, active)
+                }
+            case .failure(let error):
+                log.error(error)
+                Tracker.logGeneralError(error: error)
+                Helpers.alertWithMessage(title: Helpers.Alerts.error, message: error.localizedDescription, completionHandler: nil)
+                completion(false, nil)
+            }
+        }
+    }
+    
 }
 
 typealias  CommentModel = Comment

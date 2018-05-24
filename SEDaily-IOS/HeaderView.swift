@@ -12,6 +12,7 @@ import SwiftIcons
 protocol HeaderViewDelegate: class {
     func modelDidChange(viewModel: PodcastViewModel)
     func relatedLinksButtonPressed()
+    func updateBookmarked(active: Bool)
     func commentsButtonPressed()
 }
 
@@ -315,7 +316,24 @@ extension HeaderView {
         self.downloadButton.isSelected = true
 
         self.playButton.isUserInteractionEnabled = false
-
+        
+        let podcastId = self.podcastViewModel._id
+        
+        if UserManager.sharedInstance.isCurrentUserLoggedIn() == true {
+            if !self.podcastViewModel.isBookmarked {
+                networkService.setBookmarkPodcast(
+                    value: true,
+                    podcastId: podcastId,
+                    completion: { (success, active) in
+                        guard success != nil else { return }
+                        if success == true {
+                            guard let active = active else { return }
+                            self.delegate?.updateBookmarked(active: active)
+                        }
+                })
+            }
+        }
+        
         self.downloadManager.save(
             podcast: self.podcastViewModel,
             onProgress: { progress in

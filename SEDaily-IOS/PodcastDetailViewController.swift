@@ -113,12 +113,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
         Analytics2.bookmarkButtonPressed(podcastId: model._id)
     }
 
-    private func updateBookmarked(active: Bool) {
-        self.setBookmarked(active)
-        self.model.isBookmarked = active
-        self.delegate?.modelDidChange(viewModel: self.model)
-    }
-
+ 
     private func setBookmarked(_ bool: Bool) {
         self.model.isBookmarked = bool
         self.bookmarkButton?.isSelected = bool
@@ -170,6 +165,13 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
 }
 
 extension PodcastDetailViewController: HeaderViewDelegate {
+    
+    func updateBookmarked(active: Bool) {
+        self.setBookmarked(active)
+        self.model.isBookmarked = active
+        self.delegate?.modelDidChange(viewModel: self.model)
+    }
+
     func relatedLinksButtonPressed() {
         Analytics2.relatedLinksButtonPressed(podcastId: model._id)
         let relatedLinksStoryboard = UIStoryboard.init(name: "RelatedLinks", bundle: nil)

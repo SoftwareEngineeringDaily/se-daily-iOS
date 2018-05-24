@@ -329,6 +329,7 @@ extension HeaderView {
                         if success == true {
                             guard let active = active else { return }
                             self.delegate?.updateBookmarked(active: active)
+                            self.podcastViewModel.isBookmarked = active
                         }
                 })
             }

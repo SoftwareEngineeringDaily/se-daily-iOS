@@ -68,7 +68,12 @@ class PodcastCell: UICollectionViewCell {
 
     private func setupTimeDayLabel(timeLength: Int?, date: Date?) {
         let dateString = date?.dateString() ?? ""
-        timeDayLabel.text = dateString
+        if viewModel.isDownloaded {
+            timeDayLabel.text = "\(dateString) (Downloaded)"
+        } else {
+            timeDayLabel.text = dateString
+        }
+        
     }
 
     // MARK: Skeleton

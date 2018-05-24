@@ -175,6 +175,12 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 
         if let viewModel = self.viewModelController.viewModel(at: indexPath.row) {
             cell.viewModel = viewModel
+            if viewModel.isDownloaded {
+                cell.backgroundColor = UIColor(red:0.88, green:1.00, blue:0.82, alpha:1.0)
+            } else {
+                cell.backgroundColor = UIColor.clear
+            }
+            
         }
 
         return cell

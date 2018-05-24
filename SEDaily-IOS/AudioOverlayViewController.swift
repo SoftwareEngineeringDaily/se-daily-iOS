@@ -317,7 +317,8 @@ extension AudioOverlayViewController: AudioViewDelegate {
     }
 
     func stopButtonPressed() {
-        assetPlaybackManager?.stop()
+        assetPlaybackManager?.pause()        
+        self.audioOverlayDelegate?.animateOverlayOut()
     }
 
     func skipForwardButtonPressed() {

@@ -34,7 +34,8 @@ class GeneralCollectionViewController: UICollectionViewController {
     var customTabBarItem: UITabBarItem! {
         switch type {
         case .new:
-            return nil
+            // This is actually greatest hits right now
+            return UITabBarItem(tabBarSystemItem: .mostViewed, tag: 0)
         case .recommended:
             return UITabBarItem(title: L10n.tabBarJustForYou, image: #imageLiteral(resourceName: "activity_feed"), selectedImage: #imageLiteral(resourceName: "activity_feed_selected"))
         case .top:

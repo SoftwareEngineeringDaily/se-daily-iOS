@@ -14,6 +14,7 @@ import StoreKit
 import SwifterSwift
 import SwiftIcons
 import Firebase
+import Bumper
 
 class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 
@@ -44,6 +45,17 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupNavBar()
+
+        // Display the what's new dialog if the app was updated and there is
+        // content to show
+        if L10n.whatsNewBody.length > 0 {
+            Bumper.tryToExecute {
+                let whatsNewPopup = PopupDialog(title: L10n.whatsNewHeader, message: L10n.whatsNewBody)
+                let okayButton = DefaultButton(title: L10n.genericOkay, action: nil)
+                whatsNewPopup.addButton(okayButton)
+                self.present(whatsNewPopup, animated: true, completion: nil)
+            }
+        }
 
         AskForReview.tryToExecute { didExecute in
             if didExecute {

@@ -1,6 +1,7 @@
 PODS:
   - ActiveLabel (0.8.1)
   - Alamofire (4.5.1)
+  - Bumper (0.1.0)
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
   - Disk (0.3.3)
@@ -88,6 +89,7 @@ PODS:
 DEPENDENCIES:
   - ActiveLabel (from `https://github.com/optonaut/ActiveLabel.swift.git`)
   - Alamofire (~> 4.5.1)
+  - Bumper (~> 0.1.0)
   - Crashlytics (~> 3.9.3)
   - Disk (~> 0.3.1)
   - Down
@@ -124,8 +126,9 @@ DEPENDENCIES:
   - WaitForIt (~> 2.0.0)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - Alamofire
+    - Bumper
     - Crashlytics
     - Disk
     - Down
@@ -184,6 +187,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   ActiveLabel: 2fc3cdffed0dcdaad82d50af46233b9ef2f401e4
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
+  Bumper: a4e21282b402b5ffbd482655d4f62d3fa5c86751
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Disk: d1f55cd61f6ca20f368232d0c6e37e3c3dfcb63e
   Down: 6ace44ecec0c408826342ed420002f39a18e38c3
@@ -225,6 +229,6 @@ SPEC CHECKSUMS:
   URITemplate: ace0c4c46dcf8afe6e89b4060621852886b15c3b
   WaitForIt: 2c7ad6deaffe3bf727b7242a2263167bf2ce3e57
 
-PODFILE CHECKSUM: 900e14f47cd2ee536f721b3001b6397437682697
+PODFILE CHECKSUM: a01b7294d8d9c2506218b0a32829d2212cac069b
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.2

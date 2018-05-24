@@ -153,6 +153,10 @@ enum L10n {
   static let usernameOrEmailPlaceholder = L10n.tr("Localizable", "UsernameOrEmailPlaceholder")
   /// Username
   static let usernamePlaceholder = L10n.tr("Localizable", "UsernamePlaceholder")
+  /// - Offline downloads - Take SEDaily with you everywhere :D\n- Bookmark fixes\n- Local notifications - If you need a reminder to listen to all of our amazing content
+  static let whatsNewBody = L10n.tr("Localizable", "WhatsNewBody")
+  /// Here's what's new in this app update!
+  static let whatsNewHeader = L10n.tr("Localizable", "WhatsNewHeader")
 }
 // swiftlint:enable explicit_type_interface identifier_name line_length nesting type_body_length type_name
 

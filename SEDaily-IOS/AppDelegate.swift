@@ -15,6 +15,7 @@ import Crashlytics
 import Kingfisher
 //import Stripe
 import Firebase
+import Bumper
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Fabric.with([Crashlytics.self])
         setupSwiftyBeaver()
         setupIQKeyboard()
+        setupBumper()
         setupFirstScreen()
 
         // Max size for Kingfisher ImageCache
@@ -72,6 +74,10 @@ extension AppDelegate {
 
     func setupIQKeyboard() {
         IQKeyboardManager.sharedManager().enable = true
+    }
+
+    func setupBumper() {
+        Bumper.launch()
     }
 
     func setupFirstScreen() {

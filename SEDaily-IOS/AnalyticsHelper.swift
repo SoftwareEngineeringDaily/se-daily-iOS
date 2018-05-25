@@ -44,7 +44,7 @@ class Analytics2 {
     
     class func forumThreadViewed(forumThread: ForumThread) {
         Analytics.logEvent("forum_thread_viewed", parameters: [
-            AnalyticsParameterItemID: "id-\(forumThread.title)",
+            AnalyticsParameterItemID: "id-\(forumThread._id)",
             AnalyticsParameterItemName: forumThread.title,
             AnalyticsParameterContentType: "view"
         ])

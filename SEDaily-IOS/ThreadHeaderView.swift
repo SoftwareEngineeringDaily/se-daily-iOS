@@ -31,6 +31,7 @@ class ThreadHeaderView: UIView {
             dateLabel.text = thread?.getDatedCreatedPretty()
             if let thread = thread {
                 Analytics2.forumThreadViewed(forumThread: thread)
+                Tracker.logForumThreadViewed(forumThread: thread)
             }
         }
     }

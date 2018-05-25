@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Firebase
 
 class FeedListViewController: UIViewController {
 
@@ -61,6 +60,7 @@ class FeedListViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         loadThreads()
         Analytics2.feedViewed()
+        Tracker.logFeedViewed()
     }
     @objc private func refreshForumData(_ sender: Any) {
         // Fetch Weather Data

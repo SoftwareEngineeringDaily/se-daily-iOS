@@ -24,6 +24,15 @@ class Analytics2 {
     class func registrationFormViewed() {
         Analytics.logEvent("registration_form_viewed", parameters: nil)
     }
+    
+    class func podcastPlayed(podcastId: String) {
+        Analytics.logEvent("podcast_episode_played", parameters: [
+            AnalyticsParameterItemID: "id-\(podcastId)",
+            AnalyticsParameterItemName: podcastId,
+            AnalyticsParameterContentType: "play"
+            ])
+    }
+        
     class func podcastPageViewed(podcastId: String) {
         Analytics.logEvent("podcast_episode_viewed", parameters: [
             AnalyticsParameterItemID: "id-\(podcastId)",
@@ -44,7 +53,7 @@ class Analytics2 {
     
     class func forumThreadViewed(forumThread: ForumThread) {
         Analytics.logEvent("forum_thread_viewed", parameters: [
-            AnalyticsParameterItemID: "id-\(forumThread.title)",
+            AnalyticsParameterItemID: "id-\(forumThread._id)",
             AnalyticsParameterItemName: forumThread.title,
             AnalyticsParameterContentType: "view"
         ])

@@ -34,7 +34,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ImageCache.default.maxDiskCacheSize = maxByteSize
         ImageCache.default.maxMemoryCost = maxByteSize
         
-        FirebaseApp.configure()
+        #if DEBUG
+            print("FIREBASE OFF, DEBUG / DEV MODE-------")
+        #else
+            FirebaseApp.configure()
+        #endif
+        
         return true
     }
 

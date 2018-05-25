@@ -49,7 +49,7 @@ class PodcastCell: UICollectionViewCell {
 
         miscDetailsLabel = UILabel(origin: titleLabel.bottomLeftPoint(), topInset: 8, width: 158, height: 14)
         self.contentView.addSubview(miscDetailsLabel)
-        miscDetailsLabel.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 12))
+        miscDetailsLabel.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 10))
     }
 
     required init(coder aDecoder: NSCoder) {

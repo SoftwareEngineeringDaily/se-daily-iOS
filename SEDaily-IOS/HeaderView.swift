@@ -344,9 +344,9 @@ extension HeaderView {
             onSucces: {
                 // Show success by changing download
                 self.delegate?.modelDidChange(viewModel: self.podcastViewModel)
-                self.audioOverlayDelegate?.animateOverlayIn()
-                self.audioOverlayDelegate?.playAudio(podcastViewModel: self.podcastViewModel)
-                self.audioOverlayDelegate?.pauseAudio()
+//                self.audioOverlayDelegate?.animateOverlayIn()
+//                self.audioOverlayDelegate?.playAudio(podcastViewModel: self.podcastViewModel)
+//                self.audioOverlayDelegate?.pauseAudio()
                 self.playButton.setTitle("Play", for: .normal)
                 self.playButton.isUserInteractionEnabled = true},
             onFailure: { error in

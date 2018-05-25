@@ -56,6 +56,7 @@ class RelatedLinkWebVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
             let myRequest = URLRequest(url: url)
             webView.load(myRequest)
             Analytics2.relatedLinkViewed(url: url)
+            Tracker.logRelatedLinkViewedFromFeed(url: url)
         }
         // Do any additional setup after loading the view.
     }

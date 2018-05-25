@@ -38,7 +38,7 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 
         let layout = KoalaTeaFlowLayout(
             cellWidth: UIView.getValueScaledByScreenWidthFor(baseValue: 158),
-            cellHeight: UIView.getValueScaledByScreenHeightFor(baseValue: 250),
+            cellHeight: UIView.getValueScaledByScreenHeightFor(baseValue: Helpers.getEpisodeCellHeight()),
             topBottomMargin: UIView.getValueScaledByScreenHeightFor(baseValue: 12),
             leftRightMargin: UIView.getValueScaledByScreenWidthFor(baseValue: 20),
             cellSpacing: UIView.getValueScaledByScreenWidthFor(baseValue: 8))

@@ -135,6 +135,10 @@ extension ContainerViewController: AudioOverlayDelegate {
         self.audioOverlayViewController?.playAudio(podcastViewModel: podcastViewModel)
     }
 
+    func pauseAudio() {
+        self.audioOverlayViewController?.pauseAudio()
+    }
+
     func setCurrentShowingDetailView(podcastViewModel: PodcastViewModel?) {
         self.audioOverlayViewController?.setCurrentShowingDetailView(
             podcastViewModel: podcastViewModel)

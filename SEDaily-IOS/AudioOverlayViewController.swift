@@ -18,6 +18,7 @@ protocol AudioOverlayDelegate: class {
     func animateOverlayIn()
     func animateOverlayOut()
     func playAudio(podcastViewModel: PodcastViewModel)
+    func pauseAudio()
     func setCurrentShowingDetailView(podcastViewModel: PodcastViewModel?)
 }
 
@@ -121,6 +122,10 @@ class AudioOverlayViewController: UIViewController {
         self.loadAudio(podcastViewModel: podcastViewModel)
         self.createPodcastDetailViewController(podcastViewModel: podcastViewModel)
         networkService.markAsListened(postId: podcastViewModel._id)
+    }
+
+    func pauseAudio() {
+        self.pauseButtonPressed()
     }
 
     private func saveProgress() {

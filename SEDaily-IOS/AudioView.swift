@@ -190,12 +190,14 @@ class AudioView: UIView {
             make.centerX.equalToSuperview()
         }
         
+        let spacerButton = UIButton()
         stackView.addArrangedSubview(stopButton)
         stackView.addArrangedSubview(skipBackwardbutton)
         stackView.addArrangedSubview(playButton)
         stackView.addArrangedSubview(pauseButton)
         stackView.addArrangedSubview(skipForwardButton)
-
+        stackView.addArrangedSubview(spacerButton)
+        
         let iconHeight = UIView.getValueScaledByScreenHeightFor(baseValue: (70 / 2))
 
         expandCollapseButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)

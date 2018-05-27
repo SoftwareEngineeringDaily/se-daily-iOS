@@ -13,14 +13,14 @@ PODS:
   - FirebaseAnalytics (4.2.0):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - nanopb (~> 0.3)
   - FirebaseCore (4.0.20):
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
   - FirebaseInstanceID (2.0.10):
     - FirebaseCore (~> 4.0)
   - GoogleToolboxForMac/Defines (2.1.4)
-  - GoogleToolboxForMac/NSData+zlib (2.1.4):
+  - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
     - GoogleToolboxForMac/Defines (= 2.1.4)
   - IQKeyboardManagerSwift (5.0.8)
   - Kingfisher (4.2.0)
@@ -123,6 +123,49 @@ DEPENDENCIES:
   - UIFontComplete (~> 2.0.1)
   - WaitForIt (~> 2.0.0)
 
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - Crashlytics
+    - Disk
+    - Down
+    - Eureka
+    - Fabric
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseInstanceID
+    - GoogleToolboxForMac
+    - IQKeyboardManagerSwift
+    - Kingfisher
+    - KoalaTeaFlowLayout
+    - KoalaTeaPlayer
+    - KTResponsiveUI
+    - MBProgressHUD
+    - Mockingjay
+    - nanopb
+    - Nimble
+    - Pageboy
+    - PopupDialog
+    - PureLayout
+    - Quick
+    - Reusable
+    - SideMenu
+    - Skeleton
+    - SnapKit
+    - StatefulViewController
+    - SwifterSwift
+    - SwiftGen
+    - SwiftLint
+    - SwiftMoment
+    - SwiftSoup
+    - SwiftyBeaver
+    - SwiftyJSON
+    - Tabman
+    - UIFontComplete
+    - URITemplate
+    - WaitForIt
+
 EXTERNAL SOURCES:
   ActiveLabel:
     :git: https://github.com/optonaut/ActiveLabel.swift.git
@@ -184,4 +227,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 900e14f47cd2ee536f721b3001b6397437682697
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.5.0

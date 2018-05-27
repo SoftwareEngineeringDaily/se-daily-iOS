@@ -29,9 +29,18 @@ public struct RelatedLink: BaseFeedItem {
         let container = try decoder.container(keyedBy: CodingKeys.self)
   
         _id = try container.decode(String.self, forKey: ._id)
-        upvoted = try container.decode(Bool.self, forKey: .upvoted)
-        downvoted = try container.decode(Bool.self, forKey: .downvoted)
-
+        
+        if let upvotedResult = try? container.decode(Bool.self, forKey: .upvoted) {
+            upvoted = upvotedResult
+        } else {
+            downvoted = false
+        }
+        if let downvotedResult = try? container.decode(Bool.self, forKey: .downvoted) {
+            downvoted = downvotedResult
+        } else {
+            downvoted = false
+        }
+        
         score = try container.decode(Int.self, forKey: .score)
         title = try container.decode(String.self, forKey: .title)
         url = try container.decode(String.self, forKey: .url)

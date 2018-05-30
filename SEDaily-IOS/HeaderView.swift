@@ -49,6 +49,14 @@ class HeaderView: UIView {
         self.performLayout()
     }
 
+    override func didMoveToSuperview() {
+        // This will "hide" the Play button, to make it clear it won't work if pressed.
+        if self.audioOverlayDelegate == nil {
+            playButton.alpha = 0.2
+        } else {
+            playButton.alpha = 1.0
+        }
+    }
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented"); }
 
     override func performLayout() {

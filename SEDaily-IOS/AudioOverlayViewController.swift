@@ -158,7 +158,7 @@ class AudioOverlayViewController: UIViewController {
             currentViewController.removeFromParentViewController()
         }
 
-        let podcastDetailViewController = PodcastDetailViewController()
+        let podcastDetailViewController = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: nil)
         podcastDetailViewController.model = podcastViewModel
 
         let navVC = UINavigationController(rootViewController: podcastDetailViewController)

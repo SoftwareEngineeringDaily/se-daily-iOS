@@ -13,6 +13,8 @@ import StatefulViewController
 class SearchTableViewController: UIViewController, StatefulViewController {
     private let reuseIdentifier = "reuseIdentifier"
     private let podcastViewModelController = PodcastViewModelController()
+    weak var audioOverlayDelegate: AudioOverlayDelegate?
+
     private let pageSize = 10
     private let preloadMargin = 5
     private var lastLoadedPage = 0
@@ -90,9 +92,11 @@ extension SearchTableViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let viewModel = self.podcastViewModelController.viewModel(at: indexPath.row) {
-            let vc = PodcastDetailViewController()
-            vc.model = viewModel
-            self.navigationController?.pushViewController(vc, animated: true)
+            if let audioOverlayDelegate = self.audioOverlayDelegate {
+                let vc = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
+                vc.model = viewModel
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
 }

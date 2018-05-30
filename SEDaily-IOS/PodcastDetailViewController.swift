@@ -134,14 +134,28 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
 
     private func removePowerPressPlayerTags(html: String) -> String {
         var modifiedHtml = html
-        let powerPressPlayerRange = modifiedHtml.range(of: "<!--powerpress_player-->")
-        modifiedHtml.removeSubrange(powerPressPlayerRange!)
-        let divStartRange = modifiedHtml.range(of: "<div class=\"powerpress_player\"")
-        let divEndRange = modifiedHtml.range(of: "</div>")
-        modifiedHtml.removeSubrange(divStartRange!.lowerBound..<divEndRange!.upperBound)
-        let pStartRange = modifiedHtml.range(of: "<p class=\"powerpress_links powerpress_links_mp3\">")
-        let pEndRange = modifiedHtml.range(of: "</p>")
-        modifiedHtml.removeSubrange(pStartRange!.lowerBound..<pEndRange!.upperBound)
+        guard let powerPressPlayerRange = modifiedHtml.range(of: "<!--powerpress_player-->") else {
+            return modifiedHtml
+        }
+        modifiedHtml.removeSubrange(powerPressPlayerRange)
+        
+        /////////////////////////
+        guard let divStartRange = modifiedHtml.range(of: "<div class=\"powerpress_player\"") else {
+            return modifiedHtml
+        }
+        guard let divEndRange = modifiedHtml.range(of: "</div>") else {
+            return modifiedHtml
+        }
+        modifiedHtml.removeSubrange(divStartRange.lowerBound..<divEndRange.upperBound)
+        
+        /////////////////////////
+        guard let pStartRange = modifiedHtml.range(of: "<p class=\"powerpress_links powerpress_links_mp3\">") else {
+            return modifiedHtml
+        }
+        guard let pEndRange = modifiedHtml.range(of: "</p>") else {
+            return modifiedHtml
+        }
+        modifiedHtml.removeSubrange(pStartRange.lowerBound..<pEndRange.upperBound)
         return modifiedHtml
     }
 

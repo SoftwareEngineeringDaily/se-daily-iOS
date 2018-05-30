@@ -75,6 +75,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 
     @objc func rightBarButtonPressed() {
         let vc = SearchTableViewController()
+        vc.audioOverlayDelegate = self.audioOverlayDelegate
         self.navigationController?.pushViewController(vc)
         Analytics2.searchNavButtonPressed()
     }
@@ -109,12 +110,13 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
             withIdentifier: "FeedListViewController") as? FeedListViewController else {
                 return
         }
+        ForumViewController.audioOverlayDelegate = self.audioOverlayDelegate
 
         self.viewControllers = [
             PodcastPageViewController(audioOverlayDelegate: self.audioOverlayDelegate),
             GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate, type: .top),
             ForumViewController,
-            BookmarkCollectionViewController(collectionViewLayout: layout),
+            BookmarkCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate),
             NotificationsTableViewController()
         ]
 

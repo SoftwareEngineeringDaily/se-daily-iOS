@@ -192,11 +192,13 @@ class GeneralCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
-            let vc = PodcastDetailViewController()
-            vc.model = viewModel
-            vc.delegate = self
-            vc.audioOverlayDelegate = self.audioOverlayDelegate
-            self.navigationController?.pushViewController(vc, animated: true)
+            if let audioOverlayDelegate = self.audioOverlayDelegate {
+                let vc = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
+                vc.model = viewModel
+                vc.delegate = self
+            
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
 }

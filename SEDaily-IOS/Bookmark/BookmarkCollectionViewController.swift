@@ -15,13 +15,16 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
     static private let cellId = "PodcastCellId"
 
     private var viewModelController = BookmarkViewModelController()
+    weak var audioOverlayDelegate: AudioOverlayDelegate?
 
     lazy var skeletonCollectionView: SkeletonCollectionView = {
         return SkeletonCollectionView(frame: self.collectionView!.frame)
     }()
 
-    override init(collectionViewLayout layout: UICollectionViewLayout) {
+    init(collectionViewLayout layout: UICollectionViewLayout, audioOverlayDelegate: AudioOverlayDelegate?) {
         super.init(collectionViewLayout: layout)
+        self.audioOverlayDelegate = audioOverlayDelegate
+
         self.tabBarItem = UITabBarItem(tabBarSystemItem: .bookmarks, tag: 0)
     }
 
@@ -184,10 +187,12 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath) {
         if let viewModel = viewModelController.viewModel(at: indexPath.row) {
-            let vc = PodcastDetailViewController()
-            vc.model = viewModel
-            vc.delegate = self
-            self.navigationController?.pushViewController(vc, animated: true)
+            if let audioOverlayDelegate = self.audioOverlayDelegate {
+                let vc = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
+                vc.model = viewModel
+                vc.delegate = self
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
 }

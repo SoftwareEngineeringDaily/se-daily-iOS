@@ -114,7 +114,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
             PodcastPageViewController(audioOverlayDelegate: self.audioOverlayDelegate),
             GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate, type: .top),
             ForumViewController,
-            BookmarkCollectionViewController(collectionViewLayout: layout),
+            BookmarkCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate),
             NotificationsTableViewController()
         ]
 

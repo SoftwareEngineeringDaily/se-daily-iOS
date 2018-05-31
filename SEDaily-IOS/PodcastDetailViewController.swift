@@ -16,7 +16,7 @@ protocol PodcastDetailViewControllerDelegate: class {
 
 
 protocol BookmarksDelegate: class {
-    func bookmarkButtonPressed()
+    func bookmarkPodcast()
    
 }
 
@@ -200,7 +200,7 @@ extension PodcastDetailViewController: HeaderViewDelegate {
 }
 
 extension PodcastDetailViewController:BookmarksDelegate {
-    @objc func bookmarkButtonPressed() {
+     @objc private func bookmarkButtonPressed() {
         guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
             return
@@ -212,25 +212,45 @@ extension PodcastDetailViewController:BookmarksDelegate {
         }
         
         bookmarkButton.isSelected = !bookmarkButton.isSelected
-        
-        let podcastId = model._id
-        networkService.setBookmarkPodcast(
-            value: bookmarkButton.isSelected,
-            podcastId: podcastId,
-            completion: { (success, active) in
-                guard success != nil else { return }
-                if success == true {
-                    guard let active = active else { return }
-                    self.updateBookmarked(active: active)
-                }
-        })
+        self.setBookmark(value: bookmarkButton.isSelected)
+      
+    }
+    
+    private func setBookmark(value: Bool) {
+            let podcastId = model._id
+            networkService.setBookmarkPodcast(
+                value: value,
+                podcastId: podcastId,
+                completion: { (success, active) in
+                    guard success != nil else { return }
+                    if success == true {
+                        guard let active = active else { return }
+                        self.updateBookmarked(active: active)
+                    }
+            })
         Analytics2.bookmarkButtonPressed(podcastId: model._id)
+    }
+    
+    func bookmarkPodcast() {
+        if !model.isBookmarked {
+            setBookmark(value: true)
+        }
     }
     
     private func updateBookmarked(active: Bool) {
         self.setBookmarked(active)
         self.model.isBookmarked = active
         self.delegate?.modelDidChange(viewModel: self.model)
+        // Update the bookmark button too with actual result:
+        
+        guard let bookmarkButton = self.bookmarkButton else {
+            log.error("There is no bookmark button")
+            return
+        }
+        print("active?")
+        print(active)
+        bookmarkButton.isSelected = active
+        
     }
     
 }

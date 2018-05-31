@@ -316,7 +316,7 @@ extension HeaderView {
         case false:
             self.savePodcast()
             if UserManager.sharedInstance.isCurrentUserLoggedIn() == true {
-                self.bookmarkDelegate?.bookmarkButtonPressed()
+                self.bookmarkDelegate?.bookmarkPodcast()
             }
         }
     }

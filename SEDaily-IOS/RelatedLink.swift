@@ -12,8 +12,6 @@ public struct RelatedLink: BaseFeedItem {
     var score: Int = 0
     
     var _id: String
-    
-    
     var downvoted: Bool?
     
     var upvoted: Bool?
@@ -23,8 +21,7 @@ public struct RelatedLink: BaseFeedItem {
     
     let postId: String?
     let post: PodcastLite?
-    
- 
+    let image: String?
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
   
@@ -51,7 +48,11 @@ public struct RelatedLink: BaseFeedItem {
         } else {
             postId = try container.decode(String.self, forKey: .post)
             post = nil
-            print("nil post \(postId)")
+        }
+        if let _image = try? container.decode(String.self, forKey: .image) {
+            image = _image
+        } else {
+            image = nil
         }
     }
 }

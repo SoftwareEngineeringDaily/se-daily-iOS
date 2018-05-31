@@ -65,8 +65,6 @@ class FeedItemCell: UITableViewCell {
                 thread = nil
 
                 titleLabel.text = relatedLinkFeedItem.relatedLink.title
-               
-         
                 
                 scoreLabel.text = "\(relatedLinkFeedItem.relatedLink.score)"
                 if let upvoted = relatedLinkFeedItem.relatedLink.upvoted {
@@ -74,8 +72,12 @@ class FeedItemCell: UITableViewCell {
                 } else {
                     upVoteButton.isSelected = false
                 }
-
-               
+                
+                if let image = relatedLinkFeedItem.relatedLink.image {
+                    if let imgUrl = URL(string: image ) {
+                        imageHero.kf.setImage(with: imgUrl)
+                    }
+                }
                 layoutSubviews()
             }
         }

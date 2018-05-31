@@ -33,7 +33,6 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The TItle of my simple forum post" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijZ-KK-sTA">
                                                     <rect key="frame" x="35" y="31" width="225" height="187"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="2gT-FG-BWR"/>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="MW3-lH-YPV"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
@@ -77,7 +76,7 @@
                                                 <constraint firstItem="CBT-lz-Vm0" firstAttribute="top" secondItem="bNn-js-Svi" secondAttribute="topMargin" constant="10" id="HvD-3P-cUH"/>
                                                 <constraint firstItem="UtZ-WC-X22" firstAttribute="top" secondItem="ijZ-KK-sTA" secondAttribute="bottom" constant="20" id="MsY-XU-BfC"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="i5X-uV-LCY" secondAttribute="bottom" constant="20" id="X5k-hE-ohN"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="CBT-lz-Vm0" secondAttribute="bottom" constant="10" id="XUW-4m-J2h"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="CBT-lz-Vm0" secondAttribute="bottom" constant="10" id="XUW-4m-J2h"/>
                                                 <constraint firstItem="CBT-lz-Vm0" firstAttribute="leading" secondItem="ijZ-KK-sTA" secondAttribute="trailing" constant="10" id="aNU-KB-Kff"/>
                                                 <constraint firstItem="ijZ-KK-sTA" firstAttribute="leading" secondItem="bNn-js-Svi" secondAttribute="leadingMargin" constant="20" id="bB4-xQ-zaR"/>
                                                 <constraint firstItem="i5X-uV-LCY" firstAttribute="centerY" secondItem="UtZ-WC-X22" secondAttribute="centerY" id="oqC-jU-nPW"/>

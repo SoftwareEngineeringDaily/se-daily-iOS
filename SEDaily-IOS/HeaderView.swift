@@ -315,9 +315,10 @@ extension HeaderView {
             self.deletePodcast()
         case false:
             self.savePodcast()
-            self.bookmarkDelegate?.bookmarkButtonPressed()
+            if UserManager.sharedInstance.isCurrentUserLoggedIn() == true {
+                self.bookmarkDelegate?.bookmarkButtonPressed()
+            }
         }
-
     }
 
     private func savePodcast() {

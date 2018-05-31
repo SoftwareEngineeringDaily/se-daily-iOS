@@ -81,6 +81,8 @@
 		9662FC0A20AF21FA00CFA8DF /* BaseFeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9662FC0920AF21FA00CFA8DF /* BaseFeedItem.swift */; };
 		9672AA52202929C90020981F /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9672AA51202929C90020981F /* Author.swift */; };
 		96A7E2CF20951EBD002C92EC /* ThreadHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A7E2CE20951EBD002C92EC /* ThreadHeaderView.swift */; };
+		96B6168820C0883C00DF3CF6 /* ForumListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B6168620C0883C00DF3CF6 /* ForumListViewController.swift */; };
+		96B6168B20C0A59500DF3CF6 /* ForumThreadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B6168A20C0A59500DF3CF6 /* ForumThreadCell.swift */; };
 		96BD1C88208E9497006C5E1D /* TestHookBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BD1C87208E9497006C5E1D /* TestHookBool.swift */; };
 		96C8A9AB2091038100489EE4 /* FeedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C8A9AA2091038100489EE4 /* FeedListViewController.swift */; };
 		96C8A9AF209114C200489EE4 /* FeedList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96C8A9AE209114C200489EE4 /* FeedList.storyboard */; };
@@ -199,6 +201,8 @@
 		9662FC0920AF21FA00CFA8DF /* BaseFeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFeedItem.swift; sourceTree = "<group>"; };
 		9672AA51202929C90020981F /* Author.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
 		96A7E2CE20951EBD002C92EC /* ThreadHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadHeaderView.swift; sourceTree = "<group>"; };
+		96B6168620C0883C00DF3CF6 /* ForumListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumListViewController.swift; sourceTree = "<group>"; };
+		96B6168A20C0A59500DF3CF6 /* ForumThreadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumThreadCell.swift; sourceTree = "<group>"; };
 		96BD1C87208E9497006C5E1D /* TestHookBool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHookBool.swift; sourceTree = "<group>"; };
 		96C8A9AA2091038100489EE4 /* FeedListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListViewController.swift; sourceTree = "<group>"; };
 		96C8A9AE209114C200489EE4 /* FeedList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FeedList.storyboard; sourceTree = "<group>"; };
@@ -554,6 +558,8 @@
 				96A7E2CE20951EBD002C92EC /* ThreadHeaderView.swift */,
 				963144DD208FEA8000EA13F1 /* ForumThread.swift */,
 				96F4016E20C075E600D6A66A /* ForumList.storyboard */,
+				96B6168620C0883C00DF3CF6 /* ForumListViewController.swift */,
+				96B6168A20C0A59500DF3CF6 /* ForumThreadCell.swift */,
 			);
 			name = Forum;
 			sourceTree = "<group>";
@@ -968,6 +974,7 @@
 				164FE9E51F02EE83009419CA /* API.swift in Sources */,
 				164FE9E91F02F049009419CA /* Stylesheet.swift in Sources */,
 				960BFEBF20226B620073DAB2 /* CommentsViewController.swift in Sources */,
+				96B6168820C0883C00DF3CF6 /* ForumListViewController.swift in Sources */,
 				01516A04207310C900E9E743 /* NotificationTableViewCell.swift in Sources */,
 				1671BD5A200D3D7800E6ED3B /* SubscriptionStatusViewController.swift in Sources */,
 				96BD1C88208E9497006C5E1D /* TestHookBool.swift in Sources */,
@@ -979,6 +986,7 @@
 				16AD3E0C1F9B13EE0084C545 /* FilterObject.swift in Sources */,
 				1671BD56200D278F00E6ED3B /* PurchaseSubscriptionViewController.swift in Sources */,
 				16AD3E0A1F9B138D0084C545 /* PodcastViewModel.swift in Sources */,
+				96B6168B20C0A59500DF3CF6 /* ForumThreadCell.swift in Sources */,
 				16B147B11F16BF9C00433A42 /* AudioOverlayViewController.swift in Sources */,
 				164C71051F021AC8003803BC /* CustomTabViewController.swift in Sources */,
 				164FE9DC1F02DAB5009419CA /* PodcastCollectionViewCell.swift in Sources */,

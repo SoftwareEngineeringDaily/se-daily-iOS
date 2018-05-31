@@ -19,6 +19,7 @@ class HeaderView: UIView {
     var iconSize = UIView.getValueScaledByScreenWidthFor(baseValue: 34)
 
     weak var delegate: HeaderViewDelegate?
+    weak var bookmarkDelegate:BookmarksDelegate?
     weak var audioOverlayDelegate: AudioOverlayDelegate?
 
     var podcastViewModel = PodcastViewModel()
@@ -314,8 +315,10 @@ extension HeaderView {
             self.deletePodcast()
         case false:
             self.savePodcast()
+            if UserManager.sharedInstance.isCurrentUserLoggedIn() == true {
+                self.bookmarkDelegate?.bookmarkPodcast()
+            }
         }
-
     }
 
     private func savePodcast() {

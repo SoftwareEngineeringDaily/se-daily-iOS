@@ -14,6 +14,13 @@ protocol PodcastDetailViewControllerDelegate: class {
     func modelDidChange(viewModel: PodcastViewModel)
 }
 
+
+protocol BookmarksDelegate: class {
+    func bookmarkPodcast()
+   
+}
+
+
 class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
 
     weak var delegate: PodcastDetailViewControllerDelegate?
@@ -44,6 +51,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
         let headerView = HeaderView(width: 375, height: 200)
         headerView.setupHeader(model: model)
         headerView.delegate = self
+        headerView.bookmarkDelegate = self
         headerView.audioOverlayDelegate = self.audioOverlayDelegate
 
         let webView = WKWebView()
@@ -94,38 +102,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
             podcastViewModel: nil)
     }
 
-    @objc private func bookmarkButtonPressed() {
-        guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
-            Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
-            return
-        }
-
-        guard let bookmarkButton = self.bookmarkButton else {
-            log.error("There is no bookmark button")
-            return
-        }
-
-        bookmarkButton.isSelected = !bookmarkButton.isSelected
-
-        let podcastId = model._id
-        networkService.setBookmarkPodcast(
-            value: bookmarkButton.isSelected,
-            podcastId: podcastId,
-            completion: { (success, active) in
-            guard success != nil else { return }
-            if success == true {
-                guard let active = active else { return }
-                self.updateBookmarked(active: active)
-            }
-        })
-        Analytics2.bookmarkButtonPressed(podcastId: model._id)
-    }
-
-    private func updateBookmarked(active: Bool) {
-        self.setBookmarked(active)
-        self.model.isBookmarked = active
-        self.delegate?.modelDidChange(viewModel: self.model)
-    }
+   
 
     private func setBookmarked(_ bool: Bool) {
         self.model.isBookmarked = bool
@@ -220,4 +197,60 @@ extension PodcastDetailViewController: HeaderViewDelegate {
     func modelDidChange(viewModel: PodcastViewModel) {
         self.delegate?.modelDidChange(viewModel: viewModel)
     }
+}
+
+extension PodcastDetailViewController:BookmarksDelegate {
+     @objc private func bookmarkButtonPressed() {
+        guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
+            Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
+            return
+        }
+        
+        guard let bookmarkButton = self.bookmarkButton else {
+            log.error("There is no bookmark button")
+            return
+        }
+        
+        bookmarkButton.isSelected = !bookmarkButton.isSelected
+        self.setBookmark(value: bookmarkButton.isSelected)
+      
+    }
+    
+    private func setBookmark(value: Bool) {
+            let podcastId = model._id
+            networkService.setBookmarkPodcast(
+                value: value,
+                podcastId: podcastId,
+                completion: { (success, active) in
+                    guard success != nil else { return }
+                    if success == true {
+                        guard let active = active else { return }
+                        self.updateBookmarked(active: active)
+                    }
+            })
+        Analytics2.bookmarkButtonPressed(podcastId: model._id)
+    }
+    
+    func bookmarkPodcast() {
+        if !model.isBookmarked {
+            setBookmark(value: true)
+        }
+    }
+    
+    private func updateBookmarked(active: Bool) {
+        self.setBookmarked(active)
+        self.model.isBookmarked = active
+        self.delegate?.modelDidChange(viewModel: self.model)
+        // Update the bookmark button too with actual result:
+        
+        guard let bookmarkButton = self.bookmarkButton else {
+            log.error("There is no bookmark button")
+            return
+        }
+        print("active?")
+        print(active)
+        bookmarkButton.isSelected = active
+        
+    }
+    
 }

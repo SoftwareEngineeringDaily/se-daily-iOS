@@ -87,6 +87,7 @@
 		96D268F720B2250B002F95BD /* RelatedLinkWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D268F520B2250B002F95BD /* RelatedLinkWebVC.swift */; };
 		96D268F820B2250B002F95BD /* RelatedLinkWebVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96D268F620B2250B002F95BD /* RelatedLinkWebVC.xib */; };
 		96F35745201BFB0200E8B6E9 /* RelatedLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F35744201BFB0200E8B6E9 /* RelatedLink.swift */; };
+		96F4016F20C075E600D6A66A /* ForumList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96F4016E20C075E600D6A66A /* ForumList.storyboard */; };
 		C0109D992013ECE0008BDA69 /* upvote_success.json in Resources */ = {isa = PBXBuildFile; fileRef = C0109D982013ECE0008BDA69 /* upvote_success.json */; };
 		C0109D9B2013F064008BDA69 /* upvote_failure.json in Resources */ = {isa = PBXBuildFile; fileRef = C0109D9A2013F064008BDA69 /* upvote_failure.json */; };
 		C0109D9E2013F629008BDA69 /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0109D9D2013F629008BDA69 /* LoginTests.swift */; };
@@ -204,6 +205,7 @@
 		96D268F520B2250B002F95BD /* RelatedLinkWebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedLinkWebVC.swift; sourceTree = "<group>"; };
 		96D268F620B2250B002F95BD /* RelatedLinkWebVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RelatedLinkWebVC.xib; sourceTree = "<group>"; };
 		96F35744201BFB0200E8B6E9 /* RelatedLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedLink.swift; sourceTree = "<group>"; };
+		96F4016E20C075E600D6A66A /* ForumList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ForumList.storyboard; sourceTree = "<group>"; };
 		995F64385352A79BA0DF7DEB /* Pods-SEDaily-IOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9FDA28C254F62BB468401B75 /* Pods-SEDaily-IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.debug.xcconfig"; sourceTree = "<group>"; };
 		A2EFA433B346D70E958FFC73 /* Pods-SEDaily-IOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 		1686FBFF1F009EC00088A6C1 /* SEDaily-IOS */ = {
 			isa = PBXGroup;
 			children = (
+				96B6168520C0861300DF3CF6 /* Forum */,
 				961A378B208FAFC30050EF80 /* Feed */,
 				961A378A208FAF3E0050EF80 /* User */,
 				960BFEBD20226B420073DAB2 /* Comments */,
@@ -522,9 +525,6 @@
 		961A378B208FAFC30050EF80 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				96A7E2CE20951EBD002C92EC /* ThreadHeaderView.swift */,
-				961A378C208FAFEF0050EF80 /* ForumThreadLite.swift */,
-				963144DD208FEA8000EA13F1 /* ForumThread.swift */,
 				96C8A9AE209114C200489EE4 /* FeedList.storyboard */,
 				96C8A9AA2091038100489EE4 /* FeedListViewController.swift */,
 				964090BE2093B97D00CFF5C4 /* PodcastLite.swift */,
@@ -545,6 +545,17 @@
 				962F5364201E3C7900897A6E /* RelatedLinksViewController.swift */,
 			);
 			name = RelatedLinks;
+			sourceTree = "<group>";
+		};
+		96B6168520C0861300DF3CF6 /* Forum */ = {
+			isa = PBXGroup;
+			children = (
+				961A378C208FAFEF0050EF80 /* ForumThreadLite.swift */,
+				96A7E2CE20951EBD002C92EC /* ThreadHeaderView.swift */,
+				963144DD208FEA8000EA13F1 /* ForumThread.swift */,
+				96F4016E20C075E600D6A66A /* ForumList.storyboard */,
+			);
+			name = Forum;
 			sourceTree = "<group>";
 		};
 		C0109D9C2013F538008BDA69 /* APITests */ = {
@@ -716,6 +727,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96F4016F20C075E600D6A66A /* ForumList.storyboard in Resources */,
 				96C8A9AF209114C200489EE4 /* FeedList.storyboard in Resources */,
 				96600312201CEBBD00997795 /* RelatedLinks.storyboard in Resources */,
 				96004ACE20A9E0030017230F /* GoogleService-Info.plist in Resources */,

@@ -38,7 +38,7 @@ class FeedListViewController: UIViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
     }
     
-    func displaySpinner(onView : UIView) -> UIView {
+    func displaySpinner(onView: UIView) -> UIView {
         let spinnerView = UIView.init(frame: onView.bounds)
         spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
         let ai = UIActivityIndicatorView.init(activityIndicatorStyle: .whiteLarge)
@@ -53,7 +53,7 @@ class FeedListViewController: UIViewController {
         return spinnerView
     }
     
-    func removeSpinner(spinner :UIView) {
+    func removeSpinner(spinner: UIView) {
         DispatchQueue.main.async {
             spinner.removeFromSuperview()
         }
@@ -166,13 +166,10 @@ extension FeedListViewController: UITableViewDelegate, UITableViewDataSource {
         
         if let thread = self.threads[indexPath.row] as? ForumThread {
             if let liteEpisodeModel = thread.podcastEpisode {
-                print("---episode id:")
-                print(liteEpisodeModel._id)
                 let spinner = self.displaySpinner(onView: self.view)
                 networkService.getPost(podcastId: liteEpisodeModel._id) { (succeeded, fullPodcast) in
                     self.removeSpinner(spinner: spinner)
 
-                    
                     if succeeded && fullPodcast != nil {
                         if let audioOverlayDelegate = self.audioOverlayDelegate {
                             let vc = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
@@ -191,7 +188,6 @@ extension FeedListViewController: UITableViewDelegate, UITableViewDataSource {
                presentThreadComments(thread)
             }
         } else if let feedItem = self.threads[indexPath.row] as? FeedItem {
-            print("url \(feedItem.relatedLink.url)")
             // TODO: move to model
             var urlString = feedItem.relatedLink.url
             let urlPrefix = urlString.prefix(4)

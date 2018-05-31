@@ -14,12 +14,10 @@ protocol PodcastDetailViewControllerDelegate: class {
     func modelDidChange(viewModel: PodcastViewModel)
 }
 
-
 protocol BookmarksDelegate: class {
     func bookmarkPodcast()
 
 }
-
 
 class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
 
@@ -35,7 +33,6 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
     lazy var scrollView: UIScrollView = {
         return UIScrollView(frame: self.view.frame)
     }()
-
 
     required init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, audioOverlayDelegate: AudioOverlayDelegate?) {
         self.audioOverlayDelegate = audioOverlayDelegate
@@ -101,8 +98,6 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
         self.audioOverlayDelegate?.setCurrentShowingDetailView(
             podcastViewModel: nil)
     }
-
-
 
     private func setBookmarked(_ bool: Bool) {
         self.model.isBookmarked = bool
@@ -200,7 +195,7 @@ extension PodcastDetailViewController: HeaderViewDelegate {
     }
 }
 
-extension PodcastDetailViewController:BookmarksDelegate {
+extension PodcastDetailViewController: BookmarksDelegate {
      @objc private func bookmarkButtonPressed() {
         guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)

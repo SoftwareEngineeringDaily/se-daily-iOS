@@ -24,8 +24,8 @@ class FeedItemCell: UITableViewCell {
         
         let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 34)
 
-        upVoteButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
-        upVoteButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .selected)
+        upVoteButton.setIcon(icon: .fontAwesome(.thumbsOUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
+        upVoteButton.setIcon(icon: .fontAwesome(.thumbsUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .selected)
         
         upVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
     }

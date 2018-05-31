@@ -23,7 +23,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="threadCell" rowHeight="191" id="Xut-o3-zuM">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="forumThreadCell" rowHeight="191" id="Xut-o3-zuM" customClass="ForumThreadCell" customModule="SEDaily_IOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="191"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xut-o3-zuM" id="pCR-iw-drz">
@@ -84,6 +84,9 @@
                                                         <constraint firstAttribute="height" constant="30" id="G0Z-mm-eVG"/>
                                                     </constraints>
                                                     <state key="normal" title="/\"/>
+                                                    <connections>
+                                                        <action selector="upvotePressed:" destination="Xut-o3-zuM" eventType="touchUpInside" id="EY7-Kg-ZJt"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode: Vue.js Animations" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C52-KQ-elN">
                                                     <rect key="frame" x="60" y="61.5" width="174.5" height="17"/>
@@ -133,6 +136,14 @@
                                                 <constraint firstItem="C52-KQ-elN" firstAttribute="top" secondItem="Zc0-a9-Lf7" secondAttribute="bottom" constant="10" id="uVN-Uo-2di"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="authorLabel" destination="x75-bt-h8X" id="tJn-lm-Y63"/>
+                                            <outlet property="commentsCountLabel" destination="rff-fz-DxB" id="EkL-ea-Kps"/>
+                                            <outlet property="dateLabel" destination="rdG-fi-sdh" id="C5Y-rg-0tk"/>
+                                            <outlet property="scoreLabel" destination="vZL-jd-fIX" id="3SC-uh-amL"/>
+                                            <outlet property="titleLabel" destination="Zc0-a9-Lf7" id="9Mm-K2-mFH"/>
+                                            <outlet property="upVoteButton" destination="F6Q-B0-ePN" id="XI3-1a-R2j"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -146,6 +157,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="njh-10-HIw"/>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="pcK-Vg-qLx" id="PTh-YG-H77"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ge8-7P-ZzS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

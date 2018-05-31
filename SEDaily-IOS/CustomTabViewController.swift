@@ -112,13 +112,13 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
         }
         FeedViewController.audioOverlayDelegate = self.audioOverlayDelegate
 
-        /*
+        
         let forumStoryboard = UIStoryboard.init(name: "ForumList", bundle: nil)
         guard let ForumViewController = forumStoryboard.instantiateViewController(
             withIdentifier: "ForumListViewController") as? ForumListViewController else {
                 return
         }
-        */
+        
 //        ForumViewController.audioOverlayDelegate = self.audioOverlayDelegate
 
         
@@ -126,7 +126,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
             PodcastPageViewController(audioOverlayDelegate: self.audioOverlayDelegate),
   
             FeedViewController,
-//            ForumViewController,
+            ForumViewController,
             BookmarkCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate),
             NotificationsTableViewController()
         ]

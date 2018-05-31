@@ -317,23 +317,7 @@ extension HeaderView {
 
         self.playButton.isUserInteractionEnabled = false
         
-        let podcastId = self.podcastViewModel._id
-        
-        if UserManager.sharedInstance.isCurrentUserLoggedIn() == true {
-            if !self.podcastViewModel.isBookmarked {
-                networkService.setBookmarkPodcast(
-                    value: true,
-                    podcastId: podcastId,
-                    completion: { (success, active) in
-                        guard success != nil else { return }
-                        if success == true {
-                            guard let active = active else { return }
-                            self.delegate?.updateBookmarked(active: active)
-                            self.podcastViewModel.isBookmarked = active
-                        }
-                })
-            }
-        }
+        let podcastId = self.podcastViewModel._id            
         
         self.downloadManager.save(
             podcast: self.podcastViewModel,

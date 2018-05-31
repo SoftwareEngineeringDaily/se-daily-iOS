@@ -31,16 +31,17 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The TItle of my simple forum post" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijZ-KK-sTA">
-                                                    <rect key="frame" x="35" y="31" width="225" height="48"/>
+                                                    <rect key="frame" x="35" y="31" width="225" height="187"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="2gT-FG-BWR"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="MW3-lH-YPV"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UtZ-WC-X22">
-                                                    <rect key="frame" x="35" y="99" width="30" height="34"/>
+                                                    <rect key="frame" x="35" y="238" width="30" height="34"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="bJy-8F-uyE"/>
                                                         <constraint firstAttribute="height" constant="34" id="t8F-ux-m0C"/>
@@ -58,7 +59,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i5X-uV-LCY">
-                                                    <rect key="frame" x="81" y="106" width="20" height="19"/>
+                                                    <rect key="frame" x="81" y="245" width="20" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="19" id="0Be-os-Jzq"/>
                                                         <constraint firstAttribute="width" constant="20" id="P8r-fQ-q41"/>

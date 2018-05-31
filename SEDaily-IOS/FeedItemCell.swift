@@ -43,7 +43,14 @@ class FeedItemCell: UITableViewCell {
                 } else {
                     upVoteButton.isSelected = false
                 }
+            
+                imageHero.image = #imageLiteral(resourceName: "SEDaily_Logo")
                 
+                if let featuredImage = thread.podcastEpisode?.featuredImage {
+                    if let imgUrl = URL(string: featuredImage ) {
+                        imageHero.kf.setImage(with: imgUrl)
+                    }
+                }
                 layoutSubviews()
             }
         }
@@ -51,6 +58,7 @@ class FeedItemCell: UITableViewCell {
     
     var relatedLinkFeedItem: FeedItem? {
         didSet {
+            imageHero.image = #imageLiteral(resourceName: "SEDaily_Logo")
             
             if let relatedLinkFeedItem = relatedLinkFeedItem {
                 _feedItem = relatedLinkFeedItem.relatedLink

@@ -13,6 +13,8 @@ class FeedListViewController: UIViewController {
     let networkService = API()
     var threads: [Any] = []
     var lastThread:ForumThread?
+    weak var audioOverlayDelegate: AudioOverlayDelegate?
+
     private let refreshControl = UIRefreshControl()
 
     
@@ -170,13 +172,16 @@ extension FeedListViewController: UITableViewDelegate, UITableViewDataSource {
                 networkService.getPost(podcastId: liteEpisodeModel._id) { (succeeded, fullPodcast) in
                     self.removeSpinner(spinner: spinner)
 
+                    
                     if succeeded && fullPodcast != nil {
-                        let vc = PodcastDetailViewController()
-                        // TODO: check for safety:
-                        vc.model =  PodcastViewModel(podcast: fullPodcast!)
-                        //                    vc.delegate = self
-                        //                    vc.audioOverlayDelegate = self.audioOverlayDelegate
-                        self.navigationController?.pushViewController(vc, animated: true)
+                        if let audioOverlayDelegate = self.audioOverlayDelegate {
+                            let vc = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
+                            // TODO: check for safety:
+                            vc.model =  PodcastViewModel(podcast: fullPodcast!)
+                            //                    vc.delegate = self
+                            //                    vc.audioOverlayDelegate = self.audioOverlayDelegate
+                            self.navigationController?.pushViewController(vc, animated: true)
+                        }
                     } else {
                         self.presentThreadComments(thread)
                     }

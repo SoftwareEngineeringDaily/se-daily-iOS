@@ -20,6 +20,7 @@ class HeaderView: UIView {
     var iconSize = UIView.getValueScaledByScreenWidthFor(baseValue: 34)
 
     weak var delegate: HeaderViewDelegate?
+    weak var bookmarkDelegate:BookmarksDelegate?
     weak var audioOverlayDelegate: AudioOverlayDelegate?
 
     var podcastViewModel = PodcastViewModel()
@@ -50,6 +51,14 @@ class HeaderView: UIView {
         self.performLayout()
     }
 
+    override func didMoveToSuperview() {
+        // This will "hide" the Play button, to make it clear it won't work if pressed.
+        if self.audioOverlayDelegate == nil {
+            playButton.alpha = 0.2
+        } else {
+            playButton.alpha = 1.0
+        }
+    }
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented"); }
 
     override func performLayout() {
@@ -307,8 +316,10 @@ extension HeaderView {
             self.deletePodcast()
         case false:
             self.savePodcast()
+            if UserManager.sharedInstance.isCurrentUserLoggedIn() == true {
+                self.bookmarkDelegate?.bookmarkPodcast()
+            }
         }
-
     }
 
     private func savePodcast() {

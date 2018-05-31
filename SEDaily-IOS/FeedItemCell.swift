@@ -11,17 +11,11 @@ import UIKit
 class FeedItemCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var authorLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var commentsCountLabel: UILabel!
+    @IBOutlet weak var imageHero: UIImageView!
+    
     @IBOutlet weak var upVoteButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var byLabel: UILabel!
-    
-    @IBOutlet weak var subtitleHeightLessThan: NSLayoutConstraint!
-    @IBOutlet weak var subtitleHeightGreaterThan: NSLayoutConstraint!
-    
+
     let networkService = API()
 
     override func awakeFromNib() {
@@ -41,23 +35,15 @@ class FeedItemCell: UITableViewCell {
             if let thread = thread {
                 _feedItem = thread
                 relatedLinkFeedItem = nil
-                subtitleLabel.text = ""
-                let author = thread.author
-                authorLabel.text = (author.name != nil) ? author.name : author.username
                 
                 titleLabel.text = thread.getPrettyTitle()
-                commentsCountLabel.text = thread.getCommentsSummary()
-                
-                dateLabel.text = thread.getDateLastActivityPretty()
-                byLabel.text = "by"
                 scoreLabel.text = "\(thread.score)"
                 if let upvoted = thread.upvoted {
                     upVoteButton.isSelected = upvoted
                 } else {
                     upVoteButton.isSelected = false
                 }
-                subtitleHeightLessThan.constant = 0
-                subtitleHeightGreaterThan.constant = 0
+                
                 layoutSubviews()
             }
         }
@@ -71,13 +57,8 @@ class FeedItemCell: UITableViewCell {
                 thread = nil
 
                 titleLabel.text = relatedLinkFeedItem.relatedLink.title
-                subtitleLabel.text = ""
-                byLabel.text = "added by"
-                commentsCountLabel.text = ""
-                dateLabel.text = ""
-                if let title = relatedLinkFeedItem.relatedLink.post?.rendered {
-                    subtitleLabel.text = "Episode: \(title)"
-                }
+               
+         
                 
                 scoreLabel.text = "\(relatedLinkFeedItem.relatedLink.score)"
                 if let upvoted = relatedLinkFeedItem.relatedLink.upvoted {
@@ -86,8 +67,7 @@ class FeedItemCell: UITableViewCell {
                     upVoteButton.isSelected = false
                 }
 
-                subtitleHeightLessThan.constant = 100
-                subtitleHeightGreaterThan.constant = 17
+               
                 layoutSubviews()
             }
         }

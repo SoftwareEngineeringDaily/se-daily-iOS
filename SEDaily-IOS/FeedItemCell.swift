@@ -29,6 +29,7 @@ class FeedItemCell: UITableViewCell {
         upVoteButton.setIcon(icon: .fontAwesome(.thumbsUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .selected)
         
         upVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
+        itemTypeIcon.alpha = 0.3
     }
     
     var thread: ForumThread? {

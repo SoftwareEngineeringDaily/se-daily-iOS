@@ -11,21 +11,19 @@ import SwifterSwift
 
 public struct User: Codable {
     let key: Int = 1
-    let firstName: String
-    let lastName: String
+    let name: String
     let usernameOrEmail: String
     let token: String
     let pushNotificationsSetting: Bool = false
     let deviceToken: String? = nil
     let hasPremium: Bool
     
-    init(firstName: String = "",
-         lastName: String = "",
+    init(name: String = "",
+        
          usernameOrEmail: String = "",
          token: String = "",
          hasPremium: Bool = false) {
-        self.firstName = firstName
-        self.lastName = lastName
+        self.name = name
         self.usernameOrEmail = usernameOrEmail
         self.token = token
         self.hasPremium = hasPremium
@@ -34,7 +32,7 @@ public struct User: Codable {
     // MARK: Getters
 
     func getFullName() -> String {
-        return self.firstName + self.lastName
+        return self.name
     }
 
     func isLoggedIn() -> Bool {
@@ -48,8 +46,7 @@ public struct User: Codable {
 extension User: Equatable {
     public static func == (lhs: User, rhs: User) -> Bool {
         return lhs.key == rhs.key &&
-            lhs.firstName == rhs.firstName &&
-            lhs.lastName == rhs.lastName &&
+            lhs.name == rhs.name &&
             lhs.usernameOrEmail == rhs.usernameOrEmail &&
             lhs.token == rhs.token &&
             lhs.pushNotificationsSetting == rhs.pushNotificationsSetting &&

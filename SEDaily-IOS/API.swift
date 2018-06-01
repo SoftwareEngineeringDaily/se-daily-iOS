@@ -64,6 +64,7 @@ extension API {
         static let type = "type"
         static let email = "email"
         static let username = "username"
+        static let name = "name"
         static let password = "password"
         static let token = "token"
         static let tags = "tags"
@@ -118,7 +119,7 @@ extension API {
                 }
 
                 if let token = jsonResponse["token"] as? String {
-                    let user = User(firstName: "", lastName: "", usernameOrEmail: usernameOrEmail, token: token)
+                    let user = User(name: "", usernameOrEmail: usernameOrEmail, token: token)
                     UserManager.sharedInstance.setCurrentUser(to: user)
 
                     // Clear disk cache
@@ -140,12 +141,13 @@ extension API {
         }
     }
 
-    func register(firstName: String, lastName: String, email: String, username: String, password: String, completion: @escaping (_ success: Bool?) -> Void) {
+    func register(email: String, username: String, name: String, password: String, completion: @escaping (_ success: Bool?) -> Void) {
         let urlString = rootURL + Endpoints.register
         
         let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded]
         var params = [String: String]()
         params[Params.username] = username
+        params[Params.name] = name
         params[Params.email] = email
         params[Params.password] = password
         
@@ -168,7 +170,7 @@ extension API {
                 }
 
                 if let token = jsonResponse["token"] as? String {
-                    let user = User(firstName: firstName, lastName: lastName, usernameOrEmail: username, token: token)
+                    let user = User(name: name, usernameOrEmail: username, token: token)
                     UserManager.sharedInstance.setCurrentUser(to: user)
 
                     NotificationCenter.default.post(name: .loginChanged, object: nil)
@@ -220,8 +222,7 @@ extension API {
 
                     // @TODO: Dictionary for subscription model
                     if let subscriptionDictionary = jsonResponse["subscription"] as? [String: Any?] {
-                        let modifiedUser = User(firstName: user.firstName,
-                                                lastName: user.lastName,
+                        let modifiedUser = User(name: user.name,
                                                 usernameOrEmail: user.usernameOrEmail,
                                                 token: user.token,
                                                 hasPremium: true)
@@ -229,8 +230,7 @@ extension API {
                         UserManager.sharedInstance.setCurrentUser(to: modifiedUser)
                         NotificationCenter.default.post(name: .loginChanged, object: nil)
                     } else {
-                        let modifiedUser = User(firstName: user.firstName,
-                                                lastName: user.lastName,
+                        let modifiedUser = User(name: user.name,
                                                 usernameOrEmail: user.usernameOrEmail,
                                                 token: user.token,
                                                 hasPremium: false)

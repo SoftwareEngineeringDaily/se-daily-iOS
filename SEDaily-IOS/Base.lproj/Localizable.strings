@@ -34,6 +34,7 @@
 "EmailUnsupportedOnDevice" = "Email unsupported on this device";
 "EmailUnsupportedMessage" = "Please send an email to jeff@softwareengineeringdaily.com";
 "UsernamePlaceholder" = "Username";
+"NamePlaceholder" = "Name";
 "PasswordPlaceholder" = "Password";
 "ConfirmPasswordPlaceholder" = "Confirm Password";
 "FirstNamePlaceholder" = "First Name";
@@ -43,6 +44,7 @@
 "SignUpButtonTitle" = "Sign Up";
 "AlertMessageEmailEmpty" = "Email Field Empty";
 "AlertMessageUsernameEmpty" = "Username Field Empty";
+"AlertMessageNameEmpty" = "Name Field Empty";
 "AlertMessagePasswordEmpty" = "Password Field Empty";
 "AlertMessagePasswordConfirmEmpty" = "Confirm Password Field Empty";
 "AlertMessageEmailWrongFormat" = "Invalid Email Format";

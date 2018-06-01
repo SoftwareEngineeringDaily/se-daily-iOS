@@ -20,6 +20,7 @@ extension Helpers {
     enum Messages {
         static let emailEmpty = L10n.alertMessageEmailEmpty
         static let usernameEmpty = L10n.alertMessageUsernameEmpty
+        static let nameEmpty = L10n.alertMessageNameEmpty
         static let passwordEmpty = L10n.alertMessagePasswordEmpty
         static let passwordConfirmEmpty = L10n.alertMessagePasswordConfirmEmpty
         static let emailWrongFormat = L10n.alertMessageEmailWrongFormat

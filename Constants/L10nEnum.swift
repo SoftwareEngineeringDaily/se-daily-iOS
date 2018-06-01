@@ -23,6 +23,8 @@ enum L10n {
   static let alertMessageLastNameNotLongEnough = L10n.tr("Localizable", "AlertMessageLastNameNotLongEnough")
   /// Successfully Logged Out
   static let alertMessageLogoutSuccess = L10n.tr("Localizable", "AlertMessageLogoutSuccess")
+  /// Name Field Empty
+  static let alertMessageNameEmpty = L10n.tr("Localizable", "AlertMessageNameEmpty")
   /// Confirm Password Field Empty
   static let alertMessagePasswordConfirmEmpty = L10n.tr("Localizable", "AlertMessagePasswordConfirmEmpty")
   /// Password Field Empty
@@ -95,6 +97,8 @@ enum L10n {
   static let mwfNotificationBody = L10n.tr("Localizable", "mwfNotificationBody")
   /// Software Daily
   static let mwfNotificationTitle = L10n.tr("Localizable", "mwfNotificationTitle")
+  /// Name
+  static let namePlaceholder = L10n.tr("Localizable", "NamePlaceholder")
   /// No saved episodes.
   static let noBookmarks = L10n.tr("Localizable", "NoBookmarks")
   /// No thanks

@@ -68,10 +68,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bubbles" translatesAutoresizingMaskIntoConstraints="NO" id="wyk-Zl-Fbi">
-                                                    <rect key="frame" x="324" y="242" width="25" height="25"/>
+                                                    <rect key="frame" x="329" y="244.5" width="20" height="20"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="25" id="HFe-Rj-2H7"/>
-                                                        <constraint firstAttribute="width" constant="25" id="Tra-bD-scS"/>
+                                                        <constraint firstAttribute="height" constant="20" id="HFe-Rj-2H7"/>
+                                                        <constraint firstAttribute="width" constant="20" id="Tra-bD-scS"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>

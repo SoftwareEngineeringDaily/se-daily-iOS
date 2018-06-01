@@ -10,6 +10,7 @@ import UIKit
 
 class FeedItemCell: UITableViewCell {
 
+    @IBOutlet weak var itemTypeIcon: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageHero: UIImageView!
     
@@ -46,10 +47,15 @@ class FeedItemCell: UITableViewCell {
             
                 imageHero.image = #imageLiteral(resourceName: "SEDaily_Logo")
                 
-                if let featuredImage = thread.podcastEpisode?.featuredImage {
-                    if let imgUrl = URL(string: featuredImage ) {
-                        imageHero.kf.setImage(with: imgUrl)
+                if thread.podcastEpisode != nil {
+                    itemTypeIcon.image = #imageLiteral(resourceName: "podcast")
+                    if let featuredImage = thread.podcastEpisode?.featuredImage {
+                        if let imgUrl = URL(string: featuredImage ) {
+                            imageHero.kf.setImage(with: imgUrl)
+                        }
                     }
+                } else {
+                      itemTypeIcon.image = #imageLiteral(resourceName: "bubbles")
                 }
                 layoutSubviews()
             }
@@ -59,7 +65,7 @@ class FeedItemCell: UITableViewCell {
     var relatedLinkFeedItem: FeedItem? {
         didSet {
             imageHero.image = #imageLiteral(resourceName: "SEDaily_Logo")
-            
+            itemTypeIcon.image = #imageLiteral(resourceName: "relatedlink")
             if let relatedLinkFeedItem = relatedLinkFeedItem {
                 _feedItem = relatedLinkFeedItem.relatedLink
                 thread = nil

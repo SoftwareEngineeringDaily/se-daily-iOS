@@ -64,8 +64,8 @@
 "NoWithGratitude" = "No thanks";
 "Play" = "Play";
 "RelatedLinks" = "Related Links";
-"NoBookmarks" = "No Bookmarks";
-"LoginSeeBookmarks" = "Login to see your bookmarks";
+"NoBookmarks" = "No saved episodes.";
+"LoginSeeBookmarks" = "Login to see your saved episodes";
 "TapToRefresh" = "Tap to refresh";
 "Comments" = "Comments";
 "ThereWasAProblem" = "There was a problem :(";
@@ -75,6 +75,7 @@
 "TabBarNotifications" = "Notifications";
 "TabBarForum" = "Forum";
 "TabBarFeed" = "Feed";
+"TabBarSaved" = "Saved";
 "mwfNotificationTitle" = "Software Daily";
 "mwfNotificationBody" = "We have new episodes for you!";
 "Search" = "Search";

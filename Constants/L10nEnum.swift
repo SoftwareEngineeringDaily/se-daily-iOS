@@ -85,7 +85,7 @@ enum L10n {
   static let lastNamePlaceholder = L10n.tr("Localizable", "LastNamePlaceholder")
   /// Login
   static let loginButtonTitle = L10n.tr("Localizable", "LoginButtonTitle")
-  /// Login to see your bookmarks
+  /// Login to see your saved episodes
   static let loginSeeBookmarks = L10n.tr("Localizable", "LoginSeeBookmarks")
   /// Login
   static let loginTitle = L10n.tr("Localizable", "LoginTitle")
@@ -95,7 +95,7 @@ enum L10n {
   static let mwfNotificationBody = L10n.tr("Localizable", "mwfNotificationBody")
   /// Software Daily
   static let mwfNotificationTitle = L10n.tr("Localizable", "mwfNotificationTitle")
-  /// No Bookmarks
+  /// No saved episodes.
   static let noBookmarks = L10n.tr("Localizable", "NoBookmarks")
   /// No thanks
   static let noWithGratitude = L10n.tr("Localizable", "NoWithGratitude")
@@ -121,6 +121,8 @@ enum L10n {
   static let tabBarJustForYou = L10n.tr("Localizable", "TabBarJustForYou")
   /// Notifications
   static let tabBarNotifications = L10n.tr("Localizable", "TabBarNotifications")
+  /// Saved
+  static let tabBarSaved = L10n.tr("Localizable", "TabBarSaved")
   /// Latest
   static let tabBarTitleLatest = L10n.tr("Localizable", "TabBarTitleLatest")
   /// All

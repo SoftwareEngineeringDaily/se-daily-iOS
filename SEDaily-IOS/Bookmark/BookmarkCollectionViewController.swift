@@ -25,7 +25,7 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
         super.init(collectionViewLayout: layout)
         self.audioOverlayDelegate = audioOverlayDelegate
 
-        self.tabBarItem = UITabBarItem(tabBarSystemItem: .bookmarks, tag: 0)
+        self.tabBarItem = UITabBarItem(title: L10n.tabBarSaved, image:#imageLiteral(resourceName: "bookmark"), selectedImage: #imageLiteral(resourceName: "bookmark_selected"))
     }
 
     required init?(coder aDecoder: NSCoder) {

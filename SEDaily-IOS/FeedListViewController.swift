@@ -54,6 +54,7 @@ class FeedListViewController: UIViewController {
     }
     
     func removeSpinner(spinner: UIView) {
+        
         DispatchQueue.main.async {
             spinner.removeFromSuperview()
         }
@@ -68,15 +69,22 @@ class FeedListViewController: UIViewController {
         // Fetch Weather Data
         loadThreads(refreshing: true)
     }
-    
+
     func loadThreads(refreshing: Bool = false) {
         
         var lastActivityBefore =  ""
+        
+        var spinner: UIView?
         if threads.count > 0  && refreshing == false {
             // TODO: find last thread:
             
             if  let thread = self.lastThread {
                 lastActivityBefore = thread.dateLastAcitiy
+            }
+        } else {
+            // First go:
+            if refreshing == false {
+                spinner = self.displaySpinner(onView: self.view)
             }
         }
         
@@ -84,6 +92,10 @@ class FeedListViewController: UIViewController {
             if refreshing {
                 self?.threads = []
             }
+            if let spinner = spinner {
+                    self?.removeSpinner(spinner: spinner)
+            }
+            
             self?.lastThread = lastForumThread
             self?.threads += threads
             self?.tableView.reloadData()

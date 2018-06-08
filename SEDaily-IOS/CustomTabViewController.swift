@@ -105,16 +105,27 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     func setupTabs() {
         let layout = UICollectionViewLayout()
 
-        let storyboard = UIStoryboard.init(name: "FeedList", bundle: nil)
-        guard let ForumViewController = storyboard.instantiateViewController(
+        let feedListStoryboard = UIStoryboard.init(name: "FeedList", bundle: nil)
+        guard let FeedViewController = feedListStoryboard.instantiateViewController(
             withIdentifier: "FeedListViewController") as? FeedListViewController else {
                 return
         }
-        ForumViewController.audioOverlayDelegate = self.audioOverlayDelegate
+        FeedViewController.audioOverlayDelegate = self.audioOverlayDelegate
 
+        
+        let forumStoryboard = UIStoryboard.init(name: "ForumList", bundle: nil)
+        guard let ForumViewController = forumStoryboard.instantiateViewController(
+            withIdentifier: "ForumListViewController") as? ForumListViewController else {
+                return
+        }
+        
+//        ForumViewController.audioOverlayDelegate = self.audioOverlayDelegate
+
+        
         self.viewControllers = [
             PodcastPageViewController(audioOverlayDelegate: self.audioOverlayDelegate),
-            GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate, type: .top),
+  
+            FeedViewController,
             ForumViewController,
             BookmarkCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate),
             NotificationsTableViewController()

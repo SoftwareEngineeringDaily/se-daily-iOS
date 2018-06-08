@@ -189,13 +189,15 @@ class AudioView: UIView {
             make.top.equalTo(podcastLabel.snp.bottom)
             make.centerX.equalToSuperview()
         }
-
-        stackView.addArrangedSubview(skipBackwardbutton)
+        
+        let spacerButton = UIButton()
         stackView.addArrangedSubview(stopButton)
+        stackView.addArrangedSubview(skipBackwardbutton)
         stackView.addArrangedSubview(playButton)
         stackView.addArrangedSubview(pauseButton)
         stackView.addArrangedSubview(skipForwardButton)
-
+        stackView.addArrangedSubview(spacerButton)
+        
         let iconHeight = UIView.getValueScaledByScreenHeightFor(baseValue: (70 / 2))
 
         expandCollapseButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)
@@ -206,7 +208,7 @@ class AudioView: UIView {
 
         playButton.setIcon(icon: .fontAwesome(.play), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)
         pauseButton.setIcon(icon: .fontAwesome(.pause), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)
-        stopButton.setIcon(icon: .fontAwesome(.stop), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)
+        stopButton.setIcon(icon: .fontAwesome(.close), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)
 
         skipForwardButton.setImage(#imageLiteral(resourceName: "Forward"), for: .normal)
         skipForwardButton.height = iconHeight

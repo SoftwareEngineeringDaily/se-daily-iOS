@@ -9,7 +9,7 @@
 import UIKit
 
 class ForumThreadCell: UITableViewCell {
-
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -17,13 +17,13 @@ class ForumThreadCell: UITableViewCell {
     @IBOutlet weak var upVoteButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
     let networkService = API()
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
         let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 34)
-
+        
         upVoteButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
         upVoteButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .selected)
         
@@ -52,8 +52,8 @@ class ForumThreadCell: UITableViewCell {
             }
         }
     }
-
-    @IBAction func upvotePressed(_ sender: UIButton) {        
+    
+    @IBAction func upvotePressed(_ sender: UIButton) {
         guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
             return
@@ -98,8 +98,8 @@ class ForumThreadCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
-
+    
 }

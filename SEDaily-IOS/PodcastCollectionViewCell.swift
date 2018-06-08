@@ -15,7 +15,7 @@ import Kingfisher
 class PodcastCell: UICollectionViewCell {
     var imageView: UIImageView!
     var titleLabel: UILabel!
-    var timeDayLabel: UILabel!
+    var miscDetailsLabel: UILabel!
 
     var viewModel: PodcastViewModel = PodcastViewModel() {
         willSet {
@@ -24,7 +24,7 @@ class PodcastCell: UICollectionViewCell {
         didSet {
             self.titleLabel.text = viewModel.podcastTitle
             viewModel.getLastUpdatedAsDateWith { (date) in
-                self.setupTimeDayLabel(timeLength: nil, date: date)
+                self.setupMiscDetailsLabel(timeLength: nil, date: date, isDownloaded: self.viewModel.isDownloaded)
             }
             self.setupImageView(imageURL: viewModel.featuredImageURL)
         }
@@ -47,9 +47,9 @@ class PodcastCell: UICollectionViewCell {
         titleLabel.numberOfLines = 0
         titleLabel.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 16))
 
-        timeDayLabel = UILabel(origin: titleLabel.bottomLeftPoint(), topInset: 8, width: 158, height: 14)
-        self.contentView.addSubview(timeDayLabel)
-        timeDayLabel.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 12))
+        miscDetailsLabel = UILabel(origin: titleLabel.bottomLeftPoint(), topInset: 8, width: 158, height: 14)
+        self.contentView.addSubview(miscDetailsLabel)
+        miscDetailsLabel.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 10))
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -66,9 +66,14 @@ class PodcastCell: UICollectionViewCell {
         self.imageView.kf.setImage(with: imageURL, options: [.transition(.fade(0.2))])
     }
 
-    private func setupTimeDayLabel(timeLength: Int?, date: Date?) {
+    private func setupMiscDetailsLabel(timeLength: Int?, date: Date?, isDownloaded: Bool) {
         let dateString = date?.dateString() ?? ""
-        timeDayLabel.text = dateString
+        if  isDownloaded {
+            miscDetailsLabel.text = "\(dateString) (Downloaded)"
+        } else {
+            miscDetailsLabel.text = dateString
+        }
+        
     }
 
     // MARK: Skeleton

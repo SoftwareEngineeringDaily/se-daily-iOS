@@ -10,30 +10,26 @@ import UIKit
 
 class FeedItemCell: UITableViewCell {
 
+    @IBOutlet weak var itemTypeIcon: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var authorLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var commentsCountLabel: UILabel!
+    @IBOutlet weak var imageHero: UIImageView!
+    
     @IBOutlet weak var upVoteButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var byLabel: UILabel!
-    
-    @IBOutlet weak var subtitleHeightLessThan: NSLayoutConstraint!
-    @IBOutlet weak var subtitleHeightGreaterThan: NSLayoutConstraint!
-    
+
     let networkService = API()
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
-        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 34)
+        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 20)
 
-        upVoteButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
-        upVoteButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .selected)
+        upVoteButton.setIcon(icon: .fontAwesome(.thumbsOUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
+        upVoteButton.setIcon(icon: .fontAwesome(.thumbsUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .selected)
         
         upVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
+        itemTypeIcon.alpha = 0.3
     }
     
     var thread: ForumThread? {
@@ -41,23 +37,27 @@ class FeedItemCell: UITableViewCell {
             if let thread = thread {
                 _feedItem = thread
                 relatedLinkFeedItem = nil
-                subtitleLabel.text = ""
-                let author = thread.author
-                authorLabel.text = (author.name != nil) ? author.name : author.username
                 
                 titleLabel.text = thread.getPrettyTitle()
-                commentsCountLabel.text = thread.getCommentsSummary()
-                
-                dateLabel.text = thread.getDateLastActivityPretty()
-                byLabel.text = "by"
                 scoreLabel.text = "\(thread.score)"
                 if let upvoted = thread.upvoted {
                     upVoteButton.isSelected = upvoted
                 } else {
                     upVoteButton.isSelected = false
                 }
-                subtitleHeightLessThan.constant = 0
-                subtitleHeightGreaterThan.constant = 0
+            
+                imageHero.image = #imageLiteral(resourceName: "SEDaily_Logo")
+                
+                if thread.podcastEpisode != nil {
+                    itemTypeIcon.image = #imageLiteral(resourceName: "podcast")
+                    if let featuredImage = thread.podcastEpisode?.featuredImage {
+                        if let imgUrl = URL(string: featuredImage ) {
+                            imageHero.kf.setImage(with: imgUrl)
+                        }
+                    }
+                } else {
+                      itemTypeIcon.image = #imageLiteral(resourceName: "bubbles")
+                }
                 layoutSubviews()
             }
         }
@@ -65,19 +65,13 @@ class FeedItemCell: UITableViewCell {
     
     var relatedLinkFeedItem: FeedItem? {
         didSet {
-            
+            imageHero.image = #imageLiteral(resourceName: "SEDaily_Logo")
+            itemTypeIcon.image = #imageLiteral(resourceName: "relatedlink")
             if let relatedLinkFeedItem = relatedLinkFeedItem {
                 _feedItem = relatedLinkFeedItem.relatedLink
                 thread = nil
 
                 titleLabel.text = relatedLinkFeedItem.relatedLink.title
-                subtitleLabel.text = ""
-                byLabel.text = "added by"
-                commentsCountLabel.text = ""
-                dateLabel.text = ""
-                if let title = relatedLinkFeedItem.relatedLink.post?.rendered {
-                    subtitleLabel.text = "Episode: \(title)"
-                }
                 
                 scoreLabel.text = "\(relatedLinkFeedItem.relatedLink.score)"
                 if let upvoted = relatedLinkFeedItem.relatedLink.upvoted {
@@ -85,9 +79,12 @@ class FeedItemCell: UITableViewCell {
                 } else {
                     upVoteButton.isSelected = false
                 }
-
-                subtitleHeightLessThan.constant = 100
-                subtitleHeightGreaterThan.constant = 17
+                
+                if let image = relatedLinkFeedItem.relatedLink.image {
+                    if let imgUrl = URL(string: image ) {
+                        imageHero.kf.setImage(with: imgUrl)
+                    }
+                }
                 layoutSubviews()
             }
         }

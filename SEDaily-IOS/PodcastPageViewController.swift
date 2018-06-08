@@ -67,6 +67,9 @@ class PodcastPageViewController: TabmanViewController, PageboyViewControllerData
             GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate,
                                             tabTitle: PodcastCategoryIds.All.description),
             GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate,
+                                            categories: [PodcastCategoryIds.Greatest_Hits],
+                                            tabTitle: PodcastCategoryIds.Greatest_Hits.description),
+            GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate,
                                             categories: [PodcastCategoryIds.Business_and_Philosophy],
                                             tabTitle: PodcastCategoryIds.Business_and_Philosophy.description),
             GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate,
@@ -92,10 +95,7 @@ class PodcastPageViewController: TabmanViewController, PageboyViewControllerData
                                             tabTitle: PodcastCategoryIds.Security.description),
             GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate,
                                             categories: [PodcastCategoryIds.Hackers],
-                                            tabTitle: PodcastCategoryIds.Hackers.description),
-            GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate,
-                                            categories: [PodcastCategoryIds.Greatest_Hits],
-                                            tabTitle: PodcastCategoryIds.Greatest_Hits.description)
+                                            tabTitle: PodcastCategoryIds.Hackers.description)
         ]
 
         viewControllers.forEach { (controller) in

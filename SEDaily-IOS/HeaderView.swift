@@ -12,6 +12,7 @@ import SwiftIcons
 protocol HeaderViewDelegate: class {
     func modelDidChange(viewModel: PodcastViewModel)
     func relatedLinksButtonPressed()
+    func updateBookmarked(active: Bool)
     func commentsButtonPressed()
 }
 
@@ -326,7 +327,9 @@ extension HeaderView {
         self.downloadButton.isSelected = true
 
         self.playButton.isUserInteractionEnabled = false
-
+        
+        let podcastId = self.podcastViewModel._id            
+        
         self.downloadManager.save(
             podcast: self.podcastViewModel,
             onProgress: { progress in
@@ -336,9 +339,9 @@ extension HeaderView {
             onSucces: {
                 // Show success by changing download
                 self.delegate?.modelDidChange(viewModel: self.podcastViewModel)
-                self.audioOverlayDelegate?.animateOverlayIn()
-                self.audioOverlayDelegate?.playAudio(podcastViewModel: self.podcastViewModel)
-                self.audioOverlayDelegate?.pauseAudio()
+//                self.audioOverlayDelegate?.animateOverlayIn()
+//                self.audioOverlayDelegate?.playAudio(podcastViewModel: self.podcastViewModel)
+//                self.audioOverlayDelegate?.pauseAudio()
                 self.playButton.setTitle("Play", for: .normal)
                 self.playButton.isUserInteractionEnabled = true},
             onFailure: { error in

@@ -14,12 +14,10 @@ protocol PodcastDetailViewControllerDelegate: class {
     func modelDidChange(viewModel: PodcastViewModel)
 }
 
-
 protocol BookmarksDelegate: class {
     func bookmarkPodcast()
-   
-}
 
+}
 
 class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
 
@@ -35,8 +33,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
     lazy var scrollView: UIScrollView = {
         return UIScrollView(frame: self.view.frame)
     }()
-    
-    
+
     required init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, audioOverlayDelegate: AudioOverlayDelegate?) {
         self.audioOverlayDelegate = audioOverlayDelegate
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -102,8 +99,6 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
             podcastViewModel: nil)
     }
 
-   
-
     private func setBookmarked(_ bool: Bool) {
         self.model.isBookmarked = bool
         self.bookmarkButton?.isSelected = bool
@@ -115,7 +110,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
             return modifiedHtml
         }
         modifiedHtml.removeSubrange(powerPressPlayerRange)
-        
+
         /////////////////////////
         guard let divStartRange = modifiedHtml.range(of: "<div class=\"powerpress_player\"") else {
             return modifiedHtml
@@ -124,7 +119,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
             return modifiedHtml
         }
         modifiedHtml.removeSubrange(divStartRange.lowerBound..<divEndRange.upperBound)
-        
+
         /////////////////////////
         guard let pStartRange = modifiedHtml.range(of: "<p class=\"powerpress_links powerpress_links_mp3\">") else {
             return modifiedHtml
@@ -169,6 +164,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
 }
 
 extension PodcastDetailViewController: HeaderViewDelegate {
+
     func relatedLinksButtonPressed() {
         Analytics2.relatedLinksButtonPressed(podcastId: model._id)
         let relatedLinksStoryboard = UIStoryboard.init(name: "RelatedLinks", bundle: nil)
@@ -199,23 +195,23 @@ extension PodcastDetailViewController: HeaderViewDelegate {
     }
 }
 
-extension PodcastDetailViewController:BookmarksDelegate {
+extension PodcastDetailViewController: BookmarksDelegate {
      @objc private func bookmarkButtonPressed() {
         guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
             return
         }
-        
+
         guard let bookmarkButton = self.bookmarkButton else {
             log.error("There is no bookmark button")
             return
         }
-        
+
         bookmarkButton.isSelected = !bookmarkButton.isSelected
         self.setBookmark(value: bookmarkButton.isSelected)
-      
+
     }
-    
+
     private func setBookmark(value: Bool) {
             let podcastId = model._id
             networkService.setBookmarkPodcast(
@@ -230,27 +226,26 @@ extension PodcastDetailViewController:BookmarksDelegate {
             })
         Analytics2.bookmarkButtonPressed(podcastId: model._id)
     }
-    
+
     func bookmarkPodcast() {
         if !model.isBookmarked {
             setBookmark(value: true)
         }
     }
-    
-    private func updateBookmarked(active: Bool) {
+
+    func updateBookmarked(active: Bool) {
         self.setBookmarked(active)
         self.model.isBookmarked = active
         self.delegate?.modelDidChange(viewModel: self.model)
         // Update the bookmark button too with actual result:
-        
+
         guard let bookmarkButton = self.bookmarkButton else {
             log.error("There is no bookmark button")
             return
         }
-        print("active?")
-        print(active)
+
         bookmarkButton.isSelected = active
-        
+
     }
-    
+
 }

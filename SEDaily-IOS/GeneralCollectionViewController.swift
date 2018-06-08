@@ -34,7 +34,8 @@ class GeneralCollectionViewController: UICollectionViewController {
     var customTabBarItem: UITabBarItem! {
         switch type {
         case .new:
-            return nil
+            // This is actually greatest hits right now
+            return UITabBarItem(tabBarSystemItem: .mostViewed, tag: 0)
         case .recommended:
             return UITabBarItem(title: L10n.tabBarJustForYou, image: #imageLiteral(resourceName: "activity_feed"), selectedImage: #imageLiteral(resourceName: "activity_feed_selected"))
         case .top:
@@ -74,7 +75,7 @@ class GeneralCollectionViewController: UICollectionViewController {
         self.collectionView?.register(PodcastCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         let layout = KoalaTeaFlowLayout(cellWidth: UIView.getValueScaledByScreenWidthFor(baseValue: 158),
-                                        cellHeight: UIView.getValueScaledByScreenHeightFor(baseValue: 250),
+                                        cellHeight: UIView.getValueScaledByScreenHeightFor(baseValue: Helpers.getEpisodeCellHeight()),
                                         topBottomMargin: UIView.getValueScaledByScreenHeightFor(baseValue: 12),
                                         leftRightMargin: UIView.getValueScaledByScreenWidthFor(baseValue: 20),
                                         cellSpacing: UIView.getValueScaledByScreenWidthFor(baseValue: 8))

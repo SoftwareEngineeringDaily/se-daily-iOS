@@ -137,6 +137,18 @@ extension Helpers {
         let year = startDate.year.string
         return startMonth + " " + day + ", " + year
     }
+    
+    class func getEpisodeCellHeight() -> CGFloat {
+        if UIDevice().userInterfaceIdiom == .phone {
+            switch UIScreen.main.nativeBounds.height {
+            case 2436:
+                return 200
+            default:
+                return 250
+            }
+        }
+        return 250
+    }
 }
 
 import SwiftSoup

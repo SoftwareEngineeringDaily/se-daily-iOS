@@ -38,7 +38,7 @@ class FeedListViewController: UIViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
     }
     
-    func displaySpinner(onView : UIView) -> UIView {
+    func displaySpinner(onView: UIView) -> UIView {
         let spinnerView = UIView.init(frame: onView.bounds)
         spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
         let ai = UIActivityIndicatorView.init(activityIndicatorStyle: .whiteLarge)
@@ -53,7 +53,8 @@ class FeedListViewController: UIViewController {
         return spinnerView
     }
     
-    func removeSpinner(spinner :UIView) {
+    func removeSpinner(spinner: UIView) {
+        
         DispatchQueue.main.async {
             spinner.removeFromSuperview()
         }
@@ -68,15 +69,22 @@ class FeedListViewController: UIViewController {
         // Fetch Weather Data
         loadThreads(refreshing: true)
     }
-    
+
     func loadThreads(refreshing: Bool = false) {
         
         var lastActivityBefore =  ""
+        
+        var spinner: UIView?
         if threads.count > 0  && refreshing == false {
             // TODO: find last thread:
             
             if  let thread = self.lastThread {
                 lastActivityBefore = thread.dateLastAcitiy
+            }
+        } else {
+            // First go:
+            if refreshing == false {
+                spinner = self.displaySpinner(onView: self.view)
             }
         }
         
@@ -84,6 +92,10 @@ class FeedListViewController: UIViewController {
             if refreshing {
                 self?.threads = []
             }
+            if let spinner = spinner {
+                    self?.removeSpinner(spinner: spinner)
+            }
+            
             self?.lastThread = lastForumThread
             self?.threads += threads
             self?.tableView.reloadData()
@@ -112,7 +124,7 @@ class FeedListViewController: UIViewController {
     */
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
-        self.tabBarItem = UITabBarItem(title: L10n.tabBarFeed, image: #imageLiteral(resourceName: "bubbles"), selectedImage: #imageLiteral(resourceName: "bubbles_selected"))
+        self.tabBarItem = UITabBarItem(title: L10n.tabBarFeed, image: #imageLiteral(resourceName: "activity_feed"), selectedImage: #imageLiteral(resourceName: "activity_feed_selected"))
     }
 }
 
@@ -166,13 +178,10 @@ extension FeedListViewController: UITableViewDelegate, UITableViewDataSource {
         
         if let thread = self.threads[indexPath.row] as? ForumThread {
             if let liteEpisodeModel = thread.podcastEpisode {
-                print("---episode id:")
-                print(liteEpisodeModel._id)
                 let spinner = self.displaySpinner(onView: self.view)
                 networkService.getPost(podcastId: liteEpisodeModel._id) { (succeeded, fullPodcast) in
                     self.removeSpinner(spinner: spinner)
 
-                    
                     if succeeded && fullPodcast != nil {
                         if let audioOverlayDelegate = self.audioOverlayDelegate {
                             let vc = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
@@ -191,7 +200,6 @@ extension FeedListViewController: UITableViewDelegate, UITableViewDataSource {
                presentThreadComments(thread)
             }
         } else if let feedItem = self.threads[indexPath.row] as? FeedItem {
-            print("url \(feedItem.relatedLink.url)")
             // TODO: move to model
             var urlString = feedItem.relatedLink.url
             let urlPrefix = urlString.prefix(4)

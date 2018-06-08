@@ -25,7 +25,7 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
         super.init(collectionViewLayout: layout)
         self.audioOverlayDelegate = audioOverlayDelegate
 
-        self.tabBarItem = UITabBarItem(tabBarSystemItem: .bookmarks, tag: 0)
+        self.tabBarItem = UITabBarItem(title: L10n.tabBarSaved, image:#imageLiteral(resourceName: "bookmark"), selectedImage: #imageLiteral(resourceName: "bookmark_selected"))
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -41,7 +41,7 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 
         let layout = KoalaTeaFlowLayout(
             cellWidth: UIView.getValueScaledByScreenWidthFor(baseValue: 158),
-            cellHeight: UIView.getValueScaledByScreenHeightFor(baseValue: 250),
+            cellHeight: UIView.getValueScaledByScreenHeightFor(baseValue: Helpers.getEpisodeCellHeight()),
             topBottomMargin: UIView.getValueScaledByScreenHeightFor(baseValue: 12),
             leftRightMargin: UIView.getValueScaledByScreenWidthFor(baseValue: 20),
             cellSpacing: UIView.getValueScaledByScreenWidthFor(baseValue: 8))
@@ -177,7 +177,7 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
         }
 
         if let viewModel = self.viewModelController.viewModel(at: indexPath.row) {
-            cell.viewModel = viewModel
+            cell.viewModel = viewModel            
         }
 
         return cell

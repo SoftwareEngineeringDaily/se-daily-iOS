@@ -22,7 +22,8 @@ class Tracker {
         Answers.logCustomEvent(withName: "Moved_To_Webview",
                                customAttributes:
             [
-                "website": url
+                "website": url,
+                "isLoggedIn": UserManager.sharedInstance.isCurrentUserLoggedIn()
             ]
         )
     }
@@ -33,7 +34,8 @@ class Tracker {
                 "podcastId": podcast._id,
                 "podcastTitle": podcast.podcastTitle,
                 "tags": podcast.tagsAsString,
-                "categories": podcast.categoriesAsString
+                "categories": podcast.categoriesAsString,
+                "isLoggedIn": UserManager.sharedInstance.isCurrentUserLoggedIn()
             ]
         )
     }
@@ -46,7 +48,8 @@ class Tracker {
         Answers.logCustomEvent(withName: "ForumThread_Viewed", customAttributes:
             [
                 "podcastId": forumThread._id,
-                "podcastTitle": forumThread.title
+                "podcastTitle": forumThread.title,
+                "isLoggedIn": UserManager.sharedInstance.isCurrentUserLoggedIn()
             ]
         )
     }
@@ -54,7 +57,8 @@ class Tracker {
     class func logRelatedLinkViewedFromFeed(url: URL) {
         Answers.logCustomEvent(withName: "RelatedLink_Viewed_From_Feed", customAttributes:
             [
-                "website": url.absoluteString
+                "website": url.absoluteString,
+                "isLoggedIn": UserManager.sharedInstance.isCurrentUserLoggedIn()
             ]
         )
     }
@@ -62,8 +66,7 @@ class Tracker {
     class func logLogin(user: User) {
         Answers.logLogin(withMethod: "SEDaily_API", success: 1, customAttributes:
             [
-                "username": user.usernameOrEmail
-            ]
+                "username": user.usernameOrEmail            ]
         )
     }
 
@@ -71,8 +74,7 @@ class Tracker {
         Answers.logSignUp(withMethod: "SEDaily_API", success: 1,
                                customAttributes:
             [
-                "username": user.usernameOrEmail
-            ]
+                "username": user.usernameOrEmail            ]
         )
     }
 

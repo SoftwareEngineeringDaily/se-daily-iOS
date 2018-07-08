@@ -124,7 +124,7 @@ DEPENDENCIES:
   - WaitForIt (~> 2.0.0)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - Alamofire
     - Crashlytics
     - Disk
@@ -227,4 +227,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 900e14f47cd2ee536f721b3001b6397437682697
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.3

@@ -81,3 +81,6 @@
 "Search" = "Search";
 "EmptySearch" = "No results for search";
 "FetchingSearch" = "Fetching results";
+"ToggleToSignUpButtonTitle" = "No account? Sign Up";
+"ToggleToSignInButtonTitle" = "Back to Sign In";
+

@@ -3,6 +3,7 @@
 //  SEDaily-IOS
 //
 //  Created by Craig Holliday on 6/27/17.
+// 	Modyfied by Dawid Cedrych on 7/9/18
 //  Copyright © 2017 Koala Tea. All rights reserved.
 //
 
@@ -29,9 +30,8 @@ class LoginViewController: UIViewController {
     let firstNameTextField = TextField()
     let lastNameTextField = TextField()
 
-    let loginButton = UIButton()
-    let cancelButton = UIButton()
-    let signUpButton = UIButton()
+    let submitButton = UIButton()
+    let toggleButton = UIButton()
     
     let networkService = API()
 
@@ -39,7 +39,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         performLayout()
-        self.view.backgroundColor = Stylesheet.Colors.base
+        self.view.backgroundColor = UIColor.white
         Analytics2.loginFormViewed()
     }
 
@@ -49,7 +49,7 @@ class LoginViewController: UIViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return .default
     }
 
     func addBottomBorderToView(view: UIView, height: CGFloat, width: CGFloat) {
@@ -84,7 +84,19 @@ class LoginViewController: UIViewController {
         setupImageview()
         setupTextFields()
         setupButtons()
+				setupNavBar()
     }
+	
+	private func setupNavBar() {
+		
+		navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+		navigationController?.navigationBar.shadowImage = UIImage()
+		navigationController?.navigationBar.isTranslucent = true
+		navigationController?.view.backgroundColor = .clear
+		navigationController?.navigationItem.titleView = UIView()
+		navigationController?.navigationBar.tintColor = UIColor.white
+		
+	}
     private func setupTopBottomViews() {
         self.view.addSubview(topView)
         self.view.addSubview(bottomView)
@@ -115,27 +127,26 @@ class LoginViewController: UIViewController {
         self.stackView.addArrangedSubview(passwordConfirmTextField)
         self.stackView.addArrangedSubview(firstNameTextField)
         self.stackView.addArrangedSubview(lastNameTextField)
-        self.stackView.addArrangedSubview(loginButton)
-        self.stackView.addArrangedSubview(signUpButton)
-        self.stackView.addArrangedSubview(cancelButton)
+        self.stackView.addArrangedSubview(submitButton)
+        self.stackView.addArrangedSubview(toggleButton)
 
         stackView.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(self.view.center)
             make.left.right.equalToSuperview()
-            make.bottom.equalTo(cancelButton)
+            make.bottom.equalTo(toggleButton)
         }
     }
 
     private func setupImageview() {
         self.scrollView.addSubview(imageView)
         imageView.contentMode = .scaleAspectFit
-        imageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
+        imageView.image = #imageLiteral(resourceName: "logo_subtitle")
 
         imageView.snp.makeConstraints { (make) -> Void in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(50)
 
-            let height = UIView.getValueScaledByScreenHeightFor(baseValue: 200)
+            let height = UIView.getValueScaledByScreenHeightFor(baseValue: 100)
             make.height.equalTo(height)
             make.width.equalTo(height)
         }
@@ -225,42 +236,34 @@ class LoginViewController: UIViewController {
     }
 
     private func setupButtons() {
-        let width = UIView.getValueScaledByScreenWidthFor(baseValue: 94)
-        let height = UIView.getValueScaledByScreenHeightFor(baseValue: 42)
-        loginButton.snp.makeConstraints { (make) -> Void in
+        let width = UIView.getValueScaledByScreenWidthFor(baseValue: 316)
+        let height = UIView.getValueScaledByScreenHeightFor(baseValue: 50)
+        submitButton.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(width)
             make.height.equalTo(height)
         }
 
-        cancelButton.snp.makeConstraints { (make) -> Void in
+        toggleButton.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(width)
             make.height.equalTo(height)
         }
 
-        signUpButton.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(width)
-            make.height.equalTo(height)
-        }
+        submitButton.setTitle(L10n.loginButtonTitle, for: .normal)
+        let cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 25)
+        submitButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
+        submitButton.setBackgroundColor(color: Stylesheet.Colors.baseLight, forState: .normal)
+        submitButton.addTarget(self, action: #selector(self.loginButtonPressed), for: .touchUpInside)
+        submitButton.layer.cornerRadius = cornerRadius
+				submitButton.layer.shadowColor = Stylesheet.Colors.baseLight.cgColor
+				submitButton.layer.shadowOffset = CGSize(width: 0.0, height: 10.0)
+				submitButton.layer.shadowOpacity = 0.55
+				submitButton.layer.shadowRadius = 10.0
 
-        loginButton.setTitle(L10n.loginButtonTitle, for: .normal)
-        let cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 4)
-        loginButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
-        loginButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
-        loginButton.addTarget(self, action: #selector(self.loginButtonPressed), for: .touchUpInside)
-        loginButton.cornerRadius = cornerRadius
-
-        cancelButton.setTitle(L10n.cancelButtonTitle, for: .normal)
-        cancelButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
-        cancelButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
-        cancelButton.addTarget(self, action: #selector(self.cancelButtonPressed), for: .touchUpInside)
-        cancelButton.cornerRadius = cornerRadius
-        cancelButton.isHidden = true
-
-        signUpButton.setTitle(L10n.signUpButtonTitle, for: .normal)
-        signUpButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
-        signUpButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
-        signUpButton.addTarget(self, action: #selector(self.signUpButtonPressed), for: .touchUpInside)
-        signUpButton.cornerRadius = cornerRadius
+        toggleButton.setTitle(L10n.toggleToSignUpButtonTitle, for: .normal)
+        toggleButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .normal)
+        toggleButton.setBackgroundColor(color: Stylesheet.Colors.clear, forState: .normal)
+        toggleButton.addTarget(self, action: #selector(self.toggleButtonPressed), for: .touchUpInside)
+			
     }
 
     @objc func loginButtonPressed() {
@@ -296,51 +299,53 @@ class LoginViewController: UIViewController {
             self.navigationController?.popViewController()
         }
     }
+	
+	
 
-    @objc func cancelButtonPressed() {
-        Analytics2.cancelRegistrationButtonPressed()
-        Analytics2.loginFormViewed()
-        UIView.animate(withDuration: 0.15, animations: {
-            self.loginButton.isHidden = false
-            self.cancelButton.isHidden = true
-            
-            // Set email field back to "username or email"
-            self.emailTextField.placeholder = L10n.usernameOrEmailPlaceholder
-            self.emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
-        }, completion: { _ in
-            UIView.animate(withDuration: 0.15, animations: {
-                self.usernameTextField.alpha = 0
-                self.passwordConfirmTextField.alpha = 0
-                self.usernameTextField.isHidden = true
-                self.passwordConfirmTextField.isHidden = true
-//            self.firstNameTextField.isHidden = true
-//            self.lastNameTextField.isHidden = true
-            })
-        })
-    }
+		@objc func toggleButtonPressed() {
+			if passwordConfirmTextField.isHidden == true {
+				UIView.animate(withDuration: 0.15, animations: {
+					Analytics2.registrationFormViewed()
+					self.submitButton.setTitle(L10n.signUpButtonTitle, for: .normal)
+					// Remove login target and add sign up target
+					self.submitButton.removeTarget(self, action: #selector(self.loginButtonPressed), for: .touchUpInside)
+					self.submitButton.addTarget(self, action: #selector(self.signUpButtonPressed), for: .touchUpInside)
+					// Set email field to just email for signup
+					self.emailTextField.placeholder = L10n.emailAddressPlaceholder
+					self.emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
+				}, completion: { _ in
+					UIView.animate(withDuration: 0.15, animations: {
+						self.usernameTextField.alpha = 1
+						self.passwordConfirmTextField.alpha = 1
+						self.usernameTextField.isHidden = false
+						self.passwordConfirmTextField.isHidden = false
 
+					})
+				})
+			} else {
+				Analytics2.cancelRegistrationButtonPressed()
+				Analytics2.loginFormViewed()
+				UIView.animate(withDuration: 0.15, animations: {
+					self.submitButton.setTitle(L10n.loginButtonTitle, for: .normal)
+					// Remove login target and add sign up target
+					self.submitButton.removeTarget(self, action: #selector(self.signUpButtonPressed), for: .touchUpInside)
+					self.submitButton.addTarget(self, action: #selector(self.loginButtonPressed), for: .touchUpInside)
+					// Set email field back to "username or email"
+					self.emailTextField.placeholder = L10n.usernameOrEmailPlaceholder
+					self.emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
+				}, completion: { _ in
+					UIView.animate(withDuration: 0.15, animations: {
+						self.usernameTextField.alpha = 0
+						self.passwordConfirmTextField.alpha = 0
+						self.usernameTextField.isHidden = true
+						self.passwordConfirmTextField.isHidden = true
+					})
+				})
+			}
+		}
+	
+	
     @objc func signUpButtonPressed() {
-        if passwordConfirmTextField.isHidden == true {
-            UIView.animate(withDuration: 0.15, animations: {
-                Analytics2.registrationFormViewed()
-                self.loginButton.isHidden = true
-                self.cancelButton.isHidden = false
-                
-                // Set email field to just email for signup
-                self.emailTextField.placeholder = L10n.emailAddressPlaceholder
-                self.emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
-            }, completion: { _ in
-                UIView.animate(withDuration: 0.15, animations: {
-                    self.usernameTextField.alpha = 1
-                    self.passwordConfirmTextField.alpha = 1
-                    self.usernameTextField.isHidden = false
-                    self.passwordConfirmTextField.isHidden = false
-//                self.firstNameTextField.isHidden = false
-//                self.lastNameTextField.isHidden = false
-                })
-            })
-            return
-        }
 
         guard !emailTextField.isEmpty else {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.emailEmpty)

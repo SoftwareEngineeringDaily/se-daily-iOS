@@ -54,8 +54,8 @@ class LoginViewController: UIViewController {
 
     func addBottomBorderToView(view: UIView, height: CGFloat, width: CGFloat) {
         let border = CALayer()
-        let borderWidth = CGFloat(UIView.getValueScaledByScreenHeightFor(baseValue: 2))
-        border.borderColor = Stylesheet.Colors.secondaryColor.cgColor
+        let borderWidth = CGFloat(UIView.getValueScaledByScreenHeightFor(baseValue: 1))
+        border.borderColor = Stylesheet.Colors.baseLight.cgColor
         border.frame = CGRect(x: 0, y: height - borderWidth, width: width, height: height)
 
         border.borderWidth = borderWidth
@@ -131,7 +131,7 @@ class LoginViewController: UIViewController {
         self.stackView.addArrangedSubview(toggleButton)
 
         stackView.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(self.view.center)
+//            make.top.equalTo(self.view.center)
             make.left.right.equalToSuperview()
             make.bottom.equalTo(toggleButton)
         }
@@ -144,8 +144,9 @@ class LoginViewController: UIViewController {
 
         imageView.snp.makeConstraints { (make) -> Void in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(50)
-
+            make.top.equalToSuperview().inset(30)
+						make.bottom.equalTo(stackView.snp.top).offset(-30)
+		
             let height = UIView.getValueScaledByScreenHeightFor(baseValue: 100)
             make.height.equalTo(height)
             make.width.equalTo(height)
@@ -193,20 +194,20 @@ class LoginViewController: UIViewController {
         addBottomBorderToView(view: lastNameTextField, height: height, width: width)
 
         emailTextField.placeholder = L10n.usernameOrEmailPlaceholder
-        emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
+        emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
         emailTextField.textColor = Stylesheet.Colors.white
         emailTextField.autocorrectionType = .no
         emailTextField.autocapitalizationType = .none
         
         usernameTextField.isHidden = true
         usernameTextField.placeholder = L10n.usernamePlaceholder
-        usernameTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
+        usernameTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
         usernameTextField.textColor = Stylesheet.Colors.white
         usernameTextField.autocorrectionType = .no
         usernameTextField.autocapitalizationType = .none
 
         passwordTextField.placeholder = L10n.passwordPlaceholder
-        passwordTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
+        passwordTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
         passwordTextField.textColor = Stylesheet.Colors.white
         passwordTextField.autocorrectionType = .no
         passwordTextField.autocapitalizationType = .none
@@ -214,7 +215,7 @@ class LoginViewController: UIViewController {
 
         passwordConfirmTextField.isHidden = true
         passwordConfirmTextField.placeholder = L10n.confirmPasswordPlaceholder
-        passwordConfirmTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
+        passwordConfirmTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
         passwordConfirmTextField.textColor = Stylesheet.Colors.white
         passwordConfirmTextField.autocorrectionType = .no
         passwordConfirmTextField.autocapitalizationType = .none
@@ -222,14 +223,14 @@ class LoginViewController: UIViewController {
 
         firstNameTextField.isHidden = true
         firstNameTextField.placeholder = L10n.firstNamePlaceholder
-        firstNameTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
+        firstNameTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
         firstNameTextField.textColor = Stylesheet.Colors.white
         firstNameTextField.autocorrectionType = .no
         firstNameTextField.autocapitalizationType = .none
 
         lastNameTextField.isHidden = true
         lastNameTextField.placeholder = L10n.lastNamePlaceholder
-        lastNameTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
+        lastNameTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
         lastNameTextField.textColor = Stylesheet.Colors.white
         lastNameTextField.autocorrectionType = .no
         lastNameTextField.autocapitalizationType = .none
@@ -249,14 +250,13 @@ class LoginViewController: UIViewController {
         }
 
         submitButton.setTitle(L10n.loginButtonTitle, for: .normal)
-        let cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 25)
         submitButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
         submitButton.setBackgroundColor(color: Stylesheet.Colors.baseLight, forState: .normal)
         submitButton.addTarget(self, action: #selector(self.loginButtonPressed), for: .touchUpInside)
-        submitButton.layer.cornerRadius = cornerRadius
+		
 				submitButton.layer.shadowColor = Stylesheet.Colors.baseLight.cgColor
 				submitButton.layer.shadowOffset = CGSize(width: 0.0, height: 10.0)
-				submitButton.layer.shadowOpacity = 0.55
+				submitButton.layer.shadowOpacity = 0.65
 				submitButton.layer.shadowRadius = 10.0
 
         toggleButton.setTitle(L10n.toggleToSignUpButtonTitle, for: .normal)
@@ -307,12 +307,13 @@ class LoginViewController: UIViewController {
 				UIView.animate(withDuration: 0.15, animations: {
 					Analytics2.registrationFormViewed()
 					self.submitButton.setTitle(L10n.signUpButtonTitle, for: .normal)
+					self.toggleButton.setTitle(L10n.toggleToSignInButtonTitle, for: .normal)
 					// Remove login target and add sign up target
 					self.submitButton.removeTarget(self, action: #selector(self.loginButtonPressed), for: .touchUpInside)
 					self.submitButton.addTarget(self, action: #selector(self.signUpButtonPressed), for: .touchUpInside)
 					// Set email field to just email for signup
 					self.emailTextField.placeholder = L10n.emailAddressPlaceholder
-					self.emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
+					self.emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
 				}, completion: { _ in
 					UIView.animate(withDuration: 0.15, animations: {
 						self.usernameTextField.alpha = 1
@@ -327,12 +328,13 @@ class LoginViewController: UIViewController {
 				Analytics2.loginFormViewed()
 				UIView.animate(withDuration: 0.15, animations: {
 					self.submitButton.setTitle(L10n.loginButtonTitle, for: .normal)
+					self.toggleButton.setTitle(L10n.toggleToSignUpButtonTitle, for: .normal)
 					// Remove login target and add sign up target
 					self.submitButton.removeTarget(self, action: #selector(self.signUpButtonPressed), for: .touchUpInside)
 					self.submitButton.addTarget(self, action: #selector(self.loginButtonPressed), for: .touchUpInside)
 					// Set email field back to "username or email"
 					self.emailTextField.placeholder = L10n.usernameOrEmailPlaceholder
-					self.emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
+					self.emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
 				}, completion: { _ in
 					UIView.animate(withDuration: 0.15, animations: {
 						self.usernameTextField.alpha = 0

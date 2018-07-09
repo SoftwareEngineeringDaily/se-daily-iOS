@@ -14,7 +14,6 @@ import MBProgressHUD
 
 class LoginViewController: UIViewController {
 
-    //    let containerView = UIView()
     let scrollView = UIScrollView()
     let contentView = UIView()
     let topView = UIView()
@@ -86,45 +85,34 @@ class LoginViewController: UIViewController {
         setupImageview()
         setupTextFields()
         setupButtons()
-				setupNavBar()
 				setupHeaderLabel()
     }
 	
-	private func setupHeaderLabel() {
-		self.headerLabel.font = UIFont.systemFont(ofSize: 32.0, weight: .bold)
-		self.headerLabel.text = L10n.signInHeader
-		self.headerLabel.snp.makeConstraints { (make) -> Void in
-			make.left.equalTo(emailTextField.snp.left)
+		private func setupHeaderLabel() {
+			self.headerLabel.font = UIFont.systemFont(ofSize: 32.0, weight: .bold)
+			self.headerLabel.text = L10n.signInHeader
+			self.headerLabel.snp.makeConstraints { (make) -> Void in
+				make.left.equalTo(emailTextField.snp.left)
+			}
 		}
-	}
 	
-	private func setupNavBar() {
-		
-		navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-		navigationController?.navigationBar.shadowImage = UIImage()
-		navigationController?.navigationBar.isTranslucent = true
-		navigationController?.view.backgroundColor = .clear
-		navigationController?.navigationItem.titleView = UIView()
-		navigationController?.navigationBar.tintColor = UIColor.white
-		
-	}
-    private func setupTopBottomViews() {
-        self.view.addSubview(topView)
-        self.view.addSubview(bottomView)
+		private func setupTopBottomViews() {
+				self.view.addSubview(topView)
+				self.view.addSubview(bottomView)
 
-        topView.isUserInteractionEnabled = false
-        bottomView.isUserInteractionEnabled = false
+				topView.isUserInteractionEnabled = false
+				bottomView.isUserInteractionEnabled = false
 
-        topView.snp.makeConstraints { (make) -> Void in
-            make.top.left.right.equalToSuperview()
-            make.height.equalTo(view).dividedBy(2)
-        }
+				topView.snp.makeConstraints { (make) -> Void in
+						make.top.left.right.equalToSuperview()
+						make.height.equalTo(view).dividedBy(2)
+				}
 
-        bottomView.snp.makeConstraints { (make) -> Void in
-            make.bottom.left.right.equalTo(view)
-            make.height.equalTo(view).dividedBy(2)
-        }
-    }
+				bottomView.snp.makeConstraints { (make) -> Void in
+						make.bottom.left.right.equalTo(view)
+						make.height.equalTo(view).dividedBy(2)
+				}
+		}
 
     private func setupStackView() {
         stackView.alignment = .center
@@ -254,7 +242,6 @@ class LoginViewController: UIViewController {
         submitButton.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(width)
             make.height.equalTo(height)
-					
         }
 
         toggleButton.snp.makeConstraints { (make) -> Void in
@@ -342,7 +329,7 @@ class LoginViewController: UIViewController {
 				UIView.animate(withDuration: 0.15, animations: {
 					self.submitButton.setTitle(L10n.loginButtonTitle, for: .normal)
 					self.toggleButton.setTitle(L10n.toggleToSignUpButtonTitle, for: .normal)
-					// Remove login target and add sign up target
+					// Remove sign up target and add login target
 					self.submitButton.removeTarget(self, action: #selector(self.signUpButtonPressed), for: .touchUpInside)
 					self.submitButton.addTarget(self, action: #selector(self.loginButtonPressed), for: .touchUpInside)
 					self.headerLabel.text = L10n.signInHeader

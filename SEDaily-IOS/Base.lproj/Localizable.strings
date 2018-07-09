@@ -83,4 +83,6 @@
 "FetchingSearch" = "Fetching results";
 "ToggleToSignUpButtonTitle" = "no account? sign up";
 "ToggleToSignInButtonTitle" = "back to sign in";
+"SignUpHeader" = "Sign Up";
+"SignInHeader" = "Sign In";
 

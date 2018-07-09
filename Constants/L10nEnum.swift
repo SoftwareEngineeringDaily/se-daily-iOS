@@ -107,8 +107,12 @@ enum L10n {
   static let relatedLinks = L10n.tr("Localizable", "RelatedLinks")
   /// Search
   static let search = L10n.tr("Localizable", "Search")
+  /// Sign In
+  static let signInHeader = L10n.tr("Localizable", "SignInHeader")
   /// Sign Up
   static let signUpButtonTitle = L10n.tr("Localizable", "SignUpButtonTitle")
+  /// Sign Up
+  static let signUpHeader = L10n.tr("Localizable", "SignUpHeader")
   /// Submitting...
   static let submitting = L10n.tr("Localizable", "Submitting")
   /// Successfully submitted :)

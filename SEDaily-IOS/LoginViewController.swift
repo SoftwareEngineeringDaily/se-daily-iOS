@@ -50,7 +50,7 @@ class LoginViewController: UIViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
+        return .lightContent
     }
 
     func addBottomBorderToView(view: UIView, height: CGFloat, width: CGFloat) {

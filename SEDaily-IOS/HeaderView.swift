@@ -26,7 +26,6 @@ class HeaderView: UIView {
     var podcastViewModel = PodcastViewModel()
 
     let playView = UIView()
-    let playButton = UIButton()
 
     let secondaryView = UIView()
     let relatedLinksButton = UIButton()
@@ -40,6 +39,7 @@ class HeaderView: UIView {
     let downloadManager = OfflineDownloadsManager.sharedInstance
     let networkService = API()
 
+    @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var downVoteButton: UIButton!
     @IBOutlet weak var upVoteButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
@@ -58,6 +58,30 @@ class HeaderView: UIView {
         } else {
             playButton.alpha = 1.0
         }
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override func awakeFromNib() {
+        self.backgroundColor = Stylesheet.Colors.base
+
+        self.setUpButtons()
+        self.setUpPlayButton()
+        self.setUpLabels()
+    }
+    
+    func setUpLabels() {
+        podcastTitle.adjustsFontSizeToFitWidth = false
+        podcastTitle.minimumScaleFactor = 0.25
+        podcastTitle.numberOfLines = 0
+        podcastTitle.textColor = Stylesheet.Colors.white
+        
+        dateLabel.adjustsFontSizeToFitWidth = false
+        dateLabel.minimumScaleFactor = 0.25
+        dateLabel.numberOfLines = 1
+        dateLabel.textColor = Stylesheet.Colors.white
     }
 
 //    override func performLayout() {
@@ -208,6 +232,14 @@ class HeaderView: UIView {
         upVoteButton.setIcon(icon: .fontAwesome(.thumbsUp), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
         upVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
         upVoteButton.addTarget(self, action: #selector(self.upvoteButtonPressed), for: .touchUpInside)
+    }
+    
+    func setUpPlayButton() {
+        playButton.setTitle(L10n.play, for: .normal)
+        playButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
+        playButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
+        playButton.addTarget(self, action: #selector(self.playButtonPressed), for: .touchUpInside)
+        playButton.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 4)
     }
 
     func setupHeader(model: PodcastViewModel) {

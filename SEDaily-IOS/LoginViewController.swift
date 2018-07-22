@@ -261,7 +261,7 @@ class LoginViewController: UIViewController {
 
         toggleButton.setTitle(L10n.toggleToSignUpButtonTitle, for: .normal)
         toggleButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .normal)
-				toggleButton.titleLabel?.font = UIFont.systemFont(ofSize: 12.0, weight: .medium)
+				toggleButton.titleLabel?.font = UIFont.systemFont(ofSize: 15.0, weight: .medium)
         toggleButton.setBackgroundColor(color: Stylesheet.Colors.clear, forState: .normal)
         toggleButton.addTarget(self, action: #selector(self.toggleButtonPressed), for: .touchUpInside)
 			

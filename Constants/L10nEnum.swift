@@ -107,8 +107,12 @@ enum L10n {
   static let relatedLinks = L10n.tr("Localizable", "RelatedLinks")
   /// Search
   static let search = L10n.tr("Localizable", "Search")
+  /// Sign In
+  static let signInHeader = L10n.tr("Localizable", "SignInHeader")
   /// Sign Up
   static let signUpButtonTitle = L10n.tr("Localizable", "SignUpButtonTitle")
+  /// Sign Up
+  static let signUpHeader = L10n.tr("Localizable", "SignUpHeader")
   /// Submitting...
   static let submitting = L10n.tr("Localizable", "Submitting")
   /// Successfully submitted :)
@@ -151,6 +155,10 @@ enum L10n {
   static let tapToRefresh = L10n.tr("Localizable", "TapToRefresh")
   /// There was a problem :(
   static let thereWasAProblem = L10n.tr("Localizable", "ThereWasAProblem")
+  /// back to sign in
+  static let toggleToSignInButtonTitle = L10n.tr("Localizable", "ToggleToSignInButtonTitle")
+  /// no account? sign up
+  static let toggleToSignUpButtonTitle = L10n.tr("Localizable", "ToggleToSignUpButtonTitle")
   /// Username or Email
   static let usernameOrEmailPlaceholder = L10n.tr("Localizable", "UsernameOrEmailPlaceholder")
   /// Username

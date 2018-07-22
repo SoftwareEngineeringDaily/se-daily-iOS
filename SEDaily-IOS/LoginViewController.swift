@@ -3,6 +3,7 @@
 //  SEDaily-IOS
 //
 //  Created by Craig Holliday on 6/27/17.
+// 	Modyfied by Dawid Cedrych on 7/9/18
 //  Copyright © 2017 Koala Tea. All rights reserved.
 //
 
@@ -13,7 +14,6 @@ import MBProgressHUD
 
 class LoginViewController: UIViewController {
 
-    //    let containerView = UIView()
     let scrollView = UIScrollView()
     let contentView = UIView()
     let topView = UIView()
@@ -22,24 +22,25 @@ class LoginViewController: UIViewController {
     let imageView = UIImageView()
     let stackView = UIStackView()
 
-    let emailTextField = TextField()
-    let usernameTextField = TextField()
-    let passwordTextField = TextField()
-    let passwordConfirmTextField = TextField()
-    let firstNameTextField = TextField()
-    let lastNameTextField = TextField()
+    let emailTextField = InsetTextField()
+    let usernameTextField = InsetTextField()
+    let passwordTextField = InsetTextField()
+    let passwordConfirmTextField = InsetTextField()
+    let firstNameTextField = InsetTextField()
+    let lastNameTextField = InsetTextField()
 
-    let loginButton = UIButton()
-    let cancelButton = UIButton()
-    let signUpButton = UIButton()
-    
+    let submitButton = UIButton()
+    let toggleButton = UIButton()
+	
+		let headerLabel = UILabel()
+	
     let networkService = API()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         performLayout()
-        self.view.backgroundColor = Stylesheet.Colors.base
+        self.view.backgroundColor = UIColor.white
         Analytics2.loginFormViewed()
     }
 
@@ -54,8 +55,8 @@ class LoginViewController: UIViewController {
 
     func addBottomBorderToView(view: UIView, height: CGFloat, width: CGFloat) {
         let border = CALayer()
-        let borderWidth = CGFloat(UIView.getValueScaledByScreenHeightFor(baseValue: 2))
-        border.borderColor = Stylesheet.Colors.secondaryColor.cgColor
+        let borderWidth = CGFloat(UIView.getValueScaledByScreenHeightFor(baseValue: 1))
+        border.borderColor = Stylesheet.Colors.baseLight.cgColor
         border.frame = CGRect(x: 0, y: height - borderWidth, width: width, height: height)
 
         border.borderWidth = borderWidth
@@ -84,58 +85,68 @@ class LoginViewController: UIViewController {
         setupImageview()
         setupTextFields()
         setupButtons()
+				setupHeaderLabel()
     }
-    private func setupTopBottomViews() {
-        self.view.addSubview(topView)
-        self.view.addSubview(bottomView)
+	
+		private func setupHeaderLabel() {
+			self.headerLabel.font = UIFont.systemFont(ofSize: 32.0, weight: .bold)
+			self.headerLabel.text = L10n.signInHeader
+			self.headerLabel.snp.makeConstraints { (make) -> Void in
+				make.left.equalTo(emailTextField.snp.left)
+			}
+		}
+	
+		private func setupTopBottomViews() {
+				self.view.addSubview(topView)
+				self.view.addSubview(bottomView)
 
-        topView.isUserInteractionEnabled = false
-        bottomView.isUserInteractionEnabled = false
+				topView.isUserInteractionEnabled = false
+				bottomView.isUserInteractionEnabled = false
 
-        topView.snp.makeConstraints { (make) -> Void in
-            make.top.left.right.equalToSuperview()
-            make.height.equalTo(view).dividedBy(2)
-        }
+				topView.snp.makeConstraints { (make) -> Void in
+						make.top.left.right.equalToSuperview()
+						make.height.equalTo(view).dividedBy(2)
+				}
 
-        bottomView.snp.makeConstraints { (make) -> Void in
-            make.bottom.left.right.equalTo(view)
-            make.height.equalTo(view).dividedBy(2)
-        }
-    }
+				bottomView.snp.makeConstraints { (make) -> Void in
+						make.bottom.left.right.equalTo(view)
+						make.height.equalTo(view).dividedBy(2)
+				}
+		}
 
     private func setupStackView() {
         stackView.alignment = .center
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
         stackView.spacing = 10
-
+			
+				self.stackView.addArrangedSubview(headerLabel)
         self.stackView.addArrangedSubview(emailTextField)
         self.stackView.addArrangedSubview(usernameTextField)
         self.stackView.addArrangedSubview(passwordTextField)
         self.stackView.addArrangedSubview(passwordConfirmTextField)
         self.stackView.addArrangedSubview(firstNameTextField)
         self.stackView.addArrangedSubview(lastNameTextField)
-        self.stackView.addArrangedSubview(loginButton)
-        self.stackView.addArrangedSubview(signUpButton)
-        self.stackView.addArrangedSubview(cancelButton)
+        self.stackView.addArrangedSubview(submitButton)
+        self.stackView.addArrangedSubview(toggleButton)
 
         stackView.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(self.view.center)
             make.left.right.equalToSuperview()
-            make.bottom.equalTo(cancelButton)
+            make.bottom.equalTo(toggleButton)
         }
     }
 
     private func setupImageview() {
         self.scrollView.addSubview(imageView)
         imageView.contentMode = .scaleAspectFit
-        imageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
+        imageView.image = #imageLiteral(resourceName: "logo_subtitle")
 
         imageView.snp.makeConstraints { (make) -> Void in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(50)
-
-            let height = UIView.getValueScaledByScreenHeightFor(baseValue: 200)
+            make.top.equalToSuperview().inset(10)
+						make.bottom.equalTo(stackView.snp.top)
+		
+            let height = UIView.getValueScaledByScreenHeightFor(baseValue: 110)
             make.height.equalTo(height)
             make.width.equalTo(height)
         }
@@ -182,85 +193,78 @@ class LoginViewController: UIViewController {
         addBottomBorderToView(view: lastNameTextField, height: height, width: width)
 
         emailTextField.placeholder = L10n.usernameOrEmailPlaceholder
-        emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
-        emailTextField.textColor = Stylesheet.Colors.white
+        emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
+        emailTextField.textColor = Stylesheet.Colors.blackText
         emailTextField.autocorrectionType = .no
         emailTextField.autocapitalizationType = .none
-        
+				emailTextField.textAlignment = .left
+			
         usernameTextField.isHidden = true
         usernameTextField.placeholder = L10n.usernamePlaceholder
-        usernameTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
-        usernameTextField.textColor = Stylesheet.Colors.white
+        usernameTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
+        usernameTextField.textColor = Stylesheet.Colors.blackText
         usernameTextField.autocorrectionType = .no
         usernameTextField.autocapitalizationType = .none
 
         passwordTextField.placeholder = L10n.passwordPlaceholder
-        passwordTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
-        passwordTextField.textColor = Stylesheet.Colors.white
+        passwordTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
+        passwordTextField.textColor = Stylesheet.Colors.blackText
         passwordTextField.autocorrectionType = .no
         passwordTextField.autocapitalizationType = .none
         passwordTextField.isSecureTextEntry = true
 
         passwordConfirmTextField.isHidden = true
         passwordConfirmTextField.placeholder = L10n.confirmPasswordPlaceholder
-        passwordConfirmTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
-        passwordConfirmTextField.textColor = Stylesheet.Colors.white
+        passwordConfirmTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
+        passwordConfirmTextField.textColor = Stylesheet.Colors.blackText
         passwordConfirmTextField.autocorrectionType = .no
         passwordConfirmTextField.autocapitalizationType = .none
         passwordConfirmTextField.isSecureTextEntry = true
 
         firstNameTextField.isHidden = true
         firstNameTextField.placeholder = L10n.firstNamePlaceholder
-        firstNameTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
-        firstNameTextField.textColor = Stylesheet.Colors.white
+        firstNameTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
+        firstNameTextField.textColor = Stylesheet.Colors.blackText
         firstNameTextField.autocorrectionType = .no
         firstNameTextField.autocapitalizationType = .none
 
         lastNameTextField.isHidden = true
         lastNameTextField.placeholder = L10n.lastNamePlaceholder
-        lastNameTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
-        lastNameTextField.textColor = Stylesheet.Colors.white
+        lastNameTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
+        lastNameTextField.textColor = Stylesheet.Colors.blackText
         lastNameTextField.autocorrectionType = .no
         lastNameTextField.autocapitalizationType = .none
     }
 
     private func setupButtons() {
-        let width = UIView.getValueScaledByScreenWidthFor(baseValue: 94)
-        let height = UIView.getValueScaledByScreenHeightFor(baseValue: 42)
-        loginButton.snp.makeConstraints { (make) -> Void in
+        let width = UIView.getValueScaledByScreenWidthFor(baseValue: 316)
+        let height = UIView.getValueScaledByScreenHeightFor(baseValue: 50)
+        submitButton.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(width)
             make.height.equalTo(height)
         }
 
-        cancelButton.snp.makeConstraints { (make) -> Void in
+        toggleButton.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(width)
             make.height.equalTo(height)
         }
 
-        signUpButton.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(width)
-            make.height.equalTo(height)
-        }
+        submitButton.setTitle(L10n.loginButtonTitle, for: .normal)
+        submitButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
+        submitButton.setBackgroundColor(color: Stylesheet.Colors.baseLight, forState: .normal)
+        submitButton.addTarget(self, action: #selector(self.loginButtonPressed), for: .touchUpInside)
+		
+				submitButton.layer.shadowColor = Stylesheet.Colors.baseLight.cgColor
+				submitButton.layer.shadowOffset = CGSize(width: 0.0, height: 10.0)
+				submitButton.layer.shadowOpacity = 0.65
+				submitButton.layer.shadowRadius = 10.0
 
-        loginButton.setTitle(L10n.loginButtonTitle, for: .normal)
-        let cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 4)
-        loginButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
-        loginButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
-        loginButton.addTarget(self, action: #selector(self.loginButtonPressed), for: .touchUpInside)
-        loginButton.cornerRadius = cornerRadius
-
-        cancelButton.setTitle(L10n.cancelButtonTitle, for: .normal)
-        cancelButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
-        cancelButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
-        cancelButton.addTarget(self, action: #selector(self.cancelButtonPressed), for: .touchUpInside)
-        cancelButton.cornerRadius = cornerRadius
-        cancelButton.isHidden = true
-
-        signUpButton.setTitle(L10n.signUpButtonTitle, for: .normal)
-        signUpButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
-        signUpButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
-        signUpButton.addTarget(self, action: #selector(self.signUpButtonPressed), for: .touchUpInside)
-        signUpButton.cornerRadius = cornerRadius
+        toggleButton.setTitle(L10n.toggleToSignUpButtonTitle, for: .normal)
+        toggleButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .normal)
+				toggleButton.titleLabel?.font = UIFont.systemFont(ofSize: 15.0, weight: .medium)
+        toggleButton.setBackgroundColor(color: Stylesheet.Colors.clear, forState: .normal)
+        toggleButton.addTarget(self, action: #selector(self.toggleButtonPressed), for: .touchUpInside)
+			
     }
 
     @objc func loginButtonPressed() {
@@ -296,51 +300,54 @@ class LoginViewController: UIViewController {
             self.navigationController?.popViewController()
         }
     }
+	
+		@objc func toggleButtonPressed() {
+			if passwordConfirmTextField.isHidden == true {
+				UIView.animate(withDuration: 0.15, animations: {
+					Analytics2.registrationFormViewed()
+					self.submitButton.setTitle(L10n.signUpButtonTitle, for: .normal)
+					self.toggleButton.setTitle(L10n.toggleToSignInButtonTitle, for: .normal)
+					// Remove login target and add sign up target
+					self.submitButton.removeTarget(self, action: #selector(self.loginButtonPressed), for: .touchUpInside)
+					self.submitButton.addTarget(self, action: #selector(self.signUpButtonPressed), for: .touchUpInside)
+					self.headerLabel.text = L10n.signUpHeader
+					// Set email field to just email for signup
+					self.emailTextField.placeholder = L10n.emailAddressPlaceholder
+					self.emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
+				}, completion: { _ in
+					UIView.animate(withDuration: 0.15, animations: {
+						self.usernameTextField.alpha = 1
+						self.passwordConfirmTextField.alpha = 1
+						self.usernameTextField.isHidden = false
+						self.passwordConfirmTextField.isHidden = false
 
-    @objc func cancelButtonPressed() {
-        Analytics2.cancelRegistrationButtonPressed()
-        Analytics2.loginFormViewed()
-        UIView.animate(withDuration: 0.15, animations: {
-            self.loginButton.isHidden = false
-            self.cancelButton.isHidden = true
-            
-            // Set email field back to "username or email"
-            self.emailTextField.placeholder = L10n.usernameOrEmailPlaceholder
-            self.emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
-        }, completion: { _ in
-            UIView.animate(withDuration: 0.15, animations: {
-                self.usernameTextField.alpha = 0
-                self.passwordConfirmTextField.alpha = 0
-                self.usernameTextField.isHidden = true
-                self.passwordConfirmTextField.isHidden = true
-//            self.firstNameTextField.isHidden = true
-//            self.lastNameTextField.isHidden = true
-            })
-        })
-    }
-
+					})
+				})
+			} else {
+				Analytics2.cancelRegistrationButtonPressed()
+				Analytics2.loginFormViewed()
+				UIView.animate(withDuration: 0.15, animations: {
+					self.submitButton.setTitle(L10n.loginButtonTitle, for: .normal)
+					self.toggleButton.setTitle(L10n.toggleToSignUpButtonTitle, for: .normal)
+					// Remove sign up target and add login target
+					self.submitButton.removeTarget(self, action: #selector(self.signUpButtonPressed), for: .touchUpInside)
+					self.submitButton.addTarget(self, action: #selector(self.loginButtonPressed), for: .touchUpInside)
+					self.headerLabel.text = L10n.signInHeader
+					// Set email field back to "username or email"
+					self.emailTextField.placeholder = L10n.usernameOrEmailPlaceholder
+					self.emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
+				}, completion: { _ in
+					UIView.animate(withDuration: 0.15, animations: {
+						self.usernameTextField.alpha = 0
+						self.passwordConfirmTextField.alpha = 0
+						self.usernameTextField.isHidden = true
+						self.passwordConfirmTextField.isHidden = true
+					})
+				})
+			}
+		}
+	
     @objc func signUpButtonPressed() {
-        if passwordConfirmTextField.isHidden == true {
-            UIView.animate(withDuration: 0.15, animations: {
-                Analytics2.registrationFormViewed()
-                self.loginButton.isHidden = true
-                self.cancelButton.isHidden = false
-                
-                // Set email field to just email for signup
-                self.emailTextField.placeholder = L10n.emailAddressPlaceholder
-                self.emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.secondaryColor)
-            }, completion: { _ in
-                UIView.animate(withDuration: 0.15, animations: {
-                    self.usernameTextField.alpha = 1
-                    self.passwordConfirmTextField.alpha = 1
-                    self.usernameTextField.isHidden = false
-                    self.passwordConfirmTextField.isHidden = false
-//                self.firstNameTextField.isHidden = false
-//                self.lastNameTextField.isHidden = false
-                })
-            })
-            return
-        }
 
         guard !emailTextField.isEmpty else {
             Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.emailEmpty)
@@ -395,4 +402,14 @@ class LoginViewController: UIViewController {
             self.navigationController?.popViewController()
         })
     }
+}
+
+//not sure whether insetTextField effect is desired across the app, so I'm not making it an extension of UITextField
+class InsetTextField: UITextField {
+	override func textRect(forBounds bounds: CGRect) -> CGRect {
+		return bounds.insetBy(dx: 0.0, dy: 5.0)
+	}
+	override func editingRect(forBounds bounds: CGRect) -> CGRect {
+		return bounds.insetBy(dx: 0.0, dy: 5.0)
+	}
 }

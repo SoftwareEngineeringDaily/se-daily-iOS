@@ -151,6 +151,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
         imageView.contentMode = .scaleAspectFit
         imageView.image = #imageLiteral(resourceName: "Logo_BarButton")
         self.navigationItem.titleView = imageView
+			
     }
 
     private func askForReview() {

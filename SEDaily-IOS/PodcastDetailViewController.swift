@@ -30,6 +30,8 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
 
     var model = PodcastViewModel()
 
+    @IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var headerView: HeaderView!
     lazy var scrollView: UIScrollView = {
         return UIScrollView(frame: self.view.frame)
     }()
@@ -44,27 +46,10 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = Stylesheet.Colors.base
-
-        let headerView = HeaderView(width: 375, height: 200)
+        
         headerView.setupHeader(model: model)
-        headerView.delegate = self
         headerView.bookmarkDelegate = self
         headerView.audioOverlayDelegate = self.audioOverlayDelegate
-
-        let webView = WKWebView()
-        webView.navigationDelegate = self
-        self.view.addSubview(webView)
-        webView.snp.makeConstraints { (make) in
-            make.left.right.top.bottom.equalToSuperview()
-        }
-
-        var htmlString = self.removePowerPressPlayerTags(html: model.encodedPodcastDescription)
-        htmlString = self.addStyling(html: htmlString)
-        htmlString = self.addHeightAdjustment(html: htmlString, height: headerView.height)
-        htmlString = self.addScaleMeta(html: htmlString)
-        webView.loadHTMLString(htmlString, baseURL: nil)
-
-        webView.scrollView.addSubview(headerView)
 
         let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 25)
         self.bookmarkButton = UIButton()

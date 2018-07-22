@@ -12,6 +12,7 @@ import KoalaTeaFlowLayout
 private let reuseIdentifier = "Cell"
 
 class GeneralCollectionViewController: UICollectionViewController {
+    
     lazy var skeletonCollectionView: SkeletonCollectionView = {
         return SkeletonCollectionView(frame: self.collectionView!.frame)
     }()
@@ -198,7 +199,13 @@ class GeneralCollectionViewController: UICollectionViewController {
                 vc.model = viewModel
                 vc.delegate = self
             
-                self.navigationController?.pushViewController(vc, animated: true)
+                let sb = UIStoryboard(name: "PodcastDetail", bundle: .main)
+                let optionalVC = sb.instantiateInitialViewController() as? PodcastDetailViewController
+                if let vc = optionalVC {
+                    vc.model = viewModel
+                    vc.delegate = self
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
             }
         }
     }

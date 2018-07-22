@@ -7,7 +7,6 @@ target 'SEDaily-IOS' do
 
   # Pods for SEDaily-IOS
   pod 'ActiveLabel', :git => 'https://github.com/optonaut/ActiveLabel.swift.git'
-p
   pod 'Alamofire', '~> 4.5.1'
   pod 'Crashlytics', '~> 3.9.3'
   pod 'Down'

@@ -25,9 +25,6 @@ class HeaderView: UIView {
 
     var podcastViewModel = PodcastViewModel()
 
-    let titleLabel = UILabel()
-    let dateLabel = UILabel()
-
     let playView = UIView()
     let playButton = UIButton()
 
@@ -37,18 +34,21 @@ class HeaderView: UIView {
     let voteView = UIView()
     let stackView = UIStackView()
     let commentsButton = UIButton()
-    let upVoteButton = UIButton()
-    let downVoteButton = UIButton()
-    let scoreLabel = UILabel()
 
     private var downloadButton = UIButton()
 
     let downloadManager = OfflineDownloadsManager.sharedInstance
     let networkService = API()
 
+    @IBOutlet weak var downVoteButton: UIButton!
+    @IBOutlet weak var upVoteButton: UIButton!
+    @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var podcastTitle: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.performLayout()
+//        self.performLayout()
     }
 
     override func didMoveToSuperview() {
@@ -59,49 +59,48 @@ class HeaderView: UIView {
             playButton.alpha = 1.0
         }
     }
-    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented"); }
 
-    override func performLayout() {
-        let views = [
-            titleLabel,
-            dateLabel
-        ]
-
-        self.addSubviews(views)
-
-        self.backgroundColor = Stylesheet.Colors.base
-        setupPlayView()
-        setupSecondaryView()
-
-        titleLabel.snp.makeConstraints { (make) in
-            make.bottom.equalTo(playView.snp.top).offset(UIView.getValueScaledByScreenHeightFor(baseValue: -60))
-            make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenHeightFor(baseValue: 15))
-        }
-
-        dateLabel.snp.makeConstraints {  (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(UIView.getValueScaledByScreenHeightFor(baseValue: 15))
-            make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenHeightFor(baseValue: 15))
-        }
-
-        setupLabels()
-    }
-
-    func setupLabels() {
-        // This makes the post title and date pretty and large:
-        titleLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 20))
-        titleLabel.adjustsFontSizeToFitWidth = false
-        titleLabel.minimumScaleFactor = 0.25
-        titleLabel.numberOfLines = 0
-        titleLabel.textColor = Stylesheet.Colors.white
-
-        dateLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 16))
-        dateLabel.adjustsFontSizeToFitWidth = false
-        dateLabel.minimumScaleFactor = 0.25
-        dateLabel.numberOfLines = 1
-        dateLabel.textColor = Stylesheet.Colors.white
-    }
+//    override func performLayout() {
+//        let views = [
+//            podcastTitle,
+//            dateLabel
+//        ]
+//
+//        self.addSubviews(views)
+//
+//        self.backgroundColor = Stylesheet.Colors.base
+//        setupPlayView()
+//        setupSecondaryView()
+//
+//        podcastTitle.snp.makeConstraints { (make) in
+//            make.bottom.equalTo(playView.snp.top).offset(UIView.getValueScaledByScreenHeightFor(baseValue: -60))
+//            make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+//            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenHeightFor(baseValue: 15))
+//        }
+//
+//        dateLabel.snp.makeConstraints {  (make) in
+//            make.top.equalTo(podcastTitle.snp.bottom).offset(UIView.getValueScaledByScreenHeightFor(baseValue: 15))
+//            make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+//            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenHeightFor(baseValue: 15))
+//        }
+//
+//        setupLabels()
+//    }
+//
+//    func setupLabels() {
+//        // This makes the post title and date pretty and large:
+//        podcastTitle.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 20))
+//        podcastTitle.adjustsFontSizeToFitWidth = false
+//        podcastTitle.minimumScaleFactor = 0.25
+//        podcastTitle.numberOfLines = 0
+//        podcastTitle.textColor = Stylesheet.Colors.white
+//
+//        dateLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 16))
+//        dateLabel.adjustsFontSizeToFitWidth = false
+//        dateLabel.minimumScaleFactor = 0.25
+//        dateLabel.numberOfLines = 1
+//        dateLabel.textColor = Stylesheet.Colors.white
+//    }
 
     func setupSecondaryView() {
         self.addSubview(secondaryView)
@@ -127,6 +126,14 @@ class HeaderView: UIView {
             make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 180))
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 35))
         }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override func awakeFromNib() {
+        self.setUpButtons()
     }
 
     func setupPlayView() {
@@ -189,6 +196,19 @@ class HeaderView: UIView {
         upVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
         upVoteButton.addTarget(self, action: #selector(self.upvoteButtonPressed), for: .touchUpInside)
     }
+    
+    func setUpButtons() {
+        let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 35)
+        downVoteButton.setIcon(icon: .fontAwesome(.thumbsODown), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
+        downVoteButton.setIcon(icon: .fontAwesome(.thumbsDown), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
+        downVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
+        downVoteButton.addTarget(self, action: #selector(self.downVoteButtonPressed), for: .touchUpInside)
+        
+        upVoteButton.setIcon(icon: .fontAwesome(.thumbsOUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
+        upVoteButton.setIcon(icon: .fontAwesome(.thumbsUp), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
+        upVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
+        upVoteButton.addTarget(self, action: #selector(self.upvoteButtonPressed), for: .touchUpInside)
+    }
 
     func setupHeader(model: PodcastViewModel) {
         self.podcastViewModel = model
@@ -197,7 +217,8 @@ class HeaderView: UIView {
         } else {
             commentsButton.isHidden = true
         }
-        self.titleLabel.text = model.podcastTitle
+
+        self.podcastTitle.text = model.podcastTitle
         self.dateLabel.text = model.getLastUpdatedAsDate()?.dateString() ?? ""
         self.scoreLabel.text = model.score.string
 

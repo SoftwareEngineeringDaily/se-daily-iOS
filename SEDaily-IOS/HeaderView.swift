@@ -25,8 +25,6 @@ class HeaderView: UIView {
 
     var podcastViewModel = PodcastViewModel()
 
-    let playView = UIView()
-
     let secondaryView = UIView()
     let relatedLinksButton = UIButton()
 
@@ -38,7 +36,9 @@ class HeaderView: UIView {
 
     let downloadManager = OfflineDownloadsManager.sharedInstance
     let networkService = API()
-
+    
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var playView: UIView!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var downVoteButton: UIButton!
     @IBOutlet weak var upVoteButton: UIButton!
@@ -68,11 +68,10 @@ class HeaderView: UIView {
         self.backgroundColor = Stylesheet.Colors.base
 
         self.setUpButtons()
-        self.setUpPlayButton()
         self.setUpLabels()
     }
     
-    func setUpLabels() {
+    private func setUpLabels() {
         podcastTitle.adjustsFontSizeToFitWidth = false
         podcastTitle.minimumScaleFactor = 0.25
         podcastTitle.numberOfLines = 0
@@ -160,68 +159,13 @@ class HeaderView: UIView {
         self.setUpButtons()
     }
 
-    func setupPlayView() {
-        self.addSubview(playView)
-
-        // The playView is the row with the Up / Down and Pink Playbutton
-        playView.backgroundColor = Stylesheet.Colors.white
-
-        playView.snp.makeConstraints { (make) in
-            make.bottom.equalToSuperview()
-            make.left.right.equalToSuperview()
-            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 65))
-        }
-
-        playView.addSubview(playButton)
-        playButton.setTitle(L10n.play, for: .normal)
-        playButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
-        playButton.addTarget(self, action: #selector(self.playButtonPressed), for: .touchUpInside)
-        playButton.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 4)
-
-        playButton.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
-            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 84))
-            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 42))
-        }
-
-        playView.addSubview(voteView)
-        voteView.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
-            make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 10))
-            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: (35 * 4)))
-            make.height.equalToSuperview()
-        }
-
-        voteView.addSubview(stackView)
-        stackView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
-        }
-        stackView.axis = .horizontal
-        stackView.alignment = .fill
-        stackView.distribution = .fillEqually
-//        stackView.addArrangedSubview(commentsButton)
-
-        stackView.addArrangedSubview(downVoteButton)
-        stackView.addArrangedSubview(scoreLabel)
-        stackView.addArrangedSubview(upVoteButton)
-
-        scoreLabel.textAlignment = .center
-        scoreLabel.baselineAdjustment = .alignCenters
-        scoreLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 24))
-
-        downVoteButton.setIcon(icon: .fontAwesome(.thumbsODown), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
-        downVoteButton.setIcon(icon: .fontAwesome(.thumbsDown), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
-        downVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
-        downVoteButton.addTarget(self, action: #selector(self.downVoteButtonPressed), for: .touchUpInside)
-
-        upVoteButton.setIcon(icon: .fontAwesome(.thumbsOUp), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
-        upVoteButton.setIcon(icon: .fontAwesome(.thumbsUp), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
-        upVoteButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .selected)
-        upVoteButton.addTarget(self, action: #selector(self.upvoteButtonPressed), for: .touchUpInside)
+    
+    private func setUpButtons() {
+        setUpPlayButton()
+        setUpVoteButtons()
     }
     
-    func setUpButtons() {
+    private func setUpVoteButtons() {
         let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 35)
         downVoteButton.setIcon(icon: .fontAwesome(.thumbsODown), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
         downVoteButton.setIcon(icon: .fontAwesome(.thumbsDown), iconSize: iconSize, color: Stylesheet.Colors.base, forState: .selected)
@@ -234,7 +178,7 @@ class HeaderView: UIView {
         upVoteButton.addTarget(self, action: #selector(self.upvoteButtonPressed), for: .touchUpInside)
     }
     
-    func setUpPlayButton() {
+    private func setUpPlayButton() {
         playButton.setTitle(L10n.play, for: .normal)
         playButton.setBackgroundColor(color: Stylesheet.Colors.secondaryColor, forState: .normal)
         playButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
@@ -242,17 +186,17 @@ class HeaderView: UIView {
         playButton.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 4)
     }
 
-    func setupHeader(model: PodcastViewModel) {
-        self.podcastViewModel = model
+    func setupHeader(podcastViewModel: PodcastViewModel) {
+        self.podcastViewModel = podcastViewModel
         if self.podcastViewModel.thread != nil {
             commentsButton.isHidden = false
         } else {
             commentsButton.isHidden = true
         }
 
-        self.podcastTitle.text = model.podcastTitle
-        self.dateLabel.text = model.getLastUpdatedAsDate()?.dateString() ?? ""
-        self.scoreLabel.text = model.score.string
+        self.podcastTitle.text = podcastViewModel.podcastTitle
+        self.dateLabel.text = podcastViewModel.getLastUpdatedAsDate()?.dateString() ?? ""
+        self.scoreLabel.text = podcastViewModel.score.string
 
         commentsButton.isSelected = false
         upVoteButton.isSelected = self.podcastViewModel.isUpvoted

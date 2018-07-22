@@ -29,7 +29,6 @@ class HeaderView: UIView {
     let relatedLinksButton = UIButton()
 
     let voteView = UIView()
-    let stackView = UIStackView()
     let commentsButton = UIButton()
 
     private var downloadButton = UIButton()
@@ -53,11 +52,11 @@ class HeaderView: UIView {
 
     override func didMoveToSuperview() {
         // This will "hide" the Play button, to make it clear it won't work if pressed.
-        if self.audioOverlayDelegate == nil {
-            playButton.alpha = 0.2
-        } else {
-            playButton.alpha = 1.0
-        }
+//        if self.audioOverlayDelegate == nil {
+//            playButton.alpha = 0.2
+//        } else {
+//            playButton.alpha = 1.0
+//        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -150,16 +149,7 @@ class HeaderView: UIView {
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 35))
         }
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    override func awakeFromNib() {
-        self.setUpButtons()
-    }
 
-    
     private func setUpButtons() {
         setUpPlayButton()
         setUpVoteButtons()

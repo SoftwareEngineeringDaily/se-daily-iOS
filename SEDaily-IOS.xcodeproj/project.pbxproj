@@ -707,7 +707,6 @@
 					};
 					1686FC101F009EC00088A6C1 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = 6MS9QWALYV;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 1686FBFC1F009EC00088A6C1;
@@ -1208,9 +1207,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 10;
-				DEVELOPMENT_TEAM = 8DPYE775WZ;
+				DEVELOPMENT_TEAM = 46SJCF8S9H;
 				INFOPLIST_FILE = "SEDaily-IOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "koala-tea.SEDaily";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1229,9 +1228,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 10;
-				DEVELOPMENT_TEAM = 8DPYE775WZ;
+				DEVELOPMENT_TEAM = 46SJCF8S9H;
 				INFOPLIST_FILE = "SEDaily-IOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "koala-tea.SEDaily";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1248,7 +1247,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 6MS9QWALYV;
+				DEVELOPMENT_TEAM = 46SJCF8S9H;
 				INFOPLIST_FILE = "SEDaily-IOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "koala-tea.SEDaily-IOSTests";
@@ -1265,7 +1264,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 6MS9QWALYV;
+				DEVELOPMENT_TEAM = 46SJCF8S9H;
 				INFOPLIST_FILE = "SEDaily-IOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "koala-tea.SEDaily-IOSTests";

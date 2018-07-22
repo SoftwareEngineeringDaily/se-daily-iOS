@@ -22,7 +22,7 @@ protocol BookmarksDelegate: class {
 class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
 
     weak var delegate: PodcastDetailViewControllerDelegate?
-    private weak var audioOverlayDelegate: AudioOverlayDelegate?
+    weak var audioOverlayDelegate: AudioOverlayDelegate?
 
     private var bookmarkButton: UIButton?
 
@@ -32,6 +32,7 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
 
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var headerView: HeaderView!
+    
     lazy var scrollView: UIScrollView = {
         return UIScrollView(frame: self.view.frame)
     }()
@@ -40,16 +41,27 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
         self.audioOverlayDelegate = audioOverlayDelegate
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
+    
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = Stylesheet.Colors.base
         
-        headerView.setupHeader(model: model)
+        headerView.setupHeader(podcastViewModel: model)
         headerView.bookmarkDelegate = self
         headerView.audioOverlayDelegate = self.audioOverlayDelegate
+        headerView.delegate = self
+        
+        webView.navigationDelegate = self
+        let headerViewContentSize = headerView.intrinsicContentSize
+        var htmlString = self.removePowerPressPlayerTags(html: model.encodedPodcastDescription)
+        htmlString = self.addStyling(html: htmlString)
+        htmlString = self.addHeightAdjustment(html: htmlString, height: headerViewContentSize.height)
+        htmlString = self.addScaleMeta(html: htmlString)
+        webView.loadHTMLString(htmlString, baseURL: nil)
 
         let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 25)
         self.bookmarkButton = UIButton()

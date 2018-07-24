@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -37,7 +36,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Cm-Ay-7Hv">
-                                        <rect key="frame" x="16" y="70" width="343" height="19.5"/>
+                                        <rect key="frame" x="16" y="70" width="147" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -83,22 +82,35 @@
                                             <constraint firstItem="iRn-It-Wwh" firstAttribute="centerY" secondItem="chl-RX-hgB" secondAttribute="centerY" id="dvT-EB-gnW"/>
                                         </constraints>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XPx-7N-fUy">
+                                        <rect key="frame" x="179" y="70" width="180" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="35" id="alx-UW-RCI"/>
+                                            <constraint firstAttribute="width" constant="180" id="qLA-Wl-lFj"/>
+                                        </constraints>
+                                        <state key="normal" title="Related Links"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="titleForNormal" value="Related Links"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="XPx-7N-fUy" firstAttribute="trailing" secondItem="NuE-Kx-Nw0" secondAttribute="trailing" id="1MZ-Fm-rwh"/>
                                     <constraint firstItem="NuE-Kx-Nw0" firstAttribute="top" secondItem="8Zs-hk-kF8" secondAttribute="topMargin" constant="30" id="GiH-BO-WOQ"/>
+                                    <constraint firstItem="XPx-7N-fUy" firstAttribute="top" secondItem="9Cm-Ay-7Hv" secondAttribute="top" id="KAg-yZ-xI9"/>
                                     <constraint firstItem="chl-RX-hgB" firstAttribute="leading" secondItem="8Zs-hk-kF8" secondAttribute="leading" id="KaH-AZ-qQt"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="NuE-Kx-Nw0" secondAttribute="trailing" constant="8" id="Tba-dX-65U"/>
+                                    <constraint firstItem="XPx-7N-fUy" firstAttribute="leading" secondItem="9Cm-Ay-7Hv" secondAttribute="trailing" constant="16" id="UAi-iQ-cQl"/>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="240" id="UeY-YK-Xyd"/>
                                     <constraint firstItem="9Cm-Ay-7Hv" firstAttribute="top" secondItem="NuE-Kx-Nw0" secondAttribute="bottom" constant="8" id="VWd-yc-Z2I"/>
                                     <constraint firstItem="9Cm-Ay-7Hv" firstAttribute="leading" secondItem="NuE-Kx-Nw0" secondAttribute="leading" id="XD4-hm-2HQ"/>
                                     <constraint firstItem="99E-S5-1hA" firstAttribute="leading" secondItem="9Cm-Ay-7Hv" secondAttribute="leading" id="ZiX-AB-SRC"/>
-                                    <constraint firstItem="9Cm-Ay-7Hv" firstAttribute="trailing" secondItem="NuE-Kx-Nw0" secondAttribute="trailing" id="bhE-YB-NsG"/>
+                                    <constraint firstItem="iRn-It-Wwh" firstAttribute="trailing" secondItem="XPx-7N-fUy" secondAttribute="trailing" id="aJw-TE-dt7"/>
                                     <constraint firstAttribute="bottom" secondItem="chl-RX-hgB" secondAttribute="bottom" id="gbd-kc-qus"/>
                                     <constraint firstItem="NuE-Kx-Nw0" firstAttribute="leading" secondItem="8Zs-hk-kF8" secondAttribute="leadingMargin" constant="8" id="kAp-Sw-Tfx"/>
                                     <constraint firstItem="chl-RX-hgB" firstAttribute="top" secondItem="9Cm-Ay-7Hv" secondAttribute="bottom" constant="24" id="kYf-D0-vKF"/>
                                     <constraint firstAttribute="trailing" secondItem="chl-RX-hgB" secondAttribute="trailing" id="ko8-Ht-5Is"/>
-                                    <constraint firstItem="iRn-It-Wwh" firstAttribute="trailing" secondItem="9Cm-Ay-7Hv" secondAttribute="trailing" id="yqU-g2-pDk"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="dateLabel" destination="9Cm-Ay-7Hv" id="9bC-PY-15g"/>
@@ -106,6 +118,7 @@
                                     <outlet property="playButton" destination="iRn-It-Wwh" id="02u-3A-Zgl"/>
                                     <outlet property="playView" destination="chl-RX-hgB" id="5DV-Ly-TAn"/>
                                     <outlet property="podcastTitle" destination="NuE-Kx-Nw0" id="yC8-Ff-EXV"/>
+                                    <outlet property="relatedLinksButton" destination="XPx-7N-fUy" id="Abs-NJ-IRT"/>
                                     <outlet property="scoreLabel" destination="jyh-eB-DR0" id="Z1B-T7-WM1"/>
                                     <outlet property="stackView" destination="99E-S5-1hA" id="DlF-SI-wYx"/>
                                     <outlet property="upVoteButton" destination="CCX-Sc-GsN" id="otL-ZI-ie6"/>

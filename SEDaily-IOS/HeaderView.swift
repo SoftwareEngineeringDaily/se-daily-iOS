@@ -25,9 +25,6 @@ class HeaderView: UIView {
 
     var podcastViewModel = PodcastViewModel()
 
-    let secondaryView = UIView()
-    let relatedLinksButton = UIButton()
-
     let voteView = UIView()
     let commentsButton = UIButton()
 
@@ -44,6 +41,7 @@ class HeaderView: UIView {
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var podcastTitle: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var relatedLinksButton: UIButton!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -74,36 +72,21 @@ class HeaderView: UIView {
         dateLabel.numberOfLines = 1
         dateLabel.textColor = Stylesheet.Colors.white
     }
-
-    func setupSecondaryView() {
-        self.addSubview(secondaryView)
-
-        secondaryView.backgroundColor = UIColor.clear
-
-        secondaryView.snp.makeConstraints { (make) in
-            make.bottom.equalTo(playView.snp.top)
-            make.right.left.equalToSuperview()
-            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 65))
-        }
-
+    
+    private func setUpRelatedLinksButton() {
         // Add relatedLinksButton
-        secondaryView.addSubview(relatedLinksButton)
         relatedLinksButton.setTitle(L10n.relatedLinks, for: .normal)
         relatedLinksButton.setBackgroundColor(color: Stylesheet.Colors.baseLight, forState: .normal)
+        relatedLinksButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
+        relatedLinksButton.setTitleColor(Stylesheet.Colors.white, for: .focused)
         relatedLinksButton.addTarget(self, action: #selector(self.relatedLinksButtonPressed), for: .touchUpInside)
         relatedLinksButton.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 4)
-
-        relatedLinksButton.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
-            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-            make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 180))
-            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 35))
-        }
     }
 
     private func setUpButtons() {
         setUpPlayButton()
         setUpVoteButtons()
+        setUpRelatedLinksButton()
     }
     
     private func setUpVoteButtons() {

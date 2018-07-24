@@ -25,8 +25,6 @@ class HeaderView: UIView {
 
     var podcastViewModel = PodcastViewModel()
 
-    let voteView = UIView()
-
     let downloadManager = OfflineDownloadsManager.sharedInstance
     let networkService = API()
     
@@ -41,10 +39,6 @@ class HeaderView: UIView {
     @IBOutlet weak var relatedLinksButton: UIButton!
     @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var commentsButton: UIButton!
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -57,7 +51,6 @@ class HeaderView: UIView {
 
         self.setUpButtons()
         self.setUpLabels()
-
     }
     
     private func setUpLabels() {
@@ -311,7 +304,6 @@ extension HeaderView {
     }
 
     private func setupDownloadButton() {
-
         self.downloadButton.addTarget(self, action: #selector(self.downloadButtonPressed), for: .touchUpInside)
         self.downloadButton.setIcon(
             icon: .fontAwesome(.cloudDownload),
@@ -329,13 +321,5 @@ extension HeaderView {
     private func setupCommentsButton() {
         commentsButton.setIcon(icon: .fontAwesome(.commentO), iconSize: iconSize, color: Stylesheet.Colors.offBlack, forState: .normal)
         commentsButton.addTarget(self, action: #selector(self.commentsButtonPressed), for: .touchUpInside)
-
-        self.playView.addSubview(self.commentsButton)
-
-        let rightInset = UIView.getValueScaledByScreenWidthFor(baseValue: 20)
-        commentsButton.snp.makeConstraints { (make) in
-            make.right.equalTo(self.downloadButton.snp.left).inset(-rightInset)
-            make.centerY.equalTo(self.downloadButton.snp.centerY)
-        }
     }
 }

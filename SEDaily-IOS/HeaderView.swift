@@ -26,7 +26,6 @@ class HeaderView: UIView {
     var podcastViewModel = PodcastViewModel()
 
     let voteView = UIView()
-    let commentsButton = UIButton()
 
     let downloadManager = OfflineDownloadsManager.sharedInstance
     let networkService = API()
@@ -41,8 +40,8 @@ class HeaderView: UIView {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var relatedLinksButton: UIButton!
     @IBOutlet weak var downloadButton: UIButton!
-
-
+    @IBOutlet weak var commentsButton: UIButton!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -88,6 +87,7 @@ class HeaderView: UIView {
         setUpVoteButtons()
         setUpRelatedLinksButton()
         setupDownloadButton()
+        setupCommentsButton()
     }
     
     private func setUpVoteButtons() {
@@ -133,8 +133,6 @@ class HeaderView: UIView {
         upVoteButton.isSelected = self.podcastViewModel.isUpvoted
         downVoteButton.isSelected = self.podcastViewModel.isDownvoted
         self.scoreLabel.text = String(self.podcastViewModel.score)
-
-        self.setupCommentsButton()
     }
 }
 

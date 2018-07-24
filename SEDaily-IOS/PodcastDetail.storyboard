@@ -80,15 +80,26 @@
                                                 </constraints>
                                                 <state key="normal" title="Button"/>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kM2-C0-naB">
+                                                <rect key="frame" x="179" y="14" width="40" height="35"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="40" id="TOK-ii-VnQ"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="iRn-It-Wwh" firstAttribute="centerY" secondItem="99E-S5-1hA" secondAttribute="centerY" id="0Io-XX-aRk"/>
+                                            <constraint firstItem="kM2-C0-naB" firstAttribute="centerY" secondItem="CCX-Sc-GsN" secondAttribute="centerY" id="0Ps-cg-Be7"/>
                                             <constraint firstItem="99E-S5-1hA" firstAttribute="centerY" secondItem="chl-RX-hgB" secondAttribute="centerY" id="Epq-hx-ZCI"/>
                                             <constraint firstAttribute="height" constant="64" id="JUI-Pk-A4l"/>
                                             <constraint firstItem="iRn-It-Wwh" firstAttribute="leading" secondItem="tiV-uQ-KCH" secondAttribute="trailing" constant="8" id="P98-tR-o8F"/>
                                             <constraint firstItem="tiV-uQ-KCH" firstAttribute="centerY" secondItem="CCX-Sc-GsN" secondAttribute="centerY" id="aZc-NC-jyX"/>
                                             <constraint firstItem="iRn-It-Wwh" firstAttribute="centerY" secondItem="chl-RX-hgB" secondAttribute="centerY" id="dvT-EB-gnW"/>
+                                            <constraint firstItem="tiV-uQ-KCH" firstAttribute="leading" secondItem="kM2-C0-naB" secondAttribute="trailing" constant="8" id="fHt-qw-9c3"/>
+                                            <constraint firstItem="kM2-C0-naB" firstAttribute="height" secondItem="tiV-uQ-KCH" secondAttribute="height" id="g0z-JW-YEY"/>
+                                            <constraint firstItem="kM2-C0-naB" firstAttribute="width" secondItem="tiV-uQ-KCH" secondAttribute="width" id="gaf-Hz-FIS"/>
                                             <constraint firstItem="tiV-uQ-KCH" firstAttribute="height" secondItem="CCX-Sc-GsN" secondAttribute="height" id="u66-1v-NB1"/>
                                         </constraints>
                                     </view>
@@ -123,6 +134,7 @@
                                     <constraint firstAttribute="trailing" secondItem="chl-RX-hgB" secondAttribute="trailing" id="ko8-Ht-5Is"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="commentsButton" destination="kM2-C0-naB" id="gmO-bc-s5a"/>
                                     <outlet property="dateLabel" destination="9Cm-Ay-7Hv" id="9bC-PY-15g"/>
                                     <outlet property="downVoteButton" destination="Ngl-Sb-l6R" id="F60-GH-leI"/>
                                     <outlet property="downloadButton" destination="tiV-uQ-KCH" id="qnr-78-dMd"/>

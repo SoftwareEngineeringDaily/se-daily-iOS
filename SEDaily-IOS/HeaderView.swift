@@ -28,8 +28,6 @@ class HeaderView: UIView {
     let voteView = UIView()
     let commentsButton = UIButton()
 
-    private var downloadButton = UIButton()
-
     let downloadManager = OfflineDownloadsManager.sharedInstance
     let networkService = API()
     
@@ -42,6 +40,8 @@ class HeaderView: UIView {
     @IBOutlet weak var podcastTitle: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var relatedLinksButton: UIButton!
+    @IBOutlet weak var downloadButton: UIButton!
+
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -87,6 +87,7 @@ class HeaderView: UIView {
         setUpPlayButton()
         setUpVoteButtons()
         setUpRelatedLinksButton()
+        setupDownloadButton()
     }
     
     private func setUpVoteButtons() {
@@ -133,7 +134,6 @@ class HeaderView: UIView {
         downVoteButton.isSelected = self.podcastViewModel.isDownvoted
         self.scoreLabel.text = String(self.podcastViewModel.score)
 
-        self.setupDownloadButton()
         self.setupCommentsButton()
     }
 }
@@ -326,14 +326,6 @@ extension HeaderView {
             color: .red,
             forState: .selected)
         self.downloadButton.isSelected = self.podcastViewModel.isDownloaded
-
-        self.playView.addSubview(self.downloadButton)
-
-        let rightInset = UIView.getValueScaledByScreenWidthFor(baseValue: 20)
-        downloadButton.snp.makeConstraints { (make) in
-            make.right.equalTo(self.playButton.snp.left).inset(-rightInset)
-            make.centerY.equalTo(self.playButton.snp.centerY)
-        }
     }
 
     private func setupCommentsButton() {

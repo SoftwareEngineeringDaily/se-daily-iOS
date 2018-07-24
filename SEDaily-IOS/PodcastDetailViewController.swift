@@ -50,9 +50,8 @@ class PodcastDetailViewController: UIViewController, WKNavigationDelegate {
         super.viewDidLoad()
         self.view.backgroundColor = Stylesheet.Colors.base
         
-        headerView.setupHeader(podcastViewModel: model)
+        headerView.setupHeader(podcastViewModel: model, audioOverlayDelegate: self.audioOverlayDelegate)
         headerView.bookmarkDelegate = self
-        headerView.audioOverlayDelegate = self.audioOverlayDelegate
         headerView.delegate = self
         
         webView.navigationDelegate = self

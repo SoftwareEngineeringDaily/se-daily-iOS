@@ -46,7 +46,7 @@ public struct PodcastViewModel: Codable {
     var podcastTitle: String {
         return encodedPodcastTitle.htmlDecoded
     }
-
+    
     init(podcast: Podcast) {
         self._id = podcast._id
         self.thread = podcast.thread

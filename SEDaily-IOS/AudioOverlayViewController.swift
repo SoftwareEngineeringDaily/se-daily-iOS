@@ -158,7 +158,9 @@ class AudioOverlayViewController: UIViewController {
             currentViewController.removeFromParentViewController()
         }
 
-        let podcastDetailViewController = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: nil)
+        let sb = UIStoryboard(name: "PodcastDetail", bundle: .main)
+        let vc = sb.instantiateInitialViewController() as? PodcastDetailViewController
+        guard let podcastDetailViewController = vc else { return }
         podcastDetailViewController.model = podcastViewModel
 
         let navVC = UINavigationController(rootViewController: podcastDetailViewController)
@@ -325,7 +327,7 @@ extension AudioOverlayViewController: AudioViewDelegate {
 
     func stopButtonPressed() {
         self.audioOverlayDelegate?.animateOverlayOut()
-        assetPlaybackManager?.pause()        
+        assetPlaybackManager?.pause()
     }
 
     func skipForwardButtonPressed() {

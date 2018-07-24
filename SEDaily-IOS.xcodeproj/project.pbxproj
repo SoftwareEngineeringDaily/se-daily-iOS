@@ -106,7 +106,6 @@
 		C0590D7A200AD36500A00E4D /* VotingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0590D79200AD36400A00E4D /* VotingTests.swift */; };
 		C05DA1D92013FA34003C631F /* getPosts_topPosts.json in Resources */ = {isa = PBXBuildFile; fileRef = C05DA1D82013FA34003C631F /* getPosts_topPosts.json */; };
 		C079B6541FCA07F800B4B304 /* HelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C079B6531FCA07F800B4B304 /* HelpersTests.swift */; };
-		C0CBA00E2104A24200C92E62 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0CBA00D2104A24200C92E62 /* HeaderView.xib */; };
 		C0CBA0102104A25C00C92E62 /* PodcastDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0CBA00F2104A25C00C92E62 /* PodcastDetail.storyboard */; };
 		C0E64BB41FCB3F9100753AF0 /* UserModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E64BB31FCB3F9100753AF0 /* UserModelTests.swift */; };
 		C0E64BB71FCB406000753AF0 /* UserDefaultsMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E64BB61FCB406000753AF0 /* UserDefaultsMock.swift */; };
@@ -232,7 +231,6 @@
 		C0590D79200AD36400A00E4D /* VotingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingTests.swift; sourceTree = "<group>"; };
 		C05DA1D82013FA34003C631F /* getPosts_topPosts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = getPosts_topPosts.json; sourceTree = "<group>"; };
 		C079B6531FCA07F800B4B304 /* HelpersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpersTests.swift; sourceTree = "<group>"; };
-		C0CBA00D2104A24200C92E62 /* HeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
 		C0CBA00F2104A25C00C92E62 /* PodcastDetail.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PodcastDetail.storyboard; sourceTree = "<group>"; };
 		C0E64BB31FCB3F9100753AF0 /* UserModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModelTests.swift; sourceTree = "<group>"; };
 		C0E64BB61FCB406000753AF0 /* UserDefaultsMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsMock.swift; sourceTree = "<group>"; };
@@ -415,7 +413,6 @@
 			isa = PBXGroup;
 			children = (
 				C0CBA00F2104A25C00C92E62 /* PodcastDetail.storyboard */,
-				C0CBA00D2104A24200C92E62 /* HeaderView.xib */,
 				167AFAB61F043F1100A1332F /* HeaderView.swift */,
 				16CE698E1F98029E0057BAC3 /* PodcastDetailViewController.swift */,
 			);
@@ -745,7 +742,6 @@
 				96D268F820B2250B002F95BD /* RelatedLinkWebVC.xib in Resources */,
 				1686FC0B1F009EC00088A6C1 /* LaunchScreen.storyboard in Resources */,
 				1EABD8F41FB430AB00959859 /* Debug.storyboard in Resources */,
-				C0CBA00E2104A24200C92E62 /* HeaderView.xib in Resources */,
 				C0CBA0102104A25C00C92E62 /* PodcastDetail.storyboard in Resources */,
 				1E44AF031F87B08D00221B22 /* Localizable.strings in Resources */,
 				960BFEC120226F1D0073DAB2 /* Comments.storyboard in Resources */,

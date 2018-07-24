@@ -20,7 +20,7 @@ class HeaderView: UIView {
     var iconSize = UIView.getValueScaledByScreenWidthFor(baseValue: 34)
 
     weak var delegate: HeaderViewDelegate?
-    weak var bookmarkDelegate:BookmarksDelegate?
+    weak var bookmarkDelegate: BookmarksDelegate?
     weak var audioOverlayDelegate: AudioOverlayDelegate?
 
     var podcastViewModel = PodcastViewModel()
@@ -47,16 +47,6 @@ class HeaderView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        self.performLayout()
-    }
-
-    override func didMoveToSuperview() {
-        // This will "hide" the Play button, to make it clear it won't work if pressed.
-//        if self.audioOverlayDelegate == nil {
-//            playButton.alpha = 0.2
-//        } else {
-//            playButton.alpha = 1.0
-//        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -64,10 +54,13 @@ class HeaderView: UIView {
     }
     
     override func awakeFromNib() {
+        super.awakeFromNib()
+        
         self.backgroundColor = Stylesheet.Colors.base
 
         self.setUpButtons()
         self.setUpLabels()
+
     }
     
     private func setUpLabels() {
@@ -81,48 +74,6 @@ class HeaderView: UIView {
         dateLabel.numberOfLines = 1
         dateLabel.textColor = Stylesheet.Colors.white
     }
-
-//    override func performLayout() {
-//        let views = [
-//            podcastTitle,
-//            dateLabel
-//        ]
-//
-//        self.addSubviews(views)
-//
-//        self.backgroundColor = Stylesheet.Colors.base
-//        setupPlayView()
-//        setupSecondaryView()
-//
-//        podcastTitle.snp.makeConstraints { (make) in
-//            make.bottom.equalTo(playView.snp.top).offset(UIView.getValueScaledByScreenHeightFor(baseValue: -60))
-//            make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-//            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenHeightFor(baseValue: 15))
-//        }
-//
-//        dateLabel.snp.makeConstraints {  (make) in
-//            make.top.equalTo(podcastTitle.snp.bottom).offset(UIView.getValueScaledByScreenHeightFor(baseValue: 15))
-//            make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-//            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenHeightFor(baseValue: 15))
-//        }
-//
-//        setupLabels()
-//    }
-//
-//    func setupLabels() {
-//        // This makes the post title and date pretty and large:
-//        podcastTitle.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 20))
-//        podcastTitle.adjustsFontSizeToFitWidth = false
-//        podcastTitle.minimumScaleFactor = 0.25
-//        podcastTitle.numberOfLines = 0
-//        podcastTitle.textColor = Stylesheet.Colors.white
-//
-//        dateLabel.font = UIFont(font: .helveticaNeue, size: UIView.getValueScaledByScreenWidthFor(baseValue: 16))
-//        dateLabel.adjustsFontSizeToFitWidth = false
-//        dateLabel.minimumScaleFactor = 0.25
-//        dateLabel.numberOfLines = 1
-//        dateLabel.textColor = Stylesheet.Colors.white
-//    }
 
     func setupSecondaryView() {
         self.addSubview(secondaryView)
@@ -176,7 +127,13 @@ class HeaderView: UIView {
         playButton.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 4)
     }
 
-    func setupHeader(podcastViewModel: PodcastViewModel) {
+    func setupHeader(podcastViewModel: PodcastViewModel, audioOverlayDelegate: AudioOverlayDelegate?) {
+        self.audioOverlayDelegate = audioOverlayDelegate
+        if self.audioOverlayDelegate == nil {
+            playButton.alpha = 0.2
+        } else {
+            playButton.alpha = 1.0
+        }
         self.podcastViewModel = podcastViewModel
         if self.podcastViewModel.thread != nil {
             commentsButton.isHidden = false

@@ -70,7 +70,6 @@ class HeaderView: UIView {
         relatedLinksButton.setTitle(L10n.relatedLinks, for: .normal)
         relatedLinksButton.setBackgroundColor(color: Stylesheet.Colors.baseLight, forState: .normal)
         relatedLinksButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
-        relatedLinksButton.setTitleColor(Stylesheet.Colors.white, for: .focused)
         relatedLinksButton.addTarget(self, action: #selector(self.relatedLinksButtonPressed), for: .touchUpInside)
         relatedLinksButton.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 4)
     }

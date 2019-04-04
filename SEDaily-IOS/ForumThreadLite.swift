@@ -12,3 +12,4 @@ public struct ForumThreadLite: Codable {
     let _id: String
 //    let author: Author // Is a string at times..
 }
+q

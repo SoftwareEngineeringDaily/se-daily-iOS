@@ -267,7 +267,7 @@ class AudioView: UIView {
         playbackSlider.snp.makeConstraints { (make) -> Void in
             make.top.equalToSuperview().inset(-10)
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
-            make.left.right.equalToSuperview().inset(10) //change
+            make.left.right.equalToSuperview().inset(10)
 					
         }
 
@@ -292,7 +292,7 @@ class AudioView: UIView {
         bufferBackgroundSlider.snp.makeConstraints { (make) -> Void in
             make.top.equalToSuperview().inset(-10)
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
-            make.left.right.equalToSuperview().inset(10) //change
+            make.left.right.equalToSuperview().inset(10)
         }
 
         bufferBackgroundSlider.setThumbImage(UIImage(), for: .normal)
@@ -310,7 +310,7 @@ class AudioView: UIView {
         bufferSlider.snp.makeConstraints { (make) -> Void in
             make.top.equalToSuperview().inset(-10)
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
-            make.left.right.equalToSuperview().inset(10) //change
+            make.left.right.equalToSuperview().inset(10) 
         }
 
         bufferSlider.setThumbImage(UIImage(), for: .normal)
@@ -346,7 +346,6 @@ class AudioView: UIView {
     }
 	//MARK: Slider value changed implementation
 	
-	//bug here
     @objc func playbackSliderValueChanged(_ slider: UISlider) {
         let timeInSeconds = slider.value
         if (playbackSlider.isTracking) && (timeInSeconds != previousSliderValue) {

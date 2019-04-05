@@ -267,7 +267,8 @@ class AudioView: UIView {
         playbackSlider.snp.makeConstraints { (make) -> Void in
             make.top.equalToSuperview().inset(-10)
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
-            make.left.right.equalToSuperview()
+            make.left.right.equalToSuperview().inset(10) //change
+					
         }
 
         let smallCircle = #imageLiteral(resourceName: "SmallCircle").filled(withColor: Stylesheet.Colors.secondaryColor)
@@ -291,7 +292,7 @@ class AudioView: UIView {
         bufferBackgroundSlider.snp.makeConstraints { (make) -> Void in
             make.top.equalToSuperview().inset(-10)
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
-            make.left.right.equalToSuperview()
+            make.left.right.equalToSuperview().inset(10) //change
         }
 
         bufferBackgroundSlider.setThumbImage(UIImage(), for: .normal)
@@ -309,7 +310,7 @@ class AudioView: UIView {
         bufferSlider.snp.makeConstraints { (make) -> Void in
             make.top.equalToSuperview().inset(-10)
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
-            make.left.right.equalToSuperview()
+            make.left.right.equalToSuperview().inset(10) //change
         }
 
         bufferSlider.setThumbImage(UIImage(), for: .normal)
@@ -343,10 +344,11 @@ class AudioView: UIView {
             make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 55))
         }
     }
-
+	//MARK: Slider value changed implementation
+	
+	//bug here
     @objc func playbackSliderValueChanged(_ slider: UISlider) {
         let timeInSeconds = slider.value
-
         if (playbackSlider.isTracking) && (timeInSeconds != previousSliderValue) {
             playbackSlider.value = timeInSeconds
             let duration = playbackSlider.maximumValue
@@ -369,7 +371,7 @@ class AudioView: UIView {
     }
 
     func updateSlider(maxValue: Float) {
-        guard playbackSlider.maximumValue <= 1.0 else { return }
+        guard playbackSlider.maximumValue >= 0.0 else { return }
 
         if playbackSlider.isUserInteractionEnabled == false {
             playbackSlider.isUserInteractionEnabled = true
@@ -377,7 +379,7 @@ class AudioView: UIView {
 
         playbackSlider.maximumValue = maxValue
         bufferSlider.maximumValue = maxValue
-    }
+			}
 
     func updateSlider(currentValue: Float) {
         guard !playbackSlider.isTracking else { return }

@@ -832,7 +832,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Mockingjay/Mockingjay.framework",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
 				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
@@ -847,7 +847,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SEDaily-IOSTests/Pods-SEDaily-IOSTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6A12E8C003C75BEEE01B2AA0 /* [CP] Check Pods Manifest.lock */ = {
@@ -874,7 +874,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ActiveLabel/ActiveLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Disk/Disk.framework",
@@ -941,7 +941,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

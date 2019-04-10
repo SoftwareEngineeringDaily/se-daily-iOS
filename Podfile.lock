@@ -178,7 +178,7 @@ CHECKOUT OPTIONS:
     :commit: 3e98a76353bcdeea879e7d2552f58d6967207dab
     :git: https://github.com/optonaut/ActiveLabel.swift.git
   KoalaTeaPlayer:
-    :commit: 82ca51d2cb99c3c177a1d16b3e48978ca724a976
+    :commit: 5655b5b7f422f113452bc29452b4afae4edbf39c
     :git: https://github.com/Altalogy/KoalaTeaPlayer.git
 
 SPEC CHECKSUMS:

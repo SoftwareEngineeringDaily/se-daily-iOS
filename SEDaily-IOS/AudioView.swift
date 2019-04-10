@@ -189,15 +189,12 @@ class AudioView: UIView {
             make.top.equalTo(podcastLabel.snp.bottom)
             make.centerX.equalToSuperview()
         }
-        
-        let spacerButton = UIButton()
-        stackView.addArrangedSubview(stopButton)
+			
         stackView.addArrangedSubview(skipBackwardbutton)
         stackView.addArrangedSubview(playButton)
         stackView.addArrangedSubview(pauseButton)
         stackView.addArrangedSubview(skipForwardButton)
-        stackView.addArrangedSubview(spacerButton)
-        
+			
         let iconHeight = UIView.getValueScaledByScreenHeightFor(baseValue: (70 / 2))
 
         expandCollapseButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)
@@ -265,9 +262,9 @@ class AudioView: UIView {
         self.bringSubview(toFront: playbackSlider)
 
         playbackSlider.snp.makeConstraints { (make) -> Void in
-            make.top.equalToSuperview().inset(-10)
+            make.top.equalToSuperview().inset(5)
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
-            make.left.right.equalToSuperview().inset(10)
+            make.left.right.equalToSuperview().inset(15)
 					
         }
 
@@ -290,9 +287,9 @@ class AudioView: UIView {
         parentView.addSubview(bufferBackgroundSlider)
 
         bufferBackgroundSlider.snp.makeConstraints { (make) -> Void in
-            make.top.equalToSuperview().inset(-10)
+            make.top.equalToSuperview().inset(5)
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
-            make.left.right.equalToSuperview().inset(10)
+            make.left.right.equalToSuperview().inset(15)
         }
 
         bufferBackgroundSlider.setThumbImage(UIImage(), for: .normal)
@@ -308,9 +305,9 @@ class AudioView: UIView {
         parentView.addSubview(bufferSlider)
 
         bufferSlider.snp.makeConstraints { (make) -> Void in
-            make.top.equalToSuperview().inset(-10)
+            make.top.equalToSuperview().inset(5)
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
-            make.left.right.equalToSuperview().inset(10) 
+            make.left.right.equalToSuperview().inset(15)
         }
 
         bufferSlider.setThumbImage(UIImage(), for: .normal)
@@ -331,14 +328,14 @@ class AudioView: UIView {
         parentView.addSubview(timeLeftLabel)
 
         currentTimeLabel.snp.makeConstraints { (make) -> Void in
-            make.left.equalTo(playbackSlider).inset(UIView.getValueScaledByScreenWidthFor(baseValue: 5))
+            make.left.equalTo(playbackSlider)
             make.top.equalTo(playbackSlider.snp.bottom).inset(UIView.getValueScaledByScreenHeightFor(baseValue: 5))
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
             make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 55))
         }
 
         timeLeftLabel.snp.makeConstraints { (make) -> Void in
-            make.right.equalTo(playbackSlider).inset(UIView.getValueScaledByScreenWidthFor(baseValue: 5))
+            make.right.equalTo(playbackSlider)
             make.top.equalTo(playbackSlider.snp.bottom).inset(UIView.getValueScaledByScreenHeightFor(baseValue: 5))
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
             make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 55))

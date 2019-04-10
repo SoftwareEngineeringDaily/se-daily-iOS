@@ -25,7 +25,7 @@ protocol AudioOverlayDelegate: class {
 class AudioOverlayViewController: UIViewController {
     let networkService = API()
 
-    static let audioControlsViewHeight: CGFloat = 110
+    static let audioControlsViewHeight: CGFloat = 130
 
     private static var userSettingPlaybackSpeedKey = "PlaybackSpeed"
 
@@ -243,7 +243,7 @@ class AudioOverlayViewController: UIViewController {
         case .buffering:
             audioView?.startActivityAnimating()
 
-            audioView?.stopButton.isEnabled = true
+            //audioView?.stopButton.isEnabled = true
             audioView?.playButton.isHidden = false
             audioView?.pauseButton.isHidden = true
         case .stopped:
@@ -325,7 +325,7 @@ extension AudioOverlayViewController: AudioViewDelegate {
 
     func stopButtonPressed() {
         self.audioOverlayDelegate?.animateOverlayOut()
-        assetPlaybackManager?.pause()        
+        assetPlaybackManager?.stop() //
     }
 
     func skipForwardButtonPressed() {

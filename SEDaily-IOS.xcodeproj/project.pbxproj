@@ -62,6 +62,7 @@
 		1EB74FFC1FE5E1AF004B733E /* StateBookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB74FFB1FE5E1AF004B733E /* StateBookmarkView.swift */; };
 		238E99F4E37C7365658113B8 /* Pods_SEDaily_IOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C9F051C6C2F8638D2ABF8 /* Pods_SEDaily_IOSTests.framework */; };
 		24412438C753126FDDD37CBF /* Pods_SEDaily_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */; };
+		43CE140C225F7EF700B57CFA /* PlayProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE140B225F7EF700B57CFA /* PlayProgress.swift */; };
 		96004ACE20A9E0030017230F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96004ACD20A9E0030017230F /* GoogleService-Info.plist */; };
 		960BFEBB202109800073DAB2 /* AskForReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960BFEBA202109800073DAB2 /* AskForReview.swift */; };
 		960BFEBF20226B620073DAB2 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960BFEBE20226B620073DAB2 /* CommentsViewController.swift */; };
@@ -181,6 +182,7 @@
 		1EABD8F21FB430AA00959859 /* DebugTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugTabViewController.swift; sourceTree = "<group>"; };
 		1EABD8F31FB430AA00959859 /* TestHook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHook.swift; sourceTree = "<group>"; };
 		1EB74FFB1FE5E1AF004B733E /* StateBookmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StateBookmarkView.swift; path = Bookmark/StateBookmarkView.swift; sourceTree = "<group>"; };
+		43CE140B225F7EF700B57CFA /* PlayProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayProgress.swift; sourceTree = "<group>"; };
 		675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.release.xcconfig"; sourceTree = "<group>"; };
 		96004ACD20A9E0030017230F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		960BFEBA202109800073DAB2 /* AskForReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AskForReview.swift; sourceTree = "<group>"; };
@@ -421,6 +423,7 @@
 			children = (
 				16B147B01F16BF9C00433A42 /* AudioOverlayViewController.swift */,
 				16D766B91F06B4850066C143 /* AudioView.swift */,
+				43CE140B225F7EF700B57CFA /* PlayProgress.swift */,
 			);
 			name = Audio;
 			sourceTree = "<group>";
@@ -713,6 +716,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				fr,
@@ -963,6 +967,7 @@
 				161791FC1FC4DA7200A1287E /* OfflineDownloadsManager.swift in Sources */,
 				1649A78A1F204EC6005C4A6E /* ContainerViewController.swift in Sources */,
 				C0590D78200AC2A500A00E4D /* NetworkService.swift in Sources */,
+				43CE140C225F7EF700B57CFA /* PlayProgress.swift in Sources */,
 				960BFEBB202109800073DAB2 /* AskForReview.swift in Sources */,
 				164FE9EF1F03065C009419CA /* NavigationControllerExtension.swift in Sources */,
 				165484551F902D3F005AEA23 /* GeneralCollectionViewController.swift in Sources */,

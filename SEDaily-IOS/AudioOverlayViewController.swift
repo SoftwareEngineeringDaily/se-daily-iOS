@@ -35,10 +35,6 @@ class AudioOverlayViewController: UIViewController {
 	/// The instance of `RemoteCommandManager` that the app uses for managing remote command events.
 	private var remoteCommandManager: RemoteCommandManager! = nil
 	
-	// @TODO: Move to own class
-	private var playProgress: [String: Float] =  [String: Float]()
-	private var episodePlayProgress: PlayProgressDict = PlayProgressDict()
-	
 	private var progressController = PlayProgressModelController()
 	
 	private var audioView: AudioView?
@@ -135,9 +131,8 @@ class AudioOverlayViewController: UIViewController {
 	
 	private func saveProgress() {
 		
-		guard let podcastViewModel = self.podcastViewModel,
-			let savedProgress = progressController.retrieve() else { return }
-		episodePlayProgress = savedProgress
+		guard self.podcastViewModel != nil else { return }
+		progressController.retrieve()
 	}
 	
 	private func loadAudio(podcastViewModel: PodcastViewModel) {
@@ -179,10 +174,11 @@ class AudioOverlayViewController: UIViewController {
 		
 		//Load Saved time
 		
-		if episodePlayProgress[podcastViewModel._id] != nil {
-			savedTime = episodePlayProgress[podcastViewModel._id]!.currentTime
+		
+		if progressController.episodesPlayProgress[podcastViewModel._id] != nil {
+			savedTime = progressController.episodesPlayProgress[podcastViewModel._id]!.currentTime
 		} else {
-			episodePlayProgress[podcastViewModel._id]?.currentTime = 0
+			progressController.episodesPlayProgress[podcastViewModel._id]?.currentTime = 0
 		}
 		
 		log.info(savedTime, "savedtime")
@@ -282,10 +278,10 @@ extension AudioOverlayViewController: AssetPlayerDelegate {
 		// Update progress
 		guard let podcastViewModel = self.podcastViewModel  else { return }
 		let progress = PlayProgress(id: podcastViewModel._id, currentTime: Float(player.currentTime), totalLength: Float(player.maxSecondValue))
-		episodePlayProgress[podcastViewModel._id] = progress
+		progressController.episodesPlayProgress[podcastViewModel._id] = progress
 		
 		if round(player.currentTime).truncatingRemainder(dividingBy: 5.0) == 0.0 {
-			progressController.save(playProgressDict: episodePlayProgress)
+			progressController.save()
 		}
 		
 		audioView?.updateTimeLabels(currentTimeText: player.timeElapsedText, timeLeftText: player.timeLeftText)
@@ -296,9 +292,8 @@ extension AudioOverlayViewController: AssetPlayerDelegate {
 	func playerPlaybackDidEnd(_ player: AssetPlayer) {
 		// Reset progress
 		if let podcastViewModel = self.podcastViewModel {
-			playProgress[podcastViewModel._id] = 0.0
-			let defaults = UserDefaults.standard
-			defaults.set(playProgress, forKey: "sedaily-playProgress")
+			progressController.episodesPlayProgress[podcastViewModel._id]?.currentTime = 0.0
+			progressController.save()
 		}
 	}
 	

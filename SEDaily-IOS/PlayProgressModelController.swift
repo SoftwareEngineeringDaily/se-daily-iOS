@@ -12,54 +12,51 @@ typealias PlayProgressDict = [String: PlayProgress]
 
 class PlayProgressModelController {
 	
+	var episodesPlayProgress: PlayProgressDict = PlayProgressDict()
 	
-	func save(playProgressDict: PlayProgressDict) {
+	func save() {
 		var progressToSave: [String: Data] = [String: Data]()
-		for (key, playProgress) in playProgressDict {
+		for (key, playProgress) in self.episodesPlayProgress {
 			guard let playProgressData = encodePlayProgress(from: playProgress) else { return }
 			progressToSave[key] = playProgressData
 		}
 		saveToDefaults(progressToSave: progressToSave)
 	}
 	
-	func retrieve()->PlayProgressDict? {
-		guard let fetched = fetchFromDefaults() else { return nil }
+	func retrieve() {
+		guard let fetched = fetchFromDefaults() else { return }
 		var result: PlayProgressDict = PlayProgressDict()
 		for (key, playProgressData) in fetched {
-			guard let playProgress = decodePlayProgress(from: playProgressData) else { return nil }
+			guard let playProgress = decodePlayProgress(from: playProgressData) else { return }
 			result[key] = playProgress
 		}
-		return result
+		episodesPlayProgress = result
 	}
 	
 }
 
 private extension PlayProgressModelController {
 	
-	func saveToDefaults(progressToSave: [String: Data]) {
+	private func saveToDefaults(progressToSave: [String: Data]) {
 		let defaults = UserDefaults.standard
 		defaults.set(progressToSave, forKey: "sedaily-playProgress")
 	}
 	
-	func fetchFromDefaults()->[String: Data]? {
+	private func fetchFromDefaults()-> [String: Data]? {
 		let defaults = UserDefaults.standard
 		guard let fetchedData = defaults.object(forKey: "sedaily-playProgress") as? [String: Data] else { return nil}
 		return fetchedData
 	}
 	
-	func decodePlayProgress(from data: Data)->PlayProgress? {
+	private func decodePlayProgress(from data: Data)-> PlayProgress? {
 		guard let fetchedPlayProgress = try? PropertyListDecoder().decode(PlayProgress.self, from: data)
 			else { return nil }
 		return fetchedPlayProgress
 	}
 	
-	func encodePlayProgress(from playProgress: PlayProgress)->Data? {
+	private func encodePlayProgress(from playProgress: PlayProgress)-> Data? {
 		guard let progressData = try? PropertyListEncoder().encode(playProgress) else { return nil }
 		return progressData
 	}
 }
-
-
-
-
 

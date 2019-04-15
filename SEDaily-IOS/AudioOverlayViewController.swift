@@ -35,6 +35,7 @@ class AudioOverlayViewController: UIViewController {
 	/// The instance of `RemoteCommandManager` that the app uses for managing remote command events.
 	private var remoteCommandManager: RemoteCommandManager! = nil
 	
+	/// The instance of PlayProgressModelController to retrieve and save progress of the playback
 	private var progressController = PlayProgressModelController()
 	
 	private var audioView: AudioView?

@@ -73,14 +73,15 @@ class GeneralCollectionViewController: UICollectionViewController {
 
         // Register cell classes
         self.collectionView?.register(ItemCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
+			
+			//hardcoded height
         let layout = KoalaTeaFlowLayout(cellWidth: Helpers.getScreenWidth(),
-                                        cellHeight: UIView.getValueScaledByScreenHeightFor(baseValue: Helpers.getEpisodeCellHeight()),
+                                        cellHeight: 185.0.cgFloat,
                                         topBottomMargin: UIView.getValueScaledByScreenHeightFor(baseValue: 10),
                                         leftRightMargin: UIView.getValueScaledByScreenWidthFor(baseValue: 0),
-                                        cellSpacing: UIView.getValueScaledByScreenWidthFor(baseValue: 0))
+                                        cellSpacing: UIView.getValueScaledByScreenWidthFor(baseValue: 10))
         self.collectionView?.collectionViewLayout = layout
-        self.collectionView?.backgroundColor = .white
+        self.collectionView?.backgroundColor = Stylesheet.Colors.offWhite
 
         // User Login observer
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)

@@ -137,6 +137,10 @@ extension Helpers {
         let year = startDate.year.string
         return startMonth + " " + day + ", " + year
     }
+	
+	class func getScreenWidth() -> CGFloat {
+		return UIScreen.main.bounds.width
+	}
     
     class func getEpisodeCellHeight() -> CGFloat {
         if UIDevice().userInterfaceIdiom == .phone {

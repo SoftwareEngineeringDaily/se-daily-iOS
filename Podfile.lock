@@ -97,7 +97,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift (~> 5.0.8)
   - Kingfisher (~> 4.2.0)
   - KoalaTeaFlowLayout (~> 0.3.1)
-  - KoalaTeaPlayer (from `https://github.com/Altalogy/KoalaTeaPlayer.git`, branch `develop`)
+  - KoalaTeaPlayer
   - KTResponsiveUI (~> 0.2.4)
   - MBProgressHUD (~> 1.1.0)
   - Mockingjay
@@ -139,6 +139,7 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - Kingfisher
     - KoalaTeaFlowLayout
+    - KoalaTeaPlayer
     - KTResponsiveUI
     - MBProgressHUD
     - Mockingjay
@@ -169,17 +170,11 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   ActiveLabel:
     :git: https://github.com/optonaut/ActiveLabel.swift.git
-  KoalaTeaPlayer:
-    :branch: develop
-    :git: https://github.com/Altalogy/KoalaTeaPlayer.git
 
 CHECKOUT OPTIONS:
   ActiveLabel:
     :commit: 3e98a76353bcdeea879e7d2552f58d6967207dab
     :git: https://github.com/optonaut/ActiveLabel.swift.git
-  KoalaTeaPlayer:
-    :commit: 5655b5b7f422f113452bc29452b4afae4edbf39c
-    :git: https://github.com/Altalogy/KoalaTeaPlayer.git
 
 SPEC CHECKSUMS:
   ActiveLabel: 2fc3cdffed0dcdaad82d50af46233b9ef2f401e4
@@ -197,7 +192,7 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: 2e7dc7f98c111458c1ea2b373f893e8cf95e2b97
   Kingfisher: 9ee7e788d8ba07c3f21ce0d43f33cec310a4f781
   KoalaTeaFlowLayout: 219c45709d0873d405b2de1b27080a9c411246b7
-  KoalaTeaPlayer: 262ffb1dc0c1a61000f761d80c71b92ac46c51fe
+  KoalaTeaPlayer: 6f9df0f08113765d5195c0e447b1a64966dc1507
   KTResponsiveUI: c8a75fe5270e05749a5ca8d20ab008a285b5e260
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   Mockingjay: 11a621880d2887f1775bdcf824341eb68f218450
@@ -225,6 +220,6 @@ SPEC CHECKSUMS:
   URITemplate: ace0c4c46dcf8afe6e89b4060621852886b15c3b
   WaitForIt: 2c7ad6deaffe3bf727b7242a2263167bf2ce3e57
 
-PODFILE CHECKSUM: 0105ddf4ab25361cdda6a25e130a68ee387b43b5
+PODFILE CHECKSUM: 09a1798547afac321772b395216f14a19515abcc
 
 COCOAPODS: 1.6.1

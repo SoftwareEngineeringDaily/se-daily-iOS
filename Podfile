@@ -19,7 +19,7 @@ p
   pod 'Kingfisher', '~> 4.2.0'
   pod 'KTResponsiveUI', '~> 0.2.4'
   pod 'KoalaTeaFlowLayout', '~> 0.3.1'
-  pod 'KoalaTeaPlayer', :git => 'https://github.com/Altalogy/KoalaTeaPlayer.git', :branch => 'develop'
+  pod 'KoalaTeaPlayer'
   pod 'MBProgressHUD', '~> 1.1.0'
   pod 'Pageboy', '~> 2.0.2'
   pod 'PopupDialog', '~> 0.6.0'

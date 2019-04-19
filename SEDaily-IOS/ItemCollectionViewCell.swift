@@ -19,6 +19,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	var titleLabel: UILabel!
 	var miscDetailsLabel: UILabel!
 	var descriptionLabel: UILabel!
+	
 	let actionStackView: UIStackView = UIStackView()
 	let likeButton: UIButton = UIButton()
 	let commentButton: UIButton = UIButton()
@@ -26,6 +27,8 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	let downloadButton: UIButton = UIButton()
 	let relatedLinksButton: UIButton = UIButton()
 	
+	let upvoteCountLabel: UILabel = UILabel()
+	let upvoteStackView: UIStackView = UIStackView()
 	
 	var viewModel: PodcastViewModel = PodcastViewModel() {
 		willSet {
@@ -36,7 +39,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
 			viewModel.getLastUpdatedAsDateWith { (date) in
 				self.setupMiscDetailsLabel(timeLength: nil, date: date, isDownloaded: self.viewModel.isDownloaded)
 			}
-			self.setupImageView(imageURL: viewModel.featuredImageURL)
+			self.loadImageView(imageURL: viewModel.featuredImageURL)
 			// TODO: change into parsed html
 			self.descriptionLabel.text = "Protein structure prediction is the process of predicting how a protein will fold by looking at genetic code. Protein structure prediction is a perfect field to approach through the application of deep learning, because"
 		}
@@ -44,45 +47,77 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-//		let newContentView = UIView(width: superview?.width ?? 100, height: 150)
-//		self.contentView.frame = newContentView.frame
 		self.backgroundColor = .white
+		setupImageView()
+		setupLabels()
+		setupUpvoteStackView()
+		setupActionButtons()
+		setupActionStackView()
+		setupLayout()
+	}
+	
+	
+	private func setupImageView() {
 		imageView = UIImageView()
 		self.contentView.addSubview(imageView)
 		imageView.contentMode = .scaleAspectFill
 		imageView.clipsToBounds = true
 		imageView.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 5)
-		
-		
 		self.imageView.kf.indicatorType = .activity
-		
-		titleLabel = UILabel()
-		self.contentView.addSubview(titleLabel)
-		titleLabel.numberOfLines = 3
-		titleLabel.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 16))
-
-		miscDetailsLabel = UILabel()
-		self.contentView.addSubview(miscDetailsLabel)
-		miscDetailsLabel.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 10))
-		
-		descriptionLabel = UILabel()
-		descriptionLabel.numberOfLines = 2
-		self.contentView.addSubview(descriptionLabel)
-
-		self.contentView.addSubview(actionStackView)
-		
-//		let iconSize =
-		
-		likeButton.setIcon(icon: .ionicons(.iosHeartOutline), iconSize: 25.0, color: Stylesheet.Colors.base, forState: .normal)
-	
-		bookmarkButton.setIcon(icon: .ionicons(.iosBookmarksOutline), iconSize: 25.0, color: Stylesheet.Colors.base, forState: .normal)
-		
-		
-		downloadButton.setIcon(icon: .ionicons(.iosCloudDownloadOutline), iconSize: 25.0, color: Stylesheet.Colors.base, forState: .normal)
-		setupLayout()
 		
 	}
 	
+	private func setupLabels() {
+		titleLabel = UILabel()
+		self.contentView.addSubview(titleLabel)
+		titleLabel.numberOfLines = 3
+		titleLabel.font = UIFont(name: "Roboto-Bold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 17))
+		
+		miscDetailsLabel = UILabel()
+		self.contentView.addSubview(miscDetailsLabel)
+		miscDetailsLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 11))
+		miscDetailsLabel.textColor = UIColor(hex: 0x8A8C8C)!
+		
+		descriptionLabel = UILabel()
+		descriptionLabel.numberOfLines = 2
+		descriptionLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
+		self.contentView.addSubview(descriptionLabel)
+	}
+	
+	func setupUpvoteStackView() {
+		upvoteStackView.alignment = .center
+		upvoteStackView.axis = .horizontal
+		upvoteStackView.distribution = .fillEqually
+		
+		upvoteStackView.addArrangedSubview(likeButton)
+		upvoteStackView.addArrangedSubview(upvoteCountLabel)
+		upvoteCountLabel.text = "3"
+		upvoteCountLabel.textColor = .lightGray
+		upvoteCountLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
+	}
+	
+	private func setupActionButtons() {
+		likeButton.setIcon(icon: .ionicons(.iosHeartOutline), iconSize: 25.0, color: UIColor(hex: 0x979899)!, forState: .normal)
+		bookmarkButton.setImage(UIImage(named: "ios-bookmark"), for: .normal)
+		downloadButton.setIcon(icon: .ionicons(.iosCloudDownloadOutline), iconSize: 25.0, color: UIColor(hex: 0x8A8C8C)!, forState: .normal)
+		
+		likeButton.addTarget(self, action:#selector(ItemCollectionViewCell.liked), for: .touchUpInside)
+		bookmarkButton.addTarget(self, action:#selector(ItemCollectionViewCell.bookmarked), for: .touchUpInside)
+		downloadButton.addTarget(self, action:#selector(ItemCollectionViewCell.downloaded), for: .touchUpInside)
+	}
+	
+	private func setupActionStackView() {
+		actionStackView.alignment = .center
+		actionStackView.axis = .horizontal
+		actionStackView.distribution = .fillEqually
+		
+		self.actionStackView.addArrangedSubview(upvoteStackView)
+		self.actionStackView.addArrangedSubview(downloadButton)
+		self.actionStackView.addArrangedSubview(bookmarkButton)
+		
+		self.contentView.addSubview(actionStackView)
+	}
+
 	private func setupLayout() {
 		
 		imageView.snp.makeConstraints { (make) -> Void in
@@ -92,60 +127,31 @@ class ItemCollectionViewCell: UICollectionViewCell {
 			make.height.equalTo(80)
 		}
 		
-		titleLabel.snp.makeConstraints { (make) ->Void in
+		titleLabel.snp.makeConstraints { (make) -> Void in
 			make.top.equalTo(imageView)
 			make.rightMargin.equalTo(contentView).inset(10.0)
 			make.left.equalTo(imageView.snp.right).offset(10.0)
 		}
 		
-		miscDetailsLabel.snp.makeConstraints { (make) ->Void in
+		miscDetailsLabel.snp.makeConstraints { (make) -> Void in
 			make.top.equalTo(titleLabel.snp.bottom).offset(5.0)
 			make.left.equalTo(titleLabel)
 		}
 		
-		descriptionLabel.snp.makeConstraints { (make) ->Void in
+		descriptionLabel.snp.makeConstraints { (make) -> Void in
 			make.top.equalTo(imageView.snp.bottom).offset(10.0)
 			make.rightMargin.equalTo(contentView).inset(10.0)
 			make.left.equalTo(imageView)
 		}
 		
-		actionStackView.snp.makeConstraints { (make) ->Void in
+		actionStackView.snp.makeConstraints { (make) -> Void in
 			make.bottom.equalTo(contentView).inset(0.0)
 			make.left.equalTo(imageView)
 		}
-	setupStackView()
-	}
-	
-	private func setupStackView() {
-		actionStackView.alignment = .center
-		actionStackView.axis = .horizontal
-		actionStackView.distribution = .fillEqually
-		actionStackView.spacing = 20.0.cgFloat
 		
-		
-		self.actionStackView.addArrangedSubview(likeButton)
-		self.actionStackView.addArrangedSubview(bookmarkButton)
-		self.actionStackView.addArrangedSubview(downloadButton)
-		
-
-//		self.stackView.addArrangedSubview(emailTextField)
-//		self.stackView.addArrangedSubview(usernameTextField)
-//		self.stackView.addArrangedSubview(passwordTextField)
-		
-	}
-	
-	required init(coder aDecoder: NSCoder) {
-		fatalError("init(coder:)")
-	}
-	
-	private func setupImageView(imageURL: URL?) {
-		self.imageView.kf.cancelDownloadTask()
-		guard let imageURL = imageURL else {
-			self.imageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
-			return
+		likeButton.snp.makeConstraints { (make) -> Void in
+			make.right.equalTo(upvoteCountLabel.snp.left)
 		}
-		
-		self.imageView.kf.setImage(with: imageURL, options: [.transition(.fade(0.2))])
 	}
 	
 	private func setupMiscDetailsLabel(timeLength: Int?, date: Date?, isDownloaded: Bool) {
@@ -155,8 +161,39 @@ class ItemCollectionViewCell: UICollectionViewCell {
 		} else {
 			miscDetailsLabel.text = dateString
 		}
-		
 	}
+	
+	required init(coder aDecoder: NSCoder) {
+		fatalError("init(coder:)")
+	}
+	
+	private func loadImageView(imageURL: URL?) {
+		self.imageView.kf.cancelDownloadTask()
+		guard let imageURL = imageURL else {
+			self.imageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
+			return
+		}
+		
+		self.imageView.kf.setImage(with: imageURL, options: [.transition(.fade(0.2))])
+	}
+	
+	//MARK: Button handlers
+	
+	@objc func liked() {
+		let impact = UIImpactFeedbackGenerator()
+		impact.impactOccurred()
+	}
+	
+	@objc func bookmarked() {
+		let selection = UISelectionFeedbackGenerator()
+		selection.selectionChanged()
+	}
+	
+	@objc func downloaded() {
+		let notification = UINotificationFeedbackGenerator()
+		notification.notificationOccurred(.success)
+	}
+	
 	
 	// MARK: Skeleton
 	var skeletonImageView: GradientContainerView!

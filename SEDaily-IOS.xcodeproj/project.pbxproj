@@ -63,6 +63,12 @@
 		238E99F4E37C7365658113B8 /* Pods_SEDaily_IOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C9F051C6C2F8638D2ABF8 /* Pods_SEDaily_IOSTests.framework */; };
 		24412438C753126FDDD37CBF /* Pods_SEDaily_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */; };
 		43AA2C912268530C0050668B /* ItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AA2C902268530C0050668B /* ItemCollectionViewCell.swift */; };
+		43AA2C962268AC7B0050668B /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43AA2C932268AC7B0050668B /* Roboto-Light.ttf */; };
+		43AA2C972268AC7B0050668B /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43AA2C942268AC7B0050668B /* Roboto-Bold.ttf */; };
+		43AA2C982268AC7B0050668B /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43AA2C952268AC7B0050668B /* Roboto-Regular.ttf */; };
+		43AA2C9B2268AEE50050668B /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43AA2C992268AEE50050668B /* OpenSans-Light.ttf */; };
+		43AA2C9E2268B1FD0050668B /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43AA2C9D2268B1FD0050668B /* OpenSans-Regular.ttf */; };
+		43AA2CA02268B2660050668B /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43AA2C9F2268B2660050668B /* OpenSans-Semibold.ttf */; };
 		43CE140C225F7EF700B57CFA /* PlayProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE140B225F7EF700B57CFA /* PlayProgress.swift */; };
 		43CE140E226070FB00B57CFA /* PlayProgressModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE140D226070FB00B57CFA /* PlayProgressModelController.swift */; };
 		96004ACE20A9E0030017230F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96004ACD20A9E0030017230F /* GoogleService-Info.plist */; };
@@ -185,6 +191,12 @@
 		1EABD8F31FB430AA00959859 /* TestHook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHook.swift; sourceTree = "<group>"; };
 		1EB74FFB1FE5E1AF004B733E /* StateBookmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StateBookmarkView.swift; path = Bookmark/StateBookmarkView.swift; sourceTree = "<group>"; };
 		43AA2C902268530C0050668B /* ItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		43AA2C932268AC7B0050668B /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
+		43AA2C942268AC7B0050668B /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		43AA2C952268AC7B0050668B /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		43AA2C992268AEE50050668B /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Light.ttf"; sourceTree = "<group>"; };
+		43AA2C9D2268B1FD0050668B /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		43AA2C9F2268B2660050668B /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		43CE140B225F7EF700B57CFA /* PlayProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayProgress.swift; sourceTree = "<group>"; };
 		43CE140D226070FB00B57CFA /* PlayProgressModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayProgressModelController.swift; sourceTree = "<group>"; };
 		675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -350,6 +362,7 @@
 		1686FBFF1F009EC00088A6C1 /* SEDaily-IOS */ = {
 			isa = PBXGroup;
 			children = (
+				43AA2C922268AC3B0050668B /* fonts */,
 				96B6168520C0861300DF3CF6 /* Forum */,
 				961A378B208FAFC30050EF80 /* Feed */,
 				961A378A208FAF3E0050EF80 /* User */,
@@ -501,6 +514,19 @@
 				1E286DE41FE4C63200644C1D /* TestHookManager.swift */,
 			);
 			path = Debug;
+			sourceTree = "<group>";
+		};
+		43AA2C922268AC3B0050668B /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				43AA2C942268AC7B0050668B /* Roboto-Bold.ttf */,
+				43AA2C992268AEE50050668B /* OpenSans-Light.ttf */,
+				43AA2C932268AC7B0050668B /* Roboto-Light.ttf */,
+				43AA2C9F2268B2660050668B /* OpenSans-Semibold.ttf */,
+				43AA2C9D2268B1FD0050668B /* OpenSans-Regular.ttf */,
+				43AA2C952268AC7B0050668B /* Roboto-Regular.ttf */,
+			);
+			name = fonts;
 			sourceTree = "<group>";
 		};
 		4E74333675FE5899EC260076 /* Pods */ = {
@@ -744,16 +770,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				96F4016F20C075E600D6A66A /* ForumList.storyboard in Resources */,
+				43AA2C972268AC7B0050668B /* Roboto-Bold.ttf in Resources */,
 				96C8A9AF209114C200489EE4 /* FeedList.storyboard in Resources */,
+				43AA2C9B2268AEE50050668B /* OpenSans-Light.ttf in Resources */,
+				43AA2C962268AC7B0050668B /* Roboto-Light.ttf in Resources */,
 				96600312201CEBBD00997795 /* RelatedLinks.storyboard in Resources */,
+				43AA2C9E2268B1FD0050668B /* OpenSans-Regular.ttf in Resources */,
 				96004ACE20A9E0030017230F /* GoogleService-Info.plist in Resources */,
 				96D268F820B2250B002F95BD /* RelatedLinkWebVC.xib in Resources */,
 				1686FC0B1F009EC00088A6C1 /* LaunchScreen.storyboard in Resources */,
+				43AA2C982268AC7B0050668B /* Roboto-Regular.ttf in Resources */,
 				1EABD8F41FB430AB00959859 /* Debug.storyboard in Resources */,
 				1E44AF031F87B08D00221B22 /* Localizable.strings in Resources */,
 				960BFEC120226F1D0073DAB2 /* Comments.storyboard in Resources */,
 				1686FC081F009EC00088A6C1 /* Assets.xcassets in Resources */,
 				1686FC061F009EC00088A6C1 /* Main.storyboard in Resources */,
+				43AA2CA02268B2660050668B /* OpenSans-Semibold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

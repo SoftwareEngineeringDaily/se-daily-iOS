@@ -81,7 +81,7 @@ class GeneralCollectionViewController: UICollectionViewController {
                                         leftRightMargin: UIView.getValueScaledByScreenWidthFor(baseValue: 0),
                                         cellSpacing: UIView.getValueScaledByScreenWidthFor(baseValue: 10))
         self.collectionView?.collectionViewLayout = layout
-        self.collectionView?.backgroundColor = Stylesheet.Colors.offWhite
+        self.collectionView?.backgroundColor = UIColor(hex: 0xF6F9FA)!
 
         // User Login observer
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)

@@ -62,6 +62,7 @@
 		1EB74FFC1FE5E1AF004B733E /* StateBookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB74FFB1FE5E1AF004B733E /* StateBookmarkView.swift */; };
 		238E99F4E37C7365658113B8 /* Pods_SEDaily_IOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C9F051C6C2F8638D2ABF8 /* Pods_SEDaily_IOSTests.framework */; };
 		24412438C753126FDDD37CBF /* Pods_SEDaily_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */; };
+		43A680D02270718600A639A9 /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A680CF2270718600A639A9 /* Debouncer.swift */; };
 		43AA2C912268530C0050668B /* ItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AA2C902268530C0050668B /* ItemCollectionViewCell.swift */; };
 		43AA2C962268AC7B0050668B /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43AA2C932268AC7B0050668B /* Roboto-Light.ttf */; };
 		43AA2C972268AC7B0050668B /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43AA2C942268AC7B0050668B /* Roboto-Bold.ttf */; };
@@ -191,6 +192,7 @@
 		1EABD8F21FB430AA00959859 /* DebugTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugTabViewController.swift; sourceTree = "<group>"; };
 		1EABD8F31FB430AA00959859 /* TestHook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHook.swift; sourceTree = "<group>"; };
 		1EB74FFB1FE5E1AF004B733E /* StateBookmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StateBookmarkView.swift; path = Bookmark/StateBookmarkView.swift; sourceTree = "<group>"; };
+		43A680CF2270718600A639A9 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		43AA2C902268530C0050668B /* ItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		43AA2C932268AC7B0050668B /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
 		43AA2C942268AC7B0050668B /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 				1E638E551FC794AC00A29BDC /* ProgressIndicator.swift */,
 				960BFEBA202109800073DAB2 /* AskForReview.swift */,
 				9610313D20A353B400A2D2D5 /* AnalyticsHelper.swift */,
+				43A680CF2270718600A639A9 /* Debouncer.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1012,6 +1015,7 @@
 				1671BD58200D361900E6ED3B /* SubscriptionModel.swift in Sources */,
 				96C8A9AB2091038100489EE4 /* FeedListViewController.swift in Sources */,
 				1688CB4C2006BDDA00440095 /* APIStripeExtension.swift in Sources */,
+				43A680D02270718600A639A9 /* Debouncer.swift in Sources */,
 				164FE9E11F02EE67009419CA /* LoginViewController.swift in Sources */,
 				161791FC1FC4DA7200A1287E /* OfflineDownloadsManager.swift in Sources */,
 				1649A78A1F204EC6005C4A6E /* ContainerViewController.swift in Sources */,

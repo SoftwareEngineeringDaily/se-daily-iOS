@@ -195,7 +195,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
 		let impact = UIImpactFeedbackGenerator()
 		impact.impactOccurred()
 		upvoteService?.UIDelegate = self
-		upvoteService?.upvote()
+		self?.upvoteService?.upvote()
 	}
 	
 	@objc func bookmarked() {

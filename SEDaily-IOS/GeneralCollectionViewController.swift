@@ -143,7 +143,11 @@ class GeneralCollectionViewController: UICollectionViewController {
 
         // Configure the cell
         if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
+					
+						let upvoteService = UpvoteService(podcastViewModel: viewModel)
+						upvoteService.modelDelegate = self
             cell.viewModel = viewModel
+						cell.upvoteService = upvoteService
             if let lastIndexPath = self.collectionView?.indexPathForLastItem {
                 if let lastItem = podcastViewModelController.viewModel(at: lastIndexPath.row) {
                     self.checkPage(currentIndexPath: indexPath,
@@ -197,7 +201,7 @@ class GeneralCollectionViewController: UICollectionViewController {
             if let audioOverlayDelegate = self.audioOverlayDelegate {
                 let vc = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
                 vc.model = viewModel
-                vc.delegate = self
+                //vc.delegate = self
             
                 self.navigationController?.pushViewController(vc, animated: true)
             }
@@ -205,8 +209,16 @@ class GeneralCollectionViewController: UICollectionViewController {
     }
 }
 
-extension GeneralCollectionViewController: PodcastDetailViewControllerDelegate {
-    func modelDidChange(viewModel: PodcastViewModel) {
-        self.podcastViewModelController.update(with: viewModel)
-    }
+//extension GeneralCollectionViewController: PodcastDetailViewControllerDelegate {
+//    func modelDidChange(viewModel: PodcastViewModel) {
+//        self.podcastViewModelController.update(with: viewModel)
+//    }
+//}
+
+extension GeneralCollectionViewController: UpvoteServiceModelDelegate {
+	func modelDidChange(viewModel: PodcastViewModel) {
+		self.podcastViewModelController.update(with: viewModel)
+	}
 }
+
+

@@ -21,7 +21,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	var descriptionLabel: UILabel!
 	
 	let actionStackView: UIStackView = UIStackView()
-	let likeButton: UIButton = UIButton()
+	let upvoteButton: UIButton = UIButton()
 	let commentButton: UIButton = UIButton()
 	let bookmarkButton: UIButton = UIButton()
 	let downloadButton: UIButton = UIButton()
@@ -42,8 +42,16 @@ class ItemCollectionViewCell: UICollectionViewCell {
 			self.loadImageView(imageURL: viewModel.featuredImageURL)
 			// TODO: change into parsed html
 			self.descriptionLabel.text = "Protein structure prediction is the process of predicting how a protein will fold by looking at genetic code. Protein structure prediction is a perfect field to approach through the application of deep learning, because"
+			self.upvoteButton.isSelected = viewModel.isUpvoted
+			print(viewModel.isUpvoted)
+			self.upvoteCountLabel.text = String(viewModel.score)
 		}
+		
 	}
+	
+	var upvoteService: UpvoteService?
+	
+	
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -54,6 +62,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
 		setupActionButtons()
 		setupActionStackView()
 		setupLayout()
+		
 	}
 	
 	
@@ -89,19 +98,22 @@ class ItemCollectionViewCell: UICollectionViewCell {
 		upvoteStackView.axis = .horizontal
 		upvoteStackView.distribution = .fillEqually
 		
-		upvoteStackView.addArrangedSubview(likeButton)
+		upvoteStackView.addArrangedSubview(upvoteButton)
 		upvoteStackView.addArrangedSubview(upvoteCountLabel)
-		upvoteCountLabel.text = "3"
+		print(self.viewModel.score)
+		upvoteCountLabel.text = String(self.viewModel.score)
+		upvoteButton.isSelected = self.viewModel.isUpvoted
 		upvoteCountLabel.textColor = .lightGray
 		upvoteCountLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
 	}
 	
 	private func setupActionButtons() {
-		likeButton.setIcon(icon: .ionicons(.iosHeartOutline), iconSize: 25.0, color: UIColor(hex: 0x979899)!, forState: .normal)
+		upvoteButton.setIcon(icon: .ionicons(.iosHeartOutline), iconSize: 25.0, color: UIColor(hex: 0x979899)!, forState: .normal)
+		upvoteButton.setIcon(icon: .ionicons(.iosHeart), iconSize: 25.0, color: Stylesheet.Colors.base, forState: .selected)
 		bookmarkButton.setImage(UIImage(named: "ios-bookmark"), for: .normal)
 		downloadButton.setIcon(icon: .ionicons(.iosCloudDownloadOutline), iconSize: 25.0, color: UIColor(hex: 0x8A8C8C)!, forState: .normal)
 		
-		likeButton.addTarget(self, action:#selector(ItemCollectionViewCell.liked), for: .touchUpInside)
+		upvoteButton.addTarget(self, action:#selector(ItemCollectionViewCell.liked), for: .touchUpInside)
 		bookmarkButton.addTarget(self, action:#selector(ItemCollectionViewCell.bookmarked), for: .touchUpInside)
 		downloadButton.addTarget(self, action:#selector(ItemCollectionViewCell.downloaded), for: .touchUpInside)
 	}
@@ -149,7 +161,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
 			make.left.equalTo(imageView)
 		}
 		
-		likeButton.snp.makeConstraints { (make) -> Void in
+		upvoteButton.snp.makeConstraints { (make) -> Void in
 			make.right.equalTo(upvoteCountLabel.snp.left)
 		}
 	}
@@ -182,6 +194,8 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	@objc func liked() {
 		let impact = UIImpactFeedbackGenerator()
 		impact.impactOccurred()
+		upvoteService?.UIDelegate = self
+		upvoteService?.upvote()
 	}
 	
 	@objc func bookmarked() {
@@ -229,6 +243,14 @@ extension ItemCollectionViewCell: GradientsOwner {
 						skeletonTitleLabel.gradientLayer,
 						skeletontimeDayLabel.gradientLayer
 		]
+	}
+}
+
+
+extension ItemCollectionViewCell: UpvoteServiceUIDelegate {
+	func UIDidChange(isUpvoted: Bool, score: Int) {
+		upvoteButton.isSelected = isUpvoted
+		upvoteCountLabel.text = String(score)
 	}
 }
 

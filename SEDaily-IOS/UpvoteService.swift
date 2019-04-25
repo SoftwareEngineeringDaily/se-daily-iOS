@@ -13,7 +13,6 @@ protocol UpvoteServiceUIDelegate: class {
 	func upvoteUIDidChange(isUpvoted: Bool, score: Int)
 }
 
-
 import Foundation
 
 class UpvoteService {
@@ -51,7 +50,6 @@ class UpvoteService {
 		})
 	}
 	
-	
 	func addScore(active: Bool) {
 		guard active != false else {
 			self.setScoreTo(self.podcastViewModel.score - 1)
@@ -59,7 +57,6 @@ class UpvoteService {
 		}
 		self.setScoreTo(self.podcastViewModel.score + 1)
 	}
-	
 	
 	private func updateViewModel() {
 		self.modelDelegate?.upvoteModelDidChange(viewModel: self.podcastViewModel)
@@ -75,5 +72,4 @@ class UpvoteService {
 	private func setStatus(active: Bool) {
 	self.podcastViewModel.isUpvoted = active
 	}
-
 }

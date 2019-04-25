@@ -74,6 +74,7 @@
 		43AA2CA02268B2660050668B /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43AA2C9F2268B2660050668B /* OpenSans-Semibold.ttf */; };
 		43CE140C225F7EF700B57CFA /* PlayProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE140B225F7EF700B57CFA /* PlayProgress.swift */; };
 		43CE140E226070FB00B57CFA /* PlayProgressModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE140D226070FB00B57CFA /* PlayProgressModelController.swift */; };
+		43CE8E0D2271AFC000DD990F /* HtmlHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE8E0C2271AFC000DD990F /* HtmlHelper.swift */; };
 		43F4591F226F27BB00641705 /* UpvoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F4591E226F27BA00641705 /* UpvoteService.swift */; };
 		96004ACE20A9E0030017230F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96004ACD20A9E0030017230F /* GoogleService-Info.plist */; };
 		960BFEBB202109800073DAB2 /* AskForReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960BFEBA202109800073DAB2 /* AskForReview.swift */; };
@@ -206,6 +207,7 @@
 		43AA2C9F2268B2660050668B /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		43CE140B225F7EF700B57CFA /* PlayProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayProgress.swift; sourceTree = "<group>"; };
 		43CE140D226070FB00B57CFA /* PlayProgressModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayProgressModelController.swift; sourceTree = "<group>"; };
+		43CE8E0C2271AFC000DD990F /* HtmlHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HtmlHelper.swift; sourceTree = "<group>"; };
 		43F4591E226F27BA00641705 /* UpvoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpvoteService.swift; sourceTree = "<group>"; };
 		675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.release.xcconfig"; sourceTree = "<group>"; };
 		96004ACD20A9E0030017230F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 				960BFEBA202109800073DAB2 /* AskForReview.swift */,
 				9610313D20A353B400A2D2D5 /* AnalyticsHelper.swift */,
 				43A680CF2270718600A639A9 /* Debouncer.swift */,
+				43CE8E0C2271AFC000DD990F /* HtmlHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1019,6 +1022,7 @@
 				960BFEC320239F0E0073DAB2 /* Comment.swift in Sources */,
 				965798A52093FDE600104F8F /* FeedItemCell.swift in Sources */,
 				43A680D222707DC000A639A9 /* DownloadService.swift in Sources */,
+				43CE8E0D2271AFC000DD990F /* HtmlHelper.swift in Sources */,
 				1671BD58200D361900E6ED3B /* SubscriptionModel.swift in Sources */,
 				96C8A9AB2091038100489EE4 /* FeedListViewController.swift in Sources */,
 				1688CB4C2006BDDA00440095 /* APIStripeExtension.swift in Sources */,

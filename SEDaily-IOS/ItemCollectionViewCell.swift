@@ -131,7 +131,7 @@ extension ItemCollectionViewCell {
 			contentView.addSubview(imageOverlay)
 			imageOverlay.clipsToBounds = true
 			imageOverlay.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 5)
-			imageOverlay.backgroundColor = UIColor(hexString: "0x000000", transparency: 0.03)
+			imageOverlay.backgroundColor = Stylesheet.Colors.lightTransparent
 		}
 		
 		func setupLabels() {

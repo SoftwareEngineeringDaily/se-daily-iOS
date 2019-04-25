@@ -31,6 +31,12 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	let upvoteCountLabel: UILabel = UILabel()
 	let upvoteStackView: UIStackView = UIStackView()
 	
+	// MARK: Skeleton
+	var skeletonImageView: GradientContainerView!
+	var skeletonTitleLabel: GradientContainerView!
+	var skeletontimeDayLabel: GradientContainerView!
+	var skeletonTitleLabelNextLine: GradientContainerView!
+	
 	var viewModel: PodcastViewModel = PodcastViewModel() {
 		willSet {
 			guard newValue != self.viewModel else { return }
@@ -53,7 +59,6 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	required init(coder aDecoder: NSCoder) {
 		fatalError("init(coder:)")
 	}
-	
 	//MARK: Button handlers
 	
 	private func setupButtonsTargets() {
@@ -81,39 +86,6 @@ class ItemCollectionViewCell: UICollectionViewCell {
 		notification.notificationOccurred(.success)
 	}
 	
-	// MARK: Skeleton
-	var skeletonImageView: GradientContainerView!
-	var skeletonTitleLabel: GradientContainerView!
-	var skeletontimeDayLabel: GradientContainerView!
-	
-	private func setupSkeletonView() {
-		self.skeletonImageView = GradientContainerView(frame: self.imageView.frame)
-		self.skeletonImageView.cornerRadius = self.imageView.cornerRadius
-		self.skeletonImageView.backgroundColor = UIColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1.0)
-		self.contentView.addSubview(skeletonImageView)
-		skeletonTitleLabel = GradientContainerView(frame: self.titleLabel.frame)
-		self.contentView.addSubview(skeletonTitleLabel)
-		skeletontimeDayLabel = GradientContainerView(frame: self.descriptionLabel.frame)
-		print(skeletontimeDayLabel.frame)
-		skeletontimeDayLabel.backgroundColor = UIColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1.0)
-		self.contentView.addSubview(skeletontimeDayLabel)
-		
-		skeletontimeDayLabel.snp.makeConstraints { (make) -> Void in
-			make.top.equalTo(imageView.snp.bottom).offset(10.0)
-			make.rightMargin.equalTo(contentView).inset(10.0)
-			make.left.equalTo(imageView)
-		}
-		
-		print(skeletontimeDayLabel.frame)
-		print(skeletonImageView)
-		
-		let baseColor = self.skeletonImageView.backgroundColor!
-		let gradients = baseColor.getGradientColors(brightenedBy: 1.07)
-		self.skeletonImageView.gradientLayer.colors = gradients
-		self.skeletonTitleLabel.gradientLayer.colors = gradients
-		self.skeletontimeDayLabel.gradientLayer.colors = gradients
-	}
-	
 	func setupSkeletonCell() {
 		self.setupSkeletonView()
 		self.slide(to: .right)
@@ -124,11 +96,11 @@ extension ItemCollectionViewCell: GradientsOwner {
 	var gradientLayers: [CAGradientLayer] {
 		return [skeletonImageView.gradientLayer,
 						skeletonTitleLabel.gradientLayer,
+						skeletonTitleLabelNextLine.gradientLayer,
 						skeletontimeDayLabel.gradientLayer
 		]
 	}
 }
-
 
 extension ItemCollectionViewCell: UpvoteServiceUIDelegate {
 	func upvoteUIDidChange(isUpvoted: Bool, score: Int) {
@@ -263,7 +235,6 @@ extension ItemCollectionViewCell {
 	}
 }
 
-
 extension ItemCollectionViewCell {
 	private func updateUI() {
 		
@@ -311,6 +282,29 @@ extension ItemCollectionViewCell {
 		setupDescriptionLabel()
 		updateUpvote()
 		updateBookmark()
+	}
+}
+
+extension ItemCollectionViewCell {
+	func setupSkeletonView() {
+		self.skeletonImageView = GradientContainerView(frame: CGRect(x: 10.0, y: 10.0, width: 80.0, height: 80.0))
+		self.skeletonImageView.cornerRadius = self.imageView.cornerRadius
+		self.skeletonImageView.backgroundColor = UIColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1.0)
+		self.contentView.addSubview(skeletonImageView)
+		skeletonTitleLabel = GradientContainerView(frame: CGRect(x: 100.0, y: 10.0, width: 200.0, height: 15.0))
+		skeletonTitleLabelNextLine = GradientContainerView(frame: CGRect(x: 100.0, y: 40.0, width: 200.0, height: 15.0))
+		print(imageView.topLeftPoint())
+		print(imageView.bottomRightPoint())
+		self.contentView.addSubview(skeletonTitleLabel)
+		self.contentView.addSubview(skeletonTitleLabelNextLine)
+		skeletontimeDayLabel = GradientContainerView(origin: skeletonImageView.bottomLeftPoint(), topInset: 10, width: 350, height: 25)
+		self.contentView.addSubview(skeletontimeDayLabel)
 		
+		let baseColor = self.skeletonImageView.backgroundColor!
+		let gradients = baseColor.getGradientColors(brightenedBy: 1.07)
+		self.skeletonImageView.gradientLayer.colors = gradients
+		self.skeletonTitleLabel.gradientLayer.colors = gradients
+		self.skeletonTitleLabelNextLine.gradientLayer.colors = gradients
+		self.skeletontimeDayLabel.gradientLayer.colors = gradients
 	}
 }

@@ -48,7 +48,7 @@ public struct PodcastViewModel: Codable {
     }
 	
 	var podcastDescription: String {
-		return encodedPodcastDescription.htmlDecoded
+		return HtmlHelper.removePowerPressPlayerTags(html: encodedPodcastDescription).htmlDecoded
 	}
 
     init(podcast: Podcast) {

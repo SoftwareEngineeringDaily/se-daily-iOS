@@ -36,6 +36,8 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	var skeletonTitleLabel: GradientContainerView!
 	var skeletontimeDayLabel: GradientContainerView!
 	var skeletonTitleLabelNextLine: GradientContainerView!
+	var skeletontimeDayLabelNextLine: GradientContainerView!
+	
 	
 	var viewModel: PodcastViewModel = PodcastViewModel() {
 		willSet {
@@ -62,14 +64,15 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	//MARK: Button handlers
 	
 	private func setupButtonsTargets() {
-		upvoteButton.addTarget(self, action:#selector(ItemCollectionViewCell.liked), for: .touchUpInside)
-		bookmarkButton.addTarget(self, action:#selector(ItemCollectionViewCell.bookmarked), for: .touchUpInside)
-		downloadButton.addTarget(self, action:#selector(ItemCollectionViewCell.downloaded), for: .touchUpInside)
+		upvoteButton.addTarget(self, action: #selector(ItemCollectionViewCell.liked), for: .touchUpInside)
+		bookmarkButton.addTarget(self, action: #selector(ItemCollectionViewCell.bookmarked), for: .touchUpInside)
+		downloadButton.addTarget(self, action: #selector(ItemCollectionViewCell.downloaded), for: .touchUpInside)
 	}
 	
 	@objc func liked() {
 		let impact = UIImpactFeedbackGenerator()
 		impact.impactOccurred()
+	
 		upvoteService?.UIDelegate = self
 		upvoteService?.upvote()
 	}
@@ -77,6 +80,10 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	@objc func bookmarked() {
 		let selection = UISelectionFeedbackGenerator()
 		selection.selectionChanged()
+		
+		//immediately update ui
+		bookmarkButton.isSelected = !bookmarkButton.isSelected
+		
 		bookmarkService?.UIDelegate = self
 		bookmarkService?.setBookmark()
 	}
@@ -89,16 +96,6 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	func setupSkeletonCell() {
 		self.setupSkeletonView()
 		self.slide(to: .right)
-	}
-}
-
-extension ItemCollectionViewCell: GradientsOwner {
-	var gradientLayers: [CAGradientLayer] {
-		return [skeletonImageView.gradientLayer,
-						skeletonTitleLabel.gradientLayer,
-						skeletonTitleLabelNextLine.gradientLayer,
-						skeletontimeDayLabel.gradientLayer
-		]
 	}
 }
 
@@ -293,12 +290,12 @@ extension ItemCollectionViewCell {
 		self.contentView.addSubview(skeletonImageView)
 		skeletonTitleLabel = GradientContainerView(frame: CGRect(x: 100.0, y: 10.0, width: 200.0, height: 15.0))
 		skeletonTitleLabelNextLine = GradientContainerView(frame: CGRect(x: 100.0, y: 40.0, width: 200.0, height: 15.0))
-		print(imageView.topLeftPoint())
-		print(imageView.bottomRightPoint())
 		self.contentView.addSubview(skeletonTitleLabel)
 		self.contentView.addSubview(skeletonTitleLabelNextLine)
-		skeletontimeDayLabel = GradientContainerView(origin: skeletonImageView.bottomLeftPoint(), topInset: 10, width: 350, height: 25)
+		skeletontimeDayLabel = GradientContainerView(origin: skeletonImageView.bottomLeftPoint(), topInset: 10, width: 350, height: 10)
+		skeletontimeDayLabelNextLine = GradientContainerView(origin: skeletonImageView.bottomLeftPoint(), topInset: 25, width: 350, height: 10)
 		self.contentView.addSubview(skeletontimeDayLabel)
+		self.contentView.addSubview(skeletontimeDayLabelNextLine)
 		
 		let baseColor = self.skeletonImageView.backgroundColor!
 		let gradients = baseColor.getGradientColors(brightenedBy: 1.07)
@@ -306,5 +303,17 @@ extension ItemCollectionViewCell {
 		self.skeletonTitleLabel.gradientLayer.colors = gradients
 		self.skeletonTitleLabelNextLine.gradientLayer.colors = gradients
 		self.skeletontimeDayLabel.gradientLayer.colors = gradients
+		self.skeletontimeDayLabelNextLine.gradientLayer.colors = gradients
+	}
+}
+
+extension ItemCollectionViewCell: GradientsOwner {
+	var gradientLayers: [CAGradientLayer] {
+		return [skeletonImageView.gradientLayer,
+						skeletonTitleLabel.gradientLayer,
+						skeletonTitleLabelNextLine.gradientLayer,
+						skeletontimeDayLabel.gradientLayer,
+						skeletontimeDayLabelNextLine.gradientLayer
+		]
 	}
 }

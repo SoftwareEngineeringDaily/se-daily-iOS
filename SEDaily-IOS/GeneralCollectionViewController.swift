@@ -205,7 +205,7 @@ class GeneralCollectionViewController: UICollectionViewController {
             if let audioOverlayDelegate = self.audioOverlayDelegate {
                 let vc = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
                 vc.model = viewModel
-                //vc.delegate = self
+                vc.delegate = self
             
                 self.navigationController?.pushViewController(vc, animated: true)
             }
@@ -213,11 +213,11 @@ class GeneralCollectionViewController: UICollectionViewController {
     }
 }
 
-//extension GeneralCollectionViewController: PodcastDetailViewControllerDelegate {
-//    func modelDidChange(viewModel: PodcastViewModel) {
-//        self.podcastViewModelController.update(with: viewModel)
-//    }
-//}
+extension GeneralCollectionViewController: PodcastDetailViewControllerDelegate {
+    func modelDidChange(viewModel: PodcastViewModel) {
+        self.podcastViewModelController.update(with: viewModel)
+    }
+}
 
 extension GeneralCollectionViewController: UpvoteServiceModelDelegate {
 	func upvoteModelDidChange(viewModel: PodcastViewModel) {

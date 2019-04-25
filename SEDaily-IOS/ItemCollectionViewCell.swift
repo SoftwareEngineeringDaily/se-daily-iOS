@@ -271,7 +271,15 @@ extension ItemCollectionViewCell {
 		}
 		
 		func setupDescriptionLabel() {
-			self.descriptionLabel.text = "x"
+			var str: String!
+			// Due to asynchronuous nature of decoding html content, this is a better way to do it
+			DispatchQueue.global(qos: .background).async { [weak self] in
+				str = self?.viewModel.podcastDescription
+				DispatchQueue.main.async {
+					self?.descriptionLabel.text = str
+				}
+			}
+			
 		}
 		
 		func updateUpvote() {

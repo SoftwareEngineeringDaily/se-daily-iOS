@@ -10,7 +10,11 @@ import Foundation
 
 class HtmlHelper {
 	
-	private func removePowerPressPlayerTags(html: String) -> String {
+	class func getMeta(html:String)->String {
+		return removePowerPressPlayerTags(html: html)
+	}
+	
+	class func removePowerPressPlayerTags(html: String) -> String {
 		var modifiedHtml = html
 		guard let powerPressPlayerRange = modifiedHtml.range(of: "<!--powerpress_player-->") else {
 			return modifiedHtml
@@ -37,16 +41,17 @@ class HtmlHelper {
 		return modifiedHtml
 	}
 	
-	private func addStyling(html: String) -> String {
-		return "<style type=\"text/css\">body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; } </style>\(html)"
-	}
-	
-	private func addHeightAdjustment(html: String, height: CGFloat) -> String {
-		return "<div style='width:100%;height:\(height)px'></div>\(html)"
-	}
-	
-	private func addScaleMeta(html: String) -> String {
-		return "<meta name=\"viewport\" content=\"initial-scale=1.0\" />\(html)"
-	}
+//	private func addStyling(html: String) -> String {
+//		return "<style type=\"text/css\">body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; } </style>\(html)"
+//	}
+//	
+//	private func addHeightAdjustment(html: String, height: CGFloat) -> String {
+//		return "<div style='width:100%;height:\(height)px'></div>\(html)"
+//	}
+//	
+//	private func addScaleMeta(html: String) -> String {
+//		return "<meta name=\"viewport\" content=\"initial-scale=1.0\" />\(html)"
+//	}
 	
 }
+

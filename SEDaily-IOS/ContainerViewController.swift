@@ -116,7 +116,7 @@ class ContainerViewController: UIViewController {
 
     // Have to set preferredStatusBarStyle here on first view controller
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return .default
     }
 }
 

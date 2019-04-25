@@ -26,6 +26,7 @@ enum Stylesheet {
         static let base = UIColor(hex: 0x714CFE)!
 				static let grey = UIColor(hex: 0x8A8C8C)!
 				static let light = UIColor(hex: 0xF6F9FA)!
+				static let lightTransparent = UIColor(hex: 0x8A8C8C, transparency: 0.1)
 			
         static let baseLight = UIColor(hex: 0x5366CD)!
         static let light1 = UIColor(hex: 0xFFC082)!
@@ -45,13 +46,13 @@ enum Stylesheet {
 
     enum Contexts {
         enum Global {
-            static let StatusBarStyle = UIStatusBarStyle.lightContent
-            static let StatusBarBackgroundColor = Colors.base
+            static let StatusBarStyle = UIStatusBarStyle.default
+            static let StatusBarBackgroundColor = Colors.white
         }
 
         enum NavigationController {
-            static let BarTintColor = Colors.white
-            static let BarColor = Colors.base
+            static let BarTintColor = Colors.base
+            static let BarColor = Colors.white
         }
 
         enum EventHeader {

@@ -38,6 +38,12 @@ class PodcastPageViewController: TabmanViewController, PageboyViewControllerData
 
         // configure the bar
         self.bar.style = .scrollingButtonBar
+			
+				bar.appearance = TabmanBar.Appearance({ (appearance) in
+					appearance.style.background = .solid(color: UIColor.white)
+					appearance.indicator.color = Stylesheet.Colors.base
+				})
+			
 
         self.bar.items = barItems
 

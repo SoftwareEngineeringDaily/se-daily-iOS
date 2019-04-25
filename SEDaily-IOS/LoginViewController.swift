@@ -3,7 +3,7 @@
 //  SEDaily-IOS
 //
 //  Created by Craig Holliday on 6/27/17.
-// 	Modyfied by Dawid Cedrych on 7/9/18
+// 	Modified by Dawid Cedrych on 7/9/18
 //  Copyright © 2017 Koala Tea. All rights reserved.
 //
 

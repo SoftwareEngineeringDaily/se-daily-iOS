@@ -91,10 +91,21 @@ class ItemCollectionViewCell: UICollectionViewCell {
 		self.skeletonImageView.cornerRadius = self.imageView.cornerRadius
 		self.skeletonImageView.backgroundColor = UIColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1.0)
 		self.contentView.addSubview(skeletonImageView)
-		skeletonTitleLabel = GradientContainerView(origin: imageView.bottomLeftPoint(), topInset: 15, width: 158, height: 14)
+		skeletonTitleLabel = GradientContainerView(frame: self.titleLabel.frame)
 		self.contentView.addSubview(skeletonTitleLabel)
-		skeletontimeDayLabel = GradientContainerView(origin: skeletonTitleLabel.bottomLeftPoint(), topInset: 15, width: 158, height: 14)
+		skeletontimeDayLabel = GradientContainerView(frame: self.descriptionLabel.frame)
+		print(skeletontimeDayLabel.frame)
+		skeletontimeDayLabel.backgroundColor = UIColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1.0)
 		self.contentView.addSubview(skeletontimeDayLabel)
+		
+		skeletontimeDayLabel.snp.makeConstraints { (make) -> Void in
+			make.top.equalTo(imageView.snp.bottom).offset(10.0)
+			make.rightMargin.equalTo(contentView).inset(10.0)
+			make.left.equalTo(imageView)
+		}
+		
+		print(skeletontimeDayLabel.frame)
+		print(skeletonImageView)
 		
 		let baseColor = self.skeletonImageView.backgroundColor!
 		let gradients = baseColor.getGradientColors(brightenedBy: 1.07)
@@ -151,7 +162,7 @@ extension ItemCollectionViewCell {
 			contentView.addSubview(imageOverlay)
 			imageOverlay.clipsToBounds = true
 			imageOverlay.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 5)
-			imageOverlay.backgroundColor = UIColor(hexString: "0x000000", transparency: 0.05)
+			imageOverlay.backgroundColor = UIColor(hexString: "0x000000", transparency: 0.03)
 		}
 		
 		func setupLabels() {

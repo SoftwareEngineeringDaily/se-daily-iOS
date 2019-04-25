@@ -145,9 +145,13 @@ class GeneralCollectionViewController: UICollectionViewController {
         if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
 					
 						let upvoteService = UpvoteService(podcastViewModel: viewModel)
+						let bookmarkService = BookmarkService(podcastViewModel: viewModel)
+					
 						upvoteService.modelDelegate = self
+						bookmarkService.modelDelegate = self
             cell.viewModel = viewModel
 						cell.upvoteService = upvoteService
+						cell.bookmarkService = bookmarkService
             if let lastIndexPath = self.collectionView?.indexPathForLastItem {
                 if let lastItem = podcastViewModelController.viewModel(at: lastIndexPath.row) {
                     self.checkPage(currentIndexPath: indexPath,
@@ -216,7 +220,13 @@ class GeneralCollectionViewController: UICollectionViewController {
 //}
 
 extension GeneralCollectionViewController: UpvoteServiceModelDelegate {
-	func modelDidChange(viewModel: PodcastViewModel) {
+	func upvoteModelDidChange(viewModel: PodcastViewModel) {
+		self.podcastViewModelController.update(with: viewModel)
+	}
+}
+
+extension GeneralCollectionViewController: BookmarkServiceModelDelegate {
+	func bookmarkModelDidChange(viewModel: PodcastViewModel) {
 		self.podcastViewModelController.update(with: viewModel)
 	}
 }

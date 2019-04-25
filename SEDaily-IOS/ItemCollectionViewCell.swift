@@ -16,6 +16,7 @@ import Kingfisher
 
 class ItemCollectionViewCell: UICollectionViewCell {
 	var imageView: UIImageView!
+	var imageOverlay: UIView!
 	var titleLabel: UILabel!
 	var miscDetailsLabel: UILabel!
 	var descriptionLabel: UILabel!
@@ -43,6 +44,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
 			// TODO: change into parsed html
 			self.descriptionLabel.text = "Protein structure prediction is the process of predicting how a protein will fold by looking at genetic code. Protein structure prediction is a perfect field to approach through the application of deep learning, because"
 			self.upvoteButton.isSelected = viewModel.isUpvoted
+			self.bookmarkButton.isSelected = viewModel.isBookmarked
 			print(viewModel.isUpvoted)
 			self.upvoteCountLabel.text = String(viewModel.score)
 		}
@@ -50,6 +52,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	}
 	
 	var upvoteService: UpvoteService?
+	var bookmarkService: BookmarkService?
 	
 	
 	
@@ -73,6 +76,12 @@ class ItemCollectionViewCell: UICollectionViewCell {
 		imageView.clipsToBounds = true
 		imageView.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 5)
 		self.imageView.kf.indicatorType = .activity
+		
+		imageOverlay = UIView()
+		self.contentView.addSubview(imageOverlay)
+		imageOverlay.clipsToBounds = true
+		imageOverlay.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 5)
+		imageOverlay.backgroundColor = UIColor(hexString: "0x000000", transparency: 0.05)
 		
 	}
 	
@@ -111,6 +120,8 @@ class ItemCollectionViewCell: UICollectionViewCell {
 		upvoteButton.setIcon(icon: .ionicons(.iosHeartOutline), iconSize: 25.0, color: UIColor(hex: 0x979899)!, forState: .normal)
 		upvoteButton.setIcon(icon: .ionicons(.iosHeart), iconSize: 25.0, color: Stylesheet.Colors.base, forState: .selected)
 		bookmarkButton.setImage(UIImage(named: "ios-bookmark"), for: .normal)
+		bookmarkButton.setImage(UIImage(named: "ios-bookmark-fill"), for: .selected)
+		
 		downloadButton.setIcon(icon: .ionicons(.iosCloudDownloadOutline), iconSize: 25.0, color: UIColor(hex: 0x8A8C8C)!, forState: .normal)
 		
 		upvoteButton.addTarget(self, action:#selector(ItemCollectionViewCell.liked), for: .touchUpInside)
@@ -133,6 +144,13 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	private func setupLayout() {
 		
 		imageView.snp.makeConstraints { (make) -> Void in
+			make.left.equalToSuperview().inset(10)
+			make.top.equalToSuperview().inset(10)
+			make.width.equalTo(80)
+			make.height.equalTo(80)
+		}
+		
+		imageOverlay.snp.makeConstraints { (make) -> Void in
 			make.left.equalToSuperview().inset(10)
 			make.top.equalToSuperview().inset(10)
 			make.width.equalTo(80)
@@ -182,6 +200,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	private func loadImageView(imageURL: URL?) {
 		self.imageView.kf.cancelDownloadTask()
 		guard let imageURL = imageURL else {
+			
 			self.imageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
 			return
 		}
@@ -195,12 +214,14 @@ class ItemCollectionViewCell: UICollectionViewCell {
 		let impact = UIImpactFeedbackGenerator()
 		impact.impactOccurred()
 		upvoteService?.UIDelegate = self
-		self?.upvoteService?.upvote()
+		upvoteService?.upvote()
 	}
 	
 	@objc func bookmarked() {
 		let selection = UISelectionFeedbackGenerator()
 		selection.selectionChanged()
+		bookmarkService?.UIDelegate = self
+		bookmarkService?.setBookmark()
 	}
 	
 	@objc func downloaded() {
@@ -248,9 +269,15 @@ extension ItemCollectionViewCell: GradientsOwner {
 
 
 extension ItemCollectionViewCell: UpvoteServiceUIDelegate {
-	func UIDidChange(isUpvoted: Bool, score: Int) {
+	func upvoteUIDidChange(isUpvoted: Bool, score: Int) {
 		upvoteButton.isSelected = isUpvoted
 		upvoteCountLabel.text = String(score)
+	}
+}
+
+extension ItemCollectionViewCell: BookmarkServiceUIDelegate {
+	func bookmarkUIDidChange(isBookmarked: Bool) {
+		self.bookmarkButton.isSelected = isBookmarked
 	}
 }
 

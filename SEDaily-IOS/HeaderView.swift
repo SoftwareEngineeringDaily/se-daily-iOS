@@ -43,6 +43,7 @@ class HeaderView: UIView {
 
     private var downloadButton = UIButton()
 
+
     let downloadManager = OfflineDownloadsManager.sharedInstance
     let networkService = API()
 

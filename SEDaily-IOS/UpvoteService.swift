@@ -7,26 +7,28 @@
 //
 
 protocol UpvoteServiceModelDelegate: class {
-	func modelDidChange(viewModel: PodcastViewModel)
+	func upvoteModelDidChange(viewModel: PodcastViewModel)
 }
 protocol UpvoteServiceUIDelegate: class {
-	func UIDidChange(isUpvoted: Bool, score: Int)
+	func upvoteUIDidChange(isUpvoted: Bool, score: Int)
 }
 
 
 import Foundation
 
 class UpvoteService {
+	
+	private let networkService = API()
+	
 	var podcastViewModel: PodcastViewModel {
 		didSet {
 			updateViewModel()
 			updateUI(isUpvoted: self.podcastViewModel.isUpvoted, score: self.podcastViewModel.score)
 		}
 	}
-	private let networkService = API()
+	
 	weak var modelDelegate: UpvoteServiceModelDelegate?
 	weak var UIDelegate: UpvoteServiceUIDelegate?
-
 
 	init(podcastViewModel: PodcastViewModel) {
 		self.podcastViewModel = podcastViewModel
@@ -60,10 +62,10 @@ class UpvoteService {
 	
 	
 	private func updateViewModel() {
-		self.modelDelegate?.modelDidChange(viewModel: self.podcastViewModel)
+		self.modelDelegate?.upvoteModelDidChange(viewModel: self.podcastViewModel)
 	}
 	private func updateUI(isUpvoted: Bool, score: Int) {
-		self.UIDelegate?.UIDidChange(isUpvoted: isUpvoted, score: self.podcastViewModel.score)
+		self.UIDelegate?.upvoteUIDidChange(isUpvoted: isUpvoted, score: self.podcastViewModel.score)
 	}
 	
 	func setScoreTo(_ score: Int) {
@@ -75,5 +77,3 @@ class UpvoteService {
 	}
 
 }
-
-

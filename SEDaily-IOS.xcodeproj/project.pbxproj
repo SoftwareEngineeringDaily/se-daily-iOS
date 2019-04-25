@@ -63,6 +63,8 @@
 		238E99F4E37C7365658113B8 /* Pods_SEDaily_IOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0C9F051C6C2F8638D2ABF8 /* Pods_SEDaily_IOSTests.framework */; };
 		24412438C753126FDDD37CBF /* Pods_SEDaily_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */; };
 		43A680D02270718600A639A9 /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A680CF2270718600A639A9 /* Debouncer.swift */; };
+		43A680D222707DC000A639A9 /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A680D122707DC000A639A9 /* DownloadService.swift */; };
+		43A680D42270803700A639A9 /* BookmarkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A680D32270803700A639A9 /* BookmarkService.swift */; };
 		43AA2C912268530C0050668B /* ItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AA2C902268530C0050668B /* ItemCollectionViewCell.swift */; };
 		43AA2C962268AC7B0050668B /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43AA2C932268AC7B0050668B /* Roboto-Light.ttf */; };
 		43AA2C972268AC7B0050668B /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43AA2C942268AC7B0050668B /* Roboto-Bold.ttf */; };
@@ -193,6 +195,8 @@
 		1EABD8F31FB430AA00959859 /* TestHook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHook.swift; sourceTree = "<group>"; };
 		1EB74FFB1FE5E1AF004B733E /* StateBookmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StateBookmarkView.swift; path = Bookmark/StateBookmarkView.swift; sourceTree = "<group>"; };
 		43A680CF2270718600A639A9 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
+		43A680D122707DC000A639A9 /* DownloadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
+		43A680D32270803700A639A9 /* BookmarkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkService.swift; sourceTree = "<group>"; };
 		43AA2C902268530C0050668B /* ItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		43AA2C932268AC7B0050668B /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
 		43AA2C942268AC7B0050668B /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
@@ -539,6 +543,8 @@
 			isa = PBXGroup;
 			children = (
 				43F4591E226F27BA00641705 /* UpvoteService.swift */,
+				43A680D122707DC000A639A9 /* DownloadService.swift */,
+				43A680D32270803700A639A9 /* BookmarkService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -1012,6 +1018,7 @@
 				965E165820ABD74900F2E4E4 /* FeedItem.swift in Sources */,
 				960BFEC320239F0E0073DAB2 /* Comment.swift in Sources */,
 				965798A52093FDE600104F8F /* FeedItemCell.swift in Sources */,
+				43A680D222707DC000A639A9 /* DownloadService.swift in Sources */,
 				1671BD58200D361900E6ED3B /* SubscriptionModel.swift in Sources */,
 				96C8A9AB2091038100489EE4 /* FeedListViewController.swift in Sources */,
 				1688CB4C2006BDDA00440095 /* APIStripeExtension.swift in Sources */,
@@ -1044,6 +1051,7 @@
 				964090BF2093B97D00CFF5C4 /* PodcastLite.swift in Sources */,
 				963144DE208FEA8000EA13F1 /* ForumThread.swift in Sources */,
 				16AD3E0C1F9B13EE0084C545 /* FilterObject.swift in Sources */,
+				43A680D42270803700A639A9 /* BookmarkService.swift in Sources */,
 				1671BD56200D278F00E6ED3B /* PurchaseSubscriptionViewController.swift in Sources */,
 				16AD3E0A1F9B138D0084C545 /* PodcastViewModel.swift in Sources */,
 				43F4591F226F27BB00641705 /* UpvoteService.swift in Sources */,

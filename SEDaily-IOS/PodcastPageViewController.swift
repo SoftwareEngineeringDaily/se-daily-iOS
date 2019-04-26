@@ -42,6 +42,7 @@ class PodcastPageViewController: TabmanViewController, PageboyViewControllerData
 				bar.appearance = TabmanBar.Appearance({ (appearance) in
 					appearance.style.background = .solid(color: UIColor.white)
 					appearance.indicator.color = Stylesheet.Colors.base
+					appearance.state.selectedColor = Stylesheet.Colors.base
 				})
 			
 

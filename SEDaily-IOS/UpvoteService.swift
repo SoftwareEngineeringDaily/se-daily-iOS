@@ -13,6 +13,7 @@ protocol UpvoteServiceUIDelegate: class {
 	func upvoteUIDidChange(isUpvoted: Bool, score: Int)
 }
 
+
 import Foundation
 
 class UpvoteService {

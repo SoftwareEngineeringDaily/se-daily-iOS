@@ -20,6 +20,7 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
     lazy var skeletonCollectionView: SkeletonCollectionView = {
         return SkeletonCollectionView(frame: self.collectionView!.frame)
     }()
+	
 
     init(collectionViewLayout layout: UICollectionViewLayout, audioOverlayDelegate: AudioOverlayDelegate?) {
         super.init(collectionViewLayout: layout)

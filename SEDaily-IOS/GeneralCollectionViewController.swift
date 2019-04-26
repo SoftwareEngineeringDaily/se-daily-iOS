@@ -12,211 +12,219 @@ import KoalaTeaFlowLayout
 private let reuseIdentifier = "Cell"
 
 class GeneralCollectionViewController: UICollectionViewController {
-    lazy var skeletonCollectionView: SkeletonCollectionView = {
-        return SkeletonCollectionView(frame: self.collectionView!.frame)
-    }()
-
-    var type: PodcastTypes
-    var tabTitle: String
-    var tags: [Int]
-    var categories: [Int]
-    weak var audioOverlayDelegate: AudioOverlayDelegate?
-
-    // Paging Properties
-    var loading = false
-    let pageSize = 10
-    let preloadMargin = 5
-
-    var lastLoadedPage = 0
-    var errorChecks = 0
-    let maximumErrorChecks = 5
-
-    var customTabBarItem: UITabBarItem! {
-        switch type {
-        case .new:
-            // This is actually greatest hits right now
-            return UITabBarItem(tabBarSystemItem: .mostViewed, tag: 0)
-        case .recommended:
-            return UITabBarItem(title: L10n.tabBarJustForYou, image: #imageLiteral(resourceName: "activity_feed"), selectedImage: #imageLiteral(resourceName: "activity_feed_selected"))
-        case .top:
-            return UITabBarItem(tabBarSystemItem: .mostViewed, tag: 0)
-        }
-    }
-
-    // ViewModelController
-    private let podcastViewModelController: PodcastViewModelController = PodcastViewModelController()
-
-    init(collectionViewLayout layout: UICollectionViewLayout,
-         audioOverlayDelegate: AudioOverlayDelegate?,
-         tags: [Int] = [],
-         categories: [PodcastCategoryIds] = [],
-         type: PodcastTypes = .new,
-         tabTitle: String = "") {
-        self.tabTitle = tabTitle
-        self.type = type
-        self.tags = tags
-        self.audioOverlayDelegate = audioOverlayDelegate
-        self.categories = categories.flatMap { $0.rawValue }
-        super.init(collectionViewLayout: layout)
-        self.tabBarItem = self.customTabBarItem
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        self.collectionView?.register(ItemCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+	lazy var skeletonCollectionView: SkeletonCollectionView = {
+		return SkeletonCollectionView(frame: self.collectionView!.frame)
+	}()
+	
+	var type: PodcastTypes
+	var tabTitle: String
+	var tags: [Int]
+	var categories: [Int]
+	weak var audioOverlayDelegate: AudioOverlayDelegate?
+	
+	private var progressController = PlayProgressModelController()
+	
+	// Paging Properties
+	var loading = false
+	let pageSize = 10
+	let preloadMargin = 5
+	
+	var lastLoadedPage = 0
+	var errorChecks = 0
+	let maximumErrorChecks = 5
+	
+	var customTabBarItem: UITabBarItem! {
+		switch type {
+		case .new:
+			// This is actually greatest hits right now
+			return UITabBarItem(tabBarSystemItem: .mostViewed, tag: 0)
+		case .recommended:
+			return UITabBarItem(title: L10n.tabBarJustForYou, image: #imageLiteral(resourceName: "activity_feed"), selectedImage: #imageLiteral(resourceName: "activity_feed_selected"))
+		case .top:
+			return UITabBarItem(tabBarSystemItem: .mostViewed, tag: 0)
+		}
+	}
+	
+	// ViewModelController
+	private let podcastViewModelController: PodcastViewModelController = PodcastViewModelController()
+	
+	init(collectionViewLayout layout: UICollectionViewLayout,
+			 audioOverlayDelegate: AudioOverlayDelegate?,
+			 tags: [Int] = [],
+			 categories: [PodcastCategoryIds] = [],
+			 type: PodcastTypes = .new,
+			 tabTitle: String = "") {
+		self.tabTitle = tabTitle
+		self.type = type
+		self.tags = tags
+		self.audioOverlayDelegate = audioOverlayDelegate
+		self.categories = categories.flatMap { $0.rawValue }
+		super.init(collectionViewLayout: layout)
+		self.tabBarItem = self.customTabBarItem
+	}
+	
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		// Uncomment the following line to preserve selection between presentations
+		// self.clearsSelectionOnViewWillAppear = false
+		progressController.retrieve()
+		
+		// Register cell classes
+		self.collectionView?.register(ItemCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+		
+		//hardcoded height
+		let layout = KoalaTeaFlowLayout(cellWidth: Helpers.getScreenWidth(),
+																		cellHeight: 185.0.cgFloat,
+																		topBottomMargin: UIView.getValueScaledByScreenHeightFor(baseValue: 10),
+																		leftRightMargin: UIView.getValueScaledByScreenWidthFor(baseValue: 0),
+																		cellSpacing: UIView.getValueScaledByScreenWidthFor(baseValue: 10))
+		self.collectionView?.collectionViewLayout = layout
+		self.collectionView?.backgroundColor = Stylesheet.Colors.light
+		
+		// User Login observer
+		NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)
+		
+		self.collectionView?.addSubview(skeletonCollectionView)
+		
+		switch type {
+		case .new:
+			Analytics2.newPodcastsListViewed(tabTitle: self.tabTitle)
+		case .recommended:
+			Analytics2.recommendedPodcastsListViewed(tabTitle: self.tabTitle)
+		case .top:
+			Analytics2.topPodcastsListViewed(tabTitle: self.tabTitle)
+		}
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		// Make sure skeletonCollectionView is animating when the view is visible
+		if self.skeletonCollectionView.alpha != 0 {
+			self.skeletonCollectionView.collectionView.reloadData()
+		}
+	}
+	
+	@objc func loginObserver() {
+		self.podcastViewModelController.clearViewModels()
+		DispatchQueue.main.async {
+			self.collectionView?.reloadData()
+		}
+		self.getData(lastIdentifier: "", nextPage: 0)
+	}
+	
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
+		// Dispose of any resources that can be recreated.
+	}
+	
+	// MARK: UICollectionViewDataSource
+	
+	override func numberOfSections(in collectionView: UICollectionView) -> Int {
+		return 1
+	}
+	
+	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		if podcastViewModelController.viewModelsCount > 0 {
+			self.skeletonCollectionView.fadeOut(duration: 0.5, completion: nil)
+		}
+		if podcastViewModelController.viewModelsCount <= 0 {
+			// Load initial data
+			self.getData(lastIdentifier: "", nextPage: 0)
+		}
+		return podcastViewModelController.viewModelsCount
+	}
+	
+	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ItemCollectionViewCell else {
+			return UICollectionViewCell()
+		}
+		
+		// Configure the cell
+		if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
 			
-			//hardcoded height
-        let layout = KoalaTeaFlowLayout(cellWidth: Helpers.getScreenWidth(),
-                                        cellHeight: 185.0.cgFloat,
-                                        topBottomMargin: UIView.getValueScaledByScreenHeightFor(baseValue: 10),
-                                        leftRightMargin: UIView.getValueScaledByScreenWidthFor(baseValue: 0),
-                                        cellSpacing: UIView.getValueScaledByScreenWidthFor(baseValue: 10))
-        self.collectionView?.collectionViewLayout = layout
-        self.collectionView?.backgroundColor = Stylesheet.Colors.light
-
-        // User Login observer
-        NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)
-
-        self.collectionView?.addSubview(skeletonCollectionView)
-        
-        switch type {
-        case .new:
-            Analytics2.newPodcastsListViewed(tabTitle: self.tabTitle)
-        case .recommended:
-            Analytics2.recommendedPodcastsListViewed(tabTitle: self.tabTitle)
-        case .top:
-            Analytics2.topPodcastsListViewed(tabTitle: self.tabTitle)
-        }        
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        // Make sure skeletonCollectionView is animating when the view is visible
-        if self.skeletonCollectionView.alpha != 0 {
-            self.skeletonCollectionView.collectionView.reloadData()
-        }
-    }
-
-    @objc func loginObserver() {
-        self.podcastViewModelController.clearViewModels()
-        DispatchQueue.main.async {
-            self.collectionView?.reloadData()
-        }
-        self.getData(lastIdentifier: "", nextPage: 0)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: UICollectionViewDataSource
-
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if podcastViewModelController.viewModelsCount > 0 {
-            self.skeletonCollectionView.fadeOut(duration: 0.5, completion: nil)
-        }
-        if podcastViewModelController.viewModelsCount <= 0 {
-            // Load initial data
-            self.getData(lastIdentifier: "", nextPage: 0)
-        }
-        return podcastViewModelController.viewModelsCount
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ItemCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-
-        // Configure the cell
-        if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
-					
-						let upvoteService = UpvoteService(podcastViewModel: viewModel)
-						let bookmarkService = BookmarkService(podcastViewModel: viewModel)
-					
-						upvoteService.modelDelegate = self
-						bookmarkService.modelDelegate = self
-            cell.viewModel = viewModel
-						cell.upvoteService = upvoteService
-						cell.bookmarkService = bookmarkService
-            if let lastIndexPath = self.collectionView?.indexPathForLastItem {
-                if let lastItem = podcastViewModelController.viewModel(at: lastIndexPath.row) {
-                    self.checkPage(currentIndexPath: indexPath,
-                                   lastIndexPath: lastIndexPath,
-                                   lastIdentifier: lastItem.uploadDateiso8601)
-                }
-            }
-        }
-
-        return cell
-    }
-
-    func checkPage(currentIndexPath: IndexPath, lastIndexPath: IndexPath, lastIdentifier: String) {
-        let nextPage: Int = Int(currentIndexPath.item / self.pageSize) + 1
-        let preloadIndex = nextPage * self.pageSize - self.preloadMargin
-
-        if (currentIndexPath.item >= preloadIndex && self.lastLoadedPage < nextPage) || currentIndexPath == lastIndexPath {
-            // @TODO: Turn lastIdentifier into some T
-            self.getData(lastIdentifier: lastIdentifier, nextPage: nextPage)
-        }
-    }
-
-    func getData(lastIdentifier: String, nextPage: Int) {
-        guard self.loading == false else { return }
-        self.loading = true
-        podcastViewModelController.fetchData(
-            type: self.type.rawValue,
-            createdAtBefore: lastIdentifier,
-            tags: self.tags,
-            categories: self.categories,
-            onSuccess: {
-                self.errorChecks = 0
-                self.loading = false
-                self.lastLoadedPage = nextPage
-                DispatchQueue.main.async {
-                    self.collectionView?.reloadData()
-                }},
-            onFailure: { (apiError) in
-                self.loading = false
-                self.errorChecks += 1
-                log.error(apiError ?? "")
-                guard self.errorChecks <= self.maximumErrorChecks else { return }
-                self.getData(lastIdentifier: lastIdentifier, nextPage: nextPage)
-        })
-    }
-
-    // MARK: UICollectionViewDelegate
-
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
-            if let audioOverlayDelegate = self.audioOverlayDelegate {
-                let vc = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
-                vc.model = viewModel
-                vc.delegate = self
-            
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-        }
-    }
+			let upvoteService = UpvoteService(podcastViewModel: viewModel)
+			let bookmarkService = BookmarkService(podcastViewModel: viewModel)
+			
+			print(viewModel._id)
+			print(progressController.episodesPlayProgress[viewModel._id])
+			
+			cell.playProgress = progressController.episodesPlayProgress[viewModel._id]?.progressFraction ?? 0.0
+			
+			upvoteService.modelDelegate = self
+			bookmarkService.modelDelegate = self
+			cell.viewModel = viewModel
+			cell.upvoteService = upvoteService
+			cell.bookmarkService = bookmarkService
+			if let lastIndexPath = self.collectionView?.indexPathForLastItem {
+				if let lastItem = podcastViewModelController.viewModel(at: lastIndexPath.row) {
+					self.checkPage(currentIndexPath: indexPath,
+												 lastIndexPath: lastIndexPath,
+												 lastIdentifier: lastItem.uploadDateiso8601)
+				}
+			}
+		}
+		
+		return cell
+	}
+	
+	func checkPage(currentIndexPath: IndexPath, lastIndexPath: IndexPath, lastIdentifier: String) {
+		let nextPage: Int = Int(currentIndexPath.item / self.pageSize) + 1
+		let preloadIndex = nextPage * self.pageSize - self.preloadMargin
+		
+		if (currentIndexPath.item >= preloadIndex && self.lastLoadedPage < nextPage) || currentIndexPath == lastIndexPath {
+			// @TODO: Turn lastIdentifier into some T
+			self.getData(lastIdentifier: lastIdentifier, nextPage: nextPage)
+		}
+	}
+	
+	func getData(lastIdentifier: String, nextPage: Int) {
+		guard self.loading == false else { return }
+		self.loading = true
+		podcastViewModelController.fetchData(
+			type: self.type.rawValue,
+			createdAtBefore: lastIdentifier,
+			tags: self.tags,
+			categories: self.categories,
+			onSuccess: {
+				self.errorChecks = 0
+				self.loading = false
+				self.lastLoadedPage = nextPage
+				DispatchQueue.main.async {
+					self.collectionView?.reloadData()
+				}},
+			onFailure: { (apiError) in
+				self.loading = false
+				self.errorChecks += 1
+				log.error(apiError ?? "")
+				guard self.errorChecks <= self.maximumErrorChecks else { return }
+				self.getData(lastIdentifier: lastIdentifier, nextPage: nextPage)
+		})
+	}
+	
+	// MARK: UICollectionViewDelegate
+	
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
+			if let audioOverlayDelegate = self.audioOverlayDelegate {
+				let vc = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
+				vc.model = viewModel
+				vc.delegate = self
+				
+				self.navigationController?.pushViewController(vc, animated: true)
+			}
+		}
+	}
 }
 
 extension GeneralCollectionViewController: PodcastDetailViewControllerDelegate {
-    func modelDidChange(viewModel: PodcastViewModel) {
-        self.podcastViewModelController.update(with: viewModel)
-    }
+	func modelDidChange(viewModel: PodcastViewModel) {
+		self.podcastViewModelController.update(with: viewModel)
+	}
 }
 
 extension GeneralCollectionViewController: UpvoteServiceModelDelegate {

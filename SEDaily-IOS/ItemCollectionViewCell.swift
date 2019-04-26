@@ -30,6 +30,9 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	
 	let upvoteCountLabel: UILabel = UILabel()
 	let upvoteStackView: UIStackView = UIStackView()
+	let bottomStackView: UIStackView = UIStackView()
+	
+	let progressBar: UIProgressView = UIProgressView()
 	
 	// MARK: Skeleton
 	var skeletonImageView: GradientContainerView!
@@ -51,6 +54,8 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	
 	var upvoteService: UpvoteService?
 	var bookmarkService: BookmarkService?
+	
+	var playProgress: Float = 0.0
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -81,9 +86,6 @@ class ItemCollectionViewCell: UICollectionViewCell {
 		let selection = UISelectionFeedbackGenerator()
 		selection.selectionChanged()
 		
-		//immediately update ui
-		bookmarkButton.isSelected = !bookmarkButton.isSelected
-		
 		bookmarkService?.UIDelegate = self
 		bookmarkService?.setBookmark()
 	}
@@ -110,7 +112,10 @@ extension ItemCollectionViewCell: UpvoteServiceUIDelegate {
 
 extension ItemCollectionViewCell: BookmarkServiceUIDelegate {
 	func bookmarkUIDidChange(isBookmarked: Bool) {
-		self.bookmarkButton.isSelected = isBookmarked
+		bookmarkButton.isSelected = isBookmarked
+	}
+	func bookmarkUIImmediateUpdate() {
+		bookmarkButton.isSelected = !bookmarkButton.isSelected
 	}
 }
 
@@ -160,6 +165,16 @@ extension ItemCollectionViewCell {
 			downloadButton.setIcon(icon: .ionicons(.iosCloudDownloadOutline), iconSize: 25.0, color: Stylesheet.Colors.grey, forState: .normal)
 		}
 		
+		func setupProgressBar() {
+			progressBar.progressTintColor = Stylesheet.Colors.base
+			progressBar.trackTintColor = Stylesheet.Colors.gray
+			progressBar.transform = progressBar.transform.scaledBy(x: 1, y: 3)
+			progressBar.layer.cornerRadius = progressBar.height/2.0
+			progressBar.clipsToBounds = true
+			progressBar.layer.sublayers![1].cornerRadius = progressBar.height/2.0
+			progressBar.subviews[1].clipsToBounds = true
+		}
+		
 		func setupUpvoteStackView() {
 			upvoteStackView.alignment = .center
 			upvoteStackView.axis = .horizontal
@@ -180,6 +195,7 @@ extension ItemCollectionViewCell {
 			
 			contentView.addSubview(actionStackView)
 		}
+		
 		
 		func setupConstraints() {
 			imageView.snp.makeConstraints { (make) -> Void in
@@ -221,11 +237,20 @@ extension ItemCollectionViewCell {
 			upvoteButton.snp.makeConstraints { (make) -> Void in
 				make.right.equalTo(upvoteCountLabel.snp.left)
 			}
+			
+			contentView.addSubview(progressBar)
+			progressBar.snp.makeConstraints { (make) -> Void in
+				make.width.equalTo(60)
+				make.rightMargin.equalTo(contentView).inset(20.0)
+				make.centerY.equalTo(actionStackView)
+			}
 		}
 		
 		setupImageView()
 		setupLabels()
 		setupActionButtons()
+		setupProgressBar()
+		progressBar.isHidden = true
 		setupUpvoteStackView()
 		setupActionStackView()
 		setupConstraints()
@@ -272,10 +297,21 @@ extension ItemCollectionViewCell {
 			bookmarkButton.isSelected = viewModel.isBookmarked
 		}
 		
+		func updateProgressBar() {
+			if playProgress > 0.01 {
+			progressBar.progress = playProgress
+			progressBar.isHidden = false
+			} else {
+				progressBar.isHidden = true
+			}
+		}
+		
 		loadImageView(imageURL: viewModel.featuredImageURL)
 		viewModel.getLastUpdatedAsDateWith { (date) in
 			setupMiscDetailsLabel(timeLength: nil, date: date, isDownloaded: self.viewModel.isDownloaded)
 		}
+		
+		updateProgressBar()
 		setupDescriptionLabel()
 		updateUpvote()
 		updateBookmark()

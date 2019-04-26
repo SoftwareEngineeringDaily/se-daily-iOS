@@ -11,6 +11,7 @@ protocol BookmarkServiceModelDelegate: class {
 }
 protocol BookmarkServiceUIDelegate: class {
 	func bookmarkUIDidChange(isBookmarked: Bool)
+	func bookmarkUIImmediateUpdate()
 }
 
 import Foundation
@@ -34,7 +35,7 @@ class BookmarkService {
 		Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
 		return
 		}
-
+		UIDelegate?.bookmarkUIImmediateUpdate()
 		self.setBookmark(value: true)
 	}
 	
@@ -43,11 +44,13 @@ class BookmarkService {
 		networkService.setBookmarkPodcast(
 			value: value,
 			podcastId: podcastId,
-			completion: { (success, active) in
-				guard success != nil else { return }
+			completion: { [weak self] (success, active) in
+				guard success != nil else {
+					self?.UIDelegate?.bookmarkUIImmediateUpdate()
+					return }
 				if success == true {
 					guard let active = active else { return }
-					self.updateBookmarked(active: active)
+					self?.updateBookmarked(active: active)
 				}
 		})
 		Analytics2.bookmarkButtonPressed(podcastId: podcastViewModel._id)

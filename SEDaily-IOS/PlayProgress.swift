@@ -12,6 +12,11 @@ struct PlayProgress: Codable {
 	let id: String
 	var currentTime: Float
 	var totalLength: Float
+	var progressFraction: Float {
+		get {
+			return currentTime / totalLength
+		}
+	}
 	
 	init(id: String, currentTime: Float, totalLength: Float) {
 		self.id = id

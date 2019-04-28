@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AVFoundation
 
 import UIKit
 import SnapKit
@@ -55,7 +56,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	var upvoteService: UpvoteService?
 	var bookmarkService: BookmarkService?
 	
-	var playProgress: Float = 0.0
+	var playProgress: PlayProgress?
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -168,11 +169,9 @@ extension ItemCollectionViewCell {
 		func setupProgressBar() {
 			progressBar.progressTintColor = Stylesheet.Colors.base
 			progressBar.trackTintColor = Stylesheet.Colors.gray
-			progressBar.transform = progressBar.transform.scaledBy(x: 1, y: 3)
-			progressBar.layer.cornerRadius = progressBar.height/2.0
-			progressBar.clipsToBounds = true
-			progressBar.layer.sublayers![1].cornerRadius = progressBar.height/2.0
-			progressBar.subviews[1].clipsToBounds = true
+			progressBar.transform = progressBar.transform.scaledBy(x: 1, y: 1)
+			progressBar.isHidden = true
+			contentView.addSubview(progressBar)
 		}
 		
 		func setupUpvoteStackView() {
@@ -230,7 +229,7 @@ extension ItemCollectionViewCell {
 			}
 			
 			actionStackView.snp.makeConstraints { (make) -> Void in
-				make.bottom.equalTo(contentView).inset(0.0)
+				make.bottom.equalTo(contentView).inset(5.0)
 				make.left.equalTo(imageView)
 			}
 			
@@ -238,11 +237,11 @@ extension ItemCollectionViewCell {
 				make.right.equalTo(upvoteCountLabel.snp.left)
 			}
 			
-			contentView.addSubview(progressBar)
 			progressBar.snp.makeConstraints { (make) -> Void in
-				make.width.equalTo(60)
-				make.rightMargin.equalTo(contentView).inset(20.0)
-				make.centerY.equalTo(actionStackView)
+				make.width.equalTo(contentView)
+				make.rightMargin.equalTo(contentView)
+				make.leftMargin.equalTo(contentView)
+				make.bottom.equalTo(contentView)
 			}
 		}
 		
@@ -250,7 +249,6 @@ extension ItemCollectionViewCell {
 		setupLabels()
 		setupActionButtons()
 		setupProgressBar()
-		progressBar.isHidden = true
 		setupUpvoteStackView()
 		setupActionStackView()
 		setupConstraints()
@@ -271,7 +269,12 @@ extension ItemCollectionViewCell {
 		
 		func setupMiscDetailsLabel(timeLength: Int?, date: Date?, isDownloaded: Bool) {
 			let dateString = date?.dateString() ?? ""
-			miscDetailsLabel.text = dateString
+			let timeLeftString = isProgressSet() ? createTimeLeftString() : ""
+			miscDetailsLabel.text = dateString + timeLeftString
+		}
+		
+		func createTimeLeftString()->String {
+			return " · " + Helpers.createTimeString(time: playProgress?.timeLeft ?? 0.0, units: [.minute]) + " " + L10n.timeLeft
 		}
 		
 		func setupDescriptionLabel() {
@@ -298,19 +301,24 @@ extension ItemCollectionViewCell {
 		}
 		
 		func updateProgressBar() {
-			if playProgress > 0.01 {
-			progressBar.progress = playProgress
+			guard let playProgress = playProgress else { return }
+			if isProgressSet() {
+			progressBar.progress = playProgress.progressFraction
 			progressBar.isHidden = false
 			} else {
 				progressBar.isHidden = true
 			}
 		}
 		
+		func isProgressSet()->Bool {
+			guard let playProgress = playProgress else { return false }
+			return playProgress.progressFraction > Float(0.005)
+		}
+		
 		loadImageView(imageURL: viewModel.featuredImageURL)
 		viewModel.getLastUpdatedAsDateWith { (date) in
 			setupMiscDetailsLabel(timeLength: nil, date: date, isDownloaded: self.viewModel.isDownloaded)
 		}
-		
 		updateProgressBar()
 		setupDescriptionLabel()
 		updateUpvote()

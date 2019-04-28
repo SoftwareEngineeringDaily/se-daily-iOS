@@ -17,6 +17,11 @@ struct PlayProgress: Codable {
 			return currentTime / totalLength
 		}
 	}
+	var timeLeft: Float {
+		get {
+			return totalLength - currentTime
+		}
+	}
 	
 	init(id: String, currentTime: Float, totalLength: Float) {
 		self.id = id

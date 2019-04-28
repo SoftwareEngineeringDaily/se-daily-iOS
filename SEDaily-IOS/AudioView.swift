@@ -350,16 +350,16 @@ class AudioView: UIView {
             let duration = playbackSlider.maximumValue
             let timeLeft = Float(duration - timeInSeconds)
 
-            let currentTimeString = Helpers.createTimeString(time: timeInSeconds)
-            let timeLeftString = Helpers.createTimeString(time: timeLeft)
+            let currentTimeString = Helpers.createTimeString(time: timeInSeconds, units: [.minute, .second])
+            let timeLeftString = Helpers.createTimeString(time: timeLeft, units: [.minute, .second])
             self.currentTimeLabel.text = currentTimeString
             self.timeLeftLabel.text = timeLeftString
         } else {
             self.audioViewDelegate?.playbackSliderValueChanged(value: timeInSeconds)
             let duration = playbackSlider.maximumValue
             let timeLeft = Float(duration - timeInSeconds)
-            let currentTimeString = Helpers.createTimeString(time: timeInSeconds)
-            let timeLeftString = Helpers.createTimeString(time: timeLeft)
+            let currentTimeString = Helpers.createTimeString(time: timeInSeconds, units: [.minute, .second])
+						let timeLeftString = Helpers.createTimeString(time: timeLeft, units: [.minute, .second])
             self.currentTimeLabel.text = currentTimeString
             self.timeLeftLabel.text = timeLeftString
         }

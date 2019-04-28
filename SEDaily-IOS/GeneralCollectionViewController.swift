@@ -153,7 +153,7 @@ class GeneralCollectionViewController: UICollectionViewController {
 			print(viewModel._id)
 			print(progressController.episodesPlayProgress[viewModel._id])
 			
-			cell.playProgress = progressController.episodesPlayProgress[viewModel._id]?.progressFraction ?? 0.0
+			cell.playProgress = progressController.episodesPlayProgress[viewModel._id] ?? PlayProgress(id: "", currentTime: 0.0, totalLength: 0.0)
 			
 			upvoteService.modelDelegate = self
 			bookmarkService.modelDelegate = self

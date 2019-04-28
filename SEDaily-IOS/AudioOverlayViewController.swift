@@ -286,7 +286,7 @@ extension AudioOverlayViewController: AssetPlayerDelegate {
 		}
 		
 		audioView?.updateTimeLabels(currentTimeText: player.timeElapsedText, timeLeftText: player.timeLeftText)
-		
+
 		audioView?.updateSlider(currentValue: Float(player.currentTime))
 	}
 	

@@ -51,7 +51,7 @@ class BookmarkService {
 				if success == true {
 					guard let active = active else { return }
 					self?.updateBookmarked(active: active)
-				}
+				} else { self?.UIDelegate?.bookmarkUIImmediateUpdate() }
 		})
 		Analytics2.bookmarkButtonPressed(podcastId: podcastViewModel._id)
 	}

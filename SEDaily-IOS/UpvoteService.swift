@@ -11,6 +11,7 @@ protocol UpvoteServiceModelDelegate: class {
 }
 protocol UpvoteServiceUIDelegate: class {
 	func upvoteUIDidChange(isUpvoted: Bool, score: Int)
+	func upvoteUIImmediateUpdate()
 }
 
 
@@ -39,15 +40,19 @@ class UpvoteService {
 			Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
 			return
 		}
+		self.UIDelegate?.upvoteUIImmediateUpdate()
 		
 		let podcastId = self.podcastViewModel._id
-		networkService.upvotePodcast(podcastId: podcastId, completion: { (success, active) in
-			guard success != nil else { return }
+		networkService.upvotePodcast(podcastId: podcastId, completion: { [weak self] (success, active) in
+			guard success != nil else {
+				self?.UIDelegate?.upvoteUIImmediateUpdate()
+				return
+			}
 			if success == true {
 				guard let active = active else { return }
-				self.addScore(active: active)
-				self.setStatus(active: active)
-			}
+				self?.addScore(active: active)
+				self?.setStatus(active: active)
+			} else { self?.UIDelegate?.upvoteUIImmediateUpdate() }
 		})
 	}
 	

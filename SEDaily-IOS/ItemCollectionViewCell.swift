@@ -106,6 +106,19 @@ extension ItemCollectionViewCell: UpvoteServiceUIDelegate {
 	func upvoteUIDidChange(isUpvoted: Bool, score: Int) {
 		upvoteButton.isSelected = isUpvoted
 		upvoteCountLabel.text = String(score)
+		updateLabelStyle()
+	}
+	
+	func upvoteUIImmediateUpdate() {
+		guard let tempScore = Int(upvoteCountLabel.text ?? "0") else { return }
+		upvoteCountLabel.text = upvoteButton.isSelected ? String(tempScore - 1) : String(tempScore + 1)
+		upvoteButton.isSelected = !upvoteButton.isSelected
+		updateLabelStyle()
+	}
+}
+
+extension ItemCollectionViewCell {
+	func updateLabelStyle() {
 		upvoteCountLabel.textColor = upvoteButton.isSelected ? Stylesheet.Colors.base : Stylesheet.Colors.grey
 		upvoteCountLabel.font = upvoteButton.isSelected ? UIFont(name: "OpenSans-Semibold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13)) : UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
 	}

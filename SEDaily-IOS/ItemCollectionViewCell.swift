@@ -163,6 +163,7 @@ extension ItemCollectionViewCell {
 			contentView.addSubview(miscDetailsLabel)
 			miscDetailsLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 11))
 			miscDetailsLabel.textColor = UIColor(hex: 0x8A8C8C)!
+			print(UIView.getValueScaledByScreenWidthFor(baseValue: 17))
 			
 			descriptionLabel = UILabel()
 			descriptionLabel.numberOfLines = 2
@@ -211,38 +212,39 @@ extension ItemCollectionViewCell {
 		
 		func setupConstraints() {
 			imageView.snp.makeConstraints { (make) -> Void in
-				make.left.equalToSuperview().inset(10)
-				make.top.equalToSuperview().inset(10)
-				make.width.equalTo(80)
-				make.height.equalTo(80)
+				make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue:10))
+				make.top.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue:10))
+				make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 80))
+				make.height.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 80))
 			}
 			
+			
 			imageOverlay.snp.makeConstraints { (make) -> Void in
-				make.left.equalToSuperview().inset(10)
-				make.top.equalToSuperview().inset(10)
-				make.width.equalTo(80)
-				make.height.equalTo(80)
+				make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue:10))
+				make.top.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue:10))
+				make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue:80))
+				make.height.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue:80))
 			}
 			
 			titleLabel.snp.makeConstraints { (make) -> Void in
 				make.top.equalTo(imageView)
-				make.rightMargin.equalTo(contentView).inset(10.0)
-				make.left.equalTo(imageView.snp.right).offset(10.0)
+				make.rightMargin.equalTo(contentView).inset(UIView.getValueScaledByScreenWidthFor(baseValue:10.0))
+				make.left.equalTo(imageView.snp.right).offset(UIView.getValueScaledByScreenWidthFor(baseValue:10.0))
 			}
 			
 			miscDetailsLabel.snp.makeConstraints { (make) -> Void in
-				make.top.equalTo(titleLabel.snp.bottom).offset(5.0)
+				make.top.equalTo(titleLabel.snp.bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue:5.0))
 				make.left.equalTo(titleLabel)
 			}
 			
 			descriptionLabel.snp.makeConstraints { (make) -> Void in
-				make.top.equalTo(imageView.snp.bottom).offset(10.0)
-				make.rightMargin.equalTo(contentView).inset(10.0)
+				make.top.equalTo(imageView.snp.bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue:10.0))
+				make.rightMargin.equalTo(contentView).inset(UIView.getValueScaledByScreenWidthFor(baseValue:10.0))
 				make.left.equalTo(imageView)
 			}
 			
 			actionStackView.snp.makeConstraints { (make) -> Void in
-				make.bottom.equalTo(contentView).inset(5.0)
+				make.bottom.equalTo(contentView).inset(UIView.getValueScaledByScreenWidthFor(baseValue:5.0))
 				make.left.equalTo(imageView)
 			}
 			
@@ -330,7 +332,7 @@ extension ItemCollectionViewCell {
 		
 		loadImageView(imageURL: viewModel.featuredImageURL)
 		viewModel.getLastUpdatedAsDateWith { (date) in
-			setupMiscDetailsLabel(timeLength: nil, date: date, isDownloaded: self.viewModel.isDownloaded)
+			setupMiscDetailsLabel(timeLength: nil, date: date, isDownloaded: viewModel.isDownloaded)
 		}
 		updateProgressBar()
 		setupDescriptionLabel()
@@ -341,28 +343,33 @@ extension ItemCollectionViewCell {
 
 extension ItemCollectionViewCell {
 	func setupSkeletonView() {
-		self.skeletonImageView = GradientContainerView(frame: CGRect(x: 10.0, y: 10.0, width: 80.0, height: 80.0))
-		self.skeletonImageView.cornerRadius = self.imageView.cornerRadius
-		self.skeletonImageView.backgroundColor = UIColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1.0)
-		self.contentView.addSubview(skeletonImageView)
-		skeletonTitleLabel = GradientContainerView(frame: CGRect(x: 100.0, y: 10.0, width: 200.0, height: 15.0))
-		skeletonTitleLabelNextLine = GradientContainerView(frame: CGRect(x: 100.0, y: 40.0, width: 200.0, height: 15.0))
-		self.contentView.addSubview(skeletonTitleLabel)
-		self.contentView.addSubview(skeletonTitleLabelNextLine)
-		skeletontimeDayLabel = GradientContainerView(origin: skeletonImageView.bottomLeftPoint(), topInset: 10, width: 350, height: 10)
-		skeletontimeDayLabelNextLine = GradientContainerView(origin: skeletonImageView.bottomLeftPoint(), topInset: 25, width: 350, height: 10)
-		self.contentView.addSubview(skeletontimeDayLabel)
-		self.contentView.addSubview(skeletontimeDayLabelNextLine)
 		
-		let baseColor = self.skeletonImageView.backgroundColor!
+		func scale(_ value: CGFloat)-> CGFloat {
+			return UIView.getValueScaledByScreenWidthFor(baseValue: value)
+		}
+		
+		skeletonImageView = GradientContainerView(frame: CGRect(x: scale(10.0), y: scale(10.0), width: scale(80.0), height: scale(80.0)))
+		skeletonImageView.cornerRadius = self.imageView.cornerRadius
+		skeletonImageView.backgroundColor = UIColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1.0)
+		contentView.addSubview(skeletonImageView)
+		skeletonTitleLabel = GradientContainerView(frame: CGRect(x: scale(100.0), y: scale(10.0), width: scale(200.0), height: scale(15.0)))
+		skeletonTitleLabelNextLine = GradientContainerView(frame: CGRect(x: scale(100.0), y: scale(40.0), width: scale(200.0), height: scale(15.0)))
+		contentView.addSubview(skeletonTitleLabel)
+		contentView.addSubview(skeletonTitleLabelNextLine)
+		skeletontimeDayLabel = GradientContainerView(origin: skeletonImageView.bottomLeftPoint(), topInset: scale(10), width: scale(350), height: scale(10))
+		skeletontimeDayLabelNextLine = GradientContainerView(origin: skeletonImageView.bottomLeftPoint(), topInset: scale(25), width: scale(350), height: scale(10))
+		contentView.addSubview(skeletontimeDayLabel)
+		contentView.addSubview(skeletontimeDayLabelNextLine)
+		
+		let baseColor = skeletonImageView.backgroundColor!
 		let gradients = baseColor.getGradientColors(brightenedBy: 1.07)
-		self.skeletonImageView.gradientLayer.colors = gradients
-		self.skeletonTitleLabel.gradientLayer.colors = gradients
-		self.skeletonTitleLabelNextLine.gradientLayer.colors = gradients
-		self.skeletontimeDayLabel.gradientLayer.colors = gradients
-		self.skeletontimeDayLabelNextLine.gradientLayer.colors = gradients
+		skeletonImageView.gradientLayer.colors = gradients
+		skeletonTitleLabel.gradientLayer.colors = gradients
+		skeletonTitleLabelNextLine.gradientLayer.colors = gradients
+		skeletontimeDayLabel.gradientLayer.colors = gradients
+		skeletontimeDayLabelNextLine.gradientLayer.colors = gradients
 	}
-}
+}	
 
 extension ItemCollectionViewCell: GradientsOwner {
 	var gradientLayers: [CAGradientLayer] {

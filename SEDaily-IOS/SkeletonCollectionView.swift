@@ -22,7 +22,7 @@ class SkeletonCollectionView: UIView, UICollectionViewDataSource {
         self.collectionView!.register(ItemCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
 			let layout = KoalaTeaFlowLayout(cellWidth: Helpers.getScreenWidth(),
-																			cellHeight: 185.0.cgFloat,
+																			cellHeight: UIView.getValueScaledByScreenWidthFor(baseValue: 185.0),
 																			topBottomMargin: UIView.getValueScaledByScreenHeightFor(baseValue: 10),
 																			leftRightMargin: UIView.getValueScaledByScreenWidthFor(baseValue: 0),
 																			cellSpacing: UIView.getValueScaledByScreenWidthFor(baseValue: 10))

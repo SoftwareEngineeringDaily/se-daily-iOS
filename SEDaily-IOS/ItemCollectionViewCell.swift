@@ -26,7 +26,8 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	let upvoteButton: UIButton = UIButton()
 	let commentButton: UIButton = UIButton()
 	let bookmarkButton: UIButton = UIButton()
-
+	
+	var commentShowCallback: ( ()-> Void) = {}
 	
 	let upvoteCountLabel: UILabel = UILabel()
 
@@ -42,7 +43,6 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	var skeletonTitleLabelNextLine: GradientContainerView!
 	var skeletontimeDayLabelNextLine: GradientContainerView!
 	
-	var commentShowCallback: ( ()-> Void) = {}
 	
 	
 	var viewModel: PodcastViewModel = PodcastViewModel() {

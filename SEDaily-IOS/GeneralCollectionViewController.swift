@@ -150,9 +150,6 @@ class GeneralCollectionViewController: UICollectionViewController {
 			let upvoteService = UpvoteService(podcastViewModel: viewModel)
 			let bookmarkService = BookmarkService(podcastViewModel: viewModel)
 			
-			print(viewModel._id)
-			print(progressController.episodesPlayProgress[viewModel._id])
-			
 			cell.playProgress = progressController.episodesPlayProgress[viewModel._id] ?? PlayProgress(id: "", currentTime: 0.0, totalLength: 0.0)
 			
 			upvoteService.modelDelegate = self

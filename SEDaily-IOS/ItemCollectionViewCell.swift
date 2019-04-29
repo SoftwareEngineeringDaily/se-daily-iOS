@@ -331,8 +331,9 @@ extension ItemCollectionViewCell {
 		}
 		
 		loadImageView(imageURL: viewModel.featuredImageURL)
-		viewModel.getLastUpdatedAsDateWith { (date) in
-			setupMiscDetailsLabel(timeLength: nil, date: date, isDownloaded: viewModel.isDownloaded)
+		viewModel.getLastUpdatedAsDateWith { [weak self] (date) in
+			guard let strongSelf = self else { return }
+			setupMiscDetailsLabel(timeLength: nil, date: date, isDownloaded: strongSelf.viewModel.isDownloaded)
 		}
 		updateProgressBar()
 		setupDescriptionLabel()
@@ -369,7 +370,7 @@ extension ItemCollectionViewCell {
 		skeletontimeDayLabel.gradientLayer.colors = gradients
 		skeletontimeDayLabelNextLine.gradientLayer.colors = gradients
 	}
-}	
+}
 
 extension ItemCollectionViewCell: GradientsOwner {
 	var gradientLayers: [CAGradientLayer] {

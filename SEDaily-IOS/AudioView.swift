@@ -189,15 +189,12 @@ class AudioView: UIView {
             make.top.equalTo(podcastLabel.snp.bottom)
             make.centerX.equalToSuperview()
         }
-        
-        let spacerButton = UIButton()
-        stackView.addArrangedSubview(stopButton)
+			
         stackView.addArrangedSubview(skipBackwardbutton)
         stackView.addArrangedSubview(playButton)
         stackView.addArrangedSubview(pauseButton)
         stackView.addArrangedSubview(skipForwardButton)
-        stackView.addArrangedSubview(spacerButton)
-        
+			
         let iconHeight = UIView.getValueScaledByScreenHeightFor(baseValue: (70 / 2))
 
         expandCollapseButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)
@@ -265,9 +262,10 @@ class AudioView: UIView {
         self.bringSubview(toFront: playbackSlider)
 
         playbackSlider.snp.makeConstraints { (make) -> Void in
-            make.top.equalToSuperview().inset(-10)
+            make.top.equalToSuperview().inset(5)
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
-            make.left.right.equalToSuperview()
+            make.left.right.equalToSuperview().inset(15)
+					
         }
 
         let smallCircle = #imageLiteral(resourceName: "SmallCircle").filled(withColor: Stylesheet.Colors.secondaryColor)
@@ -289,9 +287,9 @@ class AudioView: UIView {
         parentView.addSubview(bufferBackgroundSlider)
 
         bufferBackgroundSlider.snp.makeConstraints { (make) -> Void in
-            make.top.equalToSuperview().inset(-10)
+            make.top.equalToSuperview().inset(5)
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
-            make.left.right.equalToSuperview()
+            make.left.right.equalToSuperview().inset(15)
         }
 
         bufferBackgroundSlider.setThumbImage(UIImage(), for: .normal)
@@ -307,9 +305,9 @@ class AudioView: UIView {
         parentView.addSubview(bufferSlider)
 
         bufferSlider.snp.makeConstraints { (make) -> Void in
-            make.top.equalToSuperview().inset(-10)
+            make.top.equalToSuperview().inset(5)
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
-            make.left.right.equalToSuperview()
+            make.left.right.equalToSuperview().inset(15)
         }
 
         bufferSlider.setThumbImage(UIImage(), for: .normal)
@@ -330,38 +328,38 @@ class AudioView: UIView {
         parentView.addSubview(timeLeftLabel)
 
         currentTimeLabel.snp.makeConstraints { (make) -> Void in
-            make.left.equalTo(playbackSlider).inset(UIView.getValueScaledByScreenWidthFor(baseValue: 5))
+            make.left.equalTo(playbackSlider)
             make.top.equalTo(playbackSlider.snp.bottom).inset(UIView.getValueScaledByScreenHeightFor(baseValue: 5))
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
             make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 55))
         }
 
         timeLeftLabel.snp.makeConstraints { (make) -> Void in
-            make.right.equalTo(playbackSlider).inset(UIView.getValueScaledByScreenWidthFor(baseValue: 5))
+            make.right.equalTo(playbackSlider)
             make.top.equalTo(playbackSlider.snp.bottom).inset(UIView.getValueScaledByScreenHeightFor(baseValue: 5))
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
             make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 55))
         }
     }
-
+	//MARK: Slider value changed implementation
+	
     @objc func playbackSliderValueChanged(_ slider: UISlider) {
         let timeInSeconds = slider.value
-
         if (playbackSlider.isTracking) && (timeInSeconds != previousSliderValue) {
             playbackSlider.value = timeInSeconds
             let duration = playbackSlider.maximumValue
             let timeLeft = Float(duration - timeInSeconds)
 
-            let currentTimeString = Helpers.createTimeString(time: timeInSeconds)
-            let timeLeftString = Helpers.createTimeString(time: timeLeft)
+            let currentTimeString = Helpers.createTimeString(time: timeInSeconds, units: [.minute, .second])
+            let timeLeftString = Helpers.createTimeString(time: timeLeft, units: [.minute, .second])
             self.currentTimeLabel.text = currentTimeString
             self.timeLeftLabel.text = timeLeftString
         } else {
             self.audioViewDelegate?.playbackSliderValueChanged(value: timeInSeconds)
             let duration = playbackSlider.maximumValue
             let timeLeft = Float(duration - timeInSeconds)
-            let currentTimeString = Helpers.createTimeString(time: timeInSeconds)
-            let timeLeftString = Helpers.createTimeString(time: timeLeft)
+            let currentTimeString = Helpers.createTimeString(time: timeInSeconds, units: [.minute, .second])
+						let timeLeftString = Helpers.createTimeString(time: timeLeft, units: [.minute, .second])
             self.currentTimeLabel.text = currentTimeString
             self.timeLeftLabel.text = timeLeftString
         }
@@ -369,7 +367,7 @@ class AudioView: UIView {
     }
 
     func updateSlider(maxValue: Float) {
-        guard playbackSlider.maximumValue <= 1.0 else { return }
+        guard playbackSlider.maximumValue >= 0.0 else { return }
 
         if playbackSlider.isUserInteractionEnabled == false {
             playbackSlider.isUserInteractionEnabled = true
@@ -377,7 +375,7 @@ class AudioView: UIView {
 
         playbackSlider.maximumValue = maxValue
         bufferSlider.maximumValue = maxValue
-    }
+			}
 
     func updateSlider(currentValue: Float) {
         guard !playbackSlider.isTracking else { return }

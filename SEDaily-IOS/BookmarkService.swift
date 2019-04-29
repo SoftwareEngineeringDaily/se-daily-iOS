@@ -30,7 +30,6 @@ class BookmarkService {
 	}
 	
 	func setBookmark() {
-		
 		guard UserManager.sharedInstance.isCurrentUserLoggedIn() == true else {
 		Helpers.alertWithMessage(title: Helpers.Alerts.error, message: Helpers.Messages.youMustLogin, completionHandler: nil)
 		return

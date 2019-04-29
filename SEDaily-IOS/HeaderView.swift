@@ -337,7 +337,7 @@ extension HeaderView {
                 // Show progress
                 let progressAsInt = Int((progress * 100).rounded())
                 self.playButton.setTitle(String(progressAsInt) + "%", for: .normal)},
-            onSucces: {
+            onSuccess: {
                 // Show success by changing download
                 self.delegate?.modelDidChange(viewModel: self.podcastViewModel)
 //                self.audioOverlayDelegate?.animateOverlayIn()

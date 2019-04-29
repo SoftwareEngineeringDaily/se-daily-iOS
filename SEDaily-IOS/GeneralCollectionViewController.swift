@@ -149,14 +149,22 @@ class GeneralCollectionViewController: UICollectionViewController {
 			
 			let upvoteService = UpvoteService(podcastViewModel: viewModel)
 			let bookmarkService = BookmarkService(podcastViewModel: viewModel)
+			let downloadService = DownloadService(podcastViewModel: viewModel)
 			
 			cell.playProgress = progressController.episodesPlayProgress[viewModel._id] ?? PlayProgress(id: "", currentTime: 0.0, totalLength: 0.0)
 			
 			upvoteService.modelDelegate = self
 			bookmarkService.modelDelegate = self
+
 			cell.viewModel = viewModel
 			cell.upvoteService = upvoteService
 			cell.bookmarkService = bookmarkService
+			
+			cell.commentShowCallback = { [weak self] in
+				self?.commentsButtonPressed(viewModel)
+				
+			}
+
 			if let lastIndexPath = self.collectionView?.indexPathForLastItem {
 				if let lastItem = podcastViewModelController.viewModel(at: lastIndexPath.row) {
 					self.checkPage(currentIndexPath: indexPath,
@@ -236,4 +244,18 @@ extension GeneralCollectionViewController: BookmarkServiceModelDelegate {
 	}
 }
 
+extension GeneralCollectionViewController {
+	func commentsButtonPressed(_ viewModel: PodcastViewModel) {
+		Analytics2.podcastCommentsViewed(podcastId: viewModel._id)
+		let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
+		guard let commentsViewController = commentsStoryboard.instantiateViewController(
+			withIdentifier: "CommentsViewController") as? CommentsViewController else {
+				return
+		}
+		if let thread = viewModel.thread {
+			commentsViewController.rootEntityId = thread._id
+			self.navigationController?.pushViewController(commentsViewController, animated: true)
+		}
+	}
+}
 

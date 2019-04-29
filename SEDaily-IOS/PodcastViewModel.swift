@@ -50,6 +50,8 @@ public struct PodcastViewModel: Codable {
 	var podcastDescription: String {
 		return HtmlHelper.removePowerPressPlayerTags(html: encodedPodcastDescription).htmlDecoded
 	}
+	
+	var downloadingProgress: Int?
 
     init(podcast: Podcast) {
         self._id = podcast._id

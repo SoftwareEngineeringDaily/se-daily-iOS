@@ -26,10 +26,10 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	let upvoteButton: UIButton = UIButton()
 	let commentButton: UIButton = UIButton()
 	let bookmarkButton: UIButton = UIButton()
-	let downloadButton: UIButton = UIButton()
-	let relatedLinksButton: UIButton = UIButton()
+
 	
 	let upvoteCountLabel: UILabel = UILabel()
+
 	let upvoteStackView: UIStackView = UIStackView()
 	let bottomStackView: UIStackView = UIStackView()
 	
@@ -41,6 +41,8 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	var skeletontimeDayLabel: GradientContainerView!
 	var skeletonTitleLabelNextLine: GradientContainerView!
 	var skeletontimeDayLabelNextLine: GradientContainerView!
+	
+	var commentShowCallback: ( ()-> Void) = {}
 	
 	
 	var viewModel: PodcastViewModel = PodcastViewModel() {
@@ -55,6 +57,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	
 	var upvoteService: UpvoteService?
 	var bookmarkService: BookmarkService?
+
 	
 	var playProgress: PlayProgress?
 	
@@ -70,12 +73,12 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	//MARK: Button handlers
 	
 	private func setupButtonsTargets() {
-		upvoteButton.addTarget(self, action: #selector(ItemCollectionViewCell.liked), for: .touchUpInside)
-		bookmarkButton.addTarget(self, action: #selector(ItemCollectionViewCell.bookmarked), for: .touchUpInside)
-		downloadButton.addTarget(self, action: #selector(ItemCollectionViewCell.downloaded), for: .touchUpInside)
+		upvoteButton.addTarget(self, action: #selector(ItemCollectionViewCell.upvoteTapped), for: .touchUpInside)
+		bookmarkButton.addTarget(self, action: #selector(ItemCollectionViewCell.bookmarkTapped), for: .touchUpInside)
+		commentButton.addTarget(self, action: #selector(ItemCollectionViewCell.commentTapped), for: .touchUpInside)
 	}
 	
-	@objc func liked() {
+	@objc func upvoteTapped() {
 		let impact = UIImpactFeedbackGenerator()
 		impact.impactOccurred()
 	
@@ -83,7 +86,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
 		upvoteService?.upvote()
 	}
 	
-	@objc func bookmarked() {
+	@objc func bookmarkTapped() {
 		let selection = UISelectionFeedbackGenerator()
 		selection.selectionChanged()
 		
@@ -91,9 +94,11 @@ class ItemCollectionViewCell: UICollectionViewCell {
 		bookmarkService?.setBookmark()
 	}
 	
-	@objc func downloaded() {
+	@objc func commentTapped() {
 		let notification = UINotificationFeedbackGenerator()
 		notification.notificationOccurred(.success)
+		commentShowCallback()
+		
 	}
 	
 	func setupSkeletonCell() {
@@ -163,7 +168,6 @@ extension ItemCollectionViewCell {
 			contentView.addSubview(miscDetailsLabel)
 			miscDetailsLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 11))
 			miscDetailsLabel.textColor = UIColor(hex: 0x8A8C8C)!
-			print(UIView.getValueScaledByScreenWidthFor(baseValue: 17))
 			
 			descriptionLabel = UILabel()
 			descriptionLabel.numberOfLines = 2
@@ -174,10 +178,14 @@ extension ItemCollectionViewCell {
 		func setupActionButtons() {
 			upvoteButton.setIcon(icon: .ionicons(.iosHeartOutline), iconSize: 25.0, color: Stylesheet.Colors.grey, forState: .normal)
 			upvoteButton.setIcon(icon: .ionicons(.iosHeart), iconSize: 25.0, color: Stylesheet.Colors.base, forState: .selected)
+			
 			bookmarkButton.setImage(UIImage(named: "ios-bookmark"), for: .normal)
 			bookmarkButton.setImage(UIImage(named: "ios-bookmark-fill"), for: .selected)
 			
-			downloadButton.setIcon(icon: .ionicons(.iosCloudDownloadOutline), iconSize: 25.0, color: Stylesheet.Colors.grey, forState: .normal)
+			commentButton.setIcon(icon: .ionicons(.iosChatbubbleOutline), iconSize: 30.0, color: Stylesheet.Colors.grey, forState: .normal)
+			commentButton.setIcon(icon: .ionicons(.iosChatbubble), iconSize: 30.0, color: Stylesheet.Colors.base, forState: .selected)
+			
+
 		}
 		
 		func setupProgressBar() {
@@ -203,7 +211,7 @@ extension ItemCollectionViewCell {
 			actionStackView.distribution = .fillEqually
 			
 			actionStackView.addArrangedSubview(upvoteStackView)
-			actionStackView.addArrangedSubview(downloadButton)
+			actionStackView.addArrangedSubview(commentButton)
 			actionStackView.addArrangedSubview(bookmarkButton)
 			
 			contentView.addSubview(actionStackView)

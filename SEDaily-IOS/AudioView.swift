@@ -132,6 +132,7 @@ class AudioView: UIView {
         self.disableButtons()
 
         self.hideSliders()
+				self.addShadow(location: .top, color: Stylesheet.Colors.grey, opacity: 0.8, radius: 5.0)
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented"); }
@@ -171,7 +172,8 @@ class AudioView: UIView {
             make.centerY.equalToSuperview().inset(UIView.getValueScaledByScreenHeightFor(baseValue: -30))
         }
 
-        podcastLabel.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 16))
+        podcastLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+			
         podcastLabel.numberOfLines = 2
         podcastLabel.lineBreakMode = .byTruncatingTail
         podcastLabel.textAlignment = .center
@@ -190,26 +192,29 @@ class AudioView: UIView {
             make.centerX.equalToSuperview()
         }
 			
+				//stackView.addArrangedSubview(expandCollapseButton)
         stackView.addArrangedSubview(skipBackwardbutton)
         stackView.addArrangedSubview(playButton)
         stackView.addArrangedSubview(pauseButton)
         stackView.addArrangedSubview(skipForwardButton)
+				//stackView.addArrangedSubview(playbackSpeedButton)
 			
-        let iconHeight = UIView.getValueScaledByScreenHeightFor(baseValue: (70 / 2))
+			
+        let iconHeight = UIView.getValueScaledByScreenWidthFor(baseValue: (70 / 2))
 
-        expandCollapseButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)
+        expandCollapseButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: 30.0, color: Stylesheet.Colors.base, forState: .normal)
 
-        skipBackwardbutton.setImage(#imageLiteral(resourceName: "Backward"), for: .normal)
+        skipBackwardbutton.setImage(UIImage(named: "rewind_audio"), for: .normal)
         skipBackwardbutton.height = iconHeight
-        skipBackwardbutton.tintColor = Stylesheet.Colors.secondaryColor
+        skipBackwardbutton.tintColor = Stylesheet.Colors.base
 
-        playButton.setIcon(icon: .fontAwesome(.play), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)
-        pauseButton.setIcon(icon: .fontAwesome(.pause), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)
-        stopButton.setIcon(icon: .fontAwesome(.close), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)
+        playButton.setImage(UIImage(named: "play_audio"), for: .normal)
+        pauseButton.setImage(UIImage(named: "pause_audio"), for: .normal)
+        stopButton.setIcon(icon: .fontAwesome(.close), iconSize: iconHeight, color: Stylesheet.Colors.base, forState: .normal)
 
-        skipForwardButton.setImage(#imageLiteral(resourceName: "Forward"), for: .normal)
+        skipForwardButton.setImage(UIImage(named: "forward_audio"), for: .normal)
         skipForwardButton.height = iconHeight
-        skipForwardButton.tintColor = Stylesheet.Colors.secondaryColor
+        skipForwardButton.tintColor = Stylesheet.Colors.base
 
         expandCollapseButton.addTarget(self, action: #selector(self.expandButtonPressed), for: .touchUpInside)
         skipBackwardbutton.addTarget(self, action: #selector(self.skipBackwardButtonPressed), for: .touchUpInside)
@@ -222,7 +227,7 @@ class AudioView: UIView {
 
         playbackSpeedButton.titleLabel?.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 20))
         playbackSpeedButton.setTitle(PlaybackSpeed._1x.shortTitle, for: .normal)
-        playbackSpeedButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .normal)
+        playbackSpeedButton.setTitleColor(Stylesheet.Colors.base, for: .normal)
         playbackSpeedButton.addTarget(self, action: #selector(self.settingsButtonPressed), for: .touchUpInside)
         parentView.addSubview(playbackSpeedButton)
 
@@ -231,8 +236,8 @@ class AudioView: UIView {
         playbackSpeedButton.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(width)
             make.height.equalTo(height)
-            make.bottom.equalToSuperview()
-            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 2))
+            make.centerY.equalTo(stackView.snp_centerY)
+            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
         }
 
         setupActivityIndicator(parentView: containerView)
@@ -240,10 +245,12 @@ class AudioView: UIView {
         addLabels(parentView: containerView)
 
         parentView.addSubview(self.expandCollapseButton)
-
+//
         self.expandCollapseButton.snp.makeConstraints { (make) in
-            make.bottom.left.equalToSuperview()
-            make.width.height.equalTo(iconHeight)
+            //make.bottom.left.equalToSuperview()
+            //make.width.height.equalTo(iconHeight)
+						make.centerY.equalTo(stackView.snp_centerY)
+						make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
         }
     }
 
@@ -252,7 +259,7 @@ class AudioView: UIView {
 
         playbackSlider.minimumValue = 0
         playbackSlider.isContinuous = true
-        playbackSlider.minimumTrackTintColor = Stylesheet.Colors.secondaryColor
+        playbackSlider.minimumTrackTintColor = Stylesheet.Colors.base
         playbackSlider.maximumTrackTintColor = .clear
         playbackSlider.layer.cornerRadius = 0
         playbackSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
@@ -268,10 +275,10 @@ class AudioView: UIView {
 					
         }
 
-        let smallCircle = #imageLiteral(resourceName: "SmallCircle").filled(withColor: Stylesheet.Colors.secondaryColor)
+        let smallCircle = #imageLiteral(resourceName: "SmallCircle").filled(withColor: Stylesheet.Colors.base)
         playbackSlider.setThumbImage(smallCircle, for: .normal)
 
-        let bigCircle = #imageLiteral(resourceName: "BigCircle").filled(withColor: Stylesheet.Colors.secondaryColor)
+        let bigCircle = #imageLiteral(resourceName: "BigCircle").filled(withColor: Stylesheet.Colors.base)
         playbackSlider.setThumbImage(bigCircle, for: .highlighted)
     }
 
@@ -494,4 +501,29 @@ extension AudioView {
     @objc func settingsButtonPressed() {
         self.parentViewController?.present(alertController, animated: true, completion: nil)
     }
+}
+
+
+enum VerticalLocation: String {
+	case bottom
+	case top
+}
+
+extension UIView {
+	func addShadow(location: VerticalLocation, color: UIColor = .black, opacity: Float = 0.5, radius: CGFloat = 5.0) {
+		switch location {
+		case .bottom:
+			addShadow(offset: CGSize(width: 0, height: 5), color: color, opacity: opacity, radius: radius)
+		case .top:
+			addShadow(offset: CGSize(width: 0, height: 5), color: color, opacity: opacity, radius: radius)
+		}
+	}
+	
+	func addShadow(offset: CGSize, color: UIColor = .black, opacity: Float = 0.5, radius: CGFloat = 5.0) {
+		self.layer.masksToBounds = false
+		self.layer.shadowColor = color.cgColor
+		self.layer.shadowOffset = offset
+		self.layer.shadowOpacity = opacity
+		self.layer.shadowRadius = radius
+	}
 }

@@ -58,7 +58,6 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	var upvoteService: UpvoteService?
 	var bookmarkService: BookmarkService?
 
-	
 	var playProgress: PlayProgress?
 	
 	override init(frame: CGRect) {
@@ -167,7 +166,7 @@ extension ItemCollectionViewCell {
 			miscDetailsLabel = UILabel()
 			contentView.addSubview(miscDetailsLabel)
 			miscDetailsLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 11))
-			miscDetailsLabel.textColor = UIColor(hex: 0x8A8C8C)!
+			miscDetailsLabel.textColor = Stylesheet.Colors.grey
 			
 			descriptionLabel = UILabel()
 			descriptionLabel.numberOfLines = 2

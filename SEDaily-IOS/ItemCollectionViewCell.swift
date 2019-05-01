@@ -32,7 +32,6 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	let upvoteCountLabel: UILabel = UILabel()
 
 	let upvoteStackView: UIStackView = UIStackView()
-	let bottomStackView: UIStackView = UIStackView()
 	
 	let progressBar: UIProgressView = UIProgressView()
 	
@@ -96,7 +95,6 @@ class ItemCollectionViewCell: UICollectionViewCell {
 		let notification = UINotificationFeedbackGenerator()
 		notification.notificationOccurred(.success)
 		commentShowCallback()
-		
 	}
 	
 	func setupSkeletonCell() {

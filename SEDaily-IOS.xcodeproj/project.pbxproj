@@ -74,6 +74,8 @@
 		43AA2C9B2268AEE50050668B /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43AA2C992268AEE50050668B /* OpenSans-Light.ttf */; };
 		43AA2C9E2268B1FD0050668B /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43AA2C9D2268B1FD0050668B /* OpenSans-Regular.ttf */; };
 		43AA2CA02268B2660050668B /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43AA2C9F2268B2660050668B /* OpenSans-Semibold.ttf */; };
+		43C0C76022797464007A92E7 /* EpisodeActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C75F22797464007A92E7 /* EpisodeActionsViewController.swift */; };
+		43C0C76222798635007A92E7 /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C76122798635007A92E7 /* ActionView.swift */; };
 		43CE140C225F7EF700B57CFA /* PlayProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE140B225F7EF700B57CFA /* PlayProgress.swift */; };
 		43CE140E226070FB00B57CFA /* PlayProgressModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE140D226070FB00B57CFA /* PlayProgressModelController.swift */; };
 		43CE8E0D2271AFC000DD990F /* HtmlHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE8E0C2271AFC000DD990F /* HtmlHelper.swift */; };
@@ -209,6 +211,8 @@
 		43AA2C992268AEE50050668B /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Light.ttf"; sourceTree = "<group>"; };
 		43AA2C9D2268B1FD0050668B /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		43AA2C9F2268B2660050668B /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
+		43C0C75F22797464007A92E7 /* EpisodeActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeActionsViewController.swift; sourceTree = "<group>"; };
+		43C0C76122798635007A92E7 /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
 		43CE140B225F7EF700B57CFA /* PlayProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayProgress.swift; sourceTree = "<group>"; };
 		43CE140D226070FB00B57CFA /* PlayProgressModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayProgressModelController.swift; sourceTree = "<group>"; };
 		43CE8E0C2271AFC000DD990F /* HtmlHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HtmlHelper.swift; sourceTree = "<group>"; };
@@ -450,6 +454,7 @@
 				16CE698E1F98029E0057BAC3 /* PodcastDetailViewController.swift */,
 				435BAF3922783B7C00762891 /* EpisodeViewController.swift */,
 				435BAF3B2278430900762891 /* EpisodeHeaderCell.swift */,
+				43C0C76122798635007A92E7 /* ActionView.swift */,
 			);
 			name = PodcastDetail;
 			sourceTree = "<group>";
@@ -479,6 +484,7 @@
 				161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */,
 				164FE9DB1F02DAB5009419CA /* PodcastCollectionViewCell.swift */,
 				43AA2C902268530C0050668B /* ItemCollectionViewCell.swift */,
+				43C0C75F22797464007A92E7 /* EpisodeActionsViewController.swift */,
 			);
 			name = CommonCells;
 			sourceTree = "<group>";
@@ -1050,6 +1056,7 @@
 				164FE9E51F02EE83009419CA /* API.swift in Sources */,
 				164FE9E91F02F049009419CA /* Stylesheet.swift in Sources */,
 				960BFEBF20226B620073DAB2 /* CommentsViewController.swift in Sources */,
+				43C0C76222798635007A92E7 /* ActionView.swift in Sources */,
 				96B6168820C0883C00DF3CF6 /* ForumListViewController.swift in Sources */,
 				01516A04207310C900E9E743 /* NotificationTableViewCell.swift in Sources */,
 				1671BD5A200D3D7800E6ED3B /* SubscriptionStatusViewController.swift in Sources */,
@@ -1072,6 +1079,7 @@
 				164FE9DC1F02DAB5009419CA /* PodcastCollectionViewCell.swift in Sources */,
 				961A378D208FAFEF0050EF80 /* ForumThreadLite.swift in Sources */,
 				962F5365201E3C7900897A6E /* RelatedLinksViewController.swift in Sources */,
+				43C0C76022797464007A92E7 /* EpisodeActionsViewController.swift in Sources */,
 				960BFEC7202539180073DAB2 /* CommentReplyTableViewCell.swift in Sources */,
 				1EABD8F51FB430AB00959859 /* DebugTabViewController.swift in Sources */,
 				435BAF3C2278430900762891 /* EpisodeHeaderCell.swift in Sources */,

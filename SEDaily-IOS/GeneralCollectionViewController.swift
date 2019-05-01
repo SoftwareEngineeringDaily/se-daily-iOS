@@ -217,6 +217,10 @@ class GeneralCollectionViewController: UICollectionViewController {
 		if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
 			if let audioOverlayDelegate = self.audioOverlayDelegate {
 				let vc = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
+				let cell1 = collectionView.cellForItem(at: indexPath) as? ItemCollectionViewCell
+				guard let cell:ItemCollectionViewCell = cell1 else { return }
+				vc.bookmarkService = cell.bookmarkService
+				vc.upvoteService = cell.upvoteService
 				vc.viewModel = viewModel
 				//vc.delegate = self
 				
@@ -241,6 +245,7 @@ extension GeneralCollectionViewController: UpvoteServiceModelDelegate {
 extension GeneralCollectionViewController: BookmarkServiceModelDelegate {
 	func bookmarkModelDidChange(viewModel: PodcastViewModel) {
 		self.podcastViewModelController.update(with: viewModel)
+		//collectionView?.reloadData()
 	}
 }
 

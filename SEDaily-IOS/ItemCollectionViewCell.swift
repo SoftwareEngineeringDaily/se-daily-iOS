@@ -50,7 +50,6 @@ class ItemCollectionViewCell: UICollectionViewCell {
 			guard newValue != self.viewModel else { return }
 		}
 		didSet {
-			self.titleLabel.text = viewModel.podcastTitle
 			updateUI()
 		}
 	}
@@ -279,6 +278,8 @@ extension ItemCollectionViewCell {
 
 extension ItemCollectionViewCell {
 	private func updateUI() {
+		
+		self.titleLabel.text = viewModel.podcastTitle
 		
 		func loadImageView(imageURL: URL?) {
 			imageView.kf.cancelDownloadTask()

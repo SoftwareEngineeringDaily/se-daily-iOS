@@ -216,9 +216,9 @@ class GeneralCollectionViewController: UICollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
 			if let audioOverlayDelegate = self.audioOverlayDelegate {
-				let vc = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
-				vc.model = viewModel
-				vc.delegate = self
+				let vc = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
+				vc.viewModel = viewModel
+				//vc.delegate = self
 				
 				self.navigationController?.pushViewController(vc, animated: true)
 			}

@@ -21,6 +21,9 @@ class EpisodeViewController: UIViewController, WKNavigationDelegate {
 	
 	var tableView = UITableView()
 	
+	var upvoteService: UpvoteService?
+	var bookmarkService: BookmarkService?
+	
 	required init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, audioOverlayDelegate: AudioOverlayDelegate?) {
 		self.audioOverlayDelegate = audioOverlayDelegate
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -36,6 +39,8 @@ class EpisodeViewController: UIViewController, WKNavigationDelegate {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		tableView.register(cellType: EpisodeHeaderCell.self)
@@ -48,19 +53,36 @@ class EpisodeViewController: UIViewController, WKNavigationDelegate {
 		
 		// Do any additional setup after loading the view.
 	}
+	func commentsButtonPressed(_ viewModel: PodcastViewModel) {
+		Analytics2.podcastCommentsViewed(podcastId: viewModel._id)
+		let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
+		guard let commentsViewController = commentsStoryboard.instantiateViewController(
+			withIdentifier: "CommentsViewController") as? CommentsViewController else {
+				return
+		}
+		if let thread = viewModel.thread {
+			commentsViewController.rootEntityId = thread._id
+			self.navigationController?.pushViewController(commentsViewController, animated: true)
+		}
+	}
 }
 
 extension EpisodeViewController: UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell: EpisodeHeaderCell = tableView.dequeueReusableCell(for: indexPath)
+	
+		cell.selectionStyle = .none
+		cell.bookmarkService = bookmarkService
+		cell.upvoteService = upvoteService
+		
 		cell.viewModel = viewModel
 		//cell.layoutIfNeeded()
 		return cell
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 3
+		return 82
 	}
 	func numberOfSections(in tableView: UITableView) -> Int {
 		return 1

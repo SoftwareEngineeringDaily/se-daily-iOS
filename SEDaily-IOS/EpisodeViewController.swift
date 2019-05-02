@@ -6,8 +6,8 @@
 //  Copyright © 2019 Altalogy. All rights reserved.
 //
 
-protocol NewsTableViewCellDelegate {
-	func newCell(_ cell: WebViewCell, didCalculateHeight height: CGFloat)
+protocol WebViewCellDelegate {
+	func updateWebViewHeight(didCalculateHeight height: CGFloat)
 }
 import UIKit
 import WebKit
@@ -17,9 +17,11 @@ class EpisodeViewController: UIViewController {
 	weak var delegate: PodcastDetailViewControllerDelegate?
 	private weak var audioOverlayDelegate: AudioOverlayDelegate?
 	
-	var loaded: Bool = false
+	var loaded: Bool = false // to check if HTML content has loaded
 	var webView: WKWebView = WKWebView()
 	let networkService: API = API()
+	
+	var webViewHeight: CGFloat = 600
 	
 	var viewModel = PodcastViewModel()
 	
@@ -50,17 +52,17 @@ class EpisodeViewController: UIViewController {
 		tableView.register(cellType: EpisodeHeaderCell.self)
 		tableView.register(cellType: WebViewCell.self)
 		self.tableView.rowHeight = UITableViewAutomaticDimension
-		self.tableView.estimatedRowHeight = 750.0
+		self.tableView.estimatedRowHeight = 50.0
 		//tableView.delegate = self
 		tableView.dataSource = self
 		tableView.tableFooterView = UIView()
-		tableView.backgroundColor = .black
-//		var htmlString = self.removePowerPressPlayerTags(html: viewModel.encodedPodcastDescription)
-//		htmlString = self.addStyling(html: htmlString)
-//		//htmlString = self.addHeightAdjustment(html: htmlString, height: headerView.height)
-//		htmlString = self.addScaleMeta(html: htmlString)
-//		webView.loadHTMLString(htmlString, baseURL: nil)
-//		webView.navigationDelegate = self
+		tableView.backgroundColor = .white
+		var htmlString = self.removePowerPressPlayerTags(html: viewModel.encodedPodcastDescription)
+		htmlString = self.addStyling(html: htmlString)
+		//htmlString = self.addHeightAdjustment(html: htmlString, height: headerView.height)
+		htmlString = self.addScaleMeta(html: htmlString)
+		webView.loadHTMLString(htmlString, baseURL: nil)
+		//webView.navigationDelegate = self
 		
 		
 		// Do any additional setup after loading the view.
@@ -76,51 +78,7 @@ class EpisodeViewController: UIViewController {
 			commentsViewController.rootEntityId = thread._id
 			self.navigationController?.pushViewController(commentsViewController, animated: true)
 		}
-	}
-	
-	
-	
-	
-	
-	private func removePowerPressPlayerTags(html: String) -> String {
-		var modifiedHtml = html
-		guard let powerPressPlayerRange = modifiedHtml.range(of: "<!--powerpress_player-->") else {
-			return modifiedHtml
-		}
-		modifiedHtml.removeSubrange(powerPressPlayerRange)
-		
-		/////////////////////////
-		guard let divStartRange = modifiedHtml.range(of: "<div class=\"powerpress_player\"") else {
-			return modifiedHtml
-		}
-		guard let divEndRange = modifiedHtml.range(of: "</div>") else {
-			return modifiedHtml
-		}
-		modifiedHtml.removeSubrange(divStartRange.lowerBound..<divEndRange.upperBound)
-		
-		/////////////////////////
-		guard let pStartRange = modifiedHtml.range(of: "<p class=\"powerpress_links powerpress_links_mp3\">") else {
-			return modifiedHtml
-		}
-		guard let pEndRange = modifiedHtml.range(of: "</p>") else {
-			return modifiedHtml
-		}
-		modifiedHtml.removeSubrange(pStartRange.lowerBound..<pEndRange.upperBound)
-		return modifiedHtml
-	}
-	
-	private func addStyling(html: String) -> String {
-		return "<style type=\"text/css\">body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; } </style>\(html)"
-	}
-	
-	private func addHeightAdjustment(html: String, height: CGFloat) -> String {
-		return "<div style='width:100%;height:\(height)px'></div>\(html)"
-	}
-	
-	private func addScaleMeta(html: String) -> String {
-		return "<meta name=\"viewport\" content=\"initial-scale=1.0\" />\(html)"
-	}
-	
+	}	
 	
 	
 }
@@ -145,28 +103,37 @@ extension EpisodeViewController: UITableViewDataSource {
 			
 		default:
 			let cell: WebViewCell = tableView.dequeueReusableCell(for: indexPath)
+			cell.webViewHeight = webViewHeight
+			
 			//cell.delegate = self
 			//cell.webView = webView
 			var htmlString = self.removePowerPressPlayerTags(html: viewModel.encodedPodcastDescription)
 			htmlString = self.addStyling(html: htmlString)
 			//htmlString = self.addHeightAdjustment(html: htmlString, height: headerView.height)
 			htmlString = self.addScaleMeta(html: htmlString)
+		htmlString = HtmlHelper.removeImage(html: htmlString)
+			print(viewModel.encodedPodcastDescription)
 			cell.webView.loadHTMLString(htmlString, baseURL: nil)
-			//cell.webView.navigationDelegate = self
-			print(cell.webView.frame)
+			//cell.webView.frame = CGRect(x: 0.0, y: 0.0, width: 375.0, height: 2000.0)
+			//cell.webView.scrollView.frame = CGRect(x: 0.0, y: 0.0, width: 375.0, height: 2000.0)
+			cell.webView.navigationDelegate = cell
 			cell.delegate = self
+
+			//print(cell.webView.frame)
+			//cell.delegate = self
+			
 			return cell
 			
 		}
 		
 	}
 	
+	
+	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if self.loaded {
-			return 2
-		} else {return 2}
-		
+		return 2
 	}
+	
 	func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
@@ -175,29 +142,20 @@ extension EpisodeViewController: UITableViewDataSource {
 
 extension EpisodeViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-		return 750.0
+		return UITableViewAutomaticDimension
 	}
 }
 
 
 
-extension EpisodeViewController: NewsTableViewCellDelegate {
-	func newCell(_ cell: WebViewCell, didCalculateHeight height: CGFloat) {
-		//let index = tableView.indexPath(for: cell)
-		//tableView.reloadData()
+extension EpisodeViewController: WebViewCellDelegate {
+	func updateWebViewHeight(didCalculateHeight height: CGFloat) {
+		if !loaded {
+			webViewHeight = height
+			tableView.reloadData()
+			loaded = true
+		} else { return }
 	}
 }
 
-extension EpisodeViewController: WKNavigationDelegate {
-	func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-		webView.evaluateJavaScript("document.readyState", completionHandler: { (complete, error) in
-			if complete != nil {
-				webView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { (height, error) in
-					//print(height)
-					self.loaded = true
-					self.tableView.reloadData()
-				})
-			}
-		})
-	}
-}
+

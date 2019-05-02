@@ -306,7 +306,7 @@ extension ItemCollectionViewCell {
 			DispatchQueue.global(qos: .background).async { [weak self] in
 				str = self?.viewModel.podcastDescription
 				DispatchQueue.main.async {
-					print(str)
+					
 					self?.descriptionLabel.text = str
 				}
 			}

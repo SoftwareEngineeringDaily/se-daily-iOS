@@ -77,18 +77,24 @@ class EpisodeHeaderCell: UITableViewCell, Reusable {
 
 extension EpisodeHeaderCell {
 	private func setupLayout() {
-		func setupTitleLabel() {
+		func setupLabels() {
 			titleLabel = UILabel()
 			self.contentView.addSubview(titleLabel)
+			titleLabel.textColor = Stylesheet.Colors.dark
 			titleLabel.numberOfLines = 3
 			titleLabel.font = UIFont(name: "Roboto-Bold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 24))
+			
+			miscDetailsLabel = UILabel()
+			contentView.addSubview(miscDetailsLabel)
+			miscDetailsLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 11))
+			miscDetailsLabel.textColor = Stylesheet.Colors.dark
 		}
 		func setupGuestThumb() {
 			guestThumb = UIImageView()
 			contentView.addSubview(guestThumb)
 			guestThumb.contentMode = .scaleAspectFill
 			guestThumb.clipsToBounds = true
-			guestThumb.cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 20)
+			guestThumb.cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 25)
 			guestThumb.kf.indicatorType = .activity
 		}
 		func setupPlayButton() {
@@ -109,13 +115,13 @@ extension EpisodeHeaderCell {
 			playButton.imageEdgeInsets = UIEdgeInsetsMake(0.0, -10.0, 0.0, 0.0)
 			playButton.titleEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, -10.0)
 			playButton.backgroundColor = Stylesheet.Colors.base
-			playButton.cornerRadius = 25.0
+			playButton.cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 25.0)
 		}
 		func setupDownloadButton() {
 			downloadButton = UIButton()
 			contentView.addSubview(downloadButton)
 			downloadButton.setIcon(icon: .ionicons(.iosCloudDownloadOutline), iconSize: 25.0, color: Stylesheet.Colors.grey, forState: .normal)
-			downloadButton.cornerRadius = 25.0
+			downloadButton.cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 25.0)
 			downloadButton.backgroundColor = Stylesheet.Colors.light
 			
 		}
@@ -126,36 +132,43 @@ extension EpisodeHeaderCell {
 	
 		func setupContraints() {
 			titleLabel.snp.makeConstraints { (make) -> Void in
-				make.left.equalToSuperview().offset(10)
-				make.right.equalToSuperview().offset(10)
-				make.top.equalToSuperview().offset(10)
+				make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 10.0))
+				make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 10.0))
+				make.top.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 10.0))
+			}
+			miscDetailsLabel.snp.makeConstraints { (make) -> Void in
+				make.left.equalTo(guestThumb.snp_right).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 10.0))
+				make.rightMargin.equalTo(playButton.snp_left).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 10.0))
+				make.centerY.equalTo(guestThumb.snp_centerY)
 			}
 			guestThumb.snp.makeConstraints { (make) -> Void in
-				make.top.equalTo(titleLabel.snp_bottom)
+				make.top.equalTo(titleLabel.snp_bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 20.0))
 				make.left.equalTo(titleLabel)
-				make.width.equalTo(40.0)
-				make.height.equalTo(40.0)
+				make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 50.0))
+				make.height.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 50.0))
 			}
 			playButton.snp.makeConstraints { (make) -> Void in
-				make.bottom.equalToSuperview().inset(130)
-				make.top.equalTo(titleLabel.snp_bottom).offset(30.0)
-				make.left.equalTo(titleLabel)
-				make.width.equalTo(120.0)
-				make.height.equalTo(50.0)
+				make.top.equalTo(titleLabel.snp_bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 20.0))
+				make.right.equalTo(downloadButton.snp_left).inset(UIView.getValueScaledByScreenWidthFor(baseValue: -10.0))
+				
+				make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 120.0))
+				make.height.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 50.0))
 			}
 			downloadButton.snp.makeConstraints { (make) -> Void in
-				make.top.equalTo(playButton.snp_bottom).offset(50.0)
-				make.width.equalTo(50.0)
-				make.height.equalTo(50.0)
+				make.top.equalTo(titleLabel.snp_bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 20.0))
+				make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 50.0))
+				make.height.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 50.0))
+				make.right.equalToSuperview().inset((UIView.getValueScaledByScreenWidthFor(baseValue: 10.0)))
 			}
 			actionView.setupContraints()
 			actionView.actionStackView.snp.makeConstraints { (make) -> Void in
-				make.top.equalTo(playButton.snp_bottom)
+				make.top.equalTo(playButton.snp_bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 10.0))
 				make.left.equalTo(titleLabel)
+				make.bottom.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 10.0))
 			}
 		}
 		
-		setupTitleLabel()
+		setupLabels()
 		setupGuestThumb()
 		setupPlayButton()
 		setupDownloadButton()
@@ -167,7 +180,16 @@ extension EpisodeHeaderCell {
 extension EpisodeHeaderCell {
 	private func updateUI() {
 		
+		viewModel.getLastUpdatedAsDateWith { [weak self] (date) in
+			guard let strongSelf = self else { return }
+			setupMiscDetailsLabel(timeLength: nil, date: date, isDownloaded: strongSelf.viewModel.isDownloaded)
+		}
+		
 		self.titleLabel.text = viewModel.podcastTitle
+		func setupMiscDetailsLabel(timeLength: Int?, date: Date?, isDownloaded: Bool) {
+			let dateString = date?.dateString() ?? ""
+			miscDetailsLabel.text = dateString
+		}
 		
 		func setupGuestThumb(imageURL: URL?) {
 			guestThumb.kf.cancelDownloadTask()
@@ -212,3 +234,8 @@ extension EpisodeHeaderCell: BookmarkServiceUIDelegate {
 		actionView.bookmarkButton.isSelected = !actionView.bookmarkButton.isSelected
 	}
 }
+
+
+
+
+

@@ -159,15 +159,17 @@ extension ItemCollectionViewCell {
 			contentView.addSubview(titleLabel)
 			titleLabel.numberOfLines = 3
 			titleLabel.font = UIFont(name: "Roboto-Bold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 17))
+			titleLabel.textColor = Stylesheet.Colors.dark
 			
 			miscDetailsLabel = UILabel()
 			contentView.addSubview(miscDetailsLabel)
 			miscDetailsLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 11))
-			miscDetailsLabel.textColor = Stylesheet.Colors.grey
+			miscDetailsLabel.textColor = Stylesheet.Colors.dark
 			
 			descriptionLabel = UILabel()
 			descriptionLabel.numberOfLines = 2
 			descriptionLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
+			descriptionLabel.textColor = Stylesheet.Colors.dark
 			contentView.addSubview(descriptionLabel)
 		}
 		

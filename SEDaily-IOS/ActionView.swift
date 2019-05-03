@@ -23,14 +23,14 @@ class ActionView {
 	
 	func setupComponents(superview: UIView) {
 		func setupButtons() {
-			upvoteButton.setIcon(icon: .ionicons(.iosHeartOutline), iconSize: 25.0, color: Stylesheet.Colors.grey, forState: .normal)
+			upvoteButton.setIcon(icon: .ionicons(.iosHeartOutline), iconSize: 25.0, color: Stylesheet.Colors.dark, forState: .normal)
 			upvoteButton.setIcon(icon: .ionicons(.iosHeart), iconSize: 25.0, color: Stylesheet.Colors.base, forState: .selected)
 			
 			bookmarkButton.setImage(UIImage(named: "ios-bookmark"), for: .normal)
 			bookmarkButton.setImage(UIImage(named: "ios-bookmark-fill"), for: .selected)
 			
-			commentButton.setIcon(icon: .ionicons(.iosChatbubbleOutline), iconSize: 30.0, color: Stylesheet.Colors.grey, forState: .normal)
-			commentButton.setIcon(icon: .ionicons(.iosChatbubble), iconSize: 30.0, color: Stylesheet.Colors.base, forState: .selected)
+			commentButton.setIcon(icon: .ionicons(.iosChatbubbleOutline), iconSize: 30.0, color: Stylesheet.Colors.dark, forState: .normal)
+			commentButton.setIcon(icon: .ionicons(.iosChatbubble), iconSize: 30.0, color: Stylesheet.Colors.base, forState: .highlighted)
 		}
 		func setupUpvoteStackView() {
 			upvoteStackView.alignment = .center

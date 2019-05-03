@@ -101,6 +101,11 @@ class GeneralCollectionViewController: UICollectionViewController {
 		}
 	}
 	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		self.collectionView?.reloadData()
+	}
+	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		// Make sure skeletonCollectionView is animating when the view is visible

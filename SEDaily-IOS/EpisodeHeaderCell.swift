@@ -15,13 +15,21 @@ class EpisodeHeaderCell: UITableViewCell, Reusable {
 	var guestThumb: UIImageView!
 	var miscDetailsLabel: UILabel!
 	
+	var separator: UIView!
+	
 	var playButton: UIButton!
 	var downloadButton: UIButton!
+	var relatedLinksButton: UIButton!
 	
 	var actionView: ActionView!
 	
 	var upvoteService: UpvoteService?
 	var bookmarkService: BookmarkService?
+	
+	var downloadButtonCallBack: (()-> Void) = {}
+	var relatedLinksButtonCallBack: (()-> Void) = {}
+	var playButtonCallBack: ((_ isPlaying: Bool)-> Void) = {_ in }
+	
 	
 	
 	var viewModel: PodcastViewModel = PodcastViewModel() {
@@ -32,6 +40,10 @@ class EpisodeHeaderCell: UITableViewCell, Reusable {
 			updateUI()
 		}
 	}
+	
+	var isPlaying: Bool = false { didSet {
+		playButton.isSelected = isPlaying
+		}}
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -51,6 +63,7 @@ class EpisodeHeaderCell: UITableViewCell, Reusable {
 		actionView.upvoteButton.addTarget(self, action: #selector(EpisodeHeaderCell.upvoteTapped), for: .touchUpInside)
 		actionView.bookmarkButton.addTarget(self, action: #selector(EpisodeHeaderCell.bookmarkTapped), for: .touchUpInside)
 		actionView.commentButton.addTarget(self, action: #selector(EpisodeHeaderCell.commentTapped), for: .touchUpInside)
+		playButton.addTarget(self, action: #selector(EpisodeHeaderCell.playTapped), for: .touchUpInside)
 	}
 	
 	@objc func upvoteTapped() {
@@ -72,6 +85,13 @@ class EpisodeHeaderCell: UITableViewCell, Reusable {
 		let notification = UINotificationFeedbackGenerator()
 		notification.notificationOccurred(.success)
 		actionView.commentShowCallback()
+	}
+	
+	@objc func playTapped() {
+		let notification = UINotificationFeedbackGenerator()
+		notification.notificationOccurred(.success)
+		playButtonCallBack(isPlaying)
+		isPlaying = !isPlaying
 	}
 }
 
@@ -101,6 +121,9 @@ extension EpisodeHeaderCell {
 			playButton = UIButton()
 			contentView.addSubview(playButton)
 			
+			playButton.borderWidth = 1.0
+			playButton.borderColor = Stylesheet.Colors.base
+			
 			playButton.setTitle("Play", for: .normal)
 			playButton.setTitleColor(UIColor.white, for: .normal)
 			playButton.setBackgroundColor(color: Stylesheet.Colors.base, forState: .normal)
@@ -109,7 +132,7 @@ extension EpisodeHeaderCell {
 			
 			playButton.setTitle("Stop", for: .selected)
 			playButton.setTitleColor(Stylesheet.Colors.base, for: .selected)
-			playButton.setTitleColor(Stylesheet.Colors.base, for: .selected)
+			playButton.setBackgroundColor(color: .white, forState: .selected)
 			playButton.setImage(UIImage(named: "Square"), for: .selected)
 			
 			playButton.imageEdgeInsets = UIEdgeInsetsMake(0.0, -10.0, 0.0, 0.0)
@@ -120,21 +143,32 @@ extension EpisodeHeaderCell {
 		func setupDownloadButton() {
 			downloadButton = UIButton()
 			contentView.addSubview(downloadButton)
-			downloadButton.setIcon(icon: .ionicons(.iosCloudDownloadOutline), iconSize: 25.0, color: Stylesheet.Colors.grey, forState: .normal)
+			downloadButton.setIcon(icon: .ionicons(.iosCloudDownloadOutline), iconSize: 25.0, color: Stylesheet.Colors.dark, forState: .normal)
 			downloadButton.cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 25.0)
 			downloadButton.backgroundColor = Stylesheet.Colors.light
 			
+		}
+		func setupRelatedLinksButton() {
+			relatedLinksButton = UIButton()
+			contentView.addSubview(relatedLinksButton)
+			relatedLinksButton.setIcon(icon: .linearIcons(.link), iconSize: 21.0, color: Stylesheet.Colors.dark, forState: .normal)
+			relatedLinksButton.setIcon(icon: .linearIcons(.link), iconSize: 21.0, color: Stylesheet.Colors.base, forState: .selected)
 		}
 		func setupActionView() {
 			actionView = ActionView()
 			actionView.setupComponents(superview: contentView)
 		}
+		func setupSeparator() {
+			separator = UIView()
+			contentView.addSubview(separator)
+			separator.backgroundColor = Stylesheet.Colors.light
+		}
 	
 		func setupContraints() {
 			titleLabel.snp.makeConstraints { (make) -> Void in
-				make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 10.0))
-				make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 10.0))
-				make.top.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 10.0))
+				make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
+				make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
+				make.top.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
 			}
 			miscDetailsLabel.snp.makeConstraints { (make) -> Void in
 				make.left.equalTo(guestThumb.snp_right).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 10.0))
@@ -158,13 +192,21 @@ extension EpisodeHeaderCell {
 				make.top.equalTo(titleLabel.snp_bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 20.0))
 				make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 50.0))
 				make.height.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 50.0))
-				make.right.equalToSuperview().inset((UIView.getValueScaledByScreenWidthFor(baseValue: 10.0)))
+				make.right.equalToSuperview().inset((UIView.getValueScaledByScreenWidthFor(baseValue: 15.0)))
+			}
+			relatedLinksButton.snp.makeConstraints { (make) -> Void in
+				make.centerY.equalTo(actionView.actionStackView)
+				make.centerX.equalTo(downloadButton)
 			}
 			actionView.setupContraints()
 			actionView.actionStackView.snp.makeConstraints { (make) -> Void in
-				make.top.equalTo(playButton.snp_bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 10.0))
+				make.top.equalTo(playButton.snp_bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
 				make.left.equalTo(titleLabel)
-				make.bottom.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 10.0))
+				make.bottom.equalTo(separator.snp_top)
+			}
+			separator.snp.makeConstraints { (make) -> Void in
+				make.left.right.bottom.equalToSuperview()
+				make.height.equalTo(5.0)
 			}
 		}
 		
@@ -172,7 +214,9 @@ extension EpisodeHeaderCell {
 		setupGuestThumb()
 		setupPlayButton()
 		setupDownloadButton()
+		setupRelatedLinksButton()
 		setupActionView()
+		setupSeparator()
 		setupContraints()
 	}
 }
@@ -199,10 +243,22 @@ extension EpisodeHeaderCell {
 			}
 			guestThumb.kf.setImage(with: imageURL, options: [.transition(.fade(0.2))])
 		}
+		func updateUpvote() {
+			actionView.upvoteCountLabel.text = String(viewModel.score)
+			actionView.upvoteButton.isSelected = viewModel.isUpvoted
+			actionView.upvoteCountLabel.textColor = actionView.upvoteButton.isSelected ? Stylesheet.Colors.base : Stylesheet.Colors.grey
+			actionView.upvoteCountLabel.font = actionView.upvoteButton.isSelected ? UIFont(name: "OpenSans-Semibold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13)) : UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
+		}
+		
+		func updateBookmark() {
+			actionView.bookmarkButton.isSelected = viewModel.isBookmarked
+		}
+		
+		updateUpvote()
+		updateBookmark()
 		setupGuestThumb(imageURL: viewModel.guestImageURL)
 	}
 }
-
 
 extension EpisodeHeaderCell: UpvoteServiceUIDelegate {
 	func upvoteUIDidChange(isUpvoted: Bool, score: Int) {

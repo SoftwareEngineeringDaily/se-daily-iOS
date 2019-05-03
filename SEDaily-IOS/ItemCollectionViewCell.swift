@@ -27,7 +27,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	let commentButton: UIButton = UIButton()
 	let bookmarkButton: UIButton = UIButton()
 	
-	var commentShowCallback: ( ()-> Void) = {}
+	var commentShowCallback: (()-> Void) = {}
 	
 	let upvoteCountLabel: UILabel = UILabel()
 

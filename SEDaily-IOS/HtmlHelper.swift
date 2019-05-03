@@ -3,7 +3,7 @@
 //  SEDaily-IOS
 //
 //  Created by Dawid Cedrych on 4/25/19.
-//  Copyright © 2019 Koala Tea. All rights reserved.
+//  Copyright © 2019 Altalogy. All rights reserved.
 //
 
 import Foundation
@@ -55,22 +55,26 @@ class HtmlHelper {
 		return modifiedHtml
 	}
 	
-	private func addStyling(html: String) -> String {
-		return "<style type=\"text/css\">body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; } </style>\(html)"
+	class func addStyling(html: String) -> String {
+		
+		let margin = UIView.getValueScaledByScreenWidthFor(baseValue: 15.0)
+		let fontSize = UIView.getValueScaledByScreenWidthFor(baseValue: 15.0)
+		
+		return "<head><link href=\"https://fonts.googleapis.com/css?family=Open+Sans\" rel=\"stylesheet\"></head><style type=\"text/css\">body { font-family: 'Open Sans', sans-serif; font-size: \(fontSize)px; margin: \(margin) } a { color: #714CFE } </style>\(html)"
 	}
 	
-	private func addHeightAdjustment(html: String, height: CGFloat) -> String {
-		return "<div style='width:100%;height:\(height)px'></div>\(html)"
+	class func addWidthAdjustment(html: String) -> String {
+		return "<div style='width:100vw;'></div>\(html)"
 	}
 	
-	private func addScaleMeta(html: String) -> String {
+	class func addScaleMeta(html: String) -> String {
 		return "<meta name=\"viewport\" content=\"initial-scale=1.0\" />\(html)"
 	}
 	
 	
-//	class func getHTML(html: String) {
-//		retur
-//	}
+	class func getHTML(html: String)-> String {
+		return removeImage(html: addScaleMeta(html: addStyling(html: removePowerPressPlayerTags(html: html))))
+	}
 	
 }
 

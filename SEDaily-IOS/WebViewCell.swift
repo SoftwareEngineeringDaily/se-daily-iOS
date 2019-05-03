@@ -16,13 +16,14 @@ class WebViewCell: UITableViewCell, Reusable {
 	
 	var webView: WKWebView!
 	
-	var webViewHeight: CGFloat = 0.0 { didSet {
-		snp.removeConstraints()
-		webView.snp.remakeConstraints { (make) in
-			make.left.right.top.bottom.equalToSuperview()
-			make.height.equalTo(webViewHeight).priority(999)
-			make.width.equalToSuperview()
-		}
+	var webViewHeight: CGFloat = 0.0 {
+		didSet {
+			snp.removeConstraints()
+			webView.snp.remakeConstraints { (make) in
+				make.left.top.right.bottom.equalToSuperview()
+				make.height.equalTo(webViewHeight).priority(999)
+				make.width.equalToSuperview()
+			}
 		}
 	}
 	
@@ -36,18 +37,14 @@ class WebViewCell: UITableViewCell, Reusable {
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
-		//let G = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 375.0, height: 4000.0))
 		webView = WKWebView()
 		self.contentView.addSubview(webView)
-		
-		print(self.contentView)
-		print("frame")
-		//print(webView.frame)
-		
-		
-		
-		
+		webView.scrollView.snp.makeConstraints { make in
+			make.left.equalToSuperview().offset(15.0)
+			make.right.equalToSuperview().offset(-15.0)
+		}
 	}
+	
 	required init
 		(coder aDecoder: NSCoder) {
 		fatalError("init(coder:)")
@@ -55,18 +52,9 @@ class WebViewCell: UITableViewCell, Reusable {
 	
 	override func setSelected(_ selected: Bool, animated: Bool) {
 		super.setSelected(selected, animated: animated)
-		
-		// Configure the view for the selected state
 	}
-	
 }
 
-extension WebViewCell {
-	private func setupLayout() {
-		//webView.navigationDelegate = self
-		
-	}
-}
 
 
 extension WebViewCell: WKNavigationDelegate {
@@ -74,31 +62,23 @@ extension WebViewCell: WKNavigationDelegate {
 		webView.evaluateJavaScript("document.readyState", completionHandler: { (complete, error) in
 			if complete != nil {
 				webView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { (height, error) in
-					//let h: CGFloat = height as! CGFloat
-				guard let h:CGFloat = height as? CGFloat else { return }
+					guard let h:CGFloat = height as? CGFloat else { return }
 					self.delegate?.updateWebViewHeight(didCalculateHeight: h)
-//
-//					self.height1?.deactivate()
-//					webView.snp.makeConstraints { (make) in
-//						self.height1 = make.height.equalTo(h).constraint
-//					}
-//					self.height1?.activate()
-//					self.layoutIfNeeded()
-					//self.webView.scrollView.frame = CGRect(x: 0.0, y: 0.0, width: 357.0, height: 4000)
-					//self.webView.frame = CGRect(x: 0.0, y: 0.0, width: 357.0, height: 1000)
-					
-				//	self.webView.frame = CGRect(x: 0.0, y: 0.0, width: 375.0, height: 1000.0)
-			//print(self.webView.frame)
-					//self.delegate?.newCell(self, didCalculateHeight: 10.0)
-					//webView.frame = CGRect(x: 0.0, y: 0.0, width: 375.0, height: 1000.0)
-					//print(self.webView.frame)
-//					let newsContentFrame: CGRect = self.newsContentViewContainer.frame
-//					self.newsContentViewContainer.frame = CGRect(x: newsContentFrame.minX, y: newsContentFrame.minY, width: newsContentFrame.width, height: h)
-//
-//					let tableCellFrame: CGRect = self.frame
-//					self.frame = CGRect(x: tableCellFrame.minX, y: tableCellFrame.minY, width: tableCellFrame.width, height: tableCellFrame.height + h)
 				})
 			}
 		})
+	}
+	func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+		if navigationAction.navigationType == .linkActivated {
+			if let url = navigationAction.request.url,
+				UIApplication.shared.canOpenURL(url) {
+				UIApplication.shared.open(url)
+				decisionHandler(.cancel)
+			} else {
+				decisionHandler(.allow)
+			}
+		} else {
+			decisionHandler(.allow)
+		}
 	}
 }

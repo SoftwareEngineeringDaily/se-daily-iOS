@@ -30,6 +30,8 @@ class EpisodeViewController: UIViewController {
 	var upvoteService: UpvoteService?
 	var bookmarkService: BookmarkService?
 	
+	var isPlaying: Bool = false
+	
 	required init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, audioOverlayDelegate: AudioOverlayDelegate?) {
 		self.audioOverlayDelegate = audioOverlayDelegate
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -51,21 +53,15 @@ class EpisodeViewController: UIViewController {
 		super.viewDidLoad()
 		tableView.register(cellType: EpisodeHeaderCell.self)
 		tableView.register(cellType: WebViewCell.self)
-		self.tableView.rowHeight = UITableViewAutomaticDimension
-		self.tableView.estimatedRowHeight = 50.0
+		tableView.rowHeight = UITableViewAutomaticDimension
+		tableView.estimatedRowHeight = 50.0
+		navigationController?.hidesBarsOnSwipe = true
+		tableView.separatorStyle = .none
+		
 		//tableView.delegate = self
 		tableView.dataSource = self
 		tableView.tableFooterView = UIView()
 		tableView.backgroundColor = .white
-		var htmlString = self.removePowerPressPlayerTags(html: viewModel.encodedPodcastDescription)
-		htmlString = self.addStyling(html: htmlString)
-		//htmlString = self.addHeightAdjustment(html: htmlString, height: headerView.height)
-		htmlString = self.addScaleMeta(html: htmlString)
-		webView.loadHTMLString(htmlString, baseURL: nil)
-		//webView.navigationDelegate = self
-		
-		
-		// Do any additional setup after loading the view.
 	}
 	func commentsButtonPressed(_ viewModel: PodcastViewModel) {
 		Analytics2.podcastCommentsViewed(podcastId: viewModel._id)
@@ -78,13 +74,21 @@ class EpisodeViewController: UIViewController {
 			commentsViewController.rootEntityId = thread._id
 			self.navigationController?.pushViewController(commentsViewController, animated: true)
 		}
-	}	
+	}
 	
-	
+	func playButtonPressed(isPlaying: Bool) {
+		self.isPlaying = isPlaying
+		if !isPlaying {
+		self.audioOverlayDelegate?.animateOverlayIn()
+		self.audioOverlayDelegate?.playAudio(podcastViewModel: viewModel)
+		AskForReview.triggerEvent()
+		} else {
+			self.audioOverlayDelegate?.animateOverlayOut()
+			self.audioOverlayDelegate?.stopAudio()
+		}
+	}
+
 }
-
-
-
 
 extension EpisodeViewController: UITableViewDataSource {
 	
@@ -96,36 +100,21 @@ extension EpisodeViewController: UITableViewDataSource {
 			cell.selectionStyle = .none
 			cell.bookmarkService = bookmarkService
 			cell.upvoteService = upvoteService
-			
 			cell.viewModel = viewModel
-			//cell.layoutIfNeeded()
+			cell.playButtonCallBack = { [weak self] isPlaying in
+				self?.playButtonPressed(isPlaying: isPlaying)
+			}
 			return cell
 			
 		default:
 			let cell: WebViewCell = tableView.dequeueReusableCell(for: indexPath)
+			var htmlString = HtmlHelper.getHTML(html: viewModel.encodedPodcastDescription)
 			cell.webViewHeight = webViewHeight
-			
-			//cell.delegate = self
-			//cell.webView = webView
-			var htmlString = self.removePowerPressPlayerTags(html: viewModel.encodedPodcastDescription)
-			htmlString = self.addStyling(html: htmlString)
-			//htmlString = self.addHeightAdjustment(html: htmlString, height: headerView.height)
-			htmlString = self.addScaleMeta(html: htmlString)
-		htmlString = HtmlHelper.removeImage(html: htmlString)
-			print(viewModel.encodedPodcastDescription)
 			cell.webView.loadHTMLString(htmlString, baseURL: nil)
-			//cell.webView.frame = CGRect(x: 0.0, y: 0.0, width: 375.0, height: 2000.0)
-			//cell.webView.scrollView.frame = CGRect(x: 0.0, y: 0.0, width: 375.0, height: 2000.0)
 			cell.webView.navigationDelegate = cell
 			cell.delegate = self
-
-			//print(cell.webView.frame)
-			//cell.delegate = self
-			
 			return cell
-			
 		}
-		
 	}
 	
 	

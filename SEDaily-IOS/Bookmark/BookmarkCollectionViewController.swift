@@ -13,6 +13,7 @@ import KoalaTeaFlowLayout
 /// Collection view controller for viewing all bookmarks for the user.
 class BookmarkCollectionViewController: UICollectionViewController, StatefulViewController {
     static private let cellId = "PodcastCellId"
+	private let reuseIdentifier = "Cell"
 
     private var viewModelController = BookmarkViewModelController()
     weak var audioOverlayDelegate: AudioOverlayDelegate?
@@ -35,10 +36,11 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.collectionView?.register(
-            PodcastCell.self,
-            forCellWithReuseIdentifier: BookmarkCollectionViewController.cellId)
+			
+//        self.collectionView?.register(
+//            PodcastCell.self,
+//            forCellWithReuseIdentifier: BookmarkCollectionViewController.cellId)
+				self.collectionView?.register(ItemCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         let layout = KoalaTeaFlowLayout(
             cellWidth: UIView.getValueScaledByScreenWidthFor(baseValue: 158),
@@ -171,14 +173,30 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
     override func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: BookmarkCollectionViewController.cellId,
-            for: indexPath) as? PodcastCell else {
-                return UICollectionViewCell()
+			guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ItemCollectionViewCell else {
+				return UICollectionViewCell()
         }
 
         if let viewModel = self.viewModelController.viewModel(at: indexPath.row) {
-            cell.viewModel = viewModel            
+            cell.viewModel = viewModel
+					let upvoteService = UpvoteService(podcastViewModel: viewModel)
+					let bookmarkService = BookmarkService(podcastViewModel: viewModel)
+					let downloadService = DownloadService(podcastViewModel: viewModel)
+					
+//					cell.playProgress = progressController.episodesPlayProgress[viewModel._id] ?? PlayProgress(id: "", currentTime: 0.0, totalLength: 0.0)
+					
+					upvoteService.modelDelegate = self
+					bookmarkService.modelDelegate = self
+					
+					cell.viewModel = viewModel
+					cell.upvoteService = upvoteService
+					cell.bookmarkService = bookmarkService
+					
+					cell.commentShowCallback = { [weak self] in
+						//self?.commentsButtonPressed(viewModel)
+						
+					}
+
         }
 
         return cell
@@ -189,9 +207,14 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
         didSelectItemAt indexPath: IndexPath) {
         if let viewModel = viewModelController.viewModel(at: indexPath.row) {
             if let audioOverlayDelegate = self.audioOverlayDelegate {
-                let vc = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
-                vc.model = viewModel
-                vc.delegate = self
+//                let vc = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
+//                vc.model = viewModel
+//                vc.delegate = self
+							let cell1 = collectionView.cellForItem(at: indexPath) as? ItemCollectionViewCell
+							guard let cell:ItemCollectionViewCell = cell1 else { return
+							}
+							let vc = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate, bookmarkService: cell.bookmarkService!, upvoteService: cell.upvoteService!)
+							vc.viewModel = viewModel
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
@@ -210,4 +233,17 @@ extension BookmarkCollectionViewController: PodcastDetailViewControllerDelegate 
         self.viewModelController.update(with: viewModel)
         self.collectionView?.reloadData()
     }
+}
+
+extension BookmarkCollectionViewController: UpvoteServiceModelDelegate {
+	func upvoteModelDidChange(viewModel: PodcastViewModel) {
+		self.viewModelController.update(with: viewModel)
+	}
+}
+
+extension BookmarkCollectionViewController: BookmarkServiceModelDelegate {
+	func bookmarkModelDidChange(viewModel: PodcastViewModel) {
+		self.viewModelController.update(with: viewModel)
+		//collectionView?.reloadData()
+	}
 }

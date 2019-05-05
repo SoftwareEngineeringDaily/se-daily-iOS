@@ -17,31 +17,35 @@ class EpisodeViewController: UIViewController {
 	weak var delegate: PodcastDetailViewControllerDelegate?
 	private weak var audioOverlayDelegate: AudioOverlayDelegate?
 	
+	
+	
 	var loaded: Bool = false // to check if HTML content has loaded
 	var webView: WKWebView = WKWebView()
 	let networkService: API = API()
 	
 	var webViewHeight: CGFloat = 600
 	
-	var viewModel = PodcastViewModel()
+	var viewModel: PodcastViewModel = PodcastViewModel() {
+		willSet {
+			guard newValue != self.viewModel else { return }
+		}
+		didSet {
+			
+		}
+	}
 	
 	var tableView = UITableView()
 	
-	var upvoteService: UpvoteService?
-	var bookmarkService: BookmarkService?
+	let upvoteService: UpvoteService
+	let bookmarkService: BookmarkService
 	
 	var isPlaying: Bool = false
 	
-	required init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, audioOverlayDelegate: AudioOverlayDelegate?) {
+	required init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, audioOverlayDelegate: AudioOverlayDelegate?, bookmarkService: BookmarkService, upvoteService: UpvoteService) {
 		self.audioOverlayDelegate = audioOverlayDelegate
+		self.bookmarkService = bookmarkService
+		self.upvoteService = upvoteService
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-		self.view.addSubview(tableView)
-		tableView.snp.makeConstraints { (make) -> Void in
-			make.top.equalToSuperview()
-			make.bottom.equalToSuperview()
-			make.right.equalToSuperview()
-			make.left.equalToSuperview()
-		}
 	}
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
@@ -51,30 +55,43 @@ class EpisodeViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		self.view.addSubview(tableView)
+		tableView.snp.makeConstraints { (make) -> Void in
+			make.top.equalToSuperview()
+			make.bottom.equalToSuperview()
+			make.right.equalToSuperview()
+			make.left.equalToSuperview()
+		}
 		tableView.register(cellType: EpisodeHeaderCell.self)
 		tableView.register(cellType: WebViewCell.self)
 		tableView.rowHeight = UITableViewAutomaticDimension
 		tableView.estimatedRowHeight = 50.0
-		navigationController?.hidesBarsOnSwipe = true
 		tableView.separatorStyle = .none
 		
 		//tableView.delegate = self
 		tableView.dataSource = self
 		tableView.tableFooterView = UIView()
 		tableView.backgroundColor = .white
+		
+		self.audioOverlayDelegate?.setCurrentShowingDetailView(
+			podcastViewModel: viewModel)
+		
+		
+		
+		self.audioOverlayDelegate?.setServices(upvoteService: upvoteService, bookmarkService: bookmarkService)
 	}
-	func commentsButtonPressed(_ viewModel: PodcastViewModel) {
-		Analytics2.podcastCommentsViewed(podcastId: viewModel._id)
-		let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
-		guard let commentsViewController = commentsStoryboard.instantiateViewController(
-			withIdentifier: "CommentsViewController") as? CommentsViewController else {
-				return
-		}
-		if let thread = viewModel.thread {
-			commentsViewController.rootEntityId = thread._id
-			self.navigationController?.pushViewController(commentsViewController, animated: true)
-		}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
 	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		self.audioOverlayDelegate?.setCurrentShowingDetailView(
+			podcastViewModel: nil)
+	}
+
 	
 	func playButtonPressed(isPlaying: Bool) {
 		self.isPlaying = isPlaying
@@ -87,7 +104,33 @@ class EpisodeViewController: UIViewController {
 			self.audioOverlayDelegate?.stopAudio()
 		}
 	}
+}
 
+
+extension EpisodeViewController {
+	private func relatedLinksButtonPressed() {
+		Analytics2.relatedLinksButtonPressed(podcastId: viewModel._id)
+		let relatedLinksStoryboard = UIStoryboard.init(name: "RelatedLinks", bundle: nil)
+		guard let relatedLinksViewController = relatedLinksStoryboard.instantiateViewController(
+			withIdentifier: "RelatedLinksViewController") as? RelatedLinksViewController else {
+				return
+		}
+		let podcastId = viewModel._id
+		relatedLinksViewController.postId = podcastId
+		self.navigationController?.pushViewController(relatedLinksViewController, animated: true)
+	}
+	private func commentsButtonPressed() {
+		Analytics2.podcastCommentsViewed(podcastId: self.viewModel._id)
+		let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
+		guard let commentsViewController = commentsStoryboard.instantiateViewController(
+			withIdentifier: "CommentsViewController") as? CommentsViewController else {
+				return
+		}
+		if let thread = viewModel.thread {
+			commentsViewController.rootEntityId = thread._id
+			self.navigationController?.pushViewController(commentsViewController, animated: true)
+		}
+	}
 }
 
 extension EpisodeViewController: UITableViewDataSource {
@@ -103,6 +146,12 @@ extension EpisodeViewController: UITableViewDataSource {
 			cell.viewModel = viewModel
 			cell.playButtonCallBack = { [weak self] isPlaying in
 				self?.playButtonPressed(isPlaying: isPlaying)
+			}
+			cell.relatedLinksButtonCallBack = { [weak self] in
+				self?.relatedLinksButtonPressed()
+			}
+			cell.actionView.commentShowCallback = { [weak self] in
+				self?.commentsButtonPressed()
 			}
 			return cell
 			
@@ -146,5 +195,17 @@ extension EpisodeViewController: WebViewCellDelegate {
 		} else { return }
 	}
 }
+
+//extension EpisodeViewController: UpvoteServiceModelDelegate {
+//	func upvoteModelDidChange(viewModel: PodcastViewModel) {
+//		self.podcastViewModelController.update(with: viewModel)
+//	}
+//}
+//
+//extension EpisodeViewController: BookmarkServiceModelDelegate {
+//	func bookmarkModelDidChange(viewModel: PodcastViewModel) {
+//		self.podcastViewModelController.update(with: viewModel)
+//	}
+//}
 
 

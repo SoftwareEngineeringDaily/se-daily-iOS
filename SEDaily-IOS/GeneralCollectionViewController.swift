@@ -221,11 +221,10 @@ class GeneralCollectionViewController: UICollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
 			if let audioOverlayDelegate = self.audioOverlayDelegate {
-				let vc = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
 				let cell1 = collectionView.cellForItem(at: indexPath) as? ItemCollectionViewCell
-				guard let cell:ItemCollectionViewCell = cell1 else { return }
-				vc.bookmarkService = cell.bookmarkService
-				vc.upvoteService = cell.upvoteService
+				guard let cell:ItemCollectionViewCell = cell1 else { return
+				}
+				let vc = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate, bookmarkService: cell.bookmarkService!, upvoteService: cell.upvoteService!)
 				vc.viewModel = viewModel
 				//vc.delegate = self
 				

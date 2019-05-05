@@ -64,6 +64,7 @@ class EpisodeHeaderCell: UITableViewCell, Reusable {
 		actionView.bookmarkButton.addTarget(self, action: #selector(EpisodeHeaderCell.bookmarkTapped), for: .touchUpInside)
 		actionView.commentButton.addTarget(self, action: #selector(EpisodeHeaderCell.commentTapped), for: .touchUpInside)
 		playButton.addTarget(self, action: #selector(EpisodeHeaderCell.playTapped), for: .touchUpInside)
+		relatedLinksButton.addTarget(self, action: #selector(EpisodeHeaderCell.relatedLinksTapped), for: .touchUpInside)
 	}
 	
 	@objc func upvoteTapped() {
@@ -92,6 +93,12 @@ class EpisodeHeaderCell: UITableViewCell, Reusable {
 		notification.notificationOccurred(.success)
 		playButtonCallBack(isPlaying)
 		isPlaying = !isPlaying
+	}
+	
+	@objc func relatedLinksTapped() {
+		let notification = UINotificationFeedbackGenerator()
+		notification.notificationOccurred(.success)
+		relatedLinksButtonCallBack()
 	}
 }
 

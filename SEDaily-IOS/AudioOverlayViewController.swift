@@ -170,10 +170,10 @@ class AudioOverlayViewController: UIViewController {
 			currentViewController.view.removeFromSuperview()
 			currentViewController.removeFromParentViewController()
 		}
-		guard let bookmarkService = self.bookmarkService else { return }
-		guard let upvoteService = self.upvoteService else { return }
+//		guard let bookmarkService = self.bookmarkService else { return }
+//		guard let upvoteService = self.upvoteService else { return }
 	
-		let podcastDetailViewController = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate, bookmarkService: bookmarkService, upvoteService: upvoteService)
+		let podcastDetailViewController = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
 		podcastDetailViewController.viewModel = podcastViewModel
 		
 		let navVC = UINavigationController(rootViewController: podcastDetailViewController)

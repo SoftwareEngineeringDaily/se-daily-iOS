@@ -56,6 +56,7 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
             selector: #selector(self.loginObserver),
             name: .loginChanged,
             object: nil)
+		
 
         self.errorView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         self.errorView?.backgroundColor = .green
@@ -213,7 +214,7 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 							let cell1 = collectionView.cellForItem(at: indexPath) as? ItemCollectionViewCell
 							guard let cell:ItemCollectionViewCell = cell1 else { return
 							}
-							let vc = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate, bookmarkService: cell.bookmarkService!, upvoteService: cell.upvoteService!)
+							let vc = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
 							vc.viewModel = viewModel
                 self.navigationController?.pushViewController(vc, animated: true)
             }
@@ -247,3 +248,4 @@ extension BookmarkCollectionViewController: BookmarkServiceModelDelegate {
 		//collectionView?.reloadData()
 	}
 }
+

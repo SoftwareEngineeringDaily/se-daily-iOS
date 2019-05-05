@@ -6,6 +6,13 @@
 //  Copyright © 2017 Koala Tea. All rights reserved.
 //
 
+enum CollectionConfig {
+	case latest
+	case bookmarks
+	case downloaded
+	case search
+}
+
 import UIKit
 import MessageUI
 import PopupDialog

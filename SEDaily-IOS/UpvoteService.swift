@@ -23,8 +23,10 @@ class UpvoteService {
 	
 	var podcastViewModel: PodcastViewModel {
 		didSet {
-			updateViewModel()
+			//updateViewModel()
 			updateUI(isUpvoted: self.podcastViewModel.isUpvoted, score: self.podcastViewModel.score)
+			let userInfo = ["vm": self.podcastViewModel]
+			NotificationCenter.default.post(name: .podcastLiked, object: nil, userInfo: userInfo)
 		}
 	}
 	

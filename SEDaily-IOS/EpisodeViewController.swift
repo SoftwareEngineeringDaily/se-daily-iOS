@@ -77,7 +77,7 @@ class EpisodeViewController: UIViewController {
 		NotificationCenter.default.addObserver(
 			self,
 			selector: #selector(self.onDidReceiveData(_:)),
-			name: .podcastLiked,
+			name: .viewModelUpdated,
 			object: nil)
 		
 		
@@ -206,19 +206,16 @@ extension EpisodeViewController: WebViewCellDelegate {
 }
 
 extension EpisodeViewController {
-	@objc func onDidReceiveData(_ notification: Notification)
-	{
-		if let data = notification.userInfo as? [String: PodcastViewModel]
-		{
-			for (name, score) in data
-			{
-				guard score._id == viewModel._id else { return }
-				self.viewModel = score
-				
+	@objc func onDidReceiveData(_ notification: Notification) {
+		if let data = notification.userInfo as? [String: PodcastViewModel] {
+			for (_, viewModel) in data {
+				guard viewModel._id == self.viewModel._id else { return }
+				self.viewModel = viewModel
 			}
 		}
 	}
 }
+
 
 //extension EpisodeViewController: UpvoteServiceModelDelegate {
 //	func upvoteModelDidChange(viewModel: PodcastViewModel) {

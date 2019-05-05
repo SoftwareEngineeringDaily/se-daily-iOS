@@ -22,7 +22,7 @@ class BookmarkService {
 	
 	var podcastViewModel: PodcastViewModel
 
-	weak var modelDelegate: BookmarkServiceModelDelegate?
+	
 	weak var UIDelegate: BookmarkServiceUIDelegate?
 	
 	init(podcastViewModel: PodcastViewModel) {
@@ -58,7 +58,10 @@ class BookmarkService {
 	private func updateBookmarked(active: Bool) {
 		
 		self.podcastViewModel.isBookmarked = active
-		self.modelDelegate?.bookmarkModelDidChange(viewModel: self.podcastViewModel)
+		
+		let userInfo = ["viewModel": podcastViewModel]
+		NotificationCenter.default.post(name: .viewModelUpdated, object: nil, userInfo: userInfo)
+		
 		self.UIDelegate?.bookmarkUIDidChange(isBookmarked: active)
 	}
 }

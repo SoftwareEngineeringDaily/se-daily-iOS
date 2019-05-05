@@ -30,21 +30,19 @@ class EpisodeViewController: UIViewController {
 			guard newValue != self.viewModel else { return }
 		}
 		didSet {
-			
+			tableView.reloadData()
 		}
 	}
 	
 	var tableView = UITableView()
 	
-	let upvoteService: UpvoteService
-	let bookmarkService: BookmarkService
+//	let upvoteService: UpvoteService = UpvoteService(podcastViewModel: viewModel)
+//	let bookmarkService: BookmarkService = BookmarkService(podcastViewModel: viewModel)
 	
 	var isPlaying: Bool = false
 	
-	required init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, audioOverlayDelegate: AudioOverlayDelegate?, bookmarkService: BookmarkService, upvoteService: UpvoteService) {
+	required init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, audioOverlayDelegate: AudioOverlayDelegate?) {
 		self.audioOverlayDelegate = audioOverlayDelegate
-		self.bookmarkService = bookmarkService
-		self.upvoteService = upvoteService
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 	}
 	required init?(coder aDecoder: NSCoder) {
@@ -76,10 +74,17 @@ class EpisodeViewController: UIViewController {
 		self.audioOverlayDelegate?.setCurrentShowingDetailView(
 			podcastViewModel: viewModel)
 		
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(self.onDidReceiveData(_:)),
+			name: .podcastLiked,
+			object: nil)
 		
 		
-		self.audioOverlayDelegate?.setServices(upvoteService: upvoteService, bookmarkService: bookmarkService)
+		
+//		self.audioOverlayDelegate?.setServices(upvoteService: upvoteService, bookmarkService: bookmarkService)
 	}
+	
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -92,6 +97,10 @@ class EpisodeViewController: UIViewController {
 			podcastViewModel: nil)
 	}
 
+	deinit {
+		// perform the deinitialization
+		NotificationCenter.default.removeObserver(self)
+	}
 	
 	func playButtonPressed(isPlaying: Bool) {
 		self.isPlaying = isPlaying
@@ -141,8 +150,8 @@ extension EpisodeViewController: UITableViewDataSource {
 		case 0:
 			let cell: EpisodeHeaderCell = tableView.dequeueReusableCell(for: indexPath)
 			cell.selectionStyle = .none
-			cell.bookmarkService = bookmarkService
-			cell.upvoteService = upvoteService
+			cell.bookmarkService = BookmarkService(podcastViewModel: viewModel)
+			cell.upvoteService = UpvoteService(podcastViewModel: viewModel)
 			cell.viewModel = viewModel
 			cell.playButtonCallBack = { [weak self] isPlaying in
 				self?.playButtonPressed(isPlaying: isPlaying)
@@ -193,6 +202,21 @@ extension EpisodeViewController: WebViewCellDelegate {
 			tableView.reloadData()
 			loaded = true
 		} else { return }
+	}
+}
+
+extension EpisodeViewController {
+	@objc func onDidReceiveData(_ notification: Notification)
+	{
+		if let data = notification.userInfo as? [String: PodcastViewModel]
+		{
+			for (name, score) in data
+			{
+				guard score._id == viewModel._id else { return }
+				self.viewModel = score
+				
+			}
+		}
 	}
 }
 

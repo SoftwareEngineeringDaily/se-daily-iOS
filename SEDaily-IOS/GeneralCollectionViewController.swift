@@ -92,9 +92,8 @@ class GeneralCollectionViewController: UICollectionViewController, StatefulViewC
 		NotificationCenter.default.addObserver(
 			self,
 			selector: #selector(self.onDidReceiveData(_:)),
-			name: .podcastLiked,
+			name: .viewModelUpdated,
 			object: nil)
-//		NotificationCenter.default.addObserver(self, selector: #selector(self.podcastLiked), name: .loginChanged, object: PodcastViewModel)
 		
 		self.collectionView?.addSubview(skeletonCollectionView)
 		
@@ -124,82 +123,6 @@ class GeneralCollectionViewController: UICollectionViewController, StatefulViewC
 			self.skeletonCollectionView.collectionView.reloadData()
 		}
 	}
-	
-//	private func refreshView(useCache: Bool) {
-//		self.startLoading()
-//		if UserManager.sharedInstance.getActiveUser().isLoggedIn() {
-//			self.updateLoadingView(view: skeletonCollectionView)
-//			self.updateEmptyView(view:
-//				StateView(
-//					frame: CGRect.zero,
-//					text: L10n.noBookmarks,
-//					showLoadingIndicator: false,
-//					showRefreshButton: true,
-//					delegate: self))
-//
-//			if useCache {
-//				self.getData(lastIdentifier: "", nextPage: 0)
-//					self.endLoading()
-//					DispatchQueue.main.async {
-//						self.collectionView?.reloadData()
-//						self.collectionView?.refreshControl?.endRefreshing()
-//					}
-//				}
-//			}
-////			self.viewModelController.retrieveNetworkBookmarkData {
-////				self.endLoading()
-////				DispatchQueue.main.async {
-////					self.collectionView?.reloadData()
-////					self.collectionView?.refreshControl?.endRefreshing()
-////				}
-////			}
-//		} else {
-//			self.updateLoadingView(view:
-//				StateView(
-//					frame: CGRect.zero,
-//					text: "",
-//					showLoadingIndicator: false,
-//					showRefreshButton: false,
-//					delegate: nil))
-//			self.updateEmptyView(view:
-//				StateView(
-//					frame: CGRect.zero,
-//					text: L10n.loginSeeBookmarks,
-//					showLoadingIndicator: false,
-//					showRefreshButton: false,
-//					delegate: nil))
-//			self.endLoading()
-//			DispatchQueue.main.async {
-//				self.collectionView?.reloadData()
-//				self.collectionView?.refreshControl?.endRefreshing()
-//			}
-//		}
-//	}
-	
-	
-	private func updateLoadingView(view: UIView) {
-		self.loadingView?.removeFromSuperview()
-		self.loadingView = view
-	}
-	
-	private func updateEmptyView(view: UIView) {
-		self.emptyView?.removeFromSuperview()
-		self.emptyView = view
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	@objc func loginObserver() {
 		self.podcastViewModelController.clearViewModels()
@@ -245,8 +168,6 @@ class GeneralCollectionViewController: UICollectionViewController, StatefulViewC
 			
 			cell.playProgress = progressController.episodesPlayProgress[viewModel._id] ?? PlayProgress(id: "", currentTime: 0.0, totalLength: 0.0)
 			
-			upvoteService.modelDelegate = self
-			bookmarkService.modelDelegate = self
 
 			cell.viewModel = viewModel
 			cell.upvoteService = upvoteService
@@ -308,28 +229,16 @@ class GeneralCollectionViewController: UICollectionViewController, StatefulViewC
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
 			if let audioOverlayDelegate = self.audioOverlayDelegate {
-				let cell1 = collectionView.cellForItem(at: indexPath) as? ItemCollectionViewCell
-				guard let cell:ItemCollectionViewCell = cell1 else { return
-				}
 				let vc = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
 				vc.viewModel = viewModel
-				//vc.delegate = self
-				
 				self.navigationController?.pushViewController(vc, animated: true)
 			}
 		}
 	}
 }
 
-extension GeneralCollectionViewController: PodcastDetailViewControllerDelegate {
-	func modelDidChange(viewModel: PodcastViewModel) {
-		self.podcastViewModelController.update(with: viewModel)
-	}
-}
-
-extension GeneralCollectionViewController: UpvoteServiceModelDelegate {
-	func upvoteModelDidChange(viewModel: PodcastViewModel) {
-		
+extension GeneralCollectionViewController {
+	private func viewModelDidChange(viewModel: PodcastViewModel) {
 		DispatchQueue.global(qos: .background).async { [weak self] in
 			self?.podcastViewModelController.update(with: viewModel)
 			DispatchQueue.main.async {
@@ -339,12 +248,7 @@ extension GeneralCollectionViewController: UpvoteServiceModelDelegate {
 	}
 }
 
-extension GeneralCollectionViewController: BookmarkServiceModelDelegate {
-	func bookmarkModelDidChange(viewModel: PodcastViewModel) {
-		self.podcastViewModelController.update(with: viewModel)
-		
-	}
-}
+
 
 extension GeneralCollectionViewController {
 	func commentsButtonPressed(_ viewModel: PodcastViewModel) {
@@ -361,15 +265,11 @@ extension GeneralCollectionViewController {
 	}
 }
 
-
 extension GeneralCollectionViewController {
-	@objc func onDidReceiveData(_ notification: Notification)
-	{
-		if let data = notification.userInfo as? [String: PodcastViewModel]
-		{
-			for (name, score) in data
-			{
-				upvoteModelDidChange(viewModel: score)
+	@objc func onDidReceiveData(_ notification: Notification) {
+		if let data = notification.userInfo as? [String: PodcastViewModel] {
+			for (_, viewModel) in data {
+				viewModelDidChange(viewModel: viewModel)
 			}
 		}
 	}

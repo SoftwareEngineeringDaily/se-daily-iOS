@@ -33,13 +33,13 @@ class EpisodeViewController: UIViewController {
 			tableView.reloadData()
 		}
 	}
-	
+	var isPlaying = false { didSet { tableView.reloadData() }}
 	var tableView = UITableView()
 	
 //	let upvoteService: UpvoteService = UpvoteService(podcastViewModel: viewModel)
 //	let bookmarkService: BookmarkService = BookmarkService(podcastViewModel: viewModel)
 	
-	var isPlaying: Bool = false
+	
 	
 	required init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, audioOverlayDelegate: AudioOverlayDelegate?) {
 		self.audioOverlayDelegate = audioOverlayDelegate
@@ -79,6 +79,11 @@ class EpisodeViewController: UIViewController {
 			selector: #selector(self.onDidReceiveData(_:)),
 			name: .viewModelUpdated,
 			object: nil)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(self.onPlayerStateChanged(_:)),
+			name: .currentlyPlaying,
+			object: nil)
 		
 		
 		
@@ -103,7 +108,7 @@ class EpisodeViewController: UIViewController {
 	}
 	
 	func playButtonPressed(isPlaying: Bool) {
-		self.isPlaying = isPlaying
+		
 		if !isPlaying {
 		self.audioOverlayDelegate?.animateOverlayIn()
 		self.audioOverlayDelegate?.playAudio(podcastViewModel: viewModel)
@@ -152,6 +157,7 @@ extension EpisodeViewController: UITableViewDataSource {
 			cell.selectionStyle = .none
 			cell.bookmarkService = BookmarkService(podcastViewModel: viewModel)
 			cell.upvoteService = UpvoteService(podcastViewModel: viewModel)
+			cell.isPlaying = isPlaying
 			cell.viewModel = viewModel
 			cell.playButtonCallBack = { [weak self] isPlaying in
 				self?.playButtonPressed(isPlaying: isPlaying)
@@ -211,6 +217,16 @@ extension EpisodeViewController {
 			for (_, viewModel) in data {
 				guard viewModel._id == self.viewModel._id else { return }
 				self.viewModel = viewModel
+			}
+		}
+	}
+}
+
+extension EpisodeViewController {
+	@objc func onPlayerStateChanged(_ notification: Notification) {
+		if let data = notification.userInfo as? [String: String] {
+			for (_, id) in data {
+				self.isPlaying = id == viewModel._id
 			}
 		}
 	}

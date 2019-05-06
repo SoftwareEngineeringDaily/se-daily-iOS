@@ -6,12 +6,16 @@
 //  Copyright © 2018 Koala Tea. All rights reserved.
 //
 
+
+// TODO: Refactor and add link submit feature
+
 import UIKit
 
 class RelatedLinksViewController: UIViewController {
 	let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
 	let networkService: API = API()
 	var postId = ""
+	var transcriptURL: String?
 	@IBOutlet weak var noRelatedLinks: UILabel!
 	var links: [RelatedLink] = []
 	@IBOutlet weak var tableView: UITableView!
@@ -35,13 +39,12 @@ class RelatedLinksViewController: UIViewController {
 		activityIndicator.startAnimating()
 		
 		networkService.getRelatedLinks(podcastId: self.postId, onSuccess: { [weak self] relatedLinks in
-			print(relatedLinks)
 			self?.links = relatedLinks
 			self?.tableView.reloadData()
 			self?.activityIndicator.stopAnimating()
 			
-			self?.title = "\(relatedLinks.count) \(L10n.relatedLinks)"
-			if relatedLinks.count == 0 {
+			//self?.title = "\(relatedLinks.count) \(L10n.relatedLinks)"
+			if relatedLinks.count == 0 && self?.transcriptURL == nil {
 				self?.tableView.isHidden = true
 			}
 			}, onFailure: { _ in
@@ -59,7 +62,8 @@ class RelatedLinksViewController: UIViewController {
 extension RelatedLinksViewController: UITableViewDataSource, UITableViewDelegate {
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return self.links.count
+		guard self.transcriptURL != nil else { return self.links.count }
+		return self.links.count + 1
 	}
 	
 	func numberOfSections(in tableView: UITableView) -> Int {
@@ -68,11 +72,21 @@ extension RelatedLinksViewController: UITableViewDataSource, UITableViewDelegate
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-		cell.textLabel?.text = self.links[indexPath.row].title
-		cell.textLabel?.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-		cell.textLabel?.textColor = Stylesheet.Colors.dark
-		cell.selectionStyle = .none
-		cell.accessoryType = .disclosureIndicator
+		if transcriptURL != nil {
+			switch indexPath.row {
+			case 0:
+				cell.textLabel?.text = L10n.transcript
+			default:
+				cell.textLabel?.text = self.links[indexPath.row-1].title
+			}
+		} else {
+			cell.textLabel?.text = self.links[indexPath.row].title
+		}
+			cell.textLabel?.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+			cell.textLabel?.textColor = Stylesheet.Colors.dark
+			cell.selectionStyle = .none
+			cell.accessoryType = .disclosureIndicator
+		
 
 		return cell
 	}
@@ -80,7 +94,17 @@ extension RelatedLinksViewController: UITableViewDataSource, UITableViewDelegate
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		// Add http:// prefix to url if it doesn't exist so it can be opened:
 		// Could be moved to themodel
-		var urlString = links[indexPath.row].url
+		var urlString: String
+		if transcriptURL != nil {
+			switch indexPath.row {
+			case 0:
+				urlString = transcriptURL!
+			default:
+				urlString = links[indexPath.row-1].url
+			}
+		} else {
+			urlString = links[indexPath.row].url
+		}
 		let urlPrefix = urlString.prefix(4)
 		if urlPrefix != "http" {
 			// Defaulting to http:

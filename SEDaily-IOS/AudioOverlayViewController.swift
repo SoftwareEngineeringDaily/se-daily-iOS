@@ -88,6 +88,17 @@ class AudioOverlayViewController: UIViewController {
 		}
 	}
 	
+	
+	deinit {
+		
+	
+	}
+	
+	private func notifyOnCurrentlyPlaying(id: String) {
+		let userInfo = ["viewModelId": id]
+		NotificationCenter.default.post(name: .currentlyPlaying, object: nil, userInfo: userInfo)
+	}
+	
 	func animateIn() {
 		self.view.snp.updateConstraints { (make) in
 			make.bottom.equalToSuperview().offset(0)
@@ -132,6 +143,7 @@ class AudioOverlayViewController: UIViewController {
 		self.saveProgress()
 		self.loadAudio(podcastViewModel: podcastViewModel)
 		self.createPodcastDetailViewController(podcastViewModel: podcastViewModel)
+		notifyOnCurrentlyPlaying(id: podcastViewModel._id)
 		// TODO: only mark if logged in
 		networkService.markAsListened(postId: podcastViewModel._id)
 		Analytics2.podcastPlayed(podcastId: podcastViewModel._id)
@@ -143,6 +155,7 @@ class AudioOverlayViewController: UIViewController {
 	
 	func stopAudio() {
 		self.stopButtonPressed()
+		notifyOnCurrentlyPlaying(id: "")
 	}
 	
 	private func saveProgress() {

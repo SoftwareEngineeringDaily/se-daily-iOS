@@ -60,7 +60,7 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 		self.errorView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
 		self.errorView?.backgroundColor = .green
 		
-		progressController.retrieve()
+		
 		
 		let refreshControl = UIRefreshControl()
 		refreshControl.addTarget(
@@ -85,6 +85,7 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		self.setupInitialViewState()
+		progressController.retrieve()
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {

@@ -92,7 +92,7 @@ class EpisodeHeaderCell: UITableViewCell, Reusable {
 		let notification = UINotificationFeedbackGenerator()
 		notification.notificationOccurred(.success)
 		playButtonCallBack(isPlaying)
-		isPlaying = !isPlaying
+		
 	}
 	
 	@objc func relatedLinksTapped() {

@@ -73,7 +73,7 @@ class GeneralCollectionViewController: UICollectionViewController, StatefulViewC
 		
 		// Uncomment the following line to preserve selection between presentations
 		// self.clearsSelectionOnViewWillAppear = false
-		progressController.retrieve()
+		
 		
 		// Register cell classes
 		self.collectionView?.register(ItemCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -109,7 +109,7 @@ class GeneralCollectionViewController: UICollectionViewController, StatefulViewC
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		//collectionView?.reloadData()
+		progressController.retrieve()
 	}
 	deinit {
 		// perform the deinitialization

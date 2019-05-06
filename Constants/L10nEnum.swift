@@ -161,6 +161,8 @@ enum L10n {
   static let toggleToSignInButtonTitle = L10n.tr("Localizable", "ToggleToSignInButtonTitle")
   /// no account? sign up
   static let toggleToSignUpButtonTitle = L10n.tr("Localizable", "ToggleToSignUpButtonTitle")
+  /// Transcript
+  static let transcript = L10n.tr("Localizable", "Transcript")
   /// Username or Email
   static let usernameOrEmailPlaceholder = L10n.tr("Localizable", "UsernameOrEmailPlaceholder")
   /// Username

@@ -19,8 +19,14 @@ protocol AudioOverlayDelegate: class {
 	func animateOverlayOut()
 	func playAudio(podcastViewModel: PodcastViewModel)
 	func pauseAudio()
+	func stopAudio()
 	func setCurrentShowingDetailView(podcastViewModel: PodcastViewModel?)
+	func setServices(upvoteService: UpvoteService, bookmarkService: BookmarkService)
 }
+
+//extension AudioOverlayDelegate {
+//	func setServices(upvoteService: UpvoteService, bookmarkService: BookmarkService) { }
+//}
 
 class AudioOverlayViewController: UIViewController {
 	let networkService = API()
@@ -38,12 +44,17 @@ class AudioOverlayViewController: UIViewController {
 	/// The instance of PlayProgressModelController to retrieve and save progress of the playback
 	private var progressController = PlayProgressModelController()
 	
+
+	
 	private var audioView: AudioView?
 	private var podcastViewModel: PodcastViewModel?
 	private let verticalStackView = UIStackView()
 	private let horizontalStackView = UIStackView()
 	private var currentViewController: UIViewController?
 	private weak var audioOverlayDelegate: AudioOverlayDelegate?
+	
+	private var upvoteService: UpvoteService?
+	private var bookmarkService: BookmarkService?
 	
 	init(audioOverlayDelegate: AudioOverlayDelegate) {
 		self.audioOverlayDelegate = audioOverlayDelegate
@@ -75,6 +86,12 @@ class AudioOverlayViewController: UIViewController {
 		self.verticalStackView.snp.makeConstraints { (make) in
 			make.edges.equalToSuperview()
 		}
+	}
+	
+	
+	deinit {
+		
+	
 	}
 	
 	func animateIn() {
@@ -121,6 +138,7 @@ class AudioOverlayViewController: UIViewController {
 		self.saveProgress()
 		self.loadAudio(podcastViewModel: podcastViewModel)
 		self.createPodcastDetailViewController(podcastViewModel: podcastViewModel)
+		CurrentlyPlaying.shared.setCurrentlyPlaying(id: podcastViewModel._id)
 		// TODO: only mark if logged in
 		networkService.markAsListened(postId: podcastViewModel._id)
 		Analytics2.podcastPlayed(podcastId: podcastViewModel._id)
@@ -128,6 +146,11 @@ class AudioOverlayViewController: UIViewController {
 	
 	func pauseAudio() {
 		self.pauseButtonPressed()
+	}
+	
+	func stopAudio() {
+		self.stopButtonPressed()
+		CurrentlyPlaying.shared.setCurrentlyPlaying(id: "")
 	}
 	
 	private func saveProgress() {
@@ -155,9 +178,11 @@ class AudioOverlayViewController: UIViewController {
 			currentViewController.view.removeFromSuperview()
 			currentViewController.removeFromParentViewController()
 		}
-		
-		let podcastDetailViewController = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: nil)
-		podcastDetailViewController.model = podcastViewModel
+//		guard let bookmarkService = self.bookmarkService else { return }
+//		guard let upvoteService = self.upvoteService else { return }
+	
+		let podcastDetailViewController = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
+		podcastDetailViewController.viewModel = podcastViewModel
 		
 		let navVC = UINavigationController(rootViewController: podcastDetailViewController)
 		navVC.view.backgroundColor = .white
@@ -370,5 +395,10 @@ extension AudioOverlayViewController: AudioViewDelegate {
 				self.audioView?.hideExpandCollapseButton()
 			}
 		}
+	}
+	
+	func setServices(upvoteService: UpvoteService, bookmarkService: BookmarkService) {
+		self.upvoteService = upvoteService
+		self.bookmarkService = bookmarkService
 	}
 }

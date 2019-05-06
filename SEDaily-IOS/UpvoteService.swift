@@ -6,9 +6,6 @@
 //  Copyright © 2019 Altalogy. All rights reserved.
 //
 
-protocol UpvoteServiceModelDelegate: class {
-	func upvoteModelDidChange(viewModel: PodcastViewModel)
-}
 protocol UpvoteServiceUIDelegate: class {
 	func upvoteUIDidChange(isUpvoted: Bool, score: Int)
 	func upvoteUIImmediateUpdate()
@@ -28,7 +25,6 @@ class UpvoteService {
 		}
 	}
 	
-	weak var modelDelegate: UpvoteServiceModelDelegate?
 	weak var UIDelegate: UpvoteServiceUIDelegate?
 
 	init(podcastViewModel: PodcastViewModel) {
@@ -65,7 +61,8 @@ class UpvoteService {
 	}
 	
 	private func updateViewModel() {
-		self.modelDelegate?.upvoteModelDidChange(viewModel: self.podcastViewModel)
+		let userInfo = ["viewModel": podcastViewModel]
+		NotificationCenter.default.post(name: .viewModelUpdated, object: nil, userInfo: userInfo)
 	}
 	private func updateUI(isUpvoted: Bool, score: Int) {
 		self.UIDelegate?.upvoteUIDidChange(isUpvoted: isUpvoted, score: self.podcastViewModel.score)

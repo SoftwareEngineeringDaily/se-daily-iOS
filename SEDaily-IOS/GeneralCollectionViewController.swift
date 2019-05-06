@@ -8,10 +8,11 @@
 
 import UIKit
 import KoalaTeaFlowLayout
+import StatefulViewController
 
 private let reuseIdentifier = "Cell"
 
-class GeneralCollectionViewController: UICollectionViewController {
+class GeneralCollectionViewController: UICollectionViewController, StatefulViewController {
 	lazy var skeletonCollectionView: SkeletonCollectionView = {
 		return SkeletonCollectionView(frame: self.collectionView!.frame)
 	}()
@@ -72,7 +73,7 @@ class GeneralCollectionViewController: UICollectionViewController {
 		
 		// Uncomment the following line to preserve selection between presentations
 		// self.clearsSelectionOnViewWillAppear = false
-		progressController.retrieve()
+		
 		
 		// Register cell classes
 		self.collectionView?.register(ItemCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -88,6 +89,11 @@ class GeneralCollectionViewController: UICollectionViewController {
 		
 		// User Login observer
 		NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(self.onDidReceiveData(_:)),
+			name: .viewModelUpdated,
+			object: nil)
 		
 		self.collectionView?.addSubview(skeletonCollectionView)
 		
@@ -99,6 +105,16 @@ class GeneralCollectionViewController: UICollectionViewController {
 		case .top:
 			Analytics2.topPodcastsListViewed(tabTitle: self.tabTitle)
 		}
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		progressController.retrieve()
+		self.collectionView?.reloadData()
+	}
+	deinit {
+		// perform the deinitialization
+		NotificationCenter.default.removeObserver(self)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -153,8 +169,6 @@ class GeneralCollectionViewController: UICollectionViewController {
 			
 			cell.playProgress = progressController.episodesPlayProgress[viewModel._id] ?? PlayProgress(id: "", currentTime: 0.0, totalLength: 0.0)
 			
-			upvoteService.modelDelegate = self
-			bookmarkService.modelDelegate = self
 
 			cell.viewModel = viewModel
 			cell.upvoteService = upvoteService
@@ -216,33 +230,21 @@ class GeneralCollectionViewController: UICollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
 			if let audioOverlayDelegate = self.audioOverlayDelegate {
-				let vc = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
-				vc.model = viewModel
-				vc.delegate = self
-				
+				let vc = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
+				vc.viewModel = viewModel
 				self.navigationController?.pushViewController(vc, animated: true)
 			}
 		}
 	}
 }
 
-extension GeneralCollectionViewController: PodcastDetailViewControllerDelegate {
-	func modelDidChange(viewModel: PodcastViewModel) {
-		self.podcastViewModelController.update(with: viewModel)
+extension GeneralCollectionViewController {
+	private func viewModelDidChange(viewModel: PodcastViewModel) {
+			self.podcastViewModelController.update(with: viewModel)
 	}
 }
 
-extension GeneralCollectionViewController: UpvoteServiceModelDelegate {
-	func upvoteModelDidChange(viewModel: PodcastViewModel) {
-		self.podcastViewModelController.update(with: viewModel)
-	}
-}
 
-extension GeneralCollectionViewController: BookmarkServiceModelDelegate {
-	func bookmarkModelDidChange(viewModel: PodcastViewModel) {
-		self.podcastViewModelController.update(with: viewModel)
-	}
-}
 
 extension GeneralCollectionViewController {
 	func commentsButtonPressed(_ viewModel: PodcastViewModel) {
@@ -259,3 +261,12 @@ extension GeneralCollectionViewController {
 	}
 }
 
+extension GeneralCollectionViewController {
+	@objc func onDidReceiveData(_ notification: Notification) {
+		if let data = notification.userInfo as? [String: PodcastViewModel] {
+			for (_, viewModel) in data {
+				viewModelDidChange(viewModel: viewModel)
+			}
+		}
+	}
+}

@@ -27,12 +27,11 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	let commentButton: UIButton = UIButton()
 	let bookmarkButton: UIButton = UIButton()
 	
-	var commentShowCallback: ( ()-> Void) = {}
+	var commentShowCallback: (()-> Void) = {}
 	
 	let upvoteCountLabel: UILabel = UILabel()
 
 	let upvoteStackView: UIStackView = UIStackView()
-	let bottomStackView: UIStackView = UIStackView()
 	
 	let progressBar: UIProgressView = UIProgressView()
 	
@@ -50,7 +49,6 @@ class ItemCollectionViewCell: UICollectionViewCell {
 			guard newValue != self.viewModel else { return }
 		}
 		didSet {
-			self.titleLabel.text = viewModel.podcastTitle
 			updateUI()
 		}
 	}
@@ -58,7 +56,6 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	var upvoteService: UpvoteService?
 	var bookmarkService: BookmarkService?
 
-	
 	var playProgress: PlayProgress?
 	
 	override init(frame: CGRect) {
@@ -98,7 +95,6 @@ class ItemCollectionViewCell: UICollectionViewCell {
 		let notification = UINotificationFeedbackGenerator()
 		notification.notificationOccurred(.success)
 		commentShowCallback()
-		
 	}
 	
 	func setupSkeletonCell() {
@@ -163,15 +159,17 @@ extension ItemCollectionViewCell {
 			contentView.addSubview(titleLabel)
 			titleLabel.numberOfLines = 3
 			titleLabel.font = UIFont(name: "Roboto-Bold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 17))
+			titleLabel.textColor = Stylesheet.Colors.dark
 			
 			miscDetailsLabel = UILabel()
 			contentView.addSubview(miscDetailsLabel)
 			miscDetailsLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 11))
-			miscDetailsLabel.textColor = UIColor(hex: 0x8A8C8C)!
+			miscDetailsLabel.textColor = Stylesheet.Colors.dark
 			
 			descriptionLabel = UILabel()
 			descriptionLabel.numberOfLines = 2
 			descriptionLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
+			descriptionLabel.textColor = Stylesheet.Colors.dark
 			contentView.addSubview(descriptionLabel)
 		}
 		
@@ -281,6 +279,8 @@ extension ItemCollectionViewCell {
 extension ItemCollectionViewCell {
 	private func updateUI() {
 		
+		self.titleLabel.text = viewModel.podcastTitle
+		
 		func loadImageView(imageURL: URL?) {
 			imageView.kf.cancelDownloadTask()
 			guard let imageURL = imageURL else {
@@ -306,6 +306,7 @@ extension ItemCollectionViewCell {
 			DispatchQueue.global(qos: .background).async { [weak self] in
 				str = self?.viewModel.podcastDescription
 				DispatchQueue.main.async {
+					
 					self?.descriptionLabel.text = str
 				}
 			}

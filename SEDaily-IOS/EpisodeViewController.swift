@@ -32,6 +32,7 @@ class EpisodeViewController: UIViewController {
 		}
 	}
 	var isPlaying = false { didSet { tableView.reloadData() }}
+	var transcriptURL: String?
 	var tableView = UITableView()
 	
 	
@@ -71,6 +72,9 @@ class EpisodeViewController: UIViewController {
 			selector: #selector(self.onDidReceiveData(_:)),
 			name: .viewModelUpdated,
 			object: nil)
+		
+		
+		self.getTrascriptURL()
 		
 	}
 	
@@ -116,6 +120,7 @@ extension EpisodeViewController {
 		}
 		let podcastId = viewModel._id
 		relatedLinksViewController.postId = podcastId
+		relatedLinksViewController.transcriptURL = transcriptURL
 		self.navigationController?.pushViewController(relatedLinksViewController, animated: true)
 	}
 	private func commentsButtonPressed() {
@@ -129,6 +134,17 @@ extension EpisodeViewController {
 			commentsViewController.rootEntityId = thread._id
 			self.navigationController?.pushViewController(commentsViewController, animated: true)
 		}
+	}
+}
+
+extension EpisodeViewController {
+	func getTrascriptURL() {
+		networkService.getPost(podcastId: viewModel._id, completion: { [weak self] (success, result) in
+			if success {
+				guard let transcriptURL = result?.transcriptURL else { return }
+				self?.transcriptURL = transcriptURL
+			}
+	})
 	}
 }
 

@@ -79,6 +79,7 @@ public struct Podcast: Codable {
 	var downvoted: Bool?
 	var bookmarked: Bool?
 	var downloaded: Bool?
+	var transcriptURL: String?
 }
 
 extension Podcast {
@@ -111,7 +112,7 @@ extension Podcast {
 		self.upvoted = viewModel.isUpvoted
 		self.downvoted = viewModel.isDownvoted
 		self.bookmarked = viewModel.isBookmarked
-		
+		self.transcriptURL = ""
 	}
 }
 
@@ -128,6 +129,7 @@ extension Podcast: Equatable {
 			lhs.content.rendered == rhs.content.rendered &&
 			lhs.title.rendered == rhs.title.rendered &&
 			lhs.score == rhs.score &&
+			lhs.transcriptURL == rhs.transcriptURL &&
 			lhs.type == rhs.type
 	}
 }

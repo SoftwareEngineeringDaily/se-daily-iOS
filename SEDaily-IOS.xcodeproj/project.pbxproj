@@ -64,6 +64,7 @@
 		24412438C753126FDDD37CBF /* Pods_SEDaily_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3651E5B02B83E392546E167 /* Pods_SEDaily_IOS.framework */; };
 		435BAF3A22783B7C00762891 /* EpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435BAF3922783B7C00762891 /* EpisodeViewController.swift */; };
 		435BAF3C2278430900762891 /* EpisodeHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435BAF3B2278430900762891 /* EpisodeHeaderCell.swift */; };
+		439BCC6C22802EDC008D808B /* CurrentlyPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BCC6B22802EDC008D808B /* CurrentlyPlaying.swift */; };
 		43A680D02270718600A639A9 /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A680CF2270718600A639A9 /* Debouncer.swift */; };
 		43A680D222707DC000A639A9 /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A680D122707DC000A639A9 /* DownloadService.swift */; };
 		43A680D42270803700A639A9 /* BookmarkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A680D32270803700A639A9 /* BookmarkService.swift */; };
@@ -202,6 +203,7 @@
 		1EB74FFB1FE5E1AF004B733E /* StateBookmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StateBookmarkView.swift; path = Bookmark/StateBookmarkView.swift; sourceTree = "<group>"; };
 		435BAF3922783B7C00762891 /* EpisodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeViewController.swift; sourceTree = "<group>"; };
 		435BAF3B2278430900762891 /* EpisodeHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeHeaderCell.swift; sourceTree = "<group>"; };
+		439BCC6B22802EDC008D808B /* CurrentlyPlaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentlyPlaying.swift; sourceTree = "<group>"; };
 		43A680CF2270718600A639A9 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		43A680D122707DC000A639A9 /* DownloadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
 		43A680D32270803700A639A9 /* BookmarkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkService.swift; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 				9610313D20A353B400A2D2D5 /* AnalyticsHelper.swift */,
 				43A680CF2270718600A639A9 /* Debouncer.swift */,
 				43CE8E0C2271AFC000DD990F /* HtmlHelper.swift */,
+				439BCC6B22802EDC008D808B /* CurrentlyPlaying.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1032,6 +1035,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9672AA52202929C90020981F /* Author.swift in Sources */,
+				439BCC6C22802EDC008D808B /* CurrentlyPlaying.swift in Sources */,
 				96F35745201BFB0200E8B6E9 /* RelatedLink.swift in Sources */,
 				965E165820ABD74900F2E4E4 /* FeedItem.swift in Sources */,
 				960BFEC320239F0E0073DAB2 /* Comment.swift in Sources */,

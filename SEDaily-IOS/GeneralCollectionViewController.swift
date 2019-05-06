@@ -110,6 +110,7 @@ class GeneralCollectionViewController: UICollectionViewController, StatefulViewC
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		progressController.retrieve()
+		self.collectionView?.reloadData()
 	}
 	deinit {
 		// perform the deinitialization
@@ -239,12 +240,7 @@ class GeneralCollectionViewController: UICollectionViewController, StatefulViewC
 
 extension GeneralCollectionViewController {
 	private func viewModelDidChange(viewModel: PodcastViewModel) {
-		DispatchQueue.global(qos: .background).async { [weak self] in
-			self?.podcastViewModelController.update(with: viewModel)
-			DispatchQueue.main.async {
-				self?.collectionView?.reloadData()
-			}
-		}
+			self.podcastViewModelController.update(with: viewModel)
 	}
 }
 

@@ -25,6 +25,7 @@ class EpisodeHeaderCell: UITableViewCell, Reusable {
 	
 	var upvoteService: UpvoteService?
 	var bookmarkService: BookmarkService?
+	var downloadService: DownloadService? { didSet { downloadService?.UIDelegate = self }}
 	
 	var downloadButtonCallBack: (()-> Void) = {}
 	var relatedLinksButtonCallBack: (()-> Void) = {}
@@ -65,6 +66,7 @@ class EpisodeHeaderCell: UITableViewCell, Reusable {
 		actionView.commentButton.addTarget(self, action: #selector(EpisodeHeaderCell.commentTapped), for: .touchUpInside)
 		playButton.addTarget(self, action: #selector(EpisodeHeaderCell.playTapped), for: .touchUpInside)
 		relatedLinksButton.addTarget(self, action: #selector(EpisodeHeaderCell.relatedLinksTapped), for: .touchUpInside)
+		downloadButton.addTarget(self, action: #selector(EpisodeHeaderCell.downloadTapped), for: .touchUpInside)
 	}
 	
 	@objc func upvoteTapped() {
@@ -86,6 +88,17 @@ class EpisodeHeaderCell: UITableViewCell, Reusable {
 		let notification = UINotificationFeedbackGenerator()
 		notification.notificationOccurred(.success)
 		actionView.commentShowCallback()
+	}
+	@objc func downloadTapped() {
+		let notification = UINotificationFeedbackGenerator()
+		notification.notificationOccurred(.success)
+//		downloadService?.UIDelegate = self
+		switch viewModel.isDownloaded {
+		case true:
+			downloadService?.deletePodcast()
+		default:
+			downloadService?.savePodcast()
+		}
 	}
 	
 	@objc func playTapped() {
@@ -151,6 +164,7 @@ extension EpisodeHeaderCell {
 			downloadButton = UIButton()
 			contentView.addSubview(downloadButton)
 			downloadButton.setIcon(icon: .ionicons(.iosCloudDownloadOutline), iconSize: 25.0, color: Stylesheet.Colors.dark, forState: .normal)
+			downloadButton.setIcon(icon: .ionicons(.iosCloudDownload), iconSize: 25.0, color: Stylesheet.Colors.base, forState: .selected)
 			downloadButton.cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 25.0)
 			downloadButton.backgroundColor = Stylesheet.Colors.light
 			
@@ -261,8 +275,13 @@ extension EpisodeHeaderCell {
 			actionView.bookmarkButton.isSelected = viewModel.isBookmarked
 		}
 		
+		func updateDownloadButton() {
+			downloadButton.isSelected = viewModel.isDownloaded
+		}
+		
 		updateUpvote()
 		updateBookmark()
+		updateDownloadButton()
 		setupGuestThumb(imageURL: viewModel.guestImageURL)
 	}
 }
@@ -298,7 +317,23 @@ extension EpisodeHeaderCell: BookmarkServiceUIDelegate {
 	}
 }
 
-
-
-
-
+extension EpisodeHeaderCell: DownloadServiceUIDelegate {
+	func downloadUIDidChange(progress: Int?, success: Bool?) {
+		
+		guard let progress = progress else {
+			guard let success = success else { return }
+			downloadButton.isUserInteractionEnabled = true
+			downloadButton.isSelected = success
+			downloadButton.setTitle("", for: .normal)
+			downloadButton.setIcon(icon: .ionicons(.iosCloudDownload), iconSize: 25.0, color: Stylesheet.Colors.base, forState: .selected)
+			downloadButton.setIcon(icon: .ionicons(.iosCloudDownloadOutline), iconSize: 25.0, color: Stylesheet.Colors.dark, forState: .normal)
+			downloadButton.cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 25.0)
+			downloadButton.backgroundColor = Stylesheet.Colors.light
+			return
+		}
+		downloadButton.isUserInteractionEnabled = false
+		let progressString: String = String(progress) + "%"
+		downloadButton.titleLabel?.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 12))
+		downloadButton.setTitle(String(progressString), for: .normal)
+	}
+}

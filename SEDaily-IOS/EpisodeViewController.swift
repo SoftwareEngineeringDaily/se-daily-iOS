@@ -158,6 +158,8 @@ extension EpisodeViewController: UITableViewDataSource {
 			cell.selectionStyle = .none
 			cell.bookmarkService = BookmarkService(podcastViewModel: viewModel)
 			cell.upvoteService = UpvoteService(podcastViewModel: viewModel)
+			cell.downloadService = DownloadService(podcastViewModel: viewModel)
+			
 			cell.isPlaying = isPlaying
 			cell.viewModel = viewModel
 			cell.playButtonCallBack = { [weak self] isPlaying in
@@ -201,7 +203,6 @@ extension EpisodeViewController: UITableViewDelegate {
 }
 
 
-
 extension EpisodeViewController: WebViewCellDelegate {
 	func updateWebViewHeight(didCalculateHeight height: CGFloat) {
 		if !loaded {
@@ -222,4 +223,3 @@ extension EpisodeViewController {
 		}
 	}
 }
-

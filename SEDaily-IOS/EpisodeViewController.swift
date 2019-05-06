@@ -17,8 +17,6 @@ class EpisodeViewController: UIViewController {
 	weak var delegate: PodcastDetailViewControllerDelegate?
 	private weak var audioOverlayDelegate: AudioOverlayDelegate?
 	
-	
-	
 	var loaded: Bool = false // to check if HTML content has loaded
 	var webView: WKWebView = WKWebView()
 	let networkService: API = API()
@@ -36,10 +34,6 @@ class EpisodeViewController: UIViewController {
 	var isPlaying = false { didSet { tableView.reloadData() }}
 	var tableView = UITableView()
 	
-//	let upvoteService: UpvoteService = UpvoteService(podcastViewModel: viewModel)
-//	let bookmarkService: BookmarkService = BookmarkService(podcastViewModel: viewModel)
-	
-	
 	
 	required init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, audioOverlayDelegate: AudioOverlayDelegate?) {
 		self.audioOverlayDelegate = audioOverlayDelegate
@@ -48,8 +42,6 @@ class EpisodeViewController: UIViewController {
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
-	
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -79,21 +71,13 @@ class EpisodeViewController: UIViewController {
 			selector: #selector(self.onDidReceiveData(_:)),
 			name: .viewModelUpdated,
 			object: nil)
-		NotificationCenter.default.addObserver(
-			self,
-			selector: #selector(self.onPlayerStateChanged(_:)),
-			name: .currentlyPlaying,
-			object: nil)
 		
-		
-		
-//		self.audioOverlayDelegate?.setServices(upvoteService: upvoteService, bookmarkService: bookmarkService)
 	}
 	
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		
+		self.isPlaying = CurrentlyPlaying.shared.getCurrentlyPlayingId() == viewModel._id
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
@@ -117,6 +101,7 @@ class EpisodeViewController: UIViewController {
 			self.audioOverlayDelegate?.animateOverlayOut()
 			self.audioOverlayDelegate?.stopAudio()
 		}
+		self.isPlaying = !self.isPlaying
 	}
 }
 
@@ -221,28 +206,4 @@ extension EpisodeViewController {
 		}
 	}
 }
-
-extension EpisodeViewController {
-	@objc func onPlayerStateChanged(_ notification: Notification) {
-		if let data = notification.userInfo as? [String: String] {
-			for (_, id) in data {
-				self.isPlaying = id == viewModel._id
-			}
-		}
-	}
-}
-
-
-//extension EpisodeViewController: UpvoteServiceModelDelegate {
-//	func upvoteModelDidChange(viewModel: PodcastViewModel) {
-//		self.podcastViewModelController.update(with: viewModel)
-//	}
-//}
-//
-//extension EpisodeViewController: BookmarkServiceModelDelegate {
-//	func bookmarkModelDidChange(viewModel: PodcastViewModel) {
-//		self.podcastViewModelController.update(with: viewModel)
-//	}
-//}
-
 

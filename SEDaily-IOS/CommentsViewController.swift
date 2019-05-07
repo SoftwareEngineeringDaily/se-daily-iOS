@@ -10,6 +10,7 @@ import UIKit
 import Down
 class CommentsViewController: UIViewController {
 	
+	
 	@IBOutlet var headerView: ThreadHeaderView!
 	
 	@IBOutlet weak var closeStatusAreaButton: UIButton!
@@ -20,6 +21,11 @@ class CommentsViewController: UIViewController {
 	@IBOutlet weak var composeStatusHolder: UIStackView!
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var heightOfReplyInfoHolder: NSLayoutConstraint!
+	
+	var postButton: UIButton!
+	var commentTextView: UITextView!
+	var postCommentView: UIView!
+	
 	
 	private let refreshControl = UIRefreshControl()
 	var rootEntityId: String?
@@ -33,7 +39,7 @@ class CommentsViewController: UIViewController {
 				if thread != nil {
 					tableView.isHidden = false
 				} else {
-					tableView.isHidden = true
+					tableView.isHidden = false //edit
 				}
 			} else {
 				tableView.isHidden = false
@@ -78,10 +84,10 @@ class CommentsViewController: UIViewController {
 	let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
 		tableView.dataSource = self
 		tableView.delegate = self
 		tableView.register(cellType: CommentCell.self)
-		tableView.tableFooterView = UIView()
 		tableView.separatorColor = .clear
 		tableView.contentInset = UIEdgeInsets(top: 20,left: 0,bottom: 0,right: 0)
 		
@@ -97,11 +103,9 @@ class CommentsViewController: UIViewController {
 		activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
 		view.addSubview(activityIndicator)
 		
-		if let thread = thread {
-			//setupTableHeader(thread: thread)
-		}
 		
 		updateUIBasedOnUser()
+	
 		
 		// Style (x) close button for status area:
 		let iconSize = UIView.getValueScaledByScreenHeightFor(baseValue: 20)
@@ -116,16 +120,21 @@ class CommentsViewController: UIViewController {
 		if !isFullUser() {
 			// TODO: setting the table view footer would make make this much easier.
 			// Constraints:
-			bottomCommentTextField.isActive = false
-			topStatusHolder.isActive = false
-			topCreateCommentTextField.isActive = false
-			heightCreateCommentTextField.isActive = false
-			heightReplyInfoHolder.isActive = false
-			
-			//
-			createCommentHeight.constant = 0
-			createCommentHolder.isHidden = true
-			self.view.layoutSubviews()
+//			bottomCommentTextField.isActive = false
+//			topStatusHolder.isActive = false
+//			topCreateCommentTextField.isActive = false
+//			heightCreateCommentTextField.isActive = false
+//			heightReplyInfoHolder.isActive = false
+//
+//			//
+//			createCommentHeight.constant = 0
+//			createCommentHolder.isHidden = true
+//			self.view.layoutSubviews()
+			tableView.tableFooterView = UIView()
+			tableView.reloadData()
+		} else {
+			setupLayout()
+			tableView.reloadData()
 		}
 	}
 	
@@ -144,28 +153,26 @@ class CommentsViewController: UIViewController {
 		loadComments()
 	}
 	
-	func setupTableHeader (thread: ForumThread) {
-		headerView.thread = thread
-		tableView.tableHeaderView = headerView
-		headerView.setNeedsLayout()
-		headerView.layoutIfNeeded()
-		
-		let height = headerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
-		var frame = headerView.frame
-		frame.size.height = height
-		headerView.frame = frame
-		
-		tableView.tableHeaderView = headerView
-	}
+//	func setupTableHeader (thread: ForumThread) {
+//		headerView.thread = thread
+//		tableView.tableHeaderView = headerView
+//		headerView.setNeedsLayout()
+//		headerView.layoutIfNeeded()
+//
+//		let height = headerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+//		var frame = headerView.frame
+//		frame.size.height = height
+//		headerView.frame = frame
+//
+//		tableView.tableHeaderView = headerView
+//	}
 	
 	// Should be in the model but only used by comments for now:
 	func isFullUser() -> Bool {
 		if !UserManager.sharedInstance.isCurrentUserLoggedIn() {
 			return false
 		}
-		
 		return true
-		
 	}
 	
 	func loadComments() {
@@ -203,6 +210,29 @@ class CommentsViewController: UIViewController {
 		return flatComments
 	}
 	
+	
+	@objc func postCommentTapped() {
+		guard let rootEntityId = rootEntityId, let commentContent = commentTextView.text else {
+			//composeStatusLabel.text = L10n.thereWasAProblem
+			return
+		}
+		networkService.createComment(rootEntityId: rootEntityId, parentComment: parentCommentSelected, commentContent: commentContent, onSuccess: { [weak self] in
+			
+			// Reset input field + re-enable button:
+			self?.createCommentTextField.text = ""
+			self?.createCommentTextField.isUserInteractionEnabled = true
+			self?.submitCommentButton.isEnabled = true
+			
+			self?.composeStatusLabel.text = L10n.succcessfullySubmitted
+			self?.parentCommentSelected = nil
+			self?.loadComments()
+			}, onFailure: { [weak self] (_) in
+				self?.composeStatusLabel.text = L10n.thereWasAProblem
+				self?.submitCommentButton.isEnabled = true
+				self?.createCommentTextField.isUserInteractionEnabled = true
+		})
+	}
+	
 	@IBAction func submitCommentPressed(_ sender: UIButton) {
 		self.view.endEditing(true) // Hide keyboard
 		
@@ -216,7 +246,7 @@ class CommentsViewController: UIViewController {
 		createCommentTextField.isUserInteractionEnabled = false
 		submitCommentButton.isEnabled = false
 		
-		guard let rootEntityId = rootEntityId, let commentContent = createCommentTextField.text else {
+		guard let rootEntityId = rootEntityId, let commentContent = commentTextView.text else {
 			composeStatusLabel.text = L10n.thereWasAProblem
 			return
 		}
@@ -281,4 +311,59 @@ extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
 	public func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
+}
+
+
+extension CommentsViewController {
+	private func setupLayout() {
+		postButton = UIButton()
+		postCommentView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIView.getValueScaledByScreenWidthFor(baseValue: 375.0), height: UIView.getValueScaledByScreenWidthFor(baseValue: 100.0)))
+		postCommentView.backgroundColor = .white
+		commentTextView = UITextView(frame: .zero)
+		commentTextView.toolbarPlaceholder = "Type here"
+		commentTextView.text = "Add a comment..."
+		commentTextView.textColor = Stylesheet.Colors.grey
+		commentTextView.delegate = self
+		commentTextView.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
+
+		commentTextView.textAlignment = NSTextAlignment.natural
+		
+		commentTextView.backgroundColor = .white
+		postCommentView.addSubview(postButton)
+		postButton.setTitle("Post", for: .normal)
+		postButton.titleLabel?.font = UIFont(name: "OpenSans-Semibold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+		postButton.setTitleColor(Stylesheet.Colors.base, for: .normal)
+		postCommentView.addSubview(commentTextView)
+		tableView.tableFooterView = postCommentView
+
+		commentTextView.snp.makeConstraints { (make) -> Void in
+			make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+			make.right.equalTo(postButton.snp_left).offset(UIView.getValueScaledByScreenWidthFor(baseValue: -10))
+			make.top.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 10))
+			make.bottom.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 10))
+		}
+		postButton.snp.makeConstraints { (make) -> Void in
+			make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+			make.top.equalTo(commentTextView)
+		}
+		
+		postButton.addTarget(self, action: #selector(CommentsViewController.postCommentTapped), for: .touchUpInside)
+		
+	}
+}
+
+extension CommentsViewController: UITextViewDelegate {
+	
+	func textViewDidBeginEditing(_ textView: UITextView) {
+		if textView.textColor == Stylesheet.Colors.grey {
+			textView.text = nil
+			textView.textColor = Stylesheet.Colors.dark
+		}
+	}
+	func textViewDidEndEditing(_ textView: UITextView) {
+		if textView.text.isEmpty {
+			textView.text = "Add a comment..."
+			textView.textColor = Stylesheet.Colors.grey
+		}
+}
 }

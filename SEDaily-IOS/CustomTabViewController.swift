@@ -127,15 +127,19 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
         }
         
 //        ForumViewController.audioOverlayDelegate = self.audioOverlayDelegate
+			
+			//            FeedViewController,
+			//            ForumViewController,
+			//            BookmarkCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate),
+			//            NotificationsTableViewController()
 
         
         self.viewControllers = [
             PodcastPageViewController(audioOverlayDelegate: self.audioOverlayDelegate),
-  
-            FeedViewController,
-            ForumViewController,
-            BookmarkCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate),
-            NotificationsTableViewController()
+					ProfileViewController(),
+					ForumViewController,
+					BookmarkCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate),
+					NotificationsTableViewController()
         ]
 
         #if DEBUG

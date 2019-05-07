@@ -23,21 +23,27 @@ class ProfileViewController: UIViewController {
 		tableView.separatorColor = .clear
 		tableView.backgroundColor = .white
 		tableView.register(cellType: ProfileCell.self)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)
 		tableView.snp.makeConstraints { (make) -> Void in
 			make.top.equalToSuperview()
 			make.bottom.equalToSuperview()
 			make.right.equalToSuperview()
 			make.left.equalToSuperview()
 		}
+		API().loadUserInfo()
 	}
-	
+	@objc func loginObserver() {
+		tableView.reloadData()
+	}
 }
 extension ProfileViewController: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell: ProfileCell = tableView.dequeueReusableCell(for: indexPath)
-		cell.nameLabel.text = "Dawid Cedrych"
-		cell.bioLabel.text = "Technology, Design, Future | Co-founder of @Altalogy iOS Dev | Don’t build things that quickly fade into irrelevance."
-		cell.linkLabel.text = "www.altalogy.com"
+		cell.nameLabel.text = UserManager.sharedInstance.getActiveUser().fullName
+		cell.usernameOrEmailLabel.text = UserManager.sharedInstance.getActiveUser().usernameOrEmail
+		cell.bioLabel.text = UserManager.sharedInstance.getActiveUser().bio
+		cell.linkLabel.text = UserManager.sharedInstance.getActiveUser().website
+		cell.setupAvatar(imageURL: URL(string: UserManager.sharedInstance.getActiveUser().avatarURL))
 		return cell
 	}
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

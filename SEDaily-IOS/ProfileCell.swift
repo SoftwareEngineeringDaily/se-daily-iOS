@@ -15,6 +15,8 @@ class ProfileCell: UITableViewCell, Reusable {
 	var nameLabel: UILabel!
 	var bioLabel: UILabel!
 	var linkLabel: UILabel!
+	var usernameOrEmailLabel: UILabel!
+	var separator: UIView!
 	
 	
 	
@@ -35,6 +37,15 @@ class ProfileCell: UITableViewCell, Reusable {
 		super.setSelected(selected, animated: animated)
 		
 		// Configure the view for the selected state
+	}
+	
+	func setupAvatar(imageURL: URL?) {
+		avatarImage.kf.cancelDownloadTask()
+		guard let imageURL = imageURL else {
+			avatarImage.image = #imageLiteral(resourceName: "SEDaily_Logo")
+			return
+		}
+		avatarImage.kf.setImage(with: imageURL, options: [.transition(.fade(0.2))])
 	}
 	
 }
@@ -58,6 +69,12 @@ extension ProfileCell {
 			nameLabel.numberOfLines = 3
 			nameLabel.font = UIFont(name: "Roboto-Bold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 30))
 			
+			usernameOrEmailLabel = UILabel()
+			contentView.addSubview(usernameOrEmailLabel)
+			usernameOrEmailLabel.textColor = Stylesheet.Colors.grey
+			usernameOrEmailLabel.numberOfLines = 0
+			usernameOrEmailLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 11))
+			
 			
 			bioLabel = UILabel()
 			contentView.addSubview(bioLabel)
@@ -71,6 +88,11 @@ extension ProfileCell {
 			linkLabel.numberOfLines = 0
 			linkLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
 		}
+		func setupSeparator() {
+			separator = UIView()
+			contentView.addSubview(separator)
+			separator.backgroundColor = Stylesheet.Colors.light
+		}
 		
 		func setupConstraints() {
 			avatarImage.snp.makeConstraints { (make) -> Void in
@@ -83,10 +105,15 @@ extension ProfileCell {
 				make.top.equalTo(avatarImage.snp_bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
 				make.centerX.equalTo(avatarImage.snp_centerX)
 			}
+			usernameOrEmailLabel.snp.makeConstraints { (make) -> Void in
+				make.centerX.equalTo(avatarImage.snp_centerX)
+				make.top.equalTo(nameLabel.snp_bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 5.0))
+				
+			}
 			bioLabel.snp.makeConstraints { (make) -> Void in
 				make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
 				make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
-				make.top.equalTo(nameLabel.snp_bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
+				make.top.equalTo(usernameOrEmailLabel.snp_bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
 				
 			}
 			linkLabel.snp.makeConstraints { (make) -> Void in
@@ -94,9 +121,14 @@ extension ProfileCell {
 				make.top.equalTo(bioLabel.snp_bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
 				make.bottom.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
 			}
+			separator.snp.makeConstraints { (make) -> Void in
+				make.left.right.bottom.equalToSuperview()
+				make.height.equalTo(5.0)
+			}
 		}
 		setupAvatarImage()
 		setupLabels()
+		setupSeparator()
 		setupConstraints()
 		
 	}

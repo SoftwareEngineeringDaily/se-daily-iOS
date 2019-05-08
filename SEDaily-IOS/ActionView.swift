@@ -23,14 +23,14 @@ class ActionView {
 	
 	func setupComponents(superview: UIView) {
 		func setupButtons() {
-			upvoteButton.setIcon(icon: .ionicons(.iosHeartOutline), iconSize: 25.0, color: Stylesheet.Colors.dark, forState: .normal)
-			upvoteButton.setIcon(icon: .ionicons(.iosHeart), iconSize: 25.0, color: Stylesheet.Colors.base, forState: .selected)
+			upvoteButton.setImage(UIImage(named: "like_outline"), for: .normal)
+			upvoteButton.setImage(UIImage(named: "like"), for: .selected)
 			
-			bookmarkButton.setImage(UIImage(named: "ios-bookmark"), for: .normal)
-			bookmarkButton.setImage(UIImage(named: "ios-bookmark-fill"), for: .selected)
+			bookmarkButton.setImage(UIImage(named: "bookmark_outline"), for: .normal)
+			bookmarkButton.setImage(UIImage(named: "bookmark"), for: .selected)
 			
-			commentButton.setIcon(icon: .ionicons(.iosChatbubbleOutline), iconSize: 30.0, color: Stylesheet.Colors.dark, forState: .normal)
-			commentButton.setIcon(icon: .ionicons(.iosChatbubble), iconSize: 30.0, color: Stylesheet.Colors.base, forState: .highlighted)
+			commentButton.setImage(UIImage(named: "comment"), for: .normal)
+			commentButton.setImage(UIImage(named: "comment"), for: .normal)
 		}
 		func setupUpvoteStackView() {
 			upvoteStackView.alignment = .center
@@ -61,6 +61,15 @@ class ActionView {
 	func setupContraints() {
 			upvoteButton.snp.makeConstraints { (make) -> Void in
 				make.right.equalTo(upvoteCountLabel.snp.left)
+				make.height.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 50.0))
+		}
+		bookmarkButton.snp.makeConstraints { (make) -> Void in
+			
+			make.height.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 50.0))
+		}
+		commentButton.snp.makeConstraints { (make) -> Void in
+			
+			make.height.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 50.0))
 		}
 	}
 }

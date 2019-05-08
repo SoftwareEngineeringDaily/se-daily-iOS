@@ -16,7 +16,7 @@ class PodcastPageViewController: TabmanViewController, PageboyViewControllerData
     var barItems = [TabmanBar.Item]()
     weak var audioOverlayDelegate: AudioOverlayDelegate?
     var customTabBarItem: UITabBarItem! {
-        return UITabBarItem(title: L10n.tabBarTitleLatest, image: #imageLiteral(resourceName: "mic_stand"), selectedImage: #imageLiteral(resourceName: "mic_stand_selected"))
+			return UITabBarItem(title: L10n.tabBarTitleLatest, image: UIImage(named: "latest_outline"), selectedImage: UIImage(named: "latest"))
     }
 
     init(audioOverlayDelegate: AudioOverlayDelegate?) {

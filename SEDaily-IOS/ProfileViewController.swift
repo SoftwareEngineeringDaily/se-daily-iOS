@@ -11,6 +11,16 @@ import UIKit
 class ProfileViewController: UIViewController {
 	
 	var tableView: UITableView = UITableView()
+	
+	init() {
+		super.init(nibName: nil, bundle: nil)
+		self.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "person_outline"), selectedImage: UIImage(named: "person"))
+	}
+	
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.addSubview(tableView)

@@ -46,6 +46,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 
         setupTabs()
         setupTitleView()
+			self.tabBar.tintColor = Stylesheet.Colors.base
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -118,6 +119,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
                 return
         }
         FeedViewController.audioOverlayDelegate = self.audioOverlayDelegate
+			
 
         
         let forumStoryboard = UIStoryboard.init(name: "ForumList", bundle: nil)
@@ -125,7 +127,13 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
             withIdentifier: "ForumListViewController") as? ForumListViewController else {
                 return
         }
-        
+			
+			
+			let latestVC = PodcastPageViewController(audioOverlayDelegate: self.audioOverlayDelegate)
+			let profileVC = ProfileViewController()
+			let bookmarksVC = BookmarkCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate)
+			
+			//self.tabBar.items?[2] = UITabBarItem(title: "Latest", image: UIImage(named: "latest_outline"), selectedImage: UIImage(named: "latest"))
 //        ForumViewController.audioOverlayDelegate = self.audioOverlayDelegate
 			
 			//            FeedViewController,
@@ -135,22 +143,20 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 
         
         self.viewControllers = [
-            PodcastPageViewController(audioOverlayDelegate: self.audioOverlayDelegate),
-					ProfileViewController(),
-					ForumViewController,
-					BookmarkCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate),
-					NotificationsTableViewController()
+            latestVC,
+						bookmarksVC,
+						profileVC
         ]
 
-        #if DEBUG
-            // This will cause the tab bar to overflow so it will be auto turned into "More ..."
-            let debugStoryboard = UIStoryboard.init(name: "Debug", bundle: nil)
-            let debugViewController = debugStoryboard.instantiateViewController(
-                withIdentifier: "DebugTabViewController")
-            if let viewControllers = self.viewControllers {
-                self.viewControllers =  viewControllers + [debugViewController]
-            }
-        #endif
+//        #if DEBUG
+//            // This will cause the tab bar to overflow so it will be auto turned into "More ..."
+//            let debugStoryboard = UIStoryboard.init(name: "Debug", bundle: nil)
+//            let debugViewController = debugStoryboard.instantiateViewController(
+//                withIdentifier: "DebugTabViewController")
+//            if let viewControllers = self.viewControllers {
+//                self.viewControllers =  viewControllers + [debugViewController]
+//            }
+//        #endif
 
         self.tabBar.backgroundColor = .white
         self.tabBar.isTranslucent = false

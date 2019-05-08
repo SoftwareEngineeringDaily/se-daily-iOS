@@ -47,6 +47,9 @@ class EpisodeViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.view.addSubview(tableView)
+		
+		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Share", style: .plain, target: self, action: #selector(EpisodeViewController.shareTapped))
+			
 		tableView.snp.makeConstraints { (make) -> Void in
 			make.top.equalToSuperview()
 			make.bottom.equalToSuperview()
@@ -89,7 +92,7 @@ class EpisodeViewController: UIViewController {
 		self.audioOverlayDelegate?.setCurrentShowingDetailView(
 			podcastViewModel: nil)
 	}
-
+	
 	deinit {
 		// perform the deinitialization
 		NotificationCenter.default.removeObserver(self)
@@ -98,14 +101,23 @@ class EpisodeViewController: UIViewController {
 	func playButtonPressed(isPlaying: Bool) {
 		
 		if !isPlaying {
-		self.audioOverlayDelegate?.animateOverlayIn()
-		self.audioOverlayDelegate?.playAudio(podcastViewModel: viewModel)
-		AskForReview.triggerEvent()
+			self.audioOverlayDelegate?.animateOverlayIn()
+			self.audioOverlayDelegate?.playAudio(podcastViewModel: viewModel)
+			AskForReview.triggerEvent()
 		} else {
 			self.audioOverlayDelegate?.animateOverlayOut()
 			self.audioOverlayDelegate?.stopAudio()
 		}
 		self.isPlaying = !self.isPlaying
+	}
+	
+	@objc func shareTapped() {
+		
+		if let link = viewModel.postLinkURL {
+			let objectsToShare = [link]
+			let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+			self.present(activityVC, animated: true, completion: nil)
+		}
 	}
 }
 
@@ -144,7 +156,7 @@ extension EpisodeViewController {
 				guard let transcriptURL = result?.transcriptURL else { return }
 				self?.transcriptURL = transcriptURL
 			}
-	})
+		})
 	}
 }
 

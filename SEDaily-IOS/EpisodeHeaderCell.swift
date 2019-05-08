@@ -163,8 +163,8 @@ extension EpisodeHeaderCell {
 		func setupDownloadButton() {
 			downloadButton = UIButton()
 			contentView.addSubview(downloadButton)
-			downloadButton.setIcon(icon: .ionicons(.iosCloudDownloadOutline), iconSize: 25.0, color: Stylesheet.Colors.dark, forState: .normal)
-			downloadButton.setIcon(icon: .ionicons(.iosCloudDownload), iconSize: 25.0, color: Stylesheet.Colors.base, forState: .selected)
+			downloadButton.setImage(UIImage(named: "download_outline"), for: .normal)
+			downloadButton.setImage(UIImage(named: "download"), for: .selected)
 			downloadButton.cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 25.0)
 			downloadButton.backgroundColor = Stylesheet.Colors.light
 			
@@ -172,8 +172,7 @@ extension EpisodeHeaderCell {
 		func setupRelatedLinksButton() {
 			relatedLinksButton = UIButton()
 			contentView.addSubview(relatedLinksButton)
-			relatedLinksButton.setIcon(icon: .linearIcons(.link), iconSize: 21.0, color: Stylesheet.Colors.dark, forState: .normal)
-			relatedLinksButton.setIcon(icon: .linearIcons(.link), iconSize: 21.0, color: Stylesheet.Colors.base, forState: .selected)
+			relatedLinksButton.setImage(UIImage(named: "link"), for: .normal)
 		}
 		func setupActionView() {
 			actionView = ActionView()
@@ -267,7 +266,7 @@ extension EpisodeHeaderCell {
 		func updateUpvote() {
 			actionView.upvoteCountLabel.text = String(viewModel.score)
 			actionView.upvoteButton.isSelected = viewModel.isUpvoted
-			actionView.upvoteCountLabel.textColor = actionView.upvoteButton.isSelected ? Stylesheet.Colors.base : Stylesheet.Colors.grey
+			actionView.upvoteCountLabel.textColor = actionView.upvoteButton.isSelected ? Stylesheet.Colors.base : Stylesheet.Colors.dark
 			actionView.upvoteCountLabel.font = actionView.upvoteButton.isSelected ? UIFont(name: "OpenSans-Semibold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13)) : UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
 		}
 		
@@ -303,7 +302,7 @@ extension EpisodeHeaderCell: UpvoteServiceUIDelegate {
 
 extension EpisodeHeaderCell {
 	func updateLabelStyle() {
-		actionView.upvoteCountLabel.textColor = actionView.upvoteButton.isSelected ? Stylesheet.Colors.base : Stylesheet.Colors.grey
+		actionView.upvoteCountLabel.textColor = actionView.upvoteButton.isSelected ? Stylesheet.Colors.base : Stylesheet.Colors.dark
 		actionView.upvoteCountLabel.font = actionView.upvoteButton.isSelected ? UIFont(name: "OpenSans-Semibold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13)) : UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
 	}
 }
@@ -325,14 +324,17 @@ extension EpisodeHeaderCell: DownloadServiceUIDelegate {
 			downloadButton.isUserInteractionEnabled = true
 			downloadButton.isSelected = success
 			downloadButton.setTitle("", for: .normal)
-			downloadButton.setIcon(icon: .ionicons(.iosCloudDownload), iconSize: 25.0, color: Stylesheet.Colors.base, forState: .selected)
-			downloadButton.setIcon(icon: .ionicons(.iosCloudDownloadOutline), iconSize: 25.0, color: Stylesheet.Colors.dark, forState: .normal)
+//			downloadButton.setIcon(icon: .ionicons(.iosCloudDownload), iconSize: 25.0, color: Stylesheet.Colors.base, forState: .selected)
+//			downloadButton.setIcon(icon: .ionicons(.iosCloudDownloadOutline), iconSize: 25.0, color: Stylesheet.Colors.dark, forState: .normal)
+			downloadButton.setImage(UIImage(named: "download_outline"), for: .normal)
+			downloadButton.setImage(UIImage(named: "download"), for: .selected)
 			downloadButton.cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 25.0)
 			downloadButton.backgroundColor = Stylesheet.Colors.light
 			return
 		}
 		downloadButton.isUserInteractionEnabled = false
 		let progressString: String = String(progress) + "%"
+		downloadButton.setImage(nil, for: .normal)
 		downloadButton.titleLabel?.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 12))
 		downloadButton.setTitle(String(progressString), for: .normal)
 	}

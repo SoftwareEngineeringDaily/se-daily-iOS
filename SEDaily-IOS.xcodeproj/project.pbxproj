@@ -65,6 +65,10 @@
 		435BAF3A22783B7C00762891 /* EpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435BAF3922783B7C00762891 /* EpisodeViewController.swift */; };
 		435BAF3C2278430900762891 /* EpisodeHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435BAF3B2278430900762891 /* EpisodeHeaderCell.swift */; };
 		439BCC6C22802EDC008D808B /* CurrentlyPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BCC6B22802EDC008D808B /* CurrentlyPlaying.swift */; };
+		439BCC6E2280CD6B008D808B /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BCC6D2280CD6B008D808B /* CommentCell.swift */; };
+		439BCC7122818F58008D808B /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BCC7022818F58008D808B /* ProfileCell.swift */; };
+		439BCC7322818F83008D808B /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BCC7222818F83008D808B /* SettingsCell.swift */; };
+		439BCC7522818F9D008D808B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BCC7422818F9D008D808B /* ProfileViewController.swift */; };
 		43A680D02270718600A639A9 /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A680CF2270718600A639A9 /* Debouncer.swift */; };
 		43A680D222707DC000A639A9 /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A680D122707DC000A639A9 /* DownloadService.swift */; };
 		43A680D42270803700A639A9 /* BookmarkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A680D32270803700A639A9 /* BookmarkService.swift */; };
@@ -204,6 +208,10 @@
 		435BAF3922783B7C00762891 /* EpisodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeViewController.swift; sourceTree = "<group>"; };
 		435BAF3B2278430900762891 /* EpisodeHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeHeaderCell.swift; sourceTree = "<group>"; };
 		439BCC6B22802EDC008D808B /* CurrentlyPlaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentlyPlaying.swift; sourceTree = "<group>"; };
+		439BCC6D2280CD6B008D808B /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		439BCC7022818F58008D808B /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
+		439BCC7222818F83008D808B /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		439BCC7422818F9D008D808B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		43A680CF2270718600A639A9 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		43A680D122707DC000A639A9 /* DownloadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
 		43A680D32270803700A639A9 /* BookmarkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkService.swift; sourceTree = "<group>"; };
@@ -387,6 +395,7 @@
 		1686FBFF1F009EC00088A6C1 /* SEDaily-IOS */ = {
 			isa = PBXGroup;
 			children = (
+				439BCC6F22818F32008D808B /* Profile */,
 				43F4591D226F279F00641705 /* Services */,
 				43AA2C922268AC3B0050668B /* fonts */,
 				96B6168520C0861300DF3CF6 /* Forum */,
@@ -547,6 +556,16 @@
 			path = Debug;
 			sourceTree = "<group>";
 		};
+		439BCC6F22818F32008D808B /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				439BCC7022818F58008D808B /* ProfileCell.swift */,
+				439BCC7222818F83008D808B /* SettingsCell.swift */,
+				439BCC7422818F9D008D808B /* ProfileViewController.swift */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
 		43AA2C922268AC3B0050668B /* fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -590,6 +609,7 @@
 				960BFEC220239F0E0073DAB2 /* Comment.swift */,
 				960BFEC6202539180073DAB2 /* CommentReplyTableViewCell.swift */,
 				960BFEC8202539640073DAB2 /* CommentTableViewCell.swift */,
+				439BCC6D2280CD6B008D808B /* CommentCell.swift */,
 			);
 			name = Comments;
 			sourceTree = "<group>";
@@ -1040,6 +1060,7 @@
 				965E165820ABD74900F2E4E4 /* FeedItem.swift in Sources */,
 				960BFEC320239F0E0073DAB2 /* Comment.swift in Sources */,
 				43C0C764227AE7D1007A92E7 /* WebViewCell.swift in Sources */,
+				439BCC7522818F9D008D808B /* ProfileViewController.swift in Sources */,
 				965798A52093FDE600104F8F /* FeedItemCell.swift in Sources */,
 				43A680D222707DC000A639A9 /* DownloadService.swift in Sources */,
 				43CE8E0D2271AFC000DD990F /* HtmlHelper.swift in Sources */,
@@ -1051,6 +1072,7 @@
 				161791FC1FC4DA7200A1287E /* OfflineDownloadsManager.swift in Sources */,
 				1649A78A1F204EC6005C4A6E /* ContainerViewController.swift in Sources */,
 				C0590D78200AC2A500A00E4D /* NetworkService.swift in Sources */,
+				439BCC7322818F83008D808B /* SettingsCell.swift in Sources */,
 				43CE140C225F7EF700B57CFA /* PlayProgress.swift in Sources */,
 				43AA2C912268530C0050668B /* ItemCollectionViewCell.swift in Sources */,
 				960BFEBB202109800073DAB2 /* AskForReview.swift in Sources */,
@@ -1079,6 +1101,7 @@
 				43A680D42270803700A639A9 /* BookmarkService.swift in Sources */,
 				1671BD56200D278F00E6ED3B /* PurchaseSubscriptionViewController.swift in Sources */,
 				16AD3E0A1F9B138D0084C545 /* PodcastViewModel.swift in Sources */,
+				439BCC7122818F58008D808B /* ProfileCell.swift in Sources */,
 				43F4591F226F27BB00641705 /* UpvoteService.swift in Sources */,
 				96B6168B20C0A59500DF3CF6 /* ForumThreadCell.swift in Sources */,
 				435BAF3A22783B7C00762891 /* EpisodeViewController.swift in Sources */,
@@ -1094,6 +1117,7 @@
 				1E286DE91FE4C65200644C1D /* TestHookEvent.swift in Sources */,
 				960BFEC9202539640073DAB2 /* CommentTableViewCell.swift in Sources */,
 				16D766BA1F06B4850066C143 /* AudioView.swift in Sources */,
+				439BCC6E2280CD6B008D808B /* CommentCell.swift in Sources */,
 				164FE9EB1F02F340009419CA /* Helpers.swift in Sources */,
 				16FA84031F8D323700A45D9B /* SkeletonCollectionView.swift in Sources */,
 				166036211F266FF300A22B7B /* Notifications.swift in Sources */,

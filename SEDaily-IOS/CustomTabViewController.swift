@@ -133,20 +133,13 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 			let profileVC = ProfileViewController()
 			let bookmarksVC = BookmarkCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate)
 			
-			//self.tabBar.items?[2] = UITabBarItem(title: "Latest", image: UIImage(named: "latest_outline"), selectedImage: UIImage(named: "latest"))
-//        ForumViewController.audioOverlayDelegate = self.audioOverlayDelegate
-			
-			//            FeedViewController,
-			//            ForumViewController,
-			//            BookmarkCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate),
-			//            NotificationsTableViewController()
+
 
         
         self.viewControllers = [
             latestVC,
 						bookmarksVC,
-						profileVC,
-						NotificationsTableViewController()
+						profileVC
         ]
 
 //        #if DEBUG

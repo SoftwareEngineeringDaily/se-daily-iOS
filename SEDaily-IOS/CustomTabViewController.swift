@@ -145,7 +145,8 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
         self.viewControllers = [
             latestVC,
 						bookmarksVC,
-						profileVC
+						profileVC,
+						NotificationsTableViewController()
         ]
 
 //        #if DEBUG

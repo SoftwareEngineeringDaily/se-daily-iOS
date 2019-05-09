@@ -14,45 +14,53 @@ import KTResponsiveUI
 import Kingfisher
 
 class NotificationTableViewCell: UITableViewCell, Reusable {
-    public var cellLabel: UILabel!
-    private var cellImageView: UIImageView!
-    public var cellToggle: UISwitch!
-    
-    var viewModel: PodcastViewModel = PodcastViewModel() {
-        willSet {
-            guard newValue != self.viewModel else { return }
-        }
-        didSet {
-            self.cellLabel.text = viewModel.podcastTitle
-            
-            if let url = viewModel.featuredImageURL {
-                cellImageView.kf.setImage(with: url)
-            }
-        }
-    }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-        cellImageView = UIImageView(leftInset: 10, topInset: 5, height: 75)
-        cellImageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
-        cellImageView.contentMode = .scaleAspectFit
-        cellImageView.clipsToBounds = true
-        cellImageView.kf.indicatorType = .activity
-
-        cellLabel = UILabel(origin: cellImageView.topRightPoint(), leftInset: 10, width: 210, height: 75)
-        cellLabel.textColor = .black
-        cellLabel.baselineAdjustment = .alignCenters
-        cellLabel.numberOfLines = 0
-
-        cellToggle = UISwitch(origin: cellLabel.topRightPoint(), leftInset: 10, topInset: 22, width: 20)
-
-        self.contentView.addSubview(cellImageView)
-        self.contentView.addSubview(cellLabel)
-        self.contentView.addSubview(cellToggle)
-    }
-    
-    required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:)")
-    }
+	public var cellLabel: UILabel!
+	public var cellToggle: UISwitch!
+	var separator: UIView!
+	
+	
+	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
+		
+		cellLabel = UILabel()
+		cellLabel.textColor = .black
+		cellLabel.baselineAdjustment = .alignCenters
+		cellLabel.numberOfLines = 0
+		cellLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+		cellLabel.textColor = Stylesheet.Colors.dark
+		cellToggle = UISwitch()
+		cellToggle.tintColor = Stylesheet.Colors.light
+		cellToggle.onTintColor = Stylesheet.Colors.base
+		
+		
+		self.contentView.addSubview(cellLabel)
+		self.contentView.addSubview(cellToggle)
+		setupSeparator()
+		
+		cellLabel.snp.makeConstraints { (make) in
+			make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
+			make.centerY.equalToSuperview()
+			make.top.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
+			make.bottom.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
+		}
+		
+		cellToggle.snp.makeConstraints { (make) in
+			make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
+			make.centerY.equalToSuperview()
+		}
+		separator.snp.makeConstraints { (make) -> Void in
+			make.left.right.bottom.equalToSuperview()
+			make.height.equalTo(2.0)
+		}
+	}
+	
+	required init(coder aDecoder: NSCoder) {
+		fatalError("init(coder:)")
+	}
+	
+	func setupSeparator() {
+		separator = UIView()
+		contentView.addSubview(separator)
+		separator.backgroundColor = Stylesheet.Colors.light
+	}
 }

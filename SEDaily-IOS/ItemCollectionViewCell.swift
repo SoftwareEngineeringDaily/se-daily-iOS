@@ -21,11 +21,8 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	var titleLabel: UILabel!
 	var miscDetailsLabel: UILabel!
 	var descriptionLabel: UILabel!
-	
-	let actionStackView: UIStackView = UIStackView()
-	let upvoteButton: UIButton = UIButton()
-	let commentButton: UIButton = UIButton()
-	let bookmarkButton: UIButton = UIButton()
+
+	var actionView: ActionView!
 	
 	var commentShowCallback: (()-> Void) = {}
 	
@@ -70,9 +67,9 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	//MARK: Button handlers
 	
 	private func setupButtonsTargets() {
-		upvoteButton.addTarget(self, action: #selector(ItemCollectionViewCell.upvoteTapped), for: .touchUpInside)
-		bookmarkButton.addTarget(self, action: #selector(ItemCollectionViewCell.bookmarkTapped), for: .touchUpInside)
-		commentButton.addTarget(self, action: #selector(ItemCollectionViewCell.commentTapped), for: .touchUpInside)
+		actionView.upvoteButton.addTarget(self, action: #selector(ItemCollectionViewCell.upvoteTapped), for: .touchUpInside)
+		actionView.bookmarkButton.addTarget(self, action: #selector(ItemCollectionViewCell.bookmarkTapped), for: .touchUpInside)
+		actionView.commentButton.addTarget(self, action: #selector(ItemCollectionViewCell.commentTapped), for: .touchUpInside)
 	}
 	
 	@objc func upvoteTapped() {
@@ -105,32 +102,32 @@ class ItemCollectionViewCell: UICollectionViewCell {
 
 extension ItemCollectionViewCell: UpvoteServiceUIDelegate {
 	func upvoteUIDidChange(isUpvoted: Bool, score: Int) {
-		upvoteButton.isSelected = isUpvoted
-		upvoteCountLabel.text = String(score)
+		actionView.upvoteButton.isSelected = isUpvoted
+		actionView.upvoteCountLabel.text = String(score)
 		updateLabelStyle()
 	}
 	
 	func upvoteUIImmediateUpdate() {
-		guard let tempScore = Int(upvoteCountLabel.text ?? "0") else { return }
-		upvoteCountLabel.text = upvoteButton.isSelected ? String(tempScore - 1) : String(tempScore + 1)
-		upvoteButton.isSelected = !upvoteButton.isSelected
+		guard let tempScore = Int(actionView.upvoteCountLabel.text ?? "0") else { return }
+		actionView.upvoteCountLabel.text = actionView.upvoteButton.isSelected ? String(tempScore - 1) : String(tempScore + 1)
+		actionView.upvoteButton.isSelected = !actionView.upvoteButton.isSelected
 		updateLabelStyle()
 	}
 }
 
 extension ItemCollectionViewCell {
 	func updateLabelStyle() {
-		upvoteCountLabel.textColor = upvoteButton.isSelected ? Stylesheet.Colors.base : Stylesheet.Colors.grey
-		upvoteCountLabel.font = upvoteButton.isSelected ? UIFont(name: "OpenSans-Semibold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13)) : UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
+		actionView.upvoteCountLabel.textColor = actionView.upvoteButton.isSelected ? Stylesheet.Colors.base : Stylesheet.Colors.dark
+		actionView.upvoteCountLabel.font = actionView.upvoteButton.isSelected ? UIFont(name: "OpenSans-Semibold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13)) : UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
 	}
 }
 
 extension ItemCollectionViewCell: BookmarkServiceUIDelegate {
 	func bookmarkUIDidChange(isBookmarked: Bool) {
-		bookmarkButton.isSelected = isBookmarked
+		actionView.bookmarkButton.isSelected = isBookmarked
 	}
 	func bookmarkUIImmediateUpdate() {
-		bookmarkButton.isSelected = !bookmarkButton.isSelected
+		actionView.bookmarkButton.isSelected = !actionView.bookmarkButton.isSelected
 	}
 }
 
@@ -173,18 +170,6 @@ extension ItemCollectionViewCell {
 			contentView.addSubview(descriptionLabel)
 		}
 		
-		func setupActionButtons() {
-			upvoteButton.setIcon(icon: .ionicons(.iosHeartOutline), iconSize: 25.0, color: Stylesheet.Colors.grey, forState: .normal)
-			upvoteButton.setIcon(icon: .ionicons(.iosHeart), iconSize: 25.0, color: Stylesheet.Colors.base, forState: .selected)
-			
-			bookmarkButton.setImage(UIImage(named: "ios-bookmark"), for: .normal)
-			bookmarkButton.setImage(UIImage(named: "ios-bookmark-fill"), for: .selected)
-			
-			commentButton.setIcon(icon: .ionicons(.iosChatbubbleOutline), iconSize: 30.0, color: Stylesheet.Colors.grey, forState: .normal)
-			commentButton.setIcon(icon: .ionicons(.iosChatbubble), iconSize: 30.0, color: Stylesheet.Colors.base, forState: .selected)
-			
-
-		}
 		
 		func setupProgressBar() {
 			progressBar.progressTintColor = Stylesheet.Colors.base
@@ -194,27 +179,11 @@ extension ItemCollectionViewCell {
 			contentView.addSubview(progressBar)
 		}
 		
-		func setupUpvoteStackView() {
-			upvoteStackView.alignment = .center
-			upvoteStackView.axis = .horizontal
-			upvoteStackView.distribution = .fillEqually
-			
-			upvoteStackView.addArrangedSubview(upvoteButton)
-			upvoteStackView.addArrangedSubview(upvoteCountLabel)
+		func setupActionView() {
+			actionView = ActionView()
+			actionView.setupComponents(superview: contentView)
 		}
-		
-		func setupActionStackView() {
-			actionStackView.alignment = .center
-			actionStackView.axis = .horizontal
-			actionStackView.distribution = .fillEqually
-			
-			actionStackView.addArrangedSubview(upvoteStackView)
-			actionStackView.addArrangedSubview(commentButton)
-			actionStackView.addArrangedSubview(bookmarkButton)
-			
-			contentView.addSubview(actionStackView)
-		}
-		
+
 		
 		func setupConstraints() {
 			imageView.snp.makeConstraints { (make) -> Void in
@@ -248,15 +217,12 @@ extension ItemCollectionViewCell {
 				make.rightMargin.equalTo(contentView).inset(UIView.getValueScaledByScreenWidthFor(baseValue:10.0))
 				make.left.equalTo(imageView)
 			}
-			
-			actionStackView.snp.makeConstraints { (make) -> Void in
-				make.bottom.equalTo(contentView).inset(UIView.getValueScaledByScreenWidthFor(baseValue:5.0))
+			actionView.setupContraints()
+			actionView.actionStackView.snp.makeConstraints { (make) -> Void in
+				make.bottom.equalTo(contentView)
 				make.left.equalTo(imageView)
 			}
 			
-			upvoteButton.snp.makeConstraints { (make) -> Void in
-				make.right.equalTo(upvoteCountLabel.snp.left)
-			}
 			
 			progressBar.snp.makeConstraints { (make) -> Void in
 				make.width.equalTo(contentView)
@@ -268,10 +234,8 @@ extension ItemCollectionViewCell {
 		
 		setupImageView()
 		setupLabels()
-		setupActionButtons()
 		setupProgressBar()
-		setupUpvoteStackView()
-		setupActionStackView()
+		setupActionView()
 		setupConstraints()
 	}
 }
@@ -314,14 +278,14 @@ extension ItemCollectionViewCell {
 		}
 		
 		func updateUpvote() {
-			upvoteCountLabel.text = String(viewModel.score)
-			upvoteButton.isSelected = viewModel.isUpvoted
-			upvoteCountLabel.textColor = upvoteButton.isSelected ? Stylesheet.Colors.base : Stylesheet.Colors.grey
-			upvoteCountLabel.font = upvoteButton.isSelected ? UIFont(name: "OpenSans-Semibold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13)) : UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
+			actionView.upvoteCountLabel.text = String(viewModel.score)
+			actionView.upvoteButton.isSelected = viewModel.isUpvoted
+			actionView.upvoteCountLabel.textColor = actionView.upvoteButton.isSelected ? Stylesheet.Colors.base : Stylesheet.Colors.dark
+			actionView.upvoteCountLabel.font = actionView.upvoteButton.isSelected ? UIFont(name: "OpenSans-Semibold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13)) : UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
 		}
 		
 		func updateBookmark() {
-			bookmarkButton.isSelected = viewModel.isBookmarked
+			actionView.bookmarkButton.isSelected = viewModel.isBookmarked
 		}
 		
 		func updateProgressBar() {

@@ -11,9 +11,11 @@ import KTResponsiveUI
 import StatefulViewController
 
 class SearchTableViewController: UIViewController, StatefulViewController {
-	private let reuseIdentifier = "reuseIdentifier"
+	
 	private let podcastViewModelController = PodcastViewModelController()
 	weak var audioOverlayDelegate: AudioOverlayDelegate?
+	
+	private var progressController = PlayProgressModelController()
 	
 	private let pageSize = 10
 	private let preloadMargin = 5
@@ -27,8 +29,13 @@ class SearchTableViewController: UIViewController, StatefulViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(self.onDidReceiveData(_:)),
+			name: .viewModelUpdated,
+			object: nil)
+		
 		searchController.searchBar.delegate = self
-		//searchController.searchBar.backgroundImage = UIImage()
 		searchController.searchBar.layer.borderWidth = 1
 		searchController.searchBar.layer.borderColor = Stylesheet.Colors.light.cgColor
 		searchController.searchBar.tintColor = Stylesheet.Colors.base
@@ -47,10 +54,12 @@ class SearchTableViewController: UIViewController, StatefulViewController {
 			tableView.snp.makeConstraints { (make) in
 				make.edges.equalToSuperview()
 			}
-			tableView.register(PodcastTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+			tableView.register(cellType: PodcastTableViewCell.self)
 			tableView.tableHeaderView = searchController.searchBar
 			tableView.separatorStyle = .singleLine
-			tableView.rowHeight = UIView.getValueScaledByScreenHeightFor(baseValue: 75)
+			tableView.rowHeight = UITableViewAutomaticDimension
+			tableView.estimatedRowHeight = 50.0
+			
 		}
 		self.title = L10n.search
 		
@@ -69,17 +78,25 @@ class SearchTableViewController: UIViewController, StatefulViewController {
 			showRefreshButton: false,
 			delegate: nil)
 		self.emptyView?.isUserInteractionEnabled = false
+		
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		self.searchController.searchBar.isHidden = false
 		self.setupInitialViewState()
+		progressController.retrieve()
+		self.tableView?.reloadData()
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		self.searchController.searchBar.isHidden = true
+	}
+	
+	deinit {
+		// perform the deinitialization
+		NotificationCenter.default.removeObserver(self)
 	}
 	
 	func hasContent() -> Bool {
@@ -88,6 +105,11 @@ class SearchTableViewController: UIViewController, StatefulViewController {
 }
 
 extension SearchTableViewController: UITableViewDelegate {
+	
+	func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+		return UITableViewAutomaticDimension
+	}
+	
 	func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
@@ -99,8 +121,8 @@ extension SearchTableViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		if let viewModel = self.podcastViewModelController.viewModel(at: indexPath.row) {
 			if let audioOverlayDelegate = self.audioOverlayDelegate {
-				let vc = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
-				vc.model = viewModel
+				let vc = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
+				vc.viewModel = viewModel
 				self.navigationController?.pushViewController(vc, animated: true)
 			}
 		}
@@ -109,26 +131,32 @@ extension SearchTableViewController: UITableViewDelegate {
 
 extension SearchTableViewController: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(
-			withIdentifier: reuseIdentifier,
-			for: indexPath) as? PodcastTableViewCell else {
-				return UITableViewCell()
-		}
 		
-		if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
-			cell.viewModel = viewModel
-			if let lastIndexPath = self.tableView?.indexPathForLastRow {
-				if let lastItem = podcastViewModelController.viewModel(at: lastIndexPath.row) {
-					self.checkPage(currentIndexPath: indexPath,
-												 lastIndexPath: lastIndexPath,
-												 lastIdentifier: lastItem.uploadDateiso8601)
-				}
-			}
+		guard let viewModel = podcastViewModelController.viewModel(at: indexPath.row) else { return UITableViewCell() }
+		
+		let cell: PodcastTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+		cell.selectionStyle = .none
+		let upvoteService = UpvoteService(podcastViewModel: viewModel)
+		let bookmarkService = BookmarkService(podcastViewModel: viewModel)
+		let downloadService = DownloadService(podcastViewModel: viewModel)
+		
+		cell.playProgress = progressController.episodesPlayProgress[viewModel._id] ?? PlayProgress(id: "", currentTime: 0.0, totalLength: 0.0)
+		
+		
+		cell.viewModel = viewModel
+		cell.upvoteService = upvoteService
+		cell.bookmarkService = bookmarkService
+		
+		cell.commentShowCallback = { [weak self] in
+			self?.commentsButtonPressed(viewModel)
 		}
 		
 		return cell
 	}
 }
+
+
+
 
 extension SearchTableViewController {
 	func checkPage(currentIndexPath: IndexPath, lastIndexPath: IndexPath, lastIdentifier: String) {
@@ -179,4 +207,39 @@ extension SearchTableViewController: UISearchBarDelegate {
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		filterContentForSearchText(searchController.searchBar.text!)
 	}
+}
+
+
+
+extension SearchTableViewController {
+	
+	func commentsButtonPressed(_ viewModel: PodcastViewModel) {
+		Analytics2.podcastCommentsViewed(podcastId: viewModel._id)
+		let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
+		guard let commentsViewController = commentsStoryboard.instantiateViewController(
+			withIdentifier: "CommentsViewController") as? CommentsViewController else {
+				return
+		}
+		if let thread = viewModel.thread {
+			commentsViewController.rootEntityId = thread._id
+			self.navigationController?.pushViewController(commentsViewController, animated: true)
+		}
+	}
+}
+	
+	extension SearchTableViewController {
+		@objc func onDidReceiveData(_ notification: Notification) {
+			if let data = notification.userInfo as? [String: PodcastViewModel] {
+				for (_, viewModel) in data {
+					viewModelDidChange(viewModel: viewModel)
+				}
+			}
+		}
+	}
+	
+	
+	extension SearchTableViewController {
+		private func viewModelDidChange(viewModel: PodcastViewModel) {
+			self.podcastViewModelController.update(with: viewModel)
+		}
 }

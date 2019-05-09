@@ -297,12 +297,14 @@ extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
 		
 		if comment.parentComment != nil {
 			let cell: CommentCell = tableView.dequeueReusableCell(for: indexPath)
+			cell.isReplyCell = true
 			cell.comment = comment
 			return cell
 		} else {
 			let cell: CommentCell = tableView.dequeueReusableCell(for: indexPath)
 			//cell?.delegate = self
 			//cell?.hideReplyCell = !isFullUser()
+			cell.isReplyCell = false
 			cell.comment = comment
 			return cell
 		}

@@ -59,6 +59,7 @@ class SearchTableViewController: UIViewController, StatefulViewController {
 			tableView.separatorStyle = .singleLine
 			tableView.rowHeight = UITableViewAutomaticDimension
 			tableView.estimatedRowHeight = 50.0
+			tableView.backgroundColor = Stylesheet.Colors.light
 			
 		}
 		self.title = L10n.search

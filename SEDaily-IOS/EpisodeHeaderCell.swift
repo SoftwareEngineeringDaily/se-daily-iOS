@@ -335,7 +335,8 @@ extension EpisodeHeaderCell: DownloadServiceUIDelegate {
 		downloadButton.isUserInteractionEnabled = false
 		let progressString: String = String(progress) + "%"
 		downloadButton.setImage(nil, for: .normal)
+		downloadButton.setTitleColor(Stylesheet.Colors.dark, for: .normal)
 		downloadButton.titleLabel?.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 12))
-		downloadButton.setTitle(String(progressString), for: .normal)
+		downloadButton.setTitle(progressString, for: .normal)
 	}
 }

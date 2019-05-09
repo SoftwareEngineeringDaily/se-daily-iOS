@@ -6,6 +6,7 @@
 //  Copyright © 2019 Koala Tea. All rights reserved.
 //
 
+
 import UIKit
 import Reusable
 
@@ -16,6 +17,14 @@ class CommentCell: UITableViewCell, Reusable {
 	var contentLabel: UILabel!
 	var dateLabel: UILabel!
 	var verticalLine: UIView!
+	var replyButton: UIButton!
+	var isReplyCell: Bool = false {
+		didSet {
+			replyButton.isHidden = isReplyCell
+			
+		}
+	}
+	
 	
 	var comment: Comment? {
 		didSet {
@@ -31,16 +40,12 @@ class CommentCell: UITableViewCell, Reusable {
 			} else {
 				avatarImage.image = UIImage(named: "profile-icon-9")
 			}
-			if comment?.deleted == true {
-				contentLabel.textColor = UIColor.lightGray
-			} else {
-				//contentLabel.textColor = UIColor.black
-			}
 		}
 	}
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
+		self.selectionStyle = .none
 		setupLayout()
 	}
 	required init
@@ -66,7 +71,7 @@ extension CommentCell {
 			
 			authorLabel = UILabel()
 			self.contentView.addSubview(authorLabel)
-			authorLabel.textColor = Stylesheet.Colors.base
+			authorLabel.textColor = Stylesheet.Colors.dark
 			authorLabel.numberOfLines = 1
 			authorLabel.font = UIFont(name: "OpenSans-Semibold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
 			
@@ -81,6 +86,12 @@ extension CommentCell {
 			dateLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 12))
 			dateLabel.textColor = Stylesheet.Colors.grey
 			
+			replyButton = UIButton()
+			contentView.addSubview(replyButton)
+			replyButton.setTitleColor(Stylesheet.Colors.base, for: .normal)
+			replyButton.setTitle("Reply", for: .normal)
+			replyButton.titleLabel?.font = UIFont(name: "OpenSans-SemiBold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
+			
 		}
 		func setupAvatarImage() {
 			avatarImage = UIImageView()
@@ -93,7 +104,9 @@ extension CommentCell {
 		func setupConstraints() {
 			avatarImage.snp.makeConstraints { (make) -> Void in
 				make.top.equalToSuperview()
-				make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
+				let leftPadding: CGFloat = isReplyCell ? 25.0 : 15.0
+				print(leftPadding)
+				make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: leftPadding))
 				make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 40.0))
 				make.height.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 40.0))
 			}
@@ -110,7 +123,13 @@ extension CommentCell {
 				make.left.equalTo(authorLabel)
 				make.top.equalTo(authorLabel.snp_bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 10.0))
 				make.rightMargin.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
-				make.bottom.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 10.0))
+				
+			}
+			
+			replyButton.snp.makeConstraints { (make) -> Void in
+				make.top.equalTo(contentLabel.snp_bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 5.0))
+				make.left.equalTo(authorLabel)
+				make.bottom.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 5.0))
 			}
 			
 			verticalLine.snp.makeConstraints { (make) -> Void in

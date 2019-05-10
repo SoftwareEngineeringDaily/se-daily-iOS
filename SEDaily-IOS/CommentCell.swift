@@ -10,6 +10,9 @@
 import UIKit
 import Reusable
 
+protocol CommentReplyTableViewCellDelegate: class {
+	func replyToCommentPressed(comment: Comment)
+}
 class CommentCell: UITableViewCell, Reusable {
 	
 	var avatarImage: UIImageView!
@@ -18,12 +21,17 @@ class CommentCell: UITableViewCell, Reusable {
 	var dateLabel: UILabel!
 	var verticalLine: UIView!
 	var replyButton: UIButton!
+	// Update for reply cell
 	var isReplyCell: Bool = false {
 		didSet {
 			replyButton.isHidden = isReplyCell
-			
+			avatarImage.snp.updateConstraints { (make) -> Void in
+				let leftPadding: CGFloat = isReplyCell ? 55.0 : 15.0
+				make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: leftPadding))
+			}
 		}
 	}
+	weak var delegate: CommentReplyTableViewCellDelegate?
 	
 	
 	var comment: Comment? {
@@ -47,6 +55,7 @@ class CommentCell: UITableViewCell, Reusable {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		self.selectionStyle = .none
 		setupLayout()
+		replyButton.addTarget(self, action: #selector(CommentCell.replyTapped), for: .touchUpInside)
 	}
 	required init
 		(coder aDecoder: NSCoder) {
@@ -59,14 +68,23 @@ class CommentCell: UITableViewCell, Reusable {
 		// Configure the view for the selected state
 	}
 	
+	@objc func replyTapped(sender: UIButton) {
+		if let comment = comment {
+			delegate?.replyToCommentPressed(comment: comment)
+		}
+	}
+	
 }
 
 extension CommentCell {
+	
+	
+	
 	private func setupLayout() {
 		func setupLabels() {
 			
 			verticalLine = UIView()
-			verticalLine.backgroundColor = Stylesheet.Colors.light
+			verticalLine.backgroundColor = .clear
 			contentView.addSubview(verticalLine)
 			
 			authorLabel = UILabel()
@@ -92,23 +110,23 @@ extension CommentCell {
 			replyButton.setTitle("Reply", for: .normal)
 			replyButton.titleLabel?.font = UIFont(name: "OpenSans-SemiBold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
 			
+			
 		}
 		func setupAvatarImage() {
 			avatarImage = UIImageView()
 			contentView.addSubview(avatarImage)
 			avatarImage.contentMode = .scaleAspectFill
 			avatarImage.clipsToBounds = true
-			avatarImage.cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 20)
+			avatarImage.cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 15)
 			avatarImage.kf.indicatorType = .activity
 		}
+		
 		func setupConstraints() {
 			avatarImage.snp.makeConstraints { (make) -> Void in
-				make.top.equalToSuperview()
-				let leftPadding: CGFloat = isReplyCell ? 25.0 : 15.0
-				print(leftPadding)
-				make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: leftPadding))
-				make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 40.0))
-				make.height.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 40.0))
+				make.top.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 5.0))
+				make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
+				make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 30.0))
+				make.height.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 30.0))
 			}
 			authorLabel.snp.makeConstraints { (make) -> Void in
 				make.centerY.equalTo(avatarImage.snp_centerY)
@@ -138,8 +156,8 @@ extension CommentCell {
 				make.centerX.equalTo(avatarImage.snp_centerX)
 				make.bottom.equalTo(contentLabel.snp_bottom)
 			}
-			
 		}
+		
 		
 		setupLabels()
 		setupAvatarImage()

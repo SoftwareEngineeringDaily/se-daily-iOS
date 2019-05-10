@@ -195,7 +195,7 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 			cell.bookmarkService = bookmarkService
 			
 			cell.commentShowCallback = { [weak self] in
-				//self?.commentsButtonPressed(viewModel)
+				self?.commentsButtonPressed(viewModel)
 				
 			}
 			
@@ -231,5 +231,16 @@ extension BookmarkCollectionViewController: PodcastDetailViewControllerDelegate 
 	}
 }
 
+
+extension BookmarkCollectionViewController {
+	func commentsButtonPressed(_ viewModel: PodcastViewModel) {
+		Analytics2.podcastCommentsViewed(podcastId: viewModel._id)
+		let commentsViewController: CommentsViewController = CommentsViewController()
+		if let thread = viewModel.thread {
+			commentsViewController.rootEntityId = thread._id
+			self.navigationController?.pushViewController(commentsViewController, animated: true)
+		}
+	}
+}
 
 

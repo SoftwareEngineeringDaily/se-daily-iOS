@@ -142,15 +142,15 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 						profileVC
         ]
 
-//        #if DEBUG
-//            // This will cause the tab bar to overflow so it will be auto turned into "More ..."
-//            let debugStoryboard = UIStoryboard.init(name: "Debug", bundle: nil)
-//            let debugViewController = debugStoryboard.instantiateViewController(
-//                withIdentifier: "DebugTabViewController")
-//            if let viewControllers = self.viewControllers {
-//                self.viewControllers =  viewControllers + [debugViewController]
-//            }
-//        #endif
+        #if DEBUG
+            // This will cause the tab bar to overflow so it will be auto turned into "More ..."
+            let debugStoryboard = UIStoryboard.init(name: "Debug", bundle: nil)
+            let debugViewController = debugStoryboard.instantiateViewController(
+                withIdentifier: "DebugTabViewController")
+            if let viewControllers = self.viewControllers {
+                self.viewControllers =  viewControllers + [debugViewController]
+            }
+        #endif
 
         self.tabBar.backgroundColor = .white
         self.tabBar.isTranslucent = false

@@ -135,13 +135,9 @@ extension EpisodeViewController {
 		relatedLinksViewController.transcriptURL = transcriptURL
 		self.navigationController?.pushViewController(relatedLinksViewController, animated: true)
 	}
-	private func commentsButtonPressed() {
-		Analytics2.podcastCommentsViewed(podcastId: self.viewModel._id)
-		let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
-		guard let commentsViewController = commentsStoryboard.instantiateViewController(
-			withIdentifier: "CommentsViewController") as? CommentsViewController else {
-				return
-		}
+	func commentsButtonPressed() {
+		Analytics2.podcastCommentsViewed(podcastId: viewModel._id)
+		let commentsViewController: CommentsViewController = CommentsViewController()
 		if let thread = viewModel.thread {
 			commentsViewController.rootEntityId = thread._id
 			self.navigationController?.pushViewController(commentsViewController, animated: true)

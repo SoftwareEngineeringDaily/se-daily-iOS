@@ -249,11 +249,7 @@ extension GeneralCollectionViewController {
 extension GeneralCollectionViewController {
 	func commentsButtonPressed(_ viewModel: PodcastViewModel) {
 		Analytics2.podcastCommentsViewed(podcastId: viewModel._id)
-		let commentsStoryboard = UIStoryboard.init(name: "Comments", bundle: nil)
-		guard let commentsViewController = commentsStoryboard.instantiateViewController(
-			withIdentifier: "CommentsViewController") as? CommentsViewController else {
-				return
-		}
+		let commentsViewController: CommentsViewController = CommentsViewController()
 		if let thread = viewModel.thread {
 			commentsViewController.rootEntityId = thread._id
 			self.navigationController?.pushViewController(commentsViewController, animated: true)

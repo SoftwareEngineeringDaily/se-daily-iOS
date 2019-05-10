@@ -181,7 +181,7 @@ extension PodcastTableViewCell {
 		
 		func setupConstraints() {
 			episodeImage.snp.makeConstraints { (make) -> Void in
-				make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue:10))
+				make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue:15))
 				make.top.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue:10))
 				make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 80))
 				make.height.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 80))
@@ -189,7 +189,7 @@ extension PodcastTableViewCell {
 			
 			
 			imageOverlay.snp.makeConstraints { (make) -> Void in
-				make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue:10))
+				make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue:15))
 				make.top.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue:10))
 				make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue:80))
 				make.height.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue:80))
@@ -197,7 +197,7 @@ extension PodcastTableViewCell {
 			
 			titleLabel.snp.makeConstraints { (make) -> Void in
 				make.top.equalTo(episodeImage)
-				make.rightMargin.equalTo(contentView).inset(UIView.getValueScaledByScreenWidthFor(baseValue:10.0))
+				make.rightMargin.equalTo(contentView).inset(UIView.getValueScaledByScreenWidthFor(baseValue:15.0))
 				make.left.equalTo(episodeImage.snp.right).offset(UIView.getValueScaledByScreenWidthFor(baseValue:10.0))
 			}
 			
@@ -208,7 +208,7 @@ extension PodcastTableViewCell {
 			
 			descriptionLabel.snp.makeConstraints { (make) -> Void in
 				make.top.equalTo(episodeImage.snp.bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue:10.0))
-				make.rightMargin.equalTo(contentView).inset(UIView.getValueScaledByScreenWidthFor(baseValue:10.0))
+				make.rightMargin.equalTo(contentView).inset(UIView.getValueScaledByScreenWidthFor(baseValue:15.0))
 				make.left.equalTo(episodeImage)
 			}
 			actionView.setupContraints()

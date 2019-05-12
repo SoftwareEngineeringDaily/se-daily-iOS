@@ -31,6 +31,7 @@ protocol AudioOverlayDelegate: class {
 class AudioOverlayViewController: UIViewController {
 	let networkService = API()
 	
+	// TODO: needs to tweak this value and the logic behind it to support different screen sizes well
 	static let audioControlsViewHeight: CGFloat = 130
 	
 	private static var userSettingPlaybackSpeedKey = "PlaybackSpeed"

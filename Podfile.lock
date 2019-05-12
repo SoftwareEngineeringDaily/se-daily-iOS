@@ -72,7 +72,7 @@ PODS:
   - SwifterSwift/SwiftStdlib (4.0.1)
   - SwifterSwift/UIKit (4.0.1)
   - SwiftGen (5.2.1)
-  - SwiftIcons (1.5.1)
+  - SwiftIcons (2.0.1)
   - SwiftLint (0.25.1)
   - SwiftMoment (0.7)
   - SwiftSoup (1.5.8)
@@ -97,7 +97,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift (~> 5.0.8)
   - Kingfisher (~> 4.2.0)
   - KoalaTeaFlowLayout (~> 0.3.1)
-  - KoalaTeaPlayer (~> 0.2.7)
+  - KoalaTeaPlayer
   - KTResponsiveUI (~> 0.2.4)
   - MBProgressHUD (~> 1.1.0)
   - Mockingjay
@@ -113,7 +113,7 @@ DEPENDENCIES:
   - StatefulViewController (~> 3.0)
   - SwifterSwift (~> 4.0.1)
   - SwiftGen (~> 5.2.1)
-  - SwiftIcons (from `https://github.com/themisterholliday/SwiftIcons.git`, branch `swift-4`)
+  - SwiftIcons (~> 2.0.0)
   - SwiftLint (~> 0.25.1)
   - SwiftMoment
   - SwiftSoup (~> 1.5.8)
@@ -156,6 +156,7 @@ SPEC REPOS:
     - StatefulViewController
     - SwifterSwift
     - SwiftGen
+    - SwiftIcons
     - SwiftLint
     - SwiftMoment
     - SwiftSoup
@@ -169,17 +170,11 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   ActiveLabel:
     :git: https://github.com/optonaut/ActiveLabel.swift.git
-  SwiftIcons:
-    :branch: swift-4
-    :git: https://github.com/themisterholliday/SwiftIcons.git
 
 CHECKOUT OPTIONS:
   ActiveLabel:
     :commit: 3e98a76353bcdeea879e7d2552f58d6967207dab
     :git: https://github.com/optonaut/ActiveLabel.swift.git
-  SwiftIcons:
-    :commit: 56e9cf1019b01a4a9a2f22a78e84618f4ea094aa
-    :git: https://github.com/themisterholliday/SwiftIcons.git
 
 SPEC CHECKSUMS:
   ActiveLabel: 2fc3cdffed0dcdaad82d50af46233b9ef2f401e4
@@ -214,7 +209,7 @@ SPEC CHECKSUMS:
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwifterSwift: 5f406a5f831343312d6d5b34282b57ef3f52c40b
   SwiftGen: 444b4c467e512a4812b8a800d731643fd265139e
-  SwiftIcons: b20641adce6b71fcb2e72389b4b5f2e87252df99
+  SwiftIcons: e475a56ae2c2da40672dbf16061ca5dd5cee7dbb
   SwiftLint: ce933681be10c3266e82576dad676fa815a602e9
   SwiftMoment: dc6dd27012e267819104cbb03f74ff9192dd0b42
   SwiftSoup: 86a1f5ad07b7e3d14ab1a9324a58c75ae2215e79
@@ -225,6 +220,6 @@ SPEC CHECKSUMS:
   URITemplate: ace0c4c46dcf8afe6e89b4060621852886b15c3b
   WaitForIt: 2c7ad6deaffe3bf727b7242a2263167bf2ce3e57
 
-PODFILE CHECKSUM: 900e14f47cd2ee536f721b3001b6397437682697
+PODFILE CHECKSUM: 09a1798547afac321772b395216f14a19515abcc
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.1

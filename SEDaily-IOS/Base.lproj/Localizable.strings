@@ -85,4 +85,6 @@
 "ToggleToSignInButtonTitle" = "back to sign in";
 "SignUpHeader" = "Sign Up";
 "SignInHeader" = "Sign In";
+"TimeLeft" = "minutes left";
+"Transcript" = "Transcript";
 

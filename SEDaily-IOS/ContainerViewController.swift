@@ -116,7 +116,7 @@ class ContainerViewController: UIViewController {
 
     // Have to set preferredStatusBarStyle here on first view controller
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return .default
     }
 }
 
@@ -138,9 +138,18 @@ extension ContainerViewController: AudioOverlayDelegate {
     func pauseAudio() {
         self.audioOverlayViewController?.pauseAudio()
     }
+	
+	func stopAudio() {
+		self.audioOverlayViewController?.stopAudio()
+	}
 
     func setCurrentShowingDetailView(podcastViewModel: PodcastViewModel?) {
         self.audioOverlayViewController?.setCurrentShowingDetailView(
             podcastViewModel: podcastViewModel)
     }
+	
+	func setServices(upvoteService: UpvoteService, bookmarkService: BookmarkService) {
+		self.audioOverlayViewController?.setServices(upvoteService: upvoteService, bookmarkService: bookmarkService)
+	}
+	
 }

@@ -155,10 +155,14 @@ enum L10n {
   static let tapToRefresh = L10n.tr("Localizable", "TapToRefresh")
   /// There was a problem :(
   static let thereWasAProblem = L10n.tr("Localizable", "ThereWasAProblem")
+  /// minutes left
+  static let timeLeft = L10n.tr("Localizable", "TimeLeft")
   /// back to sign in
   static let toggleToSignInButtonTitle = L10n.tr("Localizable", "ToggleToSignInButtonTitle")
   /// no account? sign up
   static let toggleToSignUpButtonTitle = L10n.tr("Localizable", "ToggleToSignUpButtonTitle")
+  /// Transcript
+  static let transcript = L10n.tr("Localizable", "Transcript")
   /// Username or Email
   static let usernameOrEmailPlaceholder = L10n.tr("Localizable", "UsernameOrEmailPlaceholder")
   /// Username

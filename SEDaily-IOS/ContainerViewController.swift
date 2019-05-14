@@ -148,8 +148,4 @@ extension ContainerViewController: AudioOverlayDelegate {
             podcastViewModel: podcastViewModel)
     }
 	
-	func setServices(upvoteService: UpvoteService, bookmarkService: BookmarkService) {
-		self.audioOverlayViewController?.setServices(upvoteService: upvoteService, bookmarkService: bookmarkService)
-	}
-	
 }

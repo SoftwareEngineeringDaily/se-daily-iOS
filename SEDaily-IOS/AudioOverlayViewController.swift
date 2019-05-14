@@ -21,7 +21,6 @@ protocol AudioOverlayDelegate: class {
 	func pauseAudio()
 	func stopAudio()
 	func setCurrentShowingDetailView(podcastViewModel: PodcastViewModel?)
-	func setServices(upvoteService: UpvoteService, bookmarkService: BookmarkService)
 }
 
 //extension AudioOverlayDelegate {
@@ -31,8 +30,9 @@ protocol AudioOverlayDelegate: class {
 class AudioOverlayViewController: UIViewController {
 	let networkService = API()
 	
-	// TODO: needs to tweak this value and the logic behind it to support different screen sizes well
-	static let audioControlsViewHeight: CGFloat = 130
+	// This value adapts based on screen height ration relatively to iPhone X
+	static let audioControlsViewHeight: CGFloat = 140 * (812 / UIScreen.main.bounds.height)
+	
 	
 	private static var userSettingPlaybackSpeedKey = "PlaybackSpeed"
 	
@@ -67,6 +67,7 @@ class AudioOverlayViewController: UIViewController {
 	}
 	
 	override func viewDidLoad() {
+		
 		self.verticalStackView.axis = .vertical
 		self.view.addSubview(self.verticalStackView)
 		
@@ -84,6 +85,7 @@ class AudioOverlayViewController: UIViewController {
 				UIView.getValueScaledByScreenHeightFor(
 					baseValue: AudioOverlayViewController.audioControlsViewHeight))
 		}
+
 		self.verticalStackView.snp.makeConstraints { (make) in
 			make.edges.equalToSuperview()
 		}
@@ -398,8 +400,4 @@ extension AudioOverlayViewController: AudioViewDelegate {
 		}
 	}
 	
-	func setServices(upvoteService: UpvoteService, bookmarkService: BookmarkService) {
-		self.upvoteService = upvoteService
-		self.bookmarkService = bookmarkService
-	}
 }

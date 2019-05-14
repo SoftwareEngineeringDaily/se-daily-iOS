@@ -166,10 +166,12 @@ class AudioView: UIView {
 
         containerView.addSubview(podcastLabel)
 
+				addPlaybackSlider(parentView: parentView)
+			
         podcastLabel.snp.makeConstraints { (make) -> Void in
             make.left.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 60))
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().inset(UIView.getValueScaledByScreenHeightFor(baseValue: -30))
+            make.top.equalTo(playbackSlider.snp.bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15)) //changed
         }
 
         podcastLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 15))
@@ -186,10 +188,11 @@ class AudioView: UIView {
         stackView.distribution = .fillEqually
 
         stackView.snp.makeConstraints { (make) -> Void in
-            make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 70))
+						//make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 70))
             make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: (50 * 5)))
-            make.top.equalTo(podcastLabel.snp.bottom)
+            make.top.equalTo(podcastLabel.snp.bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 20))
             make.centerX.equalToSuperview()
+						//make.bottom.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 20)) //changed
         }
 			
 				//stackView.addArrangedSubview(expandCollapseButton)
@@ -241,7 +244,7 @@ class AudioView: UIView {
         }
 
         setupActivityIndicator(parentView: containerView)
-        addPlaybackSlider(parentView: parentView)
+        //changed addPlaybackSlider(parentView: parentView)
         addLabels(parentView: containerView)
 
         parentView.addSubview(self.expandCollapseButton)
@@ -269,7 +272,7 @@ class AudioView: UIView {
         self.bringSubview(toFront: playbackSlider)
 
         playbackSlider.snp.makeConstraints { (make) -> Void in
-            make.top.equalToSuperview().inset(5)
+            make.top.equalToSuperview().offset(5)
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
             make.left.right.equalToSuperview().inset(15)
 					

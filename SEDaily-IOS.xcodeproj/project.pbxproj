@@ -79,6 +79,7 @@
 		43AA2C9B2268AEE50050668B /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43AA2C992268AEE50050668B /* OpenSans-Light.ttf */; };
 		43AA2C9E2268B1FD0050668B /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43AA2C9D2268B1FD0050668B /* OpenSans-Regular.ttf */; };
 		43AA2CA02268B2660050668B /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43AA2C9F2268B2660050668B /* OpenSans-Semibold.ttf */; };
+		43AD7117228AF08B00E930BD /* TagsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7116228AF08B00E930BD /* TagsCell.swift */; };
 		43BA7BF8228452A4000E1171 /* NotificationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BA7BF7228452A4000E1171 /* NotificationsController.swift */; };
 		43C0C76022797464007A92E7 /* EpisodeActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C75F22797464007A92E7 /* EpisodeActionsViewController.swift */; };
 		43C0C76222798635007A92E7 /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C76122798635007A92E7 /* ActionView.swift */; };
@@ -222,6 +223,7 @@
 		43AA2C992268AEE50050668B /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Light.ttf"; sourceTree = "<group>"; };
 		43AA2C9D2268B1FD0050668B /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		43AA2C9F2268B2660050668B /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
+		43AD7116228AF08B00E930BD /* TagsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsCell.swift; sourceTree = "<group>"; };
 		43BA7BF7228452A4000E1171 /* NotificationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsController.swift; sourceTree = "<group>"; };
 		43C0C75F22797464007A92E7 /* EpisodeActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeActionsViewController.swift; sourceTree = "<group>"; };
 		43C0C76122798635007A92E7 /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
@@ -471,6 +473,7 @@
 				435BAF3B2278430900762891 /* EpisodeHeaderCell.swift */,
 				43C0C763227AE7D1007A92E7 /* WebViewCell.swift */,
 				43C0C76122798635007A92E7 /* ActionView.swift */,
+				43AD7116228AF08B00E930BD /* TagsCell.swift */,
 			);
 			name = PodcastDetail;
 			sourceTree = "<group>";
@@ -1004,6 +1007,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
+				"${BUILT_PRODUCTS_DIR}/Tags/Tags.framework",
 				"${BUILT_PRODUCTS_DIR}/UIFontComplete/UIFontComplete.framework",
 				"${BUILT_PRODUCTS_DIR}/WaitForIt/WaitForIt.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -1037,6 +1041,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tags.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIFontComplete.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaitForIt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -1095,6 +1100,7 @@
 				16CE698F1F98029E0057BAC3 /* PodcastDetailViewController.swift in Sources */,
 				1E286DE31FE4C5BA00644C1D /* TestHookEventTableViewCell.swift in Sources */,
 				964090BF2093B97D00CFF5C4 /* PodcastLite.swift in Sources */,
+				43AD7117228AF08B00E930BD /* TagsCell.swift in Sources */,
 				963144DE208FEA8000EA13F1 /* ForumThread.swift in Sources */,
 				16AD3E0C1F9B13EE0084C545 /* FilterObject.swift in Sources */,
 				43A680D42270803700A639A9 /* BookmarkService.swift in Sources */,

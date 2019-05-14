@@ -14,6 +14,10 @@ import SwifterSwift
 import KTResponsiveUI
 import KoalaTeaPlayer
 
+protocol ExpandButtonDelegate: class {
+	func willExpand()
+}
+
 protocol AudioOverlayDelegate: class {
 	func animateOverlayIn()
 	func animateOverlayOut()
@@ -46,6 +50,7 @@ class AudioOverlayViewController: UIViewController {
 	private var progressController = PlayProgressModelController()
 	
 
+	weak var expandButtonDelegate: ExpandButtonDelegate?
 	
 	private var audioView: AudioView?
 	private var podcastViewModel: PodcastViewModel?
@@ -360,12 +365,16 @@ extension AudioOverlayViewController: AudioViewDelegate {
 	}
 	
 	func expandButtonPressed() {
+		
+		
+		
 		self.view.snp.updateConstraints({ (make) in
 			make.top.equalToSuperview().offset(0)
 		})
 		
 		UIView.animate(withDuration: 0.25) {
 			self.view.superview?.layoutIfNeeded()
+			NotificationCenter.default.post(name: .episodeViewWillExpand, object: nil, userInfo: nil)
 		}
 	}
 	

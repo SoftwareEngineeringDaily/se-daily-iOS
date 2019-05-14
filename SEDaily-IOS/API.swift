@@ -41,7 +41,7 @@ extension API {
 		static let comments = "/comments"
 		static let createComment = "/comment"
 		
-	
+		static let topicsForPost = "/topics"
 		
 		
 		
@@ -77,6 +77,7 @@ extension API {
 		static let commentContent = "content"
 		static let entityType = "entityType"
 		static let parentCommentId = "parentCommentId"
+		static let postId = "postId"
 	}
 }
 
@@ -318,6 +319,7 @@ extension API {
 				
 				var data: [PodcastModel] = []
 				let this = JSON(responseData)
+				
 				for (_, subJson):(String, JSON) in this {
 					guard let jsonData = try? subJson.rawData() else { continue }
 					let newObject = try? JSONDecoder().decode(PodcastModel.self, from: jsonData)
@@ -326,6 +328,58 @@ extension API {
 					}
 				}
 				onSuccess(data)
+			case .failure(let error):
+				log.error(error.localizedDescription)
+				Tracker.logGeneralError(error: error)
+				onFailure(.GeneralFailure)
+			}
+		}
+	}
+}
+
+extension API {
+	func getTopicsForPost(podcastId: String,
+										onSuccess: @escaping ([Topic]) -> Void,
+										onFailure: @escaping (APIError?) -> Void) {
+		let urlString = self.rootURL + Endpoints.topicsForPost
+		
+		var params = [String: String]()
+		params[Params.postId] = podcastId
+		
+		
+		let user = UserManager.sharedInstance.getActiveUser()
+		let userToken = user.token
+		let _headers: HTTPHeaders = [
+			Headers.authorization: Headers.bearer + userToken
+		]
+		
+		networkRequest(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
+			switch response.result {
+			case .success:
+				guard let responseData = response.data else {
+					// Handle error here
+					log.error("response has no data")
+					onFailure(.NoResponseDataError)
+					return
+				}
+				print(JSON(responseData))
+//				do {
+//					let data: TopicResponse = try JSONDecoder().decode(TopicResponse.self, from: responseData)
+//					onSuccess(data.result)
+//				} catch let jsonErr {
+//					onFailure(.NoResponseDataError)
+//				}
+				
+				let jsonData = JSON(responseData)
+				var topicModels = [Topic]()
+				jsonData.forEach({ (_, itemJsonData) in
+					if let rawData = try? itemJsonData.rawData(),
+						let podcast = try? JSONDecoder().decode(Topic.self, from: rawData) {
+						topicModels.append(podcast)
+					}
+				})
+				onSuccess(topicModels)
+
 			case .failure(let error):
 				log.error(error.localizedDescription)
 				Tracker.logGeneralError(error: error)

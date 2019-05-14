@@ -14,6 +14,15 @@ class TagsCell: UITableViewCell, Reusable {
 	
 	let tagsView = TagsView()
 	
+	var topics:[String] = [] { willSet {
+	guard newValue != self.topics else { return }
+		}
+	didSet {
+		tagsView.set(contentsOf: topics)
+		tagsView.lastTag = "+"
+		}
+	}
+	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setupLayout()
@@ -42,11 +51,6 @@ extension TagsCell {
 		tagsView.tagFont = .systemFont(ofSize: 15)
 		// text longer ...
 		tagsView.lineBreakMode = .byTruncatingMiddle
-		// tag add
-		tagsView.tags = "Hello,Swift,Kubernetes,Javascript,React Native, Hello,Swift,Kubernetes,Javascript,React Native, Hello,Swift,Kubernetes,Javascript,React Native"
-		
-		tagsView.lastTag = "+"
-		
 		
 		
 		tagsView.snp.makeConstraints { (make) in
@@ -55,3 +59,5 @@ extension TagsCell {
 		
 	}
 }
+
+

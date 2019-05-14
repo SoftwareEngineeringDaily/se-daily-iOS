@@ -80,6 +80,8 @@
 		43AA2C9E2268B1FD0050668B /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43AA2C9D2268B1FD0050668B /* OpenSans-Regular.ttf */; };
 		43AA2CA02268B2660050668B /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43AA2C9F2268B2660050668B /* OpenSans-Semibold.ttf */; };
 		43AD7117228AF08B00E930BD /* TagsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7116228AF08B00E930BD /* TagsCell.swift */; };
+		43AD7119228B05A400E930BD /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7118228B05A400E930BD /* Topic.swift */; };
+		43AD711B228B0B9300E930BD /* TopicResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AD711A228B0B9300E930BD /* TopicResponse.swift */; };
 		43BA7BF8228452A4000E1171 /* NotificationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BA7BF7228452A4000E1171 /* NotificationsController.swift */; };
 		43C0C76022797464007A92E7 /* EpisodeActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C75F22797464007A92E7 /* EpisodeActionsViewController.swift */; };
 		43C0C76222798635007A92E7 /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C76122798635007A92E7 /* ActionView.swift */; };
@@ -224,6 +226,8 @@
 		43AA2C9D2268B1FD0050668B /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		43AA2C9F2268B2660050668B /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		43AD7116228AF08B00E930BD /* TagsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsCell.swift; sourceTree = "<group>"; };
+		43AD7118228B05A400E930BD /* Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
+		43AD711A228B0B9300E930BD /* TopicResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicResponse.swift; sourceTree = "<group>"; };
 		43BA7BF7228452A4000E1171 /* NotificationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsController.swift; sourceTree = "<group>"; };
 		43C0C75F22797464007A92E7 /* EpisodeActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeActionsViewController.swift; sourceTree = "<group>"; };
 		43C0C76122798635007A92E7 /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
@@ -474,6 +478,8 @@
 				43C0C763227AE7D1007A92E7 /* WebViewCell.swift */,
 				43C0C76122798635007A92E7 /* ActionView.swift */,
 				43AD7116228AF08B00E930BD /* TagsCell.swift */,
+				43AD7118228B05A400E930BD /* Topic.swift */,
+				43AD711A228B0B9300E930BD /* TopicResponse.swift */,
 			);
 			name = PodcastDetail;
 			sourceTree = "<group>";
@@ -1092,6 +1098,7 @@
 				960BFEBF20226B620073DAB2 /* CommentsViewController.swift in Sources */,
 				43C0C76222798635007A92E7 /* ActionView.swift in Sources */,
 				96B6168820C0883C00DF3CF6 /* ForumListViewController.swift in Sources */,
+				43AD7119228B05A400E930BD /* Topic.swift in Sources */,
 				01516A04207310C900E9E743 /* NotificationTableViewCell.swift in Sources */,
 				1671BD5A200D3D7800E6ED3B /* SubscriptionStatusViewController.swift in Sources */,
 				96BD1C88208E9497006C5E1D /* TestHookBool.swift in Sources */,
@@ -1117,6 +1124,7 @@
 				962F5365201E3C7900897A6E /* RelatedLinksViewController.swift in Sources */,
 				43C0C76022797464007A92E7 /* EpisodeActionsViewController.swift in Sources */,
 				960BFEC7202539180073DAB2 /* CommentReplyTableViewCell.swift in Sources */,
+				43AD711B228B0B9300E930BD /* TopicResponse.swift in Sources */,
 				1EABD8F51FB430AB00959859 /* DebugTabViewController.swift in Sources */,
 				435BAF3C2278430900762891 /* EpisodeHeaderCell.swift in Sources */,
 				1E286DE91FE4C65200644C1D /* TestHookEvent.swift in Sources */,

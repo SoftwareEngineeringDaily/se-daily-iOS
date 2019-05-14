@@ -22,6 +22,17 @@ class EpisodeViewController: UIViewController {
 	var webView: WKWebView = WKWebView()
 	let networkService: API = API()
 	
+	var topics:[Topic] = [] { didSet {
+		tableView.reloadData()
+		}
+	}
+	
+	var topicsStringArray: [String] {
+		get {
+			return topics.map{ $0.name }
+		}
+	}
+	
 	var webViewHeight: CGFloat = 600
 	
 	var viewModel: PodcastViewModel = PodcastViewModel() {
@@ -48,6 +59,10 @@ class EpisodeViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.view.addSubview(tableView)
+		
+		networkService.getTopicsForPost(podcastId: viewModel._id, onSuccess: { [weak self] data in
+			self?.topics = data
+		}, onFailure: { _ in print("error")})
 		
 		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Share", style: .plain, target: self, action: #selector(EpisodeViewController.shareTapped))
 			
@@ -76,6 +91,12 @@ class EpisodeViewController: UIViewController {
 			self,
 			selector: #selector(self.onDidReceiveData(_:)),
 			name: .viewModelUpdated,
+			object: nil)
+		
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(self.willExpand(_:)),
+			name: .episodeViewWillExpand,
 			object: nil)
 		
 		
@@ -185,6 +206,7 @@ extension EpisodeViewController: UITableViewDataSource {
 		case 1:
 			let cell: TagsCell = tableView.dequeueReusableCell(for: indexPath)
 			cell.tagsView.delegate = self
+			cell.topics = self.topicsStringArray
 			return cell
 			
 		default:
@@ -253,6 +275,13 @@ extension EpisodeViewController: TagsDelegate {
 	
 	// TagsView Change Height
 	func tagsChangeHeight(_ tagsView: TagsView, height: CGFloat) {
+		//self.tableView.reloadData()
+	}
+}
+
+
+extension EpisodeViewController {
+	@objc func willExpand(_ notification: Notification) {
 		self.tableView.reloadData()
 	}
 }

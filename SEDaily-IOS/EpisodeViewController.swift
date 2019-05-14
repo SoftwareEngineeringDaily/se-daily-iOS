@@ -11,6 +11,7 @@ protocol WebViewCellDelegate {
 }
 import UIKit
 import WebKit
+import Tags
 
 class EpisodeViewController: UIViewController {
 	
@@ -58,6 +59,7 @@ class EpisodeViewController: UIViewController {
 		}
 		tableView.register(cellType: EpisodeHeaderCell.self)
 		tableView.register(cellType: WebViewCell.self)
+		tableView.register(cellType: TagsCell.self)
 		tableView.rowHeight = UITableViewAutomaticDimension
 		tableView.estimatedRowHeight = 50.0
 		tableView.separatorStyle = .none
@@ -180,6 +182,10 @@ extension EpisodeViewController: UITableViewDataSource {
 				self?.commentsButtonPressed()
 			}
 			return cell
+		case 1:
+			let cell: TagsCell = tableView.dequeueReusableCell(for: indexPath)
+			cell.tagsView.delegate = self
+			return cell
 			
 		default:
 			let cell: WebViewCell = tableView.dequeueReusableCell(for: indexPath)
@@ -195,7 +201,7 @@ extension EpisodeViewController: UITableViewDataSource {
 	
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 2
+		return 3
 	}
 	
 	func numberOfSections(in tableView: UITableView) -> Int {
@@ -229,5 +235,24 @@ extension EpisodeViewController {
 				self.viewModel = viewModel
 			}
 		}
+	}
+}
+
+
+extension EpisodeViewController: TagsDelegate {
+	
+	// Tag Touch Action
+	func tagsTouchAction(_ tagsView: TagsView, tagButton: TagButton) {
+		
+	}
+	
+	// Last Tag Touch Action
+	func tagsLastTagAction(_ tagsView: TagsView, tagButton: TagButton) {
+		
+	}
+	
+	// TagsView Change Height
+	func tagsChangeHeight(_ tagsView: TagsView, height: CGFloat) {
+		self.tableView.reloadData()
 	}
 }

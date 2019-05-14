@@ -81,6 +81,7 @@ PODS:
   - Tabman (1.0.8):
     - Pageboy (~> 2.0)
     - PureLayout (~> 3.0)
+  - Tags (0.2.4)
   - UIFontComplete (2.0.1)
   - URITemplate (2.0.3)
   - WaitForIt (2.0.0)
@@ -120,6 +121,7 @@ DEPENDENCIES:
   - SwiftyBeaver (~> 1.4.2)
   - SwiftyJSON (~> 3.1.4)
   - Tabman (~> 1.0.5)
+  - Tags
   - UIFontComplete (~> 2.0.1)
   - WaitForIt (~> 2.0.0)
 
@@ -163,6 +165,7 @@ SPEC REPOS:
     - SwiftyBeaver
     - SwiftyJSON
     - Tabman
+    - Tags
     - UIFontComplete
     - URITemplate
     - WaitForIt
@@ -216,10 +219,11 @@ SPEC CHECKSUMS:
   SwiftyBeaver: 25bd76281f49ca989ec2e3cbde9af89c15bc1432
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   Tabman: 9f9a25595516c7dffb747be271ec8a0a5ac2341e
+  Tags: f513b25d753de97503f1bef5b4ff1fca4a0d5b29
   UIFontComplete: 7e3ce7f0a12d2529fb07f537e262aabfa87df280
   URITemplate: ace0c4c46dcf8afe6e89b4060621852886b15c3b
   WaitForIt: 2c7ad6deaffe3bf727b7242a2263167bf2ce3e57
 
-PODFILE CHECKSUM: 09a1798547afac321772b395216f14a19515abcc
+PODFILE CHECKSUM: 5271fe48e374d28c6bbfca3a87efa69db432e251
 
 COCOAPODS: 1.6.1

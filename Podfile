@@ -40,6 +40,7 @@ p
   pod 'Tabman', '~> 1.0.5'
   pod 'UIFontComplete', '~> 2.0.1'
   pod 'WaitForIt', '~> 2.0.0'
+  pod 'Tags'
 
   target 'SEDaily-IOSTests' do
     inherit! :search_paths

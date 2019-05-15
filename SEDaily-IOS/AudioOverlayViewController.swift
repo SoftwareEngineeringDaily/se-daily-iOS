@@ -374,7 +374,6 @@ extension AudioOverlayViewController: AudioViewDelegate {
 		
 		UIView.animate(withDuration: 0.25) {
 			self.view.superview?.layoutIfNeeded()
-			NotificationCenter.default.post(name: .episodeViewWillExpand, object: nil, userInfo: nil)
 		}
 	}
 	

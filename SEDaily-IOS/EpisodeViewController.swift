@@ -15,6 +15,9 @@ import Tags
 
 class EpisodeViewController: UIViewController {
 	
+	let tagsView = TagsView()
+	let tagsScrollView = UIScrollView(frame: .zero)
+	
 	weak var delegate: PodcastDetailViewControllerDelegate?
 	private weak var audioOverlayDelegate: AudioOverlayDelegate?
 	
@@ -23,7 +26,10 @@ class EpisodeViewController: UIViewController {
 	let networkService: API = API()
 	
 	var topics:[Topic] = [] { didSet {
-		tableView.reloadData()
+		tagsView.set(contentsOf: topicsStringArray)
+		tagsView.lastTag = "+"
+		
+		
 		}
 	}
 	
@@ -34,6 +40,8 @@ class EpisodeViewController: UIViewController {
 	}
 	
 	var webViewHeight: CGFloat = 600
+	
+	
 	
 	var viewModel: PodcastViewModel = PodcastViewModel() {
 		willSet {
@@ -60,9 +68,7 @@ class EpisodeViewController: UIViewController {
 		super.viewDidLoad()
 		self.view.addSubview(tableView)
 		
-		networkService.getTopicsForPost(podcastId: viewModel._id, onSuccess: { [weak self] data in
-			self?.topics = data
-		}, onFailure: { _ in print("error")})
+		getTopics()
 		
 		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Share", style: .plain, target: self, action: #selector(EpisodeViewController.shareTapped))
 			
@@ -79,9 +85,15 @@ class EpisodeViewController: UIViewController {
 		tableView.estimatedRowHeight = 50.0
 		tableView.separatorStyle = .none
 		
-		//tableView.delegate = self
+		tableView.delegate = self
 		tableView.dataSource = self
-		tableView.tableFooterView = UIView()
+		tagsView.delegate = self
+
+		
+		
+		tagsScrollView.addSubview(tagsView)
+		tableView.tableHeaderView = tagsScrollView
+		setupTagsHeaderLayout()
 		tableView.backgroundColor = .white
 		
 		self.audioOverlayDelegate?.setCurrentShowingDetailView(
@@ -92,15 +104,8 @@ class EpisodeViewController: UIViewController {
 			selector: #selector(self.onDidReceiveData(_:)),
 			name: .viewModelUpdated,
 			object: nil)
-		
-		NotificationCenter.default.addObserver(
-			self,
-			selector: #selector(self.willExpand(_:)),
-			name: .episodeViewWillExpand,
-			object: nil)
-		
-		
-		self.getTrascriptURL()
+
+		getTrascriptURL()
 		
 	}
 	
@@ -169,7 +174,7 @@ extension EpisodeViewController {
 }
 
 extension EpisodeViewController {
-	func getTrascriptURL() {
+	private func getTrascriptURL() {
 		networkService.getPost(podcastId: viewModel._id, completion: { [weak self] (success, result) in
 			if success {
 				guard let transcriptURL = result?.transcriptURL else { return }
@@ -178,6 +183,48 @@ extension EpisodeViewController {
 		})
 	}
 }
+
+
+extension EpisodeViewController {
+	private func getTopics() {
+		networkService.getTopicsForPost(podcastId: viewModel._id, onSuccess: { [weak self] data in
+			self?.topics = data
+		}, onFailure: { _ in print("error")})
+	}
+}
+
+extension EpisodeViewController {
+	private func setupTagsHeaderLayout() {
+		
+		tagsScrollView.showsHorizontalScrollIndicator = false
+		
+		tagsView.lastTagTitleColor = .white
+		tagsView.lastTagLayerColor = Stylesheet.Colors.base
+		tagsView.lastTagBackgroundColor = Stylesheet.Colors.base
+		
+		tagsView.tagLayerRadius = 5
+		tagsView.tagLayerWidth = 1
+		tagsView.tagLayerColor = Stylesheet.Colors.base
+		tagsView.tagTitleColor = Stylesheet.Colors.base
+		tagsView.tagBackgroundColor = .white
+		tagsView.tagFont = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 14)) ?? .systemFont(ofSize: 14)
+		tagsView.lineBreakMode = .byTruncatingMiddle
+		
+		tagsScrollView.snp.makeConstraints{ (make) in
+			make.height.equalTo(50)
+			make.width.equalTo(UIScreen.main.bounds.width)
+		}
+		
+		tagsView.translatesAutoresizingMaskIntoConstraints = false
+		tagsView.snp.makeConstraints { (make) in
+			make.top.left.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 10.0))
+			make.right.bottom.equalToSuperview()
+			make.height.equalTo(50)
+			make.width.equalTo(900) //arbitrary value wider than the actual screen
+		}
+	}
+}
+
 
 extension EpisodeViewController: UITableViewDataSource {
 	
@@ -203,11 +250,6 @@ extension EpisodeViewController: UITableViewDataSource {
 				self?.commentsButtonPressed()
 			}
 			return cell
-		case 1:
-			let cell: TagsCell = tableView.dequeueReusableCell(for: indexPath)
-			cell.tagsView.delegate = self
-			cell.topics = self.topicsStringArray
-			return cell
 			
 		default:
 			let cell: WebViewCell = tableView.dequeueReusableCell(for: indexPath)
@@ -223,7 +265,7 @@ extension EpisodeViewController: UITableViewDataSource {
 	
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 3
+		return 2
 	}
 	
 	func numberOfSections(in tableView: UITableView) -> Int {
@@ -265,12 +307,13 @@ extension EpisodeViewController: TagsDelegate {
 	
 	// Tag Touch Action
 	func tagsTouchAction(_ tagsView: TagsView, tagButton: TagButton) {
-		
+		print(tagButton.index)
 	}
 	
 	// Last Tag Touch Action
 	func tagsLastTagAction(_ tagsView: TagsView, tagButton: TagButton) {
 		
+		print("add")
 	}
 	
 	// TagsView Change Height
@@ -280,8 +323,3 @@ extension EpisodeViewController: TagsDelegate {
 }
 
 
-extension EpisodeViewController {
-	@objc func willExpand(_ notification: Notification) {
-		self.tableView.reloadData()
-	}
-}

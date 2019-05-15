@@ -188,7 +188,7 @@ extension EpisodeHeaderCell {
 			titleLabel.snp.makeConstraints { (make) -> Void in
 				make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
 				make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
-				make.top.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15.0))
+				make.top.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 10.0))
 			}
 			miscDetailsLabel.snp.makeConstraints { (make) -> Void in
 				make.left.equalTo(guestThumb.snp_right).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 10.0))

@@ -78,6 +78,7 @@ extension API {
 		static let entityType = "entityType"
 		static let parentCommentId = "parentCommentId"
 		static let postId = "postId"
+		static let topic = "topic"
 	}
 }
 
@@ -323,6 +324,7 @@ extension API {
 				for (_, subJson):(String, JSON) in this {
 					guard let jsonData = try? subJson.rawData() else { continue }
 					let newObject = try? JSONDecoder().decode(PodcastModel.self, from: jsonData)
+					
 					if let newObject = newObject {
 						data.append(newObject)
 					}
@@ -362,13 +364,6 @@ extension API {
 					onFailure(.NoResponseDataError)
 					return
 				}
-				print(JSON(responseData))
-//				do {
-//					let data: TopicResponse = try JSONDecoder().decode(TopicResponse.self, from: responseData)
-//					onSuccess(data.result)
-//				} catch let jsonErr {
-//					onFailure(.NoResponseDataError)
-//				}
 				
 				let jsonData = JSON(responseData)
 				var topicModels = [Topic]()
@@ -388,6 +383,56 @@ extension API {
 		}
 	}
 }
+
+extension API {
+	func getPostsFor(topic: String,
+										createdAtBefore beforeDate: String = "",
+										onSuccess: @escaping ([Podcast]) -> Void,
+										onFailure: @escaping (APIError?) -> Void) {
+		let urlString = self.rootURL + Endpoints.posts
+		
+		var params = [String: String]()
+		params[Params.createdAtBefore] = beforeDate
+		params[Params.topic] = topic
+		
+		let user = UserManager.sharedInstance.getActiveUser()
+		let userToken = user.token
+		let _headers: HTTPHeaders = [
+			Headers.authorization: Headers.bearer + userToken
+		]
+		
+		networkRequest(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
+			switch response.result {
+			case .success:
+				guard let responseData = response.data else {
+					// Handle error here
+					log.error("response has no data")
+					onFailure(.NoResponseDataError)
+					return
+				}
+				
+				var data: [PodcastModel] = []
+				let this = JSON(responseData)
+				
+				print(this)
+				
+				for (_, subJson):(String, JSON) in this {
+					guard let jsonData = try? subJson.rawData() else { continue }
+					let newObject = try? JSONDecoder().decode(PodcastModel.self, from: jsonData)
+					if let newObject = newObject {
+						data.append(newObject)
+					}
+				}
+				onSuccess(data)
+			case .failure(let error):
+				log.error(error.localizedDescription)
+				Tracker.logGeneralError(error: error)
+				onFailure(.GeneralFailure)
+			}
+		}
+	}
+}
+
 
 // MARK: - MVVM Getters
 extension API {

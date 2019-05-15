@@ -307,7 +307,11 @@ extension EpisodeViewController: TagsDelegate {
 	
 	// Tag Touch Action
 	func tagsTouchAction(_ tagsView: TagsView, tagButton: TagButton) {
-		print(tagButton.index)
+		let topicTableViewController: TopicTableViewController = TopicTableViewController()
+		let topic = topics[tagButton.index]
+		topicTableViewController.topic = topic
+		self.navigationController?.pushViewController(topicTableViewController, animated: true)
+		
 	}
 	
 	// Last Tag Touch Action

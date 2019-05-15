@@ -86,6 +86,7 @@
 		43C0C76022797464007A92E7 /* EpisodeActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C75F22797464007A92E7 /* EpisodeActionsViewController.swift */; };
 		43C0C76222798635007A92E7 /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C76122798635007A92E7 /* ActionView.swift */; };
 		43C0C764227AE7D1007A92E7 /* WebViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C763227AE7D1007A92E7 /* WebViewCell.swift */; };
+		43C3B92F228C462700D884FD /* TopicTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C3B92E228C462700D884FD /* TopicTableViewController.swift */; };
 		43CE140C225F7EF700B57CFA /* PlayProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE140B225F7EF700B57CFA /* PlayProgress.swift */; };
 		43CE140E226070FB00B57CFA /* PlayProgressModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE140D226070FB00B57CFA /* PlayProgressModelController.swift */; };
 		43CE8E0D2271AFC000DD990F /* HtmlHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE8E0C2271AFC000DD990F /* HtmlHelper.swift */; };
@@ -232,6 +233,7 @@
 		43C0C75F22797464007A92E7 /* EpisodeActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeActionsViewController.swift; sourceTree = "<group>"; };
 		43C0C76122798635007A92E7 /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
 		43C0C763227AE7D1007A92E7 /* WebViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewCell.swift; sourceTree = "<group>"; };
+		43C3B92E228C462700D884FD /* TopicTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicTableViewController.swift; sourceTree = "<group>"; };
 		43CE140B225F7EF700B57CFA /* PlayProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayProgress.swift; sourceTree = "<group>"; };
 		43CE140D226070FB00B57CFA /* PlayProgressModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayProgressModelController.swift; sourceTree = "<group>"; };
 		43CE8E0C2271AFC000DD990F /* HtmlHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HtmlHelper.swift; sourceTree = "<group>"; };
@@ -402,6 +404,7 @@
 		1686FBFF1F009EC00088A6C1 /* SEDaily-IOS */ = {
 			isa = PBXGroup;
 			children = (
+				43C3B92D228C434A00D884FD /* Topic */,
 				439BCC6F22818F32008D808B /* Profile */,
 				43F4591D226F279F00641705 /* Services */,
 				43AA2C922268AC3B0050668B /* fonts */,
@@ -587,6 +590,14 @@
 				43AA2C952268AC7B0050668B /* Roboto-Regular.ttf */,
 			);
 			name = fonts;
+			sourceTree = "<group>";
+		};
+		43C3B92D228C434A00D884FD /* Topic */ = {
+			isa = PBXGroup;
+			children = (
+				43C3B92E228C462700D884FD /* TopicTableViewController.swift */,
+			);
+			name = Topic;
 			sourceTree = "<group>";
 		};
 		43F4591D226F279F00641705 /* Services */ = {
@@ -1155,6 +1166,7 @@
 				161F3DEA1F62703100A8F825 /* PodcastTableViewCell.swift in Sources */,
 				164FE9E71F02F02F009419CA /* UserModel.swift in Sources */,
 				43BA7BF8228452A4000E1171 /* NotificationsController.swift in Sources */,
+				43C3B92F228C462700D884FD /* TopicTableViewController.swift in Sources */,
 				1E706BD41FD62E0300D44AB2 /* BookmarkViewModelController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -61,15 +61,15 @@ class ActionView {
 	func setupContraints() {
 			upvoteButton.snp.makeConstraints { (make) -> Void in
 				make.right.equalTo(upvoteCountLabel.snp.left)
-				make.height.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 50.0))
+				make.height.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 50.0)).priority(999)
 		}
 		bookmarkButton.snp.makeConstraints { (make) -> Void in
 			
-			make.height.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 50.0))
+			make.height.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 50.0)).priority(999)
 		}
 		commentButton.snp.makeConstraints { (make) -> Void in
 			
-			make.height.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 50.0))
+			make.height.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 50.0)).priority(999)
 		}
 	}
 }

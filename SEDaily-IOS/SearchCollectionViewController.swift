@@ -1,48 +1,43 @@
-
 //
-//  PostsForTopicTableViewController.swift
+//  SearchTableViewController.swift
 //  SEDaily-IOS
 //
-//  Created by Dawid Cedrych on 5/16/19.
-//  Copyright © 2019 Altalogy. All rights reserved.
+//  Created by Craig Holliday on 9/7/17.
+//  Copyright © 2017 Koala Tea. All rights reserved.
 //
 
-
 import UIKit
+import KTResponsiveUI
 import KoalaTeaFlowLayout
+import StatefulViewController
 
 private let reuseIdentifier = "Cell"
 
-class PostsForTopicCollectionViewController: UICollectionViewController {
+class SearchCollectionViewController: UICollectionViewController, StatefulViewController {
 	lazy var skeletonCollectionView: SkeletonCollectionView = {
 		return SkeletonCollectionView(frame: self.collectionView!.frame)
 	}()
 	
-	weak var audioOverlayDelegate: AudioOverlayDelegate?
+	private let podcastViewModelController = PodcastViewModelController()
 	
-	var topic: Topic
+	weak var audioOverlayDelegate: AudioOverlayDelegate?
 	
 	private var progressController = PlayProgressModelController()
 	
-	// Paging Properties
 	var loading = false
-	let pageSize = 10
-	let preloadMargin = 5
-	
-	var lastLoadedPage = 0
+	private let pageSize = 10
+	private let preloadMargin = 5
+	private var lastLoadedPage = 0
 	var errorChecks = 0
 	let maximumErrorChecks = 5
 	
-	
-	// ViewModelController
-	private let podcastViewModelController: PodcastViewModelController = PodcastViewModelController()
+	private let searchController = UISearchController(searchResultsController: nil)
+	private var searchText: String {
+		return searchController.searchBar.text ?? ""
+	}
 	
 	init(collectionViewLayout layout: UICollectionViewLayout,
-			 audioOverlayDelegate: AudioOverlayDelegate?,
-			 topic: Topic = Topic(_id: "", name: "", slug: "", status: "", postCount: 0)
-		) {
-		
-		self.topic = topic
+			 audioOverlayDelegate: AudioOverlayDelegate?) {
 		self.audioOverlayDelegate = audioOverlayDelegate
 		super.init(collectionViewLayout: layout)
 	}
@@ -54,12 +49,6 @@ class PostsForTopicCollectionViewController: UICollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		self.title = topic.name
-		// Uncomment the following line to preserve selection between presentations
-		// self.clearsSelectionOnViewWillAppear = false
-		
-		
-		// Register cell classes
 		self.collectionView?.register(ItemCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 		
 		//hardcoded height
@@ -80,37 +69,59 @@ class PostsForTopicCollectionViewController: UICollectionViewController {
 			object: nil)
 		
 		self.collectionView?.addSubview(skeletonCollectionView)
+		
+		searchController.searchBar.delegate = self
+		searchController.searchBar.layer.borderWidth = 1
+		searchController.searchBar.layer.borderColor = Stylesheet.Colors.light.cgColor
+		searchController.searchBar.tintColor = Stylesheet.Colors.base
+		searchController.searchBar.barTintColor = Stylesheet.Colors.light
+		
+		
+		searchController.dimsBackgroundDuringPresentation = false
+		searchController.hidesNavigationBarDuringPresentation = false
+		
+		
+		self.title = L10n.search
+		
+		self.loadingView = StateView(
+			frame: CGRect.zero,
+			text: L10n.fetchingSearch,
+			showLoadingIndicator: true,
+			showRefreshButton: false,
+			delegate: nil)
+		self.loadingView?.isUserInteractionEnabled = false
+		
+		self.emptyView = StateView(
+			frame: CGRect.zero,
+			text: L10n.emptySearch,
+			showLoadingIndicator: false,
+			showRefreshButton: false,
+			delegate: nil)
+		self.emptyView?.isUserInteractionEnabled = false
+		
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		self.searchController.searchBar.isHidden = false
+		self.setupInitialViewState()
 		progressController.retrieve()
 		self.collectionView?.reloadData()
 	}
+	
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		self.searchController.searchBar.isHidden = true
+	}
+	
 	deinit {
 		// perform the deinitialization
 		NotificationCenter.default.removeObserver(self)
 	}
 	
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		// Make sure skeletonCollectionView is animating when the view is visible
-		if self.skeletonCollectionView.alpha != 0 {
-			self.skeletonCollectionView.collectionView.reloadData()
-		}
-	}
-	
-	@objc func loginObserver() {
-		self.podcastViewModelController.clearViewModels()
-		DispatchQueue.main.async {
-			self.collectionView?.reloadData()
-		}
-		self.getData(lastIdentifier: "", nextPage: 0)
-	}
-	
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
+	func hasContent() -> Bool {
+		return podcastViewModelController.viewModelsCount > 0
 	}
 	
 	// MARK: UICollectionViewDataSource
@@ -125,7 +136,7 @@ class PostsForTopicCollectionViewController: UICollectionViewController {
 		}
 		if podcastViewModelController.viewModelsCount <= 0 {
 			// Load initial data
-			self.getData(lastIdentifier: "", nextPage: 0)
+			//self.getData(lastIdentifier: lastIdentifier, nextPage: nextPage, firstSearch: false)
 		}
 		return podcastViewModelController.viewModelsCount
 	}
@@ -162,64 +173,83 @@ class PostsForTopicCollectionViewController: UICollectionViewController {
 				}
 			}
 		}
-		
 		return cell
 	}
 	
+	@objc func loginObserver() {
+		self.podcastViewModelController.clearViewModels()
+		DispatchQueue.main.async {
+			self.collectionView?.reloadData()
+		}
+		self.getData(lastIdentifier: "", nextPage: 0, firstSearch: false)
+	}
+}
+
+
+
+
+extension SearchCollectionViewController {
 	func checkPage(currentIndexPath: IndexPath, lastIndexPath: IndexPath, lastIdentifier: String) {
 		let nextPage: Int = Int(currentIndexPath.item / self.pageSize) + 1
 		let preloadIndex = nextPage * self.pageSize - self.preloadMargin
 		
 		if (currentIndexPath.item >= preloadIndex && self.lastLoadedPage < nextPage) || currentIndexPath == lastIndexPath {
-			// @TODO: Turn lastIdentifier into some T
-			self.getData(lastIdentifier: lastIdentifier, nextPage: nextPage)
+			self.getData(lastIdentifier: lastIdentifier, nextPage: nextPage, firstSearch: false)
 		}
 	}
 	
-	func getData(lastIdentifier: String, nextPage: Int) {
+	func getData(lastIdentifier: String, nextPage: Int, firstSearch: Bool) {
+		self.startLoading()
 		guard self.loading == false else { return }
 		self.loading = true
-		podcastViewModelController.fetchTopicData(
-			slug: topic._id,
+		podcastViewModelController.fetchSearchData(
+			searchTerm: self.searchText.lowercased(),
 			createdAtBefore: lastIdentifier,
+			firstSearch: firstSearch,
 			onSuccess: { [weak self] in
 				self?.errorChecks = 0
 				self?.loading = false
+				self?.endLoading()
 				self?.lastLoadedPage = nextPage
 				DispatchQueue.main.async {
 					self?.collectionView?.reloadData()
 				} },
 			onFailure: {  [weak self] (apiError) in
+				self?.endLoading()
 				self?.loading = false
 				self?.errorChecks += 1
 				log.error(apiError ?? "")
 				guard let strongSelf = self else { return }
-				guard strongSelf.errorChecks <= strongSelf.maximumErrorChecks else { return }
-		})
-	}
-	
-	// MARK: UICollectionViewDelegate
-	
-	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
-			if let audioOverlayDelegate = self.audioOverlayDelegate {
-				let vc = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
-				vc.viewModel = viewModel
-				self.navigationController?.pushViewController(vc, animated: true)
-			}
-		}
+				guard strongSelf.errorChecks <= strongSelf.maximumErrorChecks else { return } })
 	}
 }
 
-extension PostsForTopicCollectionViewController {
-	private func viewModelDidChange(viewModel: PodcastViewModel) {
-		self.podcastViewModelController.update(with: viewModel)
+extension SearchCollectionViewController {
+	func filterContentForSearchText(_ searchText: String) {
+		guard !searchBarIsEmpty() else { return }
+		self.getData(lastIdentifier: "", nextPage: 0, firstSearch: true)
+	}
+	
+	func searchBarIsEmpty() -> Bool {
+		return searchController.searchBar.text?.isEmpty ?? true
+	}
+	
+	func isFiltering() -> Bool {
+		let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
+		return searchController.isActive && (!searchBarIsEmpty() || searchBarScopeIsFiltering)
+	}
+}
+
+extension SearchCollectionViewController: UISearchBarDelegate {
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+		filterContentForSearchText(searchController.searchBar.text!)
 	}
 }
 
 
 
-extension PostsForTopicCollectionViewController {
+extension SearchCollectionViewController {
+	
 	func commentsButtonPressed(_ viewModel: PodcastViewModel) {
 		Analytics2.podcastCommentsViewed(podcastId: viewModel._id)
 		let commentsViewController: CommentsViewController = CommentsViewController()
@@ -230,12 +260,19 @@ extension PostsForTopicCollectionViewController {
 	}
 }
 
-extension PostsForTopicCollectionViewController {
+extension SearchCollectionViewController {
 	@objc func onDidReceiveData(_ notification: Notification) {
 		if let data = notification.userInfo as? [String: PodcastViewModel] {
 			for (_, viewModel) in data {
 				viewModelDidChange(viewModel: viewModel)
 			}
 		}
+	}
+}
+
+
+extension SearchCollectionViewController {
+	private func viewModelDidChange(viewModel: PodcastViewModel) {
+		self.podcastViewModelController.update(with: viewModel)
 	}
 }

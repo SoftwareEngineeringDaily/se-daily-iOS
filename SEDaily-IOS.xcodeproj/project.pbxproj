@@ -11,7 +11,7 @@
 		01707421207192C0002E6E3C /* NotificationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01707420207192C0002E6E3C /* NotificationsTableViewController.swift */; };
 		01BB1D6D1F29999E004A912E /* PodcastPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */; };
 		161791FC1FC4DA7200A1287E /* OfflineDownloadsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161791FB1FC4DA7200A1287E /* OfflineDownloadsManager.swift */; };
-		161F3DE61F61F73D00A8F825 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161F3DE51F61F73D00A8F825 /* SearchTableViewController.swift */; };
+		161F3DE61F61F73D00A8F825 /* SearchCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161F3DE51F61F73D00A8F825 /* SearchCollectionViewController.swift */; };
 		161F3DEA1F62703100A8F825 /* PodcastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */; };
 		162FFD401FBE200E0026288D /* DiskKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162FFD3F1FBE200E0026288D /* DiskKeys.swift */; };
 		16307FCA1F8FDD02001783CB /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16307FC91F8FDD02001783CB /* Podcast.swift */; };
@@ -152,7 +152,7 @@
 		01707420207192C0002E6E3C /* NotificationsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewController.swift; sourceTree = "<group>"; };
 		01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastPageViewController.swift; sourceTree = "<group>"; };
 		161791FB1FC4DA7200A1287E /* OfflineDownloadsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineDownloadsManager.swift; sourceTree = "<group>"; };
-		161F3DE51F61F73D00A8F825 /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
+		161F3DE51F61F73D00A8F825 /* SearchCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewController.swift; sourceTree = "<group>"; };
 		161F3DE91F62703100A8F825 /* PodcastTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastTableViewCell.swift; sourceTree = "<group>"; };
 		162FFD3F1FBE200E0026288D /* DiskKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskKeys.swift; sourceTree = "<group>"; };
 		16307FC91F8FDD02001783CB /* Podcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
@@ -498,7 +498,7 @@
 		16AD3E031F9B06950084C545 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				161F3DE51F61F73D00A8F825 /* SearchTableViewController.swift */,
+				161F3DE51F61F73D00A8F825 /* SearchCollectionViewController.swift */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -1098,7 +1098,7 @@
 				164FE9EF1F03065C009419CA /* NavigationControllerExtension.swift in Sources */,
 				165484551F902D3F005AEA23 /* GeneralCollectionViewController.swift in Sources */,
 				1E638E561FC794AC00A29BDC /* ProgressIndicator.swift in Sources */,
-				161F3DE61F61F73D00A8F825 /* SearchTableViewController.swift in Sources */,
+				161F3DE61F61F73D00A8F825 /* SearchCollectionViewController.swift in Sources */,
 				1E2BFDCD2017C74A00E6DE0A /* TestHookBoolTableViewCell.swift in Sources */,
 				167AFAB71F043F1100A1332F /* HeaderView.swift in Sources */,
 				16D67C4A1F33AC620065E838 /* AnswersTracker.swift in Sources */,

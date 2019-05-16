@@ -82,9 +82,9 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     }
 
     @objc func rightBarButtonPressed() {
-        let vc = SearchTableViewController()
-        vc.audioOverlayDelegate = self.audioOverlayDelegate
-        self.navigationController?.pushViewController(vc)
+			let layout = UICollectionViewLayout()
+			var searchCollectionViewController = SearchCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate)
+        self.navigationController?.pushViewController(searchCollectionViewController)
         Analytics2.searchNavButtonPressed()
     }
 

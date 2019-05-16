@@ -14,9 +14,6 @@ import StatefulViewController
 private let reuseIdentifier = "Cell"
 
 class SearchCollectionViewController: UICollectionViewController, StatefulViewController {
-	lazy var skeletonCollectionView: SkeletonCollectionView = {
-		return SkeletonCollectionView(frame: self.collectionView!.frame)
-	}()
 	
 	private let podcastViewModelController = PodcastViewModelController()
 	
@@ -68,7 +65,6 @@ class SearchCollectionViewController: UICollectionViewController, StatefulViewCo
 			name: .viewModelUpdated,
 			object: nil)
 		
-		self.collectionView?.addSubview(skeletonCollectionView)
 		
 		searchController.searchBar.delegate = self
 		searchController.searchBar.layer.borderWidth = 1
@@ -80,7 +76,8 @@ class SearchCollectionViewController: UICollectionViewController, StatefulViewCo
 		searchController.dimsBackgroundDuringPresentation = false
 		searchController.hidesNavigationBarDuringPresentation = false
 		
-		
+		self.collectionView?.contentInset = UIEdgeInsetsMake(searchController.searchBar.frame.height - UIView.getValueScaledByScreenHeightFor(baseValue: 10), 0, 0, 0)
+		self.view.addSubview(searchController.searchBar)
 		self.title = L10n.search
 		
 		self.loadingView = StateView(
@@ -131,13 +128,6 @@ class SearchCollectionViewController: UICollectionViewController, StatefulViewCo
 	}
 	
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		if podcastViewModelController.viewModelsCount > 0 {
-			self.skeletonCollectionView.fadeOut(duration: 0.5, completion: nil)
-		}
-		if podcastViewModelController.viewModelsCount <= 0 {
-			// Load initial data
-			//self.getData(lastIdentifier: lastIdentifier, nextPage: nextPage, firstSearch: false)
-		}
 		return podcastViewModelController.viewModelsCount
 	}
 	
@@ -176,6 +166,16 @@ class SearchCollectionViewController: UICollectionViewController, StatefulViewCo
 		return cell
 	}
 	
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
+			if let audioOverlayDelegate = self.audioOverlayDelegate {
+				let vc = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
+				vc.viewModel = viewModel
+				self.navigationController?.pushViewController(vc, animated: true)
+			}
+		}
+	}
+	
 	@objc func loginObserver() {
 		self.podcastViewModelController.clearViewModels()
 		DispatchQueue.main.async {
@@ -184,8 +184,6 @@ class SearchCollectionViewController: UICollectionViewController, StatefulViewCo
 		self.getData(lastIdentifier: "", nextPage: 0, firstSearch: false)
 	}
 }
-
-
 
 
 extension SearchCollectionViewController {

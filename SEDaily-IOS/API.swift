@@ -414,8 +414,6 @@ extension API {
 				var data: [PodcastModel] = []
 				let this = JSON(responseData)
 				
-				print(this)
-				
 				for (_, subJson):(String, JSON) in this {
 					guard let jsonData = try? subJson.rawData() else { continue }
 					let newObject = try? JSONDecoder().decode(PodcastModel.self, from: jsonData)

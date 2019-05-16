@@ -29,7 +29,6 @@ class EpisodeViewController: UIViewController {
 		tagsView.set(contentsOf: topicsStringArray)
 		tagsView.lastTag = "+"
 		
-		
 		}
 	}
 	
@@ -307,22 +306,21 @@ extension EpisodeViewController: TagsDelegate {
 	
 	// Tag Touch Action
 	func tagsTouchAction(_ tagsView: TagsView, tagButton: TagButton) {
-		let topicTableViewController: TopicTableViewController = TopicTableViewController()
+		let layout = UICollectionViewLayout()
 		let topic = topics[tagButton.index]
-		topicTableViewController.topic = topic
-		self.navigationController?.pushViewController(topicTableViewController, animated: true)
+		var postsForTopicCollectionViewController = PostsForTopicCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate, topic: topic)
+		
+		self.navigationController?.pushViewController(postsForTopicCollectionViewController, animated: true)
 		
 	}
 	
 	// Last Tag Touch Action
 	func tagsLastTagAction(_ tagsView: TagsView, tagButton: TagButton) {
-		
-		print("add")
+
 	}
 	
 	// TagsView Change Height
 	func tagsChangeHeight(_ tagsView: TagsView, height: CGFloat) {
-		//self.tableView.reloadData()
 	}
 }
 

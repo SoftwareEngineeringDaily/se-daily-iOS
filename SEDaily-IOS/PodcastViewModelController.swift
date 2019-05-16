@@ -147,12 +147,8 @@ public class PodcastViewModelController {
 	
 	func fetchTopicData(slug: String,
 											 createdAtBefore beforeDate: String = "",
-											 firstSearch: Bool,
 											 onSuccess: @escaping SuccessCallback,
 											 onFailure: @escaping (APIError?) -> Void) {
-		if firstSearch {
-			self.clearViewModels()
-		}
 		networkService.getPostsFor(
 			topic: slug,
 			createdAtBefore: beforeDate,

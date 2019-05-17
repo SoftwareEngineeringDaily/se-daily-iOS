@@ -7,6 +7,8 @@ import Foundation
 
 // swiftlint:disable explicit_type_interface identifier_name line_length nesting type_body_length type_name
 enum L10n {
+  /// Add a link
+  static let addLink = L10n.tr("Localizable", "AddLink")
   /// Email Field Empty
   static let alertMessageEmailEmpty = L10n.tr("Localizable", "AlertMessageEmailEmpty")
   /// Invalid Email Format
@@ -69,6 +71,8 @@ enum L10n {
   static let enthusiasticYes = L10n.tr("Localizable", "EnthusiasticYes")
   /// Fetching results
   static let fetchingSearch = L10n.tr("Localizable", "FetchingSearch")
+  /// Fields cannot be blank, please fill and retry
+  static let fieldEmpty = L10n.tr("Localizable", "FieldEmpty")
   /// First Name
   static let firstNamePlaceholder = L10n.tr("Localizable", "FirstNamePlaceholder")
   /// Error
@@ -95,6 +99,8 @@ enum L10n {
   static let mwfNotificationBody = L10n.tr("Localizable", "mwfNotificationBody")
   /// Software Daily
   static let mwfNotificationTitle = L10n.tr("Localizable", "mwfNotificationTitle")
+  /// Add new link
+  static let newLink = L10n.tr("Localizable", "NewLink")
   /// No saved episodes.
   static let noBookmarks = L10n.tr("Localizable", "NoBookmarks")
   /// No thanks
@@ -107,12 +113,18 @@ enum L10n {
   static let relatedLinks = L10n.tr("Localizable", "RelatedLinks")
   /// Search
   static let search = L10n.tr("Localizable", "Search")
+  /// Add a short title
+  static let shortTitle = L10n.tr("Localizable", "ShortTitle")
   /// Sign In
   static let signInHeader = L10n.tr("Localizable", "SignInHeader")
   /// Sign Up
   static let signUpButtonTitle = L10n.tr("Localizable", "SignUpButtonTitle")
   /// Sign Up
   static let signUpHeader = L10n.tr("Localizable", "SignUpHeader")
+  /// Something went wrong, please try again
+  static let somethingWentWrong = L10n.tr("Localizable", "SomethingWentWrong")
+  /// Submit
+  static let submit = L10n.tr("Localizable", "Submit")
   /// Submitting...
   static let submitting = L10n.tr("Localizable", "Submitting")
   /// Successfully submitted :)

@@ -38,6 +38,7 @@ extension API {
 		static let unfavorite = "/unfavorite"
 		static let myBookmarked = "/users/me/bookmarked"
 		static let relatedLinks = "/related-links"
+		static let relatedLink = "/related-link"
 		static let comments = "/comments"
 		static let createComment = "/comment"
 		
@@ -79,6 +80,8 @@ extension API {
 		static let parentCommentId = "parentCommentId"
 		static let postId = "postId"
 		static let topic = "topic"
+		static let relatedLinkTitle = "title"
+		static let relatedLinkURL = "url"
 	}
 }
 
@@ -710,6 +713,39 @@ extension API {
 					print(jsonErr)
 				}
 				
+			case .failure(let error):
+				log.error(error.localizedDescription)
+				Tracker.logGeneralError(error: error)
+				onFailure(.GeneralFailure)
+			}
+		}
+	}
+	
+	func addRelatedLink(podcastId: String, title: String, url: String, onSuccess: @escaping () -> Void,
+											 onFailure: @escaping (APIError?) -> Void) {
+		let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.relatedLink
+		let user = UserManager.sharedInstance.getActiveUser()
+		let userToken = user.token
+		let _headers: HTTPHeaders = [
+			Headers.authorization: Headers.bearer + userToken,
+			Headers.contentType: Headers.x_www_form_urlencoded
+		]
+		
+		var params = [String: String]()
+		params[Params.relatedLinkTitle] = title
+		params[Params.relatedLinkURL] = url
+		
+		networkRequest(urlString, method: .post, parameters: params, headers: _headers).responseJSON { response in
+			switch response.result {
+			case .success:
+				guard let responseData = response.data else {
+					// Handle error here
+					log.error("response has no data")
+					onFailure(.NoResponseDataError)
+					return
+				}
+				onSuccess()
+	
 			case .failure(let error):
 				log.error(error.localizedDescription)
 				Tracker.logGeneralError(error: error)

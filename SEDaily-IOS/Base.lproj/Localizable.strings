@@ -87,4 +87,9 @@
 "SignInHeader" = "Sign In";
 "TimeLeft" = "minutes left";
 "Transcript" = "Transcript";
-
+"FieldEmpty" = "Fields cannot be blank, please fill and retry";
+"SomethingWentWrong" = "Something went wrong, please try again";
+"NewLink" = "Add new link";
+"AddLink" = "Add a link";
+"Submit" = "Submit";
+"ShortTitle" = "Add a short title";

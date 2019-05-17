@@ -18,7 +18,6 @@ class SettingsCell: UITableViewCell, Reusable {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		
 		cellLabel = UILabel()
-		cellLabel.textColor = .black
 		cellLabel.baselineAdjustment = .alignCenters
 		cellLabel.numberOfLines = 0
 		cellLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 15))

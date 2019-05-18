@@ -16,7 +16,7 @@ import Tags
 class EpisodeViewController: UIViewController {
 	
 	let tagsView = TagsView()
-	let tagsScrollView = UIScrollView(frame: .zero)
+	let tagsScrollView = UIScrollView(frame: CGRect(x: 0.0, y: 0.0, width: 375.0, height: 50.0))
 	
 	weak var delegate: PodcastDetailViewControllerDelegate?
 	private weak var audioOverlayDelegate: AudioOverlayDelegate?
@@ -27,8 +27,6 @@ class EpisodeViewController: UIViewController {
 	
 	var topics:[Topic] = [] { didSet {
 		tagsView.set(contentsOf: topicsStringArray)
-		tagsView.lastTag = "+"
-		
 		}
 	}
 	
@@ -67,7 +65,7 @@ class EpisodeViewController: UIViewController {
 		super.viewDidLoad()
 		self.view.addSubview(tableView)
 		
-		getTopics()
+		
 		
 		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Share", style: .plain, target: self, action: #selector(EpisodeViewController.shareTapped))
 			
@@ -105,7 +103,7 @@ class EpisodeViewController: UIViewController {
 			object: nil)
 
 		getTrascriptURL()
-		
+		getTopics()
 	}
 	
 	
@@ -309,16 +307,13 @@ extension EpisodeViewController: TagsDelegate {
 		let layout = UICollectionViewLayout()
 		let topic = topics[tagButton.index]
 		var postsForTopicCollectionViewController = PostsForTopicCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate, topic: topic)
-		
 		self.navigationController?.pushViewController(postsForTopicCollectionViewController, animated: true)
 		
 	}
-	
 	// Last Tag Touch Action
 	func tagsLastTagAction(_ tagsView: TagsView, tagButton: TagButton) {
 
 	}
-	
 	// TagsView Change Height
 	func tagsChangeHeight(_ tagsView: TagsView, height: CGFloat) {
 	}

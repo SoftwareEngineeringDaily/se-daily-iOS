@@ -72,8 +72,8 @@ extension ProfileViewController: UITableViewDataSource {
 			} else {
 				let cell: SettingsCell = tableView.dequeueReusableCell(for: indexPath)
 				cell.cellLabel.text = "Sign In to see your profile here"
-				cell.cellLabel.font = UIFont(name: "OpenSans-SemiBold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-				cell.cellLabel.textColor = Stylesheet.Colors.base
+				cell.cellLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+				cell.cellLabel.textColor = Stylesheet.Colors.dark
 				cell.selectionStyle = .none
 				return cell
 			}

@@ -261,7 +261,7 @@ extension EpisodeHeaderCell {
 				guestThumb.image = #imageLiteral(resourceName: "SEDaily_Logo")
 				return
 			}
-			guestThumb.kf.setImage(with: imageURL, options: [.transition(.fade(0.2))])
+			guestThumb.kf.setImage(with: imageURL, placeholder: UIImage(named: "Logo_BarButton"), options: [.transition(.fade(0.2))])
 		}
 		func updateUpvote() {
 			actionView.upvoteCountLabel.text = String(viewModel.score)

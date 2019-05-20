@@ -230,7 +230,7 @@ extension API {
 						return
 					}
 					// Get user details
-					print(jsonResponse)
+					
 					guard let fullName = jsonResponse["name"] as? String else { return }
 					guard let avatarURL = jsonResponse["avatarUrl"] as? String else { return }
 					guard let website = jsonResponse["website"] as? String  else { return }
@@ -245,7 +245,7 @@ extension API {
 																	website: website,
 																	fullName: fullName
 																	)
-					print(modifiedUser)
+					
 					UserManager.sharedInstance.setCurrentUser(to: modifiedUser)
 					NotificationCenter.default.post(name: .loginChanged, object: nil)
 					
@@ -457,6 +457,7 @@ extension API {
 				}
 				
 				let jsonData = JSON(responseData)
+				
 				guard let data = try? jsonData.rawData() else {
 					log.error("response has no data")
 					completion(false, nil)
@@ -524,6 +525,7 @@ extension API {
 				
 				var data: [PodcastModel] = []
 				let this = JSON(responseData)
+				print(this)
 				for (_, subJson):(String, JSON) in this {
 					guard let jsonData = try? subJson.rawData() else { continue }
 					let newObject = try? JSONDecoder().decode(PodcastModel.self, from: jsonData)
@@ -710,7 +712,7 @@ extension API {
 					onSuccess(data)
 				} catch let jsonErr {
 					onFailure(.NoResponseDataError)
-					print(jsonErr)
+
 				}
 				
 			case .failure(let error):

@@ -9,13 +9,9 @@
 import UIKit
 import Down
 class CommentsViewController: UIViewController {
-	
-	
 
-	
 	
 	var tableView: UITableView = UITableView()
-
 	
 	var postButton: UIButton!
 	var commentTextView: UITextView!

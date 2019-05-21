@@ -1,21 +1,23 @@
 //
-//  BookmarkCollectionViewController.swift
+//  DownloadsCollectionViewController.swift
 //  SEDaily-IOS
 //
-//  Created by Justin Lam on 12/4/17.
-//  Copyright © 2017 Koala Tea. All rights reserved.
+//  Created by Dawid Cedrych on 5/21/19.
+//  Copyright © 2019 Altalogy. All rights reserved.
 //
+
+import Foundation
 
 import UIKit
 import StatefulViewController
 import KoalaTeaFlowLayout
 
-/// Collection view controller for viewing all bookmarks for the user.
-class BookmarkCollectionViewController: UICollectionViewController, StatefulViewController {
-	static private let cellId = "PodcastCellId"
+/// Collection view controller for viewing all downloads for the user.
+class DownloadsCollectionViewController: UICollectionViewController, StatefulViewController {
+	
 	private let reuseIdentifier = "Cell"
 	
-	private var viewModelController = BookmarkViewModelController()
+	private var viewModelController = DownloadsViewModelController()
 	weak var audioOverlayDelegate: AudioOverlayDelegate?
 	
 	private var progressController = PlayProgressModelController()
@@ -29,7 +31,7 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 		super.init(collectionViewLayout: layout)
 		self.audioOverlayDelegate = audioOverlayDelegate
 		
-		self.tabBarItem = UITabBarItem(title: L10n.tabBarSaved, image: UIImage(named: "bookmark_outline"), selectedImage: UIImage(named: "bookmark"))
+		self.tabBarItem = UITabBarItem(title: L10n.tabBarDownloads, image: UIImage(named: "download_panel_outline"), selectedImage: UIImage(named: "download_panel"))
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -50,13 +52,6 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 		self.collectionView?.collectionViewLayout = layout
 		self.collectionView?.backgroundColor = Stylesheet.Colors.light
 		
-		NotificationCenter.default.addObserver(
-			self,
-			selector: #selector(self.loginObserver),
-			name: .loginChanged,
-			object: nil)
-		
-		
 		self.errorView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
 		self.errorView?.backgroundColor = .green
 		
@@ -68,18 +63,11 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 			action: #selector(pullToRefresh(_:)),
 			for: .valueChanged)
 		self.collectionView?.refreshControl = refreshControl
-		Analytics2.bookmarksPageViewed()
+		//Analytics2.bookmarksPageViewed()
 	}
 	
 	@objc private func pullToRefresh(_ sender: Any) {
-		self.refreshView(useCache: false)
-	}
-	
-	func hasContent() -> Bool {
-		if UserManager.sharedInstance.getActiveUser().isLoggedIn() {
-			return self.viewModelController.viewModelsCount > 0
-		}
-		return false
+		self.refreshView(useCache: true)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -94,57 +82,26 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 		self.refreshView(useCache: true)
 	}
 	
-	/// Refresh the view
-	///
-	/// - Parameter useCache: true to use disk cache first while network calls occur in the background
 	private func refreshView(useCache: Bool) {
 		self.startLoading()
-		if UserManager.sharedInstance.getActiveUser().isLoggedIn() {
-			self.updateLoadingView(view: skeletonCollectionView)
-			self.updateEmptyView(view:
-				StateView(
-					frame: CGRect.zero,
-					text: L10n.noBookmarks,
-					showLoadingIndicator: false,
-					showRefreshButton: true,
-					delegate: self))
-			
-			if useCache {
-				self.viewModelController.retrieveCachedBookmarkData(onSuccess: {
-					self.endLoading()
-					DispatchQueue.main.async {
-						self.collectionView?.reloadData()
-						self.collectionView?.refreshControl?.endRefreshing()
-					}
-				})
-			}
-			self.viewModelController.retrieveNetworkBookmarkData {
+		
+		self.updateLoadingView(view: skeletonCollectionView)
+		self.updateEmptyView(view:
+			StateView(
+				frame: CGRect.zero,
+				text: L10n.noDownloads,
+				showLoadingIndicator: false,
+				showRefreshButton: true,
+				delegate: self))
+		
+		if useCache {
+			self.viewModelController.retrieveCachedDownloadsData(onSuccess: {
 				self.endLoading()
 				DispatchQueue.main.async {
 					self.collectionView?.reloadData()
 					self.collectionView?.refreshControl?.endRefreshing()
 				}
-			}
-		} else {
-			self.updateLoadingView(view:
-				StateView(
-					frame: CGRect.zero,
-					text: "",
-					showLoadingIndicator: false,
-					showRefreshButton: false,
-					delegate: nil))
-			self.updateEmptyView(view:
-				StateView(
-					frame: CGRect.zero,
-					text: L10n.loginSeeBookmarks,
-					showLoadingIndicator: false,
-					showRefreshButton: false,
-					delegate: nil))
-			self.endLoading()
-			DispatchQueue.main.async {
-				self.collectionView?.reloadData()
-				self.collectionView?.refreshControl?.endRefreshing()
-			}
+			})
 		}
 	}
 	
@@ -158,9 +115,6 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 		self.emptyView = view
 	}
 	
-	@objc func loginObserver() {
-		self.refreshView(useCache: false)
-	}
 	
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {
 		return 1
@@ -169,8 +123,7 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 	override func collectionView(
 		_ collectionView: UICollectionView,
 		numberOfItemsInSection section: Int) -> Int {
-		return UserManager.sharedInstance.getActiveUser().isLoggedIn() ?
-			self.viewModelController.viewModelsCount : 0
+			return self.viewModelController.viewModelsCount
 	}
 	
 	override func collectionView(
@@ -197,7 +150,6 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 				self?.commentsButtonPressed(viewModel)
 				
 			}
-			
 		}
 		
 		return cell
@@ -216,14 +168,14 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 	}
 }
 
-extension BookmarkCollectionViewController: StateViewDelegate {
+extension DownloadsCollectionViewController: StateViewDelegate {
 	func refreshPressed() {
-		self.refreshView(useCache: false)
+		self.refreshView(useCache: true)
 		Analytics2.refreshMyBookmarksPressed()
 	}
 }
 
-extension BookmarkCollectionViewController: PodcastDetailViewControllerDelegate {
+extension DownloadsCollectionViewController: PodcastDetailViewControllerDelegate {
 	func modelDidChange(viewModel: PodcastViewModel) {
 		self.viewModelController.update(with: viewModel)
 		self.collectionView?.reloadData()
@@ -231,7 +183,7 @@ extension BookmarkCollectionViewController: PodcastDetailViewControllerDelegate 
 }
 
 
-extension BookmarkCollectionViewController {
+extension DownloadsCollectionViewController {
 	func commentsButtonPressed(_ viewModel: PodcastViewModel) {
 		Analytics2.podcastCommentsViewed(podcastId: viewModel._id)
 		let commentsViewController: CommentsViewController = CommentsViewController()
@@ -241,5 +193,3 @@ extension BookmarkCollectionViewController {
 		}
 	}
 }
-
-

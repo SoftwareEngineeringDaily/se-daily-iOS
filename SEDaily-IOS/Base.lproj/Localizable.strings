@@ -76,6 +76,7 @@
 "TabBarForum" = "Forum";
 "TabBarFeed" = "Feed";
 "TabBarSaved" = "Saved";
+"TabBarDownloads" = "Downloads";
 "mwfNotificationTitle" = "Software Daily";
 "mwfNotificationBody" = "We have new episodes for you!";
 "Search" = "Search";
@@ -93,3 +94,4 @@
 "AddLink" = "Add a link";
 "Submit" = "Submit";
 "ShortTitle" = "Add a short title";
+"NoDownloads" = "No downloaded episodes";

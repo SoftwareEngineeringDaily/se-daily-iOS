@@ -89,6 +89,8 @@
 		43CE140C225F7EF700B57CFA /* PlayProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE140B225F7EF700B57CFA /* PlayProgress.swift */; };
 		43CE140E226070FB00B57CFA /* PlayProgressModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE140D226070FB00B57CFA /* PlayProgressModelController.swift */; };
 		43CE451E2293E85D0048426A /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE451D2293E85C0048426A /* Haptics.swift */; };
+		43CE45212293ECFC0048426A /* DownloadsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE45202293ECFC0048426A /* DownloadsCollectionViewController.swift */; };
+		43CE45232293F14B0048426A /* DownloadsViewModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE45222293F14B0048426A /* DownloadsViewModelController.swift */; };
 		43CE8E0D2271AFC000DD990F /* HtmlHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE8E0C2271AFC000DD990F /* HtmlHelper.swift */; };
 		43F4591F226F27BB00641705 /* UpvoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F4591E226F27BA00641705 /* UpvoteService.swift */; };
 		96004ACE20A9E0030017230F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96004ACD20A9E0030017230F /* GoogleService-Info.plist */; };
@@ -236,6 +238,8 @@
 		43CE140B225F7EF700B57CFA /* PlayProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayProgress.swift; sourceTree = "<group>"; };
 		43CE140D226070FB00B57CFA /* PlayProgressModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayProgressModelController.swift; sourceTree = "<group>"; };
 		43CE451D2293E85C0048426A /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
+		43CE45202293ECFC0048426A /* DownloadsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsCollectionViewController.swift; sourceTree = "<group>"; };
+		43CE45222293F14B0048426A /* DownloadsViewModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewModelController.swift; sourceTree = "<group>"; };
 		43CE8E0C2271AFC000DD990F /* HtmlHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HtmlHelper.swift; sourceTree = "<group>"; };
 		43F4591E226F27BA00641705 /* UpvoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpvoteService.swift; sourceTree = "<group>"; };
 		675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -405,6 +409,7 @@
 		1686FBFF1F009EC00088A6C1 /* SEDaily-IOS */ = {
 			isa = PBXGroup;
 			children = (
+				43CE451F2293ECCB0048426A /* Downloads */,
 				43C3B92D228C434A00D884FD /* Topic */,
 				439BCC6F22818F32008D808B /* Profile */,
 				43F4591D226F279F00641705 /* Services */,
@@ -598,6 +603,15 @@
 				431DE890228D619C00FACA74 /* PostsForTopicCollectionViewController.swift */,
 			);
 			name = Topic;
+			sourceTree = "<group>";
+		};
+		43CE451F2293ECCB0048426A /* Downloads */ = {
+			isa = PBXGroup;
+			children = (
+				43CE45202293ECFC0048426A /* DownloadsCollectionViewController.swift */,
+				43CE45222293F14B0048426A /* DownloadsViewModelController.swift */,
+			);
+			name = Downloads;
 			sourceTree = "<group>";
 		};
 		43F4591D226F279F00641705 /* Services */ = {
@@ -1083,6 +1097,7 @@
 				965E165820ABD74900F2E4E4 /* FeedItem.swift in Sources */,
 				960BFEC320239F0E0073DAB2 /* Comment.swift in Sources */,
 				43C0C764227AE7D1007A92E7 /* WebViewCell.swift in Sources */,
+				43CE45212293ECFC0048426A /* DownloadsCollectionViewController.swift in Sources */,
 				439BCC7522818F9D008D808B /* ProfileViewController.swift in Sources */,
 				965798A52093FDE600104F8F /* FeedItemCell.swift in Sources */,
 				43A680D222707DC000A639A9 /* DownloadService.swift in Sources */,
@@ -1135,6 +1150,7 @@
 				164FE9DC1F02DAB5009419CA /* PodcastCollectionViewCell.swift in Sources */,
 				961A378D208FAFEF0050EF80 /* ForumThreadLite.swift in Sources */,
 				962F5365201E3C7900897A6E /* RelatedLinksViewController.swift in Sources */,
+				43CE45232293F14B0048426A /* DownloadsViewModelController.swift in Sources */,
 				43C0C76022797464007A92E7 /* EpisodeActionsViewController.swift in Sources */,
 				960BFEC7202539180073DAB2 /* CommentReplyTableViewCell.swift in Sources */,
 				1EABD8F51FB430AB00959859 /* DebugTabViewController.swift in Sources */,

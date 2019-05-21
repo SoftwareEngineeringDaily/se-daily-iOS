@@ -103,6 +103,8 @@ enum L10n {
   static let newLink = L10n.tr("Localizable", "NewLink")
   /// No saved episodes.
   static let noBookmarks = L10n.tr("Localizable", "NoBookmarks")
+  /// No downloaded episodes
+  static let noDownloads = L10n.tr("Localizable", "NoDownloads")
   /// No thanks
   static let noWithGratitude = L10n.tr("Localizable", "NoWithGratitude")
   /// Password
@@ -129,6 +131,8 @@ enum L10n {
   static let submitting = L10n.tr("Localizable", "Submitting")
   /// Successfully submitted :)
   static let succcessfullySubmitted = L10n.tr("Localizable", "SucccessfullySubmitted")
+  /// Downloads
+  static let tabBarDownloads = L10n.tr("Localizable", "TabBarDownloads")
   /// Feed
   static let tabBarFeed = L10n.tr("Localizable", "TabBarFeed")
   /// Forum

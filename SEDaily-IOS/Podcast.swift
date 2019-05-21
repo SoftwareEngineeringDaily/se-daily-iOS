@@ -113,6 +113,7 @@ extension Podcast {
 		self.downvoted = viewModel.isDownvoted
 		self.bookmarked = viewModel.isBookmarked
 		self.transcriptURL = ""
+		self.downloaded = viewModel.isDownloaded
 	}
 }
 

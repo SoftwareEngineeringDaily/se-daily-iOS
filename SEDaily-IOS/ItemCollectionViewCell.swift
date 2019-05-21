@@ -73,24 +73,22 @@ class ItemCollectionViewCell: UICollectionViewCell {
 	}
 	
 	@objc func upvoteTapped() {
-		let impact = UIImpactFeedbackGenerator()
-		impact.impactOccurred()
-	
+
+		Haptics.feedback(.impact)
 		upvoteService?.UIDelegate = self
 		upvoteService?.upvote()
 	}
 	
 	@objc func bookmarkTapped() {
-		let selection = UISelectionFeedbackGenerator()
-		selection.selectionChanged()
 		
+		Haptics.feedback(.impact)
 		bookmarkService?.UIDelegate = self
 		bookmarkService?.setBookmark()
 	}
 	
 	@objc func commentTapped() {
-		let notification = UINotificationFeedbackGenerator()
-		notification.notificationOccurred(.success)
+		
+		Haptics.feedback(.impact)
 		commentShowCallback()
 	}
 	
@@ -322,7 +320,7 @@ extension ItemCollectionViewCell {
 			return UIView.getValueScaledByScreenWidthFor(baseValue: value)
 		}
 		
-		skeletonImageView = GradientContainerView(frame: CGRect(x: scale(10.0), y: scale(10.0), width: scale(80.0), height: scale(80.0)))
+		skeletonImageView = GradientContainerView(frame: CGRect(x: scale(15.0), y: scale(10.0), width: scale(80.0), height: scale(80.0)))
 		skeletonImageView.cornerRadius = self.imageView.cornerRadius
 		skeletonImageView.backgroundColor = UIColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1.0)
 		contentView.addSubview(skeletonImageView)

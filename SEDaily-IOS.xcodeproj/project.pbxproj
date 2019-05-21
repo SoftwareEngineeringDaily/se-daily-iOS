@@ -88,6 +88,7 @@
 		43C0C764227AE7D1007A92E7 /* WebViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C763227AE7D1007A92E7 /* WebViewCell.swift */; };
 		43CE140C225F7EF700B57CFA /* PlayProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE140B225F7EF700B57CFA /* PlayProgress.swift */; };
 		43CE140E226070FB00B57CFA /* PlayProgressModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE140D226070FB00B57CFA /* PlayProgressModelController.swift */; };
+		43CE451E2293E85D0048426A /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE451D2293E85C0048426A /* Haptics.swift */; };
 		43CE8E0D2271AFC000DD990F /* HtmlHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE8E0C2271AFC000DD990F /* HtmlHelper.swift */; };
 		43F4591F226F27BB00641705 /* UpvoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F4591E226F27BA00641705 /* UpvoteService.swift */; };
 		96004ACE20A9E0030017230F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96004ACD20A9E0030017230F /* GoogleService-Info.plist */; };
@@ -234,6 +235,7 @@
 		43C0C763227AE7D1007A92E7 /* WebViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewCell.swift; sourceTree = "<group>"; };
 		43CE140B225F7EF700B57CFA /* PlayProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayProgress.swift; sourceTree = "<group>"; };
 		43CE140D226070FB00B57CFA /* PlayProgressModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayProgressModelController.swift; sourceTree = "<group>"; };
+		43CE451D2293E85C0048426A /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		43CE8E0C2271AFC000DD990F /* HtmlHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HtmlHelper.swift; sourceTree = "<group>"; };
 		43F4591E226F27BA00641705 /* UpvoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpvoteService.swift; sourceTree = "<group>"; };
 		675FBEB71FD81FBA8767227A /* Pods-SEDaily-IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEDaily-IOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SEDaily-IOS/Pods-SEDaily-IOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 				43A680CF2270718600A639A9 /* Debouncer.swift */,
 				43CE8E0C2271AFC000DD990F /* HtmlHelper.swift */,
 				439BCC6B22802EDC008D808B /* CurrentlyPlaying.swift */,
+				43CE451D2293E85C0048426A /* Haptics.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1075,6 +1078,7 @@
 				9672AA52202929C90020981F /* Author.swift in Sources */,
 				431DE891228D619D00FACA74 /* PostsForTopicCollectionViewController.swift in Sources */,
 				439BCC6C22802EDC008D808B /* CurrentlyPlaying.swift in Sources */,
+				43CE451E2293E85D0048426A /* Haptics.swift in Sources */,
 				96F35745201BFB0200E8B6E9 /* RelatedLink.swift in Sources */,
 				965E165820ABD74900F2E4E4 /* FeedItem.swift in Sources */,
 				960BFEC320239F0E0073DAB2 /* Comment.swift in Sources */,

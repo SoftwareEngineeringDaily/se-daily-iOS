@@ -14,15 +14,8 @@ public struct Topic: Codable {
 	let slug: String
 	let status: String
 	let postCount: Int
-	
-//	init() {
-//		self._id = ""
-//		self.name = ""
-//		self.slug = ""
-//		self.status = ""
-//		self.postCount = 0
-//	}
 }
+
 extension Topic: Equatable {
 	public static func == (lhs: Topic, rhs: Topic) -> Bool {
 		return lhs._id == rhs._id &&

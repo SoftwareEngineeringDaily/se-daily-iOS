@@ -70,29 +70,26 @@ class EpisodeHeaderCell: UITableViewCell, Reusable {
 	}
 	
 	@objc func upvoteTapped() {
-		let impact = UIImpactFeedbackGenerator()
-		impact.impactOccurred()
 		
+		Haptics.feedback(.impact)
 		upvoteService?.UIDelegate = self
 		upvoteService?.upvote()
 	}
 	
 	@objc func bookmarkTapped() {
-		let selection = UISelectionFeedbackGenerator()
-		selection.selectionChanged()
 		
+		Haptics.feedback(.impact)
 		bookmarkService?.UIDelegate = self
 		bookmarkService?.setBookmark()
 	}
 	@objc func commentTapped() {
-		let notification = UINotificationFeedbackGenerator()
-		notification.notificationOccurred(.success)
+		
+		Haptics.feedback(.impact)
 		actionView.commentShowCallback()
 	}
 	@objc func downloadTapped() {
-		let notification = UINotificationFeedbackGenerator()
-		notification.notificationOccurred(.success)
-//		downloadService?.UIDelegate = self
+
+		Haptics.feedback(.impact)
 		switch viewModel.isDownloaded {
 		case true:
 			downloadService?.deletePodcast()
@@ -102,15 +99,13 @@ class EpisodeHeaderCell: UITableViewCell, Reusable {
 	}
 	
 	@objc func playTapped() {
-		let notification = UINotificationFeedbackGenerator()
-		notification.notificationOccurred(.success)
+		Haptics.feedback(.notification)
 		playButtonCallBack(isPlaying)
 		
 	}
 	
 	@objc func relatedLinksTapped() {
-		let notification = UINotificationFeedbackGenerator()
-		notification.notificationOccurred(.success)
+		Haptics.feedback(.impact)
 		relatedLinksButtonCallBack()
 	}
 }
@@ -340,3 +335,5 @@ extension EpisodeHeaderCell: DownloadServiceUIDelegate {
 		downloadButton.setTitle(progressString, for: .normal)
 	}
 }
+
+

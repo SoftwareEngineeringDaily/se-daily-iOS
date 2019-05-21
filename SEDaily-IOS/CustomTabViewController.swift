@@ -130,8 +130,10 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 			
 			
 			let latestVC = PodcastPageViewController(audioOverlayDelegate: self.audioOverlayDelegate)
-			let profileVC = ProfileViewController()
 			let bookmarksVC = BookmarkCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate)
+			let downloadsVC = DownloadsCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate)
+			let profileVC = ProfileViewController()
+			
 			
 
 
@@ -139,6 +141,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
         self.viewControllers = [
             latestVC,
 						bookmarksVC,
+						downloadsVC,
 						profileVC
         ]
 

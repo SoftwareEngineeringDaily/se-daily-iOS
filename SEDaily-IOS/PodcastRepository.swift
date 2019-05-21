@@ -40,6 +40,23 @@ class PodcastRepository: Repository<Podcast> {
     // MARK: Getters With Paging
     let tag = "podcasts"
     var loading = false
+	
+	/// Retrieves the cached downloads data from disk
+	///
+	/// - Parameters:
+	///   - onSuccess: Success callback
+	///   - onFailure: Failure callback
+	func retrieveDownloadsData(
+		onSuccess: @escaping RepositorySuccessCallback,
+		onFailure: @escaping RepositoryErrorCallback) {
+		DataSource.getAllDownloads(diskKey: .PodcastFolder) { diskData in
+			guard let data = diskData else {
+				onFailure(.ErrorGettingFromDisk)
+				return
+			}
+			onSuccess(data)
+		}
+	}
 
     /// Retrieves the cached bookmark data from disk
     ///

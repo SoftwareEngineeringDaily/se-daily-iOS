@@ -109,25 +109,24 @@ class Helpers {
         return seconds < 10 ? "0\(seconds)" : "\(seconds)"
     }
 
-	
+    /*
+     A formatter for individual date components used to provide an appropriate
+     value for the `startTimeLabel` and `durationLabel`.
+     */
+    static let timeRemainingFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.zeroFormattingBehavior = .pad
+        formatter.allowedUnits = [.minute, .second]
 
-	static func createTimeString(time: Float, units: NSCalendar.Unit ) -> String {
-		/*
-		A formatter for individual date components used to provide an appropriate
-		value for the `startTimeLabel`, `durationLabel` and `timeLeft label`.
-		*/
-		let timeRemainingFormatter: DateComponentsFormatter = {
-			let formatter = DateComponentsFormatter()
-			formatter.zeroFormattingBehavior = .pad
-			formatter.allowedUnits = units
-			
-			return formatter
-		}()
-		let components = NSDateComponents()
-		components.second = Int(max(0.0, time))
+        return formatter
+    }()
 
-		return timeRemainingFormatter.string(from: components as DateComponents)!
-	}
+    static func createTimeString(time: Float) -> String {
+        let components = NSDateComponents()
+        components.second = Int(max(0.0, time))
+
+        return timeRemainingFormatter.string(from: components as DateComponents)!
+    }
 }
 
 extension Helpers {
@@ -138,10 +137,6 @@ extension Helpers {
         let year = startDate.year.string
         return startMonth + " " + day + ", " + year
     }
-	
-	class func getScreenWidth() -> CGFloat {
-		return UIScreen.main.bounds.width
-	}
     
     class func getEpisodeCellHeight() -> CGFloat {
         if UIDevice().userInterfaceIdiom == .phone {

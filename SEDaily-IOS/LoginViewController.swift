@@ -3,7 +3,7 @@
 //  SEDaily-IOS
 //
 //  Created by Craig Holliday on 6/27/17.
-// 	Modified by Dawid Cedrych on 7/9/18
+// 	Modyfied by Dawid Cedrych on 7/9/18
 //  Copyright © 2017 Koala Tea. All rights reserved.
 //
 
@@ -56,7 +56,7 @@ class LoginViewController: UIViewController {
     func addBottomBorderToView(view: UIView, height: CGFloat, width: CGFloat) {
         let border = CALayer()
         let borderWidth = CGFloat(UIView.getValueScaledByScreenHeightFor(baseValue: 1))
-        border.borderColor = Stylesheet.Colors.base.cgColor
+        border.borderColor = Stylesheet.Colors.baseLight.cgColor
         border.frame = CGRect(x: 0, y: height - borderWidth, width: width, height: height)
 
         border.borderWidth = borderWidth
@@ -193,7 +193,7 @@ class LoginViewController: UIViewController {
         addBottomBorderToView(view: lastNameTextField, height: height, width: width)
 
         emailTextField.placeholder = L10n.usernameOrEmailPlaceholder
-        emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.base)
+        emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
         emailTextField.textColor = Stylesheet.Colors.blackText
         emailTextField.autocorrectionType = .no
         emailTextField.autocapitalizationType = .none
@@ -201,13 +201,13 @@ class LoginViewController: UIViewController {
 			
         usernameTextField.isHidden = true
         usernameTextField.placeholder = L10n.usernamePlaceholder
-        usernameTextField.setPlaceHolderTextColor(Stylesheet.Colors.base)
+        usernameTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
         usernameTextField.textColor = Stylesheet.Colors.blackText
         usernameTextField.autocorrectionType = .no
         usernameTextField.autocapitalizationType = .none
 
         passwordTextField.placeholder = L10n.passwordPlaceholder
-        passwordTextField.setPlaceHolderTextColor(Stylesheet.Colors.base)
+        passwordTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
         passwordTextField.textColor = Stylesheet.Colors.blackText
         passwordTextField.autocorrectionType = .no
         passwordTextField.autocapitalizationType = .none
@@ -215,7 +215,7 @@ class LoginViewController: UIViewController {
 
         passwordConfirmTextField.isHidden = true
         passwordConfirmTextField.placeholder = L10n.confirmPasswordPlaceholder
-        passwordConfirmTextField.setPlaceHolderTextColor(Stylesheet.Colors.base)
+        passwordConfirmTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
         passwordConfirmTextField.textColor = Stylesheet.Colors.blackText
         passwordConfirmTextField.autocorrectionType = .no
         passwordConfirmTextField.autocapitalizationType = .none
@@ -223,14 +223,14 @@ class LoginViewController: UIViewController {
 
         firstNameTextField.isHidden = true
         firstNameTextField.placeholder = L10n.firstNamePlaceholder
-        firstNameTextField.setPlaceHolderTextColor(Stylesheet.Colors.base)
+        firstNameTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
         firstNameTextField.textColor = Stylesheet.Colors.blackText
         firstNameTextField.autocorrectionType = .no
         firstNameTextField.autocapitalizationType = .none
 
         lastNameTextField.isHidden = true
         lastNameTextField.placeholder = L10n.lastNamePlaceholder
-        lastNameTextField.setPlaceHolderTextColor(Stylesheet.Colors.base)
+        lastNameTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
         lastNameTextField.textColor = Stylesheet.Colors.blackText
         lastNameTextField.autocorrectionType = .no
         lastNameTextField.autocapitalizationType = .none
@@ -238,7 +238,7 @@ class LoginViewController: UIViewController {
 
     private func setupButtons() {
         let width = UIView.getValueScaledByScreenWidthFor(baseValue: 316)
-        let height = UIView.getValueScaledByScreenHeightFor(baseValue: 40)
+        let height = UIView.getValueScaledByScreenHeightFor(baseValue: 50)
         submitButton.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(width)
             make.height.equalTo(height)
@@ -251,15 +251,13 @@ class LoginViewController: UIViewController {
 
         submitButton.setTitle(L10n.loginButtonTitle, for: .normal)
         submitButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
-        submitButton.setBackgroundColor(color: Stylesheet.Colors.base, forState: .normal)
+        submitButton.setBackgroundColor(color: Stylesheet.Colors.baseLight, forState: .normal)
         submitButton.addTarget(self, action: #selector(self.loginButtonPressed), for: .touchUpInside)
 		
-				submitButton.layer.shadowColor = Stylesheet.Colors.base.cgColor
+				submitButton.layer.shadowColor = Stylesheet.Colors.baseLight.cgColor
 				submitButton.layer.shadowOffset = CGSize(width: 0.0, height: 10.0)
-				submitButton.layer.shadowOpacity = 0.35
+				submitButton.layer.shadowOpacity = 0.65
 				submitButton.layer.shadowRadius = 10.0
-			
-				//submitButton.cornerRadius = UIView.getValueScaledByScreenHeightFor(baseValue: 20)
 
         toggleButton.setTitle(L10n.toggleToSignUpButtonTitle, for: .normal)
         toggleButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .normal)
@@ -315,7 +313,7 @@ class LoginViewController: UIViewController {
 					self.headerLabel.text = L10n.signUpHeader
 					// Set email field to just email for signup
 					self.emailTextField.placeholder = L10n.emailAddressPlaceholder
-					self.emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.base)
+					self.emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
 				}, completion: { _ in
 					UIView.animate(withDuration: 0.15, animations: {
 						self.usernameTextField.alpha = 1
@@ -337,7 +335,7 @@ class LoginViewController: UIViewController {
 					self.headerLabel.text = L10n.signInHeader
 					// Set email field back to "username or email"
 					self.emailTextField.placeholder = L10n.usernameOrEmailPlaceholder
-					self.emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.base)
+					self.emailTextField.setPlaceHolderTextColor(Stylesheet.Colors.baseLight)
 				}, completion: { _ in
 					UIView.animate(withDuration: 0.15, animations: {
 						self.usernameTextField.alpha = 0

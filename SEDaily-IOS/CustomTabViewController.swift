@@ -6,13 +6,6 @@
 //  Copyright © 2017 Koala Tea. All rights reserved.
 //
 
-enum CollectionConfig {
-	case latest
-	case bookmarks
-	case downloaded
-	case search
-}
-
 import UIKit
 import MessageUI
 import PopupDialog
@@ -46,7 +39,6 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 
         setupTabs()
         setupTitleView()
-			self.tabBar.tintColor = Stylesheet.Colors.base
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -119,7 +111,6 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
                 return
         }
         FeedViewController.audioOverlayDelegate = self.audioOverlayDelegate
-			
 
         
         let forumStoryboard = UIStoryboard.init(name: "ForumList", bundle: nil)
@@ -127,19 +118,17 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
             withIdentifier: "ForumListViewController") as? ForumListViewController else {
                 return
         }
-			
-			
-			let latestVC = PodcastPageViewController(audioOverlayDelegate: self.audioOverlayDelegate)
-			let profileVC = ProfileViewController()
-			let bookmarksVC = BookmarkCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate)
-			
-
+        
+//        ForumViewController.audioOverlayDelegate = self.audioOverlayDelegate
 
         
         self.viewControllers = [
-            latestVC,
-						bookmarksVC,
-						profileVC
+            PodcastPageViewController(audioOverlayDelegate: self.audioOverlayDelegate),
+  
+            FeedViewController,
+            ForumViewController,
+            BookmarkCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate),
+            NotificationsTableViewController()
         ]
 
         #if DEBUG

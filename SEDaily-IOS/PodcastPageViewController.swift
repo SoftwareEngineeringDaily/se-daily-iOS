@@ -16,7 +16,7 @@ class PodcastPageViewController: TabmanViewController, PageboyViewControllerData
     var barItems = [TabmanBar.Item]()
     weak var audioOverlayDelegate: AudioOverlayDelegate?
     var customTabBarItem: UITabBarItem! {
-			return UITabBarItem(title: L10n.tabBarTitleLatest, image: UIImage(named: "latest_outline"), selectedImage: UIImage(named: "latest"))
+        return UITabBarItem(title: L10n.tabBarTitleLatest, image: #imageLiteral(resourceName: "mic_stand"), selectedImage: #imageLiteral(resourceName: "mic_stand_selected"))
     }
 
     init(audioOverlayDelegate: AudioOverlayDelegate?) {
@@ -38,13 +38,6 @@ class PodcastPageViewController: TabmanViewController, PageboyViewControllerData
 
         // configure the bar
         self.bar.style = .scrollingButtonBar
-			
-				bar.appearance = TabmanBar.Appearance({ (appearance) in
-					appearance.style.background = .solid(color: UIColor.white)
-					appearance.indicator.color = Stylesheet.Colors.base
-					appearance.state.selectedColor = Stylesheet.Colors.base
-				})
-			
 
         self.bar.items = barItems
 

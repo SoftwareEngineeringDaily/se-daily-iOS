@@ -43,7 +43,6 @@ class HeaderView: UIView {
 
     private var downloadButton = UIButton()
 
-
     let downloadManager = OfflineDownloadsManager.sharedInstance
     let networkService = API()
 
@@ -337,7 +336,7 @@ extension HeaderView {
                 // Show progress
                 let progressAsInt = Int((progress * 100).rounded())
                 self.playButton.setTitle(String(progressAsInt) + "%", for: .normal)},
-            onSuccess: {
+            onSucces: {
                 // Show success by changing download
                 self.delegate?.modelDidChange(viewModel: self.podcastViewModel)
 //                self.audioOverlayDelegate?.animateOverlayIn()

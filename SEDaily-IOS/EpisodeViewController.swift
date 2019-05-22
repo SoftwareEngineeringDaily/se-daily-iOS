@@ -18,6 +18,7 @@ class EpisodeViewController: UIViewController {
 	let tagsView = TagsView()
 	let tagsScrollView = UIScrollView(frame: CGRect(x: 0.0, y: 0.0, width: 375.0, height: 50.0))
 	
+	
 	weak var delegate: PodcastDetailViewControllerDelegate?
 	private weak var audioOverlayDelegate: AudioOverlayDelegate?
 	
@@ -75,6 +76,8 @@ class EpisodeViewController: UIViewController {
 			make.right.equalToSuperview()
 			make.left.equalToSuperview()
 		}
+		
+
 		tableView.register(cellType: EpisodeHeaderCell.self)
 		tableView.register(cellType: WebViewCell.self)
 		tableView.register(cellType: TagsCell.self)

@@ -19,15 +19,16 @@ class SkeletonCollectionView: UIView, UICollectionViewDataSource {
         self.addSubview(self.collectionView)
         self.collectionView.dataSource = self
 
-        self.collectionView!.register(ItemCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(PodcastCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
-			let layout = KoalaTeaFlowLayout(cellWidth: Helpers.getScreenWidth(),
-																			cellHeight: UIView.getValueScaledByScreenWidthFor(baseValue: 185.0),
-																			topBottomMargin: UIView.getValueScaledByScreenHeightFor(baseValue: 10),
-																			leftRightMargin: UIView.getValueScaledByScreenWidthFor(baseValue: 0),
-																			cellSpacing: UIView.getValueScaledByScreenWidthFor(baseValue: 10))
-			self.collectionView?.collectionViewLayout = layout
-			self.collectionView?.backgroundColor = Stylesheet.Colors.light
+        let layout = KoalaTeaFlowLayout(cellWidth: UIView.getValueScaledByScreenWidthFor(baseValue: 158),
+                                        cellHeight: UIView.getValueScaledByScreenHeightFor(baseValue: Helpers.getEpisodeCellHeight()),
+                                        topBottomMargin: UIView.getValueScaledByScreenHeightFor(baseValue: 12),
+                                        leftRightMargin: UIView.getValueScaledByScreenWidthFor(baseValue: 20),
+                                        cellSpacing: UIView.getValueScaledByScreenWidthFor(baseValue: 8))
+        self.collectionView?.collectionViewLayout = layout
+
+        self.collectionView?.backgroundColor = .white
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -47,7 +48,7 @@ class SkeletonCollectionView: UIView, UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ItemCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PodcastCell else {
             return UICollectionViewCell()
         }
 

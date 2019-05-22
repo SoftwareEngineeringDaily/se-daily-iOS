@@ -8,6 +8,9 @@
 
 import UIKit
 
+protocol  CommentReplyTableViewCellDelegate: class {
+    func replyToCommentPressed(comment: Comment)
+}
 
 class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var avatarImage: UIImageView!

@@ -9,6 +9,5 @@
 import UIKit
 
 extension Notification.Name {
-	static let loginChanged = Notification.Name("loginChanged")
-	static let viewModelUpdated = Notification.Name("viewModelUpdated")
+    static let loginChanged = Notification.Name("loginChanged")
 }

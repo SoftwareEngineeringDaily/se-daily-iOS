@@ -132,7 +132,6 @@ class AudioView: UIView {
         self.disableButtons()
 
         self.hideSliders()
-				self.addShadow(location: .top, color: Stylesheet.Colors.grey, opacity: 0.8, radius: 5.0)
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented"); }
@@ -172,8 +171,7 @@ class AudioView: UIView {
             make.centerY.equalToSuperview().inset(UIView.getValueScaledByScreenHeightFor(baseValue: -30))
         }
 
-        podcastLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-			
+        podcastLabel.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 16))
         podcastLabel.numberOfLines = 2
         podcastLabel.lineBreakMode = .byTruncatingTail
         podcastLabel.textAlignment = .center
@@ -191,30 +189,30 @@ class AudioView: UIView {
             make.top.equalTo(podcastLabel.snp.bottom)
             make.centerX.equalToSuperview()
         }
-			
-				//stackView.addArrangedSubview(expandCollapseButton)
+        
+        let spacerButton = UIButton()
+        stackView.addArrangedSubview(stopButton)
         stackView.addArrangedSubview(skipBackwardbutton)
         stackView.addArrangedSubview(playButton)
         stackView.addArrangedSubview(pauseButton)
         stackView.addArrangedSubview(skipForwardButton)
-				//stackView.addArrangedSubview(playbackSpeedButton)
-			
-			
-        let iconHeight = UIView.getValueScaledByScreenWidthFor(baseValue: (70 / 2))
+        stackView.addArrangedSubview(spacerButton)
+        
+        let iconHeight = UIView.getValueScaledByScreenHeightFor(baseValue: (70 / 2))
 
-        expandCollapseButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: 30.0, color: Stylesheet.Colors.base, forState: .normal)
+        expandCollapseButton.setIcon(icon: .fontAwesome(.angleUp), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)
 
-        skipBackwardbutton.setImage(UIImage(named: "rewind_audio"), for: .normal)
+        skipBackwardbutton.setImage(#imageLiteral(resourceName: "Backward"), for: .normal)
         skipBackwardbutton.height = iconHeight
-        skipBackwardbutton.tintColor = Stylesheet.Colors.base
+        skipBackwardbutton.tintColor = Stylesheet.Colors.secondaryColor
 
-        playButton.setImage(UIImage(named: "play_audio"), for: .normal)
-        pauseButton.setImage(UIImage(named: "pause_audio"), for: .normal)
-        stopButton.setIcon(icon: .fontAwesome(.close), iconSize: iconHeight, color: Stylesheet.Colors.base, forState: .normal)
+        playButton.setIcon(icon: .fontAwesome(.play), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)
+        pauseButton.setIcon(icon: .fontAwesome(.pause), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)
+        stopButton.setIcon(icon: .fontAwesome(.close), iconSize: iconHeight, color: Stylesheet.Colors.secondaryColor, forState: .normal)
 
-        skipForwardButton.setImage(UIImage(named: "forward_audio"), for: .normal)
+        skipForwardButton.setImage(#imageLiteral(resourceName: "Forward"), for: .normal)
         skipForwardButton.height = iconHeight
-        skipForwardButton.tintColor = Stylesheet.Colors.base
+        skipForwardButton.tintColor = Stylesheet.Colors.secondaryColor
 
         expandCollapseButton.addTarget(self, action: #selector(self.expandButtonPressed), for: .touchUpInside)
         skipBackwardbutton.addTarget(self, action: #selector(self.skipBackwardButtonPressed), for: .touchUpInside)
@@ -227,7 +225,7 @@ class AudioView: UIView {
 
         playbackSpeedButton.titleLabel?.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 20))
         playbackSpeedButton.setTitle(PlaybackSpeed._1x.shortTitle, for: .normal)
-        playbackSpeedButton.setTitleColor(Stylesheet.Colors.base, for: .normal)
+        playbackSpeedButton.setTitleColor(Stylesheet.Colors.secondaryColor, for: .normal)
         playbackSpeedButton.addTarget(self, action: #selector(self.settingsButtonPressed), for: .touchUpInside)
         parentView.addSubview(playbackSpeedButton)
 
@@ -236,8 +234,8 @@ class AudioView: UIView {
         playbackSpeedButton.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(width)
             make.height.equalTo(height)
-            make.centerY.equalTo(stackView.snp_centerY)
-            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+            make.bottom.equalToSuperview()
+            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 2))
         }
 
         setupActivityIndicator(parentView: containerView)
@@ -245,12 +243,10 @@ class AudioView: UIView {
         addLabels(parentView: containerView)
 
         parentView.addSubview(self.expandCollapseButton)
-//
+
         self.expandCollapseButton.snp.makeConstraints { (make) in
-            //make.bottom.left.equalToSuperview()
-            //make.width.height.equalTo(iconHeight)
-						make.centerY.equalTo(stackView.snp_centerY)
-						make.left.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
+            make.bottom.left.equalToSuperview()
+            make.width.height.equalTo(iconHeight)
         }
     }
 
@@ -259,7 +255,7 @@ class AudioView: UIView {
 
         playbackSlider.minimumValue = 0
         playbackSlider.isContinuous = true
-        playbackSlider.minimumTrackTintColor = Stylesheet.Colors.base
+        playbackSlider.minimumTrackTintColor = Stylesheet.Colors.secondaryColor
         playbackSlider.maximumTrackTintColor = .clear
         playbackSlider.layer.cornerRadius = 0
         playbackSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
@@ -269,16 +265,15 @@ class AudioView: UIView {
         self.bringSubview(toFront: playbackSlider)
 
         playbackSlider.snp.makeConstraints { (make) -> Void in
-            make.top.equalToSuperview().inset(5)
+            make.top.equalToSuperview().inset(-10)
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
-            make.left.right.equalToSuperview().inset(15)
-					
+            make.left.right.equalToSuperview()
         }
 
-        let smallCircle = #imageLiteral(resourceName: "SmallCircle").filled(withColor: Stylesheet.Colors.base)
+        let smallCircle = #imageLiteral(resourceName: "SmallCircle").filled(withColor: Stylesheet.Colors.secondaryColor)
         playbackSlider.setThumbImage(smallCircle, for: .normal)
 
-        let bigCircle = #imageLiteral(resourceName: "BigCircle").filled(withColor: Stylesheet.Colors.base)
+        let bigCircle = #imageLiteral(resourceName: "BigCircle").filled(withColor: Stylesheet.Colors.secondaryColor)
         playbackSlider.setThumbImage(bigCircle, for: .highlighted)
     }
 
@@ -294,9 +289,9 @@ class AudioView: UIView {
         parentView.addSubview(bufferBackgroundSlider)
 
         bufferBackgroundSlider.snp.makeConstraints { (make) -> Void in
-            make.top.equalToSuperview().inset(5)
+            make.top.equalToSuperview().inset(-10)
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
-            make.left.right.equalToSuperview().inset(15)
+            make.left.right.equalToSuperview()
         }
 
         bufferBackgroundSlider.setThumbImage(UIImage(), for: .normal)
@@ -312,9 +307,9 @@ class AudioView: UIView {
         parentView.addSubview(bufferSlider)
 
         bufferSlider.snp.makeConstraints { (make) -> Void in
-            make.top.equalToSuperview().inset(5)
+            make.top.equalToSuperview().inset(-10)
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
-            make.left.right.equalToSuperview().inset(15)
+            make.left.right.equalToSuperview()
         }
 
         bufferSlider.setThumbImage(UIImage(), for: .normal)
@@ -335,38 +330,38 @@ class AudioView: UIView {
         parentView.addSubview(timeLeftLabel)
 
         currentTimeLabel.snp.makeConstraints { (make) -> Void in
-            make.left.equalTo(playbackSlider)
+            make.left.equalTo(playbackSlider).inset(UIView.getValueScaledByScreenWidthFor(baseValue: 5))
             make.top.equalTo(playbackSlider.snp.bottom).inset(UIView.getValueScaledByScreenHeightFor(baseValue: 5))
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
             make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 55))
         }
 
         timeLeftLabel.snp.makeConstraints { (make) -> Void in
-            make.right.equalTo(playbackSlider)
+            make.right.equalTo(playbackSlider).inset(UIView.getValueScaledByScreenWidthFor(baseValue: 5))
             make.top.equalTo(playbackSlider.snp.bottom).inset(UIView.getValueScaledByScreenHeightFor(baseValue: 5))
             make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
             make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 55))
         }
     }
-	//MARK: Slider value changed implementation
-	
+
     @objc func playbackSliderValueChanged(_ slider: UISlider) {
         let timeInSeconds = slider.value
+
         if (playbackSlider.isTracking) && (timeInSeconds != previousSliderValue) {
             playbackSlider.value = timeInSeconds
             let duration = playbackSlider.maximumValue
             let timeLeft = Float(duration - timeInSeconds)
 
-            let currentTimeString = Helpers.createTimeString(time: timeInSeconds, units: [.minute, .second])
-            let timeLeftString = Helpers.createTimeString(time: timeLeft, units: [.minute, .second])
+            let currentTimeString = Helpers.createTimeString(time: timeInSeconds)
+            let timeLeftString = Helpers.createTimeString(time: timeLeft)
             self.currentTimeLabel.text = currentTimeString
             self.timeLeftLabel.text = timeLeftString
         } else {
             self.audioViewDelegate?.playbackSliderValueChanged(value: timeInSeconds)
             let duration = playbackSlider.maximumValue
             let timeLeft = Float(duration - timeInSeconds)
-            let currentTimeString = Helpers.createTimeString(time: timeInSeconds, units: [.minute, .second])
-						let timeLeftString = Helpers.createTimeString(time: timeLeft, units: [.minute, .second])
+            let currentTimeString = Helpers.createTimeString(time: timeInSeconds)
+            let timeLeftString = Helpers.createTimeString(time: timeLeft)
             self.currentTimeLabel.text = currentTimeString
             self.timeLeftLabel.text = timeLeftString
         }
@@ -374,7 +369,7 @@ class AudioView: UIView {
     }
 
     func updateSlider(maxValue: Float) {
-        guard playbackSlider.maximumValue >= 0.0 else { return }
+        guard playbackSlider.maximumValue <= 1.0 else { return }
 
         if playbackSlider.isUserInteractionEnabled == false {
             playbackSlider.isUserInteractionEnabled = true
@@ -382,7 +377,7 @@ class AudioView: UIView {
 
         playbackSlider.maximumValue = maxValue
         bufferSlider.maximumValue = maxValue
-			}
+    }
 
     func updateSlider(currentValue: Float) {
         guard !playbackSlider.isTracking else { return }
@@ -501,29 +496,4 @@ extension AudioView {
     @objc func settingsButtonPressed() {
         self.parentViewController?.present(alertController, animated: true, completion: nil)
     }
-}
-
-
-enum VerticalLocation: String {
-	case bottom
-	case top
-}
-
-extension UIView {
-	func addShadow(location: VerticalLocation, color: UIColor = .black, opacity: Float = 0.5, radius: CGFloat = 5.0) {
-		switch location {
-		case .bottom:
-			addShadow(offset: CGSize(width: 0, height: 5), color: color, opacity: opacity, radius: radius)
-		case .top:
-			addShadow(offset: CGSize(width: 0, height: 5), color: color, opacity: opacity, radius: radius)
-		}
-	}
-	
-	func addShadow(offset: CGSize, color: UIColor = .black, opacity: Float = 0.5, radius: CGFloat = 5.0) {
-		self.layer.masksToBounds = false
-		self.layer.shadowColor = color.cgColor
-		self.layer.shadowOffset = offset
-		self.layer.shadowOpacity = opacity
-		self.layer.shadowRadius = radius
-	}
 }

@@ -249,4 +249,3 @@ extension PodcastDetailViewController: BookmarksDelegate {
     }
 
 }
-

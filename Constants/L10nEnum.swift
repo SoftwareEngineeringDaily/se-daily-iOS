@@ -53,6 +53,8 @@ enum L10n {
   static let cancelButtonTitle = L10n.tr("Localizable", "CancelButtonTitle")
   /// Comments
   static let comments = L10n.tr("Localizable", "Comments")
+  /// Add a comment...
+  static let commentsPlaceholder = L10n.tr("Localizable", "CommentsPlaceholder")
   /// Confirm Password
   static let confirmPasswordPlaceholder = L10n.tr("Localizable", "ConfirmPasswordPlaceholder")
   /// Email

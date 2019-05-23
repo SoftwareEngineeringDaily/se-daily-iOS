@@ -9,7 +9,7 @@
 import UIKit
 import Down
 class CommentsViewController: UIViewController {
-
+	
 	
 	var tableView: UITableView = UITableView()
 	
@@ -18,6 +18,8 @@ class CommentsViewController: UIViewController {
 	var postCommentView: UIView!
 	var statusLabel: UILabel!
 	var cancelReplyButton: UIButton!
+	
+	let placeholderText = L10n.commentsPlaceholder
 	
 	
 	private let refreshControl = UIRefreshControl()
@@ -47,15 +49,15 @@ class CommentsViewController: UIViewController {
 		didSet {
 			guard let parentComment = parentCommentSelected else {
 				// Hide
-//				composeStatusHolder.isHidden = true
-//				heightOfReplyInfoHolder.constant = 0
-//				self.view.layoutIfNeeded()
-					cancelReplyButton.isHidden = true
-					statusLabel.text = ""
+				//				composeStatusHolder.isHidden = true
+				//				heightOfReplyInfoHolder.constant = 0
+				//				self.view.layoutIfNeeded()
+				cancelReplyButton.isHidden = true
+				statusLabel.text = ""
 				return
 			}
 			cancelReplyButton.isHidden = false
-	
+			
 			// Show  the reply area
 			if let replyTo = parentComment.author.username {
 				statusLabel.text = "Reply to: \(replyTo)"
@@ -110,10 +112,6 @@ class CommentsViewController: UIViewController {
 		
 		
 		updateUIBasedOnUser()
-	
-		
-		// Style (x) close button for status area:
-		
 		loadComments()
 		setupPullToRefresh()
 	}
@@ -121,18 +119,6 @@ class CommentsViewController: UIViewController {
 	func updateUIBasedOnUser () {
 		// Hide if user is not logged in OR if user is limited (no true username)
 		if !isFullUser() {
-			// TODO: setting the table view footer would make make this much easier.
-			// Constraints:
-//			bottomCommentTextField.isActive = false
-//			topStatusHolder.isActive = false
-//			topCreateCommentTextField.isActive = false
-//			heightCreateCommentTextField.isActive = false
-//			heightReplyInfoHolder.isActive = false
-//
-//			//
-//			createCommentHeight.constant = 0
-//			createCommentHolder.isHidden = true
-//			self.view.layoutSubviews()
 			tableView.tableFooterView = UIView()
 			tableView.reloadData()
 		} else {
@@ -155,20 +141,8 @@ class CommentsViewController: UIViewController {
 		// Fetch Weather Data
 		loadComments()
 	}
-	
-//	func setupTableHeader (thread: ForumThread) {
-//		headerView.thread = thread
-//		tableView.tableHeaderView = headerView
-//		headerView.setNeedsLayout()
-//		headerView.layoutIfNeeded()
-//
-//		let height = headerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
-//		var frame = headerView.frame
-//		frame.size.height = height
-//		headerView.frame = frame
-//
-//		tableView.tableHeaderView = headerView
-//	}
+
+	//	}
 	
 	// Should be in the model but only used by comments for now:
 	func isFullUser() -> Bool {
@@ -229,15 +203,18 @@ class CommentsViewController: UIViewController {
 	
 	@objc func postCommentTapped() {
 		self.view.endEditing(true)
-		guard let rootEntityId = rootEntityId, let commentContent = commentTextView.text else {
-			//composeStatusLabel.text = L10n.thereWasAProblem
-			return
+		guard let rootEntityId = rootEntityId,
+			let commentContent = commentTextView.text,
+			commentContent != "",
+			commentContent != placeholderText else {
+				//composeStatusLabel.text = L10n.thereWasAProblem
+				return
 		}
 		networkService.createComment(rootEntityId: rootEntityId, parentComment: parentCommentSelected, commentContent: commentContent, onSuccess: { [weak self] in
 			
 			// Reset input field + re-enable button:
 			
-			self?.commentTextView.text = "Add a comment..."
+			self?.commentTextView.text = self?.placeholderText
 			self?.commentTextView.isUserInteractionEnabled = true
 			self?.postButton.isEnabled = true
 			
@@ -245,10 +222,6 @@ class CommentsViewController: UIViewController {
 			self?.parentCommentSelected = nil
 			self?.loadComments()
 			
-			
-//			self?.composeStatusLabel.text = L10n.succcessfullySubmitted
-//			self?.parentCommentSelected = nil
-//			self?.loadComments()
 			}, onFailure: { [weak self] (_) in
 				self?.statusLabel.text = L10n.thereWasAProblem
 				self?.postButton.isEnabled = true
@@ -316,7 +289,7 @@ extension CommentsViewController {
 		
 		commentTextView = UITextView(frame: .zero)
 		commentTextView.toolbarPlaceholder = "Type here"
-		commentTextView.text = "Add a comment..."
+		commentTextView.text = placeholderText
 		commentTextView.textColor = Stylesheet.Colors.grey
 		commentTextView.delegate = self
 		commentTextView.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
@@ -350,7 +323,7 @@ extension CommentsViewController {
 		
 		
 		postCommentView.addSubview(statusLabel)
-
+		
 		commentTextView.snp.makeConstraints { (make) -> Void in
 			make.left.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 15))
 			make.right.equalTo(postButton.snp_left).offset(UIView.getValueScaledByScreenWidthFor(baseValue: -10))
@@ -389,8 +362,8 @@ extension CommentsViewController: UITextViewDelegate {
 	func textViewDidEndEditing(_ textView: UITextView) {
 		if textView.text.isEmpty {
 			postButton.isEnabled = false
-			textView.text = "Add a comment..."
+			textView.text = placeholderText
 			textView.textColor = Stylesheet.Colors.grey
 		}
-}
+	}
 }

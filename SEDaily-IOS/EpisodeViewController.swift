@@ -49,7 +49,10 @@ class EpisodeViewController: UIViewController {
 			tableView.reloadData()
 		}
 	}
-	var isPlaying = false { didSet { tableView.reloadData() }}
+	var isPlaying = false { didSet {
+		tableView.reloadData()
+		
+		}}
 	var transcriptURL: String?
 	var tableView = UITableView()
 	
@@ -69,7 +72,7 @@ class EpisodeViewController: UIViewController {
 		
 		
 		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Share", style: .plain, target: self, action: #selector(EpisodeViewController.shareTapped))
-			
+		
 		tableView.snp.makeConstraints { (make) -> Void in
 			make.top.equalToSuperview()
 			make.bottom.equalToSuperview()
@@ -77,7 +80,7 @@ class EpisodeViewController: UIViewController {
 			make.left.equalToSuperview()
 		}
 		
-
+		
 		tableView.register(cellType: EpisodeHeaderCell.self)
 		tableView.register(cellType: WebViewCell.self)
 		tableView.register(cellType: TagsCell.self)
@@ -88,7 +91,8 @@ class EpisodeViewController: UIViewController {
 		tableView.delegate = self
 		tableView.dataSource = self
 		tagsView.delegate = self
-
+		
+		
 		
 		
 		tagsScrollView.addSubview(tagsView)
@@ -104,7 +108,13 @@ class EpisodeViewController: UIViewController {
 			selector: #selector(self.onDidReceiveData(_:)),
 			name: .viewModelUpdated,
 			object: nil)
-
+		
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(self.onDidReceiveReloadRequest(_:)),
+			name: .reloadEpisodeView,
+			object: nil)
+		
 		getTrascriptURL()
 		getTopics()
 	}
@@ -132,11 +142,11 @@ class EpisodeViewController: UIViewController {
 			self.audioOverlayDelegate?.animateOverlayIn()
 			self.audioOverlayDelegate?.playAudio(podcastViewModel: viewModel)
 			AskForReview.triggerEvent()
+			self.isPlaying = true
 		} else {
 			self.audioOverlayDelegate?.animateOverlayOut()
 			self.audioOverlayDelegate?.stopAudio()
 		}
-		self.isPlaying = !self.isPlaying
 	}
 	
 	@objc func shareTapped() {
@@ -189,7 +199,7 @@ extension EpisodeViewController {
 	private func getTopics() {
 		networkService.getTopicsForPost(podcastId: viewModel._id, onSuccess: { [weak self] data in
 			self?.topics = data
-		}, onFailure: { _ in print("error")})
+			}, onFailure: { _ in print("error")})
 	}
 }
 
@@ -302,6 +312,19 @@ extension EpisodeViewController {
 	}
 }
 
+extension EpisodeViewController {
+	@objc func onDidReceiveReloadRequest(_ notification: Notification) {
+		if let data = notification.userInfo as? [String: PodcastViewModel] {
+			for (_, viewModel) in data {
+				guard viewModel._id == self.viewModel._id else { return }
+				self.isPlaying = false
+
+			}
+		}
+	}
+}
+
+
 
 extension EpisodeViewController: TagsDelegate {
 	
@@ -315,7 +338,7 @@ extension EpisodeViewController: TagsDelegate {
 	}
 	// Last Tag Touch Action
 	func tagsLastTagAction(_ tagsView: TagsView, tagButton: TagButton) {
-
+		
 	}
 	// TagsView Change Height
 	func tagsChangeHeight(_ tagsView: TagsView, height: CGFloat) {

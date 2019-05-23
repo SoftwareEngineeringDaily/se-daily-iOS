@@ -18,6 +18,7 @@ protocol ExpandButtonDelegate: class {
 	func willExpand()
 }
 
+
 protocol AudioOverlayDelegate: class {
 	func animateOverlayIn()
 	func animateOverlayOut()
@@ -158,7 +159,7 @@ class AudioOverlayViewController: UIViewController {
 	
 	func stopAudio() {
 		self.stopButtonPressed()
-		CurrentlyPlaying.shared.setCurrentlyPlaying(id: "")
+		//CurrentlyPlaying.shared.setCurrentlyPlaying(id: "")
 	}
 	
 	private func saveProgress() {
@@ -282,6 +283,10 @@ class AudioOverlayViewController: UIViewController {
 		case .stopped:
 			self.triggerRemoveContainerViewInset()
 			self.audioOverlayDelegate?.animateOverlayOut()
+			// change play/stop button state
+			CurrentlyPlaying.shared.setCurrentlyPlaying(id: "")
+			let userInfo = ["viewModel": podcastViewModel]
+			NotificationCenter.default.post(name: .reloadEpisodeView, object: nil, userInfo: userInfo)
 		}
 	}
 }

@@ -318,7 +318,6 @@ extension EpisodeViewController {
 			for (_, viewModel) in data {
 				guard viewModel._id == self.viewModel._id else { return }
 				self.isPlaying = false
-
 			}
 		}
 	}

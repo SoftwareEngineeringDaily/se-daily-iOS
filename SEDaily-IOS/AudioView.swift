@@ -411,8 +411,8 @@ class AudioView: UIView {
         parentView.addSubview(activityView)
 
         activityView.snp.makeConstraints { (make) -> Void in
-            make.centerY.equalToSuperview()
-            make.right.equalToSuperview().inset(UIView.getValueScaledByScreenWidthFor(baseValue: 10))
+            make.centerX.equalToSuperview()
+            make.top.equalTo(playButton.snp_bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 10))
         }
     }
 

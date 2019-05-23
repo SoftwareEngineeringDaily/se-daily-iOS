@@ -6,6 +6,13 @@
 //  Copyright © 2017 Koala Tea. All rights reserved.
 //
 
+enum CollectionConfig {
+	case latest
+	case bookmarks
+	case downloaded
+	case search
+}
+
 import UIKit
 import MessageUI
 import PopupDialog
@@ -39,6 +46,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 
         setupTabs()
         setupTitleView()
+			self.tabBar.tintColor = Stylesheet.Colors.base
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -74,9 +82,9 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     }
 
     @objc func rightBarButtonPressed() {
-        let vc = SearchTableViewController()
-        vc.audioOverlayDelegate = self.audioOverlayDelegate
-        self.navigationController?.pushViewController(vc)
+			let layout = UICollectionViewLayout()
+			var searchCollectionViewController = SearchCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate)
+        self.navigationController?.pushViewController(searchCollectionViewController)
         Analytics2.searchNavButtonPressed()
     }
 
@@ -111,6 +119,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
                 return
         }
         FeedViewController.audioOverlayDelegate = self.audioOverlayDelegate
+			
 
         
         let forumStoryboard = UIStoryboard.init(name: "ForumList", bundle: nil)
@@ -118,17 +127,22 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
             withIdentifier: "ForumListViewController") as? ForumListViewController else {
                 return
         }
-        
-//        ForumViewController.audioOverlayDelegate = self.audioOverlayDelegate
+			
+			
+			let latestVC = PodcastPageViewController(audioOverlayDelegate: self.audioOverlayDelegate)
+			let bookmarksVC = BookmarkCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate)
+			let downloadsVC = DownloadsCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate)
+			let profileVC = ProfileViewController()
+			
+			
+
 
         
         self.viewControllers = [
-            PodcastPageViewController(audioOverlayDelegate: self.audioOverlayDelegate),
-  
-            FeedViewController,
-            ForumViewController,
-            BookmarkCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate),
-            NotificationsTableViewController()
+            latestVC,
+						bookmarksVC,
+						downloadsVC,
+						profileVC
         ]
 
         #if DEBUG

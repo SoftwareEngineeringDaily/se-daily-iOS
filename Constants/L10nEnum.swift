@@ -7,6 +7,8 @@ import Foundation
 
 // swiftlint:disable explicit_type_interface identifier_name line_length nesting type_body_length type_name
 enum L10n {
+  /// Add a link
+  static let addLink = L10n.tr("Localizable", "AddLink")
   /// Email Field Empty
   static let alertMessageEmailEmpty = L10n.tr("Localizable", "AlertMessageEmailEmpty")
   /// Invalid Email Format
@@ -51,6 +53,8 @@ enum L10n {
   static let cancelButtonTitle = L10n.tr("Localizable", "CancelButtonTitle")
   /// Comments
   static let comments = L10n.tr("Localizable", "Comments")
+  /// Add a comment...
+  static let commentsPlaceholder = L10n.tr("Localizable", "CommentsPlaceholder")
   /// Confirm Password
   static let confirmPasswordPlaceholder = L10n.tr("Localizable", "ConfirmPasswordPlaceholder")
   /// Email
@@ -69,6 +73,8 @@ enum L10n {
   static let enthusiasticYes = L10n.tr("Localizable", "EnthusiasticYes")
   /// Fetching results
   static let fetchingSearch = L10n.tr("Localizable", "FetchingSearch")
+  /// Fields cannot be blank, please fill and retry
+  static let fieldEmpty = L10n.tr("Localizable", "FieldEmpty")
   /// First Name
   static let firstNamePlaceholder = L10n.tr("Localizable", "FirstNamePlaceholder")
   /// Error
@@ -95,8 +101,12 @@ enum L10n {
   static let mwfNotificationBody = L10n.tr("Localizable", "mwfNotificationBody")
   /// Software Daily
   static let mwfNotificationTitle = L10n.tr("Localizable", "mwfNotificationTitle")
+  /// Add new link
+  static let newLink = L10n.tr("Localizable", "NewLink")
   /// No saved episodes.
   static let noBookmarks = L10n.tr("Localizable", "NoBookmarks")
+  /// No downloaded episodes
+  static let noDownloads = L10n.tr("Localizable", "NoDownloads")
   /// No thanks
   static let noWithGratitude = L10n.tr("Localizable", "NoWithGratitude")
   /// Password
@@ -107,16 +117,24 @@ enum L10n {
   static let relatedLinks = L10n.tr("Localizable", "RelatedLinks")
   /// Search
   static let search = L10n.tr("Localizable", "Search")
+  /// Add a short title
+  static let shortTitle = L10n.tr("Localizable", "ShortTitle")
   /// Sign In
   static let signInHeader = L10n.tr("Localizable", "SignInHeader")
   /// Sign Up
   static let signUpButtonTitle = L10n.tr("Localizable", "SignUpButtonTitle")
   /// Sign Up
   static let signUpHeader = L10n.tr("Localizable", "SignUpHeader")
+  /// Something went wrong, please try again
+  static let somethingWentWrong = L10n.tr("Localizable", "SomethingWentWrong")
+  /// Submit
+  static let submit = L10n.tr("Localizable", "Submit")
   /// Submitting...
   static let submitting = L10n.tr("Localizable", "Submitting")
   /// Successfully submitted :)
   static let succcessfullySubmitted = L10n.tr("Localizable", "SucccessfullySubmitted")
+  /// Downloads
+  static let tabBarDownloads = L10n.tr("Localizable", "TabBarDownloads")
   /// Feed
   static let tabBarFeed = L10n.tr("Localizable", "TabBarFeed")
   /// Forum
@@ -155,10 +173,14 @@ enum L10n {
   static let tapToRefresh = L10n.tr("Localizable", "TapToRefresh")
   /// There was a problem :(
   static let thereWasAProblem = L10n.tr("Localizable", "ThereWasAProblem")
+  /// minutes left
+  static let timeLeft = L10n.tr("Localizable", "TimeLeft")
   /// back to sign in
   static let toggleToSignInButtonTitle = L10n.tr("Localizable", "ToggleToSignInButtonTitle")
   /// no account? sign up
   static let toggleToSignUpButtonTitle = L10n.tr("Localizable", "ToggleToSignUpButtonTitle")
+  /// Transcript
+  static let transcript = L10n.tr("Localizable", "Transcript")
   /// Username or Email
   static let usernameOrEmailPlaceholder = L10n.tr("Localizable", "UsernameOrEmailPlaceholder")
   /// Username

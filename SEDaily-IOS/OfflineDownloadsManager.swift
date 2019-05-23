@@ -18,7 +18,7 @@ public protocol OfflineDownloadsProtocol {
     typealias RepositorySuccessCallback = () -> Void
     typealias RepositoryErrorCallback = (Error?) -> Void
 
-    func save(podcast: PodcastViewModel, onProgress: @escaping ProgressCallback, onSucces: @escaping RepositorySuccessCallback, onFailure: @escaping RepositoryErrorCallback)
+    func save(podcast: PodcastViewModel, onProgress: @escaping ProgressCallback, onSuccess: @escaping RepositorySuccessCallback, onFailure: @escaping RepositoryErrorCallback)
     func deletePodcast(podcast: PodcastViewModel, completion: @escaping () -> Void)
     static func findURL(for podcast: PodcastViewModel) -> URL?
 }
@@ -35,7 +35,7 @@ public class OfflineDownloadsManager: NSObject, OfflineDownloadsProtocol {
 
     public func save(podcast: PodcastViewModel,
                      onProgress: @escaping OfflineDownloadsProtocol.ProgressCallback,
-                     onSucces: @escaping RepositorySuccessCallback,
+                     onSuccess: @escaping RepositorySuccessCallback,
                      onFailure: @escaping OfflineDownloadsProtocol.RepositoryErrorCallback) {
         let utilityQueue = DispatchQueue.global(qos: .utility)
 
@@ -56,7 +56,7 @@ public class OfflineDownloadsManager: NSObject, OfflineDownloadsProtocol {
                 switch response.result {
                 case .success:
                     DispatchQueue.main.async {
-                        onSucces()
+                        onSuccess()
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
@@ -105,7 +105,7 @@ public class OfflineDownloadsManager: NSObject, OfflineDownloadsProtocol {
                 switch response.result {
                 case .success:
                     DispatchQueue.main.async {
-                        onSucces()
+                        onSuccess()
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {

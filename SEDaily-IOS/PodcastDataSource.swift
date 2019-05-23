@@ -23,6 +23,19 @@ class PodcastDataSource {
             }
         }
     }
+	
+	static func getAllDownloads(diskKey: DiskKeys, completion: @escaping ([GenericType]?) -> Void) {
+		DispatchQueue.global(qos: .userInitiated).async {
+			let retrievedObjects = try? Disk.retrieve(diskKey.folderPath, from: .caches, as: [GenericType].self)
+			let downloads = retrievedObjects?.filter({ podcast -> Bool in
+				let vm = PodcastViewModel(podcast: podcast)
+				return vm.isDownloaded == true
+			})
+			DispatchQueue.main.async {
+				completion(downloads)
+			}
+		}
+	}
 
     static func getAll(diskKey: DiskKeys, completion: @escaping ([GenericType]?) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {

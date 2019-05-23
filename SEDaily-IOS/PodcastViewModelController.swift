@@ -144,4 +144,46 @@ public class PodcastViewModelController {
                 log.error(apiError?.localizedDescription ?? "")
                 onFailure(apiError) })
     }
+	
+	func fetchTopicData(slug: String,
+											 createdAtBefore beforeDate: String = "",
+											 onSuccess: @escaping SuccessCallback,
+											 onFailure: @escaping (APIError?) -> Void) {
+		networkService.getPostsFor(
+			topic: slug,
+			createdAtBefore: beforeDate,
+			onSuccess: { (podcasts) in
+				let newViewModels: [ViewModel?] = podcasts.map { model in
+					return ViewModel(podcast: model)
+				}
+				
+				guard !self.viewModels.isEmpty else {
+					self.viewModels.append(contentsOf: newViewModels)
+					onSuccess()
+					return
+				}
+				
+				//@TODO: Do this in the background?
+				let filteredArray = newViewModels.filter { newPodcast in
+					let contains = self.viewModels.contains { currentPodcast in
+						return newPodcast == currentPodcast
+					}
+					return !contains
+				}
+				
+				guard filteredArray.count != 0 else {
+					// OnFailure Nothing to append
+					//@TODO: Change handle error
+					onFailure(.GeneralFailure)
+					return
+				}
+				
+				self.viewModels.append(contentsOf: filteredArray)
+				onSuccess() },
+			onFailure: { (apiError) in
+				//@TODO: handle error
+				log.error(apiError?.localizedDescription ?? "")
+				onFailure(apiError) })
+	}
+
 }

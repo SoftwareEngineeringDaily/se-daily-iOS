@@ -55,8 +55,6 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 		self.errorView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
 		self.errorView?.backgroundColor = .green
 		
-		
-		
 		let refreshControl = UIRefreshControl()
 		refreshControl.addTarget(
 			self,
@@ -115,6 +113,10 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 		self.emptyView = view
 	}
 	
+	func hasContent() -> Bool {
+			return self.viewModelController.viewModelsCount > 0
+	}
+	
 	
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {
 		return 1
@@ -171,7 +173,7 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 extension DownloadsCollectionViewController: StateViewDelegate {
 	func refreshPressed() {
 		self.refreshView(useCache: true)
-		Analytics2.refreshMyBookmarksPressed()
+		
 	}
 }
 

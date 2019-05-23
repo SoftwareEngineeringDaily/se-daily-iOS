@@ -106,7 +106,7 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 					frame: CGRect.zero,
 					text: L10n.noBookmarks,
 					showLoadingIndicator: false,
-					showRefreshButton: true,
+					showRefreshButton: false,
 					delegate: self))
 			
 			if useCache {

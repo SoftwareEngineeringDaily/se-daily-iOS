@@ -89,7 +89,7 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 				frame: CGRect.zero,
 				text: L10n.noDownloads,
 				showLoadingIndicator: false,
-				showRefreshButton: true,
+				showRefreshButton: false,
 				delegate: self))
 		
 		if useCache {

@@ -231,6 +231,11 @@ extension API {
 					}
 					// Get user details
 					
+					var hasSubscription: Bool = false
+					if let subscriptionDictionary = jsonResponse["subscription"] as? [String: Any?] {
+						hasSubscription = true
+					}
+					
 					guard let fullName = jsonResponse["name"] as? String else { return }
 					guard let avatarURL = jsonResponse["avatarUrl"] as? String else { return }
 					guard let website = jsonResponse["website"] as? String  else { return }
@@ -239,7 +244,7 @@ extension API {
 																	lastName: "",
 																	usernameOrEmail: user.usernameOrEmail,
 																	token: user.token,
-																	hasPremium: false,
+																	hasPremium: hasSubscription,
 																	avatarURL: avatarURL,
 																	bio: bio,
 																	website: website,

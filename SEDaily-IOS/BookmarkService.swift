@@ -6,9 +6,6 @@
 //  Copyright © 2019 Altalogy All rights reserved.
 //
 
-protocol BookmarkServiceModelDelegate: class {
-	func bookmarkModelDidChange(viewModel: PodcastViewModel)
-}
 protocol BookmarkServiceUIDelegate: class {
 	func bookmarkUIDidChange(isBookmarked: Bool)
 	func bookmarkUIImmediateUpdate()
@@ -56,12 +53,9 @@ class BookmarkService {
 	}
 	
 	private func updateBookmarked(active: Bool) {
-		
 		self.podcastViewModel.isBookmarked = active
-		
 		let userInfo = ["viewModel": podcastViewModel]
 		NotificationCenter.default.post(name: .viewModelUpdated, object: nil, userInfo: userInfo)
-		
 		self.UIDelegate?.bookmarkUIDidChange(isBookmarked: active)
 	}
 }

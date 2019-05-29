@@ -57,6 +57,10 @@ enum L10n {
   static let commentsPlaceholder = L10n.tr("Localizable", "CommentsPlaceholder")
   /// Confirm Password
   static let confirmPasswordPlaceholder = L10n.tr("Localizable", "ConfirmPasswordPlaceholder")
+  /// Are you sure you want to delete this podcast?
+  static let deletePodcast = L10n.tr("Localizable", "DeletePodcast")
+  /// YEP! Delete it please.
+  static let deletePodcastButtonTitle = L10n.tr("Localizable", "DeletePodcastButtonTitle")
   /// Email
   static let emailAddressPlaceholder = L10n.tr("Localizable", "EmailAddressPlaceholder")
   /// Please send an email to jeff@softwareengineeringdaily.com

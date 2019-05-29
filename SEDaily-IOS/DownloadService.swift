@@ -40,7 +40,7 @@ class DownloadService {
 				self.UIDelegate?.downloadUIDidChange(progress: nil, success: true)
 				
 				
-			},
+		},
 			onFailure: { error in
 				self.UIDelegate?.downloadUIDidChange(progress: nil, success: false)
 				guard let error = error else { return }
@@ -50,78 +50,13 @@ class DownloadService {
 		})
 	}
 	
-	func notifyOnSuccess() {
-		let userInfo = ["viewModel": podcastViewModel]
-		NotificationCenter.default.post(name: .viewModelUpdated, object: nil, userInfo: userInfo)
-	}
-	
 	func deletePodcast() {
 		
-		let alert = UIAlertController(title: "Are you sure you want to delete this podcast?", message: nil, preferredStyle: .alert)
-		
-		alert.addAction(title: "YEP! Delete it please.", style: .destructive, isEnabled: true) { _ in
-			self.downloadManager.deletePodcast(podcast: self.podcastViewModel) {
-				self.UIDelegate?.downloadUIDidChange(progress: nil, success: false)
+		Helpers.alertWithMessageCustomAction(title: L10n.deletePodcast, message: nil, actionTitle: L10n.deletePodcastButtonTitle) { [weak self] in
+			guard let strongSelf = self else { return }
+			strongSelf.downloadManager.deletePodcast(podcast: strongSelf.podcastViewModel) {
+				strongSelf.UIDelegate?.downloadUIDidChange(progress: nil, success: false)
 			}
-		}
-		
-		let noAction = UIAlertAction(title: "Oh no actually...", style: .cancel, handler: nil)
-		alert.addAction(noAction)
-		
-		if var topController = UIApplication.shared.keyWindow?.rootViewController {
-			while let presentedViewController = topController.presentedViewController {
-				topController = presentedViewController
-			}
-			
-			guard !(topController is UIAlertController) else {
-				// There's already a alert preseneted
-				return
-			}
-			
-			topController.present(alert, animated: true, completion: nil)
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
 }
-
-
-
-
-
-//private func deletePodcast() {
-//	guard self.downloadButton.isSelected else { return }
-//
-//	let alert = UIAlertController(title: "Are you sure you want to delete this podcast?", message: nil, preferredStyle: .alert)
-//
-//	alert.addAction(title: "YEP! Delete it please.", style: .destructive, isEnabled: true) { _ in
-//		self.downloadManager.deletePodcast(podcast: self.podcastViewModel) {
-//			print("Successfully deleted")
-//		}
-//
-//		self.downloadButton.isSelected = false
-//		self.playButton.setTitle("Play", for: .normal)
-//		self.playButton.isUserInteractionEnabled = true
-//	}
-//
-//	let noAction = UIAlertAction(title: "Oh no actually...", style: .cancel, handler: nil)
-//	alert.addAction(noAction)
-//
-//	if var topController = UIApplication.shared.keyWindow?.rootViewController {
-//		while let presentedViewController = topController.presentedViewController {
-//			topController = presentedViewController
-//		}
-//
-//		guard !(topController is UIAlertController) else {
-//			// There's already a alert preseneted
-//			return
-//		}
-//
-//		topController.present(alert, animated: true, completion: nil)
-//	}
-//}

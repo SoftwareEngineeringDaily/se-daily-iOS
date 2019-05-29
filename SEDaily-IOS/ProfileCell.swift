@@ -19,7 +19,6 @@ class ProfileCell: UITableViewCell, Reusable {
 	var separator: UIView!
 	
 	
-	
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		// Initialization code
@@ -52,7 +51,7 @@ class ProfileCell: UITableViewCell, Reusable {
 
 extension ProfileCell {
 	private func setupLayout() {
-		func setupAvatarImage(){
+		func setupAvatarImage() {
 			avatarImage = UIImageView()
 			contentView.addSubview(avatarImage)
 			avatarImage.contentMode = .scaleAspectFill
@@ -62,7 +61,7 @@ extension ProfileCell {
 			avatarImage.cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 50)
 			avatarImage.kf.indicatorType = .activity
 		}
-		func setupLabels(){
+		func setupLabels() {
 			nameLabel = UILabel()
 			contentView.addSubview(nameLabel)
 			nameLabel.textColor = Stylesheet.Colors.dark

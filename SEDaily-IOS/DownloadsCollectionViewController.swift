@@ -30,7 +30,6 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 	init(collectionViewLayout layout: UICollectionViewLayout, audioOverlayDelegate: AudioOverlayDelegate?) {
 		super.init(collectionViewLayout: layout)
 		self.audioOverlayDelegate = audioOverlayDelegate
-		
 		self.tabBarItem = UITabBarItem(title: L10n.tabBarDownloads, image: UIImage(named: "download_panel_outline"), selectedImage: UIImage(named: "download_panel"))
 	}
 	
@@ -61,7 +60,6 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 			action: #selector(pullToRefresh(_:)),
 			for: .valueChanged)
 		self.collectionView?.refreshControl = refreshControl
-		//Analytics2.bookmarksPageViewed()
 	}
 	
 	@objc private func pullToRefresh(_ sender: Any) {
@@ -76,7 +74,6 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		
 		self.refreshView(useCache: true)
 	}
 	
@@ -117,7 +114,6 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 			return self.viewModelController.viewModelsCount > 0
 	}
 	
-	
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {
 		return 1
 	}
@@ -142,7 +138,6 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 			let bookmarkService = BookmarkService(podcastViewModel: viewModel)
 			
 			cell.playProgress = progressController.episodesPlayProgress[viewModel._id] ?? PlayProgress(id: "", currentTime: 0.0, totalLength: 0.0)
-			
 			
 			cell.viewModel = viewModel
 			cell.upvoteService = upvoteService

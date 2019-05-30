@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		01516A04207310C900E9E743 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01516A03207310C900E9E743 /* NotificationTableViewCell.swift */; };
-		01707421207192C0002E6E3C /* NotificationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01707420207192C0002E6E3C /* NotificationsTableViewController.swift */; };
 		01BB1D6D1F29999E004A912E /* PodcastPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */; };
 		161791FC1FC4DA7200A1287E /* OfflineDownloadsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161791FB1FC4DA7200A1287E /* OfflineDownloadsManager.swift */; };
 		161F3DE61F61F73D00A8F825 /* SearchCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161F3DE51F61F73D00A8F825 /* SearchCollectionViewController.swift */; };
@@ -150,7 +149,6 @@
 
 /* Begin PBXFileReference section */
 		01516A03207310C900E9E743 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
-		01707420207192C0002E6E3C /* NotificationsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewController.swift; sourceTree = "<group>"; };
 		01BB1D6C1F29999E004A912E /* PodcastPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastPageViewController.swift; sourceTree = "<group>"; };
 		161791FB1FC4DA7200A1287E /* OfflineDownloadsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineDownloadsManager.swift; sourceTree = "<group>"; };
 		161F3DE51F61F73D00A8F825 /* SearchCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewController.swift; sourceTree = "<group>"; };
@@ -314,7 +312,6 @@
 		017074222071938D002E6E3C /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
-				01707420207192C0002E6E3C /* NotificationsTableViewController.swift */,
 				01516A03207310C900E9E743 /* NotificationTableViewCell.swift */,
 				43BA7BF7228452A4000E1171 /* NotificationsController.swift */,
 			);
@@ -1159,7 +1156,6 @@
 				162FFD401FBE200E0026288D /* DiskKeys.swift in Sources */,
 				16307FCC1F8FEE3A001783CB /* PodcastViewModelController.swift in Sources */,
 				16AD3E0E1F9B14130084C545 /* PodcastDataSource.swift in Sources */,
-				01707421207192C0002E6E3C /* NotificationsTableViewController.swift in Sources */,
 				164FE9ED1F02F7E2009419CA /* UIButtonExtension.swift in Sources */,
 				1EABD8F61FB430AB00959859 /* TestHook.swift in Sources */,
 				9662FC0A20AF21FA00CFA8DF /* BaseFeedItem.swift in Sources */,

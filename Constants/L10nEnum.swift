@@ -123,6 +123,8 @@ enum L10n {
   static let post = L10n.tr("Localizable", "Post")
   /// Related Links
   static let relatedLinks = L10n.tr("Localizable", "RelatedLinks")
+  /// Reply
+  static let replyButtonTitle = L10n.tr("Localizable", "ReplyButtonTitle")
   /// Search
   static let search = L10n.tr("Localizable", "Search")
   /// Add a short title

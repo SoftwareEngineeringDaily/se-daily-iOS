@@ -99,5 +99,6 @@
 "DeletePodcast" = "Are you sure you want to delete this podcast?";
 "DeletePodcastButtonTitle" = "YEP! Delete it please.";
 "CancelReplyButtonTitle" = "Cancel reply";
+"ReplyButtonTitle" = "Reply";
 "TypeHere" = "Type here";
 "Post" = "Post";

@@ -63,6 +63,7 @@
 		431DE891228D619D00FACA74 /* PostsForTopicCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431DE890228D619C00FACA74 /* PostsForTopicCollectionViewController.swift */; };
 		435BAF3A22783B7C00762891 /* EpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435BAF3922783B7C00762891 /* EpisodeViewController.swift */; };
 		435BAF3C2278430900762891 /* EpisodeHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435BAF3B2278430900762891 /* EpisodeHeaderCell.swift */; };
+		4381367D229FFCC4008043B2 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4381367C229FFCC4008043B2 /* UIColor+Extensions.swift */; };
 		439BCC6C22802EDC008D808B /* CurrentlyPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BCC6B22802EDC008D808B /* CurrentlyPlaying.swift */; };
 		439BCC6E2280CD6B008D808B /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BCC6D2280CD6B008D808B /* CommentCell.swift */; };
 		439BCC7122818F58008D808B /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BCC7022818F58008D808B /* ProfileCell.swift */; };
@@ -207,6 +208,7 @@
 		431DE890228D619C00FACA74 /* PostsForTopicCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsForTopicCollectionViewController.swift; sourceTree = "<group>"; };
 		435BAF3922783B7C00762891 /* EpisodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeViewController.swift; sourceTree = "<group>"; };
 		435BAF3B2278430900762891 /* EpisodeHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeHeaderCell.swift; sourceTree = "<group>"; };
+		4381367C229FFCC4008043B2 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		439BCC6B22802EDC008D808B /* CurrentlyPlaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentlyPlaying.swift; sourceTree = "<group>"; };
 		439BCC6D2280CD6B008D808B /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		439BCC7022818F58008D808B /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				43CE8E0C2271AFC000DD990F /* HtmlHelper.swift */,
 				439BCC6B22802EDC008D808B /* CurrentlyPlaying.swift */,
 				43CE451D2293E85C0048426A /* Haptics.swift */,
+				4381367C229FFCC4008043B2 /* UIColor+Extensions.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1155,6 +1158,7 @@
 				960BFEC52023C1330073DAB2 /* CommentsResponse.swift in Sources */,
 				1E706BD21FD620B100D44AB2 /* BookmarkCollectionViewController.swift in Sources */,
 				96D268F720B2250B002F95BD /* RelatedLinkWebVC.swift in Sources */,
+				4381367D229FFCC4008043B2 /* UIColor+Extensions.swift in Sources */,
 				16307FCA1F8FDD02001783CB /* Podcast.swift in Sources */,
 				1EB74FFC1FE5E1AF004B733E /* StateBookmarkView.swift in Sources */,
 				16F3A1BA1F90918D00364709 /* PodcastRepository.swift in Sources */,

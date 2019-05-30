@@ -74,6 +74,8 @@ enum Stylesheet {
 
 }
 
+
+
 // MARK: - Apply Stylesheet
 extension Stylesheet {
     static func applyOn(_ navVC: UINavigationController) {

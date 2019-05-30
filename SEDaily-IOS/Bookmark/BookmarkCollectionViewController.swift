@@ -207,7 +207,6 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 				self?.commentsButtonPressed(viewModel)
 				
 			}
-			
 		}
 		
 		return cell

@@ -43,9 +43,6 @@ extension API {
 		static let createComment = "/comment"
 		
 		static let topicsForPost = "/topics"
-		
-		
-		
 	}
 	
 	enum Types {

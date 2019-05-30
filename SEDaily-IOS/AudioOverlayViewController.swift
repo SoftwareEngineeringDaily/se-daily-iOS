@@ -18,7 +18,6 @@ protocol ExpandButtonDelegate: class {
 	func willExpand()
 }
 
-
 protocol AudioOverlayDelegate: class {
 	func animateOverlayIn()
 	func animateOverlayOut()
@@ -27,10 +26,6 @@ protocol AudioOverlayDelegate: class {
 	func stopAudio()
 	func setCurrentShowingDetailView(podcastViewModel: PodcastViewModel?)
 }
-
-//extension AudioOverlayDelegate {
-//	func setServices(upvoteService: UpvoteService, bookmarkService: BookmarkService) { }
-//}
 
 class AudioOverlayViewController: UIViewController {
 	let networkService = API()
@@ -95,12 +90,6 @@ class AudioOverlayViewController: UIViewController {
 		self.verticalStackView.snp.makeConstraints { (make) in
 			make.edges.equalToSuperview()
 		}
-	}
-	
-	
-	deinit {
-		
-	
 	}
 	
 	func animateIn() {
@@ -187,8 +176,7 @@ class AudioOverlayViewController: UIViewController {
 			currentViewController.view.removeFromSuperview()
 			currentViewController.removeFromParentViewController()
 		}
-//		guard let bookmarkService = self.bookmarkService else { return }
-//		guard let upvoteService = self.upvoteService else { return }
+
 	
 		let podcastDetailViewController = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
 		podcastDetailViewController.viewModel = podcastViewModel

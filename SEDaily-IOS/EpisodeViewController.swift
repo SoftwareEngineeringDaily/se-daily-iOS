@@ -19,7 +19,7 @@ class EpisodeViewController: UIViewController {
 	let tagsScrollView = UIScrollView(frame: CGRect(x: 0.0, y: 0.0, width: 375.0, height: 50.0))
 	
 	
-	weak var delegate: PodcastDetailViewControllerDelegate?
+	//weak var delegate: PodcastDetailViewControllerDelegate?
 	private weak var audioOverlayDelegate: AudioOverlayDelegate?
 	
 	var loaded: Bool = false // to check if HTML content has loaded

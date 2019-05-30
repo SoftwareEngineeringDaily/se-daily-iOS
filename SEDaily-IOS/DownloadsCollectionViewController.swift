@@ -51,6 +51,12 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 		self.collectionView?.collectionViewLayout = layout
 		self.collectionView?.backgroundColor = Stylesheet.Colors.light
 		
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(self.onDidReceiveData(_:)),
+			name: .viewModelUpdated,
+			object: nil)
+		
 		self.errorView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
 		self.errorView?.backgroundColor = .green
 		
@@ -60,6 +66,11 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 			action: #selector(pullToRefresh(_:)),
 			for: .valueChanged)
 		self.collectionView?.refreshControl = refreshControl
+	}
+	
+	deinit {
+		// perform the deinitialization
+		NotificationCenter.default.removeObserver(self)
 	}
 	
 	@objc private func pullToRefresh(_ sender: Any) {
@@ -172,10 +183,19 @@ extension DownloadsCollectionViewController: StateViewDelegate {
 	}
 }
 
-extension DownloadsCollectionViewController: PodcastDetailViewControllerDelegate {
-	func modelDidChange(viewModel: PodcastViewModel) {
+extension DownloadsCollectionViewController {
+	@objc func onDidReceiveData(_ notification: Notification) {
+		if let data = notification.userInfo as? [String: PodcastViewModel] {
+			for (_, viewModel) in data {
+				viewModelDidChange(viewModel: viewModel)
+			}
+		}
+	}
+}
+
+extension DownloadsCollectionViewController {
+	private func viewModelDidChange(viewModel: PodcastViewModel) {
 		self.viewModelController.update(with: viewModel)
-		self.collectionView?.reloadData()
 	}
 }
 

@@ -55,6 +55,11 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 			selector: #selector(self.loginObserver),
 			name: .loginChanged,
 			object: nil)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(self.onDidReceiveData(_:)),
+			name: .viewModelUpdated,
+			object: nil)
 		
 		
 		self.errorView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
@@ -69,6 +74,11 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 			for: .valueChanged)
 		self.collectionView?.refreshControl = refreshControl
 		Analytics2.bookmarksPageViewed()
+	}
+	
+	deinit {
+		// perform the deinitialization
+		NotificationCenter.default.removeObserver(self)
 	}
 	
 	@objc private func pullToRefresh(_ sender: Any) {
@@ -223,10 +233,20 @@ extension BookmarkCollectionViewController: StateViewDelegate {
 	}
 }
 
-extension BookmarkCollectionViewController: PodcastDetailViewControllerDelegate {
-	func modelDidChange(viewModel: PodcastViewModel) {
+extension BookmarkCollectionViewController{
+	@objc func onDidReceiveData(_ notification: Notification) {
+		if let data = notification.userInfo as? [String: PodcastViewModel] {
+			for (_, viewModel) in data {
+				viewModelDidChange(viewModel: viewModel)
+			}
+		}
+	}
+}
+
+
+extension BookmarkCollectionViewController {
+	private func viewModelDidChange(viewModel: PodcastViewModel) {
 		self.viewModelController.update(with: viewModel)
-		self.collectionView?.reloadData()
 	}
 }
 

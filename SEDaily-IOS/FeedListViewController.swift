@@ -184,12 +184,12 @@ extension FeedListViewController: UITableViewDelegate, UITableViewDataSource {
 
                     if succeeded && fullPodcast != nil {
                         if let audioOverlayDelegate = self.audioOverlayDelegate {
-                            let vc = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
-                            // TODO: check for safety:
-                            vc.model =  PodcastViewModel(podcast: fullPodcast!)
-                            //                    vc.delegate = self
-                            //                    vc.audioOverlayDelegate = self.audioOverlayDelegate
-                            self.navigationController?.pushViewController(vc, animated: true)
+//                            let vc = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
+//                            // TODO: check for safety:
+//                            vc.model =  PodcastViewModel(podcast: fullPodcast!)
+//                            //                    vc.delegate = self
+//                            //                    vc.audioOverlayDelegate = self.audioOverlayDelegate
+//                            self.navigationController?.pushViewController(vc, animated: true)
                         }
                     } else {
                         self.presentThreadComments(thread)

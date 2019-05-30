@@ -29,7 +29,6 @@
 		1671BD56200D278F00E6ED3B /* PurchaseSubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1671BD55200D278F00E6ED3B /* PurchaseSubscriptionViewController.swift */; };
 		1671BD58200D361900E6ED3B /* SubscriptionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1671BD57200D361900E6ED3B /* SubscriptionModel.swift */; };
 		1671BD5A200D3D7800E6ED3B /* SubscriptionStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1671BD59200D3D7800E6ED3B /* SubscriptionStatusViewController.swift */; };
-		167AFAB71F043F1100A1332F /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167AFAB61F043F1100A1332F /* HeaderView.swift */; };
 		1686FC011F009EC00088A6C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1686FC001F009EC00088A6C1 /* AppDelegate.swift */; };
 		1686FC061F009EC00088A6C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC041F009EC00088A6C1 /* Main.storyboard */; };
 		1686FC081F009EC00088A6C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1686FC071F009EC00088A6C1 /* Assets.xcassets */; };
@@ -41,7 +40,6 @@
 		16AD3E0C1F9B13EE0084C545 /* FilterObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AD3E0B1F9B13EE0084C545 /* FilterObject.swift */; };
 		16AD3E0E1F9B14130084C545 /* PodcastDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AD3E0D1F9B14130084C545 /* PodcastDataSource.swift */; };
 		16B147B11F16BF9C00433A42 /* AudioOverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B147B01F16BF9C00433A42 /* AudioOverlayViewController.swift */; };
-		16CE698F1F98029E0057BAC3 /* PodcastDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CE698E1F98029E0057BAC3 /* PodcastDetailViewController.swift */; };
 		16D67C4A1F33AC620065E838 /* AnswersTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D67C491F33AC620065E838 /* AnswersTracker.swift */; };
 		16D766BA1F06B4850066C143 /* AudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D766B91F06B4850066C143 /* AudioView.swift */; };
 		16F3A1BA1F90918D00364709 /* PodcastRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F3A1B91F90918D00364709 /* PodcastRepository.swift */; };
@@ -169,7 +167,6 @@
 		1671BD55200D278F00E6ED3B /* PurchaseSubscriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseSubscriptionViewController.swift; sourceTree = "<group>"; };
 		1671BD57200D361900E6ED3B /* SubscriptionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionModel.swift; sourceTree = "<group>"; };
 		1671BD59200D3D7800E6ED3B /* SubscriptionStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionStatusViewController.swift; sourceTree = "<group>"; };
-		167AFAB61F043F1100A1332F /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		1686FBFD1F009EC00088A6C1 /* SEDaily-IOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SEDaily-IOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1686FC001F009EC00088A6C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1686FC051F009EC00088A6C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -185,7 +182,6 @@
 		16AD3E0B1F9B13EE0084C545 /* FilterObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterObject.swift; sourceTree = "<group>"; };
 		16AD3E0D1F9B14130084C545 /* PodcastDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastDataSource.swift; sourceTree = "<group>"; };
 		16B147B01F16BF9C00433A42 /* AudioOverlayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioOverlayViewController.swift; sourceTree = "<group>"; };
-		16CE698E1F98029E0057BAC3 /* PodcastDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastDetailViewController.swift; sourceTree = "<group>"; };
 		16D67C491F33AC620065E838 /* AnswersTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswersTracker.swift; sourceTree = "<group>"; };
 		16D766B91F06B4850066C143 /* AudioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioView.swift; sourceTree = "<group>"; };
 		16F3A1B91F90918D00364709 /* PodcastRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastRepository.swift; sourceTree = "<group>"; };
@@ -473,8 +469,6 @@
 		16AD3E001F9A975F0084C545 /* PodcastDetail */ = {
 			isa = PBXGroup;
 			children = (
-				167AFAB61F043F1100A1332F /* HeaderView.swift */,
-				16CE698E1F98029E0057BAC3 /* PodcastDetailViewController.swift */,
 				435BAF3922783B7C00762891 /* EpisodeViewController.swift */,
 				435BAF3B2278430900762891 /* EpisodeHeaderCell.swift */,
 				43C0C763227AE7D1007A92E7 /* WebViewCell.swift */,
@@ -1107,7 +1101,6 @@
 				1E638E561FC794AC00A29BDC /* ProgressIndicator.swift in Sources */,
 				161F3DE61F61F73D00A8F825 /* SearchCollectionViewController.swift in Sources */,
 				1E2BFDCD2017C74A00E6DE0A /* TestHookBoolTableViewCell.swift in Sources */,
-				167AFAB71F043F1100A1332F /* HeaderView.swift in Sources */,
 				16D67C4A1F33AC620065E838 /* AnswersTracker.swift in Sources */,
 				164FE9E51F02EE83009419CA /* API.swift in Sources */,
 				164FE9E91F02F049009419CA /* Stylesheet.swift in Sources */,
@@ -1120,7 +1113,6 @@
 				96BD1C88208E9497006C5E1D /* TestHookBool.swift in Sources */,
 				43CE140E226070FB00B57CFA /* PlayProgressModelController.swift in Sources */,
 				96A7E2CF20951EBD002C92EC /* ThreadHeaderView.swift in Sources */,
-				16CE698F1F98029E0057BAC3 /* PodcastDetailViewController.swift in Sources */,
 				1E286DE31FE4C5BA00644C1D /* TestHookEventTableViewCell.swift in Sources */,
 				964090BF2093B97D00CFF5C4 /* PodcastLite.swift in Sources */,
 				43AD7117228AF08B00E930BD /* TagsCell.swift in Sources */,

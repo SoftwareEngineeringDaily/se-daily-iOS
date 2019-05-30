@@ -169,8 +169,8 @@ extension FeedListViewController: UITableViewDelegate, UITableViewDataSource {
             withIdentifier: "CommentsViewController") as? CommentsViewController else {
                 return
         }
-        commentsViewController.rootEntityId = thread._id
-        commentsViewController.thread = thread
+        //commentsViewController.rootEntityId = thread._id
+        //commentsViewController.thread = thread
         self.navigationController?.pushViewController(commentsViewController, animated: true)
         
     }

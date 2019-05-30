@@ -327,6 +327,7 @@
 		16307FC81F8FDCE4001783CB /* PodcastModels */ = {
 			isa = PBXGroup;
 			children = (
+				43AD7118228B05A400E930BD /* Topic.swift */,
 				16AD3E0B1F9B13EE0084C545 /* FilterObject.swift */,
 				16307FC91F8FDD02001783CB /* Podcast.swift */,
 				16AD3E0D1F9B14130084C545 /* PodcastDataSource.swift */,
@@ -479,7 +480,6 @@
 				43C0C763227AE7D1007A92E7 /* WebViewCell.swift */,
 				43C0C76122798635007A92E7 /* ActionView.swift */,
 				43AD7116228AF08B00E930BD /* TagsCell.swift */,
-				43AD7118228B05A400E930BD /* Topic.swift */,
 			);
 			name = PodcastDetail;
 			sourceTree = "<group>";

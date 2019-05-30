@@ -165,11 +165,9 @@ class GeneralCollectionViewController: UICollectionViewController, StatefulViewC
 			
 			let upvoteService = UpvoteService(podcastViewModel: viewModel)
 			let bookmarkService = BookmarkService(podcastViewModel: viewModel)
-			let downloadService = DownloadService(podcastViewModel: viewModel)
 			
 			cell.playProgress = progressController.episodesPlayProgress[viewModel._id] ?? PlayProgress(id: "", currentTime: 0.0, totalLength: 0.0)
-			
-
+		
 			cell.viewModel = viewModel
 			cell.upvoteService = upvoteService
 			cell.bookmarkService = bookmarkService
@@ -243,7 +241,6 @@ extension GeneralCollectionViewController {
 			self.podcastViewModelController.update(with: viewModel)
 	}
 }
-
 
 
 extension GeneralCollectionViewController {

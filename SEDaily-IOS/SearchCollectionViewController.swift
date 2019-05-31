@@ -268,7 +268,6 @@ extension SearchCollectionViewController {
 	}
 }
 
-
 extension SearchCollectionViewController {
 	private func viewModelDidChange(viewModel: PodcastViewModel) {
 		self.podcastViewModelController.update(with: viewModel)

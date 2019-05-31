@@ -319,8 +319,6 @@ extension EpisodeHeaderCell: DownloadServiceUIDelegate {
 			downloadButton.isUserInteractionEnabled = true
 			downloadButton.isSelected = success
 			downloadButton.setTitle("", for: .normal)
-//			downloadButton.setIcon(icon: .ionicons(.iosCloudDownload), iconSize: 25.0, color: Stylesheet.Colors.base, forState: .selected)
-//			downloadButton.setIcon(icon: .ionicons(.iosCloudDownloadOutline), iconSize: 25.0, color: Stylesheet.Colors.dark, forState: .normal)
 			downloadButton.setImage(UIImage(named: "download_outline"), for: .normal)
 			downloadButton.setImage(UIImage(named: "download"), for: .selected)
 			downloadButton.cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 25.0)

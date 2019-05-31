@@ -221,16 +221,18 @@ extension EpisodeViewController {
 		tagsView.lineBreakMode = .byTruncatingMiddle
 		
 		tagsScrollView.snp.makeConstraints{ (make) in
+			make.top.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 5))
+			make.bottom.equalToSuperview().offset(UIView.getValueScaledByScreenWidthFor(baseValue: 5))
 			make.height.equalTo(50)
 			make.width.equalTo(UIScreen.main.bounds.width)
 		}
 		
 		tagsView.translatesAutoresizingMaskIntoConstraints = false
 		tagsView.snp.makeConstraints { (make) in
-			make.top.left.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 10.0))
-			make.right.bottom.equalToSuperview()
+			make.left.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 10))
+			make.right.bottom.top.equalToSuperview()
 			make.height.equalTo(50)
-			make.width.equalTo(900) //arbitrary value wider than the actual screen
+			make.width.equalTo(9000) //arbitrary value wider than the actual screen
 		}
 	}
 }
@@ -333,7 +335,6 @@ extension EpisodeViewController: TagsDelegate {
 		let topic = topics[tagButton.index]
 		var postsForTopicCollectionViewController = PostsForTopicCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate, topic: topic)
 		self.navigationController?.pushViewController(postsForTopicCollectionViewController, animated: true)
-		
 	}
 	// Last Tag Touch Action
 	func tagsLastTagAction(_ tagsView: TagsView, tagButton: TagButton) {

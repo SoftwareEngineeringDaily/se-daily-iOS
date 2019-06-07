@@ -18,6 +18,19 @@ class ProfileCell: UITableViewCell, Reusable {
 	var usernameOrEmailLabel: UILabel!
 	var separator: UIView!
 	
+	var viewModel: ViewModel = ViewModel() {
+		didSet {
+			nameLabel.text = viewModel.name
+			bioLabel.text = viewModel.bio
+			linkLabel.text = viewModel.link
+			usernameOrEmailLabel.text = viewModel.username
+		}
+	}
+	@objc func linkTapped() {
+		// open link here
+	}
+
+	
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -85,8 +98,12 @@ extension ProfileCell {
 			contentView.addSubview(linkLabel)
 			linkLabel.textColor = Stylesheet.Colors.base
 			linkLabel.numberOfLines = 0
+			let tap = UITapGestureRecognizer(target: self, action: #selector(ProfileCell.linkTapped))
+			linkLabel.isUserInteractionEnabled = true
+			linkLabel.addGestureRecognizer(tap)
 			linkLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
 		}
+		
 		func setupSeparator() {
 			separator = UIView()
 			contentView.addSubview(separator)
@@ -129,6 +146,18 @@ extension ProfileCell {
 		setupLabels()
 		setupSeparator()
 		setupConstraints()
-		
 	}
 }
+
+
+extension ProfileCell {
+	struct ViewModel {
+		var avatarURL: String = ""
+		var name: String = ""
+		var username: String  = ""
+		var bio: String = ""
+		var link: String = ""
+	}
+}
+
+

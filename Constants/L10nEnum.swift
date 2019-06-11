@@ -63,6 +63,8 @@ enum L10n {
   static let deletePodcast = L10n.tr("Localizable", "DeletePodcast")
   /// YEP! Delete it please.
   static let deletePodcastButtonTitle = L10n.tr("Localizable", "DeletePodcastButtonTitle")
+  /// Edit Profile
+  static let editProfile = L10n.tr("Localizable", "EditProfile")
   /// Email
   static let emailAddressPlaceholder = L10n.tr("Localizable", "EmailAddressPlaceholder")
   /// Please send an email to jeff@softwareengineeringdaily.com
@@ -71,6 +73,8 @@ enum L10n {
   static let emailUnsupportedOnDevice = L10n.tr("Localizable", "EmailUnsupportedOnDevice")
   /// No results for search
   static let emptySearch = L10n.tr("Localizable", "EmptySearch")
+  /// Enable Notifications
+  static let enableNotifications = L10n.tr("Localizable", "EnableNotifications")
   /// Hello!
   static let enthusiasticHello = L10n.tr("Localizable", "EnthusiasticHello")
   /// Sure! Send email

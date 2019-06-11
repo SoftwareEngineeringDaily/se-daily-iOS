@@ -17,14 +17,14 @@ struct UserMock {
 	var link: String? = "www.startups.com"
 }
 
-extension UserMock {
+extension User {
 	subscript(row: ProfileViewController.Section.SummaryRow) -> Any? {
 		switch row {
 		case .bio: return bio
 		case .name: return name
-		case .username: return username
-		case .avatar: return avatar
-		case .link: return link
+		case .username: return email
+		case .avatar: return URL(string: avatarUrl)
+		case .link: return website
 		}
 	}
 }

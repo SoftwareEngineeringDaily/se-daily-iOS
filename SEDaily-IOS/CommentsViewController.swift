@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MBProgressHUD
+
 
 class CommentsViewController: UIViewController {
 	
@@ -208,6 +210,8 @@ extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
 			let cell: CommentCell = tableView.dequeueReusableCell(for: indexPath)
 			cell.isReplyCell = true
 			cell.comment = comment
+			cell.callback = { [weak self] user in self?.loadUser(comment: comment) }
+
 			return cell
 		} else {
 			let cell: CommentCell = tableView.dequeueReusableCell(for: indexPath)
@@ -215,12 +219,30 @@ extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
 			cell.replyButton.isHidden = !isFullUser()
 			cell.isReplyCell = false
 			cell.comment = comment
+			cell.callback = { [weak self] user in self?.loadUser(comment: comment) }
 			return cell
 		}
 	}
 	
 	public func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
+	}
+}
+
+extension CommentsViewController {
+	private func loadUser(comment: Comment) {
+		ProgressIndicator.showBlockingProgress()
+
+		networkService.getUser(userId: comment.author._id!) { user in
+			guard let user = user else {
+				ProgressIndicator.hideBlockingProgress()
+				return }
+			
+			let vc: ProfileViewController = ProfileViewController()
+			vc.user = user
+			self.navigationController?.pushViewController(vc, animated: true)
+			ProgressIndicator.hideBlockingProgress()
+		}
 	}
 }
 

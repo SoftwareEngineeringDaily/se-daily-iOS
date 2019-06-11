@@ -14,11 +14,12 @@ import Reusable
 class SwitchCell: UITableViewCell, Reusable {
 	private var label: UILabel = UILabel()
 	private var toggle: UISwitch = UISwitch()
-	var separator: UIView!
+	var separator: UIView = UIView()
 	
 	var viewModel: ViewModel = ViewModel() {
 		didSet {
 			label.text = viewModel.text
+			setupLayout()
 			//toggle.
 			//setupLayout(style: viewModel.style)
 		}

@@ -18,6 +18,8 @@ class ProfileViewController: UIViewController {
 	
 	var tableView: UITableView = UITableView.init(frame: CGRect.zero, style: .grouped)
 	
+	var user: User = User()
+	
 	let notificationsController = NotificationsController()
 	
 	init() {
@@ -32,10 +34,7 @@ class ProfileViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.addSubview(tableView)
-		let user = UserMock()
-		let dataSource = ProfileTableViewDataSource(user: user)
-		self.dataSource = dataSource
-		tableView.dataSource = dataSource
+		setupDataSource()
 		tableView.delegate = self
 		
 
@@ -51,6 +50,8 @@ class ProfileViewController: UIViewController {
 		tableView.register(cellType: SummaryCell.self)
 		tableView.register(cellType: AvatarCell.self)
 		tableView.register(cellType: SeparatorCell.self)
+		tableView.register(cellType: SwitchCell.self)
+		tableView.register(cellType: LabelCell.self)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)
 		tableView.snp.makeConstraints { (make) -> Void in
 			make.top.equalToSuperview()
@@ -58,12 +59,21 @@ class ProfileViewController: UIViewController {
 			make.right.equalToSuperview()
 			make.left.equalToSuperview()
 		}
-		if UserManager.sharedInstance.getActiveUser().fullName == "" {
+		if UserManager.sharedInstance.getActiveUser().name == "" {
 		API().loadUserInfo()
 		}
 	}
 	@objc func loginObserver() {
+		setupDataSource()
 		tableView.reloadData()
+	}
+}
+extension ProfileViewController {
+	private func setupDataSource() {
+		//let user = UserManager.sharedInstance.getActiveUser()
+		let dataSource = ProfileTableViewDataSource(user: user)
+		self.dataSource = dataSource
+		tableView.dataSource = dataSource
 	}
 }
 //extension ProfileViewController: UITableViewDataSource {
@@ -136,9 +146,6 @@ class ProfileViewController: UIViewController {
 
 extension ProfileViewController: UITableViewDelegate {
 	
-	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		return UIView()
-	}
 	
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return dataSource?.section(at: section).headerHeight ?? 0
@@ -193,19 +200,21 @@ extension ProfileViewController {
 	enum Section {
 		case summary([SummaryRow])
 		case layout([LayoutRow])
+		case settings([SettingsRow])
 		//case actions([ActionRow])
 		
 		var rows: [RowType] {
 			switch self {
 			case let .summary(rows): return rows
 			case let .layout(rows): return rows
+			case let .settings(rows): return rows
 			//case let .actions(rows): return rows
 			}
 		}
 		
 		var headerHeight: CGFloat {
 			switch self {
-			case .summary: return 24.0
+			case .summary, .settings: return 24.0
 			case .layout: return 0.0
 			}
 		}
@@ -230,6 +239,32 @@ extension ProfileViewController.Section {
 		var cellType: UITableViewCell.Type {
 			switch self {
 			case .separator: return SeparatorCell.self
+			}
+		}
+	}
+	
+	enum SettingsRow: RowType {
+		case notifications
+		case editProfile
+		
+		var cellType: UITableViewCell.Type {
+			switch self {
+				case .notifications: return SwitchCell.self
+				case .editProfile: return LabelCell.self
+			}
+		}
+		
+		var style: LabelCell.ViewModel.Style {
+			switch self {
+			case .editProfile: return LabelCell.ViewModel.Style(
+				marginX: UIView.getValueScaledByScreenWidthFor(baseValue: 15.0),
+				marginY: UIView.getValueScaledByScreenWidthFor(baseValue: 15.0),
+				font: UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 15))!,
+				color: Stylesheet.Colors.dark,
+				alignment: .left,
+				accessory: .disclosureIndicator)
+			case .notifications:
+				return LabelCell.ViewModel.Style()
 			}
 		}
 	}

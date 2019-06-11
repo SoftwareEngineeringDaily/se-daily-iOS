@@ -41,7 +41,7 @@ extension API {
 		static let relatedLink = "/related-link"
 		static let comments = "/comments"
 		static let createComment = "/comment"
-		
+		static let users =  "/users"
 		static let topicsForPost = "/topics"
 	}
 	
@@ -117,6 +117,9 @@ extension API {
 					return
 				}
 				
+				print("login")
+				print(jsonResponse)
+				
 				if let message = jsonResponse["message"] {
 					Helpers.alertWithMessage(title: Helpers.Alerts.error, message: String(describing: message), completionHandler: nil)
 					completion(false)
@@ -125,7 +128,7 @@ extension API {
 				}
 				
 				if let token = jsonResponse["token"] as? String {
-					let user = User(firstName: "", lastName: "", usernameOrEmail: usernameOrEmail, token: token)
+					let user = User(token: token)
 					UserManager.sharedInstance.setCurrentUser(to: user)
 					
 					// Clear disk cache
@@ -147,7 +150,7 @@ extension API {
 		}
 	}
 	
-	func register(firstName: String, lastName: String, email: String, username: String, password: String, completion: @escaping (_ success: Bool?) -> Void) {
+	func register(email: String, username: String, password: String, completion: @escaping (_ success: Bool?) -> Void) {
 		let urlString = rootURL + Endpoints.register
 		
 		let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded]
@@ -174,10 +177,10 @@ extension API {
 					return
 				}
 				
+				
 				if let token = jsonResponse["token"] as? String {
-					let user = User(firstName: firstName, lastName: lastName, usernameOrEmail: username, token: token)
+					let user = User(username: username, email: email, token: token)
 					UserManager.sharedInstance.setCurrentUser(to: user)
-					
 					NotificationCenter.default.post(name: .loginChanged, object: nil)
 					completion(true)
 				}
@@ -188,6 +191,60 @@ extension API {
 				Tracker.logRegisterError(error: error)
 				completion(false)
 			}
+		}
+	}
+	func getUser(userId: String, completion: @escaping (_ user: User?) -> Void) {
+		let urlString = rootURL + Endpoints.users + "/" + userId
+		
+		let user = UserManager.sharedInstance.getActiveUser()
+		let userToken = user.token
+		
+		let _headers: HTTPHeaders = [
+			Headers.contentType: Headers.x_www_form_urlencoded,
+			Headers.authorization: Headers.bearer + userToken
+		]
+		
+		Alamofire.request(urlString, method: .get, parameters: nil, encoding: URLEncoding.httpBody, headers: _headers)
+			.validate(statusCode: 200..<300)
+			.responseJSON { response in
+				switch response.result {
+				case .success:
+					guard let jsonResponse = response.result.value as? NSDictionary else {
+						Tracker.logGeneralError(string: "Error result value is not a NSDictionary")
+						completion(nil)
+						return
+					}
+					
+					if let message = jsonResponse["message"] {
+						Helpers.alertWithMessage(title: Helpers.Alerts.error, message: String(describing: message), completionHandler: nil)
+						completion(nil)
+						return
+					}
+					
+					guard let responseData = response.data else {
+						// Handle error here
+						log.error("response has no data")
+						return
+					}
+					// Get user details
+					print(responseData)
+					
+					guard let name = jsonResponse["name"] as? String else { return }
+					guard let username = jsonResponse["username"] as? String else { return }
+					guard let avatarUrl = jsonResponse["avatarUrl"] as? String else { return }
+					guard let website = jsonResponse["website"] as? String  else { return }
+					guard let bio = jsonResponse["bio"] as? String  else { return }
+					let user = User(
+						username: username,
+						avatarURL: avatarUrl,
+						bio: bio,
+						website: website,
+						name: name
+					)
+					completion(user)
+				case .failure(let error):
+					log.error(error.localizedDescription)
+				}
 		}
 	}
 	
@@ -213,7 +270,9 @@ extension API {
 						return
 					}
 					
-				
+					print("user info")
+					print(jsonResponse)
+					
 					
 					if let message = jsonResponse["message"] {
 						Helpers.alertWithMessage(title: Helpers.Alerts.error, message: String(describing: message), completionHandler: nil)
@@ -233,44 +292,45 @@ extension API {
 						hasSubscription = true
 					}
 					
-					guard let fullName = jsonResponse["name"] as? String else { return }
+					guard let name = jsonResponse["name"] as? String else { return }
+					guard let email = jsonResponse["email"] as? String else { return }
+					guard let username = jsonResponse["username"] as? String else { return }
 					guard let avatarURL = jsonResponse["avatarUrl"] as? String else { return }
 					guard let website = jsonResponse["website"] as? String  else { return }
 					guard let bio = jsonResponse["bio"] as? String  else { return }
-					let modifiedUser = User(firstName: "",
-																	lastName: "",
-																	usernameOrEmail: user.usernameOrEmail,
-																	token: user.token,
-																	hasPremium: hasSubscription,
-																	avatarURL: avatarURL,
-																	bio: bio,
-																	website: website,
-																	fullName: fullName
-																	)
+					let modifiedUser = User(
+						_id: username, username: name,
+						email: email,
+						token: user.token,
+						hasPremium: hasSubscription,
+						avatarURL: avatarURL,
+						bio: bio,
+						website: website
+					)
 					
 					UserManager.sharedInstance.setCurrentUser(to: modifiedUser)
 					NotificationCenter.default.post(name: .loginChanged, object: nil)
 					
 					// @TODO: Dictionary for subscription model
-//					if let subscriptionDictionary = jsonResponse["subscription"] as? [String: Any?] {
-//						let modifiedUser = User(firstName: user.firstName,
-//																		lastName: user.lastName,
-//																		usernameOrEmail: user.usernameOrEmail,
-//																		token: user.token,
-//																		hasPremium: true)
-//
-//						UserManager.sharedInstance.setCurrentUser(to: modifiedUser)
-//						NotificationCenter.default.post(name: .loginChanged, object: nil)
-//					} else {
-//						let modifiedUser = User(firstName: user.firstName,
-//																		lastName: user.lastName,
-//																		usernameOrEmail: user.usernameOrEmail,
-//																		token: user.token,
-//																		hasPremium: false)
-//
-//						UserManager.sharedInstance.setCurrentUser(to: modifiedUser)
-//						NotificationCenter.default.post(name: .loginChanged, object: nil)
-//					}
+					//					if let subscriptionDictionary = jsonResponse["subscription"] as? [String: Any?] {
+					//						let modifiedUser = User(firstName: user.firstName,
+					//																		lastName: user.lastName,
+					//																		usernameOrEmail: user.usernameOrEmail,
+					//																		token: user.token,
+					//																		hasPremium: true)
+					//
+					//						UserManager.sharedInstance.setCurrentUser(to: modifiedUser)
+					//						NotificationCenter.default.post(name: .loginChanged, object: nil)
+					//					} else {
+					//						let modifiedUser = User(firstName: user.firstName,
+					//																		lastName: user.lastName,
+					//																		usernameOrEmail: user.usernameOrEmail,
+					//																		token: user.token,
+					//																		hasPremium: false)
+					//
+					//						UserManager.sharedInstance.setCurrentUser(to: modifiedUser)
+					//						NotificationCenter.default.post(name: .loginChanged, object: nil)
+					//					}
 					
 					let json = JSON(responseData)
 					let subscriptionJSON = json
@@ -346,8 +406,8 @@ extension API {
 
 extension API {
 	func getTopicsForPost(podcastId: String,
-										onSuccess: @escaping ([Topic]) -> Void,
-										onFailure: @escaping (APIError?) -> Void) {
+												onSuccess: @escaping ([Topic]) -> Void,
+												onFailure: @escaping (APIError?) -> Void) {
 		let urlString = self.rootURL + Endpoints.topicsForPost
 		
 		var params = [String: String]()
@@ -379,7 +439,7 @@ extension API {
 					}
 				})
 				onSuccess(topicModels)
-
+				
 			case .failure(let error):
 				log.error(error.localizedDescription)
 				Tracker.logGeneralError(error: error)
@@ -391,9 +451,9 @@ extension API {
 
 extension API {
 	func getPostsFor(topic: String,
-										createdAtBefore beforeDate: String = "",
-										onSuccess: @escaping ([Podcast]) -> Void,
-										onFailure: @escaping (APIError?) -> Void) {
+									 createdAtBefore beforeDate: String = "",
+									 onSuccess: @escaping ([Podcast]) -> Void,
+									 onFailure: @escaping (APIError?) -> Void) {
 		let urlString = self.rootURL + Endpoints.posts
 		
 		var params = [String: String]()
@@ -714,7 +774,7 @@ extension API {
 					onSuccess(data)
 				} catch let jsonErr {
 					onFailure(.NoResponseDataError)
-
+					
 				}
 				
 			case .failure(let error):
@@ -726,7 +786,7 @@ extension API {
 	}
 	
 	func addRelatedLink(podcastId: String, title: String, url: String, onSuccess: @escaping () -> Void,
-											 onFailure: @escaping (APIError?) -> Void) {
+											onFailure: @escaping (APIError?) -> Void) {
 		let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.relatedLink
 		let user = UserManager.sharedInstance.getActiveUser()
 		let userToken = user.token
@@ -749,7 +809,7 @@ extension API {
 					return
 				}
 				onSuccess()
-	
+				
 			case .failure(let error):
 				log.error(error.localizedDescription)
 				Tracker.logGeneralError(error: error)
@@ -822,7 +882,6 @@ extension API {
 				}
 				
 				do {
-					
 					let data: CommentsResponse = try JSONDecoder().decode(CommentsResponse.self, from: responseData)
 					onSuccess(data.result)
 				} catch let jsonErr {

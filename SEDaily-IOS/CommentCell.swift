@@ -21,6 +21,7 @@ class CommentCell: UITableViewCell, Reusable {
 	var dateLabel: UILabel!
 	var verticalLine: UIView!
 	var replyButton: UIButton!
+	var callback: ((Comment)->Void) = {_ in }
 	// Update for reply cell
 	var isReplyCell: Bool = false {
 		didSet {
@@ -53,7 +54,8 @@ class CommentCell: UITableViewCell, Reusable {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		self.selectionStyle = .none
 		setupLayout()
-		replyButton.addTarget(self, action: #selector(CommentCell.replyTapped), for: .touchUpInside)
+		setupTargets()
+		
 	}
 	required init
 		(coder aDecoder: NSCoder) {
@@ -67,6 +69,11 @@ class CommentCell: UITableViewCell, Reusable {
 	@objc func replyTapped(sender: UIButton) {
 		if let comment = comment {
 			delegate?.replyToCommentPressed(comment: comment)
+		}
+	}
+	@objc func avatarTapped() {
+		if let comment = comment {
+			callback(comment)
 		}
 	}
 }
@@ -152,5 +159,24 @@ extension CommentCell {
 		setupLabels()
 		setupAvatarImage()
 		setupConstraints()
+	}
+}
+
+
+extension CommentCell {
+	
+	private func setupTargets() {
+		
+		replyButton.addTarget(self, action: #selector(CommentCell.replyTapped), for: .touchUpInside)
+
+		let tapGestureRecognizerAvatar = UITapGestureRecognizer(target: self, action: #selector(CommentCell.avatarTapped))
+		let tapGestureRecognizerLabel = UITapGestureRecognizer(target: self, action: #selector(CommentCell.avatarTapped))
+		
+		avatarImage.addGestureRecognizer(tapGestureRecognizerAvatar)
+		authorLabel.addGestureRecognizer(tapGestureRecognizerLabel)
+		
+		self.isUserInteractionEnabled = true
+		avatarImage.isUserInteractionEnabled = true
+		authorLabel.isUserInteractionEnabled = true
 	}
 }

@@ -11,47 +11,47 @@ import SwifterSwift
 
 public struct User: Codable {
 	let key: Int = 1
-	let firstName: String
-	let lastName: String
-	let usernameOrEmail: String
+	let _id: String
+	let username: String
+	let email: String
 	let token: String
 	let pushNotificationsSetting: Bool = false
 	let deviceToken: String? = nil
 	let hasPremium: Bool
 	
-	let avatarURL: String
+	let avatarUrl: String
 	let bio: String
 	let website: String
-	let fullName: String
+	let name: String
 	
 	
 	
-	init(firstName: String = "",
-			 lastName: String = "",
-			 usernameOrEmail: String = "",
-			 token: String = "",
-			 hasPremium: Bool = false,
-			 avatarURL: String = "",
-			 bio: String = "",
-			 website: String = "",
-			 fullName: String = ""
+	init(
+		_id: String = "",
+		username: String = "",
+		email: String = "",
+		token: String = "",
+		hasPremium: Bool = false,
+		avatarURL: String = "",
+		bio: String = "",
+		website: String = "",
+		name: String = ""
 		) {
-		self.firstName = firstName
-		self.lastName = lastName
-		self.usernameOrEmail = usernameOrEmail
+		
+		self._id = _id
+		self.username = username
+		self.email = email
 		self.token = token
 		self.hasPremium = hasPremium
-		self.avatarURL = avatarURL
+		self.avatarUrl = avatarURL
 		self.bio = bio
 		self.website = website
-		self.fullName = fullName
+		self.name = name
 	}
 	
 	// MARK: Getters
 	
-	func getFullName() -> String {
-		return self.firstName + self.lastName
-	}
+	
 	
 	func isLoggedIn() -> Bool {
 		if token != "" {
@@ -64,17 +64,16 @@ public struct User: Codable {
 extension User: Equatable {
 	public static func == (lhs: User, rhs: User) -> Bool {
 		return lhs.key == rhs.key &&
-			lhs.firstName == rhs.firstName &&
-			lhs.lastName == rhs.lastName &&
-			lhs.usernameOrEmail == rhs.usernameOrEmail &&
+			lhs.username == rhs.username &&
+			lhs.email == rhs.email &&
 			lhs.token == rhs.token &&
 			lhs.pushNotificationsSetting == rhs.pushNotificationsSetting &&
 			lhs.deviceToken == rhs.deviceToken &&
 			lhs.hasPremium == rhs.hasPremium &&
-			lhs.avatarURL == rhs.avatarURL &&
+			lhs.avatarUrl == rhs.avatarUrl &&
 			lhs.bio == rhs.bio &&
 			lhs.website == rhs.website &&
-			lhs.fullName == rhs.fullName
+			lhs.name == rhs.name
 		
 	}
 }

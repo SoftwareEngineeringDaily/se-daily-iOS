@@ -1,31 +1,33 @@
 //
-//  SummaryCell.swift
+//  LabelCell.swift
 //  SEDaily-IOS
 //
-//  Created by Dawid Cedrych on 6/5/19.
-//  Copyright © 2019 Altalogy. All rights reserved.
+//  Created by Dawid Cedrych on 6/10/19.
+//  Copyright © 2019 Koala Tea. All rights reserved.
 //
+
+import Foundation
 
 import Foundation
 import Reusable
 import UIKit
 
-class SummaryCell: UITableViewCell, Reusable {
+class LabelCell: UITableViewCell, Reusable {
 	
 	private var label: UILabel = UILabel()
-
+	
 	var viewModel: ViewModel = ViewModel() {
 		didSet {
 			label.text = viewModel.text
 			setupLayout(style: viewModel.style)
-
+			
 		}
 	}
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		contentView.addSubview(label)
-		self.isUserInteractionEnabled = false
+		self.isUserInteractionEnabled = true
 	}
 	
 	required init
@@ -35,7 +37,7 @@ class SummaryCell: UITableViewCell, Reusable {
 }
 
 
-extension SummaryCell {
+extension LabelCell {
 	private func setupLayout(style: ViewModel.Style) {
 		
 		label.snp.makeConstraints { (make) in
@@ -47,12 +49,13 @@ extension SummaryCell {
 		label.textAlignment = style.alignment
 		label.font = style.font
 		label.textColor = style.color
-		label.numberOfLines = 0
+		
+		self.accessoryType = style.accessory
 	}
 }
 
 // MARK: - ViewModel
-extension SummaryCell {
+extension LabelCell {
 	struct ViewModel {
 		struct Style {
 			var marginX: CGFloat = 0
@@ -60,6 +63,7 @@ extension SummaryCell {
 			var font: UIFont = UIFont(font: .helveticaNeue, size: 10.0)!
 			var color = UIColor.clear
 			var alignment = NSTextAlignment.left
+			var accessory: UITableViewCell.AccessoryType = .disclosureIndicator
 		}
 		var text = ""
 		var style = Style()

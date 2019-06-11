@@ -68,6 +68,7 @@
 		435BAF3A22783B7C00762891 /* EpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435BAF3922783B7C00762891 /* EpisodeViewController.swift */; };
 		435BAF3C2278430900762891 /* EpisodeHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435BAF3B2278430900762891 /* EpisodeHeaderCell.swift */; };
 		4381367D229FFCC4008043B2 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4381367C229FFCC4008043B2 /* UIColor+Extensions.swift */; };
+		4398EA3022AE58BF002F22F0 /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4398EA2F22AE58BF002F22F0 /* LabelCell.swift */; };
 		439BCC6C22802EDC008D808B /* CurrentlyPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BCC6B22802EDC008D808B /* CurrentlyPlaying.swift */; };
 		439BCC6E2280CD6B008D808B /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BCC6D2280CD6B008D808B /* CommentCell.swift */; };
 		439BCC7122818F58008D808B /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BCC7022818F58008D808B /* ProfileCell.swift */; };
@@ -217,6 +218,7 @@
 		435BAF3922783B7C00762891 /* EpisodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeViewController.swift; sourceTree = "<group>"; };
 		435BAF3B2278430900762891 /* EpisodeHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeHeaderCell.swift; sourceTree = "<group>"; };
 		4381367C229FFCC4008043B2 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		4398EA2F22AE58BF002F22F0 /* LabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
 		439BCC6B22802EDC008D808B /* CurrentlyPlaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentlyPlaying.swift; sourceTree = "<group>"; };
 		439BCC6D2280CD6B008D808B /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		439BCC7022818F58008D808B /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
@@ -582,6 +584,7 @@
 				43086E3622A85C7A00B8B65B /* AvatarCell.swift */,
 				43086E3A22A8EAF800B8B65B /* SwitchCell.swift */,
 				431135D322AA2E2B00BFC910 /* SeparatorCell.swift */,
+				4398EA2F22AE58BF002F22F0 /* LabelCell.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -1099,6 +1102,7 @@
 				43C0C764227AE7D1007A92E7 /* WebViewCell.swift in Sources */,
 				43CE45212293ECFC0048426A /* DownloadsCollectionViewController.swift in Sources */,
 				439BCC7522818F9D008D808B /* ProfileViewController.swift in Sources */,
+				4398EA3022AE58BF002F22F0 /* LabelCell.swift in Sources */,
 				965798A52093FDE600104F8F /* FeedItemCell.swift in Sources */,
 				43A680D222707DC000A639A9 /* DownloadService.swift in Sources */,
 				43086E3522A7C7CB00B8B65B /* User+ProfileViewController.Section.swift in Sources */,

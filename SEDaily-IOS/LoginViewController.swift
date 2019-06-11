@@ -397,7 +397,7 @@ class LoginViewController: UIViewController {
         }
 
         // API Login Call
-        networkService.register(firstName: "", lastName: "", email: email, username: username, password: password, completion: { (success) -> Void in
+        networkService.register(email: email, username: username, password: password, completion: { (success) -> Void in
             if success == false {
                 return
             }

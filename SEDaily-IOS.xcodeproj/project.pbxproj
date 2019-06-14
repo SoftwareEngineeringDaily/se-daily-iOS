@@ -63,6 +63,7 @@
 		43086E3522A7C7CB00B8B65B /* User+ProfileViewController.Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43086E3422A7C7CB00B8B65B /* User+ProfileViewController.Section.swift */; };
 		43086E3722A85C7A00B8B65B /* AvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43086E3622A85C7A00B8B65B /* AvatarCell.swift */; };
 		43086E3B22A8EAF800B8B65B /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43086E3A22A8EAF800B8B65B /* SwitchCell.swift */; };
+		430FF9C922B2FEF70033A15A /* URLSchemaHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430FF9C822B2FEF60033A15A /* URLSchemaHelper.swift */; };
 		431135D422AA2E2B00BFC910 /* SeparatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431135D322AA2E2B00BFC910 /* SeparatorCell.swift */; };
 		431DE891228D619D00FACA74 /* PostsForTopicCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431DE890228D619C00FACA74 /* PostsForTopicCollectionViewController.swift */; };
 		435BAF3A22783B7C00762891 /* EpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435BAF3922783B7C00762891 /* EpisodeViewController.swift */; };
@@ -213,6 +214,7 @@
 		43086E3422A7C7CB00B8B65B /* User+ProfileViewController.Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+ProfileViewController.Section.swift"; sourceTree = "<group>"; };
 		43086E3622A85C7A00B8B65B /* AvatarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCell.swift; sourceTree = "<group>"; };
 		43086E3A22A8EAF800B8B65B /* SwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
+		430FF9C822B2FEF60033A15A /* URLSchemaHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSchemaHelper.swift; sourceTree = "<group>"; };
 		431135D322AA2E2B00BFC910 /* SeparatorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorCell.swift; sourceTree = "<group>"; };
 		431DE890228D619C00FACA74 /* PostsForTopicCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsForTopicCollectionViewController.swift; sourceTree = "<group>"; };
 		435BAF3922783B7C00762891 /* EpisodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeViewController.swift; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 				439BCC6B22802EDC008D808B /* CurrentlyPlaying.swift */,
 				43CE451D2293E85C0048426A /* Haptics.swift */,
 				4381367C229FFCC4008043B2 /* UIColor+Extensions.swift */,
+				430FF9C822B2FEF60033A15A /* URLSchemaHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1152,6 +1155,7 @@
 				96B6168B20C0A59500DF3CF6 /* ForumThreadCell.swift in Sources */,
 				435BAF3A22783B7C00762891 /* EpisodeViewController.swift in Sources */,
 				16B147B11F16BF9C00433A42 /* AudioOverlayViewController.swift in Sources */,
+				430FF9C922B2FEF70033A15A /* URLSchemaHelper.swift in Sources */,
 				164C71051F021AC8003803BC /* CustomTabViewController.swift in Sources */,
 				961A378D208FAFEF0050EF80 /* ForumThreadLite.swift in Sources */,
 				962F5365201E3C7900897A6E /* RelatedLinksViewController.swift in Sources */,

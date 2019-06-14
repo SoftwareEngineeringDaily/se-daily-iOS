@@ -133,6 +133,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 			let bookmarksVC = BookmarkCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate)
 			let downloadsVC = DownloadsCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate)
 			let profileVC = ProfileViewController()
+		
 			
 			
 
@@ -231,6 +232,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 //                self.present(navVC, animated: true, completion: nil)
 //            }
             break
+				default: break
         }
 
         self.actionSheet.addAction(title: "Logout", style: .destructive, isEnabled: true) { _ in

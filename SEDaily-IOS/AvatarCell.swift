@@ -23,12 +23,12 @@ class AvatarCell: UITableViewCell, Reusable {
 
 extension AvatarCell {
 	private func setupLayout() {
+		self.selectionStyle = .none
+		
 		avatarImageView = UIImageView()
 		contentView.addSubview(avatarImageView)
 		avatarImageView.contentMode = .scaleAspectFill
 		avatarImageView.clipsToBounds = true
-		avatarImageView.borderWidth = UIView.getValueScaledByScreenWidthFor(baseValue: 1)
-		avatarImageView.borderColor = Stylesheet.Colors.base
 		avatarImageView.cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 50)
 		avatarImageView.kf.indicatorType = .activity
 		
@@ -42,6 +42,7 @@ extension AvatarCell {
 	}
 	private func setupAvatar(imageURL: URL?) {
 		avatarImageView.kf.cancelDownloadTask()
+		avatarImageView.image = nil
 		guard let imageURL = imageURL else {
 			avatarImageView.image = #imageLiteral(resourceName: "SEDaily_Logo")
 			return

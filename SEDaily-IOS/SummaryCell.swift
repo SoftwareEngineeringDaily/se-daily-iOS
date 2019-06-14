@@ -25,7 +25,8 @@ class SummaryCell: UITableViewCell, Reusable {
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		contentView.addSubview(label)
-		self.isUserInteractionEnabled = false
+		self.isUserInteractionEnabled = true
+		self.selectionStyle = .none
 	}
 	
 	required init
@@ -38,7 +39,7 @@ class SummaryCell: UITableViewCell, Reusable {
 extension SummaryCell {
 	private func setupLayout(style: ViewModel.Style) {
 		
-		label.snp.makeConstraints { (make) in
+		label.snp.updateConstraints { (make) in
 			make.left.right.equalToSuperview().offset(style.marginX)
 			make.right.equalToSuperview().inset(style.marginX)
 			make.top.equalToSuperview().offset(style.marginY)

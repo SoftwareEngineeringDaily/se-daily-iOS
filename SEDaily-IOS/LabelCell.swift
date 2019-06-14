@@ -27,6 +27,7 @@ class LabelCell: UITableViewCell, Reusable {
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		contentView.addSubview(label)
+		self.selectionStyle = .none
 		self.isUserInteractionEnabled = true
 	}
 	

@@ -18,7 +18,7 @@ class ProfileViewController: UIViewController {
 	
 	var tableView: UITableView = UITableView.init(frame: CGRect.zero, style: .grouped)
 	
-	var user: User = User()
+	var user: User?
 	
 	let notificationsController = NotificationsController()
 	
@@ -36,6 +36,9 @@ class ProfileViewController: UIViewController {
 		view.addSubview(tableView)
 		setupDataSource()
 		tableView.delegate = self
+		
+		
+
 		
 
 		tableView.rowHeight = UITableViewAutomaticDimension
@@ -59,9 +62,6 @@ class ProfileViewController: UIViewController {
 			make.right.equalToSuperview()
 			make.left.equalToSuperview()
 		}
-		if UserManager.sharedInstance.getActiveUser().name == "" {
-		API().loadUserInfo()
-		}
 	}
 	@objc func loginObserver() {
 		setupDataSource()
@@ -70,82 +70,15 @@ class ProfileViewController: UIViewController {
 }
 extension ProfileViewController {
 	private func setupDataSource() {
-		//let user = UserManager.sharedInstance.getActiveUser()
+		let user = self.user ?? UserManager.sharedInstance.getActiveUser()
 		let dataSource = ProfileTableViewDataSource(user: user)
+		dataSource.parent = self
 		self.dataSource = dataSource
 		tableView.dataSource = dataSource
 	}
 }
-//extension ProfileViewController: UITableViewDataSource {
-//	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//		switch indexPath.section {
-//		case 0:
-//			if UserManager.sharedInstance.isCurrentUserLoggedIn() {
-//			let cell: ProfileCell = tableView.dequeueReusableCell(for: indexPath)
-//			cell.nameLabel.text = UserManager.sharedInstance.getActiveUser().fullName
-//			cell.usernameOrEmailLabel.text = UserManager.sharedInstance.getActiveUser().usernameOrEmail
-//			cell.bioLabel.text = UserManager.sharedInstance.getActiveUser().bio
-//			cell.linkLabel.text = UserManager.sharedInstance.getActiveUser().website
-//			cell.setupAvatar(imageURL: URL(string: UserManager.sharedInstance.getActiveUser().avatarURL))
-//			cell.selectionStyle = .none
-//			return cell
-//			} else {
-//				let cell: SettingsCell = tableView.dequeueReusableCell(for: indexPath)
-//				cell.cellLabel.text = "Sign In to see your profile here"
-//				cell.cellLabel.font = UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 15))
-//				cell.cellLabel.textColor = Stylesheet.Colors.dark
-//				cell.selectionStyle = .none
-//				return cell
-//			}
-//
-//		default:
-//			switch indexPath.row {
-//			case 0:
-//				let cell: NotificationTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-//				cell.cellLabel.text = "Enable Daily Notifications"
-//				cell.selectionStyle = .none
-//				if notificationsController.notificationsSubscribed {
-//					cell.cellToggle.setOn(true, animated: true)
-//				}
-//				cell.cellToggle.addTarget(self, action: #selector(switchValueDidChange), for: .touchUpInside)
-//				return cell
-//			default:
-//				let cell: SettingsCell = tableView.dequeueReusableCell(for: indexPath)
-//				cell.cellLabel.text = "Edit Profile"
-//				cell.selectionStyle = .none
-//				return cell
-//			}
-//
-//		}
-//	}
-//
-//
-//	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//		switch section {
-//		case 0:
-//			return 1
-//		default:
-//			return 2
-//		}
-//	}
-//
-//	func numberOfSections(in tableView: UITableView) -> Int {
-//		return 2
-//	}
-
-//	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//		if section==1 {
-//			return "Settings"
-//		}
-//		return ""
-//	}
-//}
-
-
-
 
 extension ProfileViewController: UITableViewDelegate {
-	
 	
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return dataSource?.section(at: section).headerHeight ?? 0
@@ -153,16 +86,35 @@ extension ProfileViewController: UITableViewDelegate {
 	
 	func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
 		view.tintColor = .clear
-		print(view.height)
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		if indexPath.section == 1 && indexPath.row == 1 {
-			let alert = UIAlertController(title: "Please visit the web version", message: "We are working hard to bring this feature to mobile. Please visit softwaredaily.com to edit your profile", preferredStyle: .alert)
-			alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-			self.present(alert, animated: true)
+		
+		dataSource.map { dataSource in
+			let row = dataSource.row(at: indexPath)
+			(row as? Section.SummaryRow).map { row in
+				switch row {
+				case .link: user?.website.map {
+					if let linkUrl = URL(string: URLSchemaHelper.addSchema(url: $0)) {
+						UIApplication.shared.open(linkUrl, options: [:], completionHandler: nil)
+					}
+				}
+				default: break
+				}
+			}
+			(row as? Section.SettingsRow).map { row in
+				switch row {
+				case .editProfile:
+					let alert = UIAlertController(title: "Please visit the web version", message: "We are working hard to bring this feature to mobile. Please visit softwaredaily.com to edit your profile", preferredStyle: .alert)
+					alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+					self.present(alert, animated: true)
+				default: break
+				}
+			}
 		}
+		
 	}
+		
 }
 
 
@@ -214,17 +166,10 @@ extension ProfileViewController {
 		
 		var headerHeight: CGFloat {
 			switch self {
-			case .summary, .settings: return 24.0
-			case .layout: return 0.0
+			case .settings: return 24.0
+			case .summary, .layout: return 0.0
 			}
 		}
-		
-//		var separator: UITableViewCell.SeparatorType {
-//			switch self {
-//			case .lists: return .insetted(24.0)
-//			case .summary, .details: return .none
-//			}
-//		}
 	}
 }
 
@@ -275,6 +220,7 @@ extension ProfileViewController.Section {
 		case username
 		case bio
 		case link
+		case signInPlaceholder
 		
 		var style: SummaryCell.ViewModel.Style {
 			switch self {
@@ -286,7 +232,7 @@ extension ProfileViewController.Section {
 				alignment: .center)
 			case .username: return SummaryCell.ViewModel.Style(
 				marginX: UIView.getValueScaledByScreenWidthFor(baseValue: 15.0),
-				marginY: UIView.getValueScaledByScreenWidthFor(baseValue: 5.0),
+				marginY: UIView.getValueScaledByScreenWidthFor(baseValue: 15.0),
 				font: UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 11))!,
 				color: Stylesheet.Colors.grey,
 				alignment: .center)
@@ -305,61 +251,20 @@ extension ProfileViewController.Section {
 			case .avatar:
 				//assertionFailure("There is no style for the avata row")
 				return SummaryCell.ViewModel.Style()
+			case .signInPlaceholder: return SummaryCell.ViewModel.Style(
+				marginX: UIView.getValueScaledByScreenWidthFor(baseValue: 15.0),
+				marginY: UIView.getValueScaledByScreenWidthFor(baseValue: 50.0),
+				font: UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))!,
+				color: Stylesheet.Colors.dark,
+				alignment: .center)
 			}
 		}
 		
 		var cellType: UITableViewCell.Type {
 			switch self {
 			case .avatar: return AvatarCell.self
-			case .name, .username, .bio, .link: return SummaryCell.self
+			case .name, .username, .bio, .link, .signInPlaceholder: return SummaryCell.self
 			}
 		}
 	}
 }
-//	enum DetailRow: RowType {
-//		case email
-//		case blog
-//		case company
-//		case location
-//
-//		var icon: UIImage {
-//			switch self {
-//			case .email: return #imageLiteral(resourceName: "Email")
-//			case .blog: return #imageLiteral(resourceName: "Blog")
-//			case .company: return #imageLiteral(resourceName: "Company")
-//			case .location: return #imageLiteral(resourceName: "Location")
-//			}
-//		}
-//
-//		var isActive: Bool {
-//			switch self {
-//			case .email, .blog: return true
-//			case .company, .location: return false
-//			}
-//		}
-//
-//		var cellType: UITableViewCell.Type {
-//			return DetailCell.self
-//		}
-//	}
-	
-//	enum ListRow: RowType {
-//		case repositories
-//		case stars
-//		case followers
-//		case following
-//
-//		var name: String {
-//			switch self {
-//			case .repositories: return "Repositories"
-//			case .stars: return "Stars"
-//			case .followers: return "Followers"
-//			case .following: return "Following"
-//			}
-//		}
-//
-//		var cellType: UITableViewCell.Type {
-//			return ListCell.self
-//		}
-//	}
-//}

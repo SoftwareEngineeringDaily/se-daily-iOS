@@ -13,7 +13,7 @@ import Reusable
 
 class SwitchCell: UITableViewCell, Reusable {
 	private var label: UILabel = UILabel()
-	private var toggle: UISwitch = UISwitch()
+	var toggle: UISwitch = UISwitch()
 	var separator: UIView = UIView()
 	
 	var viewModel: ViewModel = ViewModel() {
@@ -31,6 +31,7 @@ class SwitchCell: UITableViewCell, Reusable {
 		contentView.addSubview(label)
 		contentView.addSubview(toggle)
 		contentView.addSubview(separator)
+		self.selectionStyle = .none
 	}
 	
 	required init(coder aDecoder: NSCoder) {

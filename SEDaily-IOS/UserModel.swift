@@ -10,19 +10,25 @@ import UIKit
 import SwifterSwift
 
 public struct User: Codable {
-	let key: Int = 1
 	let _id: String
 	let username: String
-	let email: String
-	let token: String
-	let pushNotificationsSetting: Bool = false
+	let email: String?
+	var token: String?
+	let pushNotificationsSetting: Bool? = false
 	let deviceToken: String? = nil
-	let hasPremium: Bool
+	var hasPremium: Bool?
 	
-	let avatarUrl: String
-	let bio: String
-	let website: String
-	let name: String
+	var isMainUser: Bool {
+		get {
+			guard let token = token else { return false }
+			return !token.isEmpty
+		}
+	}
+	
+	let avatarUrl: String?
+	let bio: String?
+	let website: String?
+	let name: String?
 	
 	
 	
@@ -32,10 +38,10 @@ public struct User: Codable {
 		email: String = "",
 		token: String = "",
 		hasPremium: Bool = false,
-		avatarURL: String = "",
-		bio: String = "",
-		website: String = "",
-		name: String = ""
+		avatarUrl: String? = nil,
+		bio: String? = nil,
+		website: String? = nil,
+		name: String? = nil
 		) {
 		
 		self._id = _id
@@ -43,7 +49,7 @@ public struct User: Codable {
 		self.email = email
 		self.token = token
 		self.hasPremium = hasPremium
-		self.avatarUrl = avatarURL
+		self.avatarUrl = avatarUrl
 		self.bio = bio
 		self.website = website
 		self.name = name
@@ -63,7 +69,7 @@ public struct User: Codable {
 
 extension User: Equatable {
 	public static func == (lhs: User, rhs: User) -> Bool {
-		return lhs.key == rhs.key &&
+		return 
 			lhs.username == rhs.username &&
 			lhs.email == rhs.email &&
 			lhs.token == rhs.token &&

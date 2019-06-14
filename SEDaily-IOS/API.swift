@@ -117,8 +117,6 @@ extension API {
 					return
 				}
 				
-				print("login")
-				print(jsonResponse)
 				
 				if let message = jsonResponse["message"] {
 					Helpers.alertWithMessage(title: Helpers.Alerts.error, message: String(describing: message), completionHandler: nil)
@@ -182,6 +180,7 @@ extension API {
 					let user = User(username: username, email: email, token: token)
 					UserManager.sharedInstance.setCurrentUser(to: user)
 					NotificationCenter.default.post(name: .loginChanged, object: nil)
+					self.loadUserInfo()
 					completion(true)
 				}
 			case .failure(let error):
@@ -193,11 +192,12 @@ extension API {
 			}
 		}
 	}
+	
 	func getUser(userId: String, completion: @escaping (_ user: User?) -> Void) {
 		let urlString = rootURL + Endpoints.users + "/" + userId
 		
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
 		
 		let _headers: HTTPHeaders = [
 			Headers.contentType: Headers.x_www_form_urlencoded,
@@ -227,21 +227,21 @@ extension API {
 						return
 					}
 					// Get user details
-					print(responseData)
+			
+					let this = JSON(responseData)
 					
-					guard let name = jsonResponse["name"] as? String else { return }
-					guard let username = jsonResponse["username"] as? String else { return }
-					guard let avatarUrl = jsonResponse["avatarUrl"] as? String else { return }
-					guard let website = jsonResponse["website"] as? String  else { return }
-					guard let bio = jsonResponse["bio"] as? String  else { return }
-					let user = User(
-						username: username,
-						avatarURL: avatarUrl,
-						bio: bio,
-						website: website,
-						name: name
-					)
-					completion(user)
+					guard let jsonData = try? this.rawData() else { return }
+					do {
+						
+						let user = try JSONDecoder().decode(User.self, from: jsonData)
+				
+						completion(user)
+						
+					} catch {
+						log.error(error)
+						
+					}
+					
 				case .failure(let error):
 					log.error(error.localizedDescription)
 				}
@@ -252,7 +252,7 @@ extension API {
 		let urlString = rootURL + Endpoints.usersMe
 		
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
 		
 		let _headers: HTTPHeaders = [
 			Headers.contentType: Headers.x_www_form_urlencoded,
@@ -270,8 +270,7 @@ extension API {
 						return
 					}
 					
-					print("user info")
-					print(jsonResponse)
+				
 					
 					
 					if let message = jsonResponse["message"] {
@@ -292,24 +291,48 @@ extension API {
 						hasSubscription = true
 					}
 					
-					guard let name = jsonResponse["name"] as? String else { return }
-					guard let email = jsonResponse["email"] as? String else { return }
-					guard let username = jsonResponse["username"] as? String else { return }
-					guard let avatarURL = jsonResponse["avatarUrl"] as? String else { return }
-					guard let website = jsonResponse["website"] as? String  else { return }
-					guard let bio = jsonResponse["bio"] as? String  else { return }
-					let modifiedUser = User(
-						_id: username, username: name,
-						email: email,
-						token: user.token,
-						hasPremium: hasSubscription,
-						avatarURL: avatarURL,
-						bio: bio,
-						website: website
-					)
+					let this = JSON(responseData)
+				
 					
-					UserManager.sharedInstance.setCurrentUser(to: modifiedUser)
-					NotificationCenter.default.post(name: .loginChanged, object: nil)
+					
+					guard let jsonData = try? this.rawData() else { return }
+					do {
+						
+						var user = try JSONDecoder().decode(User.self, from: jsonData)
+						user.hasPremium = hasSubscription
+						user.token = userToken
+						UserManager.sharedInstance.setCurrentUser(to: user)
+						NotificationCenter.default.post(name: .loginChanged, object: nil)
+		
+					} catch {
+						log.error(error)
+					
+					}
+					
+					
+					//UserManager.sharedInstance.setCurrentUser(to: newObject)
+					//NotificationCenter.default.post(name: .loginChanged, object: nil)
+					
+//					guard let name = jsonResponse["name"] as? String else { return }
+//					guard let email = jsonResponse["email"] as? String else { return }
+//					guard let username = jsonResponse["username"] as? String else { return }
+//					guard let avatarUrl = jsonResponse["avatarUrl"] as? String else { return }
+//					guard let website = jsonResponse["website"] as? String  else { return }
+//					guard let bio = jsonResponse["bio"] as? String  else { return }
+//					let modifiedUser = User(
+//						_id: "",
+//						username: username,
+//						email: email,
+//						token: user.token,
+//						hasPremium: hasSubscription,
+//						avatarUrl: avatarUrl,
+//						bio: bio,
+//						website: website,
+//						name: name
+//					)
+					
+//					UserManager.sharedInstance.setCurrentUser(to: modifiedUser)
+//					NotificationCenter.default.post(name: .loginChanged, object: nil)
 					
 					// @TODO: Dictionary for subscription model
 					//					if let subscriptionDictionary = jsonResponse["subscription"] as? [String: Any?] {
@@ -335,10 +358,10 @@ extension API {
 					let json = JSON(responseData)
 					let subscriptionJSON = json
 					
-					guard let jsonData = try? subscriptionJSON.rawData() else {
-						log.error("Error with data")
-						return
-					}
+//					guard let jsonData = try? subscriptionJSON.rawData() else {
+//						log.error("Error with data")
+//						return
+//					}
 					
 					do {
 						let newObject = try JSONDecoder().decode(SubscriptionModel.self, from: jsonData)
@@ -368,7 +391,7 @@ extension API {
 		params[Params.createdAtBefore] = beforeDate
 		
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
 		let _headers: HTTPHeaders = [
 			Headers.authorization: Headers.bearer + userToken
 		]
@@ -415,7 +438,7 @@ extension API {
 		
 		
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
 		let _headers: HTTPHeaders = [
 			Headers.authorization: Headers.bearer + userToken
 		]
@@ -461,7 +484,7 @@ extension API {
 		params[Params.topic] = topic
 		
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
 		let _headers: HTTPHeaders = [
 			Headers.authorization: Headers.bearer + userToken
 		]
@@ -503,7 +526,7 @@ extension API {
 		let urlString = self.rootURL + Endpoints.posts + "/" + podcastId
 		
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
 		let _headers: HTTPHeaders = [
 			Headers.authorization: Headers.bearer + userToken,
 			Headers.contentType: Headers.x_www_form_urlencoded
@@ -545,7 +568,7 @@ extension API {
 		var type = type
 		
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
 		let _headers: HTTPHeaders = [
 			Headers.authorization: Headers.bearer + userToken
 		]
@@ -611,7 +634,7 @@ extension API {
 	func markAsListened(postId: String) {
 		//    http://localhost:4040/api/posts/5a57b6ffe9b21f96de35dabb/listened
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
 		let _headers: HTTPHeaders = [
 			Headers.authorization: Headers.bearer + userToken
 		]
@@ -623,7 +646,6 @@ extension API {
 				
 				switch response.result {
 				case .success:
-					// onSuccess()
 					print("success")
 				case .failure(let error):
 					log.error(error)
@@ -643,7 +665,7 @@ extension API {
 		onFailure: @escaping (APIError?) -> Void) {
 		
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
 		let _headers: HTTPHeaders = [
 			Headers.authorization: Headers.bearer + userToken
 		]
@@ -696,7 +718,7 @@ extension API {
 		onFailure: @escaping (APIError?) -> Void) {
 		
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
 		let _headers: HTTPHeaders = [
 			Headers.authorization: Headers.bearer + userToken
 		]
@@ -753,7 +775,7 @@ extension API {
 											 onFailure: @escaping (APIError?) -> Void) {
 		let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.relatedLinks
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
 		let _headers: HTTPHeaders = [
 			Headers.authorization: Headers.bearer + userToken,
 			Headers.contentType: Headers.x_www_form_urlencoded
@@ -789,7 +811,7 @@ extension API {
 											onFailure: @escaping (APIError?) -> Void) {
 		let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.relatedLink
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
 		let _headers: HTTPHeaders = [
 			Headers.authorization: Headers.bearer + userToken,
 			Headers.contentType: Headers.x_www_form_urlencoded
@@ -822,7 +844,7 @@ extension API {
 		let urlString = self.rootURL + Endpoints.relatedLinks + "/" + entityId + Endpoints.upvote
 		
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
 		let _headers: HTTPHeaders = [
 			Headers.authorization: Headers.bearer + userToken,
 			Headers.contentType: Headers.x_www_form_urlencoded
@@ -866,7 +888,7 @@ extension API {
 									 onFailure: @escaping (APIError?) -> Void) {
 		let urlString = self.rootURL + Endpoints.comments + "/forEntity/" + rootEntityId
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
 		let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded,
 																 Headers.authorization: Headers.bearer + userToken
 		]
@@ -903,7 +925,7 @@ extension API {
 		let urlString = self.rootURL + Endpoints.comments + "/forEntity/" + rootEntityId
 		
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
 		let _headers: HTTPHeaders = [Headers.contentType: Headers.x_www_form_urlencoded,
 																 Headers.authorization: Headers.bearer + userToken
 		]
@@ -939,7 +961,7 @@ extension API {
 		let urlString = self.rootURL + Endpoints.myBookmarked
 		
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
 		let headers = [
 			Headers.authorization: Headers.bearer + userToken,
 			Headers.contentType: Headers.x_www_form_urlencoded
@@ -995,7 +1017,7 @@ extension API {
 			(value ? Endpoints.favorite : Endpoints.unfavorite)
 		
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
 		let headers = [
 			Headers.authorization: Headers.bearer + userToken,
 			Headers.contentType: Headers.x_www_form_urlencoded
@@ -1046,7 +1068,7 @@ extension API {
 		let urlString = self.rootURL + Endpoints.forum + "/" + entityId + Endpoints.upvote
 		
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
 		let _headers: HTTPHeaders = [
 			Headers.authorization: Headers.bearer + userToken,
 			Headers.contentType: Headers.x_www_form_urlencoded
@@ -1083,7 +1105,8 @@ extension API {
 		let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.upvote
 		
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
+
 		let _headers: HTTPHeaders = [
 			Headers.authorization: Headers.bearer + userToken,
 			Headers.contentType: Headers.x_www_form_urlencoded
@@ -1120,7 +1143,7 @@ extension API {
 		let urlString = self.rootURL + Endpoints.posts + "/" + podcastId + Endpoints.downvote
 		
 		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token
+		let userToken = user.token ?? ""
 		let _headers: HTTPHeaders = [
 			Headers.authorization: Headers.bearer + userToken,
 			Headers.contentType: Headers.x_www_form_urlencoded

@@ -10,20 +10,26 @@ import Foundation
 import UIKit
 import Reusable
 
+protocol SwitchCellDelegate: class {
+	func switchCell(_ cell: SwitchCell, didToggle value: Bool)
+}
 
 class SwitchCell: UITableViewCell, Reusable {
 	private var label: UILabel = UILabel()
 	var toggle: UISwitch = UISwitch()
-	var separator: UIView = UIView()
+	private var separator: UIView = UIView()
+	
+	weak var delegate: SwitchCellDelegate?
 	
 	var viewModel: ViewModel = ViewModel() {
 		didSet {
 			label.text = viewModel.text
 			setupLayout()
-			//toggle.
-			//setupLayout(style: viewModel.style)
+			setupTargets()
 		}
 	}
+	
+	
 	
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -31,7 +37,6 @@ class SwitchCell: UITableViewCell, Reusable {
 		contentView.addSubview(label)
 		contentView.addSubview(toggle)
 		contentView.addSubview(separator)
-		self.selectionStyle = .none
 	}
 	
 	required init(coder aDecoder: NSCoder) {
@@ -40,10 +45,19 @@ class SwitchCell: UITableViewCell, Reusable {
 }
 
 
-
-
+extension SwitchCell {
+	private func setupTargets() {
+		toggle.addTarget(self, action: #selector(SwitchCell.switchValueDidChange), for: .touchUpInside)
+	}
+	
+	@objc private func switchValueDidChange(sender: UISwitch) {
+		delegate?.switchCell(self, didToggle: sender.isOn)
+	}
+}
 extension SwitchCell {
 	private func setupLayout() {
+		
+		selectionStyle = .none
 		
 		label.textColor = Stylesheet.Colors.dark
 		label.baselineAdjustment = .alignCenters
@@ -77,6 +91,5 @@ extension SwitchCell {
 extension SwitchCell {
 	struct ViewModel {
 		var text = ""
-		var callback: ((_ isOn: Bool)-> Void) = {_ in }
 	}
 }

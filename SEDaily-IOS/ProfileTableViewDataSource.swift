@@ -15,9 +15,6 @@ class ProfileTableViewDataSource: NSObject {
 	private let user: User
 	private let organizer: DataOrganizer
 	
-	weak var parent: ProfileViewController?
-	
-	
 	init(user: User) {
 		self.user = user
 		organizer = DataOrganizer(user: user)
@@ -61,12 +58,11 @@ extension ProfileTableViewDataSource: UITableViewDataSource {
 			configurableCell.configureWith(user: user, row: row)
 		}
 		if let configurableCell = cell as? Configurable {
-			configurableCell.configureWith(row: row, parent: parent!)
+			configurableCell.configureWith(row: row)
 		}
 		return cell
 	}
 }
-
 
 
 // MARK: - DataOrganizer
@@ -115,7 +111,7 @@ protocol UserConfigurable {
 }
 
 protocol Configurable {
-	func configureWith(row: RowType, parent: ProfileViewController)
+	func configureWith(row: RowType)
 }
 
 extension AvatarCell: UserConfigurable {
@@ -139,7 +135,7 @@ extension SummaryCell: UserConfigurable {
 }
 
 extension SwitchCell: Configurable {
-	func configureWith(row: RowType, parent: ProfileViewController) {
+	func configureWith(row: RowType) {
 		guard let row = row as? ProfileViewController.Section.SettingsRow else {
 			assertionFailure("SwitchCell needs a row of type SettingsRow")
 			return
@@ -147,15 +143,11 @@ extension SwitchCell: Configurable {
 		// Refactor when more switch cells are available
 		switch row {
 		case .notifications:
-			
 			let notificationsController = NotificationsController()
-			
 			if notificationsController.notificationsSubscribed {
 				toggle.setOn(true, animated: true)
 			}
-			toggle.addTarget(parent, action: #selector(ProfileViewController.switchValueDidChange), for: .touchUpInside)
-
-			viewModel = ViewModel(text: L10n.enableNotifications, callback: { _ in })
+			viewModel = ViewModel(text: L10n.enableNotifications)
 		default:
 			return
 		}
@@ -163,7 +155,7 @@ extension SwitchCell: Configurable {
 }
 
 extension LabelCell: Configurable {
-	func configureWith(row: RowType, parent: ProfileViewController) {
+	func configureWith(row: RowType) {
 		guard let row = row as? ProfileViewController.Section.SettingsRow else {
 			assertionFailure("LabelCell needs a row of type SettingsRow")
 			return

@@ -310,58 +310,10 @@ extension API {
 					}
 					
 					
-					//UserManager.sharedInstance.setCurrentUser(to: newObject)
-					//NotificationCenter.default.post(name: .loginChanged, object: nil)
-					
-//					guard let name = jsonResponse["name"] as? String else { return }
-//					guard let email = jsonResponse["email"] as? String else { return }
-//					guard let username = jsonResponse["username"] as? String else { return }
-//					guard let avatarUrl = jsonResponse["avatarUrl"] as? String else { return }
-//					guard let website = jsonResponse["website"] as? String  else { return }
-//					guard let bio = jsonResponse["bio"] as? String  else { return }
-//					let modifiedUser = User(
-//						_id: "",
-//						username: username,
-//						email: email,
-//						token: user.token,
-//						hasPremium: hasSubscription,
-//						avatarUrl: avatarUrl,
-//						bio: bio,
-//						website: website,
-//						name: name
-//					)
-					
-//					UserManager.sharedInstance.setCurrentUser(to: modifiedUser)
-//					NotificationCenter.default.post(name: .loginChanged, object: nil)
-					
-					// @TODO: Dictionary for subscription model
-					//					if let subscriptionDictionary = jsonResponse["subscription"] as? [String: Any?] {
-					//						let modifiedUser = User(firstName: user.firstName,
-					//																		lastName: user.lastName,
-					//																		usernameOrEmail: user.usernameOrEmail,
-					//																		token: user.token,
-					//																		hasPremium: true)
-					//
-					//						UserManager.sharedInstance.setCurrentUser(to: modifiedUser)
-					//						NotificationCenter.default.post(name: .loginChanged, object: nil)
-					//					} else {
-					//						let modifiedUser = User(firstName: user.firstName,
-					//																		lastName: user.lastName,
-					//																		usernameOrEmail: user.usernameOrEmail,
-					//																		token: user.token,
-					//																		hasPremium: false)
-					//
-					//						UserManager.sharedInstance.setCurrentUser(to: modifiedUser)
-					//						NotificationCenter.default.post(name: .loginChanged, object: nil)
-					//					}
 					
 					let json = JSON(responseData)
 					let subscriptionJSON = json
 					
-//					guard let jsonData = try? subscriptionJSON.rawData() else {
-//						log.error("Error with data")
-//						return
-//					}
 					
 					do {
 						let newObject = try JSONDecoder().decode(SubscriptionModel.self, from: jsonData)

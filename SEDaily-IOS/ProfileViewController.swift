@@ -5,9 +5,6 @@
 //  Created by Dawid Cedrych on 5/7/19.
 //  Copyright © 2019 Altalogy All rights reserved.
 
-//
-
-// TODO: REFACTOR
 
 import UIKit
 import UserNotifications
@@ -36,10 +33,6 @@ class ProfileViewController: UIViewController {
 		view.addSubview(tableView)
 		setupDataSource()
 		tableView.delegate = self
-		
-		
-
-		
 
 		tableView.rowHeight = UITableViewAutomaticDimension
 		tableView.estimatedRowHeight = 50.0
@@ -47,9 +40,6 @@ class ProfileViewController: UIViewController {
 		tableView.allowsSelection = true
 		tableView.separatorColor = .clear
 		tableView.backgroundColor = .white
-		tableView.register(cellType: ProfileCell.self)
-		tableView.register(cellType: NotificationTableViewCell.self)
-		tableView.register(cellType: SettingsCell.self)
 		tableView.register(cellType: SummaryCell.self)
 		tableView.register(cellType: AvatarCell.self)
 		tableView.register(cellType: SeparatorCell.self)
@@ -72,7 +62,6 @@ extension ProfileViewController {
 	private func setupDataSource() {
 		let user = self.user ?? UserManager.sharedInstance.getActiveUser()
 		let dataSource = ProfileTableViewDataSource(user: user)
-		dataSource.parent = self
 		self.dataSource = dataSource
 		tableView.dataSource = dataSource
 	}
@@ -87,6 +76,14 @@ extension ProfileViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
 		view.tintColor = .clear
 	}
+
+	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		switch cell {
+		case let cell as SwitchCell: cell.delegate = self
+		default: break
+		}
+	}
+	
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		
@@ -94,7 +91,7 @@ extension ProfileViewController: UITableViewDelegate {
 			let row = dataSource.row(at: indexPath)
 			(row as? Section.SummaryRow).map { row in
 				switch row {
-				case .link: user?.website.map {
+				case .link: user?.website.map { //only for guest user
 					if let linkUrl = URL(string: URLSchemaHelper.addSchema(url: $0)) {
 						UIApplication.shared.open(linkUrl, options: [:], completionHandler: nil)
 					}
@@ -112,17 +109,12 @@ extension ProfileViewController: UITableViewDelegate {
 				}
 			}
 		}
-		
 	}
-		
 }
 
-
-
-
-extension ProfileViewController {
-	@objc func switchValueDidChange(sender: UISwitch!) {
-		if sender.isOn {
+extension ProfileViewController: SwitchCellDelegate {
+	func switchCell(_ cell: SwitchCell, didToggle value: Bool) {
+		if value {
 			notificationsController.assignNotifications()
 			notificationsController.notificationsSubscribed = true
 		} else {
@@ -134,8 +126,10 @@ extension ProfileViewController {
 		let defaults = UserDefaults.standard
 		defaults.set(notificationsController.notificationsSubscribed, forKey: notificationsController.notificationPrefKey)
 	}
-	
-	func assignNotifications () {
+}
+
+extension ProfileViewController {
+	private func assignNotifications () {
 		notificationsController.center.getNotificationSettings { [weak self] (settings) in
 			if settings.authorizationStatus != .authorized {
 				// Notifications not allowed
@@ -199,6 +193,9 @@ extension ProfileViewController.Section {
 			}
 		}
 		
+		
+		
+	
 		var style: LabelCell.ViewModel.Style {
 			switch self {
 			case .editProfile: return LabelCell.ViewModel.Style(

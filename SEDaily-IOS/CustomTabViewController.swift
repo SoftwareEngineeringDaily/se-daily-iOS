@@ -6,12 +6,6 @@
 //  Copyright © 2017 Koala Tea. All rights reserved.
 //
 
-enum CollectionConfig {
-	case latest
-	case bookmarks
-	case downloaded
-	case search
-}
 
 import UIKit
 import MessageUI
@@ -129,9 +123,9 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
         }
 			
 			
-			let latestVC = PodcastPageViewController(audioOverlayDelegate: self.audioOverlayDelegate)
-			let bookmarksVC = BookmarkCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate)
-			let downloadsVC = DownloadsCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate)
+//			let latestVC = PodcastPageViewController(audioOverlayDelegate: self.audioOverlayDelegate)
+//			let bookmarksVC = BookmarkCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate)
+//			let downloadsVC = DownloadsCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate)
 			let profileVC = ProfileViewController()
 		
 			
@@ -140,21 +134,21 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 
         
         self.viewControllers = [
-            latestVC,
-						bookmarksVC,
-						downloadsVC,
+//            latestVC,
+//						bookmarksVC,
+//						downloadsVC,
 						profileVC
         ]
 
-        #if DEBUG
-            // This will cause the tab bar to overflow so it will be auto turned into "More ..."
-            let debugStoryboard = UIStoryboard.init(name: "Debug", bundle: nil)
-            let debugViewController = debugStoryboard.instantiateViewController(
-                withIdentifier: "DebugTabViewController")
-            if let viewControllers = self.viewControllers {
-                self.viewControllers =  viewControllers + [debugViewController]
-            }
-        #endif
+//        #if DEBUG
+//            // This will cause the tab bar to overflow so it will be auto turned into "More ..."
+//            let debugStoryboard = UIStoryboard.init(name: "Debug", bundle: nil)
+//            let debugViewController = debugStoryboard.instantiateViewController(
+//                withIdentifier: "DebugTabViewController")
+//            if let viewControllers = self.viewControllers {
+//                self.viewControllers =  viewControllers + [debugViewController]
+//            }
+//        #endif
 
         self.tabBar.backgroundColor = .white
         self.tabBar.isTranslucent = false
@@ -244,7 +238,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
     }
 }
 
-extension CustomTabViewController: MFMailComposeViewControllerDelegate {
+extension MainTabBarController: MFMailComposeViewControllerDelegate {
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         switch result {
         case .sent:

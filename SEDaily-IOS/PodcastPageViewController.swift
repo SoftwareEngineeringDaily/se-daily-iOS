@@ -10,7 +10,10 @@ import UIKit
 import Tabman
 import Pageboy
 
-class PodcastPageViewController: TabmanViewController, PageboyViewControllerDataSource {
+class PodcastPageViewController: TabmanViewController, PageboyViewControllerDataSource, MainCoordinated {
+	
+	var mainCoordinator: MainFlowCoordinator?
+	
 
     var viewControllers = [GeneralCollectionViewController]()
     var barItems = [TabmanBar.Item]()
@@ -19,8 +22,7 @@ class PodcastPageViewController: TabmanViewController, PageboyViewControllerData
 			return UITabBarItem(title: L10n.tabBarTitleLatest, image: UIImage(named: "latest_outline"), selectedImage: UIImage(named: "latest"))
     }
 
-    init(audioOverlayDelegate: AudioOverlayDelegate?) {
-        self.audioOverlayDelegate = audioOverlayDelegate
+    init() {
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -107,6 +109,7 @@ class PodcastPageViewController: TabmanViewController, PageboyViewControllerData
 
         viewControllers.forEach { (controller) in
             barItems.append(Item(title: controller.tabTitle))
+					mainCoordinator?.configure(viewController: controller)
         }
     }
 }

@@ -11,7 +11,9 @@ import StatefulViewController
 import KoalaTeaFlowLayout
 
 /// Collection view controller for viewing all bookmarks for the user.
-class BookmarkCollectionViewController: UICollectionViewController, StatefulViewController {
+class BookmarkCollectionViewController: UICollectionViewController, StatefulViewController, MainCoordinated {
+	var mainCoordinator: MainFlowCoordinator?
+	
 	static private let cellId = "PodcastCellId"
 	private let reuseIdentifier = "Cell"
 	
@@ -25,9 +27,8 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 	}()
 	
 	
-	init(collectionViewLayout layout: UICollectionViewLayout, audioOverlayDelegate: AudioOverlayDelegate?) {
+	override init(collectionViewLayout layout: UICollectionViewLayout) {
 		super.init(collectionViewLayout: layout)
-		self.audioOverlayDelegate = audioOverlayDelegate
 		
 		self.tabBarItem = UITabBarItem(title: L10n.tabBarSaved, image: UIImage(named: "bookmark_outline"), selectedImage: UIImage(named: "bookmark"))
 	}
@@ -216,11 +217,12 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 		_ collectionView: UICollectionView,
 		didSelectItemAt indexPath: IndexPath) {
 		if let viewModel = viewModelController.viewModel(at: indexPath.row) {
-			if let audioOverlayDelegate = self.audioOverlayDelegate {
-				let vc = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
+			
+				let vc = EpisodeViewController()
 				vc.viewModel = viewModel
+				mainCoordinator?.configure(viewController: vc)
 				self.navigationController?.pushViewController(vc, animated: true)
-			}
+			
 		}
 	}
 }

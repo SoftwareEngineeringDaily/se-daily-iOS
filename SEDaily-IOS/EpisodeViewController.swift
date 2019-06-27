@@ -13,14 +13,16 @@ import UIKit
 import WebKit
 import Tags
 
-class EpisodeViewController: UIViewController {
+class EpisodeViewController: UIViewController, AudioControllable, MainCoordinated {
+	var mainCoordinator: MainFlowCoordinator?
+	
 	
 	let tagsView = TagsView()
 	let tagsScrollView = UIScrollView(frame: CGRect(x: 0.0, y: 0.0, width: 375.0, height: 50.0))
 	
 	
 	//weak var delegate: PodcastDetailViewControllerDelegate?
-	private weak var audioOverlayDelegate: AudioOverlayDelegate?
+	weak var audioOverlayDelegate: AudioOverlayDelegate?
 	
 	var loaded: Bool = false // to check if HTML content has loaded
 	var webView: WKWebView = WKWebView()
@@ -57,8 +59,7 @@ class EpisodeViewController: UIViewController {
 	var tableView = UITableView()
 	
 	
-	required init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, audioOverlayDelegate: AudioOverlayDelegate?) {
-		self.audioOverlayDelegate = audioOverlayDelegate
+	required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 	}
 	required init?(coder aDecoder: NSCoder) {
@@ -137,7 +138,7 @@ class EpisodeViewController: UIViewController {
 	}
 	
 	func playButtonPressed(isPlaying: Bool) {
-		
+		print(audioOverlayDelegate)
 		if !isPlaying {
 			self.audioOverlayDelegate?.animateOverlayIn()
 			self.audioOverlayDelegate?.playAudio(podcastViewModel: viewModel)

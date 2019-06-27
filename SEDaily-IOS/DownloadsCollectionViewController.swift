@@ -13,7 +13,10 @@ import StatefulViewController
 import KoalaTeaFlowLayout
 
 /// Collection view controller for viewing all downloads for the user.
-class DownloadsCollectionViewController: UICollectionViewController, StatefulViewController {
+class DownloadsCollectionViewController: UICollectionViewController, StatefulViewController, MainCoordinated {
+	
+	var mainCoordinator: MainFlowCoordinator?
+	
 	
 	private let reuseIdentifier = "Cell"
 	
@@ -27,9 +30,8 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 	}()
 	
 	
-	init(collectionViewLayout layout: UICollectionViewLayout, audioOverlayDelegate: AudioOverlayDelegate?) {
+	override init(collectionViewLayout layout: UICollectionViewLayout) {
 		super.init(collectionViewLayout: layout)
-		self.audioOverlayDelegate = audioOverlayDelegate
 		self.tabBarItem = UITabBarItem(title: L10n.tabBarDownloads, image: UIImage(named: "download_panel_outline"), selectedImage: UIImage(named: "download_panel"))
 	}
 	
@@ -122,7 +124,7 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 	}
 	
 	func hasContent() -> Bool {
-			return self.viewModelController.viewModelsCount > 0
+		return self.viewModelController.viewModelsCount > 0
 	}
 	
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -132,7 +134,7 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 	override func collectionView(
 		_ collectionView: UICollectionView,
 		numberOfItemsInSection section: Int) -> Int {
-			return self.viewModelController.viewModelsCount
+		return self.viewModelController.viewModelsCount
 	}
 	
 	override func collectionView(
@@ -167,11 +169,12 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 		_ collectionView: UICollectionView,
 		didSelectItemAt indexPath: IndexPath) {
 		if let viewModel = viewModelController.viewModel(at: indexPath.row) {
-			if let audioOverlayDelegate = self.audioOverlayDelegate {
-				let vc = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
-				vc.viewModel = viewModel
-				self.navigationController?.pushViewController(vc, animated: true)
-			}
+			
+			let vc = EpisodeViewController()
+			vc.viewModel = viewModel
+			mainCoordinator?.configure(viewController: vc)
+			self.navigationController?.pushViewController(vc, animated: true)
+			
 		}
 	}
 }

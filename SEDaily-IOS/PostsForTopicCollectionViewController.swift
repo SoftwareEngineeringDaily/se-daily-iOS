@@ -203,7 +203,7 @@ class PostsForTopicCollectionViewController: UICollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
 			if let audioOverlayDelegate = self.audioOverlayDelegate {
-				let vc = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
+				let vc = EpisodeViewController()
 				vc.viewModel = viewModel
 				self.navigationController?.pushViewController(vc, animated: true)
 			}

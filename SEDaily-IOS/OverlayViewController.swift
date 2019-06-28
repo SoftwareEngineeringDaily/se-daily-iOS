@@ -43,7 +43,7 @@ class OverlayViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		//configure()
+		configure()
 		//prepareForCollapsed()
 	}
 	
@@ -78,15 +78,15 @@ extension OverlayViewController {
 		stackView.alignment = .fill
 		stackView.distribution = .equalSpacing
 		
-		skipForwardButton.setImage(#imageLiteral(resourceName: "forward_audio"), for: .normal)
-		skipBackwardButton.setImage(#imageLiteral(resourceName: "rewind_audio"), for: .normal)
+		skipForwardButton.setImage(#imageLiteral(resourceName: "rewind_audio"), for: .normal)
+		skipBackwardButton.setImage(#imageLiteral(resourceName: "forward_audio"), for: .normal)
 		
 		playButton.setImage(#imageLiteral(resourceName: "play_audio"), for: .normal)
 		
-		infoButton.setImage(#imageLiteral(resourceName: "info"), for: .normal)
+		infoButton.setImage(#imageLiteral(resourceName: "play_audio"), for: .normal)
 		infoButton.addTarget(self, action: #selector(OverlayViewController.infoTapped), for: .touchUpInside)
 		
-		paceButton.setImage(#imageLiteral(resourceName: "1x"), for: .normal)
+		paceButton.setImage(#imageLiteral(resourceName: "Square"), for: .normal)
 		
 		collapseButton.setImage(#imageLiteral(resourceName: "Arrow-Down"), for: .normal)
 		collapseButton.addTarget(self, action: #selector(OverlayViewController.collapseTapped), for: .touchUpInside)
@@ -118,7 +118,7 @@ extension OverlayViewController {
 		label.textAlignment = .left
 		label.numberOfLines = 2
 		
-		currentImage = #imageLiteral(resourceName: "LachlanEvenson")
+		currentImage = #imageLiteral(resourceName: "download_panel")
 		imageView.image = currentImage // for initial state
 		
 		playButton.setImage(#imageLiteral(resourceName: "play_audio"), for: .normal)
@@ -155,7 +155,7 @@ extension OverlayViewController {
 		
 		collapseButton.isHidden = false
 		
-		playButton.setImage(#imageLiteral(resourceName: "play_big"), for: .normal)
+		playButton.setImage(#imageLiteral(resourceName: "like"), for: .normal)
 		
 		label.font = UIFont(name: "Avenir", size: 20.0)
 		label.textAlignment = .center
@@ -166,7 +166,7 @@ extension OverlayViewController {
 		infoButton.isHidden = false
 		paceButton.isHidden = false
 		
-		currentImage = #imageLiteral(resourceName: "PivotalContainerService")
+		currentImage = #imageLiteral(resourceName: "download")
 		
 		imageView.layer.cornerRadius = 0.0
 		imageView.contentMode = .scaleAspectFit
@@ -232,7 +232,8 @@ extension OverlayViewController: AudioOverlayDelegate {
 	}
 	
 	func playAudio(podcastViewModel: PodcastViewModel) {
-		print(podcastViewModel._id)
+		
+		PlayProgressModelController.saveRecentlyListenedEpisodeId(id: podcastViewModel._id)
 	}
 	
 	func pauseAudio() {

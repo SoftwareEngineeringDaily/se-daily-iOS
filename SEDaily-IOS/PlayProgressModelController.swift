@@ -14,6 +14,17 @@ class PlayProgressModelController {
 	
 	var episodesPlayProgress: PlayProgressDict = PlayProgressDict()
 	
+	static func saveRecentlyListenedEpisodeId(id: String) {
+		let defaults = UserDefaults.standard
+		defaults.set(id, forKey: "sedaily-recentlyListened")
+	}
+	
+	static func getRecentlyListenedEpisodeId() -> String? {
+		let defaults = UserDefaults.standard
+		guard let id = defaults.object(forKey: "sedaily-recentlyListened") as? String else { return nil}
+		return id
+	}
+	
 	func save() {
 		var progressToSave: [String: Data] = [String: Data]()
 		for (key, playProgress) in self.episodesPlayProgress {

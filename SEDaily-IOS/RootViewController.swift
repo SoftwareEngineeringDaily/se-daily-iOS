@@ -22,6 +22,21 @@ class RootViewController: UIViewController, MainCoordinated  {
 		super.viewDidLoad()
 		overlayController.delegate = self
 		configure()
+		getRecentPodcast()
+	}
+	
+	func getRecentPodcast() {
+		
+		guard let id = PlayProgressModelController.getRecentlyListenedEpisodeId() else { return }
+		
+		let repository = PodcastRepository()
+		repository.retrieveRecentlyListened(podcastId: id,
+																				onSuccess: { (podcasts) in
+																					podcasts.forEach({ podcast in
+																						let vm = PodcastViewModel(podcast: podcast)
+																						
+																					})},
+																				onFailure: { _ in })
 	}
 	
 	private func add(asChildViewController viewController: UIViewController, container: UIView) {

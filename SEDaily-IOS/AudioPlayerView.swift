@@ -81,15 +81,41 @@ class AudioPlayerView: UIView {
   private let imageView: UIImageView = UIImageView()
   private let skipForwardButton = UIButton()
   private let skipBackwardButton = UIButton()
-  private let paceButton = UIButton()
+  private let playbackSpeedButton = UIButton()
   private let playButton = UIButton()
   private let infoButton = UIButton()
   private let collapseButton = UIButton()
   private var currentImage = UIImage()
   
+  private var bufferSlider = UISlider(frame: .zero)
+  private var bufferBackgroundSlider = UISlider(frame: .zero)
+  private var playbackSlider = UISlider(frame: .zero)
+  private var currentTimeLabel = UILabel()
+  private var timeLeftLabel = UILabel()
+  private var previousSliderValue: Float = 0.0
+  
   private let stackView = UIStackView()
   private let separator: UIView = UIView()
   private let label = UILabel()
+  
+  var currentImageURL: URL?
+  
+  var vm: PodcastViewModel = PodcastViewModel()
+  
+  var expanded: Bool = false {
+    didSet {
+      setupLayout()
+    }
+  }
+  
+  var currentSpeed: PlaybackSpeed = ._1x {
+    willSet {
+      guard currentSpeed != newValue else { return }
+      self.playbackSpeedButton.setTitle(newValue.shortTitle, for: .normal)
+      
+      //self.audioViewDelegate?.audioRateChanged(newRate: newValue.rawValue)
+    }
+  }
   
   
   override init(frame: CGRect) {
@@ -103,40 +129,159 @@ class AudioPlayerView: UIView {
   } 
   
   override func performLayout() {
-    self.backgroundColor = .white
+    self.backgroundColor = Stylesheet.Colors.light
     
-    stackView.addArrangedSubview(paceButton)
+    stackView.addArrangedSubview(playbackSpeedButton)
     stackView.addArrangedSubview(skipBackwardButton)
     stackView.addArrangedSubview(playButton)
     stackView.addArrangedSubview(skipForwardButton)
     stackView.addArrangedSubview(infoButton)
+    
     
     addSubview(stackView)
     addSubview(label)
     addSubview(imageView)
     addSubview(separator)
     addSubview(collapseButton)
+    addPlaybackSlider(parentView: self)
+    addBufferSlider(parentView: self)
+    addLabels(parentView: self)
     
     stackView.axis = .horizontal
     stackView.alignment = .fill
     stackView.distribution = .equalSpacing
     
-    skipForwardButton.setImage(#imageLiteral(resourceName: "rewind_audio"), for: .normal)
-    skipBackwardButton.setImage(#imageLiteral(resourceName: "forward_audio"), for: .normal)
+    skipForwardButton.setImage(#imageLiteral(resourceName: "forward_audio"), for: .normal)
+    skipBackwardButton.setImage(#imageLiteral(resourceName: "rewind_audio"), for: .normal)
     
     playButton.setImage(#imageLiteral(resourceName: "play_audio"), for: .normal)
     
-    infoButton.setImage(#imageLiteral(resourceName: "play_audio"), for: .normal)
+    playbackSpeedButton.setTitle(PlaybackSpeed._1x.shortTitle, for: .normal)
+    playbackSpeedButton.titleLabel?.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 20))
+    playbackSpeedButton.setTitleColor(Stylesheet.Colors.base, for: .normal)
+    
+    infoButton.setImage(#imageLiteral(resourceName: "info"), for: .normal)
     infoButton.addTarget(self, action: #selector(OverlayViewController.infoTapped), for: .touchUpInside)
     
-    paceButton.setImage(#imageLiteral(resourceName: "Square"), for: .normal)
     
     collapseButton.setImage(#imageLiteral(resourceName: "Arrow-Down"), for: .normal)
     collapseButton.addTarget(self, action: #selector(OverlayViewController.collapseTapped), for: .touchUpInside)
     
-    label.text = "Service Mesh Interface with Lachlan Evenson"
+    label.text = vm.podcastTitle
     
     separator.backgroundColor = .lightGray
+  }
+  
+  
+  func addPlaybackSlider(parentView: UIView) {
+    addBufferSlider(parentView: parentView)
+    
+    playbackSlider.minimumValue = 0
+    playbackSlider.isContinuous = true
+    playbackSlider.minimumTrackTintColor = Stylesheet.Colors.base
+    playbackSlider.maximumTrackTintColor = .clear
+    playbackSlider.layer.cornerRadius = 0
+    //playbackSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
+    playbackSlider.isUserInteractionEnabled = false
+    
+    parentView.addSubview(playbackSlider)
+    self.bringSubview(toFront: playbackSlider)
+    
+    playbackSlider.snp.makeConstraints { (make) -> Void in
+      make.top.equalTo(label.snp.bottom).offset(UIView.getValueScaledByScreenHeightFor(baseValue: 30))
+      make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
+      make.left.right.equalToSuperview().inset(15).priority(999)
+      
+    }
+    
+    let smallCircle = #imageLiteral(resourceName: "SmallCircle").filled(withColor: Stylesheet.Colors.base)
+    playbackSlider.setThumbImage(smallCircle, for: .normal)
+    
+    let bigCircle = #imageLiteral(resourceName: "BigCircle").filled(withColor: Stylesheet.Colors.base)
+    playbackSlider.setThumbImage(bigCircle, for: .highlighted)
+  }
+  
+  func addBufferSlider(parentView: UIView) {
+    bufferBackgroundSlider.minimumValue = 0
+    bufferBackgroundSlider.isContinuous = true
+    bufferBackgroundSlider.tintColor = Stylesheet.Colors.bufferColor
+    bufferBackgroundSlider.layer.cornerRadius = 0
+    bufferBackgroundSlider.alpha = 0.5
+    //bufferBackgroundSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
+    bufferBackgroundSlider.isUserInteractionEnabled = false
+    
+    parentView.addSubview(bufferBackgroundSlider)
+    
+    bufferBackgroundSlider.snp.makeConstraints { (make) -> Void in
+      make.top.equalTo(label.snp.bottom).offset(UIView.getValueScaledByScreenHeightFor(baseValue: 30))
+      make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
+      make.left.right.equalToSuperview().inset(15).priority(999)
+    }
+    
+    bufferBackgroundSlider.setThumbImage(UIImage(), for: .normal)
+    
+    bufferSlider.minimumValue = 0
+    bufferSlider.isContinuous = true
+    bufferSlider.minimumTrackTintColor = Stylesheet.Colors.bufferColor
+    bufferSlider.maximumTrackTintColor = .clear
+    bufferSlider.layer.cornerRadius = 0
+   // bufferSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
+    bufferSlider.isUserInteractionEnabled = false
+    
+    parentView.addSubview(bufferSlider)
+    
+    bufferSlider.snp.makeConstraints { (make) -> Void in
+      make.top.equalTo(label.snp.bottom).offset(UIView.getValueScaledByScreenHeightFor(baseValue: 30))
+      make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
+      make.left.right.equalToSuperview().inset(15).priority(999)
+    }
+    
+    bufferSlider.setThumbImage(UIImage(), for: .normal)
+  }
+  
+  func addLabels(parentView: UIView) {
+    let labelFontSize = UIView.getValueScaledByScreenWidthFor(baseValue: 12)
+    currentTimeLabel.text = "00:00"
+    currentTimeLabel.textAlignment = .left
+    currentTimeLabel.font = UIFont.systemFont(ofSize: labelFontSize)
+    
+    timeLeftLabel.text = "00:00"
+    timeLeftLabel.textAlignment = .right
+    timeLeftLabel.adjustsFontSizeToFitWidth = true
+    timeLeftLabel.font = UIFont.systemFont(ofSize: labelFontSize)
+    
+    parentView.addSubview(currentTimeLabel)
+    parentView.addSubview(timeLeftLabel)
+    
+    currentTimeLabel.snp.makeConstraints { (make) -> Void in
+      make.left.equalTo(playbackSlider)
+      make.top.equalTo(playbackSlider.snp.bottom).inset(UIView.getValueScaledByScreenHeightFor(baseValue: 5))
+      make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
+      make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 55))
+    }
+    
+    timeLeftLabel.snp.makeConstraints { (make) -> Void in
+      make.right.equalTo(playbackSlider)
+      make.top.equalTo(playbackSlider.snp.bottom).inset(UIView.getValueScaledByScreenHeightFor(baseValue: 5))
+      make.height.equalTo(UIView.getValueScaledByScreenHeightFor(baseValue: 20))
+      make.width.equalTo(UIView.getValueScaledByScreenWidthFor(baseValue: 55))
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+  private func prepareForCollapsed() {
+    
+    bufferSlider.isHidden = true
+    bufferBackgroundSlider.isHidden = true
+    playbackSlider.isHidden = true
+    currentTimeLabel.isHidden = true
+    timeLeftLabel.isHidden = true
+    
     
     collapseButton.isHidden = true
     
@@ -144,14 +289,19 @@ class AudioPlayerView: UIView {
     skipBackwardButton.isHidden = true
     
     infoButton.isHidden = true
-    paceButton.isHidden = true
+    playbackSpeedButton.isHidden = true
     
-    label.font = UIFont(name: "Avenir", size: 13.0)
+    label.font = UIFont(name: "Roboto-Bold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
     label.textAlignment = .left
     label.numberOfLines = 2
     
     currentImage = #imageLiteral(resourceName: "download_panel")
-    imageView.image = currentImage // for initial state
+    
+    currentImageURL = vm.guestImageURL
+    
+    
+    
+//    imageView.kf.setImage(with: vm.guestImageURL, placeholder: UIImage(named: "Logo_BarButton"), options: [.transition(.fade(0.2))])
     
     playButton.setImage(#imageLiteral(resourceName: "play_audio"), for: .normal)
     
@@ -179,11 +329,81 @@ class AudioPlayerView: UIView {
       make.left.right.bottom.equalToSuperview()
       make.height.equalTo(0.3)
     }
-    
-    
   }
+  private func prepareForExpanded() {
     
+    // slider.isHidden = false
     
+    bufferSlider.isHidden = false
+    bufferBackgroundSlider.isHidden = false
+    playbackSlider.isHidden = false
+    currentTimeLabel.isHidden = false
+    timeLeftLabel.isHidden = false
     
+    collapseButton.isHidden = false
     
+    label.numberOfLines = 3
+    
+    playButton.setImage(#imageLiteral(resourceName: "play_big"), for: .normal)
+    
+    label.font = UIFont(name: "Roboto-Bold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 24))
+    label.textAlignment = .center
+    
+    skipForwardButton.isHidden = false
+    skipBackwardButton.isHidden = false
+    
+    infoButton.isHidden = false
+    playbackSpeedButton.isHidden = false
+    
+    currentImage = #imageLiteral(resourceName: "download")
+    
+    currentImageURL = vm.featuredImageURL
+    
+    imageView.layer.cornerRadius = 0.0
+    imageView.contentMode = .scaleAspectFit
+    
+    stackView.snp.remakeConstraints { (make) -> Void in
+      make.left.equalToSuperview().offset(20)
+      make.right.equalToSuperview().inset(20)
+      make.top.equalTo(playbackSlider.snp.bottom).offset(UIView.getValueScaledByScreenHeightFor(baseValue: 30))
+      make.centerX.equalToSuperview()
+    }
+    collapseButton.snp.remakeConstraints { (make) -> Void in
+      make.left.equalToSuperview().offset(5)
+      if #available(iOS 11.0, *) {
+        make.top.equalTo(safeAreaLayoutGuide).offset(10.0)
+      } else {
+        // Fallback on earlier versions
+        make.top.equalToSuperview().offset(10.0)
+      }
+      make.size.equalTo(50)
+    }
+    playButton.snp.remakeConstraints { (make) -> Void in
+      make.size.equalTo(80).priority(999)
+    }
+
+    imageView.snp.remakeConstraints { (make) -> Void in
+      make.left.right.equalToSuperview()
+      make.top.equalTo(collapseButton.snp.bottom).offset(20.0)
+      make.height.equalTo(200)
+    }
+    label.snp.remakeConstraints { (make) -> Void in
+      make.top.equalTo(imageView.snp.bottom).offset(30.0)
+      make.rightMargin.leftMargin.equalToSuperview().inset(20.0)
+    }
+  }
+  
+  private func setupLayout() {
+    
+    self.expanded ? prepareForExpanded() : prepareForCollapsed()
+    UIView.animate(withDuration: 0.2, animations: {
+      self.layoutIfNeeded()
+    })
+    UIView.transition(with: imageView,
+                      duration: 0.2,
+                      options: .transitionCrossDissolve,
+                      animations: { self.imageView.kf.setImage(with: self.currentImageURL, placeholder: UIImage(named: "Logo_BarButton"), options: [.transition(.fade(0.2))]) },
+                      completion: nil)
+  }
+  
 }

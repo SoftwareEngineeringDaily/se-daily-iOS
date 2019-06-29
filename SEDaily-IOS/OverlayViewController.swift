@@ -18,6 +18,14 @@ class OverlayViewController: UIViewController {
   
   weak var delegate: OverlayViewDelegate?
   
+  var viewModel: PodcastViewModel = PodcastViewModel() {
+    didSet {
+      audioPlayerView?.vm = viewModel
+      audioPlayerView?.expanded = false
+      audioPlayerView?.performLayout()
+    }
+  }
+  
   private let mainColor = UIColor(red:0.44, green:0.30, blue:1.00, alpha:1.0)
   
   private let imageView: UIImageView = UIImageView()
@@ -37,7 +45,7 @@ class OverlayViewController: UIViewController {
   
   var expanded: Bool = false {
     didSet {
-      //setupLayout()
+      audioPlayerView?.expanded = expanded
     }
   }
   

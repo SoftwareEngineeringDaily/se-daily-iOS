@@ -31,10 +31,10 @@ class RootViewController: UIViewController, MainCoordinated  {
 		
 		let repository = PodcastRepository()
 		repository.retrieveRecentlyListened(podcastId: id,
-																				onSuccess: { (podcasts) in
+																				onSuccess: { [weak self](podcasts) in
 																					podcasts.forEach({ podcast in
 																						let vm = PodcastViewModel(podcast: podcast)
-																						
+																						self?.overlayController.viewModel = vm
 																					})},
 																				onFailure: { _ in })
 	}

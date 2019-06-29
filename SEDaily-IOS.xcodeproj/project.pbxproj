@@ -65,6 +65,7 @@
 		430FF9C922B2FEF70033A15A /* URLSchemaHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430FF9C822B2FEF60033A15A /* URLSchemaHelper.swift */; };
 		431135D422AA2E2B00BFC910 /* SeparatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431135D322AA2E2B00BFC910 /* SeparatorCell.swift */; };
 		431DE891228D619D00FACA74 /* PostsForTopicCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431DE890228D619C00FACA74 /* PostsForTopicCollectionViewController.swift */; };
+		4359B94422C73B4C009704F8 /* KoalaTeaFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4359B94322C73B4C009704F8 /* KoalaTeaFlowLayout.swift */; };
 		435BAF3A22783B7C00762891 /* EpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435BAF3922783B7C00762891 /* EpisodeViewController.swift */; };
 		435BAF3C2278430900762891 /* EpisodeHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435BAF3B2278430900762891 /* EpisodeHeaderCell.swift */; };
 		436317D922C38B5F0091DA8C /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436317D822C38B5F0091DA8C /* MainFlowCoordinator.swift */; };
@@ -219,6 +220,7 @@
 		430FF9C822B2FEF60033A15A /* URLSchemaHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSchemaHelper.swift; sourceTree = "<group>"; };
 		431135D322AA2E2B00BFC910 /* SeparatorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorCell.swift; sourceTree = "<group>"; };
 		431DE890228D619C00FACA74 /* PostsForTopicCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsForTopicCollectionViewController.swift; sourceTree = "<group>"; };
+		4359B94322C73B4C009704F8 /* KoalaTeaFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KoalaTeaFlowLayout.swift; sourceTree = "<group>"; };
 		435BAF3922783B7C00762891 /* EpisodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeViewController.swift; sourceTree = "<group>"; };
 		435BAF3B2278430900762891 /* EpisodeHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeHeaderCell.swift; sourceTree = "<group>"; };
 		436317D822C38B5F0091DA8C /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
@@ -453,6 +455,7 @@
 				164FE9DF1F02EE4E009419CA /* Podcasts */,
 				16AD3E031F9B06950084C545 /* Search */,
 				C0590D77200AC2A500A00E4D /* NetworkService.swift */,
+				4359B94322C73B4C009704F8 /* KoalaTeaFlowLayout.swift */,
 			);
 			path = "SEDaily-IOS";
 			sourceTree = "<group>";
@@ -1051,7 +1054,6 @@
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/KTResponsiveUI/KTResponsiveUI.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/KoalaTeaFlowLayout/KoalaTeaFlowLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/KoalaTeaPlayer/KoalaTeaPlayer.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
@@ -1085,7 +1087,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KTResponsiveUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KoalaTeaFlowLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KoalaTeaPlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
@@ -1169,6 +1170,7 @@
 				96A7E2CF20951EBD002C92EC /* ThreadHeaderView.swift in Sources */,
 				1E286DE31FE4C5BA00644C1D /* TestHookEventTableViewCell.swift in Sources */,
 				964090BF2093B97D00CFF5C4 /* PodcastLite.swift in Sources */,
+				4359B94422C73B4C009704F8 /* KoalaTeaFlowLayout.swift in Sources */,
 				43AD7117228AF08B00E930BD /* TagsCell.swift in Sources */,
 				436317E422C39A8B0091DA8C /* StateController.swift in Sources */,
 				963144DE208FEA8000EA13F1 /* ForumThread.swift in Sources */,

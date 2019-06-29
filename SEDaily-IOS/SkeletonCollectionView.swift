@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import KoalaTeaFlowLayout
+
 private let reuseIdentifier = "Cell"
 
 class SkeletonCollectionView: UIView, UICollectionViewDataSource {

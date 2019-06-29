@@ -24,7 +24,6 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.4)
   - IQKeyboardManagerSwift (5.0.8)
   - Kingfisher (4.2.0)
-  - KoalaTeaFlowLayout (0.3.1)
   - KoalaTeaPlayer (0.2.7):
     - KTResponsiveUI
     - SnapKit
@@ -77,7 +76,7 @@ PODS:
   - SwiftMoment (0.7)
   - SwiftSoup (1.5.8)
   - SwiftyBeaver (1.4.4)
-  - SwiftyJSON (3.1.4)
+  - SwiftyJSON (5.0.0)
   - Tabman (1.0.8):
     - Pageboy (~> 2.0)
     - PureLayout (~> 3.0)
@@ -97,7 +96,6 @@ DEPENDENCIES:
   - Firebase/Core
   - IQKeyboardManagerSwift (~> 5.0.8)
   - Kingfisher (~> 4.2.0)
-  - KoalaTeaFlowLayout (~> 0.3.1)
   - KoalaTeaPlayer
   - KTResponsiveUI (~> 0.2.4)
   - MBProgressHUD (~> 1.1.0)
@@ -119,7 +117,7 @@ DEPENDENCIES:
   - SwiftMoment
   - SwiftSoup (~> 1.5.8)
   - SwiftyBeaver (~> 1.4.2)
-  - SwiftyJSON (~> 3.1.4)
+  - SwiftyJSON
   - Tabman (~> 1.0.5)
   - Tags
   - UIFontComplete (~> 2.0.1)
@@ -140,7 +138,6 @@ SPEC REPOS:
     - GoogleToolboxForMac
     - IQKeyboardManagerSwift
     - Kingfisher
-    - KoalaTeaFlowLayout
     - KoalaTeaPlayer
     - KTResponsiveUI
     - MBProgressHUD
@@ -194,7 +191,6 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   IQKeyboardManagerSwift: 2e7dc7f98c111458c1ea2b373f893e8cf95e2b97
   Kingfisher: 9ee7e788d8ba07c3f21ce0d43f33cec310a4f781
-  KoalaTeaFlowLayout: 219c45709d0873d405b2de1b27080a9c411246b7
   KoalaTeaPlayer: 6f9df0f08113765d5195c0e447b1a64966dc1507
   KTResponsiveUI: c8a75fe5270e05749a5ca8d20ab008a285b5e260
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
@@ -217,13 +213,13 @@ SPEC CHECKSUMS:
   SwiftMoment: dc6dd27012e267819104cbb03f74ff9192dd0b42
   SwiftSoup: 86a1f5ad07b7e3d14ab1a9324a58c75ae2215e79
   SwiftyBeaver: 25bd76281f49ca989ec2e3cbde9af89c15bc1432
-  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   Tabman: 9f9a25595516c7dffb747be271ec8a0a5ac2341e
   Tags: f513b25d753de97503f1bef5b4ff1fca4a0d5b29
   UIFontComplete: 7e3ce7f0a12d2529fb07f537e262aabfa87df280
   URITemplate: ace0c4c46dcf8afe6e89b4060621852886b15c3b
   WaitForIt: 2c7ad6deaffe3bf727b7242a2263167bf2ce3e57
 
-PODFILE CHECKSUM: 5271fe48e374d28c6bbfca3a87efa69db432e251
+PODFILE CHECKSUM: bc3e0ce027ad18c1833068ccb8d49a9dcb9bb707
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.7.3

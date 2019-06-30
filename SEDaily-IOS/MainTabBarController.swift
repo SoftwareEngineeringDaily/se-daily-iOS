@@ -24,8 +24,6 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
 	let downloadsVC = DownloadsCollectionViewController(collectionViewLayout: UICollectionViewLayout())
 	let profileVC = ProfileViewController()
 	
-	
-	
 	var ifset = false
 	
 	var actionSheet = UIAlertController()

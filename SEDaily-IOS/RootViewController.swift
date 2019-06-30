@@ -22,34 +22,23 @@ class RootViewController: UIViewController, MainCoordinated  {
 		super.viewDidLoad()
 		overlayController.delegate = self
 		configure()
-		getRecentPodcast()
+    getRecentlyListenedPodcast()
 	}
 	
-	func getRecentPodcast() {
+	private func getRecentlyListenedPodcast() {
 		
 		guard let id = PlayProgressModelController.getRecentlyListenedEpisodeId() else { return }
-		
 		let repository = PodcastRepository()
 		repository.retrieveRecentlyListened(podcastId: id,
 																				onSuccess: { [weak self](podcasts) in
 																					podcasts.forEach({ podcast in
-																						let vm = PodcastViewModel(podcast: podcast)
-																						self?.overlayController.viewModel = vm
+																						let viewModel = PodcastViewModel(podcast: podcast)
+                                            self?.addOverlayViewController(viewModel: viewModel)
+                                            
 																					})},
 																				onFailure: { _ in })
 	}
 	
-	private func add(asChildViewController viewController: UIViewController, container: UIView) {
-		// Add Child View Controller
-		addChildViewController(viewController)
-		container.addSubview(viewController.view)
-		
-		let height = container.frame.height
-		let width = container.frame.width
-		viewController.view.frame = CGRect(x: 0, y: 0, width: width, height: height)
-		viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-		viewController.didMove(toParentViewController: self)
-	}
 	
 	private func toggleState() {
 		overlayContainerView.snp.remakeConstraints { (make) -> Void in
@@ -88,22 +77,47 @@ class RootViewController: UIViewController, MainCoordinated  {
 }
 
 extension RootViewController {
+  
+  private func addOverlayViewController(viewModel: PodcastViewModel) {
+    view.addSubview(overlayContainerView)
+    add(asChildViewController: overlayController, container: overlayContainerView)
+
+    let tap = UITapGestureRecognizer(target: self, action: #selector(RootViewController.didTap))
+    overlayContainerView.addGestureRecognizer(tap)
+    overlayContainerView.isUserInteractionEnabled = true
+    
+    let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(didSwipeDown))
+    swipeDown.direction = .down
+    self.overlayContainerView.addGestureRecognizer(swipeDown)
+    
+    overlayContainerView.snp.makeConstraints { (make) -> Void in
+      make.height.equalTo(100.0)
+      make.right.equalToSuperview()
+      make.left.equalToSuperview()
+      make.bottom.equalTo(tabController.tabBar.snp.top)
+    }
+    
+    overlayController.viewModel = viewModel
+  }
+  
+  private func add(asChildViewController viewController: UIViewController, container: UIView) {
+    // Add Child View Controller
+    addChildViewController(viewController)
+    container.addSubview(viewController.view)
+    let height = container.frame.height
+    let width = container.frame.width
+    viewController.view.frame = CGRect(x: 0, y: 0, width: width, height: height)
+    viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    viewController.didMove(toParentViewController: self)
+  }
+}
+
+extension RootViewController {
+  
 	private func configure() {
-		
 		self.view.backgroundColor = .blue
-		
 		self.view.addSubview(containerView)
-		self.view.addSubview(overlayContainerView)
 		self.add(asChildViewController: tabController, container: containerView)
-		self.add(asChildViewController: overlayController, container: overlayContainerView)
-		
-		let tap = UITapGestureRecognizer(target: self, action: #selector(RootViewController.didTap))
-		overlayContainerView.addGestureRecognizer(tap)
-		overlayContainerView.isUserInteractionEnabled = true
-		
-		let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(didSwipeDown))
-		swipeDown.direction = .down
-		self.overlayContainerView.addGestureRecognizer(swipeDown)
 		
 		containerView.snp.makeConstraints { (make) -> Void in
 			make.top.equalToSuperview()
@@ -111,19 +125,13 @@ extension RootViewController {
 			make.left.equalToSuperview()
 			make.bottom.equalToSuperview()
 		}
-		overlayContainerView.snp.makeConstraints { (make) -> Void in
-			make.height.equalTo(100.0)
-			make.right.equalToSuperview()
-			make.left.equalToSuperview()
-			make.bottom.equalTo(tabController.tabBar.snp.top)
-		}
 	}
 }
 
 extension RootViewController: OverlayViewDelegate {
 	
 	func didSelectInfo() {
-		guard let vc = tabController.selectedViewController as? UINavigationController else { return }
+		guard let viewController = tabController.selectedViewController as? UINavigationController else { return }
 		//mainCoordinator?.viewController(vc, didSelect: "")
 		collapse()
 	}

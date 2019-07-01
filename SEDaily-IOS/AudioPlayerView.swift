@@ -30,7 +30,7 @@ class AudioPlayerView: UIView {
   
   private let infoButton = UIButton()
   private let collapseButton = UIButton()
-  private var activityView: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+  private var activityView: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
   
   private var bufferSlider = UISlider(frame: .zero)
   private var bufferBackgroundSlider = UISlider(frame: .zero)
@@ -45,8 +45,6 @@ class AudioPlayerView: UIView {
   
   let playButton = UIButton()
   let pauseButton = UIButton()
-  
-  var currentImageURL: URL?
   
   var viewModel: PodcastViewModel = PodcastViewModel()
   
@@ -86,11 +84,37 @@ class AudioPlayerView: UIView {
     self.audioViewDelegate = audioViewDelegate
     super.init(frame: frame)
     self.performLayout()
+    setupActivityIndicator()
   }
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
+  func startActivityAnimating() {
+    self.activityView.startAnimating()
+  }
+  
+  func stopActivityAnimating() {
+    self.activityView.stopAnimating()
+  }
+  
+  func enableButtons() {
+    log.warning("enabling buttons")
+    self.playButton.isEnabled = true
+    self.pauseButton.isEnabled = true
+    self.skipForwardButton.isEnabled = true
+    self.skipBackwardButton.isEnabled = true
+  }
+  
+  func disableButtons() {
+    log.warning("disabling buttons")
+    self.playButton.isEnabled = false
+    self.pauseButton.isEnabled = false
+    self.skipForwardButton.isEnabled = false
+    self.skipBackwardButton.isEnabled = false
+  }
+
 }
 
 extension AudioPlayerView {
@@ -225,17 +249,18 @@ extension AudioPlayerView {
     
     pauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
     pauseButton.addTarget(self, action: #selector(self.pauseButtonPressed), for: .touchUpInside)
+    pauseButton.isHidden = true
     
     playbackSpeedButton.setTitle(PlaybackSpeed._1x.shortTitle, for: .normal)
     playbackSpeedButton.titleLabel?.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 20))
     playbackSpeedButton.setTitleColor(Stylesheet.Colors.base, for: .normal)
     
     infoButton.setImage(#imageLiteral(resourceName: "info"), for: .normal)
-    infoButton.addTarget(self, action: #selector(OverlayViewController.infoTapped), for: .touchUpInside)
+    infoButton.addTarget(self, action: #selector(AudioPlayerView.infoTapped), for: .touchUpInside)
     
     
     collapseButton.setImage(#imageLiteral(resourceName: "Arrow-Down"), for: .normal)
-    collapseButton.addTarget(self, action: #selector(OverlayViewController.collapseTapped), for: .touchUpInside)
+    collapseButton.addTarget(self, action: #selector(AudioPlayerView.collapseTapped), for: .touchUpInside)
     
     label.text = viewModel.podcastTitle
     
@@ -263,6 +288,14 @@ extension AudioPlayerView {
       self.timeLeftLabel.text = timeLeftString
     }
     previousSliderValue = timeInSeconds
+  }
+  
+  @objc func collapseTapped() {
+    audioViewDelegate?.collapseButtonPressed()
+  }
+  
+  @objc func infoTapped() {
+    audioViewDelegate?.detailsButtonPressed()
   }
   
   
@@ -332,6 +365,8 @@ extension AudioPlayerView {
   
   private func prepareForCollapsed() {
     
+    self.backgroundColor = Stylesheet.Colors.white
+    
     bufferSlider.isHidden = true
     bufferBackgroundSlider.isHidden = true
     playbackSlider.isHidden = true
@@ -350,8 +385,6 @@ extension AudioPlayerView {
     label.textAlignment = .left
     label.numberOfLines = 2
     
-    currentImageURL = viewModel.guestImageURL
-    
     playButton.setImage(#imageLiteral(resourceName: "play_audio"), for: .normal)
     pauseButton.setImage(#imageLiteral(resourceName: "pause_audio"), for: .normal)
     
@@ -359,10 +392,13 @@ extension AudioPlayerView {
     imageView.layer.masksToBounds = true
     
     playButton.snp.remakeConstraints { (make) -> Void in
-      make.size.equalTo(55).priority(999)
+      make.size.equalTo(40).priority(999)
+    }
+    pauseButton.snp.remakeConstraints { (make) -> Void in
+      make.size.equalTo(40).priority(999)
     }
     stackView.snp.remakeConstraints { (make) -> Void in
-      make.right.equalToSuperview().inset(25.0)
+      make.right.equalToSuperview().inset(15.0)
       make.centerY.equalToSuperview()
     }
     imageView.snp.remakeConstraints { (make) -> Void in
@@ -372,7 +408,7 @@ extension AudioPlayerView {
     }
     label.snp.remakeConstraints { (make) -> Void in
       make.left.equalTo(imageView.snp.right).offset(15.0).priority(999)
-      make.right.lessThanOrEqualTo(stackView.snp.left)
+      make.rightMargin.lessThanOrEqualTo(stackView.snp.left)
       make.centerY.equalToSuperview()
     }
     separator.snp.remakeConstraints { (make) -> Void in
@@ -383,6 +419,8 @@ extension AudioPlayerView {
   
   private func prepareForExpanded() {
     
+    self.backgroundColor = Stylesheet.Colors.white
+    
     bufferSlider.isHidden = false
     bufferBackgroundSlider.isHidden = false
     playbackSlider.isHidden = false
@@ -392,11 +430,12 @@ extension AudioPlayerView {
     collapseButton.isHidden = false
     
     label.numberOfLines = 3
+   
     
     playButton.setImage(#imageLiteral(resourceName: "play-big"), for: .normal)
     pauseButton.setImage(#imageLiteral(resourceName: "pause-big"), for: .normal)
     
-    label.font = UIFont(name: "Roboto-Bold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 24))
+    label.font = UIFont(name: "Roboto-Bold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 20))
     label.textAlignment = .center
     
     skipForwardButton.isHidden = false
@@ -404,8 +443,6 @@ extension AudioPlayerView {
     
     infoButton.isHidden = false
     playbackSpeedButton.isHidden = false
-    
-    currentImageURL = viewModel.featuredImageURL
     
     imageView.layer.cornerRadius = 0.0
     imageView.contentMode = .scaleAspectFit
@@ -429,6 +466,9 @@ extension AudioPlayerView {
     playButton.snp.remakeConstraints { (make) -> Void in
       make.size.equalTo(80).priority(999)
     }
+    pauseButton.snp.remakeConstraints { (make) -> Void in
+      make.size.equalTo(80).priority(999)
+    }
     
     imageView.snp.remakeConstraints { (make) -> Void in
       make.left.right.equalToSuperview()
@@ -449,7 +489,9 @@ extension AudioPlayerView {
     UIView.transition(with: imageView,
                       duration: 0.2,
                       options: .transitionCrossDissolve,
-                      animations: { self.imageView.kf.setImage(with: self.currentImageURL, placeholder: UIImage(named: "Logo_BarButton"), options: [.transition(.fade(0.2))]) },
+                      animations: { self.imageView.kf.setImage(with: self.expanded ?  self.viewModel.featuredImageURL : self.viewModel.guestImageURL , placeholder: UIImage(named: "Logo_BarButton"), options: [.transition(.fade(0.2))])
+                        self.backgroundColor = self.expanded ? .white : .white
+    },
                       completion: nil)
   }
 }

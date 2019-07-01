@@ -45,7 +45,7 @@ class RootViewController: UIViewController, MainCoordinated, Stateful  {
 	
 	private func toggleState() {
 		overlayContainerView.snp.remakeConstraints { (make) -> Void in
-			self.overlayController.expanded ? make.height.equalTo(100) : make.top.equalToSuperview()
+			self.overlayController.expanded ? make.height.equalTo(80) : make.top.equalToSuperview()
 			self.overlayController.expanded ? make.bottom.equalTo(tabController.tabBar.snp.top) : make.bottom.equalToSuperview()
 			make.right.equalToSuperview()
 			make.left.equalToSuperview()
@@ -94,7 +94,7 @@ extension RootViewController {
     self.overlayContainerView.addGestureRecognizer(swipeDown)
     
     overlayContainerView.snp.makeConstraints { (make) -> Void in
-      make.height.equalTo(100.0)
+      make.height.equalTo(80.0)
       make.right.equalToSuperview()
       make.left.equalToSuperview()
       make.bottom.equalTo(tabController.tabBar.snp.top)
@@ -132,10 +132,10 @@ extension RootViewController {
 }
 
 extension RootViewController: OverlayViewDelegate {
-	
-	func didSelectInfo() {
+
+  func didSelectInfo(viewModel: PodcastViewModel) {
 		guard let viewController = tabController.selectedViewController as? UINavigationController else { return }
-		//mainCoordinator?.viewController(vc, didSelect: "")
+    mainCoordinator?.viewController(viewController, with: viewModel)
 		collapse()
 	}
 	

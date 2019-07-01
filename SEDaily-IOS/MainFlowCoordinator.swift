@@ -40,7 +40,7 @@ class MainFlowCoordinator: NSObject {
 	}
 	
 	//Here you will pass viewModel as parameter, "info" String now for the exemplary purpose
-	func viewController(_ viewController: UINavigationController, didSelect viewModel: PodcastViewModel) {
+	func viewController(_ viewController: UINavigationController, with viewModel: PodcastViewModel) {
 		if let vc = viewController.visibleViewController as? EpisodeViewController { // a mechanism to prevent pushing the same view controllers
 			if vc.viewModel == viewModel {
 				return
@@ -58,7 +58,6 @@ extension MainFlowCoordinator: Coordinator {
 		(viewController as? Stateful)?.stateController = stateController
 		(viewController as? AudioControllable)?.audioOverlayDelegate = rootViewController.overlayController
 		if let rootController = viewController as? RootViewController {
-      print(rootController.childViewControllers)
 			rootController.childViewControllers.forEach(configure(viewController:))
 		}
 		if let tabBarController = viewController as? UITabBarController {

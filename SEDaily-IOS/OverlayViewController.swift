@@ -12,7 +12,7 @@ import SnapKit
 import KoalaTeaPlayer
 
 protocol OverlayViewDelegate: class {
-  func didSelectInfo()
+  func didSelectInfo(viewModel: PodcastViewModel)
   func didTapCollapse()
 }
 
@@ -118,34 +118,32 @@ class OverlayViewController: UIViewController, Stateful {
     switch state {
     case .setup:
       //audioPlayerView?.isFirstLoad = true
-      //audioPlayerView?.disableButtons()
-      //audioPlayerView?.startActivityAnimating()
+      audioPlayerView?.disableButtons()
+      audioPlayerView?.startActivityAnimating()
       
       audioPlayerView?.playButton.isHidden = false
       audioPlayerView?.pauseButton.isHidden = true
     case .playing:
-      //audioPlayerView?.enableButtons()
-      //audioPlayerView?.stopActivityAnimating()
+      audioPlayerView?.enableButtons()
+      audioPlayerView?.stopActivityAnimating()
       
       audioPlayerView?.playButton.isHidden = true
       audioPlayerView?.pauseButton.isHidden = false
     case .paused:
-      //audioPlayerView?.enableButtons()
-      //audioPlayerView?.stopActivityAnimating()
+      audioPlayerView?.enableButtons()
+      audioPlayerView?.stopActivityAnimating()
       
       audioPlayerView?.playButton.isHidden = false
       audioPlayerView?.pauseButton.isHidden = true
-      //audioPlayerView?.pauseButton.isHidden = true
     case .interrupted:
       //@TODO: handle interrupted
       break
     case .failed:
-      print("dummy")
+      break
     //self.audioOverlayDelegate?.animateOverlayOut()
     case .buffering:
-      //audioPlayerView?.startActivityAnimating()
+      audioPlayerView?.startActivityAnimating()
       
-      //audioPlayerView?.stopButton.isEnabled = true
       audioPlayerView?.playButton.isHidden = false
       audioPlayerView?.pauseButton.isHidden = true
       //audioPlayerView?.pauseButton.isHidden = true
@@ -159,12 +157,6 @@ class OverlayViewController: UIViewController, Stateful {
     }
   }
   
-  @objc func infoTapped() {
-    delegate?.didSelectInfo()
-  }
-  @objc func collapseTapped() {
-    delegate?.didTapCollapse()
-  }
 }
 
 extension OverlayViewController: AssetPlayerDelegate {
@@ -222,8 +214,10 @@ extension OverlayViewController: AssetPlayerDelegate {
 
 
 extension OverlayViewController: AudioPlayerViewDelegate {
+
+  
   func detailsButtonPressed() {
-    
+    delegate?.didSelectInfo(viewModel: viewModel)
   }
   
   
@@ -252,7 +246,7 @@ extension OverlayViewController: AudioPlayerViewDelegate {
   }
   
   func collapseButtonPressed() {
-    
+    delegate?.didTapCollapse()
   }
   
   func audioRateChanged(newRate: Float) {

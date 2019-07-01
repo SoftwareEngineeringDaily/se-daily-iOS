@@ -58,6 +58,7 @@ extension MainFlowCoordinator: Coordinator {
 		(viewController as? Stateful)?.stateController = stateController
 		(viewController as? AudioControllable)?.audioOverlayDelegate = rootViewController.overlayController
 		if let rootController = viewController as? RootViewController {
+      print(rootController.childViewControllers)
 			rootController.childViewControllers.forEach(configure(viewController:))
 		}
 		if let tabBarController = viewController as? UITabBarController {

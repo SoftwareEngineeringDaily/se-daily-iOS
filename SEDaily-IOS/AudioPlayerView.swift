@@ -9,8 +9,6 @@
 import Foundation
 import UIKit
 import AVFoundation
-import SwifterSwift
-import KTResponsiveUI
 
 public protocol AudioPlayerViewDelegate: NSObjectProtocol {
   func playButtonPressed()
@@ -18,6 +16,7 @@ public protocol AudioPlayerViewDelegate: NSObjectProtocol {
   func skipForwardButtonPressed()
   func skipBackwardButtonPressed()
   func detailsButtonPressed()
+  func collapseButtonPressed()
   func audioRateChanged(newRate: Float)
   func playbackSliderValueChanged(value: Float)
 }
@@ -28,7 +27,7 @@ class AudioPlayerView: UIView {
   private let skipForwardButton = UIButton()
   private let skipBackwardButton = UIButton()
   private let playbackSpeedButton = UIButton()
-  private let playButton = UIButton()
+  
   private let infoButton = UIButton()
   private let collapseButton = UIButton()
   private var activityView: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
@@ -44,11 +43,14 @@ class AudioPlayerView: UIView {
   private let separator: UIView = UIView()
   private let label = UILabel()
   
+  let playButton = UIButton()
+  let pauseButton = UIButton()
+  
   var currentImageURL: URL?
   
   var viewModel: PodcastViewModel = PodcastViewModel()
   
-  weak var audioViewDelegate: AudioViewDelegate?
+  weak var audioViewDelegate: AudioPlayerViewDelegate?
   
   var expanded: Bool = false {
     didSet {
@@ -80,7 +82,7 @@ class AudioPlayerView: UIView {
     return alert
   }
   
-  init(frame: CGRect, audioViewDelegate: AudioViewDelegate) {
+  init(frame: CGRect, audioViewDelegate: AudioPlayerViewDelegate) {
     self.audioViewDelegate = audioViewDelegate
     super.init(frame: frame)
     self.performLayout()
@@ -103,7 +105,7 @@ extension AudioPlayerView {
       playbackSlider.minimumTrackTintColor = Stylesheet.Colors.base
       playbackSlider.maximumTrackTintColor = .clear
       playbackSlider.layer.cornerRadius = 0
-      //playbackSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
+      playbackSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
       playbackSlider.isUserInteractionEnabled = false
       
       parentView.addSubview(playbackSlider)
@@ -128,7 +130,7 @@ extension AudioPlayerView {
       bufferBackgroundSlider.tintColor = Stylesheet.Colors.bufferColor
       bufferBackgroundSlider.layer.cornerRadius = 0
       bufferBackgroundSlider.alpha = 0.5
-      //bufferBackgroundSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
+      bufferBackgroundSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
       bufferBackgroundSlider.isUserInteractionEnabled = false
       
       parentView.addSubview(bufferBackgroundSlider)
@@ -146,7 +148,7 @@ extension AudioPlayerView {
       bufferSlider.minimumTrackTintColor = Stylesheet.Colors.bufferColor
       bufferSlider.maximumTrackTintColor = .clear
       bufferSlider.layer.cornerRadius = 0
-      // bufferSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
+      bufferSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
       bufferSlider.isUserInteractionEnabled = false
       
       parentView.addSubview(bufferSlider)
@@ -194,6 +196,7 @@ extension AudioPlayerView {
     stackView.addArrangedSubview(playbackSpeedButton)
     stackView.addArrangedSubview(skipBackwardButton)
     stackView.addArrangedSubview(playButton)
+    stackView.addArrangedSubview(pauseButton)
     stackView.addArrangedSubview(skipForwardButton)
     stackView.addArrangedSubview(infoButton)
     
@@ -204,7 +207,6 @@ extension AudioPlayerView {
     addSubview(separator)
     addSubview(collapseButton)
     addPlaybackSlider(parentView: self)
-    addBufferSlider(parentView: self)
     addLabels(parentView: self)
     
     stackView.axis = .horizontal
@@ -212,9 +214,17 @@ extension AudioPlayerView {
     stackView.distribution = .equalSpacing
     
     skipForwardButton.setImage(#imageLiteral(resourceName: "forward_audio"), for: .normal)
-    skipBackwardButton.setImage(#imageLiteral(resourceName: "rewind_audio"), for: .normal)
+    skipForwardButton.addTarget(self, action: #selector(self.skipForwardButtonPressed), for: .touchUpInside)
     
-    playButton.setImage(#imageLiteral(resourceName: "play_audio"), for: .normal)
+    
+    skipBackwardButton.setImage(#imageLiteral(resourceName: "rewind_audio"), for: .normal)
+    skipBackwardButton.addTarget(self, action: #selector(self.skipBackwardButtonPressed), for: .touchUpInside)
+    
+    playButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+    playButton.addTarget(self, action: #selector(self.playButtonPressed), for: .touchUpInside)
+    
+    pauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+    pauseButton.addTarget(self, action: #selector(self.pauseButtonPressed), for: .touchUpInside)
     
     playbackSpeedButton.setTitle(PlaybackSpeed._1x.shortTitle, for: .normal)
     playbackSpeedButton.titleLabel?.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 20))
@@ -297,6 +307,28 @@ extension AudioPlayerView {
 }
 
 extension AudioPlayerView {
+  @objc func playButtonPressed() {
+    self.audioViewDelegate?.playButtonPressed()
+  }
+  
+  @objc func pauseButtonPressed() {
+    self.audioViewDelegate?.pauseButtonPressed()
+  }
+  
+  @objc func skipForwardButtonPressed() {
+    self.audioViewDelegate?.skipForwardButtonPressed()
+  }
+  
+  @objc func skipBackwardButtonPressed() {
+    self.audioViewDelegate?.skipBackwardButtonPressed()
+  }
+  
+  @objc func settingsButtonPressed() {
+    self.parentViewController?.present(alertController, animated: true, completion: nil)
+  }
+}
+
+extension AudioPlayerView {
   
   private func prepareForCollapsed() {
     
@@ -321,6 +353,7 @@ extension AudioPlayerView {
     currentImageURL = viewModel.guestImageURL
     
     playButton.setImage(#imageLiteral(resourceName: "play_audio"), for: .normal)
+    pauseButton.setImage(#imageLiteral(resourceName: "pause_audio"), for: .normal)
     
     imageView.layer.cornerRadius = 20.0
     imageView.layer.masksToBounds = true
@@ -360,7 +393,8 @@ extension AudioPlayerView {
     
     label.numberOfLines = 3
     
-    playButton.setImage(#imageLiteral(resourceName: "play_big"), for: .normal)
+    playButton.setImage(#imageLiteral(resourceName: "play-big"), for: .normal)
+    pauseButton.setImage(#imageLiteral(resourceName: "pause-big"), for: .normal)
     
     label.font = UIFont(name: "Roboto-Bold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 24))
     label.textAlignment = .center

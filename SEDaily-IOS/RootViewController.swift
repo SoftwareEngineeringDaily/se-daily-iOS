@@ -9,8 +9,10 @@
 import UIKit
 import SnapKit
 
-class RootViewController: UIViewController, MainCoordinated  {
-	
+class RootViewController: UIViewController, MainCoordinated, Stateful  {
+  
+  var stateController: StateController?
+  
 	private var containerView = UIView()
 	private var overlayContainerView = UIView()
 	private var tabController: MainTabBarController = MainTabBarController()
@@ -32,9 +34,10 @@ class RootViewController: UIViewController, MainCoordinated  {
 		repository.retrieveRecentlyListened(podcastId: id,
 																				onSuccess: { [weak self](podcasts) in
 																					podcasts.forEach({ podcast in
+                                            guard let strongSelf = self else { return }
 																						let viewModel = PodcastViewModel(podcast: podcast)
-                                            self?.addOverlayViewController(viewModel: viewModel)
-                                            
+                                            strongSelf.addOverlayViewController(viewModel: viewModel)
+                                            strongSelf.mainCoordinator?.configure(viewController: strongSelf)
 																					})},
 																				onFailure: { _ in })
 	}

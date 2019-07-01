@@ -457,7 +457,7 @@
 				164FE9DF1F02EE4E009419CA /* Podcasts */,
 				16AD3E031F9B06950084C545 /* Search */,
 				C0590D77200AC2A500A00E4D /* NetworkService.swift */,
-				4359B94322C73B4C009704F8 /* KoalaTeaFlowLayout.swift */,
+				439913D722C9F0570061EE6E /* Vendor */,
 			);
 			path = "SEDaily-IOS";
 			sourceTree = "<group>";
@@ -606,6 +606,14 @@
 				4359B94522C7494D009704F8 /* AudioPlayerView.swift */,
 			);
 			name = "Screens and navigation flow";
+			sourceTree = "<group>";
+		};
+		439913D722C9F0570061EE6E /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				4359B94322C73B4C009704F8 /* KoalaTeaFlowLayout.swift */,
+			);
+			name = Vendor;
 			sourceTree = "<group>";
 		};
 		439BCC6F22818F32008D808B /* Profile */ = {

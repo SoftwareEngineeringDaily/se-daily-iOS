@@ -254,6 +254,7 @@ extension AudioPlayerView {
     playbackSpeedButton.setTitle(PlaybackSpeed._1x.shortTitle, for: .normal)
     playbackSpeedButton.titleLabel?.font = UIFont.systemFont(ofSize: UIView.getValueScaledByScreenWidthFor(baseValue: 20))
     playbackSpeedButton.setTitleColor(Stylesheet.Colors.base, for: .normal)
+    playbackSpeedButton.addTarget(self, action: #selector(self.settingsButtonPressed), for: .touchUpInside)
     
     infoButton.setImage(#imageLiteral(resourceName: "info"), for: .normal)
     infoButton.addTarget(self, action: #selector(AudioPlayerView.infoTapped), for: .touchUpInside)
@@ -288,6 +289,10 @@ extension AudioPlayerView {
       self.timeLeftLabel.text = timeLeftString
     }
     previousSliderValue = timeInSeconds
+  }
+  
+  @objc func settingsButtonPressed() {
+    self.parentViewController?.present(alertController, animated: true, completion: nil)
   }
   
   @objc func collapseTapped() {
@@ -354,10 +359,6 @@ extension AudioPlayerView {
   
   @objc func skipBackwardButtonPressed() {
     self.audioViewDelegate?.skipBackwardButtonPressed()
-  }
-  
-  @objc func settingsButtonPressed() {
-    self.parentViewController?.present(alertController, animated: true, completion: nil)
   }
 }
 

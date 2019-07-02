@@ -18,6 +18,11 @@ class PlayProgressModelController {
 		let defaults = UserDefaults.standard
 		defaults.set(id, forKey: "sedaily-recentlyListened")
 	}
+  
+  static func cleanRecentlyListenedEpisodeId() {
+    let defaults = UserDefaults.standard
+    defaults.set("", forKey: "sedaily-recentlyListened")
+  }
 	
 	static func getRecentlyListenedEpisodeId() -> String? {
 		let defaults = UserDefaults.standard

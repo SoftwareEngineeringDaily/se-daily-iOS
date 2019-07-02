@@ -20,7 +20,7 @@ protocol MainCoordinated: AnyObject {
 }
 
 protocol AudioControllable: AnyObject {
-	var audioOverlayDelegate: AudioOverlayDelegate? { get set }
+	var audioControlDelegate: EpisodeViewDelegate? { get set }
 }
 
 protocol Stateful: AnyObject {
@@ -48,6 +48,7 @@ class MainFlowCoordinator: NSObject {
 		}
 		let vc = EpisodeViewController()
 		vc.viewModel = viewModel
+    configure(viewController: vc)
 		viewController.pushViewController(vc, animated: true)
 	}
 }
@@ -56,7 +57,7 @@ extension MainFlowCoordinator: Coordinator {
 	func configure(viewController: UIViewController) {
 		(viewController as? MainCoordinated)?.mainCoordinator = self
 		(viewController as? Stateful)?.stateController = stateController
-		(viewController as? AudioControllable)?.audioOverlayDelegate = rootViewController.overlayController
+		(viewController as? AudioControllable)?.audioControlDelegate = rootViewController.overlayController
 		if let rootController = viewController as? RootViewController {
 			rootController.childViewControllers.forEach(configure(viewController:))
 		}

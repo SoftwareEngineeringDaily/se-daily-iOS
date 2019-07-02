@@ -36,8 +36,10 @@ class RootViewController: UIViewController, MainCoordinated, Stateful  {
 																					podcasts.forEach({ podcast in
                                             guard let strongSelf = self else { return }
 																						let viewModel = PodcastViewModel(podcast: podcast)
-                                            strongSelf.addOverlayViewController(viewModel: viewModel)
-                                            strongSelf.mainCoordinator?.configure(viewController: strongSelf)
+                                            strongSelf.overlayController.viewModel = viewModel
+                                            strongSelf.overlayContainerView.isHidden = false
+                                            strongSelf.stateController?.isOverlayShowing = true
+                                            strongSelf.stateController?.setCurrentlyPlaying(id: viewModel._id)
 																					})},
 																				onFailure: { _ in })
 	}
@@ -83,7 +85,11 @@ extension RootViewController {
   
   private func addOverlayViewController(viewModel: PodcastViewModel) {
     view.addSubview(overlayContainerView)
+    mainCoordinator?.configure(viewController: overlayController)
     add(asChildViewController: overlayController, container: overlayContainerView)
+    
+    overlayContainerView.isHidden = true
+    stateController?.isOverlayShowing = false
 
     let tap = UITapGestureRecognizer(target: self, action: #selector(RootViewController.didTap))
     overlayContainerView.addGestureRecognizer(tap)
@@ -121,6 +127,7 @@ extension RootViewController {
 		self.view.backgroundColor = .blue
 		self.view.addSubview(containerView)
 		self.add(asChildViewController: tabController, container: containerView)
+    addOverlayViewController(viewModel: PodcastViewModel())
 		
 		containerView.snp.makeConstraints { (make) -> Void in
 			make.top.equalToSuperview()
@@ -131,7 +138,7 @@ extension RootViewController {
 	}
 }
 
-extension RootViewController: OverlayViewDelegate {
+extension RootViewController: OverlayControllerDelegate {
 
   func didSelectInfo(viewModel: PodcastViewModel) {
 		guard let viewController = tabController.selectedViewController as? UINavigationController else { return }
@@ -142,4 +149,39 @@ extension RootViewController: OverlayViewDelegate {
 	func didTapCollapse() {
 		collapse()
 	}
+  
+  func didTapStop() {
+    overlayContainerView.snp.remakeConstraints { (make) -> Void in
+      make.height.equalTo(0)
+      make.bottom.equalTo(tabController.tabBar.snp.top)
+      make.right.equalToSuperview()
+      make.left.equalToSuperview()
+    }
+    
+    
+    UIView.animate(withDuration: 0.1, animations: {
+      self.view.layoutIfNeeded()
+    }, completion: { _ in
+      self.overlayContainerView.isHidden = true
+    })
+    
+    stateController?.isOverlayShowing = false
+    PlayProgressModelController.cleanRecentlyListenedEpisodeId()
+  }
+  
+  func didTapPlay() {
+
+    overlayContainerView.snp.remakeConstraints { (make) -> Void in
+      make.height.equalTo(80)
+      make.bottom.equalTo(tabController.tabBar.snp.top)
+      make.right.equalToSuperview()
+      make.left.equalToSuperview()
+    }
+    self.overlayContainerView.isHidden = false
+    UIView.animate(withDuration: 0.1, animations: {
+      self.view.layoutIfNeeded()
+    }, completion: { _ in  })
+    self.overlayController.expanded = false
+    stateController?.isOverlayShowing = true
+  }
 }

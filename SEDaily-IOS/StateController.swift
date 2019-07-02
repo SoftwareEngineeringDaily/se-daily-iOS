@@ -9,5 +9,18 @@
 import Foundation
 
 class StateController {
+  
 	var isFirstLoad = true
+  
+  var isOverlayShowing = false
+  
+  private var currentlyPlayingId: String = ""
+  
+  func setCurrentlyPlaying(id: String) {
+    currentlyPlayingId = id
+  }
+  
+  func getCurrentlyPlayingId()-> String {
+    return currentlyPlayingId
+  }
 }

@@ -136,7 +136,7 @@ class AudioOverlayViewController: UIViewController {
 		self.saveProgress()
 		self.loadAudio(podcastViewModel: podcastViewModel)
 		self.createPodcastDetailViewController(podcastViewModel: podcastViewModel)
-		CurrentlyPlaying.shared.setCurrentlyPlaying(id: podcastViewModel._id)
+		//CurrentlyPlaying.shared.setCurrentlyPlaying(id: podcastViewModel._id)
 		// TODO: only mark if logged in
 		networkService.markAsListened(postId: podcastViewModel._id)
 		Analytics2.podcastPlayed(podcastId: podcastViewModel._id)
@@ -272,7 +272,7 @@ class AudioOverlayViewController: UIViewController {
 			self.triggerRemoveContainerViewInset()
 			self.audioOverlayDelegate?.animateOverlayOut()
 			// change play/stop button state
-			CurrentlyPlaying.shared.setCurrentlyPlaying(id: "")
+			//CurrentlyPlaying.shared.setCurrentlyPlaying(id: "")
 			let userInfo = ["viewModel": podcastViewModel]
 			NotificationCenter.default.post(name: .reloadEpisodeView, object: nil, userInfo: userInfo)
 		}

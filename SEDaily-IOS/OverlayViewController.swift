@@ -11,9 +11,11 @@ import AVFoundation
 import SnapKit
 import KoalaTeaPlayer
 
-protocol OverlayViewDelegate: class {
+protocol OverlayControllerDelegate: class {
   func didSelectInfo(viewModel: PodcastViewModel)
   func didTapCollapse()
+  func didTapStop()
+  func didTapPlay()
 }
 
 class OverlayViewController: UIViewController, Stateful {
@@ -32,7 +34,7 @@ class OverlayViewController: UIViewController, Stateful {
   /// The instance of PlayProgressModelController to retrieve and save progress of the playback
   private var progressController = PlayProgressModelController()
   
-  weak var delegate: OverlayViewDelegate?
+  weak var delegate: OverlayControllerDelegate?
   
   var viewModel: PodcastViewModel = PodcastViewModel() {
     didSet {
@@ -151,7 +153,7 @@ class OverlayViewController: UIViewController, Stateful {
       // dismiss whole overlay
       
       // change play/stop button state
-      CurrentlyPlaying.shared.setCurrentlyPlaying(id: "")
+      stateController?.setCurrentlyPlaying(id: "")
       let userInfo = ["viewModel": viewModel]
       NotificationCenter.default.post(name: .reloadEpisodeView, object: nil, userInfo: userInfo)
     }
@@ -220,7 +222,6 @@ extension OverlayViewController: AudioPlayerViewDelegate {
     delegate?.didSelectInfo(viewModel: viewModel)
   }
   
-  
   func playButtonPressed() {
     if stateController?.isFirstLoad ?? true {
       loadAudio(podcastViewModel: viewModel)
@@ -232,11 +233,7 @@ extension OverlayViewController: AudioPlayerViewDelegate {
   func pauseButtonPressed() {
     assetPlaybackManager?.pause()
   }
-  
-  func stopButtonPressed() {
-    
-  }
-  
+
   func skipForwardButtonPressed() {
     assetPlaybackManager?.skipForward(30)
   }
@@ -250,7 +247,8 @@ extension OverlayViewController: AudioPlayerViewDelegate {
   }
   
   func audioRateChanged(newRate: Float) {
-    
+    assetPlaybackManager?.changePlayerPlaybackRate(to: newRate)
+    UserDefaults.standard.set(newRate, forKey: OverlayViewController.userSettingPlaybackSpeedKey)
   }
   
   func playbackSliderValueChanged(value: Float) {
@@ -261,27 +259,20 @@ extension OverlayViewController: AudioPlayerViewDelegate {
   
 }
 
-extension OverlayViewController: AudioOverlayDelegate {
-  func animateOverlayIn() {
-    
-  }
-  
-  func animateOverlayOut() {
-    
-  }
-  
-  func pauseAudio() {
-    
-  }
+extension OverlayViewController: EpisodeViewDelegate {
   
   
   func playAudio(podcastViewModel: PodcastViewModel) {
+    guard let state = stateController else { return }
+    if !state.isOverlayShowing {
+      delegate?.didTapPlay()
+    }
     viewModel = podcastViewModel
     Tracker.logPlayPodcast(podcast: podcastViewModel)
     self.setText(text: podcastViewModel.podcastTitle)
     self.saveProgress()
     self.loadAudio(podcastViewModel: podcastViewModel)
-    CurrentlyPlaying.shared.setCurrentlyPlaying(id: podcastViewModel._id)
+    stateController?.setCurrentlyPlaying(id: podcastViewModel._id)
     // TODO: only mark if logged in
     networkService.markAsListened(postId: podcastViewModel._id)
     Analytics2.podcastPlayed(podcastId: podcastViewModel._id)
@@ -290,11 +281,8 @@ extension OverlayViewController: AudioOverlayDelegate {
   
   
   func stopAudio() {
-    
-  }
-  
-  func setCurrentShowingDetailView(podcastViewModel: PodcastViewModel?) {
-    
+    assetPlaybackManager?.stop()
+    delegate?.didTapStop()
   }
   
   

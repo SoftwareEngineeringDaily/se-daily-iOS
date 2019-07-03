@@ -37,6 +37,7 @@ class RootViewController: UIViewController, MainCoordinated, Stateful  {
                                             guard let strongSelf = self else { return }
 																						let viewModel = PodcastViewModel(podcast: podcast)
                                             strongSelf.overlayController.viewModel = viewModel
+                                            strongSelf.overlayController.expanded = false
                                             strongSelf.overlayContainerView.isHidden = false
                                             strongSelf.stateController?.isOverlayShowing = true
                                             strongSelf.stateController?.setCurrentlyPlaying(id: viewModel._id)

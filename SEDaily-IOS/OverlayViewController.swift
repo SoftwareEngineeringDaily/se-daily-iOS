@@ -39,8 +39,7 @@ class OverlayViewController: UIViewController, Stateful {
   var viewModel: PodcastViewModel = PodcastViewModel() {
     didSet {
       audioPlayerView?.viewModel = viewModel
-      audioPlayerView?.expanded = false
-      audioPlayerView?.performLayout()
+      //audioPlayerView?.performLayout()
     }
   }
   
@@ -123,7 +122,7 @@ class OverlayViewController: UIViewController, Stateful {
       audioPlayerView?.disableButtons()
       audioPlayerView?.startActivityAnimating()
       
-      audioPlayerView?.playButton.isHidden = false
+      audioPlayerView?.playButton.isHidden = true
       audioPlayerView?.pauseButton.isHidden = true
     case .playing:
       audioPlayerView?.enableButtons()
@@ -145,14 +144,11 @@ class OverlayViewController: UIViewController, Stateful {
     //self.audioOverlayDelegate?.animateOverlayOut()
     case .buffering:
       audioPlayerView?.startActivityAnimating()
-      
-      audioPlayerView?.playButton.isHidden = false
+      audioPlayerView?.playButton.isHidden = true
       audioPlayerView?.pauseButton.isHidden = true
       //audioPlayerView?.pauseButton.isHidden = true
     case .stopped:
       // dismiss whole overlay
-      
-      // change play/stop button state
       stateController?.setCurrentlyPlaying(id: "")
       let userInfo = ["viewModel": viewModel]
       NotificationCenter.default.post(name: .reloadEpisodeView, object: nil, userInfo: userInfo)

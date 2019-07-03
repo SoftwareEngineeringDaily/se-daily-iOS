@@ -30,7 +30,7 @@ class AudioPlayerView: UIView {
   
   private let infoButton = UIButton()
   private let collapseButton = UIButton()
-  private var activityView: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+  private var activityView: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
   
   private var bufferSlider = UISlider(frame: .zero)
   private var bufferBackgroundSlider = UISlider(frame: .zero)
@@ -46,7 +46,13 @@ class AudioPlayerView: UIView {
   let playButton = UIButton()
   let pauseButton = UIButton()
   
-  var viewModel: PodcastViewModel = PodcastViewModel()
+  
+  
+  var viewModel: PodcastViewModel = PodcastViewModel() {
+    didSet {
+      update()
+    }
+  }
   
   weak var audioViewDelegate: AudioPlayerViewDelegate?
   
@@ -115,6 +121,12 @@ class AudioPlayerView: UIView {
     self.skipBackwardButton.isEnabled = false
   }
 
+}
+extension AudioPlayerView {
+  private func update() {
+    label.text = viewModel.podcastTitle
+    imageView.kf.setImage(with: self.expanded ?  self.viewModel.featuredImageURL : self.viewModel.guestImageURL)
+  }
 }
 
 extension AudioPlayerView {
@@ -220,6 +232,7 @@ extension AudioPlayerView {
     stackView.addArrangedSubview(playbackSpeedButton)
     stackView.addArrangedSubview(skipBackwardButton)
     stackView.addArrangedSubview(playButton)
+    stackView.addArrangedSubview(activityView)
     stackView.addArrangedSubview(pauseButton)
     stackView.addArrangedSubview(skipForwardButton)
     stackView.addArrangedSubview(infoButton)
@@ -335,11 +348,11 @@ extension AudioPlayerView {
   }
   
   func setupActivityIndicator() {
-    addSubview(activityView)
-    activityView.snp.makeConstraints { (make) -> Void in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(playButton.snp_bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 10))
-    }
+//    addSubview(activityView)
+//    activityView.snp.makeConstraints { (make) -> Void in
+//      make.centerX.equalToSuperview()
+//      make.top.equalTo(playButton.snp_bottom).offset(UIView.getValueScaledByScreenWidthFor(baseValue: 10))
+//    }
   }
   
 }
@@ -386,9 +399,12 @@ extension AudioPlayerView {
     label.textColor = .white
     label.textAlignment = .left
     label.numberOfLines = 2
+    label.isUserInteractionEnabled = false
     
     playButton.setImage(#imageLiteral(resourceName: "play_white"), for: .normal)
     pauseButton.setImage(#imageLiteral(resourceName: "pause_white"), for: .normal)
+    
+    activityView.activityIndicatorViewStyle = .white
     
     imageView.layer.cornerRadius = 20.0
     imageView.layer.masksToBounds = true
@@ -440,6 +456,9 @@ extension AudioPlayerView {
     label.font = UIFont(name: "Roboto-Bold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 20))
     label.textAlignment = .center
     label.textColor = Stylesheet.Colors.dark
+    let tapOnLabel = UITapGestureRecognizer(target: self, action: #selector(AudioPlayerView.infoTapped))
+    label.addGestureRecognizer(tapOnLabel)
+    label.isUserInteractionEnabled = true
     
     skipForwardButton.isHidden = false
     skipBackwardButton.isHidden = false
@@ -449,6 +468,8 @@ extension AudioPlayerView {
     
     imageView.layer.cornerRadius = 0.0
     imageView.contentMode = .scaleAspectFit
+    
+    activityView.activityIndicatorViewStyle = .gray
     
     stackView.snp.remakeConstraints { (make) -> Void in
       make.left.equalToSuperview().offset(20)
@@ -484,7 +505,7 @@ extension AudioPlayerView {
     }
   }
   
-  private func adjustLayout() {
+  func adjustLayout() {
     self.expanded ? prepareForExpanded() : prepareForCollapsed()
     UIView.animate(withDuration: 0.2, animations: {
       self.layoutIfNeeded()

@@ -382,7 +382,7 @@ extension AudioPlayerView {
     infoButton.isHidden = true
     playbackSpeedButton.isHidden = true
     
-    label.font = UIFont(name: "Roboto-Bold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
+    label.font = UIFont(name: "OpenSans-SemiBold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
     label.textColor = .white
     label.textAlignment = .left
     label.numberOfLines = 2
@@ -410,7 +410,7 @@ extension AudioPlayerView {
     }
     label.snp.remakeConstraints { (make) -> Void in
       make.left.equalTo(imageView.snp.right).offset(15.0).priority(999)
-      make.rightMargin.lessThanOrEqualTo(stackView.snp.left)
+      make.right.equalToSuperview().inset(60)
       make.centerY.equalToSuperview()
     }
     separator.snp.remakeConstraints { (make) -> Void in

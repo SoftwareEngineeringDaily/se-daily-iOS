@@ -81,11 +81,6 @@ extension AppDelegate {
 	}
 	
 	func setupFirstScreen() {
-//		        window = UIWindow(frame: UIScreen.main.bounds)
-//		        let rootVC = ContainerViewController()
-//		        rootVC.view.backgroundColor = .white
-//		        window!.rootViewController = rootVC
-//		        window!.makeKeyAndVisible()
 		window = UIWindow(frame: UIScreen.main.bounds)
 		let rootVC = RootViewController()
 		window!.rootViewController = rootVC

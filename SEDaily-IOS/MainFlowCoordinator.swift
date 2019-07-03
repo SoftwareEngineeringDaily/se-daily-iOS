@@ -51,6 +51,14 @@ class MainFlowCoordinator: NSObject {
     configure(viewController: vc)
 		viewController.pushViewController(vc, animated: true)
 	}
+  
+  func viewController(_ navigationController: UINavigationController, push viewController: UIViewController) {
+    configure(viewController: viewController)
+    navigationController.pushViewController(viewController, animated: true)
+  }
+  
+  
+  
 }
 
 extension MainFlowCoordinator: Coordinator {

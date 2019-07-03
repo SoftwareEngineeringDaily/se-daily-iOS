@@ -127,6 +127,7 @@ extension RootViewController {
 		self.view.backgroundColor = .blue
 		self.view.addSubview(containerView)
 		self.add(asChildViewController: tabController, container: containerView)
+    mainCoordinator?.configure(viewController: tabController)
     addOverlayViewController(viewModel: PodcastViewModel())
 		
 		containerView.snp.makeConstraints { (make) -> Void in
@@ -181,7 +182,7 @@ extension RootViewController: OverlayControllerDelegate {
     UIView.animate(withDuration: 0.1, animations: {
       self.view.layoutIfNeeded()
     }, completion: { _ in  })
-    self.overlayController.expanded = false
+    
     stateController?.isOverlayShowing = true
   }
 }

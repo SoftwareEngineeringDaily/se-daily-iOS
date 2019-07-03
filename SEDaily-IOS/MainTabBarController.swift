@@ -15,7 +15,9 @@ import SwifterSwift
 import SwiftIcons
 import Firebase
 
-class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
+class MainTabBarController: UITabBarController, UITabBarControllerDelegate, MainCoordinated {
+  
+  var mainCoordinator: MainFlowCoordinator?
 	
 	let layout = UICollectionViewLayout()
 	
@@ -41,25 +43,27 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		delegate = self
+    NotificationCenter.default.addObserver(self, selector: #selector(self.loginObserver), name: .loginChanged, object: nil)
 		self.view.backgroundColor = .white
 		
 		setupNavigationControllers(viewControllers: [latestVC, downloadsVC, bookmarksVC, profileVC])
-		
 		setupTabs()
-		//setupTitleView()
+		[latestVC, downloadsVC, bookmarksVC, profileVC].forEach(setupTitleView(viewController:))
 		self.tabBar.tintColor = Stylesheet.Colors.base
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		//setupNavBar()
-		
 		AskForReview.tryToExecute { didExecute in
 			if didExecute {
 				self.askForReview()
 			}
 		}
 	}
+  
+  @objc func loginObserver() {
+    setupNavigationControllers(viewControllers: [latestVC, downloadsVC, bookmarksVC, profileVC])
+  }
 	
 	func setupNavBar(viewController: UIViewController) {
 		let rightBarButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(self.rightBarButtonPressed))
@@ -84,8 +88,9 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
 	
 	@objc func rightBarButtonPressed() {
 		let layout = UICollectionViewLayout()
-//		var searchCollectionViewController = SearchCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate)
-//		self.navigationController?.pushViewController(searchCollectionViewController)
+    let searchCollectionViewController = SearchCollectionViewController(collectionViewLayout: layout)
+    guard let navigationController = self.selectedViewController as? UINavigationController else { return }
+    mainCoordinator?.viewController(navigationController, push: searchCollectionViewController)
 		Analytics2.searchNavButtonPressed()
 	}
 	
@@ -97,13 +102,13 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
 	@objc func loginButtonPressed() {
 		Analytics2.loginNavButtonPressed()
 		let vc = LoginViewController()
-		self.navigationController?.pushViewController(vc)
+		guard let navigationController = self.selectedViewController as? UINavigationController else { return }
+    navigationController.pushViewController(vc, animated: true)
 	}
 	
 	@objc func logoutButtonPressed() {
 		Analytics2.logoutNavButtonPressed()
 		UserManager.sharedInstance.logoutUser()
-		//self.setupNavBar()
 	}
 	
 	override func didReceiveMemoryWarning() {
@@ -147,13 +152,12 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
 		self.tabBar.isTranslucent = false
 	}
 	
-	func setupTitleView() {
+  func setupTitleView(viewController: UIViewController) {
 		let height = UIView.getValueScaledByScreenHeightFor(baseValue: 40)
 		let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: height, height: height))
 		imageView.contentMode = .scaleAspectFit
 		imageView.image = #imageLiteral(resourceName: "Logo_BarButton")
-		self.navigationItem.titleView = imageView
-		
+		viewController.navigationItem.titleView = imageView
 	}
 	
 	private func askForReview() {

@@ -30,7 +30,7 @@ class AudioPlayerView: UIView {
   
   private let infoButton = UIButton()
   private let collapseButton = UIButton()
-  private var activityView: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+  private var activityView: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
   
   private var bufferSlider = UISlider(frame: .zero)
   private var bufferBackgroundSlider = UISlider(frame: .zero)
@@ -215,7 +215,7 @@ extension AudioPlayerView {
       }
     }
     
-    self.backgroundColor = Stylesheet.Colors.light
+    self.backgroundColor = Stylesheet.Colors.dark
     
     stackView.addArrangedSubview(playbackSpeedButton)
     stackView.addArrangedSubview(skipBackwardButton)
@@ -244,10 +244,10 @@ extension AudioPlayerView {
     skipBackwardButton.setImage(#imageLiteral(resourceName: "rewind_audio"), for: .normal)
     skipBackwardButton.addTarget(self, action: #selector(self.skipBackwardButtonPressed), for: .touchUpInside)
     
-    playButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+    playButton.setImage(#imageLiteral(resourceName: "play_white"), for: .normal)
     playButton.addTarget(self, action: #selector(self.playButtonPressed), for: .touchUpInside)
     
-    pauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+    pauseButton.setImage(#imageLiteral(resourceName: "pause_white"), for: .normal)
     pauseButton.addTarget(self, action: #selector(self.pauseButtonPressed), for: .touchUpInside)
     pauseButton.isHidden = true
     
@@ -383,11 +383,12 @@ extension AudioPlayerView {
     playbackSpeedButton.isHidden = true
     
     label.font = UIFont(name: "Roboto-Bold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
+    label.textColor = .white
     label.textAlignment = .left
     label.numberOfLines = 2
     
-    playButton.setImage(#imageLiteral(resourceName: "play_audio"), for: .normal)
-    pauseButton.setImage(#imageLiteral(resourceName: "pause_audio"), for: .normal)
+    playButton.setImage(#imageLiteral(resourceName: "play_white"), for: .normal)
+    pauseButton.setImage(#imageLiteral(resourceName: "pause_white"), for: .normal)
     
     imageView.layer.cornerRadius = 20.0
     imageView.layer.masksToBounds = true
@@ -438,6 +439,7 @@ extension AudioPlayerView {
     
     label.font = UIFont(name: "Roboto-Bold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 20))
     label.textAlignment = .center
+    label.textColor = Stylesheet.Colors.dark
     
     skipForwardButton.isHidden = false
     skipBackwardButton.isHidden = false
@@ -491,7 +493,7 @@ extension AudioPlayerView {
                       duration: 0.2,
                       options: .transitionCrossDissolve,
                       animations: { self.imageView.kf.setImage(with: self.expanded ?  self.viewModel.featuredImageURL : self.viewModel.guestImageURL , placeholder: UIImage(named: "Logo_BarButton"), options: [.transition(.fade(0.2))])
-                        self.backgroundColor = self.expanded ? .white : .white
+                        self.backgroundColor = self.expanded ? .white : Stylesheet.Colors.dark
     },
                       completion: nil)
   }

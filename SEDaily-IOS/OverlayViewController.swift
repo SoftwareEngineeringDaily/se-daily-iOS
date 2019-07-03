@@ -224,7 +224,7 @@ extension OverlayViewController: AudioPlayerViewDelegate {
   
   func playButtonPressed() {
     if stateController?.isFirstLoad ?? true {
-      loadAudio(podcastViewModel: viewModel)
+      playAudio(podcastViewModel: viewModel)
       stateController?.isFirstLoad = false
     } else {
       assetPlaybackManager?.play() }

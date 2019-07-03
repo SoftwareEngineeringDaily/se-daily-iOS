@@ -125,7 +125,7 @@ class AudioPlayerView: UIView {
 extension AudioPlayerView {
   private func update() {
     label.text = viewModel.podcastTitle
-    imageView.kf.setImage(with: self.expanded ?  self.viewModel.featuredImageURL : self.viewModel.guestImageURL)
+    imageView.kf.setImage(with: self.expanded ?  self.viewModel.featuredImageURL : self.viewModel.guestImageURL, placeholder: UIImage(named: "Logo_BarButton"))
   }
 }
 

@@ -179,6 +179,7 @@ extension RootViewController: OverlayControllerDelegate {
       make.right.equalToSuperview()
       make.left.equalToSuperview()
     }
+    overlayController.expanded = false
     self.overlayContainerView.isHidden = false
     UIView.animate(withDuration: 0.1, animations: {
       self.view.layoutIfNeeded()

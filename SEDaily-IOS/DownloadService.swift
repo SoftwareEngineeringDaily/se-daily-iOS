@@ -36,10 +36,13 @@ class DownloadService {
 				self.UIDelegate?.downloadUIDidChange(progress: progressAsInt, success: nil)
 				self.podcastViewModel.downloadingProgress = progressAsInt
 		},
-			onSuccess: {
-				self.UIDelegate?.downloadUIDidChange(progress: nil, success: true)
-				
-				
+			onSuccess: { [weak self] in
+        // for search bug fix
+        guard let strongSelf = self else { return }
+        let userInfo = ["viewModel": strongSelf.podcastViewModel]
+        NotificationCenter.default.post(name: .viewModelUpdated, object: nil, userInfo: userInfo)
+        //
+        strongSelf.UIDelegate?.downloadUIDidChange(progress: nil, success: true)
 		},
 			onFailure: { error in
 				self.UIDelegate?.downloadUIDidChange(progress: nil, success: false)

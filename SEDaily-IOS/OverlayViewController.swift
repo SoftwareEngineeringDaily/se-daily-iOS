@@ -264,6 +264,11 @@ extension OverlayViewController: EpisodeViewDelegate {
       delegate?.didTapPlay()
     }
     viewModel = podcastViewModel
+    // TODO: for search bug fix - deleted guest image on next launch
+//    let userInfo = ["viewModel": podcastViewModel]
+//    NotificationCenter.default.post(name: .viewModelUpdated, object: nil, userInfo: userInfo)
+//    print(podcastViewModel.guestImageURL)
+    //
     Tracker.logPlayPodcast(podcast: podcastViewModel)
     self.setText(text: podcastViewModel.podcastTitle)
     self.saveProgress()

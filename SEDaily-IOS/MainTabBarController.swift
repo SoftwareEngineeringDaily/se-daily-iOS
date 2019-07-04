@@ -90,6 +90,8 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate, Main
 		let layout = UICollectionViewLayout()
     let searchCollectionViewController = SearchCollectionViewController(collectionViewLayout: layout)
     guard let navigationController = self.selectedViewController as? UINavigationController else { return }
+    print(self.selectedViewController)
+    print(navigationController.viewControllers.first)
     mainCoordinator?.viewController(navigationController, push: searchCollectionViewController)
 		Analytics2.searchNavButtonPressed()
 	}
@@ -121,6 +123,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate, Main
 			setupNavBar(viewController: viewController)
 		}
 	}
+  
 	
 	func setupTabs() {
 		

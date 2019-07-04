@@ -65,14 +65,21 @@ class SearchCollectionViewController: UICollectionViewController, StatefulViewCo
     
     
     searchController.searchBar.delegate = self
+    searchController.obscuresBackgroundDuringPresentation = false
     searchController.searchBar.layer.borderWidth = 1
     searchController.searchBar.layer.borderColor = Stylesheet.Colors.light.cgColor
     searchController.searchBar.tintColor = Stylesheet.Colors.base
     searchController.searchBar.barTintColor = Stylesheet.Colors.light
     
+    definesPresentationContext = true
+    
+    //self.extendedLayoutIncludesOpaqueBars = true
+    //self.edgesForExtendedLayout = .bottom
+    //searchController.hidesNavigationBarDuringPresentation = false
+    
     
     searchController.dimsBackgroundDuringPresentation = false
-    searchController.hidesNavigationBarDuringPresentation = false
+    
     
     self.collectionView?.contentInset = UIEdgeInsetsMake(searchController.searchBar.frame.height - UIView.getValueScaledByScreenHeightFor(baseValue: 10), 0, 0, 0)
     self.view.addSubview(searchController.searchBar)
@@ -147,6 +154,7 @@ class SearchCollectionViewController: UICollectionViewController, StatefulViewCo
       cell.viewModel = viewModel
       cell.upvoteService = upvoteService
       cell.bookmarkService = bookmarkService
+      
       
       cell.commentShowCallback = { [weak self] in
         self?.commentsButtonPressed(viewModel)

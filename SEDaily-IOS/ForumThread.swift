@@ -39,11 +39,11 @@ extension ForumThread {
             return  "\(commentsCount) comment"
         }
     }
-    
+  
     func getDateLastActivityPretty() -> String {
         return moment(self.dateLastAcitiy)?.fromNow() ?? ""
     }
-    
+  
     func getDatedCreatedPretty() -> String {
         return moment(self.dateCreated)?.fromNow() ?? ""
     }

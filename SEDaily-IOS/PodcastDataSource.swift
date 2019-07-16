@@ -11,6 +11,21 @@ import Disk
 
 class PodcastDataSource {
     typealias GenericType = Podcast
+	
+	
+	
+	
+	static func getRecentlyListenedEpisode(podcastId: String, diskKey: DiskKeys, completion: @escaping ([GenericType]?) -> Void) {
+		DispatchQueue.global(qos: .userInitiated).async {
+			let retrievedObjects = try? Disk.retrieve(diskKey.folderPath, from: .caches, as: [GenericType].self)
+			let recentlyListened = retrievedObjects?.filter({ podcast -> Bool in
+				return podcast._id == podcastId
+			})
+			DispatchQueue.main.async {
+				completion(recentlyListened)
+			}
+		}
+	}
 
     static func getAllBookmarks(diskKey: DiskKeys, completion: @escaping ([GenericType]?) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {

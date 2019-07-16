@@ -8,7 +8,7 @@
 
 import UIKit
 import SwifterSwift
-import UIFontComplete
+
 
 // MARK: - Stylesheet
 enum Stylesheet {
@@ -40,10 +40,6 @@ enum Stylesheet {
 	
     }
 
-    enum Fonts {
-        static let Regular = Font.helveticaNeue
-        static let Bold = Font.helveticaNeueBold
-    }
 
     enum Contexts {
         enum Global {

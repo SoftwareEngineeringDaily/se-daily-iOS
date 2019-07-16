@@ -7,12 +7,14 @@
 //
 
 import UIKit
-import KoalaTeaFlowLayout
+
 import StatefulViewController
 
 private let reuseIdentifier = "Cell"
 
-class GeneralCollectionViewController: UICollectionViewController, StatefulViewController {
+class GeneralCollectionViewController: UICollectionViewController, StatefulViewController, MainCoordinated {
+	var mainCoordinator: MainFlowCoordinator?
+	
 	lazy var skeletonCollectionView: SkeletonCollectionView = {
 		return SkeletonCollectionView(frame: self.collectionView!.frame)
 	}()
@@ -21,7 +23,6 @@ class GeneralCollectionViewController: UICollectionViewController, StatefulViewC
 	var tabTitle: String
 	var tags: [Int]
 	var categories: [Int]
-	weak var audioOverlayDelegate: AudioOverlayDelegate?
 	
 	private var progressController = PlayProgressModelController()
 	
@@ -50,7 +51,6 @@ class GeneralCollectionViewController: UICollectionViewController, StatefulViewC
 	private let podcastViewModelController: PodcastViewModelController = PodcastViewModelController()
 	
 	init(collectionViewLayout layout: UICollectionViewLayout,
-			 audioOverlayDelegate: AudioOverlayDelegate?,
 			 tags: [Int] = [],
 			 categories: [PodcastCategoryIds] = [],
 			 type: PodcastTypes = .new,
@@ -58,7 +58,6 @@ class GeneralCollectionViewController: UICollectionViewController, StatefulViewC
 		self.tabTitle = tabTitle
 		self.type = type
 		self.tags = tags
-		self.audioOverlayDelegate = audioOverlayDelegate
 		self.categories = categories.flatMap { $0.rawValue }
 		super.init(collectionViewLayout: layout)
 		self.tabBarItem = self.customTabBarItem
@@ -227,11 +226,10 @@ class GeneralCollectionViewController: UICollectionViewController, StatefulViewC
 	
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
-			if let audioOverlayDelegate = self.audioOverlayDelegate {
-				let vc = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
+				let vc = EpisodeViewController()
 				vc.viewModel = viewModel
+				mainCoordinator?.configure(viewController: vc)
 				self.navigationController?.pushViewController(vc, animated: true)
-			}
 		}
 	}
 }

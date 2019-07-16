@@ -9,18 +9,29 @@
 protocol WebViewCellDelegate {
 	func updateWebViewHeight(didCalculateHeight height: CGFloat)
 }
+
+protocol EpisodeViewDelegate: class {
+  func playAudio(podcastViewModel: PodcastViewModel)
+  func stopAudio()
+}
+
 import UIKit
 import WebKit
 import Tags
 
-class EpisodeViewController: UIViewController {
+class EpisodeViewController: UIViewController, AudioControllable, MainCoordinated, Stateful {
+  
+  var stateController: StateController?
+  
+	var mainCoordinator: MainFlowCoordinator?
+	
 	
 	let tagsView = TagsView()
 	let tagsScrollView = UIScrollView(frame: CGRect(x: 0.0, y: 0.0, width: 375.0, height: 50.0))
 	
 	
 	//weak var delegate: PodcastDetailViewControllerDelegate?
-	private weak var audioOverlayDelegate: AudioOverlayDelegate?
+	weak var audioControlDelegate: EpisodeViewDelegate?
 	
 	var loaded: Bool = false // to check if HTML content has loaded
 	var webView: WKWebView = WKWebView()
@@ -57,8 +68,7 @@ class EpisodeViewController: UIViewController {
 	var tableView = UITableView()
 	
 	
-	required init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, audioOverlayDelegate: AudioOverlayDelegate?) {
-		self.audioOverlayDelegate = audioOverlayDelegate
+	required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 	}
 	required init?(coder aDecoder: NSCoder) {
@@ -100,9 +110,6 @@ class EpisodeViewController: UIViewController {
 		setupTagsHeaderLayout()
 		tableView.backgroundColor = .white
 		
-		self.audioOverlayDelegate?.setCurrentShowingDetailView(
-			podcastViewModel: viewModel)
-		
 		NotificationCenter.default.addObserver(
 			self,
 			selector: #selector(self.onDidReceiveData(_:)),
@@ -122,13 +129,11 @@ class EpisodeViewController: UIViewController {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		self.isPlaying = CurrentlyPlaying.shared.getCurrentlyPlayingId() == viewModel._id
+		self.isPlaying = stateController?.getCurrentlyPlayingId() == viewModel._id
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-		self.audioOverlayDelegate?.setCurrentShowingDetailView(
-			podcastViewModel: nil)
 	}
 	
 	deinit {
@@ -137,15 +142,13 @@ class EpisodeViewController: UIViewController {
 	}
 	
 	func playButtonPressed(isPlaying: Bool) {
-		
 		if !isPlaying {
-			self.audioOverlayDelegate?.animateOverlayIn()
-			self.audioOverlayDelegate?.playAudio(podcastViewModel: viewModel)
+			self.audioControlDelegate?.playAudio(podcastViewModel: viewModel)
 			AskForReview.triggerEvent()
 			self.isPlaying = true
 		} else {
-			self.audioOverlayDelegate?.animateOverlayOut()
-			self.audioOverlayDelegate?.stopAudio()
+			self.audioControlDelegate?.stopAudio()
+      self.isPlaying = false
 		}
 	}
 	
@@ -316,12 +319,12 @@ extension EpisodeViewController {
 
 extension EpisodeViewController {
 	@objc func onDidReceiveReloadRequest(_ notification: Notification) {
-		if let data = notification.userInfo as? [String: PodcastViewModel] {
-			for (_, viewModel) in data {
-				guard viewModel._id == self.viewModel._id else { return }
-				self.isPlaying = false
-			}
-		}
+    if let data = notification.userInfo as? [String: PodcastViewModel] {
+      for (_, viewModel) in data {
+        guard viewModel._id == self.viewModel._id else { return }
+        self.isPlaying = false
+      }
+    }
 	}
 }
 
@@ -333,7 +336,8 @@ extension EpisodeViewController: TagsDelegate {
 	func tagsTouchAction(_ tagsView: TagsView, tagButton: TagButton) {
 		let layout = UICollectionViewLayout()
 		let topic = topics[tagButton.index]
-		var postsForTopicCollectionViewController = PostsForTopicCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate, topic: topic)
+		var postsForTopicCollectionViewController = PostsForTopicCollectionViewController(collectionViewLayout: layout, topic: topic)
+    mainCoordinator?.configure(viewController: postsForTopicCollectionViewController)
 		self.navigationController?.pushViewController(postsForTopicCollectionViewController, animated: true)
 	}
 	// Last Tag Touch Action

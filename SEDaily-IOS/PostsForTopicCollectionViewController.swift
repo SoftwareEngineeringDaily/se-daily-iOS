@@ -9,16 +9,17 @@
 
 
 import UIKit
-import KoalaTeaFlowLayout
+
 
 private let reuseIdentifier = "Cell"
 
-class PostsForTopicCollectionViewController: UICollectionViewController {
+class PostsForTopicCollectionViewController: UICollectionViewController, MainCoordinated {
+  var mainCoordinator: MainFlowCoordinator?
+  
 	lazy var skeletonCollectionView: SkeletonCollectionView = {
 		return SkeletonCollectionView(frame: self.collectionView!.frame)
 	}()
 	
-	weak var audioOverlayDelegate: AudioOverlayDelegate?
 	
 	var topic: Topic
 	
@@ -38,12 +39,10 @@ class PostsForTopicCollectionViewController: UICollectionViewController {
 	private let podcastViewModelController: PodcastViewModelController = PodcastViewModelController()
 	
 	init(collectionViewLayout layout: UICollectionViewLayout,
-			 audioOverlayDelegate: AudioOverlayDelegate?,
 			 topic: Topic = Topic(_id: "", name: "", slug: "", status: "", postCount: 0)
 		) {
 		
 		self.topic = topic
-		self.audioOverlayDelegate = audioOverlayDelegate
 		super.init(collectionViewLayout: layout)
 	}
 	
@@ -202,11 +201,12 @@ class PostsForTopicCollectionViewController: UICollectionViewController {
 	
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if let viewModel = podcastViewModelController.viewModel(at: indexPath.row) {
-			if let audioOverlayDelegate = self.audioOverlayDelegate {
-				let vc = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
+			
+				let vc = EpisodeViewController()
+        mainCoordinator?.configure(viewController: vc)
 				vc.viewModel = viewModel
 				self.navigationController?.pushViewController(vc, animated: true)
-			}
+			
 		}
 	}
 }

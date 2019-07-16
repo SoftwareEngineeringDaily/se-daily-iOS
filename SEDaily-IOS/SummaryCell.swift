@@ -58,7 +58,7 @@ extension SummaryCell {
 		struct Style {
 			var marginX: CGFloat = 0
 			var marginY: CGFloat = 0
-			var font: UIFont = UIFont(font: .helveticaNeue, size: 10.0)!
+			var font: UIFont = UIFont(name: "Roboto", size: 10.0)! //arbitrary
 			var color = UIColor.clear
 			var alignment = NSTextAlignment.left
 		}

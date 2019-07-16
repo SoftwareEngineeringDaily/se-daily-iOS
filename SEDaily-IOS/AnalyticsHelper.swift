@@ -51,13 +51,7 @@ class Analytics2 {
         Analytics.logEvent("feed_list_viewed", parameters: nil)
     }
     
-    class func forumThreadViewed(forumThread: ForumThread) {
-        Analytics.logEvent("forum_thread_viewed", parameters: [
-            AnalyticsParameterItemID: "id-\(forumThread._id)",
-            AnalyticsParameterItemName: forumThread.title,
-            AnalyticsParameterContentType: "view"
-        ])
-    }
+    
     
     class func relatedLinkSafariOpen(url: URL) {
         Analytics.logEvent("related_link_in_safari", parameters: [

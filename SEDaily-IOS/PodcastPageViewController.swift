@@ -10,17 +10,18 @@ import UIKit
 import Tabman
 import Pageboy
 
-class PodcastPageViewController: TabmanViewController, PageboyViewControllerDataSource {
+class PodcastPageViewController: TabmanViewController, PageboyViewControllerDataSource, MainCoordinated {
+	
+	var mainCoordinator: MainFlowCoordinator?
+	
 
     var viewControllers = [GeneralCollectionViewController]()
     var barItems = [TabmanBar.Item]()
-    weak var audioOverlayDelegate: AudioOverlayDelegate?
     var customTabBarItem: UITabBarItem! {
 			return UITabBarItem(title: L10n.tabBarTitleLatest, image: UIImage(named: "latest_outline"), selectedImage: UIImage(named: "latest"))
     }
 
-    init(audioOverlayDelegate: AudioOverlayDelegate?) {
-        self.audioOverlayDelegate = audioOverlayDelegate
+    init() {
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -71,42 +72,43 @@ class PodcastPageViewController: TabmanViewController, PageboyViewControllerData
         let layout = UICollectionViewLayout()
 
         viewControllers = [
-            GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate,
+            GeneralCollectionViewController(collectionViewLayout: layout,
                                             tabTitle: PodcastCategoryIds.All.description),
-            GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate,
+            GeneralCollectionViewController(collectionViewLayout: layout,
                                             categories: [PodcastCategoryIds.Greatest_Hits],
                                             tabTitle: PodcastCategoryIds.Greatest_Hits.description),
-            GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate,
+            GeneralCollectionViewController(collectionViewLayout: layout,
                                             categories: [PodcastCategoryIds.Business_and_Philosophy],
                                             tabTitle: PodcastCategoryIds.Business_and_Philosophy.description),
-            GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate,
+            GeneralCollectionViewController(collectionViewLayout: layout,
                                             categories: [PodcastCategoryIds.Blockchain],
                                             tabTitle: PodcastCategoryIds.Blockchain.description),
-            GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate,
+            GeneralCollectionViewController(collectionViewLayout: layout,
                                             categories: [PodcastCategoryIds.Cloud_Engineering],
                                             tabTitle: PodcastCategoryIds.Cloud_Engineering.description),
-            GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate,
+            GeneralCollectionViewController(collectionViewLayout: layout,
                                             categories: [PodcastCategoryIds.Data],
                                             tabTitle: PodcastCategoryIds.Data.description),
-            GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate,
+            GeneralCollectionViewController(collectionViewLayout: layout,
                                             categories: [PodcastCategoryIds.JavaScript],
                                             tabTitle: PodcastCategoryIds.JavaScript.description),
-            GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate,
+            GeneralCollectionViewController(collectionViewLayout: layout,
                                             categories: [PodcastCategoryIds.Machine_Learning],
                                             tabTitle: PodcastCategoryIds.Machine_Learning.description),
-            GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate,
+            GeneralCollectionViewController(collectionViewLayout: layout,
                                             categories: [PodcastCategoryIds.Open_Source],
                                             tabTitle: PodcastCategoryIds.Open_Source.description),
-            GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate,
+            GeneralCollectionViewController(collectionViewLayout: layout,
                                             categories: [PodcastCategoryIds.Security],
                                             tabTitle: PodcastCategoryIds.Security.description),
-            GeneralCollectionViewController(collectionViewLayout: layout, audioOverlayDelegate: self.audioOverlayDelegate,
+            GeneralCollectionViewController(collectionViewLayout: layout,
                                             categories: [PodcastCategoryIds.Hackers],
                                             tabTitle: PodcastCategoryIds.Hackers.description)
         ]
 
         viewControllers.forEach { (controller) in
             barItems.append(Item(title: controller.tabTitle))
+					mainCoordinator?.configure(viewController: controller)
         }
     }
 }

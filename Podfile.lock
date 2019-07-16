@@ -46,14 +46,13 @@ PODS:
   - Nimble (7.0.3)
   - Pageboy (2.0.4)
   - PopupDialog (0.6.2)
-  - PureLayout (3.0.2)
+  - PureLayout (3.1.4)
   - Quick (1.2.0)
   - Reusable (4.0.2):
     - Reusable/Storyboard (= 4.0.2)
     - Reusable/View (= 4.0.2)
   - Reusable/Storyboard (4.0.2)
   - Reusable/View (4.0.2)
-  - SideMenu (3.1.5)
   - Skeleton (0.1.2)
   - SnapKit (4.0.0)
   - StatefulViewController (3.0)
@@ -81,7 +80,6 @@ PODS:
     - Pageboy (~> 2.0)
     - PureLayout (~> 3.0)
   - Tags (0.2.4)
-  - UIFontComplete (2.0.1)
   - URITemplate (2.0.3)
   - WaitForIt (2.0.0)
 
@@ -103,10 +101,8 @@ DEPENDENCIES:
   - Nimble
   - Pageboy (~> 2.0.2)
   - PopupDialog (~> 0.6.0)
-  - PureLayout (~> 3.0.2)
   - Quick
   - Reusable (~> 4.0.0)
-  - SideMenu (~> 3.1.4)
   - Skeleton (~> 0.1.0)
   - SnapKit (~> 4.0.0)
   - StatefulViewController (~> 3.0)
@@ -120,7 +116,6 @@ DEPENDENCIES:
   - SwiftyJSON
   - Tabman (~> 1.0.5)
   - Tags
-  - UIFontComplete (~> 2.0.1)
   - WaitForIt (~> 2.0.0)
 
 SPEC REPOS:
@@ -149,7 +144,6 @@ SPEC REPOS:
     - PureLayout
     - Quick
     - Reusable
-    - SideMenu
     - Skeleton
     - SnapKit
     - StatefulViewController
@@ -163,7 +157,6 @@ SPEC REPOS:
     - SwiftyJSON
     - Tabman
     - Tags
-    - UIFontComplete
     - URITemplate
     - WaitForIt
 
@@ -199,10 +192,9 @@ SPEC CHECKSUMS:
   Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
   Pageboy: 5970f6138b035380fd633b1813b7cc056784b784
   PopupDialog: d4336d7274a6aa3af4cb26d8b6691510eba90cc3
-  PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
+  PureLayout: f08c01b8dec00bb14a1fefa3de4c7d9c265df85e
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   Reusable: 584a5629747c52e0f6a77841b400dc2643f6fa0f
-  SideMenu: 47dbf9e4d878062d8994aed43f6e4bf6c1fea30b
   Skeleton: 0d2941ce8d24f60a7e85ee39e55203256300b538
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
@@ -216,10 +208,9 @@ SPEC CHECKSUMS:
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   Tabman: 9f9a25595516c7dffb747be271ec8a0a5ac2341e
   Tags: f513b25d753de97503f1bef5b4ff1fca4a0d5b29
-  UIFontComplete: 7e3ce7f0a12d2529fb07f537e262aabfa87df280
   URITemplate: ace0c4c46dcf8afe6e89b4060621852886b15c3b
   WaitForIt: 2c7ad6deaffe3bf727b7242a2263167bf2ce3e57
 
-PODFILE CHECKSUM: bc3e0ce027ad18c1833068ccb8d49a9dcb9bb707
+PODFILE CHECKSUM: c35cd95d6116027769f0d80b8e99a819bc01095b
 
 COCOAPODS: 1.7.3

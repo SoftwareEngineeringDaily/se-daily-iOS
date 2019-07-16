@@ -9,7 +9,6 @@
 
 import UIKit
 import SwifterSwift
-import SideMenu
 import MBProgressHUD
 
 class LoginViewController: UIViewController {

@@ -606,118 +606,14 @@ extension API {
 		}
 	}
 }
-typealias ForumThreadModel = ForumThread
+//typealias ForumThreadModel = ForumThread
 
 // MARK: Forum
-extension API {
-	
-	func getForumThreads(
-		lastActivityBefore lastActivityBeforeDate: String = "",
-		onSuccess: @escaping ([ForumThreadModel]) -> Void,
-		onFailure: @escaping (APIError?) -> Void) {
-		
-		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token ?? ""
-		let _headers: HTTPHeaders = [
-			Headers.authorization: Headers.bearer + userToken
-		]
-		
-		let urlString = rootURL + API.Endpoints.forum
-		
-		// Params
-		var params = [String: String]()
-		if lastActivityBeforeDate != "" {
-			params[Params.lastActivityBefore] = lastActivityBeforeDate
-		}
-		
-		networkRequest(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
-			switch response.result {
-			case .success:
-				guard let responseData = response.data else {
-					// Handle error here
-					log.error("response has no data")
-					onFailure(.NoResponseDataError)
-					return
-				}
-				
-				var data: [ForumThreadModel] = []
-				let this = JSON(responseData)
-				for (_, subJson):(String, JSON) in this {
-					guard let jsonData = try? subJson.rawData() else { continue }
-					let newObject = try? JSONDecoder().decode(ForumThreadModel.self, from: jsonData)
-					if let newObject = newObject {
-						data.append(newObject)
-					}
-				}
-				onSuccess(data)
-			case .failure(let error):
-				log.error(error.localizedDescription)
-				Tracker.logGeneralError(error: error)
-				onFailure(.GeneralFailure)
-			}
-		}
-	}
-}
 
 
 
 // MARK: Feed
-extension API {
-	
-	func getFeed(
-		lastActivityBefore lastActivityBeforeDate: String = "",
-		onSuccess: @escaping ([Any], ForumThread?) -> Void,
-		onFailure: @escaping (APIError?) -> Void) {
-		
-		let user = UserManager.sharedInstance.getActiveUser()
-		let userToken = user.token ?? ""
-		let _headers: HTTPHeaders = [
-			Headers.authorization: Headers.bearer + userToken
-		]
-		
-		let urlString = rootURL + API.Endpoints.feed
-		
-		// Params
-		var params = [String: String]()
-		if lastActivityBeforeDate != "" {
-			params[Params.lastActivityBefore] = lastActivityBeforeDate
-		}
-		
-		networkRequest(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
-			switch response.result {
-			case .success:
-				guard let responseData = response.data else {
-					// Handle error here
-					log.error("response has no data")
-					onFailure(.NoResponseDataError)
-					return
-				}
-				
-				var data: [Any] = []
-				let this = JSON(responseData)
-				var lastThread: ForumThread?
-				for (_, subJson):(String, JSON) in this {
-					guard let jsonData = try? subJson.rawData() else { continue }
-					let newObject = try? JSONDecoder().decode(ForumThreadModel.self, from: jsonData)
-					if let newObject = newObject {
-						data.append(newObject)
-						lastThread = newObject as ForumThread
-					} else {
-						if let feedItem = try? JSONDecoder().decode(FeedItem.self, from: jsonData) {
-							data.append(feedItem)
-						}
-						
-					}
-				}
-				onSuccess(data, lastThread)
-			case .failure(let error):
-				log.error(error.localizedDescription)
-				Tracker.logGeneralError(error: error)
-				onFailure(.GeneralFailure)
-			}
-		}
-	}
-}
+
 
 typealias RelatedLinkModel = RelatedLink
 

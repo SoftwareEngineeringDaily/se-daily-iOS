@@ -234,7 +234,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate, Main
 	}
 }
 
-extension CustomTabViewController: MFMailComposeViewControllerDelegate {
+extension MainTabBarController: MFMailComposeViewControllerDelegate {
 	func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
 		switch result {
 		case .sent:

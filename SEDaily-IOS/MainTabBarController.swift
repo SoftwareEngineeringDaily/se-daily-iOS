@@ -12,7 +12,6 @@ import PopupDialog
 import SnapKit
 import StoreKit
 import SwifterSwift
-import SwiftIcons
 import Firebase
 
 class MainTabBarController: UITabBarController, UITabBarControllerDelegate, MainCoordinated {
@@ -76,9 +75,8 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate, Main
 			
 			// Hacky way to show bars icon
 			let iconSize: CGFloat = 16.0
-			let image = UIImage(bgIcon: .fontAwesome(.bars), bgTextColor: .clear, bgBackgroundColor: .clear, topIcon: .fontAwesome(.bars), topTextColor: .white, bgLarge: false, size: CGSize(width: iconSize, height: iconSize))
-			leftBarButton.image = image
-			leftBarButton.imageInsets = UIEdgeInsets(top: 0, left: -(iconSize / 2), bottom: 0, right: 0)
+      let image = #imageLiteral(resourceName: "menu_hamburger")
+      leftBarButton.image = image
 			
 			viewController.navigationItem.leftBarButtonItem = leftBarButton
 		}

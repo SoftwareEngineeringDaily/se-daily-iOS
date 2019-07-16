@@ -60,9 +60,14 @@
 		430FF9C922B2FEF70033A15A /* URLSchemaHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430FF9C822B2FEF60033A15A /* URLSchemaHelper.swift */; };
 		431135D422AA2E2B00BFC910 /* SeparatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431135D322AA2E2B00BFC910 /* SeparatorCell.swift */; };
 		431DE891228D619D00FACA74 /* PostsForTopicCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431DE890228D619C00FACA74 /* PostsForTopicCollectionViewController.swift */; };
+		433A866522DDD3510055F931 /* RemoteCommandDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A866422DDD3510055F931 /* RemoteCommandDataSource.swift */; };
+		433A866722DDD3720055F931 /* RemoteCommandManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A866622DDD3720055F931 /* RemoteCommandManager.swift */; };
 		43476C9722DDA8A90032ABD5 /* PlaybackSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43476C9622DDA8A90032ABD5 /* PlaybackSpeed.swift */; };
 		43476C9D22DDBD770032ABD5 /* ForumThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43476C9C22DDBD770032ABD5 /* ForumThread.swift */; };
 		43476C9F22DDBDB90032ABD5 /* ForumThreadLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43476C9E22DDBDB90032ABD5 /* ForumThreadLite.swift */; };
+		43476CA222DDD1AB0032ABD5 /* AssetPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43476CA122DDD1AB0032ABD5 /* AssetPlayer.swift */; };
+		43476CA422DDD1D20032ABD5 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43476CA322DDD1D20032ABD5 /* Asset.swift */; };
+		43476CA622DDD2190032ABD5 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43476CA522DDD2190032ABD5 /* PlayerView.swift */; };
 		4359B94422C73B4C009704F8 /* KoalaTeaFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4359B94322C73B4C009704F8 /* KoalaTeaFlowLayout.swift */; };
 		4359B94622C7494D009704F8 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4359B94522C7494D009704F8 /* AudioPlayerView.swift */; };
 		435BAF3A22783B7C00762891 /* EpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435BAF3922783B7C00762891 /* EpisodeViewController.swift */; };
@@ -202,9 +207,14 @@
 		430FF9C822B2FEF60033A15A /* URLSchemaHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSchemaHelper.swift; sourceTree = "<group>"; };
 		431135D322AA2E2B00BFC910 /* SeparatorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorCell.swift; sourceTree = "<group>"; };
 		431DE890228D619C00FACA74 /* PostsForTopicCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsForTopicCollectionViewController.swift; sourceTree = "<group>"; };
+		433A866422DDD3510055F931 /* RemoteCommandDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCommandDataSource.swift; sourceTree = "<group>"; };
+		433A866622DDD3720055F931 /* RemoteCommandManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCommandManager.swift; sourceTree = "<group>"; };
 		43476C9622DDA8A90032ABD5 /* PlaybackSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackSpeed.swift; sourceTree = "<group>"; };
 		43476C9C22DDBD770032ABD5 /* ForumThread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForumThread.swift; sourceTree = "<group>"; };
 		43476C9E22DDBDB90032ABD5 /* ForumThreadLite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForumThreadLite.swift; sourceTree = "<group>"; };
+		43476CA122DDD1AB0032ABD5 /* AssetPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetPlayer.swift; sourceTree = "<group>"; };
+		43476CA322DDD1D20032ABD5 /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
+		43476CA522DDD2190032ABD5 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		4359B94322C73B4C009704F8 /* KoalaTeaFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KoalaTeaFlowLayout.swift; sourceTree = "<group>"; };
 		4359B94522C7494D009704F8 /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
 		435BAF3922783B7C00762891 /* EpisodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeViewController.swift; sourceTree = "<group>"; };
@@ -554,6 +564,15 @@
 			path = Debug;
 			sourceTree = "<group>";
 		};
+		433A866322DDD3390055F931 /* RemoteCommand */ = {
+			isa = PBXGroup;
+			children = (
+				433A866422DDD3510055F931 /* RemoteCommandDataSource.swift */,
+				433A866622DDD3720055F931 /* RemoteCommandManager.swift */,
+			);
+			name = RemoteCommand;
+			sourceTree = "<group>";
+		};
 		43476CA022DDBF4C0032ABD5 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -585,8 +604,12 @@
 		439913D722C9F0570061EE6E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				433A866322DDD3390055F931 /* RemoteCommand */,
 				43AA2C922268AC3B0050668B /* fonts */,
 				4359B94322C73B4C009704F8 /* KoalaTeaFlowLayout.swift */,
+				43476CA122DDD1AB0032ABD5 /* AssetPlayer.swift */,
+				43476CA322DDD1D20032ABD5 /* Asset.swift */,
+				43476CA522DDD2190032ABD5 /* PlayerView.swift */,
 			);
 			name = Vendor;
 			sourceTree = "<group>";
@@ -1028,7 +1051,6 @@
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/KTResponsiveUI/KTResponsiveUI.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/KoalaTeaPlayer/KoalaTeaPlayer.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
 				"${BUILT_PRODUCTS_DIR}/PopupDialog/PopupDialog.framework",
@@ -1037,7 +1059,6 @@
 				"${BUILT_PRODUCTS_DIR}/Skeleton/Skeleton.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/StatefulViewController/StatefulViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftIcons/SwiftIcons.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftMoment/SwiftMoment.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework",
 				"${BUILT_PRODUCTS_DIR}/SwifterSwift/SwifterSwift.framework",
@@ -1059,7 +1080,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KTResponsiveUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KoalaTeaPlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupDialog.framework",
@@ -1068,7 +1088,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Skeleton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StatefulViewController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftIcons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMoment.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSoup.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwifterSwift.framework",
@@ -1102,6 +1121,7 @@
 				43C0C764227AE7D1007A92E7 /* WebViewCell.swift in Sources */,
 				43CE45212293ECFC0048426A /* DownloadsCollectionViewController.swift in Sources */,
 				439BCC7522818F9D008D808B /* ProfileViewController.swift in Sources */,
+				43476CA622DDD2190032ABD5 /* PlayerView.swift in Sources */,
 				4398EA3022AE58BF002F22F0 /* LabelCell.swift in Sources */,
 				43A680D222707DC000A639A9 /* DownloadService.swift in Sources */,
 				43086E3522A7C7CB00B8B65B /* User+ProfileViewController.Section.swift in Sources */,
@@ -1130,8 +1150,10 @@
 				436317E022C3993F0091DA8C /* OverlayViewController.swift in Sources */,
 				960BFEBF20226B620073DAB2 /* CommentsViewController.swift in Sources */,
 				43C0C76222798635007A92E7 /* ActionView.swift in Sources */,
+				43476CA422DDD1D20032ABD5 /* Asset.swift in Sources */,
 				43AD7119228B05A400E930BD /* Topic.swift in Sources */,
 				43476C9D22DDBD770032ABD5 /* ForumThread.swift in Sources */,
+				43476CA222DDD1AB0032ABD5 /* AssetPlayer.swift in Sources */,
 				1671BD5A200D3D7800E6ED3B /* SubscriptionStatusViewController.swift in Sources */,
 				96BD1C88208E9497006C5E1D /* TestHookBool.swift in Sources */,
 				43CE140E226070FB00B57CFA /* PlayProgressModelController.swift in Sources */,
@@ -1149,6 +1171,7 @@
 				435BAF3A22783B7C00762891 /* EpisodeViewController.swift in Sources */,
 				430FF9C922B2FEF70033A15A /* URLSchemaHelper.swift in Sources */,
 				962F5365201E3C7900897A6E /* RelatedLinksViewController.swift in Sources */,
+				433A866522DDD3510055F931 /* RemoteCommandDataSource.swift in Sources */,
 				43CE45232293F14B0048426A /* DownloadsViewModelController.swift in Sources */,
 				1EABD8F51FB430AB00959859 /* DebugTabViewController.swift in Sources */,
 				435BAF3C2278430900762891 /* EpisodeHeaderCell.swift in Sources */,
@@ -1178,6 +1201,7 @@
 				16F3A1BA1F90918D00364709 /* PodcastRepository.swift in Sources */,
 				1686FC011F009EC00088A6C1 /* AppDelegate.swift in Sources */,
 				9610313E20A353B400A2D2D5 /* AnalyticsHelper.swift in Sources */,
+				433A866722DDD3720055F931 /* RemoteCommandManager.swift in Sources */,
 				4359B94622C7494D009704F8 /* AudioPlayerView.swift in Sources */,
 				164FE9E71F02F02F009419CA /* UserModel.swift in Sources */,
 				43BA7BF8228452A4000E1171 /* NotificationsController.swift in Sources */,

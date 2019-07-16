@@ -9,7 +9,6 @@
 import UIKit
 import AVFoundation
 import SnapKit
-import KoalaTeaPlayer
 
 protocol OverlayControllerDelegate: class {
   func didSelectInfo(viewModel: PodcastViewModel)

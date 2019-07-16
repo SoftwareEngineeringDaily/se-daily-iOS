@@ -18,7 +18,7 @@ class DebugTabViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.tabBarItem = UITabBarItem(title: "Debug", image: nil, selectedImage: nil)
-        self.tabBarItem.setIcon(icon: .fontAwesome(.bug))
+        //self.tabBarItem.setIcon(icon: .fontAwesome(.bug))
     }
 
     override func viewDidLoad() {

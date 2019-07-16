@@ -21,7 +21,6 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 	private let reuseIdentifier = "Cell"
 	
 	private var viewModelController = DownloadsViewModelController()
-	weak var audioOverlayDelegate: AudioOverlayDelegate?
 	
 	private var progressController = PlayProgressModelController()
 	

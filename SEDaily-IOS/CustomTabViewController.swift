@@ -22,10 +22,8 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
 
     var actionSheet = UIAlertController()
 
-    weak var audioOverlayDelegate: AudioOverlayDelegate?
 
-    init(audioOverlayDelegate: AudioOverlayDelegate?) {
-        self.audioOverlayDelegate = audioOverlayDelegate
+    init() {
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -112,7 +110,7 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
             withIdentifier: "FeedListViewController") as? FeedListViewController else {
                 return
         }
-        FeedViewController.audioOverlayDelegate = self.audioOverlayDelegate
+        //FeedViewController.audioOverlayDelegate = self.audioOverlayDelegate
 			
 
         

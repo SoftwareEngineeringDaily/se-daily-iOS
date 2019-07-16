@@ -30,8 +30,6 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate, Main
 	
 	var actionSheet = UIAlertController()
 	
-	weak var audioOverlayDelegate: AudioOverlayDelegate?
-	
 	init() {
 		super.init(nibName: nil, bundle: nil)
 	}
@@ -90,8 +88,6 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate, Main
 		let layout = UICollectionViewLayout()
     let searchCollectionViewController = SearchCollectionViewController(collectionViewLayout: layout)
     guard let navigationController = self.selectedViewController as? UINavigationController else { return }
-    print(self.selectedViewController)
-    print(navigationController.viewControllers.first)
     mainCoordinator?.viewController(navigationController, push: searchCollectionViewController)
 		Analytics2.searchNavButtonPressed()
 	}

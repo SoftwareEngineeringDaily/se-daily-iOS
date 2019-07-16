@@ -23,7 +23,6 @@ class GeneralCollectionViewController: UICollectionViewController, StatefulViewC
 	var tabTitle: String
 	var tags: [Int]
 	var categories: [Int]
-	weak var audioOverlayDelegate: AudioOverlayDelegate?
 	
 	private var progressController = PlayProgressModelController()
 	
@@ -52,7 +51,6 @@ class GeneralCollectionViewController: UICollectionViewController, StatefulViewC
 	private let podcastViewModelController: PodcastViewModelController = PodcastViewModelController()
 	
 	init(collectionViewLayout layout: UICollectionViewLayout,
-			 audioOverlayDelegate: AudioOverlayDelegate?,
 			 tags: [Int] = [],
 			 categories: [PodcastCategoryIds] = [],
 			 type: PodcastTypes = .new,
@@ -60,7 +58,6 @@ class GeneralCollectionViewController: UICollectionViewController, StatefulViewC
 		self.tabTitle = tabTitle
 		self.type = type
 		self.tags = tags
-		self.audioOverlayDelegate = audioOverlayDelegate
 		self.categories = categories.flatMap { $0.rawValue }
 		super.init(collectionViewLayout: layout)
 		self.tabBarItem = self.customTabBarItem

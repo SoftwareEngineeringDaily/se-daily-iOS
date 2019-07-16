@@ -18,7 +18,6 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 	private let reuseIdentifier = "Cell"
 	
 	private var viewModelController = BookmarkViewModelController()
-	weak var audioOverlayDelegate: AudioOverlayDelegate?
 	
 	private var progressController = PlayProgressModelController()
 	

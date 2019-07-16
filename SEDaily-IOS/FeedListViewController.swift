@@ -13,7 +13,7 @@ class FeedListViewController: UIViewController {
     let networkService = API()
     var threads: [Any] = []
     var lastThread:ForumThread?
-    weak var audioOverlayDelegate: AudioOverlayDelegate?
+    //weak var audioOverlayDelegate: AudioOverlayDelegate?
 
     private let refreshControl = UIRefreshControl()
 
@@ -176,52 +176,52 @@ extension FeedListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
         
-        if let thread = self.threads[indexPath.row] as? ForumThread {
-            if let liteEpisodeModel = thread.podcastEpisode {
-                let spinner = self.displaySpinner(onView: self.view)
-                networkService.getPost(podcastId: liteEpisodeModel._id) { (succeeded, fullPodcast) in
-                    self.removeSpinner(spinner: spinner)
-
-                    if succeeded && fullPodcast != nil {
-                        if let audioOverlayDelegate = self.audioOverlayDelegate {
-//                            let vc = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
-//                            // TODO: check for safety:
-//                            vc.model =  PodcastViewModel(podcast: fullPodcast!)
-//                            //                    vc.delegate = self
-//                            //                    vc.audioOverlayDelegate = self.audioOverlayDelegate
-//                            self.navigationController?.pushViewController(vc, animated: true)
-                        }
-                    } else {
-                        self.presentThreadComments(thread)
-                    }
-                    
-                }
-            } else {
-               presentThreadComments(thread)
-            }
-        } else if let feedItem = self.threads[indexPath.row] as? FeedItem {
-            // TODO: move to model
-            var urlString = feedItem.relatedLink.url
-            let urlPrefix = urlString.prefix(4)
-            if urlPrefix != "http" {
-                // Defaulting to http:
-                if urlPrefix.prefix(3) == "://" {
-                    urlString = "http\(urlString)"
-                } else {
-                    urlString = "http://\(urlString)"
-                }
-            }
-            
-            // Open the link:
-            if let linkUrl = URL(string: urlString) {
-                let vc = RelatedLinkWebVC()
-                vc.url = linkUrl
-                self.navigationController?.pushViewController(vc, animated: true)
-
-            } else {
-                print("link null")
-            }
-        }
+//        if let thread = self.threads[indexPath.row] as? ForumThread {
+//            if let liteEpisodeModel = thread.podcastEpisode {
+//                let spinner = self.displaySpinner(onView: self.view)
+//                networkService.getPost(podcastId: liteEpisodeModel._id) { (succeeded, fullPodcast) in
+//                    self.removeSpinner(spinner: spinner)
+//
+//                    if succeeded && fullPodcast != nil {
+//                        //if let audioOverlayDelegate = self.audioOverlayDelegate {
+////                            let vc = PodcastDetailViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
+////                            // TODO: check for safety:
+////                            vc.model =  PodcastViewModel(podcast: fullPodcast!)
+////                            //                    vc.delegate = self
+////                            //                    vc.audioOverlayDelegate = self.audioOverlayDelegate
+////                            self.navigationController?.pushViewController(vc, animated: true)
+////                        }
+////                    } else {
+////                        self.presentThreadComments(thread)
+////                    }
+//
+//                }
+//            } else {
+//               presentThreadComments(thread)
+//            }
+//        } else if let feedItem = self.threads[indexPath.row] as? FeedItem {
+//            // TODO: move to model
+//            var urlString = feedItem.relatedLink.url
+//            let urlPrefix = urlString.prefix(4)
+//            if urlPrefix != "http" {
+//                // Defaulting to http:
+//                if urlPrefix.prefix(3) == "://" {
+//                    urlString = "http\(urlString)"
+//                } else {
+//                    urlString = "http://\(urlString)"
+//                }
+//            }
+//
+//            // Open the link:
+//            if let linkUrl = URL(string: urlString) {
+//                let vc = RelatedLinkWebVC()
+//                vc.url = linkUrl
+//                self.navigationController?.pushViewController(vc, animated: true)
+//
+//            } else {
+//                print("link null")
+//            }
+        
     }
   
 }

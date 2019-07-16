@@ -19,7 +19,7 @@ protocol OverlayControllerDelegate: class {
 }
 
 class OverlayViewController: UIViewController, Stateful {
-  var stateController: StateController? { didSet { print("set1")}}
+  var stateController: StateController?
   
   let networkService = API()
   

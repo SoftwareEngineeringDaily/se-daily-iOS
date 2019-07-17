@@ -9,122 +9,137 @@
 import Foundation
 import Disk
 
-protocol DataSource {
-    associatedtype T
-    
-    func getAll(completion: @escaping ([T]?) -> Void)
-    func getById(id: String, completion: @escaping (T?) -> Void)
-    func insert(item: T)
-    func update(item: T)
-    func clean()
-    func deleteById(id: String)
-}
+class PodcastDataSource {
+    typealias GenericType = Podcast
+	
+	
+	
+	
+	static func getRecentlyListenedEpisode(podcastId: String, diskKey: DiskKeys, completion: @escaping ([GenericType]?) -> Void) {
+		DispatchQueue.global(qos: .userInitiated).async {
+			let retrievedObjects = try? Disk.retrieve(diskKey.folderPath, from: .caches, as: [GenericType].self)
+			let recentlyListened = retrievedObjects?.filter({ podcast -> Bool in
+				return podcast._id == podcastId
+			})
+			DispatchQueue.main.async {
+				completion(recentlyListened)
+			}
+		}
+	}
 
-enum DiskKeys: String {
-    case PodcastFolder = "Podcasts"
-    
-    var folderPath: String {
-        return self.rawValue + "/" + self.rawValue + ".json"
-    }
-}
-
-class PodcastDataSource: DataSource {
-    typealias T = Podcast
-    
-    func getAll(completion: @escaping ([T]?) -> Void) {
+    static func getAllBookmarks(diskKey: DiskKeys, completion: @escaping ([GenericType]?) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            let retrievedObjects = try? Disk.retrieve(DiskKeys.PodcastFolder.folderPath, from: .caches, as: [T].self)
+            let retrievedObjects = try? Disk.retrieve(diskKey.folderPath, from: .caches, as: [GenericType].self)
+            let bookmarks = retrievedObjects?.filter({ podcast -> Bool in
+                return podcast.bookmarked == true
+            })
+            DispatchQueue.main.async {
+                completion(bookmarks)
+            }
+        }
+    }
+	
+	static func getAllDownloads(diskKey: DiskKeys, completion: @escaping ([GenericType]?) -> Void) {
+		DispatchQueue.global(qos: .userInitiated).async {
+			let retrievedObjects = try? Disk.retrieve(diskKey.folderPath, from: .caches, as: [GenericType].self)
+			let downloads = retrievedObjects?.filter({ podcast -> Bool in
+				let vm = PodcastViewModel(podcast: podcast)
+				return vm.isDownloaded == true
+			})
+			DispatchQueue.main.async {
+				completion(downloads)
+			}
+		}
+	}
+
+    static func getAll(diskKey: DiskKeys, completion: @escaping ([GenericType]?) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let retrievedObjects = try? Disk.retrieve(diskKey.folderPath, from: .caches, as: [GenericType].self)
             DispatchQueue.main.async {
                 completion(retrievedObjects)
             }
         }
     }
-    
-    func getAllWith(filterObject: FilterObject, completion: @escaping ([T]?) -> Void) {
-        self.getAll { (returnedData) in
+
+    static func getAllWith(diskKey: DiskKeys, filterObject: FilterObject, completion: @escaping ([GenericType]?) -> Void) {
+        self.getAll(diskKey: diskKey) { (returnedData) in
             DispatchQueue.global(qos: .userInitiated).async {
-                //@TODO: Guard
-                let filteredObjects = returnedData?.filter({ (podcast) -> Bool in
+                guard let filteredObjects = returnedData?.filter({ (podcast) -> Bool in
                     return podcast.tags!.contains(filterObject.tags) &&
                         podcast.categories!.contains(filterObject.categories) &&
                         podcast.type == filterObject.type
                 })
-                
+                else {
+                    completion(nil)
+                    return
+                }
+
                 let dateString = filterObject.lastDate
                 if let passedDate = Date(iso8601String: dateString) {
-                    //@TODO: Gaurd
-                    let dateFilteredObjects = filteredObjects?.filter({ (podcast) -> Bool in
+                    let dateFilteredObjects = filteredObjects.filter({ (podcast) -> Bool in
                         return podcast.getLastUpdatedAsDate()! < passedDate
                     })
-                    //@TODO: Gaurd
                     DispatchQueue.main.async {
-                        completion(Array(dateFilteredObjects!.prefix(10)))
-                        
+                        completion(Array(dateFilteredObjects.prefix(10)))
                     }
                     return
                 }
                 DispatchQueue.main.async {
-                    // Prefix = to max paging
-                    completion(Array(filteredObjects!.prefix(10)))
-                    
+                    // Prefix = max paging
+                    completion(Array(filteredObjects.prefix(10)))
                 }
                 return
             }
         }
     }
-    
-    func getById(id: String, completion: @escaping (T?) -> Void) {
-        self.getAll { (returnedData) in
-            let foundObject = returnedData?.filter({ (item) -> Bool in
-                return item._id == id
-            }).first
-            completion(foundObject)
+
+    static func insert(diskKey: DiskKeys, items: [GenericType]) {
+        self.getAll(diskKey: .PodcastFolder) { (results) in
+            var newResults = results ?? [GenericType]()
+            items.forEach({ newPodcast in
+                if let index = results?.index(where: { oldPodcast -> Bool in
+                    return newPodcast._id == oldPodcast._id
+                }) {
+                    newResults[index] = newPodcast
+                } else {
+                    newResults.append(newPodcast)
+                }
+            })
+
+            self.override(diskKey: diskKey, items: newResults)
         }
-        
     }
-    
-    func insert(item: T) {
-        //@TODO: When would this fail
+
+    static func update(diskKey: DiskKeys, item: GenericType) {
         DispatchQueue.global(qos: .userInitiated).async {
-            do {
-                try Disk.append(item, to: DiskKeys.PodcastFolder.folderPath, in: .caches)
-            } catch {
-                //@TODO: Handle errors?
-                // ...
+            self.getAll(diskKey: .PodcastFolder) { (results) in
+                var newResults = results ?? [GenericType]()
+                if let index = results?.index(where: { oldPodcast -> Bool in
+                    return item._id == oldPodcast._id
+                }) {
+                    newResults[index] = item
+                } else {
+                    newResults.append(item)
+                }
+
+                self.override(diskKey: diskKey, items: newResults)
             }
         }
     }
-    
-    func insert(items: [T]) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            do {
-                try Disk.append(items, to: DiskKeys.PodcastFolder.folderPath, in: .caches)
-            } catch {
-                //@TODO: Handle errors?
-                // ...
-            }
+
+    static func override(diskKey: DiskKeys, items: [GenericType]) {
+        do {
+            try Disk.save(items, to: .caches, as: diskKey.folderPath)
+        } catch let error {
+            log.error(error.localizedDescription)
         }
     }
-    
-    func update(item: T) {
-        
+
+    static func clean(diskKey: DiskKeys) {
+        do {
+            try Disk.remove(diskKey.folderPath, from: .caches)
+        } catch let error {
+            log.error(error.localizedDescription)
+        }
     }
-    
-    func clean() {
-        try? Disk.remove(DiskKeys.PodcastFolder.rawValue, from: .caches)
-    }
-    
-    func deleteById(id: String) {
-        
-    }
-    
-    //@TODO: We may need to check if items exist?
-    //    func checkIfExists(item: Podcast) {
-    //        self.getById(id: item._id) { (returnedItem) in
-    //            if returnedItem != nil {
-    //                log.info("not nil")
-    //            }
-    //            log.info("nil?")
-    //        }
-    //    }
 }

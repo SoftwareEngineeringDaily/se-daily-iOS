@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   SEDaily-IOS
 
@@ -7,6 +7,13 @@
 */
 
 /* */
+"EnthusiasticHello" = "Hello!";
+"EnthusiasticYes" = "Yes!";
+"EnthusiasticSureSendEmail" = "Sure! Send email";
+"AppReviewPromptQuestion" = "Enjoying the SEDaily app?";
+"AppReviewEmailSubject" = "SEDaily iOS App Feedback";
+"AppReviewApology" = "Oh, sorry you're not liking the SEDaily app";
+"AppReviewGiveFeedbackQuestion" = "Would you help us out by sending us your feedback?";
 "TabBarTitleLatest" = "Latest";
 "TabBarJustForYou" = "Just For You";
 "TabTitleAll" = "All";
@@ -22,7 +29,11 @@
 "TabTitleGreatestHits" = "Greatest Hits";
 "LoginTitle" = "Login";
 "LogoutTitle" = "Logout";
+"UsernameOrEmailPlaceholder" = "Username or Email";
 "EmailAddressPlaceholder" = "Email";
+"EmailUnsupportedOnDevice" = "Email unsupported on this device";
+"EmailUnsupportedMessage" = "Please send an email to jeff@softwareengineeringdaily.com";
+"UsernamePlaceholder" = "Username";
 "PasswordPlaceholder" = "Password";
 "ConfirmPasswordPlaceholder" = "Confirm Password";
 "FirstNamePlaceholder" = "First Name";
@@ -31,6 +42,7 @@
 "CancelButtonTitle" = "Cancel";
 "SignUpButtonTitle" = "Sign Up";
 "AlertMessageEmailEmpty" = "Email Field Empty";
+"AlertMessageUsernameEmpty" = "Username Field Empty";
 "AlertMessagePasswordEmpty" = "Password Field Empty";
 "AlertMessagePasswordConfirmEmpty" = "Confirm Password Field Empty";
 "AlertMessageEmailWrongFormat" = "Invalid Email Format";
@@ -48,4 +60,47 @@
 "GenericError" = "Error";
 "GenericOkay" = "Okay";
 "GenericOK" = "OK";
+"GenericNo" = "No";
+"NoWithGratitude" = "No thanks";
 "Play" = "Play";
+"RelatedLinks" = "Related Links";
+"NoBookmarks" = "No saved episodes.";
+"LoginSeeBookmarks" = "Login to see your saved episodes";
+"TapToRefresh" = "Tap to refresh";
+"Comments" = "Comments";
+"ThereWasAProblem" = "There was a problem :(";
+"SucccessfullySubmitted" = "Successfully submitted :)";
+"Submitting" = "Submitting...";
+"Anonymous" = "Anonymous";
+"TabBarNotifications" = "Notifications";
+"TabBarForum" = "Forum";
+"TabBarFeed" = "Feed";
+"TabBarSaved" = "Saved";
+"TabBarDownloads" = "Downloads";
+"mwfNotificationTitle" = "Software Daily";
+"mwfNotificationBody" = "We have new episodes for you!";
+"Search" = "Search";
+"EmptySearch" = "No results for search";
+"FetchingSearch" = "Fetching results";
+"ToggleToSignUpButtonTitle" = "no account? sign up";
+"ToggleToSignInButtonTitle" = "back to sign in";
+"SignUpHeader" = "Sign Up";
+"SignInHeader" = "Sign In";
+"TimeLeft" = "minutes left";
+"Transcript" = "Transcript";
+"FieldEmpty" = "Fields cannot be blank, please fill and retry";
+"SomethingWentWrong" = "Something went wrong, please try again";
+"NewLink" = "Add new link";
+"AddLink" = "Add a link";
+"Submit" = "Submit";
+"ShortTitle" = "Add a short title";
+"NoDownloads" = "No downloaded episodes";
+"CommentsPlaceholder" = "Add a comment...";
+"DeletePodcast" = "Are you sure you want to delete this podcast?";
+"DeletePodcastButtonTitle" = "YEP! Delete it please.";
+"CancelReplyButtonTitle" = "Cancel reply";
+"ReplyButtonTitle" = "Reply";
+"TypeHere" = "Type here";
+"Post" = "Post";
+"EnableNotifications" = "Enable Notifications";
+"EditProfile" = "Edit Profile";

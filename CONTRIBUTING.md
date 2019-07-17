@@ -39,7 +39,7 @@ Please create an issue, label it as a `feature proposal` and follow the followin
 
 How to get unstuck
 ------------------
-We have an active Slack community that you can reach out to for more information or just to chat with anyone. Check out the [<img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Slack_Icon.png" alt="Slack Channel" width="15px"/> SED Android app development](https://softwaredaily.slack.com/app_redirect?channel=sed_app_ios) slack channel. 
+We have an active Slack community that you can reach out to for more information or just to chat with anyone. Check out the [<img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Slack_Icon.png" alt="Slack Channel" width="15px"/> SED iOS app development](https://softwaredaily.slack.com/app_redirect?channel=sed_app_ios) slack channel. 
 
 Also checkout the [Open Source Guide](https://softwareengineeringdaily.github.io/).
 

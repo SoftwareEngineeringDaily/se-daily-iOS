@@ -1,9 +1,11 @@
 # Software Engineering Daily iOS App
 
 [![logo](https://i.imgur.com/3OtP3p8.png)](https://softwareengineeringdaily.com/)
+
 Native iOS app for [Software Engineering Daily](https://softwareengineeringdaily.com/).
 
 ## Screenshots
+
 ![App screenshots](screenshots/app_screenshots.png)
 
 ## Getting Started

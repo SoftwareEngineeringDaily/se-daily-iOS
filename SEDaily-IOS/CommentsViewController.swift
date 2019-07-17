@@ -7,9 +7,10 @@
 //
 
 import UIKit
-import Down
+import MBProgressHUD
+
+
 class CommentsViewController: UIViewController {
-	
 	
 	var tableView: UITableView = UITableView()
 	
@@ -18,40 +19,20 @@ class CommentsViewController: UIViewController {
 	var postCommentView: UIView!
 	var statusLabel: UILabel!
 	var cancelReplyButton: UIButton!
-	
+	let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
 	let placeholderText = L10n.commentsPlaceholder
-	
 	
 	private let refreshControl = UIRefreshControl()
 	var rootEntityId: String?
-	var thread: ForumThread?
 	
 	let networkService = API()
-	var comments: [Comment] = [] {
-		didSet {
-			if comments.count == 0 {
-				// Still show if thread is defined because that means we'll have a header:
-				if thread != nil {
-					tableView.isHidden = false
-				} else {
-					tableView.isHidden = false //edit
-				}
-			} else {
-				tableView.isHidden = false
-			}
-		}
-	}
-	
-	// Constraints on Comment Holder
+	var comments: [Comment] = []
 	
 	// This is set when user clicks on reply
 	var parentCommentSelected: Comment? {
 		didSet {
 			guard let parentComment = parentCommentSelected else {
 				// Hide
-				//				composeStatusHolder.isHidden = true
-				//				heightOfReplyInfoHolder.constant = 0
-				//				self.view.layoutIfNeeded()
 				cancelReplyButton.isHidden = true
 				statusLabel.text = ""
 				return
@@ -68,9 +49,6 @@ class CommentsViewController: UIViewController {
 		}
 	}
 	
-	let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-	
-	
 	
 	init() {
 		super.init(nibName: nil, bundle: nil)
@@ -81,36 +59,9 @@ class CommentsViewController: UIViewController {
 	}
 	
 	
-	
-	
-	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		tableView.dataSource = self
-		tableView.delegate = self
-		tableView.register(cellType: CommentCell.self)
-		view.addSubview(tableView)
-		tableView.snp.makeConstraints { (make) -> Void in
-			make.top.equalToSuperview()
-			make.bottom.equalToSuperview()
-			make.right.equalToSuperview()
-			make.left.equalToSuperview()
-		}
-		tableView.separatorColor = .clear
-		tableView.contentInset = UIEdgeInsets(top: 20,left: 0,bottom: 0,right: 0)
-		
-		title = L10n.comments
-		// Hide the reply area
-		self.view.layoutIfNeeded()
-		
-		// Add activity indicator / spinner
-		activityIndicator.center = self.view.center
-		activityIndicator.hidesWhenStopped = true
-		activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
-		view.addSubview(activityIndicator)
-		
-		
+		setupLayout()
 		updateUIBasedOnUser()
 		loadComments()
 		setupPullToRefresh()
@@ -122,7 +73,7 @@ class CommentsViewController: UIViewController {
 			tableView.tableFooterView = UIView()
 			tableView.reloadData()
 		} else {
-			setupLayout()
+			setupLayoutForUser()
 			tableView.reloadData()
 		}
 	}
@@ -138,11 +89,9 @@ class CommentsViewController: UIViewController {
 	}
 	
 	@objc private func refreshListData(_ sender: Any) {
-		// Fetch Weather Data
 		loadComments()
 	}
 
-	//	}
 	
 	// Should be in the model but only used by comments for now:
 	func isFullUser() -> Bool {
@@ -207,12 +156,11 @@ class CommentsViewController: UIViewController {
 			let commentContent = commentTextView.text,
 			commentContent != "",
 			commentContent != placeholderText else {
-				//composeStatusLabel.text = L10n.thereWasAProblem
-				return
+			return
 		}
+		
 		networkService.createComment(rootEntityId: rootEntityId, parentComment: parentCommentSelected, commentContent: commentContent, onSuccess: { [weak self] in
 			
-			// Reset input field + re-enable button:
 			
 			self?.commentTextView.text = self?.placeholderText
 			self?.commentTextView.isUserInteractionEnabled = true
@@ -229,8 +177,6 @@ class CommentsViewController: UIViewController {
 		})
 	}
 	
-	
-	
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
@@ -242,6 +188,7 @@ class CommentsViewController: UIViewController {
 	
 }
 
+
 extension CommentsViewController: CommentReplyTableViewCellDelegate {
 	func replyToCommentPressed(comment: Comment) {
 		parentCommentSelected = comment
@@ -252,7 +199,6 @@ extension CommentsViewController: CommentReplyTableViewCellDelegate {
 extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		// Sections and rows? comments and replies, neat idea
 		return comments.count
 	}
 	
@@ -264,6 +210,8 @@ extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
 			let cell: CommentCell = tableView.dequeueReusableCell(for: indexPath)
 			cell.isReplyCell = true
 			cell.comment = comment
+			cell.callback = { [weak self] user in self?.loadUser(comment: comment) }
+
 			return cell
 		} else {
 			let cell: CommentCell = tableView.dequeueReusableCell(for: indexPath)
@@ -271,6 +219,7 @@ extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
 			cell.replyButton.isHidden = !isFullUser()
 			cell.isReplyCell = false
 			cell.comment = comment
+			cell.callback = { [weak self] user in self?.loadUser(comment: comment) }
 			return cell
 		}
 	}
@@ -280,15 +229,63 @@ extension CommentsViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 }
 
+extension CommentsViewController {
+	private func loadUser(comment: Comment) {
+		ProgressIndicator.showBlockingProgress()
+
+		networkService.getUser(userId: comment.author._id!) { user in
+			guard let user = user else {
+				ProgressIndicator.hideBlockingProgress()
+				return }
+			
+			let vc: ProfileViewController = ProfileViewController()
+			vc.user = user
+			self.navigationController?.pushViewController(vc, animated: true)
+			ProgressIndicator.hideBlockingProgress()
+		}
+	}
+}
 
 extension CommentsViewController {
 	private func setupLayout() {
+		func setupTableView() {
+			tableView.dataSource = self
+			tableView.delegate = self
+			tableView.register(cellType: CommentCell.self)
+			view.addSubview(tableView)
+			
+			tableView.separatorColor = .clear
+			tableView.contentInset = UIEdgeInsets(top: 20,left: 0,bottom: 0,right: 0)
+			tableView.snp.makeConstraints { (make) -> Void in
+				make.top.equalToSuperview()
+				make.bottom.equalToSuperview()
+				make.right.equalToSuperview()
+				make.left.equalToSuperview()
+			}
+			self.view.layoutIfNeeded()
+		}
+		
+		func setupActivityIndicator() {
+			activityIndicator.center = self.view.center
+			activityIndicator.hidesWhenStopped = true
+			activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+			view.addSubview(activityIndicator)
+		}
+		
+		title = L10n.comments
+		setupTableView()
+		setupActivityIndicator()
+	}
+}
+
+extension CommentsViewController {
+	private func setupLayoutForUser() {
 		postButton = UIButton()
 		postCommentView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIView.getValueScaledByScreenWidthFor(baseValue: 375.0), height: UIView.getValueScaledByScreenWidthFor(baseValue: 100.0)))
 		postCommentView.backgroundColor = .white
 		
 		commentTextView = UITextView(frame: .zero)
-		commentTextView.toolbarPlaceholder = "Type here"
+		commentTextView.toolbarPlaceholder = L10n.typeHere
 		commentTextView.text = placeholderText
 		commentTextView.textColor = Stylesheet.Colors.grey
 		commentTextView.delegate = self
@@ -297,15 +294,13 @@ extension CommentsViewController {
 		commentTextView.backgroundColor = .white
 		
 		postCommentView.addSubview(postButton)
-		postButton.setTitle("Post", for: .normal)
+		postButton.setTitle(L10n.post, for: .normal)
 		postButton.titleLabel?.font = UIFont(name: "OpenSans-Semibold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 15))
 		postButton.setTitleColor(Stylesheet.Colors.base, for: .normal)
 		
 		postCommentView.addSubview(commentTextView)
 		
 		tableView.tableFooterView = postCommentView
-		
-		
 		
 		statusLabel = UILabel()
 		statusLabel.text = ""
@@ -316,11 +311,9 @@ extension CommentsViewController {
 		postCommentView.addSubview(cancelReplyButton)
 		cancelReplyButton.setTitleColor(.red, for: .normal)
 		cancelReplyButton.titleLabel?.font = UIFont(name: "OpenSans-SemiBold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 10))
-		cancelReplyButton.setTitle("Cancel reply", for: .normal)
+		cancelReplyButton.setTitle(L10n.cancelReplyButtonTitle, for: .normal)
 		cancelReplyButton.titleLabel?.textColor = .red
 		cancelReplyButton.isHidden = true
-		
-		
 		
 		postCommentView.addSubview(statusLabel)
 		
@@ -359,6 +352,7 @@ extension CommentsViewController: UITextViewDelegate {
 			textView.textColor = Stylesheet.Colors.dark
 		}
 	}
+	
 	func textViewDidEndEditing(_ textView: UITextView) {
 		if textView.text.isEmpty {
 			postButton.isEnabled = false

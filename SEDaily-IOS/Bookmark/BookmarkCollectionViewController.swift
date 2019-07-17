@@ -8,15 +8,16 @@
 
 import UIKit
 import StatefulViewController
-import KoalaTeaFlowLayout
+
 
 /// Collection view controller for viewing all bookmarks for the user.
-class BookmarkCollectionViewController: UICollectionViewController, StatefulViewController {
+class BookmarkCollectionViewController: UICollectionViewController, StatefulViewController, MainCoordinated {
+	var mainCoordinator: MainFlowCoordinator?
+	
 	static private let cellId = "PodcastCellId"
 	private let reuseIdentifier = "Cell"
 	
 	private var viewModelController = BookmarkViewModelController()
-	weak var audioOverlayDelegate: AudioOverlayDelegate?
 	
 	private var progressController = PlayProgressModelController()
 	
@@ -25,9 +26,8 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 	}()
 	
 	
-	init(collectionViewLayout layout: UICollectionViewLayout, audioOverlayDelegate: AudioOverlayDelegate?) {
+	override init(collectionViewLayout layout: UICollectionViewLayout) {
 		super.init(collectionViewLayout: layout)
-		self.audioOverlayDelegate = audioOverlayDelegate
 		
 		self.tabBarItem = UITabBarItem(title: L10n.tabBarSaved, image: UIImage(named: "bookmark_outline"), selectedImage: UIImage(named: "bookmark"))
 	}
@@ -55,6 +55,11 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 			selector: #selector(self.loginObserver),
 			name: .loginChanged,
 			object: nil)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(self.onDidReceiveData(_:)),
+			name: .viewModelUpdated,
+			object: nil)
 		
 		
 		self.errorView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
@@ -69,6 +74,11 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 			for: .valueChanged)
 		self.collectionView?.refreshControl = refreshControl
 		Analytics2.bookmarksPageViewed()
+	}
+	
+	deinit {
+		// perform the deinitialization
+		NotificationCenter.default.removeObserver(self)
 	}
 	
 	@objc private func pullToRefresh(_ sender: Any) {
@@ -197,7 +207,6 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 				self?.commentsButtonPressed(viewModel)
 				
 			}
-			
 		}
 		
 		return cell
@@ -207,11 +216,12 @@ class BookmarkCollectionViewController: UICollectionViewController, StatefulView
 		_ collectionView: UICollectionView,
 		didSelectItemAt indexPath: IndexPath) {
 		if let viewModel = viewModelController.viewModel(at: indexPath.row) {
-			if let audioOverlayDelegate = self.audioOverlayDelegate {
-				let vc = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
+			
+				let vc = EpisodeViewController()
 				vc.viewModel = viewModel
+				mainCoordinator?.configure(viewController: vc)
 				self.navigationController?.pushViewController(vc, animated: true)
-			}
+			
 		}
 	}
 }
@@ -223,10 +233,20 @@ extension BookmarkCollectionViewController: StateViewDelegate {
 	}
 }
 
-extension BookmarkCollectionViewController: PodcastDetailViewControllerDelegate {
-	func modelDidChange(viewModel: PodcastViewModel) {
+extension BookmarkCollectionViewController{
+	@objc func onDidReceiveData(_ notification: Notification) {
+		if let data = notification.userInfo as? [String: PodcastViewModel] {
+			for (_, viewModel) in data {
+				viewModelDidChange(viewModel: viewModel)
+			}
+		}
+	}
+}
+
+
+extension BookmarkCollectionViewController {
+	private func viewModelDidChange(viewModel: PodcastViewModel) {
 		self.viewModelController.update(with: viewModel)
-		self.collectionView?.reloadData()
 	}
 }
 

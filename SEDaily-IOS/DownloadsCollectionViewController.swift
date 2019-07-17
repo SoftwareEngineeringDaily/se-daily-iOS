@@ -10,15 +10,17 @@ import Foundation
 
 import UIKit
 import StatefulViewController
-import KoalaTeaFlowLayout
+
 
 /// Collection view controller for viewing all downloads for the user.
-class DownloadsCollectionViewController: UICollectionViewController, StatefulViewController {
+class DownloadsCollectionViewController: UICollectionViewController, StatefulViewController, MainCoordinated {
+	
+	var mainCoordinator: MainFlowCoordinator?
+	
 	
 	private let reuseIdentifier = "Cell"
 	
 	private var viewModelController = DownloadsViewModelController()
-	weak var audioOverlayDelegate: AudioOverlayDelegate?
 	
 	private var progressController = PlayProgressModelController()
 	
@@ -27,10 +29,8 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 	}()
 	
 	
-	init(collectionViewLayout layout: UICollectionViewLayout, audioOverlayDelegate: AudioOverlayDelegate?) {
+	override init(collectionViewLayout layout: UICollectionViewLayout) {
 		super.init(collectionViewLayout: layout)
-		self.audioOverlayDelegate = audioOverlayDelegate
-		
 		self.tabBarItem = UITabBarItem(title: L10n.tabBarDownloads, image: UIImage(named: "download_panel_outline"), selectedImage: UIImage(named: "download_panel"))
 	}
 	
@@ -52,6 +52,12 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 		self.collectionView?.collectionViewLayout = layout
 		self.collectionView?.backgroundColor = Stylesheet.Colors.light
 		
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(self.onDidReceiveData(_:)),
+			name: .viewModelUpdated,
+			object: nil)
+		
 		self.errorView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
 		self.errorView?.backgroundColor = .green
 		
@@ -61,7 +67,11 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 			action: #selector(pullToRefresh(_:)),
 			for: .valueChanged)
 		self.collectionView?.refreshControl = refreshControl
-		//Analytics2.bookmarksPageViewed()
+	}
+	
+	deinit {
+		// perform the deinitialization
+		NotificationCenter.default.removeObserver(self)
 	}
 	
 	@objc private func pullToRefresh(_ sender: Any) {
@@ -76,7 +86,6 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		
 		self.refreshView(useCache: true)
 	}
 	
@@ -114,9 +123,8 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 	}
 	
 	func hasContent() -> Bool {
-			return self.viewModelController.viewModelsCount > 0
+		return self.viewModelController.viewModelsCount > 0
 	}
-	
 	
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {
 		return 1
@@ -125,7 +133,7 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 	override func collectionView(
 		_ collectionView: UICollectionView,
 		numberOfItemsInSection section: Int) -> Int {
-			return self.viewModelController.viewModelsCount
+		return self.viewModelController.viewModelsCount
 	}
 	
 	override func collectionView(
@@ -142,7 +150,6 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 			let bookmarkService = BookmarkService(podcastViewModel: viewModel)
 			
 			cell.playProgress = progressController.episodesPlayProgress[viewModel._id] ?? PlayProgress(id: "", currentTime: 0.0, totalLength: 0.0)
-			
 			
 			cell.viewModel = viewModel
 			cell.upvoteService = upvoteService
@@ -161,11 +168,12 @@ class DownloadsCollectionViewController: UICollectionViewController, StatefulVie
 		_ collectionView: UICollectionView,
 		didSelectItemAt indexPath: IndexPath) {
 		if let viewModel = viewModelController.viewModel(at: indexPath.row) {
-			if let audioOverlayDelegate = self.audioOverlayDelegate {
-				let vc = EpisodeViewController(nibName: nil, bundle: nil, audioOverlayDelegate: audioOverlayDelegate)
-				vc.viewModel = viewModel
-				self.navigationController?.pushViewController(vc, animated: true)
-			}
+			
+			let vc = EpisodeViewController()
+			vc.viewModel = viewModel
+			mainCoordinator?.configure(viewController: vc)
+			self.navigationController?.pushViewController(vc, animated: true)
+			
 		}
 	}
 }
@@ -177,10 +185,19 @@ extension DownloadsCollectionViewController: StateViewDelegate {
 	}
 }
 
-extension DownloadsCollectionViewController: PodcastDetailViewControllerDelegate {
-	func modelDidChange(viewModel: PodcastViewModel) {
+extension DownloadsCollectionViewController {
+	@objc func onDidReceiveData(_ notification: Notification) {
+		if let data = notification.userInfo as? [String: PodcastViewModel] {
+			for (_, viewModel) in data {
+				viewModelDidChange(viewModel: viewModel)
+			}
+		}
+	}
+}
+
+extension DownloadsCollectionViewController {
+	private func viewModelDidChange(viewModel: PodcastViewModel) {
 		self.viewModelController.update(with: viewModel)
-		self.collectionView?.reloadData()
 	}
 }
 

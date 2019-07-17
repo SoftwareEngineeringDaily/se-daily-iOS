@@ -27,6 +27,7 @@ class TagsCell: UITableViewCell, Reusable, UIScrollViewDelegate {
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
+		setupLayout()
 		scrollView.delegate = self
 		
 	}
@@ -36,7 +37,7 @@ class TagsCell: UITableViewCell, Reusable, UIScrollViewDelegate {
 	}
 	
 	override func layoutSubviews() {
-		setupLayout()
+		print(self.contentView.height)
 	}
 	
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -55,7 +56,7 @@ extension TagsCell {
 		scrollView.backgroundColor = .white
 		scrollView.contentSize = tagsView.frame.size
 		let label: UILabel = UILabel()
-		label.text = "sdsdasdsadasd"
+		label.text = ""
 		contentView.addSubview(scrollView)
 		scrollView.addSubview(tagsView)
 		scrollView.addSubview(label)
@@ -80,8 +81,8 @@ extension TagsCell {
 		
 		tagsView.snp.makeConstraints { (make) in
 			make.top.left.right.bottom.equalToSuperview()
-			make.height.equalTo(50.0)
-			make.width.equalTo(5000.0)
+			//make.height.equalTo(30.0)
+			make.width.equalTo(5000.0) // this is a workaround for scrollView
 		}
 		
 		if #available(iOS 11, *) {

@@ -52,7 +52,6 @@ class NotificationsController {
 		center.requestAuthorization(options: options, completionHandler: {
 			(granted, error) in
 			if !granted {
-				print("Something went wrong")
 				return
 			}
 			

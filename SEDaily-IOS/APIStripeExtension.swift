@@ -29,7 +29,7 @@ extension API {
         let urlString = rootURL + StripeEndpoints.subscription
 
         let user = UserManager.sharedInstance.getActiveUser()
-        let userToken = user.token
+        let userToken = user.token ?? ""
         
         let _headers: HTTPHeaders = [
             Headers.contentType: Headers.x_www_form_urlencoded,
@@ -58,7 +58,7 @@ extension API {
         let urlString = rootURL + StripeEndpoints.subscription
         
         let user = UserManager.sharedInstance.getActiveUser()
-        let userToken = user.token
+				let userToken = user.token ?? ""
         
         let _headers: HTTPHeaders = [
             Headers.contentType: Headers.x_www_form_urlencoded,

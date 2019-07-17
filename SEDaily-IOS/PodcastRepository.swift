@@ -57,6 +57,22 @@ class PodcastRepository: Repository<Podcast> {
 			onSuccess(data)
 		}
 	}
+	
+	func retrieveRecentlyListened(
+		podcastId: String,
+		onSuccess: @escaping RepositorySuccessCallback,
+		onFailure: @escaping RepositoryErrorCallback) {
+		DataSource.getRecentlyListenedEpisode(podcastId: podcastId, diskKey: .PodcastFolder) { diskData in
+			guard let data = diskData else {
+				onFailure(.ErrorGettingFromDisk)
+				return
+			}
+			onSuccess(data)
+		}
+	}
+	
+	
+	
 
     /// Retrieves the cached bookmark data from disk
     ///

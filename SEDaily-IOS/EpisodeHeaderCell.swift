@@ -262,7 +262,7 @@ extension EpisodeHeaderCell {
 			actionView.upvoteCountLabel.text = String(viewModel.score)
 			actionView.upvoteButton.isSelected = viewModel.isUpvoted
 			actionView.upvoteCountLabel.textColor = actionView.upvoteButton.isSelected ? Stylesheet.Colors.base : Stylesheet.Colors.dark
-			actionView.upvoteCountLabel.font = actionView.upvoteButton.isSelected ? UIFont(name: "OpenSans-Semibold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13)) : UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
+			actionView.upvoteCountLabel.font = actionView.upvoteButton.isSelected ? UIFont(name: "OpenSans-Semibold", size: 13) : UIFont(name: "OpenSans", size: 13)
 		}
 		
 		func updateBookmark() {
@@ -298,7 +298,7 @@ extension EpisodeHeaderCell: UpvoteServiceUIDelegate {
 extension EpisodeHeaderCell {
 	func updateLabelStyle() {
 		actionView.upvoteCountLabel.textColor = actionView.upvoteButton.isSelected ? Stylesheet.Colors.base : Stylesheet.Colors.dark
-		actionView.upvoteCountLabel.font = actionView.upvoteButton.isSelected ? UIFont(name: "OpenSans-Semibold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13)) : UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
+		actionView.upvoteCountLabel.font = actionView.upvoteButton.isSelected ? UIFont(name: "OpenSans-Semibold", size: 13) : UIFont(name: "OpenSans", size: 13)
 	}
 }
 
@@ -319,8 +319,6 @@ extension EpisodeHeaderCell: DownloadServiceUIDelegate {
 			downloadButton.isUserInteractionEnabled = true
 			downloadButton.isSelected = success
 			downloadButton.setTitle("", for: .normal)
-//			downloadButton.setIcon(icon: .ionicons(.iosCloudDownload), iconSize: 25.0, color: Stylesheet.Colors.base, forState: .selected)
-//			downloadButton.setIcon(icon: .ionicons(.iosCloudDownloadOutline), iconSize: 25.0, color: Stylesheet.Colors.dark, forState: .normal)
 			downloadButton.setImage(UIImage(named: "download_outline"), for: .normal)
 			downloadButton.setImage(UIImage(named: "download"), for: .selected)
 			downloadButton.cornerRadius = UIView.getValueScaledByScreenWidthFor(baseValue: 25.0)

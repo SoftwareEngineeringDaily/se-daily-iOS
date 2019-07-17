@@ -9,12 +9,12 @@
 import Foundation
 // This is a workaround to keep global playing state
 class CurrentlyPlaying {
-	static let shared = CurrentlyPlaying()
-	private var currentlyPlayingId: String = ""
-	func setCurrentlyPlaying(id: String) {
-		currentlyPlayingId = id
-	}
-	func getCurrentlyPlayingId()-> String {
-		return currentlyPlayingId
-	}
+//  static let shared = CurrentlyPlaying()
+//  private var currentlyPlayingId: String = ""
+//  func setCurrentlyPlaying(id: String) {
+//    currentlyPlayingId = id
+//  }
+//  func getCurrentlyPlayingId()-> String {
+//    return currentlyPlayingId
+//  }
 }

@@ -21,6 +21,7 @@ class CommentCell: UITableViewCell, Reusable {
 	var dateLabel: UILabel!
 	var verticalLine: UIView!
 	var replyButton: UIButton!
+	var callback: ((Comment)->Void) = {_ in }
 	// Update for reply cell
 	var isReplyCell: Bool = false {
 		didSet {
@@ -33,12 +34,10 @@ class CommentCell: UITableViewCell, Reusable {
 	}
 	weak var delegate: CommentReplyTableViewCellDelegate?
 	
-	
 	var comment: Comment? {
 		didSet {
 			let prettyDate = comment?.getDatedCreatedPretty()
 			dateLabel.text = prettyDate
-			//contentLabel.attributedText = comment?.commentBody()
 			contentLabel.text = comment?.content
 			authorLabel.text = comment?.author.displayName()
 			
@@ -55,7 +54,8 @@ class CommentCell: UITableViewCell, Reusable {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		self.selectionStyle = .none
 		setupLayout()
-		replyButton.addTarget(self, action: #selector(CommentCell.replyTapped), for: .touchUpInside)
+		setupTargets()
+		
 	}
 	required init
 		(coder aDecoder: NSCoder) {
@@ -64,8 +64,6 @@ class CommentCell: UITableViewCell, Reusable {
 	
 	override func setSelected(_ selected: Bool, animated: Bool) {
 		super.setSelected(selected, animated: animated)
-		
-		// Configure the view for the selected state
 	}
 	
 	@objc func replyTapped(sender: UIButton) {
@@ -73,13 +71,14 @@ class CommentCell: UITableViewCell, Reusable {
 			delegate?.replyToCommentPressed(comment: comment)
 		}
 	}
-	
+	@objc func avatarTapped() {
+		if let comment = comment {
+			callback(comment)
+		}
+	}
 }
 
 extension CommentCell {
-	
-	
-	
 	private func setupLayout() {
 		func setupLabels() {
 			
@@ -107,11 +106,10 @@ extension CommentCell {
 			replyButton = UIButton()
 			contentView.addSubview(replyButton)
 			replyButton.setTitleColor(Stylesheet.Colors.base, for: .normal)
-			replyButton.setTitle("Reply", for: .normal)
+			replyButton.setTitle(L10n.replyButtonTitle, for: .normal)
 			replyButton.titleLabel?.font = UIFont(name: "OpenSans-SemiBold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
-			
-			
 		}
+		
 		func setupAvatarImage() {
 			avatarImage = UIImageView()
 			contentView.addSubview(avatarImage)
@@ -158,9 +156,27 @@ extension CommentCell {
 			}
 		}
 		
-		
 		setupLabels()
 		setupAvatarImage()
 		setupConstraints()
+	}
+}
+
+
+extension CommentCell {
+	
+	private func setupTargets() {
+		
+		replyButton.addTarget(self, action: #selector(CommentCell.replyTapped), for: .touchUpInside)
+
+		let tapGestureRecognizerAvatar = UITapGestureRecognizer(target: self, action: #selector(CommentCell.avatarTapped))
+		let tapGestureRecognizerLabel = UITapGestureRecognizer(target: self, action: #selector(CommentCell.avatarTapped))
+		
+		avatarImage.addGestureRecognizer(tapGestureRecognizerAvatar)
+		authorLabel.addGestureRecognizer(tapGestureRecognizerLabel)
+		
+		self.isUserInteractionEnabled = true
+		avatarImage.isUserInteractionEnabled = true
+		authorLabel.isUserInteractionEnabled = true
 	}
 }

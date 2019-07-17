@@ -21,7 +21,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_subtitle" translatesAutoresizingMaskIntoConstraints="NO" id="LXv-IF-ttD">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sedaily-logo" translatesAutoresizingMaskIntoConstraints="NO" id="LXv-IF-ttD">
                                 <rect key="frame" x="70" y="311" width="274" height="274"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="LXv-IF-ttD" secondAttribute="height" multiplier="1:1" id="yut-bm-30V"/>
@@ -43,6 +43,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="logo_subtitle" width="108" height="108"/>
+        <image name="sedaily-logo" width="129" height="176"/>
     </resources>
 </document>

@@ -75,6 +75,8 @@ class Helpers {
 			alert.addAction(UIAlertAction(title: actionTitle, style: .default, handler: { (_) in
 				completionHandler?()
 			}))
+			let noAction = UIAlertAction(title: L10n.cancelButtonTitle, style: .cancel, handler: nil)
+			alert.addAction(noAction)
 			topController.present(alert, animated: true, completion: nil)
 		}
 	}

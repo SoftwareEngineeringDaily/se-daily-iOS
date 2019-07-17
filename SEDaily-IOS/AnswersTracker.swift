@@ -44,15 +44,7 @@ class Tracker {
         Answers.logCustomEvent(withName: "Feed_Viewed")
     }
     
-    class func logForumThreadViewed(forumThread: ForumThread) {
-        Answers.logCustomEvent(withName: "ForumThread_Viewed", customAttributes:
-            [
-                "podcastId": forumThread._id,
-                "podcastTitle": forumThread.title,
-                "isLoggedIn": UserManager.sharedInstance.isCurrentUserLoggedIn()
-            ]
-        )
-    }
+    
     
     class func logRelatedLinkViewedFromFeed(url: URL) {
         Answers.logCustomEvent(withName: "RelatedLink_Viewed_From_Feed", customAttributes:
@@ -66,7 +58,7 @@ class Tracker {
     class func logLogin(user: User) {
         Answers.logLogin(withMethod: "SEDaily_API", success: 1, customAttributes:
             [
-                "username": user.usernameOrEmail            ]
+                "username": user.email            ]
         )
     }
 
@@ -74,14 +66,14 @@ class Tracker {
         Answers.logSignUp(withMethod: "SEDaily_API", success: 1,
                                customAttributes:
             [
-                "username": user.usernameOrEmail            ]
+                "username": user.email            ]
         )
     }
 
     class func logFacebookLogin(user: User) {
         Answers.logLogin(withMethod: "Facebook", success: 1, customAttributes:
             [
-                "username": user.usernameOrEmail
+                "username": user.email
             ]
         )
     }

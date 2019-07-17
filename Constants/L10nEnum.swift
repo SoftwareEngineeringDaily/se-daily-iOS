@@ -51,12 +51,20 @@ enum L10n {
   static let appReviewPromptQuestion = L10n.tr("Localizable", "AppReviewPromptQuestion")
   /// Cancel
   static let cancelButtonTitle = L10n.tr("Localizable", "CancelButtonTitle")
+  /// Cancel reply
+  static let cancelReplyButtonTitle = L10n.tr("Localizable", "CancelReplyButtonTitle")
   /// Comments
   static let comments = L10n.tr("Localizable", "Comments")
   /// Add a comment...
   static let commentsPlaceholder = L10n.tr("Localizable", "CommentsPlaceholder")
   /// Confirm Password
   static let confirmPasswordPlaceholder = L10n.tr("Localizable", "ConfirmPasswordPlaceholder")
+  /// Are you sure you want to delete this podcast?
+  static let deletePodcast = L10n.tr("Localizable", "DeletePodcast")
+  /// YEP! Delete it please.
+  static let deletePodcastButtonTitle = L10n.tr("Localizable", "DeletePodcastButtonTitle")
+  /// Edit Profile
+  static let editProfile = L10n.tr("Localizable", "EditProfile")
   /// Email
   static let emailAddressPlaceholder = L10n.tr("Localizable", "EmailAddressPlaceholder")
   /// Please send an email to jeff@softwareengineeringdaily.com
@@ -65,6 +73,8 @@ enum L10n {
   static let emailUnsupportedOnDevice = L10n.tr("Localizable", "EmailUnsupportedOnDevice")
   /// No results for search
   static let emptySearch = L10n.tr("Localizable", "EmptySearch")
+  /// Enable Notifications
+  static let enableNotifications = L10n.tr("Localizable", "EnableNotifications")
   /// Hello!
   static let enthusiasticHello = L10n.tr("Localizable", "EnthusiasticHello")
   /// Sure! Send email
@@ -113,8 +123,12 @@ enum L10n {
   static let passwordPlaceholder = L10n.tr("Localizable", "PasswordPlaceholder")
   /// Play
   static let play = L10n.tr("Localizable", "Play")
+  /// Post
+  static let post = L10n.tr("Localizable", "Post")
   /// Related Links
   static let relatedLinks = L10n.tr("Localizable", "RelatedLinks")
+  /// Reply
+  static let replyButtonTitle = L10n.tr("Localizable", "ReplyButtonTitle")
   /// Search
   static let search = L10n.tr("Localizable", "Search")
   /// Add a short title
@@ -181,6 +195,8 @@ enum L10n {
   static let toggleToSignUpButtonTitle = L10n.tr("Localizable", "ToggleToSignUpButtonTitle")
   /// Transcript
   static let transcript = L10n.tr("Localizable", "Transcript")
+  /// Type here
+  static let typeHere = L10n.tr("Localizable", "TypeHere")
   /// Username or Email
   static let usernameOrEmailPlaceholder = L10n.tr("Localizable", "UsernameOrEmailPlaceholder")
   /// Username

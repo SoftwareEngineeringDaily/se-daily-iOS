@@ -116,7 +116,7 @@ extension ItemCollectionViewCell: UpvoteServiceUIDelegate {
 extension ItemCollectionViewCell {
 	func updateLabelStyle() {
 		actionView.upvoteCountLabel.textColor = actionView.upvoteButton.isSelected ? Stylesheet.Colors.base : Stylesheet.Colors.dark
-		actionView.upvoteCountLabel.font = actionView.upvoteButton.isSelected ? UIFont(name: "OpenSans-Semibold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13)) : UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
+		actionView.upvoteCountLabel.font = actionView.upvoteButton.isSelected ? UIFont(name: "OpenSans-Semibold", size: 13) : UIFont(name: "OpenSans", size: 13)
 	}
 }
 
@@ -279,7 +279,7 @@ extension ItemCollectionViewCell {
 			actionView.upvoteCountLabel.text = String(viewModel.score)
 			actionView.upvoteButton.isSelected = viewModel.isUpvoted
 			actionView.upvoteCountLabel.textColor = actionView.upvoteButton.isSelected ? Stylesheet.Colors.base : Stylesheet.Colors.dark
-			actionView.upvoteCountLabel.font = actionView.upvoteButton.isSelected ? UIFont(name: "OpenSans-Semibold", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13)) : UIFont(name: "OpenSans", size: UIView.getValueScaledByScreenWidthFor(baseValue: 13))
+			actionView.upvoteCountLabel.font = actionView.upvoteButton.isSelected ? UIFont(name: "OpenSans-Semibold", size: 13) : UIFont(name: "OpenSans", size: 13)
 		}
 		
 		func updateBookmark() {

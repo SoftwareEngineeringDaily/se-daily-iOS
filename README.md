@@ -46,5 +46,5 @@ Interested in seeing a particular feature implemented in this app? Please open a
 
 Contributing
 ------------
-Checkout [CONTRIBUTING.md](https://github.com/SoftwareEngineeringDaily/se-daily-iOS/CONTRIBUTING.md) for details.
+Checkout [CONTRIBUTING.md](https://github.com/SoftwareEngineeringDaily/se-daily-iOS/blob/master/CONTRIBUTING.md) for details.
 

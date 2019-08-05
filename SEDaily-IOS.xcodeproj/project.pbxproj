@@ -813,6 +813,7 @@
 				AE5F616C12D0339AD2CE40F0 /* [CP] Embed Pods Frameworks */,
 				16D67C4B1F33AD1D0065E838 /* ShellScript */,
 				1E884C331FA428D400400781 /* SwiftLint */,
+				432DD9A722F8431300305590 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -972,12 +973,13 @@
 			files = (
 			);
 			inputPaths = (
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run f0ec5c4da42e81dc990c190bf79ca81fd9fdcf7d 8f1f2cea85347d8df665cfe1460a1391be0d1c99e81197b80ef43259ec294b0d";
+			shellScript = "\"${PODS_ROOT}/Fabric/run\"\n";
 		};
 		1E884C331FA428D400400781 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -992,6 +994,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"";
+		};
+		432DD9A722F8431300305590 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
 		};
 		43BA1A9ED42DE22C48E64092 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
